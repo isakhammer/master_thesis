@@ -74,18 +74,17 @@ cmake -DCMAKE_INSTALL_PREFIX=${INSTALL_DIR} \
 
 #exit 0
 make -j8 VERBOSE=1
-
 make -j8 install
 
 PYTHONPATH_TMP=`python3 -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(1,0,''))"`
 
 ###### Uncomment if you want to generate a module file
-MODULE_FILE=ngsolve-${BUILD_VERSION}
-echo "#%Module 1.0"  > ./$MODULE_FILE
-echo "set MODULE_DIR \"${INSTALL_DIR}\"" >> ./$MODULE_FILE
-echo "setenv NETGENDIR \"\$MODULE_DIR/bin\"" >> ./$MODULE_FILE
-echo "prepend-path PATH \"\$MODULE_DIR/bin\""  >> ./$MODULE_FILE
-echo "prepend-path PYTHONPATH \"\$MODULE_DIR/${PYTHONPATH_TMP}\""  >> ./$MODULE_FILE
+#MODULE_FILE=ngsolve-${BUILD_VERSION}
+#echo "#%Module 1.0"  > ./$MODULE_FILE
+#echo "set MODULE_DIR \"${INSTALL_DIR}\"" >> ./$MODULE_FILE
+#echo "setenv NETGENDIR \"\$MODULE_DIR/bin\"" >> ./$MODULE_FILE
+#echo "prepend-path PATH \"\$MODULE_DIR/bin\""  >> ./$MODULE_FILE
+#echo "prepend-path PYTHONPATH \"\$MODULE_DIR/${PYTHONPATH_TMP}\""  >> ./$MODULE_FILE
 
 #source ~/.bashrc
 #cd ${BASEDIR}/${BUILD_VERSION}ngsolve-install/share/ngsolve/py_tutorials/intro
