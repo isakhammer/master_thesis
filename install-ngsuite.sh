@@ -1,3 +1,51 @@
+#!/usr/bin/env bash
+
+export BASEDIR=$HOME_DIR/software
+
+mkdir -p $BASEDIR
+cd $BASEDIR
+
+NGSOLVE_VERSION=v6.2.2105
+#NGSOLVE_VERSION=master
+
+BUILD_VERSION=serial
+#BUILD_VERSION=parallel
+if [ ${BUILD_VERSION} == serial ]
+then
+  echo "Building serial version ..."
+  USE_MPI=OFF
+  USE_SUPERBUILD=ON
+else
+  echo "Building parallel version ..."
+  USE_MPI=ON
+  USE_SUPERBUILD=OFF
+fi
+
+
+# Add version appendix to build-version
+#BUILD_VERSION=${BUILD_VERSION}
+BUILD_VERSION=${NGSOLVE_VERSION}-${BUILD_VERSION}
+BUILD_DIR=$BASEDIR/build/${BUILD_VERSION}/
+INSTALL_DIR=$BASEDIR/install/${BUILD_VERSION}/
+
+mkdir -p $BUILD_DIR
+mkdir -p $INSTALL_DIR
+
+if [ ! -d "src" ]; then
+  git clone --recursive https://github.com/NGSolve/ngsolve.git src
+fi
+
+# TODO: Add snippet which extracts last release number and git hash
+# Look at ./cmake/generate_version_file.cmake
+
+cd src
+git fetch
+git checkout ${NGSOLVE_VERSION}
+#git pull
+#git submodule update --init --recursive
+git submodule update --init --recursive --remote
+
+# NOTES:
 # Setting the flag
 ## -DUSE_SUPERBUILD=OFF \
 # activates MPI no matter how USE_MPI was set
@@ -41,4 +89,3 @@ echo "prepend-path PYTHONPATH \"\$MODULE_DIR/${PYTHONPATH_TMP}\""  >> ./$MODULE_
 #source ~/.bashrc
 #cd ${BASEDIR}/${BUILD_VERSION}ngsolve-install/share/ngsolve/py_tutorials/intro
 #netgen navierstokes.py
-
