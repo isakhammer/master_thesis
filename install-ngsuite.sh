@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+## AUTHOR: Andre Massing - Feb 2022
 export BASEDIR=$HOME_DIR/software
 
 mkdir -p $BASEDIR
