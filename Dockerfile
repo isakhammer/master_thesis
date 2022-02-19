@@ -55,5 +55,14 @@ COPY . .
 #RUN pip3 install -r $WORK_DIR/requirements.txt
 RUN echo "source ${WORK_DIR}/common_scripts.sh" >> /root/.bashrc
 
-RUN  . install-ngsuite.sh
+# Andres' script
+#RUN  . install-ngsuite.sh
+
+# Standard ubuntu installation
+RUN apt-add-repository universe
+RUN add-apt-repository ppa:ngsolve/ngsolve
+RUN apt-get update
+RUN apt-get install -yq ngsolve
+
+
 CMD ["bash"]
