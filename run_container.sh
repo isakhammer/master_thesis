@@ -5,13 +5,13 @@ function run_netgen_container()  {
   XSOCK=/tmp/.X11-unix
   docker run -it --rm \
      -e DISPLAY=$DISPLAY \
-      -v $(pwd)/:$HOME/project_thesis \
-      -v $XSOCK:$XSOCK \
-      -v $HOME/.ssh:/root/.ssh \
-       -v $HOME/.Xauthority:/root/.Xauthority \
-       --name netgen \
-        --privileged \
-        $image_name "$@"
+     --name netgen \
+     --privileged \
+     -v $(pwd)/:/root/src \
+     -v $XSOCK:$XSOCK \
+     -v $HOME/.ssh:/root/.ssh \
+     -v $HOME/.Xauthority:/root/.Xauthority \
+     $image_name "$@"
 }
 
 run_netgen_container

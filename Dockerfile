@@ -46,8 +46,8 @@ RUN apt-get -y install python3-pip
 RUN /usr/bin/python3.8 -m pip install --upgrade pip
 RUN pip3 install --upgrade pip
 
-RUN mkdir -p $HOME_DIR/project_thesis
-ENV WORK_DIR $HOME_DIR/project_thesis
+RUN mkdir -p $HOME_DIR/src
+ENV WORK_DIR $HOME_DIR/src
 WORKDIR $WORK_DIR
 
 COPY . .
