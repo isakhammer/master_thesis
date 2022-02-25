@@ -7,10 +7,11 @@ function run_netgen_container()  {
      -e DISPLAY=$DISPLAY \
      --name netgen \
      --privileged \
-     -v $(pwd)/:/root/src \
+     -v $(pwd)/:/root/code \
      -v $XSOCK:$XSOCK \
      -v $HOME/.ssh:/root/.ssh \
      -v $HOME/.Xauthority:/root/.Xauthority \
+     -p 8888:8888 \
      $image_name "$@"
 }
 

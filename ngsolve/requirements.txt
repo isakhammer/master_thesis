@@ -1,2 +1,5 @@
-numpy==1.18.1
-matplotlib==3.0.3
+numpy
+matplotlib
+jupyter
+jupyterlab
+webgui_jupyter_widgets
