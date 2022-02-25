@@ -1,17 +1,20 @@
 
-function run_netgen_container()  {
-  image_name="netgen:latest"
+function run_container2()  {
+  # image_name="custom_dealii:latest"
+  # image_name="dealii/dealii:master-focal-root"
+  image_name="dealii_project_thesis:latest"
   xhost +local:root
   XSOCK=/tmp/.X11-unix
   docker run -it --rm \
      -e DISPLAY=$DISPLAY \
-     --name netgen \
+     --name project_thesis\
      --privileged \
-     -v $(pwd)/:/root/src \
+     -v $(pwd)/:/root/code \
      -v $XSOCK:$XSOCK \
      -v $HOME/.ssh:/root/.ssh \
      -v $HOME/.Xauthority:/root/.Xauthority \
      $image_name "$@"
 }
 
-run_netgen_container
+
+run_container2
