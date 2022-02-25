@@ -35,7 +35,7 @@
 #include <deal.II/dofs/dof_handler.h>
 #include <deal.II/dofs/dof_tools.h>
 #include <deal.II/numerics/vector_tools.h>
-#include <deal.II/nmerics/data_out.h>
+#include <deal.II/numerics/data_out.h>
 #include <deal.II/fe/fe_interface_values.h>
 #include <deal.II/meshworker/mesh_loop.h>
 #include <fstream>
