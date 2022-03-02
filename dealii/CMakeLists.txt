@@ -21,5 +21,9 @@ add_executable(biharmonic src/biharmonic_example.cc)
 deal_ii_setup_target(biharmonic)
 target_link_libraries(biharmonic)
 
+add_executable(laplace_problem src/laplace_problem.cc)
+deal_ii_setup_target(laplace_problem)
+target_link_libraries(laplace_problem)
+
 
 
