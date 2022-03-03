@@ -31,9 +31,9 @@ $C^{0}$ interior penalty method says that
     a_{h} \left( w,v \right) &= \sum_{T \in \mathfrak{T}_h      }^{ } \int_{T}^{} \left( \nabla ^2 w : \nabla ^2 v
     \right) dx  + \sum_{e \in \mathfrak{E}_{h}^{i} }^{} \int_{e}^{} \left\{\!\!\!\left\{ \frac{\partial w}{\partial n_{e}} \right\}\!\!\!\right\}
    \left[\!\!\left[ \frac{\partial v}{\partial n_{e}} \right]\!\!\right] ds  \\
-   & +  \sum_{e \in \mathfrak{E} _{h}}^{}
+   & +  \sum_{e \in \mathfrak{E} _{h}^{i}}^{}
    \int_{e}^{} \left\{\!\!\!\left\{ \frac{\partial ^2 v}{\partial n_e^{2} } \right\}\!\!\!\right\} \left[\!\!\left[
-   \frac{\partial w }{\partial n_{e}} \right]\!\!\right] + \sum_{e \in \mathfrak{E} _{h}}^{} \sigma \frac{1}{\left\lvert
+   \frac{\partial w }{\partial n_{e}} \right]\!\!\right] + \sum_{e \in \mathfrak{E} _{h}^{i}}^{} \sigma \frac{1}{\left\lvert
 e \right\rvert }  \int_{e}^{} \left[\!\!\left[ \frac{\partial w}{\partial n_{e}} \right]\!\!\right] \left[\!\!\left[
 \frac{\partial v }{\partial n_{e}} \right]\!\!\right]     ds
 .\end{align*}
