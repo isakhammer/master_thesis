@@ -1,8 +1,33 @@
-\section{Chapter 1}\label{sec:ch1}
+\section{$C^0$ Interior Penalty Method}\label{sec:ch1}
 
-It is compiling alright. Here is some equation
 
+We want to solve the equation on the form
+\begin{align}
+    \label{eq:1}
+    \Delta ^{2} u &= f \quad \text{in } \Omega  \\
+    u &= \frac{\partial u}{\partial n} = 0  \\
+.\end{align}
+
+\subsection{Weak Formulation}%
+\label{sub:weak_formulation}
+
+
+The weak formulation of \eqref{eq:1} has the form
 \begin{equation}
-\label{eq:ch12}
-\left( a +b \right)^{1+1} = 15
+\label{eq:2}
+    a\left( u,v \right) = \int_{\omega}^{} f v dx \quad u,v \in V
 .\end{equation}
+
+where
+\begin{equation}
+\label{eq:3}
+    a\left( w,v \right) = \int_{\Omega }^{} \nabla ^2 w : \nabla ^2 v dx
+.\end{equation}
+Here do we define $\nabla ^2 w : \nabla ^2 v $ to be the inner product of the Hessian matrix of $w$  and $v$, and $V$
+is a closed subspace of the sobolev space $H^2\left( \Omega  \right)$.
+
+
+
+
+
+
