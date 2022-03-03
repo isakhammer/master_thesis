@@ -1,0 +1,66 @@
+
+%%%% DEPENDENCIES v1.7 %%%%%%
+
+\usepackage{graphicx}
+\usepackage[backend=bibtex,style=numeric,natbib=true,citestyle=numeric-comp,sorting=none]{biblatex}
+
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+%\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{todonotes}
+\usepackage{esint}
+\usepackage{float}
+%
+%\usepackage{mathrsfs}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true, %set true if you want colored links
+    linktoc=all,     %set to all if you want both sections and subsections linked
+    linkcolor=blue,  %choose some color if you want links to stand out
+}
+\hypersetup{linktocpage}
+
+
+% inscape-figures
+%\usepackage{import}
+%\usepackage{pdfpages}
+%\usepackage{transparent}
+%\usepackage{xcolor}
+%\newcommand{\incfig}[2][1]{%
+%\def\svgwidth{#1\columnwidth}
+%\import{./figures/}{#2.pdf_tex} } \pdfsuppresswarningpagegroup=1
+
+% Box environment
+\usepackage{tcolorbox}
+\usepackage{mdframed}
+\newmdtheoremenv{definition}{Definition}[section]
+\newmdtheoremenv{theorem}{Theorem}[section]
+\newmdtheoremenv{lemma}{Lemma}[section]
+\newmdtheoremenv{corollary}{Corollary}[section]
+
+\DeclareMathOperator{\atantwo}{atan2}
+\DeclareMathOperator{\arctantwo}{arctan2}
+
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+%\newtheorem{example}{Example}
+
+\newcommand{\newpara}
+    {
+    \vskip 0.4cm
+    }
+
+\usepackage{geometry}
+%\usepackage{showframe} %This line can be used to clearly show the new margins
+
+\newgeometry{vmargin={15mm}, hmargin={12mm,17mm}}
+
+\addbibresource{bibliography.bib} % Makes the bibliography file available to biblatex.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
