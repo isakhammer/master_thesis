@@ -26,32 +26,24 @@ where
 Here do we define $\nabla ^2 w : \nabla ^2 v $ to be the inner product of the Hessian matrix of $w$  and $v$, and $V$
 is a closed subspace of the sobolev space $H^2\left( \Omega  \right)$.
 
-$C^{0}$ interior penalty method says that
+$C^{0}$ Interior penalty method says that
 \begin{align*}
-    a_{h} \left( w,v \right) &= \sum_{T \in \mathfrak{T}_h      }^{ } \int_{T}^{} \left( \nabla ^2 w : \nabla ^2 v
-    \right) dx  + \sum_{e \in \mathfrak{E}_{h}^{i} }^{} \int_{e}^{} \left\{\!\!\!\left\{ \frac{\partial w}{\partial n_{e}} \right\}\!\!\!\right\}
-   \left[\!\!\left[ \frac{\partial v}{\partial n_{e}} \right]\!\!\right] ds  \\
-   & +  \sum_{e \in \mathfrak{E} _{h}^{i}}^{}
-   \int_{e}^{} \left\{\!\!\!\left\{ \frac{\partial ^2 v}{\partial n_e^{2} } \right\}\!\!\!\right\} \left[\!\!\left[
-   \frac{\partial w }{\partial n_{e}} \right]\!\!\right] + \sum_{e \in \mathfrak{E} _{h}^{i}}^{} \sigma \frac{1}{\left\lvert
-e \right\rvert }  \int_{e}^{} \left[\!\!\left[ \frac{\partial w}{\partial n_{e}} \right]\!\!\right] \left[\!\!\left[
-\frac{\partial v }{\partial n_{e}} \right]\!\!\right]     ds
+    a_{h} \left( w,v \right) &= \sum_{T \in \mathfrak{T} _{h}}^{} \int_{T}^{} \left( \nabla ^2 w : \nabla ^2 v \right)
+    dx  + \sum_{e \in \mathfrak{E} _{h}^{i}}^{} \int_{e}^{} \mean{ \frac{\partial w}{\partial n_{e}} } \jump{
+    \frac{\partial v}{\partial n_{e}} } ds        \\
+    & + \sum_{e \in \mathfrak{E} _{h}^{i}}^{}  \int_{e}^{}  \mean{ \frac{\partial ^2 v}{\partial n_{e}^2 } } \jump{
+    \frac{\partial w}{\partial n_{e}} }     + \sum_{e \in \mathfrak{E} _{h}^{i}}^{}  \frac{\sigma }{\left\lvert e
+\right\rvert } \int_{e}^{} \jump{ \frac{\partial w}{\partial n_{e}} } \jump{ \frac{\partial v}{\partial n_{e}} } ds
 .\end{align*}
-
 
 where
 \begin{align*}
-\left[\!\!\left[ \frac{\partial v}{\partial n_{e}} \right]\!\!\right] & = - n_{e} \nabla \nu _{T} \quad \nu_{T} = \nu |_{T}
-\\
-\left\{\!\!\!\left\{ \frac{\partial ^2 u}{\partial n^2_{e}} \right\}\!\!\!\right\}  & = \frac{\partial ^2 u}{\partial
-n_{e}} \\
-\left\{\!\!\!\left\{ \frac{\partial ^2 w}{\partial n^2_{e}} \right\}\!\!\!\right\}  & = \frac{1}{2} \left( \frac{\partial
-^2 w_{-}}{\partial n^2_{e} } + \frac{\partial ^2 w_{+}}{\partial n^2_{e} }   \right) \\
-\left\{\!\!\!\left\{ \frac{\partial ^2 w}{\partial n_{e}^2} \right\}\!\!\!\right\} &= \frac{\partial ^2 w_{T}}{\partial
-n^2_{e}}, \quad \text{ on edges. }  \\
+    \jump{ \frac{\partial v}{\partial n_{e}} } &= - n_{e} \nabla \nu_{T} , \quad \nu _{T} = \nu |_{T}   \\
+    \mean{ \frac{\partial ^2 u}{\partial n_{e}^2  } }  & = \frac{\partial ^2 u }{\partial n_{e} ^2 }  \\
+    \mean{ \frac{\partial w}{\partial n^2_{e}} }  &=  \frac{1}{2} \left( \frac{\partial^2 w_{-} }{\partial n^2_{e} } +
+    \frac{\partial ^2 w_{+}}{\partial n^2_{e} }   \right) \\
+    \mean{ \frac{\partial ^2 w}{\partial n^2_{e} } } & = \frac{\partial ^2}{\partial n^2_{e}}, \quad \text{ on edges}
 .\end{align*}
-
-
 
 
 
