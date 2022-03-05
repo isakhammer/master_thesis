@@ -2,7 +2,7 @@
 
 
 \newpage
-\section{Cahn Hilliard Equation on a Cell Membrane }%
+\section{Cahn Hilliard Equation on a Closed Membrane}%
 \label{sec:cahn_hilliard_equation}
 
 
@@ -44,9 +44,13 @@ solve using conventional FEM methods. This clear when writing the equation on th
 equations arise.
 
 
-\section{$C^0$ Interior Penalty Method}\label{sec:ch1}
+\section{$C^0$ Interior Penalty Method}
+\label{sec:ch1}
 
+In this section do we want to establish a numerical method to fourth order equations. Instead of embarking on the
+special case of surface PDE described in \eqref{eq:cahn1} can weestablish a general numerical theory on $\mathbb{R} ^2$ which we can then later generalize on manifolds later.   
 
+Assume that we restrict ourself to a surface $\Omega \in \mathbb{R} ^2 $ and let $f \in L_{2}\left( \Omega  \right)$   
 We want to solve the equation on the form
 \begin{align}
     \label{eq:1}
