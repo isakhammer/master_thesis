@@ -48,13 +48,16 @@ equations arise.
 \label{sec:ch1}
 
 In this section do we want to establish a numerical method to fourth order equations. Instead of embarking on the
-special case of surface PDE described in \eqref{eq:cahn1} can weestablish a general numerical theory on $\mathbb{R} ^2$ which we can then later generalize on manifolds later.   
+special case of surface PDE described in \eqref{eq:cahn1} can we establish a general numerical theory on $\mathbb{R}
+^2$, which we later can generalize on closed surface later.
 
-Assume that we restrict ourself to a surface $\Omega \in \mathbb{R} ^2 $ and let $f \in L_{2}\left( \Omega  \right)$   
-We want to solve the equation on the form
+Assume that we restrict ourself to a compact surface $\Omega \in \mathbb{R} ^2 $ and let $f \in L^{2}\left( \Omega  \right) $
+which is defined in \ref{sub:l_2_space}.
+We want to solve the equation on the form.
+
 \begin{align}
     \label{eq:1}
-    \Delta^{2} u &= f \quad \text{in } \Omega  \\
+    \Delta ^{2} u &= f \quad \text{in } \Omega  \\
     u &= \frac{\partial u}{\partial n} = 0  \\
 .\end{align}
 
@@ -94,12 +97,11 @@ $C^{0}$ Interior penalty method says that
 where
 \begin{align*}
     \jump{ \frac{\partial v}{\partial n_{e}} } &= - n_{e} \nabla \nu_{T} , \quad \nu _{T} = \nu |_{T}   \\
-    \mean{ \frac{\partial ^2 u}{\partial n_{e}^2  } }  & = \frac{\partial ^2 u }{\partial n_{e} ^2 }  \\
+    \mean{ \frac{\partial^2 u}{\partial n_{e}^2  } }  & = \frac{\partial ^2 u }{\partial n_{e} ^2 }  \\
     \mean{ \frac{\partial w}{\partial n^2_{e}} }  &=  \frac{1}{2} \left( \frac{\partial^2 w_{-} }{\partial n^2_{e} } +
     \frac{\partial ^2 w_{+}}{\partial n^2_{e} }   \right) \\
     \mean{ \frac{\partial ^2 w}{\partial n^2_{e} } } & = \frac{\partial ^2 w}{\partial n^2_{e}}, \quad \text{ on edges}
 .\end{align*}
-
 
 
 
