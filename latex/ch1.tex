@@ -125,5 +125,45 @@ Assume $\mathcal{T}_{h} $ be a tringaluation of $\Omega $ and $V_{h}$ be the a $
 element space associated with $\mathcal{T}_{h} $ \[
 V_{h} = \left\{ v \in C\left( \overline{\Omega } \right) : v_{T} = v |_{T} \in \mathcal{P}_{2}\left( T \right) \quad
 \forall T \in  \mathcal{T} _{h}  \right\}
-
 \]
+So that we can earn a similar space for the approximated solution space ,
+\[
+V_{h}^{*} = \begin{cases}
+    V_{h}, \quad & \text{for } \gamma >0\\
+    \left\{ v \in V_{h}: v\left( p^{*} \right) = 0 \right\} \quad & \text{for } \gamma = 0.
+\end{cases}
+\]
+Here is $p^{*}$ again a corner in $\Omega $. Let us now generelize the Hilbert space as well to the approximated
+solution space by defining \[
+H^{k}\left( \Omega , \mathcal{T} _{h}  \right) = \left\{ H^{1}\left( \Omega  \right): v_{T} \in H^{k}\left( T
+\right)\quad \forall T \in \mathcal{T} _{h} \right\}.
+\]
+\begin{figure}[!h]
+\centering
+\begin{tikzpicture}[scale=1]
+\coordinate (A) at (0,0);
+\coordinate (C) at (0,3);
+\coordinate (B) at (4,0);
+\coordinate (D) at (4,4);
+\coordinate (Tm) at (3.5,3.5);
+\coordinate (Tp) at (0.5, 0.5);
+\coordinate (e) at (1.5, 1.5);
+\coordinate (start) at (1.7, 1.7);
+\coordinate (end) at (2.25, 2.4);
+
+\draw (A) -- (B) -- (C) -- cycle;
+\fill[red, opacity=0.5] (A) -- (B) -- (C);
+\fill[blue, opacity=0.5] (B) -- (C) -- (D);
+\node[below left] at (Tm) {$T_{-} $ };
+\node[above right] at (Tp) {$T^{+}$ };
+\node[below right] at (e) {$e$ };
+
+\draw [|->, thick] (start) -- (end);
+% \node[above right] at (A) {A };
+% \node[below right] at (B) {B};
+% \node[above right] at (C) {C };
+% \node[below right] at (D) {D};
+\node[below right] at (end) {$n_e$};
+\end{tikzpicture}
+\caption{Edge $e$ shared by the triangles $T_{-}$ and $T_{+}$   }
+\end{figure}
