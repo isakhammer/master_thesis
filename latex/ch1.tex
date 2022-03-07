@@ -47,77 +47,74 @@ equations arise.
 \section{$C^0$ Interior Penalty Method}
 \label{sec:ch1}
 
-In this section do we want to establish a numerical method to fourth order equations. Instead of embarking on the
-special case of surface PDE described in \eqref{eq:cahn1} can we establish a general numerical theory on $\mathbb{R} ^2$, which we later can generalize on closed surface later.
+\subsection{Introduction of the Boundary Value Problem}%
+\label{sub:introduction_of_the_bvp}
 
-Assume that we restrict ourself to a compact surface $\Omega \in \mathbb{R} ^2 $ and let $f \in L^{2}\left( \Omega
+
+In this section do we want to establish a numerical method to fourth order equations. Instead of embarking on the
+special case of surface PDE described in \eqref{eq:cahn1} can we establish a general numerical theory on $\mathbb{R} ^2$, which we later can generalize on closed surface later. Assume that we restrict ourself to a compact surface $\Omega \in \mathbb{R} ^2 $ and let $f \in L^{2}\left( \Omega
 \right) $ as defined in \ref{sub:l_2_space}.
 Let say we want to solve the equation on the form.
 
 \begin{equation}
 \label{eq:ch1_bvp}
 \begin{split}
-    \Delta ^2 u - \beta \Delta + \gamma u &= f \\
+    \Delta ^2 u - \beta \Delta u + \gamma u &= f \quad \beta , \gamma \ge 0 \\
     \frac{\partial u}{\partial  n}  &= 0 \quad \text{on }\Omega  \\
     \frac{\partial \Delta u}{\partial  n}  &= q \quad \text{on } \partial \Omega  \\
 \end{split}
 .\end{equation}
 
-For convinience do we define 
- 
-
-
+For convenience are the boundary condition $q$ chosen to be defined via a  $\phi \in H^{4}\left( \Omega  \right)$
+such that $q = \frac{\partial \Delta \phi }{\partial  n} $ so $\frac{\partial \phi }{\partial  n}  = 0$.
+$\partial \Omega $.
 
 
 \subsection{Weak Formulation}%
 \label{sub:weak_formulation}
 
+We want to rewrite \eqref{eq:ch1_bvp} on weak formulation. Now define the Hilbert space \[
+V = \left\{ v \in H^2\left( \Omega  \right): \frac{\partial v}{\partial  n}  = 0 \quad \text{on } \partial \Omega
+\right\}.
+\]
+It can be shown \cite{gu2012c0} that a convinient form is to write it as\[
+    \begin{split}
+a\left( u,v \right) &=  \left( f,v \right)_{L^2\left( \Omega  \right)}  - \left( q,v \right)_{L^2\left( \partial \Omega  \right)}  \\
+& = \int_{\Omega }^{} D^2 w : D^2 v dx +  \int_{\Omega }^{} \nabla w \nabla v dx + \int_{\Omega }^{} \gamma w \cdot v dx
+.\\
+    \end{split}
+\]
+For all $\forall v \in  V$, where \[
+D^2 w : D^2 v = \sum_{i,j=1}^{2}  \frac{\partial ^2 w}{\partial x_{i} \partial x_{j} } \cdot  \frac{\partial ^2 v
+}{\partial x_{i} \partial x_{j} }.
+\]
 
-The weak formulation of \eqref{eq:1} has the form
-\begin{equation}
-\label{eq:2}
-    a\left( u,v \right) = \int_{\omega}^{} f v dx \quad u,v \in V
-.\end{equation}
-
-where
-\begin{equation}
-\label{eq:3}
-    a\left( w,v \right) = \int_{\Omega }^{} \nabla ^2 w : \nabla ^2 v dx
-.\end{equation}
-Here do we define $\nabla ^2 w : \nabla ^2 v $ to be the inner product of the Hessian matrix of $w$  and $v$, and $V$
-is a closed subspace of the sobolev space $H^2\left( \Omega  \right)$.
+Abusing notation can we see this is clearly arise since \[
+    \begin{split}
+\int_{\Omega }^{} \Delta ^2 w \cdot  v   dx & = - \int_{\Omega }^{} \nabla \left( \Delta w \right) \nabla v dx \\
+&= \int_{\Omega }^{} \Delta w \Delta v dx  -\int_{\partial \Omega }^{} \nabla v \frac{\partial \Delta w}{\partial n } ds   \\
+&= \left( \Delta w, \Delta v \right)_{L^2\left( \Omega  \right)} - \left( q,v \right) _{L^2\left( \partial \Omega  \right)} \\
+    \end{split}
+\]
+\todo[inline]{ why is minus sign in front of $\left( q,v \right) _{L^2\left( \partial \Omega  \right)}$ and is it
+correct to use $q$ in this setting? I also wonder how  $ \left( \Delta w, \Delta v \right)$ appears to be $\left( D ^2
+w, D^2 v \right)$ at some point.}
 
 
-\subsection{The general $C^0$ Interior Penalty Method}%
-\label{sub:_c_0_interior_penalty_method}
 
 
-$C^{0}$ Interior penalty method says that
 
 
-\begin{equation}
-\label{eq:ch1}
-\begin{split}
-    a_{h} \left( w,v \right) &= \sum_{T \in \mathfrak{T} _{h}}^{} \int_{T}^{} \left( \nabla ^2 w : \nabla ^2 v \right)
-    dx  + \sum_{e \in \mathfrak{E} _{h}^{i}}^{} \int_{e}^{} \mean{ \frac{\partial w}{\partial n_{e}} } \jump{
-    \frac{\partial v}{\partial n_{e}} } ds        \\
-    & + \sum_{e \in \mathfrak{E} _{h}^{i}}^{}  \int_{e}^{}  \mean{ \frac{\partial ^2 v}{\partial n_{e}^2 } } \jump{
-    \frac{\partial w}{\partial n_{e}} }     + \sum_{e \in \mathfrak{E} _{h}^{i}}^{}  \frac{\sigma }{\left\lvert e
-\right\rvert } \int_{e}^{} \jump{ \frac{\partial w}{\partial n_{e}} } \jump{ \frac{\partial v}{\partial n_{e}} } ds
-\end{split}
-.\end{equation}
 
-where
-\begin{equation}
-\label{eq:label}
-\begin{split}
-    \jump{ \frac{\partial v}{\partial n_{e}} } &= - n_{e} \nabla \nu_{T} , \quad \nu _{T} = \nu |_{T}   \\
-    \mean{ \frac{\partial^2 u}{\partial n_{e}^2  } }  & = \frac{\partial ^2 u }{\partial n_{e} ^2 }  \\
-    \mean{ \frac{\partial w}{\partial n^2_{e}} }  &=  \frac{1}{2} \left( \frac{\partial^2 w_{-} }{\partial n^2_{e} } +
-    \frac{\partial ^2 w_{+}}{\partial n^2_{e} }   \right) \\
-    \mean{ \frac{\partial ^2 w}{\partial n^2_{e} } } & = \frac{\partial ^2 w}{\partial n^2_{e}}, \quad \text{ on edges}
-\end{split}
-.\end{equation}
+
+
+
+
+
+
+
+
+
 
 
 
