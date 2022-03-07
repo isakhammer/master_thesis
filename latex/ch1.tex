@@ -165,5 +165,42 @@ H^{k}\left( \Omega , \mathcal{T} _{h}  \right) = \left\{ H^{1}\left( \Omega  \ri
 % \node[below right] at (D) {D};
 \node[below right] at (end) {$n_e$};
 \end{tikzpicture}
-\caption{Edge $e$ shared by the triangles $T_{-}$ and $T_{+}$   }
+\caption{Edge $e$ shared by the triangles $T_{-}$ and $T_{+}$ and the normal unit vector $n_{e}$.  }
+    \label{fig:normal}
 \end{figure}
+
+Now assume that that $e \in \mathcal{E}_{h}^{i} $ is shared between two triangles $T_{-}, T_{+} \in  \mathcal{T} _{h}$ .
+Then we can assume that the unit normal from $T_{-}$ to $T_{+}$ is described as $n_{e}$ as illustraded in figure
+\ref{fig:normal}. Finally, we now want to define jumps internally, \[
+\begin{split}
+    \jump{ \frac{\partial v_{h}}{\partial n_{e}} } &= \frac{\partial v_{T_{+}}}{\partial n_{e}  } | _{e} -
+    \frac{\partial v_{T_{-}}}{\partial n_{e}  } |_{e}, \quad \forall v \in H^{2}\left( \Omega , \mathcal{T} _{h} \right)  \\
+    \jump{ \frac{\partial ^2 v_{h}}{\partial n_{e} ^2 } } &= \frac{\partial ^2 v_{T_{+}}}{\partial  n_{e}^2} |_{e}  -
+    \frac{\partial ^2 v_{T_{-}}}{\partial n_{e}^2   } |_{e} \quad \forall v \in H^3\left( \Omega , \mathcal{T} _{h}
+    \right).  \\
+\end{split}
+\]
+
+And similarly for means internally,
+\[
+    \begin{split}
+\mean{ \frac{\partial v_{T_{-}}}{\partial n_{e} } } &= \frac{1}{2} \left( \frac{\partial v_{T_{+}}}{\partial n_{e} }
+|_{e} +  \frac{\partial v_{T_{-}}}{\partial n_{e} } |_{e}  \right) \quad  \forall v \in H^2\left( \Omega , \mathcal{T}
+_{h} \right) \\
+    \mean{ \frac{\partial ^2 v_{h}}{\partial n_{e}^2 } } &= \frac{1}{2} \left( \frac{\partial ^2 v_{T_{+}}}{\partial
+    n_{e}^2  } + \frac{\partial ^2 v_{T_{-}}}{\partial n_{e}^2  }    \right) \quad \forall v \in  H^3\left( \Omega .
+\mathcal{T}_{h}  \right), \\
+    \end{split}
+\]
+
+Let the edges along the boundary be defined as $e \in  \mathcal{E} _{h}^{b}$ along a some boundary triangle $\mathcal{T}
+_{h}$. We can then define the jump and mean as \[
+\begin{split}
+    \jump{ \frac{\partial v_{h} }{\partial n_{e} } } & = -\frac{\partial v_{T}}{\partial  n_{e}} |_{e} \quad \forall v \in
+    H^2\left( \Omega , \mathcal{T}_{h}  \right) \\
+    \mean{ \frac{\partial ^2 v_{h}}{\partial n_{e}^2 } } & = \frac{\partial v_{T}}{\partial  n_{e}} |_{e} \quad \forall v \in
+    H^3\left( \Omega  , \mathcal{T}_{h}  \right)
+\end{split}
+\]
+
+
