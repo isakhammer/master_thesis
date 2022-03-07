@@ -85,23 +85,31 @@ is a closed subspace of the sobolev space $H^2\left( \Omega  \right)$.
 
 
 $C^{0}$ Interior penalty method says that
-\begin{align*}
+
+
+\begin{equation}
+\label{eq:ch1}
+\begin{split}
     a_{h} \left( w,v \right) &= \sum_{T \in \mathfrak{T} _{h}}^{} \int_{T}^{} \left( \nabla ^2 w : \nabla ^2 v \right)
     dx  + \sum_{e \in \mathfrak{E} _{h}^{i}}^{} \int_{e}^{} \mean{ \frac{\partial w}{\partial n_{e}} } \jump{
     \frac{\partial v}{\partial n_{e}} } ds        \\
     & + \sum_{e \in \mathfrak{E} _{h}^{i}}^{}  \int_{e}^{}  \mean{ \frac{\partial ^2 v}{\partial n_{e}^2 } } \jump{
     \frac{\partial w}{\partial n_{e}} }     + \sum_{e \in \mathfrak{E} _{h}^{i}}^{}  \frac{\sigma }{\left\lvert e
 \right\rvert } \int_{e}^{} \jump{ \frac{\partial w}{\partial n_{e}} } \jump{ \frac{\partial v}{\partial n_{e}} } ds
-.\end{align*}
+\end{split}
+.\end{equation}
 
 where
-\begin{align*}
+\begin{equation}
+\label{eq:label}
+\begin{split}
     \jump{ \frac{\partial v}{\partial n_{e}} } &= - n_{e} \nabla \nu_{T} , \quad \nu _{T} = \nu |_{T}   \\
     \mean{ \frac{\partial^2 u}{\partial n_{e}^2  } }  & = \frac{\partial ^2 u }{\partial n_{e} ^2 }  \\
     \mean{ \frac{\partial w}{\partial n^2_{e}} }  &=  \frac{1}{2} \left( \frac{\partial^2 w_{-} }{\partial n^2_{e} } +
     \frac{\partial ^2 w_{+}}{\partial n^2_{e} }   \right) \\
     \mean{ \frac{\partial ^2 w}{\partial n^2_{e} } } & = \frac{\partial ^2 w}{\partial n^2_{e}}, \quad \text{ on edges}
-.\end{align*}
+\end{split}
+.\end{equation}
 
 
 
