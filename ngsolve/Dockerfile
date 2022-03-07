@@ -55,6 +55,10 @@ COPY . .
 RUN pip3 install -r $WORK_DIR/requirements.txt
 RUN echo "source ${WORK_DIR}/common_scripts.sh" >> /root/.bashrc
 
+RUN jupyter nbextension install --user --py widgetsnbextension
+RUN jupyter nbextension enable --user --py widgetsnbextension
+RUN jupyter nbextension install --user --py webgui_jupyter_widgets
+RUN jupyter nbextension enable --user --py webgui_jupyter_widgets
 # Andres' script
 #RUN  . install-ngsuite.sh
 
@@ -63,6 +67,7 @@ RUN apt-add-repository universe
 RUN add-apt-repository ppa:ngsolve/ngsolve
 RUN apt-get update
 RUN apt-get install -yq ngsolve
+
 
 
 CMD ["bash"]

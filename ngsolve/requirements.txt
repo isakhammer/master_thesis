@@ -1,5 +1,7 @@
 numpy
 matplotlib
+scipy
 jupyter
 jupyterlab
 webgui_jupyter_widgets
+
