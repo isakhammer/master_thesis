@@ -203,4 +203,28 @@ _{h}$. We can then define the jump and mean as \[
 \end{split}
 \]
 
+Using the results from \cite{gu2012c0} can we formulate the discrete formulation the bpundary value problem
+\eqref{eq:ch1_bvp} using $C^{0}$ interior penalty method. Our goals is to find a $u_{h} \in V_{h}^{*} $ such that this
+is true,
+
+\begin{equation}
+\label{eq:C0-methoda}
+\mathcal{A} \left( u_{h}, v_{h}  \right) = \left( f, v_{h} \right)_{L^{2}\left( \Omega  \right)} - \left( q, v_{h}
+\right) _{L^{2}\left( \partial \Omega  \right)} \quad  \forall v_{h} \in V_{h}^{*}
+.\end{equation}
+
+Where $w_{h}, v_{h} \in  V_{h}$ and
+\begin{equation}
+\label{eq:C0-methodb}
+\begin{split}
+    \mathcal{A} \left( w_{h}, v_{h} \right) &=  \sum_{T \in \mathcal{T} _{h}}^{} \int_{T}^{} D^2 w_{h} : D^2 v_{h}  \\
+    & + \sum_{e \in  \mathcal{E} _{h}}^{} \int_{e}^{ } \mean{ \frac{\partial ^2 w _{h}}{\partial n_{e}^2 } } \jump{
+    \frac{\partial v_{h}}{\partial  n_{e}} }  ds \\
+    & + \sum_{e \in \mathcal{E} _{h}}^{} \mean{ \frac{\partial ^2
+v_{h}}{\partial n_{e }^2 } } \jump{ \frac{\partial w_{h}}{\partial n_{e}} }  ds \\
+ &  + \sum_{e \in \mathcal{E} _{h}}^{} \frac{\sigma }{\left\lvert e \right\rvert } \int_{e}^{} \jump{ \frac{\partial
+ w_{h}}{\partial n_{e}}} \jump{ \frac{\partial v_{h}}{\partial n_{e}} } ds \\
+ & + \int_{\Omega }^{}  \beta \nabla w_{h} \cdot \nabla v_{h} dx + \int_{\Omega }^{} \gamma w_{h} v_{h} dx .
+\end{split}
+.\end{equation}
 
