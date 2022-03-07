@@ -77,13 +77,15 @@ We want to rewrite \eqref{eq:ch1_bvp} on weak formulation. Now define the Hilber
 V = \left\{ v \in H^2\left( \Omega  \right): \frac{\partial v}{\partial  n}  = 0 \quad \text{on } \partial \Omega
 \right\}.
 \]
-It can be shown \cite{gu2012c0} that a convinient form is to write it as\[
+It can be shown \cite{gu2012c0} that a convinient form is to write it as
+\begin{equation}
+\label{eq:weakform}
     \begin{split}
 a\left( u,v \right) &=  \left( f,v \right)_{L^2\left( \Omega  \right)}  - \left( q,v \right)_{L^2\left( \partial \Omega  \right)}  \\
 & = \int_{\Omega }^{} D^2 w : D^2 v dx +  \int_{\Omega }^{} \nabla w \nabla v dx + \int_{\Omega }^{} \gamma w \cdot v dx
 .\\
     \end{split}
-\]
+.\end{equation}
 For all $\forall v \in  V$, where \[
 D^2 w : D^2 v = \sum_{i,j=1}^{2}  \frac{\partial ^2 w}{\partial x_{i} \partial x_{j} } \cdot  \frac{\partial ^2 v
 }{\partial x_{i} \partial x_{j} }.
@@ -100,22 +102,28 @@ Abusing notation can we see this is clearly arise since \[
 correct to use $q$ in this setting? I also wonder how  $ \left( \Delta w, \Delta v \right)$ appears to be $\left( D ^2
 w, D^2 v \right)$ at some point.}
 
+In fact, according to \cite{gu2012c0} can it be shown that the problem has a unique solution if and only if $\gamma >
+0$. However, in the case where $\gamma  = 0$ can we provoke a unique solution by introducing the condition \[
+\int_{\Omega }^{} f dx = \int_{\partial \Omega }^{}  q ds
+\]
+
+Taking this into account can we expand the solution space such that \[
+V^* = \begin{cases}
+    V, \quad & \text{if } \gamma >0 \\
+    \left\{ v \in V: v\left( p^* \right) = 0 \right\}, \quad & \text{if } \gamma  =0
+\end{cases}
+\]
+
+Where $p^{*}$  is a corner in $\Omega $. In fact, now all solutions of \eqref{eq:weakform} exists in $V^{*}$.
 
 
+\subsection{Construction of $C^{0}$ Interior Penalty Method}%
+\label{sub:construction_interior_penalty_method}
 
+We want to construct a $C^{0}$ interior penalty method based on $C^{0}$ Lagrange elements.
+Assume $\mathcal{T}_{h} $ be a tringaluation of $\Omega $ and $V_{h}$ be the a $\mathcal{P}_{2} $ Lagrange finite
+element space associated with $\mathcal{T}_{h} $ \[
+V_{h} = \left\{ v \in C\left( \overline{\Omega } \right) : v_{T} = v |_{T} \in \mathcal{P}_{2}\left( T \right) \quad
+\forall T \in  \mathcal{T} _{h}  \right\}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+\]
