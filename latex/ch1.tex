@@ -100,7 +100,7 @@ facets $\mathcal{F} _{h}$. Now the surface integral can be rewritten such that
 Lets define some crucial spaces for the DG method \[
     \begin{split}
 V &=  \left\{ \left( u, u_{F} \right) : u \in H^2\left( \mathcal{T} _{h} \right) \cap H^{1}\left( \Omega  \right)   ,
-u_{F} L^2\left( \mathcal{F} _{h} \right)  \right\} \\
+u_{F} \in  L^2\left( \mathcal{F} _{h} \right)  \right\} \\
 V_{h} &=  \left\{ \left( u,u_{F} \right) : u \in  \mathcal{P} ^{k} \left( T \right) \forall T \in  \mathcal{T} _{h} , \quad
 u_{F} \in  \mathcal{P} ^{k}\left( E \right)  \forall E  \in \mathcal{F} _{h}   \right\} \\
     \end{split}
@@ -148,21 +148,45 @@ According to Lehrenfeld 2010  \cite{lehrenfeld2010} at page 13 on equation (1.2.
 \begin{equation}
 \label{eq:3c}
 \sum_{T \in \mathcal{T} _{h}}^{}   \left( \varepsilon \nabla u, \nabla v \right) _{T} -\sum_{T \in \mathcal{T} _{h}}^{}    \left<\varepsilon  \partial
-_{n} u , \jump{ u } \right> _{\partial T}  + \beta  \left< \varepsilon u, v_{F}  \right>_{\Gamma _{R}} = \sum_{T
+_{n} u , \jump{ v } \right> _{\partial T}  + \beta  \left< \varepsilon u, v_{F}  \right>_{\Gamma _{R}} = \sum_{T
 \in \mathcal{T} _{h}}^{} \left( f,v \right)  + \left<\varepsilon g, v_{F} \right>_{\Gamma _{N}} + \left<\varepsilon h,
 v_{F} \right>_{\Gamma _{R}}
 \end{equation}
 
 
-Here is the jump defined simply as $\jump{u} = u - u_{F}$. What we see is for \eqref{eq:3b} and \eqref{eq:3c} to be
-equivalent must this be true. \[
+Here is the jump defined simply as $\jump{v} = v - v_{F}$. Remember that $ v_{F} = tr_{\partial T} \left( v \right)  $. What we see is for \eqref{eq:3b} and \eqref{eq:3c} to be
+equivalent must this be true.
+\begin{equation}
+\label{eq:3c2}
     \sum_{T \in \mathcal{T} _{h}}^{}  \left< \varepsilon \partial _{n} u, \jump{u}  \right>_{\partial T} = \sum_{T \in
     \mathcal{T} _{h}}^{}  \left< \varepsilon \partial _{n} u, u  \right>_{\partial T} - \left< \varepsilon
     \partial _{n} u, u_{F}  \right>_{\partial T} =\sum_{E \in
     \mathcal{F} ^{int}}^{}  \varepsilon \left( \left< \partial _{n^{+}} u, v_{F} \right>_{E}  + \left<\partial _{n^{-}}
 u, v_{F}\right> \right)
-\]
+.\end{equation}
 
+\todo{why is it true??}
+
+
+Since $\left( u, u_{F} \right) \in V $ is has to be continious, hence the jump $\jump{u} = 0$ for a good solution. Hence
+we can add $-\left<\varepsilon \partial _{n} \jump{u} \right>_{\partial T}$ and $ \tau _{h} \left<\varepsilon \jump{u},
+\jump{v} \right>_{\partial T}$ for each $T \in  \mathcal{T}_{h} $. We can add this to lhs on \eqref{eq:3c2} so
+
+
+
+\begin{equation}
+\label{eq:3c}
+\begin{split}
+    \sum_{T \in \mathcal{T} _{h}}^{}   \left( \varepsilon \nabla u, \nabla v \right) _{T} &-\sum_{T \in \mathcal{T} _{h}}^{}
+\left\{ \left<\varepsilon  \partial
+_{n} u , \jump{ v } \right> _{\partial T}  -\left<\varepsilon
+\partial _{n} \jump{u} \right>_{\partial T}  + \tau _{h} \left<\varepsilon \jump{u},
+\jump{v} \right>_{\partial T} \right\}  \\ &+ \beta  \left< \varepsilon u, v_{F}  \right>_{\Gamma _{R}} \\
+                                           &= \sum_{T
+\in \mathcal{T} _{h}}^{} \left( f,v \right)  + \left<\varepsilon g, v_{F} \right>_{\Gamma _{N}} + \left<\varepsilon h,
+v_{F} \right>_{\Gamma _{R}}
+\end{split}
+\end{equation}
 
 
 
