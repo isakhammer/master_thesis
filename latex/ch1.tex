@@ -249,7 +249,7 @@ Where $p^{*}$  is a corner in $\Omega $. In fact, now all solutions of \eqref{eq
 \label{sub:construction_interior_penalty_method}
 
 We want to construct a $C^{0}$ interior penalty method based on $C^{0}$ Lagrange elements.
-Assume $\mathcal{T}_{h} $ be a tringaluation of $\Omega $ and $V_{h}$ be the a $\mathcal{P}_{2} $ Lagrange finite
+Assume $\mathcal{T}_{h} $ be a triangulation of $\Omega $ and $V_{h}$ be the à $\mathcal{P}_{2} $ Lagrange finite
 element space associated with $\mathcal{T}_{h} $ \[
 V_{h} = \left\{ v \in C\left( \overline{\Omega } \right) : v_{T} = v |_{T} \in \mathcal{P}_{2}\left( T \right) \quad
 \forall T \in  \mathcal{T} _{h}  \right\}
@@ -261,7 +261,7 @@ V_{h}^{*} = \begin{cases}
     \left\{ v \in V_{h}: v\left( p^{*} \right) = 0 \right\} \quad & \text{for } \gamma = 0.
 \end{cases}
 \]
-Here is $p^{*}$ again a corner in $\Omega $. Let us now generelize the Hilbert space as well to the approximated
+Here is $p^{*}$ again a corner in $\Omega $. Let us now generalize the Hilbert space as well to the approximated
 solution space by defining \[
 H^{k}\left( \Omega , \mathcal{T} _{h}  \right) = \left\{ H^{1}\left( \Omega  \right): v_{T} \in H^{k}\left( T
 \right)\quad \forall T \in \mathcal{T} _{h} \right\}.
@@ -298,7 +298,7 @@ H^{k}\left( \Omega , \mathcal{T} _{h}  \right) = \left\{ H^{1}\left( \Omega  \ri
 \end{figure}
 
 Now assume that that $e \in \mathcal{E}_{h}^{i} $ is shared between two triangles $T_{-}, T_{+} \in  \mathcal{T} _{h}$ .
-Then we can assume that the unit normal from $T_{-}$ to $T_{+}$ is described as $n_{e}$ as illustraded in figure
+Then we can assume that the unit normal from $T_{-}$ to $T_{+}$ is described as $n_{e}$ as illustrated in figure
 \ref{fig:normal}. Finally, we now want to define jumps internally, \[
 \begin{split}
     \jump{ \frac{\partial v_{h}}{\partial n_{e}} } &= \frac{\partial v_{T_{+}}}{\partial n_{e}  } | _{e} -
@@ -331,7 +331,7 @@ _{h}$. We can then define the jump and mean as \[
 \end{split}
 \]
 
-Using the results from \cite{gu2012c0} can we formulate the discrete formulation the bpundary value problem
+Using the results from \cite{gu2012c0} can we formulate the discrete formulation the boundary value problem
 \eqref{eq:ch1_bvp} using $C^{0}$ interior penalty method. Our goals is to find a $u_{h} \in V_{h}^{*} $ such that this
 is true,
 
