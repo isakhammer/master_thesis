@@ -105,6 +105,7 @@ V_{h} &=  \left\{ \left( u,u_{F} \right) : u \in  \mathcal{P} ^{k} \left( T \rig
 u_{F} \in  \mathcal{P} ^{k}\left( E \right)  \forall E  \in \mathcal{F} _{h}   \right\} \\
     \end{split}
 \]
+\todo{ What is the meaning of $\mathcal{P} ^{k} \left( E \right) $ on a edge  }
 and now including drichlet conditions using the previous definition \[
 \begin{split}
     V_{D} & = \left\{ \left( u,u_{F} \right) \in V , u_{F} = u_{D} \quad  \text{on } \Gamma _{D}  \right\} \quad
@@ -169,19 +170,17 @@ u, v_{F}\right> \right)
 
 
 Since $\left( u, u_{F} \right) \in V $ is has to be continious, hence the jump $\jump{u} = 0$ for a good solution. Hence
-we can add $-\left<\varepsilon \partial _{n} \jump{u} \right>_{\partial T}$ and $ \tau _{h} \left<\varepsilon \jump{u},
-\jump{v} \right>_{\partial T}$ for each $T \in  \mathcal{T}_{h} $. We can add this to lhs on \eqref{eq:3c2} so
-
-
+we can add $-\left<\varepsilon \partial _{n} \jump{u} \right>_{\partial T}$ for symmetry and $ \tau _{h} \left<\varepsilon \jump{u},
+\jump{v} \right>_{\partial T}$ for stability with some stabilization parameter $\tau _{h}$ for each $T \in  \mathcal{T}_{h} $. We can add this to lhs on \eqref{eq:3c2} such that,
 
 \begin{equation}
 \label{eq:3c}
 \begin{split}
-    \sum_{T \in \mathcal{T} _{h}}^{}   \left( \varepsilon \nabla u, \nabla v \right) _{T} &-\sum_{T \in \mathcal{T} _{h}}^{}
+    \sum_{T \in \mathcal{T} _{h}}^{}   \left( \varepsilon \nabla u, \nabla v \right) _{t} &-\sum_{T \in \mathcal{T} _{h}}^{}
 \left\{ \left<\varepsilon  \partial
 _{n} u , \jump{ v } \right> _{\partial T}  -\left<\varepsilon
 \partial _{n} \jump{u} \right>_{\partial T}  + \tau _{h} \left<\varepsilon \jump{u},
-\jump{v} \right>_{\partial T} \right\}  \\ &+ \beta  \left< \varepsilon u, v_{F}  \right>_{\Gamma _{R}} \\
+\jump{v} \right>_{\partial T} \right\}  \\ &+ \beta  \left< \varepsilon u, v_{f}  \right>_{\Gamma _{R}} \\
                                            &= \sum_{T
 \in \mathcal{T} _{h}}^{} \left( f,v \right)  + \left<\varepsilon g, v_{F} \right>_{\Gamma _{N}} + \left<\varepsilon h,
 v_{F} \right>_{\Gamma _{R}}
@@ -190,6 +189,27 @@ v_{F} \right>_{\Gamma _{R}}
 
 
 
+Finally, we can now construct the discrete system. Let now $u, u_{F} \in V_{h,D}$ and $v, v_{F} \in V_{h,0}$ be the
+discretized spaces. Using what we have in \eqref{eq:3c} can we define \[
+    \begin{split}
+F\left( u, u_{F}, v, v_{F} \right) & =  \sum_{T
+\in \mathcal{T} _{h}}^{} \left( f,v \right)  + \left<\varepsilon g, v_{F} \right>_{\Gamma _{N}} + \left<\varepsilon h,
+v_{F} \right>_{\Gamma _{R}} \\
+B\left( u, u_{F} , v, v_{F} \right)  &=
+    \sum_{T \in \mathcal{T} _{h}}^{}   \left( \varepsilon \nabla u, \nabla v \right) _{t} -\sum_{T \in \mathcal{T} _{h}}^{}
+\left\{ \left<\varepsilon  \partial
+_{n} u , \jump{ v } \right> _{\partial T}  -\left<\varepsilon
+\partial _{n} \jump{u} \right>_{\partial T}  + \tau _{h} \left<\varepsilon \jump{u},
+\jump{v} \right>_{\partial T} \right\}  + \beta  \left< \varepsilon u, v_{F}  \right>_{\Gamma _{R}} \\
+    \end{split}
+\]
+
+We then end up with the need to solve linear system.
+
+\begin{equation}
+\label{eq:3f }
+B\left( u, u_{F} , v, v_{F} \right) = F\left( u, u_{F}, v, v_{F} \right)
+.\end{equation}
 
 
 
