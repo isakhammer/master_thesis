@@ -45,7 +45,7 @@ equations arise.
 
 
 \newpage
-\section{Hybrid DG Method on HE}%
+\section{Hybrid Symmetric Interior Penalty DG Method on Heat Equation}%
 \label{sec:hybrid_dg_method_on_he}
 
 
@@ -105,7 +105,7 @@ V_{h} &=  \left\{ \left( u,u_{F} \right) : u \in  \mathcal{P} ^{k} \left( T \rig
 u_{F} \in  \mathcal{P} ^{k}\left( E \right)  \forall E  \in \mathcal{F} _{h}   \right\} \\
     \end{split}
 \]
-\todo{ What is the meaning of $\mathcal{P} ^{k} \left( E \right) $ on a edge  }
+\todo[inline]{ What is the intuition of a polynomial $\mathcal{P} ^{k} \left( E \right) $ along a edge? }
 and now including drichlet conditions using the previous definition \[
 \begin{split}
     V_{D} & = \left\{ \left( u,u_{F} \right) \in V , u_{F} = u_{D} \quad  \text{on } \Gamma _{D}  \right\} \quad
@@ -126,6 +126,43 @@ Now adding \eqref{eq:1b} and \eqref{eq:2} can we easily see that
 \partial _{n^{-}} u, v_{F} \right>_{E} + \sum_{E \in \mathcal{F} ^{ext}}^{} \varepsilon \left<\partial _{n} u, v_{F} \right>
     \end{split}
 .\end{equation}
+
+\begin{figure}[!h]
+\centering
+\begin{tikzpicture}[scale=1]
+\coordinate (A) at (0,0);
+\coordinate (C) at (0,3);
+\coordinate (B) at (4,0);
+\coordinate (D) at (4,4);
+\coordinate (Tm) at (3.5,3.5);
+\coordinate (Tp) at (0.5, 0.5);
+\coordinate (e) at (1.5, 1.5);
+\coordinate (start) at (1.7, 1.7);
+\coordinate (end) at (2.25, 2.4);
+
+\coordinate (start2) at (1.32, 2.01);
+\coordinate (end2) at (0.85, 1.4);
+
+\draw (A) -- (B) -- (C) -- cycle;
+\fill[red, opacity=0.5] (A) -- (B) -- (C);
+\fill[blue, opacity=0.5] (B) -- (C) -- (D);
+\node[below left] at (Tm) {$T_{-} $ };
+\node[above right] at (Tp) {$T_{+}$ };
+\node[below right] at (e) {$E$ };
+
+\draw [|->, thick] (start) -- (end);
+\draw [|->, thick] (start2) -- (end2);
+% \node[above right] at (A) {A };
+% \node[below right] at (B) {B};
+% \node[above right] at (C) {C };
+% \node[below right] at (D) {D};
+\node[below right] at (end) {$n^{+}$};
+\node[above left] at (end2) {$n^{-}$};
+\end{tikzpicture}
+\caption{Edge $E$ shared by the triangles $T_{-}$ and $T_{+}$ and the normal unit vectors $n^{+}$ and $n^{-}$.  }
+    \label{fig:normal_npluss}
+\end{figure}
+
 
 Applying the Neumann conditions on $ \Gamma _{N} $ and $\Gamma _{R}$, can the condition on the exterior facets
 be rewritten such that
@@ -154,7 +191,7 @@ _{n} u , \jump{ v } \right> _{\partial T}  + \beta  \left< \varepsilon u, v_{F} 
 v_{F} \right>_{\Gamma _{R}}
 \end{equation}
 
-
+Where, $u, u_{F} \in V_{D}$ and $v, v_{F} \in V_{h}$
 Here is the jump defined simply as $\jump{v} = v - v_{F}$. Remember that $ v_{F} = tr_{\partial T} \left( v \right)  $. What we see is for \eqref{eq:3b} and \eqref{eq:3c} to be
 equivalent must this be true.
 \begin{equation}
@@ -169,9 +206,11 @@ u, v_{F}\right> \right)
 \todo{why is it true??}
 
 
-Since $\left( u, u_{F} \right) \in V $ is has to be continious, hence the jump $\jump{u} = 0$ for a good solution. Hence
-we can add $-\left<\varepsilon \partial _{n} \jump{u} \right>_{\partial T}$ for symmetry and $ \tau _{h} \left<\varepsilon \jump{u},
-\jump{v} \right>_{\partial T}$ for stability with some stabilization parameter $\tau _{h}$ for each $T \in  \mathcal{T}_{h} $. We can add this to lhs on \eqref{eq:3c2} such that,
+Since $\left( u, u_{F} \right) \in V $ is has to be continious, hence the jump is $\jump{u} = 0$ for the correct
+solution. Hence,
+adding $-\left<\varepsilon \partial _{n} v, \jump{u} \right>_{\partial T}$ for symmetry and $ \tau _{h} \left<\varepsilon \jump{u},
+\jump{v} \right>_{\partial T}$ for stability with some stabilization parameter $\tau _{h}$ for each $T \in
+\mathcal{T}_{h} $. This can be added to lhs on \eqref{eq:3c2} such that,
 
 \begin{equation}
 \label{eq:3c}
@@ -179,7 +218,7 @@ we can add $-\left<\varepsilon \partial _{n} \jump{u} \right>_{\partial T}$ for 
     \sum_{T \in \mathcal{T} _{h}}^{}   \left( \varepsilon \nabla u, \nabla v \right) _{t} &-\sum_{T \in \mathcal{T} _{h}}^{}
 \left\{ \left<\varepsilon  \partial
 _{n} u , \jump{ v } \right> _{\partial T}  -\left<\varepsilon
-\partial _{n} \jump{u} \right>_{\partial T}  + \tau _{h} \left<\varepsilon \jump{u},
+\partial _{n} v, \jump{u} \right>_{\partial T}  + \tau _{h} \left<\varepsilon \jump{u},
 \jump{v} \right>_{\partial T} \right\}  \\ &+ \beta  \left< \varepsilon u, v_{f}  \right>_{\Gamma _{R}} \\
                                            &= \sum_{T
 \in \mathcal{T} _{h}}^{} \left( f,v \right)  + \left<\varepsilon g, v_{F} \right>_{\Gamma _{N}} + \left<\varepsilon h,
