@@ -96,7 +96,7 @@ facets $\mathcal{F} _{h}$. Now the surface integral can be rewritten such that
 \right>_{E} + \sum_{E \in \mathcal{F} ^{ext}}^{} \varepsilon \left<\partial _{n} u, v_{F} \right>   \\
     \end{split}
 .\end{equation}
-
+Here are we using the definitions $n^{+}$ and $n^{-}$ illustrated using figure \ref{fig:normal_npluss}.
 Lets define some crucial spaces for the DG method \[
     \begin{split}
 V &=  \left\{ \left( u, u_{F} \right) : u \in H^2\left( \mathcal{T} _{h} \right) \cap H^{1}\left( \Omega  \right)   ,
@@ -122,7 +122,7 @@ Now adding \eqref{eq:1b} and \eqref{eq:2} can we easily see that
     \begin{split}
    \sum_{T \in \mathcal{T} _{h}}^{}
      \left\{ \varepsilon\left( \nabla u, \nabla v \right) _{T}  \right\}
-     & = \sum_{T \in \mathcal{T} _{h}}^{}  \left( f,v \right) +\sum_{E \in \mathcal{F} ^{int}}^{}  \varepsilon \left<\partial _{n^{+}} u, v_{F} \right>_{E} + \varepsilon \left<
+     & = \sum_{T \in \mathcal{T} _{h}}^{}  \left( f,v \right)_{T} +\sum_{E \in \mathcal{F} ^{int}}^{}  \varepsilon \left<\partial _{n^{+}} u, v_{F} \right>_{E} + \varepsilon \left<
 \partial _{n^{-}} u, v_{F} \right>_{E} + \sum_{E \in \mathcal{F} ^{ext}}^{} \varepsilon \left<\partial _{n} u, v_{F} \right>
     \end{split}
 .\end{equation}
@@ -170,14 +170,14 @@ be rewritten such that
 \sum_{E \in \mathcal{F} ^{ext}}^{}  \varepsilon \left< \partial _{n} u, v_{F} \right> = \varepsilon \left<g,v_{F}
 \right> _{\Gamma _{N}} + \varepsilon \left<h - \beta u, v_{F} \right> _{\Gamma _{R}}
 \]
-Keep in mind that we on the exterior boundaries define the integral so $\left<f, v_{F} \right> = \int_{\Gamma }^{} f
-\cdot v_{F} \cdot n ds $ for a arbitary neumann boundary $f$ on some surface $\Gamma $. Hence \eqref{eq:3a} ends up
+Keep in mind that we on the exterior boundaries define the integral so $\left<f, v_{F} \right>_{\Gamma } = \int_{\Gamma }^{} f
+\cdot v_{F} \cdot n ds $ for a arbitary neumann boundary function $f$ on some surface $\Gamma $. Hence \eqref{eq:3a} ends up
 being
 \begin{equation}
 \label{eq:3b}
  \sum_{T \in \mathcal{T}_{h} }^{} \varepsilon \left( \nabla u , \nabla v \right)  - \sum_{E \in F^{int}}^{} \left(
 \varepsilon  \left<\partial _{n^{+}} u , v_{F} \right> _{E} + \varepsilon \left<\partial _{n^{-}}  u, v_{F}\right>_{E}
-\right) + \left<\beta u, v_{F} \right> _{\Gamma _{R}} = \sum_{T \in T_{h}}^{} \left( f,v \right)   + \left<g, v_{F}
+\right) +  \beta \left< \varepsilon  u, v_{F} \right> _{\Gamma _{R}} = \sum_{T \in T_{h}}^{} \left( f,v \right)_{T}   + \left<g, v_{F}
 \right>_{\Gamma _{N}} + \left<h, v_{F} \right>_{\Gamma _{R}}
 .\end{equation}
 
@@ -195,25 +195,25 @@ Where, $u, u_{F} \in V_{D}$ and $v, v_{F} \in V_{h}$
 Here is the jump defined simply as $\jump{v} = v - v_{F}$. Remember that $ v_{F} = tr_{\partial T} \left( v \right)  $. What we see is for \eqref{eq:3b} and \eqref{eq:3c} to be
 equivalent must this be true.
 \begin{equation}
-\label{eq:3c2}
-    \sum_{T \in \mathcal{T} _{h}}^{}  \left< \varepsilon \partial _{n} u, \jump{u}  \right>_{\partial T} = \sum_{T \in
-    \mathcal{T} _{h}}^{}  \left< \varepsilon \partial _{n} u, u  \right>_{\partial T} - \left< \varepsilon
-    \partial _{n} u, u_{F}  \right>_{\partial T} =\sum_{E \in
+\label{eq:3c4}
+    \sum_{T \in \mathcal{T} _{h}}^{}  \left< \varepsilon \partial _{n} u, \jump{v}  \right>_{\partial T} = \sum_{T \in
+    \mathcal{T} _{h}}^{}  \left< \varepsilon \partial _{n} u, v  \right>_{\partial T} - \left< \varepsilon
+    \partial _{n} u, v_{F}  \right>_{\partial T} =\sum_{E \in
     \mathcal{F} ^{int}}^{}  \varepsilon \left( \left< \partial _{n^{+}} u, v_{F} \right>_{E}  + \left<\partial _{n^{-}}
 u, v_{F}\right> \right)
 .\end{equation}
 
-\todo{why is it true??}
+\todo[inline]{why is it true?}
 
 
 Since $\left( u, u_{F} \right) \in V $ is has to be continious, hence the jump is $\jump{u} = 0$ for the correct
 solution. Hence,
 adding $-\left<\varepsilon \partial _{n} v, \jump{u} \right>_{\partial T}$ for symmetry and $ \tau _{h} \left<\varepsilon \jump{u},
 \jump{v} \right>_{\partial T}$ for stability with some stabilization parameter $\tau _{h}$ for each $T \in
-\mathcal{T}_{h} $. This can be added to lhs on \eqref{eq:3c2} such that,
+\mathcal{T}_{h} $. This can be added to lhs on \eqref{eq:3c} such that,
 
 \begin{equation}
-\label{eq:3c}
+\label{eq:3c3}
 \begin{split}
     \sum_{T \in \mathcal{T} _{h}}^{}   \left( \varepsilon \nabla u, \nabla v \right) _{t} &-\sum_{T \in \mathcal{T} _{h}}^{}
 \left\{ \left<\varepsilon  \partial
@@ -231,7 +231,7 @@ v_{F} \right>_{\Gamma _{R}}
 Finally, we can now construct the discrete system. Let now $u, u_{F} \in V_{h,D}$ and $v, v_{F} \in V_{h,0}$ be the
 discretized spaces. Using what we have in \eqref{eq:3c} can we define \[
     \begin{split}
-F\left( u, u_{F}, v, v_{F} \right) & =  \sum_{T
+F\left( v, v_{F} \right) & =  \sum_{T
 \in \mathcal{T} _{h}}^{} \left( f,v \right)  + \left<\varepsilon g, v_{F} \right>_{\Gamma _{N}} + \left<\varepsilon h,
 v_{F} \right>_{\Gamma _{R}} \\
 B\left( u, u_{F} , v, v_{F} \right)  &=
@@ -243,11 +243,9 @@ _{n} u , \jump{ v } \right> _{\partial T}  -\left<\varepsilon
     \end{split}
 \]
 
-We then end up with the need to solve linear system.
-
 \begin{equation}
 \label{eq:3f }
-B\left( u, u_{F} , v, v_{F} \right) = F\left( u, u_{F}, v, v_{F} \right)
+B\left( u, u_{F} , v, v_{F} \right) = F\left( v, v_{F} \right)
 .\end{equation}
 
 
