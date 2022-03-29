@@ -1,4 +1,4 @@
 FROM isakhammer/workbox:latest
 COPY . .
-RUN latexmk main.tex
+RUN latexmk latex/main.tex
 
