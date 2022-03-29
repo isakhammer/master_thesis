@@ -1,4 +1,4 @@
 FROM isakhammer/workbox:latest
 COPY . .
-RUN cd latex && latexmk main.tex
+RUN cd latex && pdf main.tex
 
