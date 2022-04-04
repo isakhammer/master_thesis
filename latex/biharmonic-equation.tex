@@ -181,21 +181,28 @@ parameter.
 \subsection{Hybrid DG Biharmonic Equation}%
 \label{sub:hybrid_dg_biharmonic_equation}
 
-Let us again define the problem \[
+Let us again define the problem
+
+\begin{equation}
+\label{eq:HDG_bi_problem}
 \begin{split}
     \nabla ^4 u & = f \quad \text{in } \Omega   \\
     \partial _{n} u & = \partial _{n} \nabla ^2 u = 0 \quad \text{on } \partial \Omega   \\
 \end{split}
-\]
-In fact, we also assume the solvability condtion $ \int_{\Omega }^{} f dx = 0$ to obtain a unique solution according to
-equation (2.4) in Brenner \cite{brenner2012}, which also can be related to equation (3.4) in Gu \cite{gu2012c0}. Anyhow,
-let us first define the continous space solution \[
+.\end{equation}
+
+In fact, we must also assume the solvability condtion $ \int_{\Omega }^{} f dx = 0$ to obtain a unique solution according to
+equation (2.4) in Brenner \cite{brenner2012}, which also can be related to equation (3.4) in Gu \cite{gu2012c0}.
+
+Anyhow,
+let us first define the Hilbert space of the discrete solution \[
 \begin{split}
     H^{1}\left( \mathcal{T}_{h}  \right)  & = \left\{ v \in L_{2} \left( \Omega  \right) : v  \mid _{T} \in H^{1} \left( T
     \right) \forall T \in \mathcal{T}_{h}    \right\} \\
     V &=  \left\{ v \in H^2\left( \Omega  \right) : \partial _{n} v = 0 \text{ on } \partial \Omega  \right\} \\
 \end{split}
 \]
+\todo[inline]{ Probably need to work more on this argumentation }
 
 Let us now define $u,v \in V$.
 
