@@ -199,7 +199,7 @@ let us first define the Hilbert space of the discrete solution \[
 \begin{split}
     H^{1}\left( \mathcal{T}_{h}  \right)  & = \left\{ v \in L_{2} \left( \Omega  \right) : v  \mid _{T} \in H^{1} \left( T
     \right) \forall T \in \mathcal{T}_{h}    \right\} \\
-    V &=  \left\{ v \in H^2\left( \Omega  \right) : \partial _{n} v = 0 \text{ on } \partial \Omega  \right\} \\
+    V &=  \left\{ v \in H^2\left( \Omega  \right) : \partial _{n} v = 0 \text{ and } \partial _{n} \nabla ^2 v = 0 \text{ on } \partial \Omega  \right\} \\
 \end{split}
 \]
 \todo[inline]{ Probably need to work more on this argumentation }
@@ -249,19 +249,20 @@ deduce that for every triangle $T \in  \mathcal{F}_{h} $ \[
 \]
 Keep in mind that this is a results by defining $\nabla  = \left( \partial _{n}, \partial _{t} \right) $ such that
 $\left<\partial _{n} \nabla w, \nabla v \right>_{\partial T} = \left<\partial _{nt} w, \partial _{t} v\right> _{\partial
-T} + \left< \partial _{nn} w, \partial _{n} v  \right> _{\partial T} $. Again, using this result and letting $u,v \in
-H^{4}\left( T  \right) $  can we see that for local continuity is this true
+T} + \left< \partial _{nn} w, \partial _{n} v  \right> _{\partial T} $. Thus, letting $u,v \in
+H^{4}\left( T  \right) $  does this hold for local continuity
 
 \begin{equation}
 \label{eq:bi_basic_dg}
 \left( \nabla ^{4} u,v \right) _{T} = \left( D^2u,D^2v \right) _{T } - \left<\partial _{nt} u, \partial _{t}v
-\right>_{\partial t} - \left<\partial _{nn} u, \partial _{n}v \right>_{\partial T} + \left<\partial _{n} \nabla ^2 u,v \right>
+\right>_{\partial t} - \left<\partial _{nn} u, \partial _{n}v \right>_{\partial T} + \left<\partial _{n} \nabla ^2 u,v
+\right>_{\partial T}
 .\end{equation}
 
 For global continuity  it ends up with
 
 \begin{equation}
-\label{eq:bi_basic_dg_full}
+\label{eq:bi_basic_dg_full_1}
 \left( \nabla ^{4} u, v \right) _{\Omega }
 = \sum_{T \in  \mathcal{T} _{h}}^{} \left( D^2u, D^2v \right)_{T}  + \sum_{E \in
 \mathcal{F} ^{ext}_{}}^{} \left<\partial _{n} \nabla  ^2 u, v  \right> _{E}
@@ -270,8 +271,7 @@ For global continuity  it ends up with
 \right>_{E}
 .\end{equation}
 
-What we see is that for \eqref{eq:bi_basic_dg} and \eqref{eq:bi_basic_dg_full} to be equivalent on normal and global
-form must this be true
+What we see is that for \eqref{eq:bi_basic_dg} and \eqref{eq:bi_basic_dg_full_1} to be equivalent on normal and global form must this be true
 \[
  \sum_{T \in  \mathcal{T}_{h} }^{}  - \left<\partial _{nt} u, \partial _{t}v
 \right>_{\partial T} - \left<\partial _{nn} u, \partial _{n}v \right>_{\partial T} + \left<\partial _{n} \nabla ^2 u,v
@@ -283,9 +283,57 @@ form must this be true
 \right>_{E}
 \]
 
+Anyhow, \textbf{assuming} that this equation holds can we introduce following terms,  \[
+    \begin{split}
+    &  \left< \partial _{n} v  , \jump{ u }\right> _{\partial T} \text{ for symmetry} \\
+    & \tau_{h} \left<\jump{ u }, \jump{ v }\right> _{\partial T} \text{ for stability} \\
+    \end{split}
+\]
+
+\todo[inline]{ Might want to rethink the notation of $n_{e}$  }
+Keep in mind that the jump is defined as $\jump{ \partial _{ne} v } = n_{e} \left( \nabla v_{+} - \nabla v_{-} \right)   $
+and we have now the basic DG method
+
+\begin{equation}
+\label{eq:bi_basic_dg_full}
+\begin{split}
+\left( \nabla ^{4} u, v \right) _{\Omega }
+= & \sum_{T \in  \mathcal{T} _{h}}^{} \left( D^2u, D^2v \right)_{T}  + \sum_{E \in
+\mathcal{F} ^{ext}_{}}^{} \left<\partial _{n} \nabla  ^2 u, v  \right> _{E}
+- \left<\partial _{nt} u, \partial _{n} v \right> _{E}
++ \sum_{E \in \mathcal{F}  ^{int}}^{} \left<\partial _{nn} u , \jump{ \partial _{n_{e}} v }
+\right>_{E} \\
+ & + \left< \partial _{n} v  , \jump{ u }\right> _{\partial T} +
+\tau_{h} \left<\jump{ u }, \jump{ v }\right> _{\partial T}
+\end{split}
+.\end{equation}
+
+\subsubsection{HC0IP Method copied from NGSolve}%
+\label{ssub:hc0ip_method_from_ngsolve}
 
 
+We consider the Kirchhoff plate equation: Find $w \in H^2$, such that
+$$
+\int \nabla^2 w : \nabla^2 v = \int f v
+$$
 
+A conforming method requires $C^1$ continuous finite elements. But there is no good option available, and thus there is no $H^2$ conforming finite element space in NGSolve.
+
+$$
+\sum_T \nabla^2 w : \nabla^2 v
+- \int_{E} \{\nabla^2 w\}_{nn} \, [\partial_n v]
+- \int_{E} \{\nabla^2 v\}_{nn} \, [\partial_n w] + \alpha \int_E  [\partial_n w]  [\partial_n v]
+$$
+
+[Baker 77, Brenner Gudi Sung, 2010]
+
+We consider its hybrid DG version, where the normal derivative is a new, facet-based variable:
+
+$$
+\sum_T \nabla^2 w : \nabla^2 v
+- \int_{\partial T} (\nabla^2 w)_{nn} \, (\partial_n v - \widehat{v_n})
+- \int_{\partial T} (\nabla^2 v)_{nn} \, (\partial_n w - \widehat{w_n}) + \alpha \int_E (\partial_n v - \widehat{v_n}) (\partial_n w - \widehat{w_n})
+$$
 
 
 

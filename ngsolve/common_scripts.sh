@@ -10,21 +10,6 @@ shopt -s expand_aliases # expand aliases
 export EDITOR="nvim"
 alias juplab="jupyter-lab --ip 0.0.0.0 --port 8888 --allow-root"
 
-# # Short term alias for commands
-# function ppa(){
-# 	mkdir -p ~/.cache/ppa
-# 	touch ~/.cache/ppa/pp
-# 	echo "cd $PWD && python3 $1 || cd -" > ~/.cache/ppa/pp
-# }
-# alias pp="cat ~/.cache/ppa/pp && bash ~/.cache/ppa/pp "
-
-# function ppa1(){
-# 	mkdir -p ~/.cache/ppa
-# 	touch ~/.cache/ppa/pp1
-# 	echo "cd $PWD && python3 $1 || cd -" > ~/.cache/ppa/pp1
-# }
-# alias pp1="cat ~/.cache/ppa/pp1 && bash ~/.cache/ppa/pp1"
-
 # vi mode
 set -o vi
 export KEYTIMEOUT=1
