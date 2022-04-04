@@ -46,17 +46,6 @@ D^2 w : D^2 v = \sum_{i,j=1}^{2}  \frac{\partial ^2 w}{\partial x_{i} \partial x
 }{\partial x_{i} \partial x_{j} }.
 \]
 
-% Abusing notation can we see this is clearly arise since \[
-%     \begin{split}
-% \int_{\Omega }^{} \Delta ^2 w \cdot  v   dx & = - \int_{\Omega }^{} \nabla \left( \Delta w \right) \nabla v dx \\
-% &= \int_{\Omega }^{} \Delta w \Delta v dx  -\int_{\partial \Omega }^{} \nabla v \frac{\partial \Delta w}{\partial n } ds   \\
-% &= \left( \Delta w, \Delta v \right)_{L^2\left( \Omega  \right)} - \left( q,v \right) _{L^2\left( \partial \Omega  \right)} \\
-%     \end{split}
-% \]
-% \todo[inline]{ why is minus sign in front of $\left( q,v \right) _{L^2\left( \partial \Omega  \right)}$ and is it
-% correct to use $q$ in this setting? I also wonder how  $ \left( \Delta w, \Delta v \right)$ appears to be $\left( D ^2
-% w, D^2 v \right)$ at some point.}
-
 In fact, according to \cite{gu2012c0} can it be shown that the problem has a unique solution if and only if $\gamma >
 0$. However, in the case where $\gamma  = 0$ can we provoke a unique solution by introducing the condition \[
 \int_{\Omega }^{} f dx = \int_{\partial \Omega }^{}  q ds
@@ -185,4 +174,118 @@ v_{h}}{\partial n_{e }^2 } } \jump{ \frac{\partial w_{h}}{\partial n_{e}} }  ds 
 
 The notation $\left\lvert e \right\rvert $ is to describe the length of the edge $e$ and $\sigma  \ge  1$ is a penalty
 parameter.
+
+
+
+
+\subsection{Hybrid DG Biharmonic Equation}%
+\label{sub:hybrid_dg_biharmonic_equation}
+
+Let us again define the problem \[
+\begin{split}
+    \nabla ^4 u & = f \quad \text{in } \Omega   \\
+    \partial _{n} u & = \partial _{n} \nabla ^2 u = 0 \quad \text{on } \partial \Omega   \\
+\end{split}
+\]
+In fact, we also assume the solvability condtion $ \int_{\Omega }^{} f dx = 0$ to obtain a unique solution according to
+equation (2.4) in Brenner \cite{brenner2012}, which also can be related to equation (3.4) in Gu \cite{gu2012c0}. Anyhow,
+let us first define the continous space solution \[
+\begin{split}
+    H^{1}\left( \mathcal{T}_{h}  \right)  & = \left\{ v \in L_{2} \left( \Omega  \right) : v  \mid _{T} \in H^{1} \left( T
+    \right) \forall T \in \mathcal{T}_{h}    \right\} \\
+    V &=  \left\{ v \in H^2\left( \Omega  \right) : \partial _{n} v = 0 \text{ on } \partial \Omega  \right\} \\
+\end{split}
+\]
+
+Let us now define $u,v \in V$.
+
+\subsubsection{HDG Method}%
+\label{ssub:dg_method}
+Let us now define our workspace using the Hilbert spaces
+ \[
+\begin{split}
+    V &=  \left\{ \left( u, u_{F}  \right): u \in H^{4}\left( \mathcal{T} _{h} \right) \cap H^{1}\left( \Omega  \right)   \right\} \\
+    V_{h} &=  \left\{ \left( u, u_{F}  \right) : u \in \mathcal{P} ^{k}\left( T \right) \forall T \in  \mathcal{T} ,
+    u_{F} \in \mathcal{P} ^{k}\left( E \right) \in  \mathcal{F}_{h}    \right\} \\
+\end{split}
+\]
+
+and the ones including the null drichlet conditions \[
+\begin{split}
+    V_{0} &= \left\{ \left( u, u_{F} \right) \in  V : \quad u =0, u_{F} = 0 \text{ on } \partial \Omega   \right\}, \\
+    V_{0,h} &= \left\{ \left( u, u_{F} \right) \in  V_{h} : \quad u =0, u_{F} = 0 \text{ on } \partial \Omega   \right\}
+   . \\
+\end{split}
+\]
+Let $\left( u, u_{F} \right) \in  V $\[
+    \begin{split}
+\sum_{T}^{} \left( \nabla ^{4} u,v \right) & = \sum_{T}^{} \left( \nabla ^{3} u, \nabla  v \right)_{T} + \left<\partial _{n}
+\nabla ^2 u, v \right>_{\partial \Omega } \\
+&= \sum_{T}^{} \left( \nabla ^2 u, \nabla ^2 v \right)_{T} - \left<\partial _{n} \nabla u, \nabla v \right>_{\partial T}
++ \left< \partial _{n} \nabla ^2 u, v \right> _{\partial T}\\
+    \end{split}
+\]
+
+
+\subsubsection{Basic DG method}%
+\label{ssub:basic_dg_method}
+Let $w,v \in  H^{4} \left( T  \right) $. Using the same method as in equation (3.6) in  \cite{gu2012c0} can we
+deduce that for every triangle $T \in  \mathcal{F}_{h} $ \[
+    \begin{split}
+        \left( \nabla ^{4} w, v \right) _{T} &= \left< \partial _{n} \nabla ^2 w, v \right>_{\partial T} - \left( \nabla \left( \nabla ^2 w
+ \right), \nabla  v  \right)_{T}   \\
+ &= \left( D^2w, D^2v \right)_{T} + \left< \partial _{n} \nabla ^2 w, v \right>_{\partial T}  - \left<\partial _{n}
+ \nabla w, \nabla v \right>_{\partial T} \\
+ &=  \left( D^2 w, D^2 v \right)_{T} - \left<\partial _{nt} w, \partial _{t} v \right>_{\partial T} - \left<\partial
+ _{nn} w, \partial _{n} v \right> _{\partial T} +  \left<\partial _{n} \nabla ^2 w, v \right> \\
+    \end{split}
+\]
+Keep in mind that this is a results by defining $\nabla  = \left( \partial _{n}, \partial _{t} \right) $ such that
+$\left<\partial _{n} \nabla w, \nabla v \right>_{\partial T} = \left<\partial _{nt} w, \partial _{t} v\right> _{\partial
+T} + \left< \partial _{nn} w, \partial _{n} v  \right> _{\partial T} $. Again, using this result and letting $u,v \in
+H^{4}\left( T  \right) $  can we see that for local continuity is this true
+
+\begin{equation}
+\label{eq:bi_basic_dg}
+\left( \nabla ^{4} u,v \right) _{T} = \left( D^2u,D^2v \right) _{T } - \left<\partial _{nt} u, \partial _{t}v
+\right>_{\partial t} - \left<\partial _{nn} u, \partial _{n}v \right>_{\partial T} + \left<\partial _{n} \nabla ^2 u,v \right>
+.\end{equation}
+
+For global continuity  it ends up with
+
+\begin{equation}
+\label{eq:bi_basic_dg_full}
+\left( \nabla ^{4} u, v \right) _{\Omega }
+= \sum_{T \in  \mathcal{T} _{h}}^{} \left( D^2u, D^2v \right)_{T}  + \sum_{E \in
+\mathcal{F} ^{ext}_{}}^{} \left<\partial _{n} \nabla  ^2 u, v  \right> _{E}
+- \left<\partial _{nt} u, \partial _{n} v \right> _{E}
++ \sum_{E \in \mathcal{F}  ^{int}}^{} \left<\partial _{nn} u , \jump{ \partial _{n_{e}} v }
+\right>_{E}
+.\end{equation}
+
+What we see is that for \eqref{eq:bi_basic_dg} and \eqref{eq:bi_basic_dg_full} to be equivalent on normal and global
+form must this be true
+\[
+ \sum_{T \in  \mathcal{T}_{h} }^{}  - \left<\partial _{nt} u, \partial _{t}v
+\right>_{\partial T} - \left<\partial _{nn} u, \partial _{n}v \right>_{\partial T} + \left<\partial _{n} \nabla ^2 u,v
+\right>_{\partial T}
+=  \sum_{E \in
+\mathcal{F}^{ext}  }^{} \left<\partial _{n} \nabla  ^2 u, v  \right> _{E}
+- \left<\partial _{nt} u, \partial _{n} v \right> _{E}
++ \sum_{E \in \mathcal{F}^{int} }^{} \left<\partial _{nn} u , \jump{ \partial _{n_{e}} v }
+\right>_{E}
+\]
+
+
+
+
+
+
+
+
+
+
+
+
+
 

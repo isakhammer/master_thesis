@@ -173,7 +173,7 @@ equivalent must this be true.
     \mathcal{T} _{h}}^{}  \left< \varepsilon \partial _{n} u, v  \right>_{\partial T} - \left< \varepsilon
     \partial _{n} u, v_{F}  \right>_{\partial T} =\sum_{E \in
     \mathcal{F} ^{int}}^{}  \varepsilon \left( \left< \partial _{n^{+}} u, v_{F} \right>_{E}  + \left<\partial _{n^{-}}
-u, v_{F}\right> \right)
+u, v_{F}\right>_{E} \right)
 .\end{equation}
 
 \todo[inline]{why is it true?}
@@ -209,9 +209,7 @@ F\left( v, v_{F} \right) & =  \sum_{T
 v_{F} \right>_{\Gamma _{R}} \\
 B\left( u, u_{F} , v, v_{F} \right)  &=
     \sum_{T \in \mathcal{T} _{h}}^{}   \left( \varepsilon \nabla u, \nabla v \right) _{t} -\sum_{T \in \mathcal{T} _{h}}^{}
-\left\{ \left<\varepsilon  \partial
-_{n} u , \jump{ v } \right> _{\partial T}  -\left<\varepsilon
-\partial _{n} \jump{u} \right>_{\partial T}  + \tau _{h} \left<\varepsilon \jump{u},
+\left\{ \left<\varepsilon  \partial _{n} u , \jump{ v } \right> _{\partial T}  -\left<\varepsilon \partial _{n} \jump{u} \right>_{\partial T}  + \tau _{h} \left<\varepsilon \jump{u},
 \jump{v} \right>_{\partial T} \right\}  + \beta  \left< \varepsilon u, v_{F}  \right>_{\Gamma _{R}} \\
     \end{split}
 \]
