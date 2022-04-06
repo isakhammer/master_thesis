@@ -259,7 +259,9 @@ H^{4}\left( T  \right) $  does this hold for local continuity
 \right>_{\partial T}
 .\end{equation}
 
-For global continuity  it ends up with
+For global continuity does it end up with  so that $v \in \left\{ v \in H^{1}\left( \Omega  \right): v_{T} H^{4}\left( T \right), \ \forall T \in
+\mathcal{T}_{h}    \right\}   \cap C^{0} (
+\overline{\Omega }  ) $ such that
 
 \begin{equation}
 \label{eq:bi_basic_dg_full_1}
@@ -270,7 +272,7 @@ For global continuity  it ends up with
 + \sum_{E \in \mathcal{F}  ^{int}}^{} \left<\partial _{nn} u , \jump{ \partial _{n_{e}} v }
 \right>_{E}
 .\end{equation}
-
+(This comes from a similar equation (3.7) given in Gu \cite{gu2012c0}.
 What we see is that for \eqref{eq:bi_basic_dg} and \eqref{eq:bi_basic_dg_full_1} to be equivalent on normal and global form must this be true
 \[
  \sum_{T \in  \mathcal{T}_{h} }^{}  - \left<\partial _{nt} u, \partial _{t}v
@@ -283,30 +285,70 @@ What we see is that for \eqref{eq:bi_basic_dg} and \eqref{eq:bi_basic_dg_full_1}
 \right>_{E}
 \]
 
-Anyhow, \textbf{assuming} that this equation holds can we introduce following terms,  \[
-    \begin{split}
-    &  \left< \partial _{n} v  , \jump{ u }\right> _{\partial T} \text{ for symmetry} \\
-    & \tau_{h} \left<\jump{ u }, \jump{ v }\right> _{\partial T} \text{ for stability} \\
-    \end{split}
+
+
+% \begin{equation}
+% \label{eq:bi_basic_dg_full}
+% \begin{split}
+% \left( \nabla ^{4} u, v \right) _{\Omega }
+% = & \sum_{T \in  \mathcal{T} _{h}}^{} \left( D^2u, D^2v \right)_{T}  + \sum_{E \in
+% \mathcal{F} ^{ext}_{}}^{} \left<\partial _{n} \nabla  ^2 u, v  \right> _{E}
+% - \left<\partial _{nt} u, \partial _{n} v \right> _{E}
+% + \sum_{E \in \mathcal{F}  ^{int}}^{} \left<\partial _{nn} u , \jump{ \partial _{n_{e}} v }
+% \right>_{E} \\
+%  & + \mathbf{symmetry} + \mathbf{stability}
+% \end{split}
+% .\end{equation}
+
+
+\begin{enumerate}[label=(\alph*)]
+    \item Here is what is happening in Gu \cite{gu2012c0}. Let $w_{h}, v_{h} \in V_{h} = \left\{ v \in C\left(
+        \overline{\Omega }  \right): v_{T } = v \mid _{T} \in  \mathcal{P}   _{2} \left( T \right) \quad  \forall T \in
+    \mathcal{T}_{h} \right\} $.
+Anyhow, \textbf{assuming} that this equation holds can we introduce the numerical correction term,  \[
+\sum_{E \in  \mathcal{F} _{h}}^{}  \tau _{h} \left< \jump{ \partial _{n_{e}} w_{h}}, \jump{     \partial _{n_{e}} v_{h}
+}   \right>_{E}
 \]
 
-\todo[inline]{ Might want to rethink the notation of $n_{e}$  }
-Keep in mind that the jump is defined as $\jump{ \partial _{ne} v } = n_{e} \left( \nabla v_{+} - \nabla v_{-} \right)   $
-and we have now the basic DG method
+
+\todo[inline]{ Do some research on the correct stability and symmetry term and why this is necessarry.}
+Where $\tau _{h}$ is to be determined based on each triangulation.
+
+Keep in mind that the jump is defined as $\jump{ \partial _{ne} v _{h} } = n_{e} \left( \nabla v_{+} - \nabla v_{-}
+\right)   $. We have now the basic DG method
 
 \begin{equation}
-\label{eq:bi_basic_dg_full}
+\label{eq:A_h}
 \begin{split}
-\left( \nabla ^{4} u, v \right) _{\Omega }
-= & \sum_{T \in  \mathcal{T} _{h}}^{} \left( D^2u, D^2v \right)_{T}  + \sum_{E \in
-\mathcal{F} ^{ext}_{}}^{} \left<\partial _{n} \nabla  ^2 u, v  \right> _{E}
-- \left<\partial _{nt} u, \partial _{n} v \right> _{E}
-+ \sum_{E \in \mathcal{F}  ^{int}}^{} \left<\partial _{nn} u , \jump{ \partial _{n_{e}} v }
-\right>_{E} \\
- & + \left< \partial _{n} v  , \jump{ u }\right> _{\partial T} +
-\tau_{h} \left<\jump{ u }, \jump{ v }\right> _{\partial T}
+\mathcal{A} \left( w_{h}, v_{h} \right)   =&  \sum_{T \in \mathcal{T} _{h}}^{} \left( D^2 w_{h}, D^2v_{h} \right) _{T} \\ +
+ & \sum_{E \in \mathcal{F}_{h} }^{} \left<\mean{  \partial _{n_{e} n_{e}} w_{h} }, \jump{ \partial _{n_{e}} v_{h}}
+\right>_{E}  + \left< \mean{ \partial _{n_{e} n_{e}} v_{h} }, \jump{ \partial _{n_{e}}w }      \right>_{E}
++
+\tau _{h} \left< \jump{ \partial _{n_{e}} w_{h}}, \jump{     \partial _{n_{e}} v_{h}   }   \right>_{E}
 \end{split}
 .\end{equation}
+
+
+        In Gu \cite{gu2012c0} ( eq 3.10 p.31) they introduce \[
+            \begin{split}
+    \left( D^2v: D^2w \right)_{T } & = \left<\partial _{nt} v , \partial _{t} w  \right>_{\partial T} + \left< \partial
+    _{nn} v
+    \partial _{n}, w \right>_{\partial T}. \\
+    &= \sum_{i=1}^{3} \partial _{n_{i} t_{i}} v \int_{E_{i}}^{} \partial _{t} w ds +\left< \partial
+    _{nn} v,
+    \partial _{n} w \right>_{\partial T}     \\
+    &=\left< \partial
+    _{nn} v,
+    \partial _{n} w \right>_{\partial T}  \\
+            \end{split}
+    \]
+    Using the identity $ab +cd = \frac{1}{2} (a+c)(b+d) + \frac{1}{2}(a-c)(b-d) $  they end up with the equations  \[
+    \sum_{T \in \mathcal{T}_{h}  }^{} \left( D^2v: D^2w \right)_{T }  =
+    - \sum_{E \in \mathcal{F} ^{int}}^{}  \mean{ \partial _{n_e n_{e}} v  } \jump{ \partial _{n_{e}} w } - \jump{
+    \partial _{n_e n_{e}} v}  \mean{ \partial _{n_{e}} w }
+    \]
+\end{enumerate}
+
 
 \subsubsection{HC0IP Method copied from NGSolve}%
 \label{ssub:hc0ip_method_from_ngsolve}
