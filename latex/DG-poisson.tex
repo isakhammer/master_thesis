@@ -2,7 +2,7 @@
 
 
 
-\section{DG for Possion Problem}%
+\section{DG for Possion Problem}%j
 \subsection{Possion Problem}%
 \label{sub:possion_problem}
 
@@ -78,7 +78,6 @@ V_{h} &=  \left\{ \left( u,u_{F} \right) : u \in  \mathcal{P} ^{k} \left( T \rig
 u_{F} \in  \mathcal{P} ^{k}\left( E \right)  \forall E  \in \mathcal{F} _{h}   \right\} \\
     \end{split}
 \]
-\todo[inline]{ What is the intuition of a polynomial $\mathcal{P} ^{k} \left( E \right) $ along a edge? }
 and now including drichlet conditions using the previous definition \[
 \begin{split}
     V_{D} & = \left\{ \left( u,u_{F} \right) \in V , u_{F} = u_{D} \quad  \text{on } \Gamma _{D}  \right\} \quad
@@ -176,8 +175,6 @@ equivalent must this be true.
 u, v_{F}\right>_{E} \right)
 .\end{equation}
 
-\todo[inline]{why is it true?}
-
 
 Since $\left( u, u_{F} \right) \in V $ is has to be continious, hence the jump is $\jump{u} = 0$ for the correct
 solution. Hence,
@@ -213,6 +210,7 @@ B\left( u, u_{F} , v, v_{F} \right)  &=
 \jump{v} \right>_{\partial T} \right\}  + \beta  \left< \varepsilon u, v_{F}  \right>_{\Gamma _{R}} \\
     \end{split}
 \]
+Hence, the numerical method must solve
 
 \begin{equation}
 \label{eq:3f }
@@ -224,4 +222,3 @@ B\left( u, u_{F} , v, v_{F} \right) = F\left( v, v_{F} \right)
 
 
 
-z

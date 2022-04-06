@@ -1,4 +1,4 @@
-
+\newpage
 \section{$C^0$ Interior Penalty Method for Biharmonic Equation}
 \label{sec:ch1}
 
@@ -178,6 +178,7 @@ parameter.
 
 
 
+\newpage
 \subsection{Hybrid DG Biharmonic Equation}%
 \label{sub:hybrid_dg_biharmonic_equation}
 
@@ -208,12 +209,12 @@ Let us now define $u,v \in V$.
 
 \subsubsection{HDG Method}%
 \label{ssub:dg_method}
-Let us now define our workspace using the Hilbert spaces
+Let us now define our workspace using the spaces
  \[
 \begin{split}
     V &=  \left\{ \left( u, u_{F}  \right): u \in H^{4}\left( \mathcal{T} _{h} \right) \cap H^{1}\left( \Omega  \right)   \right\} \\
     V_{h} &=  \left\{ \left( u, u_{F}  \right) : u \in \mathcal{P} ^{k}\left( T \right) \forall T \in  \mathcal{T} ,
-    u_{F} \in \mathcal{P} ^{k}\left( E \right) \in  \mathcal{F}_{h}    \right\} \\
+    u_{F} \in \mathcal{P} ^{k}\left( E \right) \forall E \in  \mathcal{F}_{h}    \right\} \\
 \end{split}
 \]
 
@@ -259,7 +260,7 @@ H^{4}\left( T  \right) $  does this hold for local continuity
 \right>_{\partial T}
 .\end{equation}
 
-For global continuity does it end up with  so that $v \in \left\{ v \in H^{1}\left( \Omega  \right): v_{T} H^{4}\left( T \right), \ \forall T \in
+For global continuity does it end up with  so that $v \in \left\{ v \in H^{1}\left( \Omega  \right): v_{T} \in  H^{4}\left( T \right), \ \forall T \in
 \mathcal{T}_{h}    \right\}   \cap C^{0} (
 \overline{\Omega }  ) $ such that
 
@@ -287,19 +288,6 @@ What we see is that for \eqref{eq:bi_basic_dg} and \eqref{eq:bi_basic_dg_full_1}
 
 
 
-% \begin{equation}
-% \label{eq:bi_basic_dg_full}
-% \begin{split}
-% \left( \nabla ^{4} u, v \right) _{\Omega }
-% = & \sum_{T \in  \mathcal{T} _{h}}^{} \left( D^2u, D^2v \right)_{T}  + \sum_{E \in
-% \mathcal{F} ^{ext}_{}}^{} \left<\partial _{n} \nabla  ^2 u, v  \right> _{E}
-% - \left<\partial _{nt} u, \partial _{n} v \right> _{E}
-% + \sum_{E \in \mathcal{F}  ^{int}}^{} \left<\partial _{nn} u , \jump{ \partial _{n_{e}} v }
-% \right>_{E} \\
-%  & + \mathbf{symmetry} + \mathbf{stability}
-% \end{split}
-% .\end{equation}
-
 
 \begin{enumerate}[label=(\alph*)]
     \item Here is what is happening in Gu \cite{gu2012c0}. Let $w_{h}, v_{h} \in V_{h} = \left\{ v \in C\left(
@@ -318,7 +306,7 @@ Keep in mind that the jump is defined as $\jump{ \partial _{ne} v _{h} } = n_{e}
 \right)   $. We have now the basic DG method
 
 \begin{equation}
-\label{eq:A_h}
+\label{eq:basic_dg_A_h}
 \begin{split}
 \mathcal{A} \left( w_{h}, v_{h} \right)   =&  \sum_{T \in \mathcal{T} _{h}}^{} \left( D^2 w_{h}, D^2v_{h} \right) _{T} \\ +
  & \sum_{E \in \mathcal{F}_{h} }^{} \left<\mean{  \partial _{n_{e} n_{e}} w_{h} }, \jump{ \partial _{n_{e}} v_{h}}
@@ -327,9 +315,19 @@ Keep in mind that the jump is defined as $\jump{ \partial _{ne} v _{h} } = n_{e}
 \tau _{h} \left< \jump{ \partial _{n_{e}} w_{h}}, \jump{     \partial _{n_{e}} v_{h}   }   \right>_{E}
 \end{split}
 .\end{equation}
+and
+\begin{equation}
+\label{eq:basic_dg_F_h}
+F\left( v_{h} \right)  = \left( f, v_{h} \right) _{\Omega }
+.\end{equation}
+Hence, the discretized numerical problem is to solve \[
+\mathcal{A}\left( w_{h}, v_{h} \right)   = F\left( v_{h} \right), \quad w_{h},v_{h} \in V_{h}  = \left\{ v \in C\left(
+        \overline{\Omega }  \right): v_{T } = v \mid _{T} \in  \mathcal{P}   _{2} \left( T \right) \quad  \forall T \in
+    \mathcal{T}_{h} \right\} .
+\]
 
 
-        In Gu \cite{gu2012c0} ( eq 3.10 p.31) they introduce \[
+In Gu \cite{gu2012c0} ( eq 3.10 p.31) they introduce \[
             \begin{split}
     \left( D^2v: D^2w \right)_{T } & = \left<\partial _{nt} v , \partial _{t} w  \right>_{\partial T} + \left< \partial
     _{nn} v
