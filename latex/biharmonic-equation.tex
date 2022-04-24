@@ -146,8 +146,9 @@ For global continuity does it end up with  so that $v \in \left\{ v \in H^{1}\le
 \mathcal{F} ^{ext}_{}}^{} \left<\partial _{n} \nabla  ^2 u, v  \right> _{E}
 - \left<\partial _{nt} u, \partial _{n} v \right> _{E}
 + \sum_{E \in \mathcal{F}  ^{int}}^{} \left<\partial _{nn} u , \jump{ \partial _{n_{e}} v }
-\right>_{E}
-.\end{equation}
+\right>_{E}.
+\end{equation}
+
 What we see is that for \eqref{eq:bi_basic_dg} and \eqref{eq:bi_basic_dg_full_1} to be equivalent on normal and global form must this be true
 \[
  \sum_{T \in  \mathcal{T}_{h} }^{}  - \left<\partial _{nt} u, \partial _{t}v
@@ -216,14 +217,13 @@ In \cite{gu2012c0} they introduce \[
     \sum_{T \in \mathcal{T}_{h}  }^{} \left( D^2v: D^2w \right)_{T }  =
     - \sum_{E \in \mathcal{F} ^{int}}^{}  \mean{ \partial _{n_e n_{e}} v  } \jump{ \partial _{n_{e}} w } - \jump{
     \partial _{n_e n_{e}} v}  \mean{ \partial _{n_{e}} w }
-    \]
-
+\]
 
 \subsubsection{HC0IP Method copied from NGSolve}%
 \label{ssub:hc0ip_method_from_ngsolve}
 
-
 We consider the Kirchhoff plate equation: Find $w \in H^2$, such that
+
 $$
 \int \nabla^2 w : \nabla^2 v = \int f v
 $$
