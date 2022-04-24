@@ -173,32 +173,31 @@ What we see is that for \eqref{eq:bi_basic_dg} and \eqref{eq:bi_basic_dg_full_1}
 % Where $\tau _{h}$ is to be determined based on each triangulation.
 
 
-Keep in mind that the jump is defined as $\jump{ \partial _{ne} v _{h} } = n_{e} \left( \nabla v_{+} - \nabla v_{-}
-\right)   $. We have now the final C0IP formulation,
+Keep in mind that the jump is defined as $\jump{ \partial _{n_e} v _{h} } = n_{e} \left( \nabla v_{+} - \nabla v_{-}
+\right)   $ and similarly will the mean be $\mean{ \partial_{  n_{e} } v_{h}  } = \frac{1}{2}n_{e}(   \nabla _{+ }v_{h})
++ \nabla _{-} v_{h}$ . We have now the final C0IP formulation.
+The discretized numerical problem is to solve $w_{h} \in V_{h}$ such that \[
+\mathcal{A}\left( w_{h}, v_{h} \right)   = F\left( v_{h} \right), \quad \forall v_{h} \in V_{h}  .
+\]
+where
 
 \begin{equation}
 \label{eq:basic_dg_A_h}
 \begin{split}
 \mathcal{A} \left( w_{h}, v_{h} \right)   =&
-   \left( \beta \nabla w_{h} \cdot \nabla v_{h}  \right)_{\Omega } + \left( \gamma w_{h}, v_{h} \right) _{\Omega }\\
+  \quad  \left( \beta \nabla w_{h} \cdot \nabla v_{h}  \right)_{\Omega } + \left( \gamma w_{h}, v_{h} \right) _{\Omega }\\
 &  + \sum_{T \in \mathcal{T} _{h}}^{} \left( D^2 w_{h}, D^2v_{h} \right) _{T} \\
  & +
   \sum_{E \in \mathcal{F}_{h} }^{} \left<\mean{  \partial _{n_{e} n_{e}} w_{h} }, \jump{ \partial _{n_{e}} v_{h}}
-\right>_{E}  + \left< \mean{ \partial _{n_{e} n_{e}} v_{h} }, \jump{ \partial _{n_{e}}w }      \right>_{E}
- \\
- &+ \tau _{h} \left< \jump{ \partial _{n_{e}} w_{h}}, \jump{ \partial _{n_{e}} v_{h}   }   \right>_{E} \\
+\right>_{E}  + \left< \mean{ \partial _{n_{e} n_{e}} v_{h} }, \jump{ \partial _{n_{e}}w }      \right>_{E} + \tau _{h} \left< \jump{ \partial _{n_{e}} w_{h}}, \jump{ \partial _{n_{e}} v_{h}   }   \right>_{E} \\
 \end{split}
-.\end{equation}
-
+\end{equation}
 and
 \begin{equation}
 \label{eq:basic_dg_F_h}
-F\left( v_{h} \right)  = \left( f, v_{h} \right) _{\Omega }
+F\left( v_{h} \right)  = \left( f, v_{h} \right) _{\Omega } - \left<q, v_{h} \right> _{\partial \Omega }
 .\end{equation}
-Hence, the discretized numerical problem is to solve $w_{h} \in V_{h}$ such that \[
-\mathcal{A}\left( w_{h}, v_{h} \right)   = F\left( v_{h} \right), \quad \forall v_{h} \in V_{h}  .
-\]
-
+Notice that the regulation $\tau _{h}$ is to be determined by for every edge.
 
 In \cite{gu2012c0} they introduce \[
             \begin{split}
