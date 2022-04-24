@@ -2,63 +2,108 @@
 \section{ $C^0$ Interior Penalty Method for Biharmonic Equation}
 \label{sec:ch1}
 
-We will now try to formulate and analyze a similar discontinious Galerkin approach for the biharmonic equation
 
+% \subsection{Hybrid DG Biharmonic Equation}%
+% \label{sub:hybrid_dg_biharmonic_equation}
 
-\subsection{Hybrid DG Biharmonic Equation}%
-\label{sub:hybrid_dg_biharmonic_equation}
-
-Let us again define the problem
+Let $\Omega \subset   \mathbb{R} ^2$ be a bounded polygonal domain and $\partial \Omega $ be its corresponding boundary.
+\todo[inline]{ Why is this domain chosen to be polygonal? }
+We can then define the fourth order problem as
 
 \begin{equation}
-\label{eq:HDG_bi_problem}
+\label{eq:bi_problem}
 \begin{split}
-    \nabla ^4 u & = f \quad \text{in } \Omega   \\
-    \partial _{n} u & = \partial _{n} \nabla ^2 u = 0 \quad \text{on } \partial \Omega   \\
+    \nabla ^4 u - \beta \nabla ^2 u  + \gamma  & = f \quad \text{in } \Omega   \\
+    \partial _{n} u & = 0 \quad \text{on } \partial \Omega  \\
+    \partial _{n} \nabla ^2 u & = q \quad \text{on } \partial \Omega   \\
 \end{split}
 .\end{equation}
+We will assume that $\gamma $ and $\beta $ is nonnegative constants, $f \in L_{2}\left( \Omega  \right) $, $q =
+\partial _{n} \nabla ^2 \varphi $, $ \partial _{n}\varphi  = 0 $ for $ \varphi  \in H^{4}\left(  \Omega
+\right)$. Such problems as \eqref{eq:bi_problem} are often associated with the Cahn-Hilliard model
+\cite{cahnhilliard1957} for phase seperation. As a matter of fact, the major difference is that \eqref{eq:bi_problem}
+has no time dependencie. However, depending on how Cahn-Hilliard model is time discretized numerically can
+\eqref{eq:bi_problem} naturally arise. I refer to \cite{brenner2012quadratic} for more informastion on this.
 
-In fact, we must also assume the solvability condtion $ \int_{\Omega }^{} f dx = 0$ to obtain a unique solution according to
-equation (2.4) in Brenner \cite{brenner2012}, which also can be related to equation (3.4) in Gu \cite{gu2012c0}.
-
-Anyhow,
-let us first define the Hilbert space of the discrete solution \[
-\begin{split}
-    H^{1}\left( \mathcal{T}_{h}  \right)  & = \left\{ v \in L_{2} \left( \Omega  \right) : v  \mid _{T} \in H^{1} \left( T
-    \right) \forall T \in \mathcal{T}_{h}    \right\} \\
-    V &=  \left\{ v \in H^2\left( \Omega  \right) : \partial _{n} v = 0 \text{ and } \partial _{n} \nabla ^2 v = 0 \text{ on } \partial \Omega  \right\} \\
-\end{split}
-\]
-\todo[inline]{ Probably need to work more on this argumentation }
-
-Let us now define $u,v \in V$.
-
-\subsubsection{HDG Method}%
-\label{ssub:dg_method}
-Let us now define our workspace using the spaces
- \[
-\begin{split}
-    V &=  \left\{ \left( u, u_{F}  \right): u \in H^{4}\left( \mathcal{T} _{h} \right) \cap H^{1}\left( \Omega  \right)   \right\} \\
-    V_{h} &=  \left\{ \left( u, u_{F}  \right) : u \in \mathcal{P} ^{k}\left( T \right) \forall T \in  \mathcal{T} ,
-    u_{F} \in \mathcal{P} ^{k}\left( E \right) \forall E \in  \mathcal{F}_{h}    \right\} \\
-\end{split}
+Now, let the solution space be on the form  $V = \left\{ v \in H^2\left( \Omega  \right) : \partial _{n} v = 0  \text{ on }
+\partial \Omega  \right\} $ and consider the weak formulation such that we want to solve $u \in  V$ such that
+\begin{equation}
+\label{eq:bi_harmonic_weak}
+a\left( u,v \right)_{\Omega } = \left( f,v \right)_{\Omega } - \left<q,v \right>_{\partial \Omega }. \quad \forall v \in
+V
+.\end{equation}
+The inner product has the form \[
+a\left( u,v \right)_{\Omega } = \int_{\Omega }^{} \left( \nabla ^2 w : \nabla ^2 v + \beta \nabla w\cdot \nabla v +
+\gamma w\cdot v \right) dx  .
 \]
 
-and the ones including the null drichlet conditions \[
-\begin{split}
-    V_{0} &= \left\{ \left( u, u_{F} \right) \in  V : \quad u =0, u_{F} = 0 \text{ on } \partial \Omega   \right\}, \\
-    V_{0,h} &= \left\{ \left( u, u_{F} \right) \in  V_{h} : \quad u =0, u_{F} = 0 \text{ on } \partial \Omega   \right\}
-   . \\
-\end{split}
+In fact, we must also assume the solvability condtion $ \int_{\Omega }^{} f dx = 0$ to obtain a unique solution according  \cite{brenner2012}, \cite{gu2012c0}. Therefore, can we let the extended solution space \[
+V^{*} = \begin{cases}
+    V \quad & \gamma > 0 \\
+    \left\{ v \in V: v\left( p_{*} \right)  = 0\right\}, \quad & \gamma = 0
+\end{cases}
 \]
-Let $\left( u, u_{F} \right) \in  V $\[
-    \begin{split}
-\sum_{T}^{} \left( \nabla ^{4} u,v \right) & = \sum_{T}^{} \left( \nabla ^{3} u, \nabla  v \right)_{T} + \left<\partial _{n}
-\nabla ^2 u, v \right>_{\partial \Omega } \\
-&= \sum_{T}^{} \left( \nabla ^2 u, \nabla ^2 v \right)_{T} - \left<\partial _{n} \nabla u, \nabla v \right>_{\partial T}
-+ \left< \partial _{n} \nabla ^2 u, v \right> _{\partial T}\\
-    \end{split}
-\]
+where $p_{*}$ is a corner of the polygonal domain $\Omega $.
+Thus, the unique solution in $v \in V^{*}$ belongs to $H^{2 + \alpha }\left( \Omega  \right) $ and we get the follwoing
+elliptic regularity error estimate,
+\begin{equation}
+\label{eq:bi_harmonic_ellitpic_regularity}
+\left| u \right| _{H^{2 + \alpha }\left( \Omega  \right) }  \le C_{\Omega } \left( \| f \|_{  L_{2}( \Omega ) }^{  } + ( 1 + \gamma ^{\frac{1}{2}}
+) \cdot \| \varphi  \|_{ H^{4}\left( \Omega  \right)  }^{  }    \right).
+\end{equation}
+\todo{ Need to prove the elliptic regularity conditions. }
+The constant $\alpha \in \left( 0,2\right] $ depends on the interior angels given the corners of $\Omega $, will be referred to as the index of
+elliptic regularity.
+
+To solve this numerically do we want to introduce the $C^{0}$ Interior Penalty Method (C0IP method), which is a Discontinious Galerkin
+method (DG method) using $C^{0}$ finite elements. There is several reasons why we want to apply $C^{0}$ instead of the often used
+$C^{1}$ finite elements for fourth order problems. First and foremost is the $C^0$ finite elements simpler than
+obtaining $C^{1}$ finite elements\todo{ Simpler than $C^{1}$, in what sense? }.  Also, compared to other methods similar to the mixed
+finite element method for the problem \eqref{eq:bi_problem}, C0IP has in fact
+preserved the symmetric positive definitenesswhich means the stability is more straight forward. Finally and most
+importantly according to \cite{brenner2012quadratic} can naive use mixed methods of splitting the boundary conditions of
+the problem
+\eqref{eq:bi_problem} produce wrong solutions if $\Omega $ is nonconvex.
+
+% Anyhow,
+% let us first define the Hilbert space of the discrete solution \[
+% \begin{split}
+%     H^{1}\left( \mathcal{T}_{h}  \right)  & = \left\{ v \in L_{2} \left( \Omega  \right) : v  \mid _{T} \in H^{1} \left( T
+%     \right) \forall T \in \mathcal{T}_{h}    \right\} \\
+%     V &=  \left\{ v \in H^2\left( \Omega  \right) : \partial _{n} v = 0 \text{ and } \partial _{n} \nabla ^2 v = 0 \text{ on } \partial \Omega  \right\} \\
+% \end{split}
+% \]
+% \todo[inline]{ Probably need to work more on this argumentation }
+
+% Let us now define $u,v \in V$.
+
+% \subsubsection{HDG Method}%
+% \label{ssub:dg_method}
+% Let us now define our workspace using the spaces
+
+%  \[
+% \begin{split}
+%     V &=  \left\{ \left( u, u_{F}  \right): u \in H^{4}\left( \mathcal{T} _{h} \right) \cap H^{1}\left( \Omega  \right)   \right\} \\
+%     V_{h} &=  \left\{ \left( u, u_{F}  \right) : u \in \mathcal{P} ^{k}\left( T \right) \forall T \in  \mathcal{T} ,
+%     u_{F} \in \mathcal{P} ^{k}\left( E \right) \forall E \in  \mathcal{F}_{h}    \right\} \\
+% \end{split}
+% \]
+
+% and the ones including the null drichlet conditions \[
+% \begin{split}
+%     V_{0} &= \left\{ \left( u, u_{F} \right) \in  V : \quad u =0, u_{F} = 0 \text{ on } \partial \Omega   \right\}, \\
+%     V_{0,h} &= \left\{ \left( u, u_{F} \right) \in  V_{h} : \quad u =0, u_{F} = 0 \text{ on } \partial \Omega   \right\}
+%    . \\
+% \end{split}
+% \]
+% Let $\left( u, u_{F} \right) \in  V $\[
+%     \begin{split}
+% \sum_{T}^{} \left( \nabla ^{4} u,v \right) & = \sum_{T}^{} \left( \nabla ^{3} u, \nabla  v \right)_{T} + \left<\partial _{n}
+% \nabla ^2 u, v \right>_{\partial \Omega } \\
+% &= \sum_{T}^{} \left( \nabla ^2 u, \nabla ^2 v \right)_{T} - \left<\partial _{n} \nabla u, \nabla v \right>_{\partial T}
+% + \left< \partial _{n} \nabla ^2 u, v \right> _{\partial T}\\
+%     \end{split}
+% \]
 
 
 \subsubsection{Basic DG method}%
@@ -200,7 +245,6 @@ $$
 - \int_{\partial T} (\nabla^2 w)_{nn} \, (\partial_n v - \widehat{v_n})
 - \int_{\partial T} (\nabla^2 v)_{nn} \, (\partial_n w - \widehat{w_n}) + \alpha \int_E (\partial_n v - \widehat{v_n}) (\partial_n w - \widehat{w_n})
 $$
-
 
 
 

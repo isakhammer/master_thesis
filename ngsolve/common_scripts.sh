@@ -1,3 +1,4 @@
+
 alias p3='python3.8'
 #shopt
 shopt -s autocd # change to named directory
