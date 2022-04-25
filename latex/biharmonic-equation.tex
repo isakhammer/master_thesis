@@ -104,7 +104,7 @@ V_{h}^{*} = \begin{cases}
 % \node[below right] at (D) {D};
 \node[below right] at (end) {$n_e$};
 \end{tikzpicture}
-\caption{Edge $E \in \mathcal{F}_h $ shared by the triangles $T_{+}, T_{-} \in \mathcal{T}_{h} $ and the normal unit vector $n_{e}$.  }
+\caption{Edge $E \in \mathcal{F}_h $ shared by the triangles $T^{+}, T^{-} \in \mathcal{T}_{h} $ and the normal unit vector $n$.  }
     \label{fig:normal}
 \end{figure}
 
@@ -148,11 +148,14 @@ For global continuity does it end up with  so that $v \in \left\{ v \in H^{1}\le
 + \sum_{E \in \mathcal{F}  ^{int}}^{} \left<\partial _{nn} u , \jump{ \partial _{n_{e}} v }
 \right>_{E}.
 \end{equation}
+Keep in mind that the jump between the triangles is defined as $\jump{ a } =    a^{+} - a^{-}
+\right)   $ and similarly will the mean be defined as $\mean{ a  } = \frac{1}{2}(   a^{+}
++ a^{-})$ .
 The equivalence comes from the following argumentation.
 
 \begin{equation*}
     \begin{split}
-\left( \nabla ^{4} u,v \right) _{T} & = \left( D^2u,D^2v \right) _{T } - \left<\partial _{nt} u, \partial _{t}v
+ \left( \nabla ^{4} u,v \right) _{\Omega } & =\sum_{T\in \mathcal{T} _{h}}^{} \left( D^2u,D^2v \right) _{T } - \left<\partial _{nt} u, \partial _{t}v
 \right>_{\partial T} - \left<\partial _{nn} u, \partial _{n}v \right>_{\partial T} + \left<\partial _{n} \nabla ^2 u,v
 \right>_{\partial T} \\
 &= \sum_{E \in \mathcal{F}_{h}^{ext} }^{} \underbrace{\left< \partial _{n} \Delta u, v  \right>_{E}}_{= q}  -  \left<
@@ -168,32 +171,31 @@ The equivalence comes from the following argumentation.
     \end{split}
 .\end{equation*}
 
-Where the interior edges is computed in this way
+Where integration over all interior edges $ \forall E \in \mathcal{F}_{h}^{int}$ is computed in this way
 \begin{equation*}
     \begin{split}
-        (I) &  = \sum_{E \in \mathcal{F}_{h}^{int} }^{}   \left<\partial _{n^{+}} \Delta u^{+} ,v^{+}\right>_{E} +
-        \left<\partial _{n^{-}} \Delta u^{+} ,v^{-}\right>_{E} =   \sum_{E \in \mathcal{F}_{h}^{int} }^{} \int_{E}^{}
+        (I) &  =    \left<\partial _{n^{+}} \Delta u^{+} ,v^{+}\right>_{E} +
+        \left<\partial _{n^{-}} \Delta u^{+} ,v^{-}\right>_{E} =   \int_{E}^{}
         \jump{ \partial _{n} \Delta u \cdot v } =
-        \sum_{E \in \mathcal{F}_{h}^{int} }^{} \int_{E}^{}
+         \int_{E}^{}
          \mean{ \partial _{n} \Delta u } \underbrace{\jump{ v }}_{= 0}    + \underbrace{\jump{ \partial _{n} \Delta u
          }}_{= 0}    \mean{ v } \\
-        (II) &  = \sum_{E \in \mathcal{F}_{h}^{int} }^{}    \left<\partial _{n^{+}t} u^{+}, \partial_{t} v^{+}
+        (II) &  =     \left<\partial _{n^{+}t} u^{+}, \partial_{t} v^{+}
         \right>_{E} +  \left<\partial _{n^{-}t} u^{-}, \partial_{t} v^{-}
-\right>_{E}    =   \sum_{E \in \mathcal{F}_{h}^{int} }^{} \int_{E}^{}
+\right>_{E}    =   \int_{E}^{}
         \jump{ \partial _{nt} u \cdot  \partial_{t} v } =
-        \sum_{E \in \mathcal{F}_{h}^{int} }^{} \int_{E}^{}
+         \int_{E}^{}
          \mean{ \partial _{nt} u    } \underbrace{\jump{ \partial_{t} v }  }_{= ?}    + \underbrace{\jump{ \partial
                  _{nt}  u
          }}_{= ?}    \mean{ \partial _{t}v } \\
-        (III) &  = \sum_{E \in \mathcal{F}_{h}^{int} }^{}    \left<\partial _{n^{+}n^{+}} u^{+}, \partial_{n^{+}} v^{+} \right>_{E} +  \left<\partial _{n^{-}n^{-}} u^{-}, \partial_{n^{-}} v^{-} \right>_{E}    =   \sum_{E \in \mathcal{F}_{h}^{int} }^{} \int_{E}^{} \jump{ \partial _{nn} u \cdot  \partial_{n} v } = \sum_{E \in \mathcal{F}_{h}^{int} }^{} \int_{E}^{} \mean{ \partial _{nn} u    } \underbrace{\jump{ \partial_{t} v }  }_{!= 0}    + \underbrace{\jump{ \partial
+        (III) &  =     \left<\partial _{n^{+}n^{+}} u^{+}, \partial_{n^{+}} v^{+} \right>_{E} +  \left<\partial _{n^{-}n^{-}} u^{-}, \partial_{n^{-}} v^{-} \right>_{E}    =    \int_{E}^{} \jump{ \partial _{nn} u \cdot  \partial_{n} v } = \int_{E}^{} \mean{ \partial _{nn} u    } \underbrace{\jump{ \partial_{t} v }  }_{!= 0}    + \underbrace{\jump{ \partial
                  _{nt}  u
          }}_{= 0}    \mean{ \partial _{n}v } \\
     \end{split}
 .\end{equation*}
 
 
-
-What we see is that for \eqref{eq:bi_basic_dg} and \eqref{eq:bi_basic_dg_full_1} to be equivalent on normal and global form must this be true
+Hence, \eqref{eq:bi_basic_dg} and \eqref{eq:bi_basic_dg_full_1} is equivalent
 \[
  \sum_{T \in  \mathcal{T}_{h} }^{}  - \left<\partial _{nt} u, \partial _{t}v
 \right>_{\partial T} - \left<\partial _{nn} u, \partial _{n}v \right>_{\partial T} + \left<\partial _{n} \nabla ^2 u,v
@@ -205,22 +207,11 @@ What we see is that for \eqref{eq:bi_basic_dg} and \eqref{eq:bi_basic_dg_full_1}
 \right>_{E}
 \]
 
-%      Here is what is happening in Gu \cite{gu2012c0}. Let $w_{h}, v_{h} \in V_{h} = \left\{ v \in C\left(
-%         \overline{\Omega }  \right): v_{T } = v \mid _{T} \in  \mathcal{P}   _{2} \left( T \right) \quad  \forall T \in
-%     \mathcal{T}_{h} \right\} $.
-
-% Anyhow, \textbf{assuming} that this equation holds can we introduce the numerical correction term,  \[
-% \sum_{E \in  \mathcal{F} _{h}}^{}  \tau _{h} \left< \jump{ \partial _{n_{e}} w_{h}}, \jump{     \partial _{n_{e}} v_{h}
-% }   \right>_{E}
-% \]
-
-% \todo[inline]{ Do some research on the correct stability and symmetry term and why this is necessarry.}
+\todo[inline]{ Do some research on the correct stability and symmetry term and why this is necessarry.}
 % Where $\tau _{h}$ is to be determined based on each triangulation.
 
 
-Keep in mind that the jump is defined as $\jump{ \partial _{n_e} v _{h} } = n_{e} \left( \nabla v_{+} - \nabla v_{-}
-\right)   $ and similarly will the mean be $\mean{ \partial_{  n_{e} } v_{h}  } = \frac{1}{2}n_{e}(   \nabla _{+ }v_{h}
-+ \nabla _{-} v_{h}$ . We have now the final C0IP formulation.
+ We have now the final C0IP formulation.
 The discretized numerical problem is to solve $w_{h} \in V_{h}$ such that \[
 \mathcal{A}\left( w_{h}, v_{h} \right)   = F\left( v_{h} \right), \quad \forall v_{h} \in V_{h}  .
 \]
@@ -233,8 +224,8 @@ where
   \quad  \left( \beta \nabla w_{h} \cdot \nabla v_{h}  \right)_{\Omega } + \left( \gamma w_{h}, v_{h} \right) _{\Omega }\\
 &  + \sum_{T \in \mathcal{T} _{h}}^{} \left( D^2 w_{h}, D^2v_{h} \right) _{T} \\
  & +
-  \sum_{E \in \mathcal{F}_{h} }^{} \left<\mean{  \partial _{n_{e} n_{e}} w_{h} }, \jump{ \partial _{n_{e}} v_{h}}
-\right>_{E}  + \left< \mean{ \partial _{n_{e} n_{e}} v_{h} }, \jump{ \partial _{n_{e}}w }      \right>_{E} + \tau _{h} \left< \jump{ \partial _{n_{e}} w_{h}}, \jump{ \partial _{n_{e}} v_{h}   }   \right>_{E} \\
+  \sum_{E \in \mathcal{F}_{h} }^{} \left<\mean{  \partial _{n n} w_{h} }, \jump{ \partial _{n v_{h}}
+\right>_{E}  + \left< \mean{ \partial _{n n} v_{h} }, \jump{ \partial _{n}w }      \right>_{E} + \tau _{h} \left< \jump{ \partial _{n} w_{h}}, \jump{ \partial _{n} v_{h}   }   \right>_{E} \\
 \end{split}
 \end{equation}
 and
