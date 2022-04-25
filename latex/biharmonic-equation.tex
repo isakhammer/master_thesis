@@ -155,9 +155,42 @@ The equivalence comes from the following argumentation.
 \left( \nabla ^{4} u,v \right) _{T} & = \left( D^2u,D^2v \right) _{T } - \left<\partial _{nt} u, \partial _{t}v
 \right>_{\partial T} - \left<\partial _{nn} u, \partial _{n}v \right>_{\partial T} + \left<\partial _{n} \nabla ^2 u,v
 \right>_{\partial T} \\
-&= \sum_{E \in \mathcal{F}_{h}^{ext} }^{} \left( \partial _{n} \Delta u, v  \right)_{E} -  \left( \partial _{nt} u, \partial _{t} v \right) _{E} - \left( \partial _{nn} u, \partial _{n} v \right)   \\
+&= \sum_{E \in \mathcal{F}_{h}^{ext} }^{} \underbrace{\left< \partial _{n} \Delta u, v  \right>_{E}}_{= q}  -  \left<
+\partial _{nt} u, \partial _{t} v \right> _{E} - \underbrace{\left< \partial _{nn} u, \partial _{n} v \right>}_{=0 ?}    \\
+& \quad  + \sum_{E \in \mathcal{F} _{h}^{int}}^{} \underbrace{\left( \left<\partial _{n^{+}} \Delta u^{+}
+        ,v^{+}\right>_{E}
++ \left<\partial _{n^{-}} \Delta u^{+} ,v^{-}\right>_{E}  \right)}_{(I)} +
+\underbrace{\left( \left<\partial _{n^{+}t} u^{+}, \partial_{t} v^{+} \right>_{E} +  \left<\partial _{n^{-}t} u^{-},
+        \partial_{t} v^{-}
+\right>_{E}  \right) }_{(II)} +
+\underbrace{\left( \left<\partial _{n^{+}n^{+}} u^{+}, v^{+} \right> _{E} + \left<\partial _{n^{-}n^{-}} u^{-}, v^{-}
+\right> _{E} \right) }_{(III)}
     \end{split}
 .\end{equation*}
+
+Where the interior edges is computed in this way
+\begin{equation*}
+    \begin{split}
+        (I) &  = \sum_{E \in \mathcal{F}_{h}^{int} }^{}   \left<\partial _{n^{+}} \Delta u^{+} ,v^{+}\right>_{E} +
+        \left<\partial _{n^{-}} \Delta u^{+} ,v^{-}\right>_{E} =   \sum_{E \in \mathcal{F}_{h}^{int} }^{} \int_{E}^{}
+        \jump{ \partial _{n} \Delta u \cdot v } =
+        \sum_{E \in \mathcal{F}_{h}^{int} }^{} \int_{E}^{}
+         \mean{ \partial _{n} \Delta u } \underbrace{\jump{ v }}_{= 0}    + \underbrace{\jump{ \partial _{n} \Delta u
+         }}_{= 0}    \mean{ v } \\
+        (II) &  = \sum_{E \in \mathcal{F}_{h}^{int} }^{}    \left<\partial _{n^{+}t} u^{+}, \partial_{t} v^{+}
+        \right>_{E} +  \left<\partial _{n^{-}t} u^{-}, \partial_{t} v^{-}
+\right>_{E}    =   \sum_{E \in \mathcal{F}_{h}^{int} }^{} \int_{E}^{}
+        \jump{ \partial _{nt} u \cdot  \partial_{t} v } =
+        \sum_{E \in \mathcal{F}_{h}^{int} }^{} \int_{E}^{}
+         \mean{ \partial _{nt} u    } \underbrace{\jump{ \partial_{t} v }  }_{= ?}    + \underbrace{\jump{ \partial
+                 _{nt}  u
+         }}_{= ?}    \mean{ \partial _{t}v } \\
+        (III) &  = \sum_{E \in \mathcal{F}_{h}^{int} }^{}    \left<\partial _{n^{+}n^{+}} u^{+}, \partial_{n^{+}} v^{+} \right>_{E} +  \left<\partial _{n^{-}n^{-}} u^{-}, \partial_{n^{-}} v^{-} \right>_{E}    =   \sum_{E \in \mathcal{F}_{h}^{int} }^{} \int_{E}^{} \jump{ \partial _{nn} u \cdot  \partial_{n} v } = \sum_{E \in \mathcal{F}_{h}^{int} }^{} \int_{E}^{} \mean{ \partial _{nn} u    } \underbrace{\jump{ \partial_{t} v }  }_{!= 0}    + \underbrace{\jump{ \partial
+                 _{nt}  u
+         }}_{= 0}    \mean{ \partial _{n}v } \\
+    \end{split}
+.\end{equation*}
+
 
 
 What we see is that for \eqref{eq:bi_basic_dg} and \eqref{eq:bi_basic_dg_full_1} to be equivalent on normal and global form must this be true
