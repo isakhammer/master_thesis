@@ -210,11 +210,11 @@ Hence, \eqref{eq:bi_basic_dg} and \eqref{eq:bi_basic_dg_full_1} is equivalent
 \todo[inline]{ Do some research on the correct stability and symmetry term and why this is necessarry.}
 % Where $\tau _{h}$ is to be determined based on each triangulation.
 
-
  We have now the final C0IP formulation.
 The discretized numerical problem is to solve $w_{h} \in V_{h}$ such that \[
 \mathcal{A}\left( w_{h}, v_{h} \right)   = F\left( v_{h} \right), \quad \forall v_{h} \in V_{h}  .
 \]
+
 where
 
 \begin{equation}
@@ -224,15 +224,19 @@ where
   \quad  \left( \beta \nabla w_{h} \cdot \nabla v_{h}  \right)_{\Omega } + \left( \gamma w_{h}, v_{h} \right) _{\Omega }\\
 &  + \sum_{T \in \mathcal{T} _{h}}^{} \left( D^2 w_{h}, D^2v_{h} \right) _{T} \\
  & +
-  \sum_{E \in \mathcal{F}_{h} }^{} \left<\mean{  \partial _{n n} w_{h} }, \jump{ \partial _{n v_{h}}
-\right>_{E}  + \left< \mean{ \partial _{n n} v_{h} }, \jump{ \partial _{n}w }      \right>_{E} + \tau _{h} \left< \jump{ \partial _{n} w_{h}}, \jump{ \partial _{n} v_{h}   }   \right>_{E} \\
+  \sum_{E \in \mathcal{F}_{h} }^{}
+  \left< \mean{  \partial _{n n} w_{h} }, \jump{ \partial _{n v_{h}}} \right>_{E}  +
+ \left< \mean{ \partial _{n n} v_{h} }, \jump{ \partial _{n}w }      \right>_{E}
++ \tau _{h} \left< \jump{ \partial _{n} w_{h}}, \jump{ \partial _{n} v_{h}   }   \right>_{E}
 \end{split}
 \end{equation}
+
 and
 \begin{equation}
 \label{eq:basic_dg_F_h}
 F\left( v_{h} \right)  = \left( f, v_{h} \right) _{\Omega } - \left<q, v_{h} \right> _{\partial \Omega }.
 \end{equation}
+
 Notice that the regulation $\tau _{h}$ is to be determined by for every edge.
 
 In \cite{gu2012c0} they introduce \[
