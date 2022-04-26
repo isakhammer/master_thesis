@@ -71,19 +71,7 @@ preserved the symmetric positive definiteness, which means the stability analysi
 importantly according to \cite{brenner2012quadratic} can naive use mixed methods of splitting the boundary conditions of
 the problem \eqref{eq:bi_problem} produce wrong solutions if $\Omega $ is nonconvex.
 
-Let $w,v \in  H^{4} \left( T  \right) $ and $\mathcal{T}_{h} $ the simplicial triangulation of $\Omega$. We can then
-define the $\mathcal{P}_{2} $ Lagrange finite element spaces so,
-\[
-V_{h} = \left\{ v \in C\left( \Omega  \right): v_{T} = v | _{T} \in P_{2}\left( T \right), \forall T \in
-\mathcal{T}_{h}    \right\}
-\]
-and
-\[
-V_{h}^{*} = \begin{cases}
-    V_{h} & \text{ if } \gamma > 0 \\
-    \left\{ v \in V_{h}: v\left( p_{*} = 0 \right)    \right\} &  \text{ if } \gamma  = 0
-\end{cases}
-\]
+Let $w,v \in  H^{4} \left( T  \right) $ and $\mathcal{T}_{h} $ the simplicial triangulation of $\Omega$.
 \begin{figure}[!h]
 \centering
 \begin{tikzpicture}[scale=1]
