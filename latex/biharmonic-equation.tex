@@ -6,16 +6,14 @@
 % \subsection{Hybrid DG Biharmonic Equation}%
 % \label{sub:hybrid_dg_biharmonic_equation}
 
-Let $\Omega \subset   \mathbb{R} ^2$ be a bounded polygonal domain and $\partial \Omega $ be its corresponding boundary.
-\todo[inline]{ Why is this domain chosen to be polygonal? }
-We can then define the fourth order problem as
+Let $\Omega \subset   \mathbb{R} ^2$ be a bounded polygonal domain and $\partial \Omega $ be its corresponding boundary. Let the fourth order biharmonic equation have the form,
 
 \begin{equation}
 \label{eq:bi_problem}
 \begin{split}
     \nabla ^4 u  + \gamma u  & = f \quad \text{in } \Omega   \\
     \partial _{n} u & = g_1\left( x \right)  \quad \text{on } \partial \Omega  \\
-    \partial _{n} \nabla ^2 u & = g_{2}\left( x \right)  \quad \text{on } \partial \Omega   \\
+    \partial _{n} \nabla ^2 u & = g_{2}\left( x \right)  \quad \text{on } \partial \Omega .  \\
 \end{split}
 .\end{equation}
 We will assume for now that $u \in H^{4}\left( \Omega  \right) $, $\gamma $ is nonnegative constants and $f \in L_{2}\left( \Omega  \right) $. We may consider the functions $g_{1}$ and $g_{2}$ as time independent boundary conditions. Such problems as \eqref{eq:bi_problem} are often associated with the Cahn-Hilliard model
@@ -65,13 +63,12 @@ This regularity estimate may be important for further usecases in terms of error
 To solve this numerically do we want to introduce the $C^{0}$ Interior Penalty Method (C0IP), which is a Discontinious Galerkin
 method (DG) using $C^{0}$ finite elements. There is several reasons why we want to apply $C^{0}$ instead of the often used
 $C^{1}$ finite elements for fourth order problems. First and foremost is the $C^0$ finite elements simpler than
-obtaining $C^{1}$ finite elements\todo{ Simpler than $C^{1}$, in what sense? }.  Also, compared to other methods similar to the mixed
+obtaining $C^{1}$ finite elements.  Also, compared to other methods similar to the mixed
 finite element method for the problem \eqref{eq:bi_problem}, C0IP has in fact
 preserved the symmetric positive definiteness, which means the stability analysis is more straight forward. Finally and most
 importantly according to \cite{brenner2012quadratic} can naive use mixed methods of splitting the boundary conditions of
 the problem \eqref{eq:bi_problem} produce wrong solutions if $\Omega $ is nonconvex.
 
-Let $w,v \in  H^{4} \left( T  \right) $ and $\mathcal{T}_{h} $ the simplicial triangulation of $\Omega$.
 \begin{figure}[!h]
 \centering
 \begin{tikzpicture}[scale=1]
@@ -103,8 +100,7 @@ Let $w,v \in  H^{4} \left( T  \right) $ and $\mathcal{T}_{h} $ the simplicial tr
     \label{fig:normal}
 \end{figure}
 
-
-Using the same method as in \cite{gu2012c0, brenner2012quadratic} can we
+Let $w,v \in  H^{4} \left( T  \right) $ and $\mathcal{T}_{h} $ the simplicial triangulation of $\Omega$. Using the same method as in \cite{gu2012c0, brenner2012quadratic} can we
 deduce that for every triangle $T \in  \mathcal{T}_{h} $ is \[
     \begin{split}
         \left( \nabla ^{4} w, v \right) _{T} &= \left< \partial _{n} \nabla ^2 w, v \right>_{\partial T} - \left( \nabla \left( \nabla ^2 w
@@ -130,7 +126,7 @@ H^{4}\left( T  \right) $  does this hold ,
 \right>_{\partial T}
 .\end{equation}
 
-For global continuity, let  $v \in \left\{ v \in H^{1}\left( \Omega  \right): v_{T} \in  H^{4}\left( T \right), \ \forall T \in
+For global continuity, let  $v \in V =  \left\{ v \in H^{1}\left( \Omega  \right): v_{T} \in  H^{4}\left( T \right), \ \forall T \in
 \mathcal{T}_{h}    \right\}   \cap C^{0} (
 \overline{\Omega }  ) $ and $u \in  H^{4}\left( \Omega  \right) $ such that,
 
@@ -141,7 +137,7 @@ For global continuity, let  $v \in \left\{ v \in H^{1}\left( \Omega  \right): v_
 \right>_{\partial T}
 .\end{equation}
 
-However, this can be simplified so
+However, this can be simplified to
 
 \begin{equation}
 \label{eq:bi_basic_dg_full_1}
@@ -149,28 +145,27 @@ However, this can be simplified so
 \left( \nabla ^{4} u, v \right) _{\Omega }
 & = \sum_{T \in  \mathcal{T} _{h}}^{} \left( D^2u, D^2v \right)_{T}  + \sum_{E \in
 \mathcal{F} ^{ext}_{}}^{} \left<\partial _{n} \nabla  ^2 u, v  \right> _{E}
-- \underbrace{\left<\partial _{nt} u, \partial _{n} v \right> _{E}}_{= 0}
+- \left<\partial _{nt} u, \partial _{t} v \right> _{E}
 + \sum_{E \in \mathcal{F}  ^{int}}^{} \left<\partial _{nn} u , \jump{ \partial _{n} v }
 \right>_{E} \\
 & = \sum_{T \in  \mathcal{T} _{h}}^{} \left( D^2u, D^2v \right)_{T}  + \sum_{E \in
-\mathcal{F} ^{ext}_{}}^{} \left<g_{2 }, v  \right> _{E} + \left<n g_{2}, \nabla _{n}v \right>_{E}
-+ \sum_{E \in \mathcal{F}  ^{int}}^{} \left<\mean{ \partial _{nn} u }   , \jump{ \partial _{n} v }
+\mathcal{F} ^{ext}_{}}^{} \left<g_{2 }, v  \right> _{E} + \left<n g_{2}, \nabla _{n}v \right>_{E} + \left<\partial _{t} g_{1} , \partial _{t}v \right> + \sum_{E \in \mathcal{F}  ^{int}}^{} \left< \partial _{nn} u    , \jump{ \partial_{n} v } \right>_{E}
 \right>_{E} \\
 \end{split}
 \end{equation}
 Where $\mathcal{F}^{int}_h , \mathcal{F} ^{ext}_{h} \subset \mathcal{F}_{h} $ be the set of interior and exterior facets of the triangulation $\mathcal{T}_{h} $.
 Keep in mind that the jump over and edge $E$, visualized in figure \ref{fig:normal},   is defined as $\jump{ a } =    a^{+} - a^{-} $
 and similarly will the mean be defined as $\mean{ a  } = \frac{1}{2}(   a^{+}
-+ a^{-})$. This is why $\mean{ \partial _{nn} u } = \partial _{nn} u  $ by the continuity of $H^{4}\left( \Omega  \right) $. Anyhow, this definition should more interesting when we later define $u$ as $C^{0}$.
-The equivalence of \eqref{eq:bi_basic_dg2} and \eqref{eq:bi_basic_dg_full_1} comes from the following argumentation.
++ a^{-})$.  The equivalence of \eqref{eq:bi_basic_dg2} and \eqref{eq:bi_basic_dg_full_1} comes from the following argumentation.
 
 \begin{equation*}
     \begin{split}
  \left( \nabla ^{4} u,v \right) _{\Omega } & =\sum_{T\in \mathcal{T} _{h}}^{} \left( D^2u,D^2v \right) _{T } - \left<\partial _{nt} u, \partial _{t}v
 \right>_{\partial T} - \left<\partial _{nn} u, \partial _{n}v \right>_{\partial T} + \left<\partial _{n} \nabla ^2 u,v
 \right>_{\partial T} \\
-&= \sum_{E \in \mathcal{F}_{h}^{ext} }^{} \underbrace{\left< \partial _{n} \nabla ^2 u, v  \right>_{E}}_{= \left< g_{2},v \right>_{E} }  -  \left<
-\partial _{nt} u, \partial _{t} v \right> _{E} - \underbrace{\left< \partial _{nn} u, \partial _{n} v \right>}_{= \left<n g_{2}, \nabla _{n}v \right>_{E}  }    \\
+&= \sum_{T\in \mathcal{T} _{h}}^{} \left( D^2u,D^2v \right) _{T } \\
+&  \quad + \sum_{E \in \mathcal{F}_{h}^{ext} }^{} \underbrace{\left< \partial _{n} \nabla ^2 u, v  \right>_{E}}_{= \left< g_{2},v \right>_{E} }  -  \underbrace{\left<
+\partial _{nt} u, \partial _{t} v \right> _{E}}_{= \left<\partial _{t} g_{1} , \partial _{t}v \right> }  - \underbrace{\left< \partial _{nn} u, \partial _{n} v \right>}_{= \left<n g_{2}, \partial  _{n}v \right>_{E}  }    \\
 & \quad  + \sum_{E \in \mathcal{F} _{h}^{int}}^{} \underbrace{\left( \left<\partial _{n^{+}} \nabla ^2 u^{+}
         ,v^{+}\right>_{E}
 + \left<\partial _{n^{-}} \nabla ^2 u^{+} ,v^{-}\right>_{E}  \right)}_{(I)} +
@@ -182,7 +177,7 @@ The equivalence of \eqref{eq:bi_basic_dg2} and \eqref{eq:bi_basic_dg_full_1} com
     \end{split}
 .\end{equation*}
 
-Where integration over all interior edges $ \forall E \in \mathcal{F}_{h}^{int}$ is computed in this way
+Where integration over all interior edges $ \forall E \in \mathcal{F}_{h}^{int}$ is computed in this way:
 \begin{equation*}
     \begin{split}
         (I) &  =    \left<\partial _{n^{+}} \nabla ^2 u^{+} ,v^{+}\right>_{E} +
@@ -196,37 +191,37 @@ Where integration over all interior edges $ \forall E \in \mathcal{F}_{h}^{int}$
 \right>_{E}    =   \int_{E}^{}
         \jump{ \partial _{nt} u \cdot  \partial_{t} v } =
          \int_{E}^{}
-         \mean{ \partial _{nt} u    } \underbrace{\jump{ \partial_{t} v }  }_{= 0?}    + \underbrace{\jump{ \partial
+         \mean{ \partial _{nt} u    } \underbrace{\jump{ \partial_{t} v }  }_{= 0}    + \underbrace{\jump{ \partial
                  _{nt}  u
          }}_{= 0}    \mean{ \partial _{t}v }  = 0\\
         (III) &  =     \left<\partial _{n^{+}n^{+}} u^{+}, \partial_{n^{+}} v^{+} \right>_{E} +  \left<\partial _{n^{-}n^{-}} u^{-}, \partial_{n^{-}} v^{-} \right>_{E}    =    \int_{E}^{} \jump{ \partial _{nn} u \cdot  \partial_{n} v } = \int_{E}^{}
         \mean{ \partial _{nn} u    } \underbrace{\jump{ \partial_{n} v }  }_{\neq 0}    + \underbrace{\jump{ \partial
                  _{nn}  u
          }}_{= 0}    \mean{ \partial _{n}v } =
-        \left<\mean{ \partial _{nn} u    } \jump{ \partial_{n} v } \right>_{E}  \\
+        \left< \partial _{nn} u    , \jump{ \partial_{n} v } \right>_{E}  \\
     \end{split}
 .\end{equation*}
 
-Observe that the cancellations in $(I)$ appears since $v\in C^{0} $ and $u\in H^{4}\left( \Omega  \right) $.
+Observe that the cancellations in the term $(I)$ appears of the continuity of $v\in V $ and $u\in H^{4}\left( \Omega  \right) $ which makes the jumps zero. For the second term $(II)$ does the terms become zero cancelled because the tangential derivative at the edge
+has no jump. However, The third term $(III)$  is fairly interesting since the discontinuity in normal vector for $v \in V$ is a jump, while the second term is still continious. It can also be raied that $\mean{ \partial _{nn} u } = \partial _{nn} u  $ holds by the continuity of $H^{4}\left( \Omega  \right) $. Anyhow, the definition of jump of should more interesting when we later weakend the continuity of $u$ during discretization.
+Hence, \eqref{eq:bi_basic_dg2} and \eqref{eq:bi_basic_dg_full_1} is equivalent.
 
-Hence, \eqref{eq:bi_basic_dg} and \eqref{eq:bi_basic_dg_full_1} is equivalent.
-
-We finally can start defining the fully discrete formulation. Let the basis be a $\mathcal{P}_{2} $ Lagrange finite element space so,
+We can finally start defining the fully discrete formulation. Let the basis be a $\mathcal{P}_{2} $ Lagrange finite element space so,
 \[
-V_{h} = \left\{ v \in C\left( \Omega  \right): v_{T} = v | _{T} \in P_{2}\left( T \right), \forall T \in
+V_{h} = \left\{ v \in C^{0}\left( \Omega  \right): v_{T} = v | _{T} \in P_{2}\left( T \right), \forall T \in
 \mathcal{T}_{h}    \right\}
 \]
 and
 \[
 V_{h}^{*} = \begin{cases}
     V_{h} & \text{ if } \gamma > 0 \\
-    \left\{ v \in V_{h}: v\left( p_{*} = 0 \right)    \right\} &  \text{ if } \gamma  = 0
+    \left\{ v \in V_{h}: v\left( p_{*}  \right) = 0   \right\} &  \text{ if } \gamma  = 0
 \end{cases}
 \]
 Now, if we choose $u \in V_{h}$ must we take account that the jump is discrete.
  We have now the final C0IP formulation.
-The discretized numerical problem is to solve $w_{h} \in V_{h}$ such that \[
-\mathcal{A}\left( w_{h}, v_{h} \right)   = F\left( v_{h} \right), \quad \forall v_{h} \in V_{h}  .
+The discretized numerical problem is to solve $w_{h} \in V_{h}^{*}$ such that \[
+\mathcal{A}\left( w_{h}, v_{h} \right)   = F\left( v_{h} \right), \quad \forall v_{h} \in V_{h}^{*}  .
 \]
 where
 \begin{equation}
@@ -246,10 +241,9 @@ where
 and
 \begin{equation}
 \label{eq:basic_dg_F_h}
-F\left( v_{h} \right)  = \left( f, v_{h} \right) _{\Omega } - \left<q, v_{h} \right> _{\partial \Omega }.
+F\left( v_{h} \right)  = \left( f, v_{h} \right) _{\Omega } - \left<g_{2},v_{h} \right>_{\partial \Omega } + \left<\nabla g_{1}, \nabla v_{h} \right>_{\partial \Omega }.
 \end{equation}
-
-Notice that the regulation $\tau _{h}$ is to be determined by for every edge.
+Notice that the regulation term $\tau _{h}$ is to be determined by for every edge.
 
 In \cite{gu2012c0} they introduce \[
             \begin{split}
