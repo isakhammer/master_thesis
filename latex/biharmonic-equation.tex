@@ -45,23 +45,22 @@ In fact, the solution is unique for $\gamma > 0$. However, for $\gamma = 0$ must
 \begin{equation*}
  \int_{\Omega }^{} f dx = \int_{\partial \Omega }^{} g_{2} ds
 .\end{equation*}
-This condition easily arise when using the substitution $v=1$ in \eqref{eq:bi_weak1}. Therefore, can we let the extended solution space \[
+This condition easily arise when using the substitution $v=1$ in \eqref{eq:bi_weak1}. To handle this, can we extended the solution space \[
 V^{*} = \begin{cases}
     V \quad & \gamma > 0 \\
     \left\{ v \in V: v\left( p_{*} \right)  = 0\right\}, \quad & \gamma = 0
 \end{cases}
 \]
+\todo{ Why is setting test function $v\left( p_{*} \right)  = 0$ on corners interesting?}
 where $p_{*}$ is a corner of the polygonal domain $\Omega $.
-Thus, the unique solution in $v \in V^{*}$ belongs to $H^{2 + \alpha }\left( \Omega  \right) $ and we get the follwing
-elliptic regularity error estimate,
+Thus, the unique solution in $v \in V^{*}$ belongs to $H^{3 }\left( \Omega  \right) $ and we get the follwing
+elliptic regularity estimate \cite{gu2012c0},
 \begin{equation}
 \label{eq:bi_harmonic_ellitpic_regularity}
-\left| u \right| _{H^{2 + \alpha }\left( \Omega  \right) }  \le C_{\Omega } \left( \| f \|_{  L_{2}( \Omega ) }^{  } + ( 1 + \gamma ^{\frac{1}{2}}
-) \cdot \| \varphi  \|_{ H^{4}\left( \Omega  \right)  }^{  }    \right).
+\left| u \right| _{H^{3 }\left( \Omega  \right) }  \le C_{\Omega } \left( \| f \|_{  L_{2}( \Omega ) }^{  } + ( 1 + \gamma ^{\frac{1}{2}}
+) \cdot \| w  \|_{ H^{4}\left( \Omega  \right)  }^{  }    \right), \quad w\in H^{4}\left( \Omega  \right).
 \end{equation}
-\todo{ Need to prove the elliptic regularity conditions. }
-The constant $\alpha \in \left( 0,2\right] $ depends on the interior angels given the corners of $\Omega $, will be referred to as the index of
-elliptic regularity.
+This regularity estimate may be important for further usecases in terms of error analysis.
 
 To solve this numerically do we want to introduce the $C^{0}$ Interior Penalty Method (C0IP), which is a Discontinious Galerkin
 method (DG) using $C^{0}$ finite elements. There is several reasons why we want to apply $C^{0}$ instead of the often used
