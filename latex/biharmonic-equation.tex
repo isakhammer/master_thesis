@@ -226,26 +226,27 @@ The discretized numerical problem is to solve $w_{h} \in V_{h}^{*}$ such that \[
 \]
 where
 \begin{equation}
-\label{eq:basic_dg_A_h}
+\label{eq:C0IP_A_h}
 \begin{split}
 \mathcal{A} \left( w_{h}, v_{h} \right)   =&
   \quad  \left( \gamma w_{h}, v_{h} \right) _{\Omega }\\
 &  + \sum_{T \in \mathcal{T} _{h}}^{} \left( D^2 w_{h}, D^2v_{h} \right) _{T} \\
  & +
-  \sum_{E \in \mathcal{F}_{h} }^{}
+  \sum_{E \in \mathcal{F}_{h}^{int} }^{}
   \left< \mean{  \partial _{n n} w_{h} }, \jump{ \partial _{n }v_{h}} \right>_{E}  +
  \left< \mean{ \partial _{n n} v_{h} }, \jump{ \partial _{n}w }      \right>_{E}
-+ \tau _{h} \left< \jump{ \partial _{n} w_{h}}, \jump{ \partial _{n} v_{h}   }   \right>_{E}
++ \tau _{E} \left< \jump{ \partial _{n} w_{h}}, \jump{ \partial _{n} v_{h}   }   \right>_{E}
 \end{split}
 \end{equation}
-
 and
 \begin{equation}
-\label{eq:basic_dg_F_h}
+\label{eq:C0IP_F_h}
 F\left( v_{h} \right)  = \left( f, v_{h} \right) _{\Omega } +  \sum_ {\mathcal{F} ^{ext}_{}}^{} \left<g_{2 }, v  \right> _{E}
-+ \left<n g_{2}, \nabla _{n}v \right>_{E} + \left<\partial _{t} g_{1} , \partial _{t}v \right>_{E}
++ \left<n g_{2}, \partial  _{n}v_{h} \right>_{E} + \left<\partial _{t} g_{1} , \partial _{t}v_{h} \right>_{E}
 \end{equation}
-Notice that the regulation term $\tau _{h}$ is to be determined by for every edge.
+Notice that the regulation term with $\tau _{E} = \sigma / \left\lvert E \right\rvert $ is to be determined by respectively a global tuning parameter $\sigma >0 $ and edge length $\left\lvert E \right\rvert $. Another key component to the formulation
+in \eqref{eq:C0IP_A_h} after introduction of $ w_{h}, v_{h} \in V^{*}_{h}$  is that we expanded $\left< \partial _{nn}w, \jump{ \partial _{n} v }  \right>_{E} \to \left< \mean{ \partial _{nn}w }  , \jump{ \partial _{n} v }  \right>_{E} $ since we can longer not guarantee a
+continious jump. For symmetric purposes we also added $ \left< \mean{ \partial _{nn} v}  , \jump{ \partial _{n} w }  \right>_{E} $.
 
 In \cite{gu2012c0} they introduce \[
             \begin{split}
