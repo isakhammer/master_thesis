@@ -143,12 +143,12 @@ However, this can be simplified to
 \label{eq:bi_basic_dg_full_1}
 \begin{split}
 \left( \nabla ^{4} u, v \right) _{\Omega }
-& = \sum_{T \in  \mathcal{T} _{h}}^{} \left( D^2u, D^2v \right)_{T}  + \sum_{E \in
+=& \sum_{T \in  \mathcal{T} _{h}}^{} \left( D^2u, D^2v \right)_{T}  + \sum_{E \in
 \mathcal{F} ^{ext}_{}}^{} \left<\partial _{n} \nabla  ^2 u, v  \right> _{E}
 - \left<\partial _{nt} u, \partial _{t} v \right> _{E}+
 \left< \partial _{nn} u, \partial _{n} v \right>_{E} + \sum_{E \in \mathcal{F}  ^{int}}^{} \left<\partial _{nn} u , \jump{ \partial _{n} v }
 \right>_{E} \\
-& = \sum_{T \in  \mathcal{T} _{h}}^{} \left( D^2u, D^2v \right)_{T}  + \sum_{E \in
+& = \sum_{T \in  \mathcal{T} _{h}}^{} \left( D^2u, D^2v \right)_{T} + \sum_{E \in
 \mathcal{F} ^{ext}_{}}^{} \left<g_{2 }, v  \right> _{E}
 + \left<n g_{2}, \nabla _{n}v \right>_{E} + \left<\partial _{t} g_{1} , \partial _{t}v \right>_{E}
 + \sum_{E \in \mathcal{F}  ^{int}}^{} \left< \partial _{nn} u    , \jump{ \partial_{n} v } \right>_{E}
@@ -248,24 +248,24 @@ Notice that the regulation term with $\tau _{E} = \sigma / \left\lvert E \right\
 in \eqref{eq:C0IP_A_h} after introduction of $ w_{h}, v_{h} \in V^{*}_{h}$  is that we expanded $\left< \partial _{nn}w, \jump{ \partial _{n} v }  \right>_{E} \to \left< \mean{ \partial _{nn}w }  , \jump{ \partial _{n} v }  \right>_{E} $ since we can longer not guarantee a
 continious jump. For symmetric purposes we also added $ \left< \mean{ \partial _{nn} v}  , \jump{ \partial _{n} w }  \right>_{E} $.
 
-In \cite{gu2012c0} they introduce \[
-            \begin{split}
-    \left( D^2v: D^2w \right)_{T } & = \left<\partial _{nt} v , \partial _{t} w  \right>_{\partial T} + \left< \partial
-    _{nn} v
-    \partial _{n}, w \right>_{\partial T}. \\
-    &= \sum_{i=1}^{3} \partial _{n_{i} t_{i}} v \int_{E_{i}}^{} \partial _{t} w ds +\left< \partial
-    _{nn} v,
-    \partial _{n} w \right>_{\partial T}     \\
-    &=\left< \partial
-    _{nn} v,
-    \partial _{n} w \right>_{\partial T}  \\
-            \end{split}
-    \]
-    Using the identity $ab +cd = \frac{1}{2} (a+c)(b+d) + \frac{1}{2}(a-c)(b-d) $  they end up with the equations  \[
-    \sum_{T \in \mathcal{T}_{h}  }^{} \left( D^2v: D^2w \right)_{T }  =
-    - \sum_{E \in \mathcal{F} ^{int}}^{}  \mean{ \partial _{n_e n_{e}} v  } \jump{ \partial _{n_{e}} w } - \jump{
-    \partial _{n_e n_{e}} v}  \mean{ \partial _{n_{e}} w }
-\]
+% In \cite{gu2012c0} they introduce \[
+%             \begin{split}
+%     \left( D^2v: D^2w \right)_{T } & = \left<\partial _{nt} v , \partial _{t} w  \right>_{\partial T} + \left< \partial
+%     _{nn} v
+%     \partial _{n}, w \right>_{\partial T}. \\
+%     &= \sum_{i=1}^{3} \partial _{n_{i} t_{i}} v \int_{E_{i}}^{} \partial _{t} w ds +\left< \partial
+%     _{nn} v,
+%     \partial _{n} w \right>_{\partial T}     \\
+%     &=\left< \partial
+%     _{nn} v,
+%     \partial _{n} w \right>_{\partial T}  \\
+%             \end{split}
+%     \]
+% Using the identity $ab +cd = \frac{1}{2} (a+c)(b+d) + \frac{1}{2}(a-c)(b-d) $  they end up with the equations  \[
+%     \sum_{T \in \mathcal{T}_{h}  }^{} \left( D^2v: D^2w \right)_{T }  =
+%     - \sum_{E \in \mathcal{F} ^{int}}^{}  \mean{ \partial _{n n} v  } \jump{ \partial _{n} w } - \jump{
+%     \partial _{n n} v}  \mean{ \partial _{n} w }
+% \]
 
 \subsubsection{HC0IP Method copied from NGSolve}%
 \label{ssub:hc0ip_method_from_ngsolve}
