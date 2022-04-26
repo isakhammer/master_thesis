@@ -130,9 +130,18 @@ H^{4}\left( T  \right) $  does this hold ,
 \right>_{\partial T}
 .\end{equation}
 
-For global continuity does it end up with  so that $v \in \left\{ v \in H^{1}\left( \Omega  \right): v_{T} \in  H^{4}\left( T \right), \ \forall T \in
+For global continuity, let  $v \in \left\{ v \in H^{1}\left( \Omega  \right): v_{T} \in  H^{4}\left( T \right), \ \forall T \in
 \mathcal{T}_{h}    \right\}   \cap C^{0} (
-\overline{\Omega }  ) $ such that
+\overline{\Omega }  ) $ and $u \in  H^{4}\left( \Omega  \right) $ such that,
+
+\begin{equation}
+\label{eq:bi_basic_dg2}
+\left( \nabla ^{4} u,v \right) _{\Omega } = \sum_{T \in  \mathcal{T} _{h}}^{} \left( D^2u,D^2v \right) _{T } - \left<\partial _{nt} u, \partial _{t}v
+\right>_{\partial T} - \left<\partial _{nn} u, \partial _{n}v \right>_{\partial T} + \left<\partial _{n} \nabla ^2 u,v
+\right>_{\partial T}
+.\end{equation}
+
+However, this can be simplified so
 
 \begin{equation}
 \label{eq:bi_basic_dg_full_1}
@@ -144,23 +153,24 @@ For global continuity does it end up with  so that $v \in \left\{ v \in H^{1}\le
 + \sum_{E \in \mathcal{F}  ^{int}}^{} \left<\partial _{nn} u , \jump{ \partial _{n} v }
 \right>_{E} \\
 & = \sum_{T \in  \mathcal{T} _{h}}^{} \left( D^2u, D^2v \right)_{T}  + \sum_{E \in
-\mathcal{F} ^{ext}_{}}^{} \left<q, v  \right> _{E}
-+ \sum_{E \in \mathcal{F}  ^{int}}^{} \left<\partial _{nn} u , \jump{ \partial _{n} v }
+\mathcal{F} ^{ext}_{}}^{} \left<g_{2 }, v  \right> _{E} + \left<n g_{2}, \nabla _{n}v \right>_{E}
++ \sum_{E \in \mathcal{F}  ^{int}}^{} \left<\mean{ \partial _{nn} u }   , \jump{ \partial _{n} v }
 \right>_{E} \\
 \end{split}
 \end{equation}
-Keep in mind that the jump between the triangles is defined as $\jump{ a } =    a^{+} - a^{-}
-   $ and similarly will the mean be defined as $\mean{ a  } = \frac{1}{2}(   a^{+}
-+ a^{-})$ .
-The equivalence comes from the following argumentation.
+Where $\mathcal{F}^{int}_h , \mathcal{F} ^{ext}_{h} \subset \mathcal{F}_{h} $ be the set of interior and exterior facets of the triangulation $\mathcal{T}_{h} $.
+Keep in mind that the jump over and edge $E$, visualized in figure \ref{fig:normal},   is defined as $\jump{ a } =    a^{+} - a^{-} $
+and similarly will the mean be defined as $\mean{ a  } = \frac{1}{2}(   a^{+}
++ a^{-})$. This is why $\mean{ \partial _{nn} u } = \partial _{nn} u  $ by the continuity of $H^{4}\left( \Omega  \right) $. Anyhow, this definition should more interesting when we later define $u$ as $C^{0}$.
+The equivalence of \eqref{eq:bi_basic_dg2} and \eqref{eq:bi_basic_dg_full_1} comes from the following argumentation.
 
 \begin{equation*}
     \begin{split}
  \left( \nabla ^{4} u,v \right) _{\Omega } & =\sum_{T\in \mathcal{T} _{h}}^{} \left( D^2u,D^2v \right) _{T } - \left<\partial _{nt} u, \partial _{t}v
 \right>_{\partial T} - \left<\partial _{nn} u, \partial _{n}v \right>_{\partial T} + \left<\partial _{n} \nabla ^2 u,v
 \right>_{\partial T} \\
-&= \sum_{E \in \mathcal{F}_{h}^{ext} }^{} \underbrace{\left< \partial _{n} \nabla ^2 u, v  \right>_{E}}_{= \left<q,v \right>_{E} }  -  \left<
-\partial _{nt} u, \partial _{t} v \right> _{E} - \underbrace{\left< \partial _{nn} u, \partial _{n} v \right>}_{=0 ?}    \\
+&= \sum_{E \in \mathcal{F}_{h}^{ext} }^{} \underbrace{\left< \partial _{n} \nabla ^2 u, v  \right>_{E}}_{= \left< g_{2},v \right>_{E} }  -  \left<
+\partial _{nt} u, \partial _{t} v \right> _{E} - \underbrace{\left< \partial _{nn} u, \partial _{n} v \right>}_{= \left<n g_{2}, \nabla _{n}v \right>_{E}  }    \\
 & \quad  + \sum_{E \in \mathcal{F} _{h}^{int}}^{} \underbrace{\left( \left<\partial _{n^{+}} \nabla ^2 u^{+}
         ,v^{+}\right>_{E}
 + \left<\partial _{n^{-}} \nabla ^2 u^{+} ,v^{-}\right>_{E}  \right)}_{(I)} +
@@ -179,7 +189,7 @@ Where integration over all interior edges $ \forall E \in \mathcal{F}_{h}^{int}$
         \left<\partial _{n^{-}} \nabla ^2 u^{+} ,v^{-}\right>_{E} =   \int_{E}^{}
         \jump{ \partial _{n} \nabla ^2 u \cdot v } =
          \int_{E}^{}
-         \mean{ \partial _{n} \nabla ^2 u } \underbrace{\jump{ v }}_{= 0}    + \underbrace{\jump{ \partial _{n} \nabla ^2 u = 0
+         \mean{ \partial _{n} \nabla ^2 u } \underbrace{\jump{ v }}_{= 0}    + \underbrace{\jump{ \partial _{n} \nabla ^2 u
          }}_{= 0}    \mean{ v } = 0 \\
         (II) &  =     \left<\partial _{n^{+}t} u^{+}, \partial_{t} v^{+}
         \right>_{E} +  \left<\partial _{n^{-}t} u^{-}, \partial_{t} v^{-}
@@ -188,37 +198,46 @@ Where integration over all interior edges $ \forall E \in \mathcal{F}_{h}^{int}$
          \int_{E}^{}
          \mean{ \partial _{nt} u    } \underbrace{\jump{ \partial_{t} v }  }_{= 0?}    + \underbrace{\jump{ \partial
                  _{nt}  u
-         }}_{= 0?}    \mean{ \partial _{t}v }  = 0\\
+         }}_{= 0}    \mean{ \partial _{t}v }  = 0\\
         (III) &  =     \left<\partial _{n^{+}n^{+}} u^{+}, \partial_{n^{+}} v^{+} \right>_{E} +  \left<\partial _{n^{-}n^{-}} u^{-}, \partial_{n^{-}} v^{-} \right>_{E}    =    \int_{E}^{} \jump{ \partial _{nn} u \cdot  \partial_{n} v } = \int_{E}^{}
         \mean{ \partial _{nn} u    } \underbrace{\jump{ \partial_{n} v }  }_{\neq 0}    + \underbrace{\jump{ \partial
                  _{nn}  u
-         }}_{= 0?}    \mean{ \partial _{n}v } =
+         }}_{= 0}    \mean{ \partial _{n}v } =
         \left<\mean{ \partial _{nn} u    } \jump{ \partial_{n} v } \right>_{E}  \\
     \end{split}
 .\end{equation*}
 
+Observe that the cancellations in $(I)$ appears since $v\in C^{0} $ and $u\in H^{4}\left( \Omega  \right) $.
 
 Hence, \eqref{eq:bi_basic_dg} and \eqref{eq:bi_basic_dg_full_1} is equivalent.
 
-\todo[inline]{ Do some research on the correct stability and symmetry term and why this is necessarry.}
-% Where $\tau _{h}$ is to be determined based on each triangulation.
-
+We finally can start defining the fully discrete formulation. Let the basis be a $\mathcal{P}_{2} $ Lagrange finite element space so,
+\[
+V_{h} = \left\{ v \in C\left( \Omega  \right): v_{T} = v | _{T} \in P_{2}\left( T \right), \forall T \in
+\mathcal{T}_{h}    \right\}
+\]
+and
+\[
+V_{h}^{*} = \begin{cases}
+    V_{h} & \text{ if } \gamma > 0 \\
+    \left\{ v \in V_{h}: v\left( p_{*} = 0 \right)    \right\} &  \text{ if } \gamma  = 0
+\end{cases}
+\]
+Now, if we choose $u \in V_{h}$ must we take account that the jump is discrete.
  We have now the final C0IP formulation.
 The discretized numerical problem is to solve $w_{h} \in V_{h}$ such that \[
 \mathcal{A}\left( w_{h}, v_{h} \right)   = F\left( v_{h} \right), \quad \forall v_{h} \in V_{h}  .
 \]
-
 where
-
 \begin{equation}
 \label{eq:basic_dg_A_h}
 \begin{split}
 \mathcal{A} \left( w_{h}, v_{h} \right)   =&
-  \quad  \left( \beta \nabla w_{h} \cdot \nabla v_{h}  \right)_{\Omega } + \left( \gamma w_{h}, v_{h} \right) _{\Omega }\\
+  \quad  \left( \gamma w_{h}, v_{h} \right) _{\Omega }\\
 &  + \sum_{T \in \mathcal{T} _{h}}^{} \left( D^2 w_{h}, D^2v_{h} \right) _{T} \\
  & +
   \sum_{E \in \mathcal{F}_{h} }^{}
-  \left< \mean{  \partial _{n n} w_{h} }, \jump{ \partial _{n v_{h}}} \right>_{E}  +
+  \left< \mean{  \partial _{n n} w_{h} }, \jump{ \partial _{n }v_{h}} \right>_{E}  +
  \left< \mean{ \partial _{n n} v_{h} }, \jump{ \partial _{n}w }      \right>_{E}
 + \tau _{h} \left< \jump{ \partial _{n} w_{h}}, \jump{ \partial _{n} v_{h}   }   \right>_{E}
 \end{split}
