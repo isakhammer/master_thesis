@@ -13,14 +13,12 @@ We can then define the fourth order problem as
 \begin{equation}
 \label{eq:bi_problem}
 \begin{split}
-    \nabla ^4 u - \beta \nabla ^2 u  + \gamma  & = f \quad \text{in } \Omega   \\
-    \partial _{n} u & = 0 \quad \text{on } \partial \Omega  \\
-    \partial _{n} \nabla ^2 u & = q \quad \text{on } \partial \Omega   \\
+    \nabla ^4 u  + \gamma u  & = f \quad \text{in } \Omega   \\
+    \partial _{n} u & = g_1 \quad \text{on } \partial \Omega  \\
+    \partial _{n} \nabla ^2 u & = g_{2} \quad \text{on } \partial \Omega   \\
 \end{split}
 .\end{equation}
-We will assume that $\gamma $ and $\beta $ is nonnegative constants, $f \in L_{2}\left( \Omega  \right) $, $q =
-\partial _{n} \nabla ^2 \varphi $, $ \partial _{n}\varphi  = 0 $ for $ \varphi  \in H^{4}\left(  \Omega
-\right)$. Such problems as \eqref{eq:bi_problem} are often associated with the Cahn-Hilliard model
+We will assume for now that $u \in H^{4}\left( \Omega  \right) $, $\gamma $ is nonnegative constants and $f \in L_{2}\left( \Omega  \right) $. Such problems as \eqref{eq:bi_problem} are often associated with the Cahn-Hilliard model
 \cite{cahnhilliard1957} for phase seperation. As a matter of fact, the major difference is that \eqref{eq:bi_problem}
 has no time dependencie. However, depending on how Cahn-Hilliard model is time discretized numerically can
 \eqref{eq:bi_problem} naturally arise. I refer to \cite{brenner2012quadratic} for more informastion on this.
@@ -29,12 +27,12 @@ Now, let the solution space be on the form  $V = \left\{ v \in H^2\left( \Omega 
 \partial \Omega  \right\} $ and consider the weak formulation such that we want to solve $u \in  V$ such that
 \begin{equation}
 \label{eq:bi_harmonic_weak}
-a\left( u,v \right)_{\Omega } = \left( f,v \right)_{\Omega } - \left<q,v \right>_{\partial \Omega } \quad \forall v \in
+a\left( u,v \right)_{\Omega } = \left( f,v \right)_{\Omega } - \left<g_{2},v \right>_{\partial \Omega } + \left<\nabla g_{1}, \nabla v \right>_{\partial \Omega }  \quad \forall v \in
 V
 .\end{equation}
 The inner product has the form \[
-a\left( u,v \right)_{\Omega } = \int_{\Omega }^{} \left( \nabla ^2 w : \nabla ^2 v + \beta \nabla w\cdot \nabla v +
-\gamma w\cdot v \right) dx  .
+a\left( u,v \right)_{\Omega } = \int_{\Omega }^{} \left( \nabla ^2 u : \nabla ^2 v  +
+\gamma u v \right) dx  .
 \]
 
 In fact, we must also assume the solvability condtion $ \int_{\Omega }^{} f dx = 0$ to obtain a unique solution according  \cite{brenner2012}, \cite{gu2012c0}. Therefore, can we let the extended solution space \[
@@ -102,7 +100,7 @@ V_{h}^{*} = \begin{cases}
 % \node[below right] at (B) {B};
 % \node[above right] at (C) {C };
 % \node[below right] at (D) {D};
-\node[below right] at (end) {$n_e$};
+\node[below right] at (end) {$n$};
 \end{tikzpicture}
 \caption{Edge $E \in \mathcal{F}_h $ shared by the triangles $T^{+}, T^{-} \in \mathcal{T}_{h} $ and the normal unit vector $n$.  }
     \label{fig:normal}
@@ -141,12 +139,18 @@ For global continuity does it end up with  so that $v \in \left\{ v \in H^{1}\le
 
 \begin{equation}
 \label{eq:bi_basic_dg_full_1}
+\begin{split}
 \left( \nabla ^{4} u, v \right) _{\Omega }
-= \sum_{T \in  \mathcal{T} _{h}}^{} \left( D^2u, D^2v \right)_{T}  + \sum_{E \in
+& = \sum_{T \in  \mathcal{T} _{h}}^{} \left( D^2u, D^2v \right)_{T}  + \sum_{E \in
 \mathcal{F} ^{ext}_{}}^{} \left<\partial _{n} \nabla  ^2 u, v  \right> _{E}
-- \left<\partial _{nt} u, \partial _{n} v \right> _{E}
-+ \sum_{E \in \mathcal{F}  ^{int}}^{} \left<\partial _{nn} u , \jump{ \partial _{n_{e}} v }
-\right>_{E}.
+- \underbrace{\left<\partial _{nt} u, \partial _{n} v \right> _{E}}_{= 0}
++ \sum_{E \in \mathcal{F}  ^{int}}^{} \left<\partial _{nn} u , \jump{ \partial _{n} v }
+\right>_{E} \\
+& = \sum_{T \in  \mathcal{T} _{h}}^{} \left( D^2u, D^2v \right)_{T}  + \sum_{E \in
+\mathcal{F} ^{ext}_{}}^{} \left<q, v  \right> _{E}
++ \sum_{E \in \mathcal{F}  ^{int}}^{} \left<\partial _{nn} u , \jump{ \partial _{n} v }
+\right>_{E} \\
+\end{split}
 \end{equation}
 Keep in mind that the jump between the triangles is defined as $\jump{ a } =    a^{+} - a^{-}
    $ and similarly will the mean be defined as $\mean{ a  } = \frac{1}{2}(   a^{+}
@@ -158,11 +162,11 @@ The equivalence comes from the following argumentation.
  \left( \nabla ^{4} u,v \right) _{\Omega } & =\sum_{T\in \mathcal{T} _{h}}^{} \left( D^2u,D^2v \right) _{T } - \left<\partial _{nt} u, \partial _{t}v
 \right>_{\partial T} - \left<\partial _{nn} u, \partial _{n}v \right>_{\partial T} + \left<\partial _{n} \nabla ^2 u,v
 \right>_{\partial T} \\
-&= \sum_{E \in \mathcal{F}_{h}^{ext} }^{} \underbrace{\left< \partial _{n} \Delta u, v  \right>_{E}}_{= q}  -  \left<
+&= \sum_{E \in \mathcal{F}_{h}^{ext} }^{} \underbrace{\left< \partial _{n} \nabla ^2 u, v  \right>_{E}}_{= \left<q,v \right>_{E} }  -  \left<
 \partial _{nt} u, \partial _{t} v \right> _{E} - \underbrace{\left< \partial _{nn} u, \partial _{n} v \right>}_{=0 ?}    \\
-& \quad  + \sum_{E \in \mathcal{F} _{h}^{int}}^{} \underbrace{\left( \left<\partial _{n^{+}} \Delta u^{+}
+& \quad  + \sum_{E \in \mathcal{F} _{h}^{int}}^{} \underbrace{\left( \left<\partial _{n^{+}} \nabla ^2 u^{+}
         ,v^{+}\right>_{E}
-+ \left<\partial _{n^{-}} \Delta u^{+} ,v^{-}\right>_{E}  \right)}_{(I)} +
++ \left<\partial _{n^{-}} \nabla ^2 u^{+} ,v^{-}\right>_{E}  \right)}_{(I)} +
 \underbrace{\left( \left<\partial _{n^{+}t} u^{+}, \partial_{t} v^{+} \right>_{E} +  \left<\partial _{n^{-}t} u^{-},
         \partial_{t} v^{-}
 \right>_{E}  \right) }_{(II)} +
@@ -174,38 +178,30 @@ The equivalence comes from the following argumentation.
 Where integration over all interior edges $ \forall E \in \mathcal{F}_{h}^{int}$ is computed in this way
 \begin{equation*}
     \begin{split}
-        (I) &  =    \left<\partial _{n^{+}} \Delta u^{+} ,v^{+}\right>_{E} +
-        \left<\partial _{n^{-}} \Delta u^{+} ,v^{-}\right>_{E} =   \int_{E}^{}
-        \jump{ \partial _{n} \Delta u \cdot v } =
+        (I) &  =    \left<\partial _{n^{+}} \nabla ^2 u^{+} ,v^{+}\right>_{E} +
+        \left<\partial _{n^{-}} \nabla ^2 u^{+} ,v^{-}\right>_{E} =   \int_{E}^{}
+        \jump{ \partial _{n} \nabla ^2 u \cdot v } =
          \int_{E}^{}
-         \mean{ \partial _{n} \Delta u } \underbrace{\jump{ v }}_{= 0}    + \underbrace{\jump{ \partial _{n} \Delta u
-         }}_{= 0}    \mean{ v } \\
+         \mean{ \partial _{n} \nabla ^2 u } \underbrace{\jump{ v }}_{= 0}    + \underbrace{\jump{ \partial _{n} \nabla ^2 u = 0
+         }}_{= 0}    \mean{ v } = 0 \\
         (II) &  =     \left<\partial _{n^{+}t} u^{+}, \partial_{t} v^{+}
         \right>_{E} +  \left<\partial _{n^{-}t} u^{-}, \partial_{t} v^{-}
 \right>_{E}    =   \int_{E}^{}
         \jump{ \partial _{nt} u \cdot  \partial_{t} v } =
          \int_{E}^{}
-         \mean{ \partial _{nt} u    } \underbrace{\jump{ \partial_{t} v }  }_{= ?}    + \underbrace{\jump{ \partial
+         \mean{ \partial _{nt} u    } \underbrace{\jump{ \partial_{t} v }  }_{= 0?}    + \underbrace{\jump{ \partial
                  _{nt}  u
-         }}_{= ?}    \mean{ \partial _{t}v } \\
-        (III) &  =     \left<\partial _{n^{+}n^{+}} u^{+}, \partial_{n^{+}} v^{+} \right>_{E} +  \left<\partial _{n^{-}n^{-}} u^{-}, \partial_{n^{-}} v^{-} \right>_{E}    =    \int_{E}^{} \jump{ \partial _{nn} u \cdot  \partial_{n} v } = \int_{E}^{} \mean{ \partial _{nn} u    } \underbrace{\jump{ \partial_{t} v }  }_{!= 0}    + \underbrace{\jump{ \partial
-                 _{nt}  u
-         }}_{= 0}    \mean{ \partial _{n}v } \\
+         }}_{= 0?}    \mean{ \partial _{t}v }  = 0\\
+        (III) &  =     \left<\partial _{n^{+}n^{+}} u^{+}, \partial_{n^{+}} v^{+} \right>_{E} +  \left<\partial _{n^{-}n^{-}} u^{-}, \partial_{n^{-}} v^{-} \right>_{E}    =    \int_{E}^{} \jump{ \partial _{nn} u \cdot  \partial_{n} v } = \int_{E}^{}
+        \mean{ \partial _{nn} u    } \underbrace{\jump{ \partial_{n} v }  }_{\neq 0}    + \underbrace{\jump{ \partial
+                 _{nn}  u
+         }}_{= 0?}    \mean{ \partial _{n}v } =
+        \left<\mean{ \partial _{nn} u    } \jump{ \partial_{n} v } \right>_{E}  \\
     \end{split}
 .\end{equation*}
 
 
-Hence, \eqref{eq:bi_basic_dg} and \eqref{eq:bi_basic_dg_full_1} is equivalent
-\[
- \sum_{T \in  \mathcal{T}_{h} }^{}  - \left<\partial _{nt} u, \partial _{t}v
-\right>_{\partial T} - \left<\partial _{nn} u, \partial _{n}v \right>_{\partial T} + \left<\partial _{n} \nabla ^2 u,v
-\right>_{\partial T}
-=  \sum_{E \in
-\mathcal{F}^{ext}  }^{} \left<\partial _{n} \nabla  ^2 u, v  \right> _{E}
-- \left<\partial _{nt} u, \partial _{n} v \right> _{E}
-+ \sum_{E \in \mathcal{F}^{int} }^{} \left<\partial _{nn} u , \jump{ \partial _{n_{e}} v }
-\right>_{E}
-\]
+Hence, \eqref{eq:bi_basic_dg} and \eqref{eq:bi_basic_dg_full_1} is equivalent.
 
 \todo[inline]{ Do some research on the correct stability and symmetry term and why this is necessarry.}
 % Where $\tau _{h}$ is to be determined based on each triangulation.
