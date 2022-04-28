@@ -11,12 +11,12 @@ Let $\Omega \subset   \mathbb{R} ^2$ be a bounded polygonal domain and $\partial
 \begin{equation}
 \label{eq:bi_problem}
 \begin{split}
-    \nabla ^4 u  + \gamma u  & = f \quad \text{in } \Omega   \\
+    \Delta^2  u  + \gamma u  & = f \quad \text{in } \Omega   \\
     \partial _{n} u & = g_1\left( x \right)  \quad \text{on } \partial \Omega  \\
     \partial _{n} \nabla ^2 u & = g_{2}\left( x \right)  \quad \text{on } \partial \Omega .  \\
 \end{split}
 .\end{equation}
-We will assume for now that $u \in H^{4}\left( \Omega  \right) $, $\gamma $ is nonnegative constants and $f \in L_{2}\left( \Omega  \right) $. We may consider the functions $g_{1}$ and $g_{2}$ as time independent boundary conditions. Such problems as \eqref{eq:bi_problem} are often associated with the Cahn-Hilliard model
+Here is $\Delta ^2$ the biharmonic operator, also known as the bilaplacian. We will assume for now that $u \in H^{4}\left( \Omega  \right) $, $\gamma $ is nonnegative constants and $f \in L_{2}\left( \Omega  \right) $. We may consider the functions $g_{1}$ and $g_{2}$ as time independent boundary conditions. Such problems as \eqref{eq:bi_problem} are often associated with the Cahn-Hilliard model
 \cite{cahnhilliard1957} for phase seperation. As a matter of fact, the major difference is that \eqref{eq:bi_problem}
 has no time dependencie. However, depending on how Cahn-Hilliard model is time discretized numerically can
 \eqref{eq:bi_problem} naturally arise. I refer to \cite{brenner2012quadratic} for more informastion on this.
@@ -34,12 +34,12 @@ V,
 \end{equation}
 where the terms are computed as \[
     \begin{split}
-a\left( u,v \right)_{\Omega } & = \int_{\Omega }^{} \left( \nabla ^2 u : \nabla ^2 v  +
+a\left( u,v \right)_{\Omega } & = \int_{\Omega }^{} \left( D ^2 u : D ^2 v  +
 \gamma u v \right) dx , \\
 F\left( v \right)_{\Omega } & = \left( f,v \right)_{\Omega } - \left<g_{2},v \right>_{\partial \Omega } + \left<\nabla g_{1}, \nabla v \right>_{\partial \Omega }.
     \end{split}
 \]
-In fact, the solution is unique for $\gamma > 0$. However, for $\gamma = 0$ must we assume the solvability condtion,
+We denote $D^2$ as the Hessian matrix operator. In fact, the solution is unique for $\gamma > 0$. However, for $\gamma = 0$ must we assume the solvability condtion,
 \begin{equation*}
  \int_{\Omega }^{} f dx = \int_{\partial \Omega }^{} g_{2} ds
 .\end{equation*}
@@ -103,7 +103,7 @@ the problem \eqref{eq:bi_problem} produce wrong solutions if $\Omega $ is noncon
 Let $w,v \in  H^{4} \left( T  \right) $ and $\mathcal{T}_{h} $ the simplicial triangulation of $\Omega$. Using the same method as in \cite{gu2012c0, brenner2012quadratic} can we
 deduce that for every triangle $T \in  \mathcal{T}_{h} $ is \[
     \begin{split}
-        \left( \nabla ^{4} w, v \right) _{T} &= \left< \partial _{n} \nabla ^2 w, v \right>_{\partial T} - \left( \nabla \left( \nabla ^2 w
+        \left( \Delta  ^{2} w, v \right) _{T} &= \left< \partial _{n} \nabla ^2 w, v \right>_{\partial T} - \left( \nabla \left( \nabla ^2 w
  \right), \nabla  v  \right)_{T}   \\
  &= \left( D^2w, D^2v \right)_{T} + \left< \partial _{n} \nabla ^2 w, v \right>_{\partial T}  - \left<\partial _{n}
  \nabla w, \nabla v \right>_{\partial T} \\
@@ -121,7 +121,7 @@ H^{4}\left( T  \right) $  does this hold ,
 
 \begin{equation}
 \label{eq:bi_basic_dg}
-\left( \nabla ^{4} u,v \right) _{T} =  \left( D^2u,D^2v \right) _{T } - \left<\partial _{nt} u, \partial _{t}v
+\left( \Delta  ^{2} u,v \right) _{T} =  \left( D^2u,D^2v \right) _{T } - \left<\partial _{nt} u, \partial _{t}v
 \right>_{\partial T} - \left<\partial _{nn} u, \partial _{n}v \right>_{\partial T} + \left<\partial _{n} \nabla ^2 u,v
 \right>_{\partial T}
 .\end{equation}
@@ -132,7 +132,7 @@ For global continuity, let  $v \in V =  \left\{ v \in H^{1}\left( \Omega  \right
 
 \begin{equation}
 \label{eq:bi_basic_dg2}
-\left( \nabla ^{4} u,v \right) _{\Omega } = \sum_{T \in  \mathcal{T} _{h}}^{} \left( D^2u,D^2v \right) _{T } - \left<\partial _{nt} u, \partial _{t}v
+\left( \Delta  ^{2} u,v \right) _{\Omega } = \sum_{T \in  \mathcal{T} _{h}}^{} \left( D^2u,D^2v \right) _{T } - \left<\partial _{nt} u, \partial _{t}v
 \right>_{\partial T} - \left<\partial _{nn} u, \partial _{n}v \right>_{\partial T} + \left<\partial _{n} \nabla ^2 u,v
 \right>_{\partial T}
 .\end{equation}
@@ -142,7 +142,7 @@ However, this can be simplified to
 \begin{equation}
 \label{eq:bi_basic_dg_full_1}
 \begin{split}
-\left( \nabla ^{4} u, v \right) _{\Omega }
+\left( \Delta  ^{2} u, v \right) _{\Omega }
 =& \sum_{T \in  \mathcal{T} _{h}}^{} \left( D^2u, D^2v \right)_{T}  + \sum_{E \in
 \mathcal{F} ^{ext}_{}}^{} \left<\partial _{n} \nabla  ^2 u, v  \right> _{E}
 - \left<\partial _{nt} u, \partial _{t} v \right> _{E}+
@@ -161,7 +161,7 @@ and similarly will the mean be defined as $\mean{ a  } = \frac{1}{2}(   a^{+}
 
 \begin{equation*}
     \begin{split}
- \left( \nabla ^{4} u,v \right) _{\Omega } & =\sum_{T\in \mathcal{T} _{h}}^{} \left( D^2u,D^2v \right) _{T } - \left<\partial _{nt} u, \partial _{t}v
+ \left( \Delta  ^{2} u,v \right) _{\Omega } & =\sum_{T\in \mathcal{T} _{h}}^{} \left( D^2u,D^2v \right) _{T } - \left<\partial _{nt} u, \partial _{t}v
 \right>_{\partial T} - \left<\partial _{nn} u, \partial _{n}v \right>_{\partial T} + \left<\partial _{n} \nabla ^2 u,v
 \right>_{\partial T} \\
 &= \sum_{T\in \mathcal{T} _{h}}^{} \left( D^2u,D^2v \right) _{T } \\
