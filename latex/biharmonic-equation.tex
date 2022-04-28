@@ -285,21 +285,15 @@ Suppose we have the C0IP problem described in \eqref{eq:C0IP_A_F} with the notat
 & \ge \| \nabla ^2 v_{h} \|_{ \mathcal{F} _{h} }^{2  } -2 \| h^{\frac{1}{2}} \jump{ \partial _{n}v_{h} }    \|_{  \mathcal{F} _{h}}^{  2} + \gamma \|  \jump{ \partial _{n}v_{h} }   \|_{ \mathcal{F} _{h}  }^{ 2 } \\
 \quad \textit{Inverse inequality} \quad
  &  \ge  \| \nabla ^2 v_{h}  \|_{ \mathcal{T} _{h}  }^{ 2  } - 2 C^{\frac{1}{2}}_{j} \| h^{-\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{ \mathcal{T} _{h}  }^{  } \| h^{\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{ \mathcal{F} _{h} }^{  }  + \gamma \| h^{ -\frac{1}{2}} \jump{
- \partial _{n } v_{h}}   \|_{ \mathcal{F}_{h}}^{  }  \\
+ \partial _{n } v_{h}}   \|_{ \mathcal{F}_{h}}^{2}  \\
 \quad \textit{ Youngs epsilon inequality} \quad
-  &  \ge  \| \nabla ^2 v_{h} \|_{ \mathcal{T}  }^{  } - \varepsilon C_{j} \| \nabla ^2 v_{h} \|_{ \mathcal{T} _{h} }^{  } - \frac{1}{\varepsilon } \| h^{\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{ \mathcal{F} _{h} }^{  }  + \gamma \|
-  h^{-\frac{1}{2}} \jump{ \partial _{n} v_{h}}   \|_{ \mathcal{F} _{h} }^{  }  \\
+  &  \ge  \| \nabla ^2 v_{h} \|_{ \mathcal{T}_{h}  }^{  } - \varepsilon C_{j} \| \nabla ^2 v_{h} \|_{ \mathcal{T} _{h} }^{  } - \frac{1}{\varepsilon } \| h^{\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{ \mathcal{F} _{h} }^{  }  + \gamma \|
+  h^{-\frac{1}{2}} \jump{ \partial _{n} v_{h}}   \|_{ \mathcal{F} _{h} }^{2  }  \\
   & =  \left( 1 - \varepsilon C_{j} \right) \| \nabla ^2 v_{h} \|_{  }^{ 2 } + \left( \gamma  - \frac{1}{\varepsilon } \right) \| h^{-\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{ \mathcal{T} _{h} }^{ 2 } \\
   (\varepsilon  = \frac{1}{2 C_{j} }) \to  \quad \quad &= \frac{1}{2} \| \nabla ^2 v_{h} \|_{ \mathcal{T} _{h} }^{ 2 }  + \underbrace{\left( \gamma -2 C_{j} \right)}_{ \ge  \frac{1}{2}}  \| h^{\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{
   \mathcal{F} _{h} }^{  } \ge \frac{1}{2} \| v_{h} \|_{ a_{h} }^{  2}    \\
     \end{split}
 \]
-
-
-
-
-
-
 \subsubsection{HC0IP Method copied from NGSolve}%
 \label{ssub:hc0ip_method_from_ngsolve}
 
