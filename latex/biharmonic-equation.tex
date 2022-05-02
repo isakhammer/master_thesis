@@ -11,12 +11,12 @@ Let $\Omega \subset   \mathbb{R} ^2$ be a bounded polygonal domain and $\partial
 \begin{equation}
 \label{eq:bi_problem}
 \begin{split}
-    \Delta^2  u  + \gamma u  & = f \quad \text{in } \Omega   \\
+    \Delta^2  u  + \alpha  u  & = f \quad \text{in } \Omega   \\
     \partial _{n} u & = g_1\left( x \right)  \quad \text{on } \partial \Omega  \\
     \partial _{n} \nabla ^2 u & = g_{2}\left( x \right)  \quad \text{on } \partial \Omega .  \\
 \end{split}
 .\end{equation}
-Here is $\Delta ^2$ the biharmonic operator, also known as the bilaplacian. We will assume for now that $u \in H^{4}\left( \Omega  \right) $, $\gamma $ is nonnegative constants and $f \in L_{2}\left( \Omega  \right) $. We may consider the functions $g_{1}$ and $g_{2}$ as time independent boundary conditions. Such problems as \eqref{eq:bi_problem} are often associated with the Cahn-Hilliard model
+Here is $\Delta ^2$ the biharmonic operator, also known as the bilaplacian. We will assume for now that $u \in H^{4}\left( \Omega  \right) $, $\alpha $ is a nonnegative constant and $f \in L_{2}\left( \Omega  \right) $. We may consider the functions $g_{1}$ and $g_{2}$ as time independent boundary conditions. Such problems as \eqref{eq:bi_problem} are often associated with the Cahn-Hilliard model
 \cite{cahnhilliard1957} for phase seperation. As a matter of fact, the major difference is that \eqref{eq:bi_problem}
 has no time dependencie. However, depending on how Cahn-Hilliard model is time discretized numerically can
 \eqref{eq:bi_problem} naturally arise. I refer to \cite{brenner2012quadratic} for more informastion on this.
@@ -35,18 +35,18 @@ V,
 where the terms are computed as \[
     \begin{split}
 a\left( u,v \right)_{\Omega } & = \int_{\Omega }^{} \left( D ^2 u : D ^2 v  +
-\gamma u v \right) dx , \\
+\alpha  u v \right) dx , \\
 F\left( v \right)_{\Omega } & = \left( f,v \right)_{\Omega } - \left<g_{2},v \right>_{\partial \Omega } + \left<\nabla g_{1}, \nabla v \right>_{\partial \Omega }.
     \end{split}
 \]
-We denote $D^2$ as the Hessian matrix operator. In fact, the solution is unique for $\gamma > 0$. However, for $\gamma = 0$ must we assume the solvability condtion,
+We denote $D^2$ as the Hessian matrix operator. In fact, the solution is unique for $\alpha  > 0$. However, for $\alpha  = 0$ must we assume the solvability condtion,
 \begin{equation*}
  \int_{\Omega }^{} f dx = \int_{\partial \Omega }^{} g_{2} ds
 .\end{equation*}
 This condition easily arise when using the substitution $v=1$ in \eqref{eq:bi_weak1}. To handle this, can we extended the solution space \[
 V^{*} = \begin{cases}
-    V \quad & \gamma > 0 \\
-    \left\{ v \in V: v\left( p_{*} \right)  = 0\right\}, \quad & \gamma = 0
+    V \quad & \alpha  > 0 \\
+    \left\{ v \in V: v\left( p_{*} \right)  = 0\right\}, \quad & \alpha  = 0
 \end{cases}
 \]
 \todo{ Why is setting test function $v\left( p_{*} \right)  = 0$ on corners interesting?}
@@ -55,7 +55,7 @@ Thus, the unique solution in $v \in V^{*}$ belongs to $H^{3 }\left( \Omega  \rig
 elliptic regularity estimate \cite{gu2012c0},
 \begin{equation}
 \label{eq:bi_harmonic_ellitpic_regularity}
-\left| u \right| _{H^{3 }\left( \Omega  \right) }  \le C_{\Omega } \left( \| f \|_{  L_{2}( \Omega ) }^{  } + ( 1 + \gamma ^{\frac{1}{2}}
+\left| u \right| _{H^{3 }\left( \Omega  \right) }  \le C_{\Omega } \left( \| f \|_{  L_{2}( \Omega ) }^{  } + ( 1 + \alpha  ^{\frac{1}{2}}
 ) \cdot \| w  \|_{ H^{4}\left( \Omega  \right)  }^{  }    \right), \quad w\in H^{4}\left( \Omega  \right).
 \end{equation}
 This regularity estimate may be important for further usecases in terms of error analysis.
@@ -215,8 +215,8 @@ V_{h} = \left\{ v \in C^{0}\left( \Omega  \right): v_{T} = v | _{T} \in P_{2}\le
 and
 \[
 V_{h}^{*} = \begin{cases}
-    V_{h} & \text{ if } \gamma > 0 \\
-    \left\{ v \in V_{h}: v\left( p_{*}  \right) = 0   \right\} &  \text{ if } \gamma  = 0
+    V_{h} & \text{ if } \alpha  > 0 \\
+    \left\{ v \in V_{h}: v\left( p_{*}  \right) = 0   \right\} &  \text{ if } \alpha   = 0
 \end{cases}
 \]
 Now, if we choose $u \in V_{h}$ must we take account that the jump is discrete.
@@ -231,13 +231,13 @@ where
 \label{eq:C0IP_A_h_1}
 \begin{split}
 \mathcal{A} \left( w_{h}, v_{h} \right)   =&
-  \quad  \left( \gamma w_{h}, v_{h} \right) _{\Omega }\\
+  \quad  \left( \alpha  w_{h}, v_{h} \right) _{\Omega }\\
 &  + \sum_{T \in \mathcal{T} _{h}}^{} \left( D^2 w_{h}, D^2v_{h} \right) _{T} \\
  & +
   \sum_{E \in \mathcal{F}_{h}^{int} }^{}
   \left< \mean{  \partial _{n n} w_{h} }, \jump{ \partial _{n }v_{h}} \right>_{E}  +
  \left< \mean{ \partial _{n n} v_{h} }, \jump{ \partial _{n}w }      \right>_{E}
-+ \tau _{E} \left< \jump{ \partial _{n} w_{h}}, \jump{ \partial _{n} v_{h}   }   \right>_{E}
++ \frac{\gamma}{h}  \left< \jump{ \partial _{n} w_{h}}, \jump{ \partial _{n} v_{h}   }   \right>_{E}
 \end{split}
 \end{equation}
 and
@@ -246,7 +246,7 @@ and
 F\left( v_{h} \right)  = \left( f, v_{h} \right) _{\Omega } +  \sum_ {\mathcal{F} ^{ext}_{}}^{} \left<g_{2 }, v_{h}  \right> _{E}
 + \left<n g_{2}, \partial  _{n}v_{h} \right>_{E} + \left<\partial _{t} g_{1} , \partial _{t}v_{h} \right>_{E}
 \end{equation}
-Notice that the regulation term with $\tau _{E} = \sigma / \left\lvert E \right\rvert $ is to be determined by respectively a global tuning parameter $\sigma >0 $ and edge length $\left\lvert E \right\rvert $. Another key component to the formulation
+Notice that the regulation term termined by respectively a global tuning parameter $\gamma >0 $ and edge length $h = \left\lvert E \right\rvert $. Another key component to the formulation
 in \eqref{eq:C0IP_A_h_1} after introduction of $ w_{h}, v_{h} \in V^{*}_{h}$  is that we expanded $\left< \partial _{nn}w, \jump{ \partial _{n} v }  \right>_{E} \to \left< \mean{ \partial _{nn}w_{h} }  , \jump{ \partial _{n} v_{h} }  \right>_{E} $ since we can longer not guarantee a
 continious jump. For symmetric purposes we also added $ \left< \mean{ \partial _{nn} v_{h}}  , \jump{ \partial _{n} w_{h} }  \right>_{E} $.
 
@@ -256,12 +256,12 @@ We may introduce the compact notation of \eqref{eq:C0IP_A_h_1}.
 \label{eq:C0IP_A_h}
 \begin{split}
 \mathcal{A} \left( w_{h}, v_{h} \right)   =&
-  \quad  \left( \gamma w_{h}, v_{h} \right) _{\Omega }\\
+  \quad  \left( \alpha  w_{h}, v_{h} \right) _{\Omega }\\
 &  +  \left( D^2 w_{h}, D^2v_{h} \right) _{\mathcal{T} _{h}} \\
  & +
   \left< \mean{  \partial _{n n} w_{h} }, \jump{ \partial _{n }v_{h}} \right>_{\mathcal{F}_{h}}  +
  \left< \mean{ \partial _{n n} v_{h} }, \jump{ \partial _{n}w }      \right>_{\mathcal{F}_{h}}
-+ \tau _{E} \left< \jump{ \partial _{n} w_{h}}, \jump{ \partial _{n} v_{h}   }   \right>_{\mathcal{F}_{h}}
++ \frac{\gamma }{h}  \left< \jump{ \partial _{n} w_{h}}, \jump{ \partial _{n} v_{h}   }   \right>_{\mathcal{F}_{h}}
 \end{split}
 .\end{equation}
 
