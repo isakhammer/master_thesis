@@ -292,10 +292,10 @@ Suppose we have the C0IP problem described in \eqref{eq:C0IP_A_F}. Then is the c
 \todo[inline]{ $\left( \alpha w_{h}, v_{h} \right) _{\Omega } $ is not included yet  }
 \[
     \begin{split}
-\mathcal{A} \left( v_{h}, v_{h} \right) & = \| D^2v_{h} \|_{ \mathcal{T} _{h} }^{  }  + 2 \left(  \mean{ \partial _{nn} v_{h} }    ,  \jump{ \partial _{n}v_{h} }     \right) _{\mathcal{F} _{h}} + \gamma \frac{1}{h} \|  \jump{ \partial _{n} v_{h} }
+\mathcal{A} \left( v_{h}, v_{h} \right) & = \| D^2v_{h} \|_{ \mathcal{T} _{h} }^{  }  + 2 \left(  \mean{ \partial _{nn} v_{h} }    ,  \jump{ \partial _{n}v_{h} }     \right) _{\mathcal{F} _{h}} +  \frac{\gamma}{h} \|  \jump{ \partial _{n} v_{h} }
   \|_{ \mathcal{F} _{h} }^{ 2 } \\
 \quad \textit{Cauchy-Schwarz inequality} \quad
-& \ge \| \nabla ^2 v_{h} \|_{ \mathcal{F} _{h} }^{2  } -2 \| h^{\frac{1}{2}} \jump{ \partial _{n}v_{h} }    \|_{  \mathcal{F} _{h}}^{  2} + \gamma \|  \jump{ \partial _{n}v_{h} }   \|_{ \mathcal{F} _{h}  }^{ 2 } \\
+& \ge \| \nabla ^2 v_{h} \|_{ \mathcal{F} _{h} }^{2  } -2 \| h^{-\frac{1}{2}} \mean{ \partial _{n}v_{h} }    \|_{  \mathcal{F} _{h}}^{  2} \| h^{\frac{1}{2}} \jump{ \partial _{n}v_{h} }    \|_{  \mathcal{F} _{h}}^{  2} + \gamma \| h^{-\frac{1}{2}}  \jump{ \partial _{n}v_{h} }   \|_{ \mathcal{F} _{h}  }^{ 2 } \\
 \quad \textit{Inverse inequality} \quad
  &  \ge  \| \nabla ^2 v_{h}  \|_{ \mathcal{T} _{h}  }^{ 2  } - 2 C^{\frac{1}{2}}_{j} \| h^{-\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{ \mathcal{T} _{h}  }^{  } \| h^{\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{ \mathcal{F} _{h} }^{  }  + \gamma \| h^{ -\frac{1}{2}} \jump{
  \partial _{n } v_{h}}   \|_{ \mathcal{F}_{h}}^{2}  \\
@@ -313,7 +313,7 @@ We want the method to be bounded
 \begin{equation*}
     \begin{split}
 \mathcal{A} \left( w_{h}, v_{h} \right)   =&
-  +  \left( D^2 w_{h}, D^2v_{h} \right) _{\mathcal{T} _{h}}
+    \left( D^2 w_{h}, D^2v_{h} \right) _{\mathcal{T} _{h}}
   +
   \left< \mean{  \partial _{n n} w_{h} }, \jump{ \partial _{n }v_{h}} \right>_{\mathcal{F}_{h}}  +
  \left< \mean{ \partial _{n n} v_{h} }, \jump{ \partial _{n}w }      \right>_{\mathcal{F}_{h}}
