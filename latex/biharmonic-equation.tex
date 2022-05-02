@@ -289,10 +289,11 @@ The method is said to be coercive if $\mathcal{A} _{h}\left( v_{h}, v_{h} \right
 }^{ 2 } $
 
 Suppose we have the C0IP problem described in \eqref{eq:C0IP_A_F}. Then is the coercivity be computed such that
+\todo[inline]{ $\left( \alpha w_{h}, v_{h} \right) _{\Omega } $ is not included yet  }
 \[
     \begin{split}
-\mathcal{A} \left( v_{h}, v_{h} \right) & = \| D^2v_{h} \|_{ \mathcal{T} _{h} }^{  }  + 2 \left( \left\{ \partial _{nn} v_{h} \right\} , \left[ \partial _{n}v_{h} \right]  \right) _{\mathcal{F} _{h}} + \gamma \frac{1}{h} \| \left[ \partial _{n} v_{h}
-\right]  \|_{ \mathcal{F} _{h} }^{ 2 } \\
+\mathcal{A} \left( v_{h}, v_{h} \right) & = \| D^2v_{h} \|_{ \mathcal{T} _{h} }^{  }  + 2 \left(  \mean{ \partial _{nn} v_{h} }    ,  \jump{ \partial _{n}v_{h} }     \right) _{\mathcal{F} _{h}} + \gamma \frac{1}{h} \|  \jump{ \partial _{n} v_{h} }
+  \|_{ \mathcal{F} _{h} }^{ 2 } \\
 \quad \textit{Cauchy-Schwarz inequality} \quad
 & \ge \| \nabla ^2 v_{h} \|_{ \mathcal{F} _{h} }^{2  } -2 \| h^{\frac{1}{2}} \jump{ \partial _{n}v_{h} }    \|_{  \mathcal{F} _{h}}^{  2} + \gamma \|  \jump{ \partial _{n}v_{h} }   \|_{ \mathcal{F} _{h}  }^{ 2 } \\
 \quad \textit{Inverse inequality} \quad
