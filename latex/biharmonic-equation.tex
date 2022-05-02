@@ -285,8 +285,10 @@ Let the energy norm be on the form \[
 \| v \|_{ h }^{ 2 }  &= \| v \|_{ a_{h},* }^{ 2 } = \| v \|_{ a_{h} }^{ 2 }  + \| h^{\frac{1}{2}} \left\{ \partial _{nn } v\right\}  \|_{ F  }^{  }, \quad  v\in V \oplus V_{h}
     \end{split}
 \]
+The method is said to be coercive if $\mathcal{A} _{h}\left( v_{h}, v_{h} \right) \ge  C \| v_{h} \|_{ a_{h} }^{  } $. Similarly, it is bounded if $ \mathcal{A} _{h} \left( v_{h}, u_{h} \right) \le  C \| u_{h} \|_{  a_{h}}^{ 2 }  \| v_{h} \|_{ a_{h}
+}^{ 2 } $
 
-Suppose we have the C0IP problem described in \eqref{eq:C0IP_A_F} with the notation given in \eqref{eq:C0IP_A_h}. Then is the coercivity be computed such that
+Suppose we have the C0IP problem described in \eqref{e}. Then is the coercivity be computed such that
 \[
     \begin{split}
 \mathcal{A} \left( v_{h}, v_{h} \right) & = \| D^2v_{h} \|_{ \mathcal{T} _{h} }^{  }  + 2 \left( \left\{ \partial _{nn} v_{h} \right\} , \left[ \partial _{n}v_{h} \right]  \right) _{\mathcal{F} _{h}} + \gamma \frac{1}{h} \| \left[ \partial _{n} v_{h}
@@ -304,6 +306,7 @@ Suppose we have the C0IP problem described in \eqref{eq:C0IP_A_F} with the notat
   \mathcal{F} _{h} }^{  } \ge \frac{1}{2} \| v_{h} \|_{ a_{h} }^{  2}    \\
     \end{split}
 \]
+Hence, the C0IP method is coercive.
 \subsubsection{HC0IP Method copied from NGSolve}%
 \label{ssub:hc0ip_method_from_ngsolve}
 
