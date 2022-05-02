@@ -325,14 +325,28 @@ We want the method to be bounded
 \begin{equation*}
     \begin{split}
 \mathcal{A} \left( w_{h}, v_{h} \right)   =&
-    \left( D^2 w_{h}, D^2v_{h} \right) _{\mathcal{T} _{h}}
+    \left( \nabla ^2 w_{h}, \nabla ^2v_{h} \right) _{\mathcal{T} _{h}}
   +
   \left< \mean{  \partial _{n n} w_{h} }, \jump{ \partial _{n }v_{h}} \right>_{\mathcal{F}_{h}}  +
  \left< \mean{ \partial _{n n} v_{h} }, \jump{ \partial _{n}w }      \right>_{\mathcal{F}_{h}}
 + \frac{\gamma }{h}  \left< \jump{ \partial _{n} w_{h}}, \jump{ \partial _{n} v_{h}   }   \right>_{\mathcal{F}_{h}} \\
-\le &
+\quad \textit{Cauchy-Schwarz inequality }\quad  &\le
+\| \nabla ^2w_{h} \|_{\mathcal{T} _{h}   }^{ 2 }  \| \nabla ^2v_{h} \|_{\mathcal{T} _{h}   }^{ 2 } + \| h^{\frac{1}{2}}\mean{ \partial _{nn} w_{h} } \|_{ \mathcal{F}_{h}  }^{  } \| h^{-\frac{1}{2}}\jump{ \partial _{n} v_{h} } \|_{ \mathcal{F}_{h}  }^{  }   + \| h^{\frac{1}{2}}\mean{ \partial _{nn} v_{h} }
+\|_{ \mathcal{F}_{h}  }^{  } \| h^{-\frac{1}{2}}\jump{ \partial _{n} w_{h} } \|_{ \mathcal{F}_{h}  }^{  } \\
+& \quad   + \gamma \| h^{-\frac{1}{2}} \jump{ \partial _{n} v_{h}}   \|_{ \mathcal{F} _{h} }^{  }   \|  \jump{ \partial _{n} w_{h}}   \|_{ \mathcal{F} _{h} }^{  } \\
+\quad \textit{Inverse inequality }\quad  &\le
+\| \nabla ^2w_{h} \|_{\mathcal{T} _{h}   }^{ 2 }  \| \nabla ^2v_{h} \|_{\mathcal{T} _{h}   }^{ 2 } + C_{j}^{\frac{1}{2}} \| \nabla ^2 w_{h} \|_{\mathcal{T} _{h}  }^{  }  \| h^{-\frac{1}{2}}\jump{ \partial _{n} v_{h} } \|_{ \mathcal{F}_{h}  }^{  }   +
+C_{j}^{\frac{1}{2}} \| \nabla ^2 w_{h} \|_{\mathcal{T} _{h}  }^{  }
+\|_{ \mathcal{F}_{h}  }^{  } \| h^{-\frac{1}{2}}\jump{ \partial _{n} w_{h} } \|_{ \mathcal{F}_{h}  }^{  } \\
+& \quad   + \gamma \| h^{-\frac{1}{2}} \jump{ \partial _{n} v_{h}}   \|_{ \mathcal{F} _{h} }^{  }   \|  \jump{ \partial _{n} w_{h}}   \|_{ \mathcal{F} _{h} }^{  }
 \end{split}
 \end{equation*}
+
+Again, the first step was to apply the \textbf{Cauchy-Schwarz inequality} for every term. However. On the second inequality the \textbf{Inverse inequality} was applied,
+\[
+\| h^{\frac{1}{2}} \mean{ \partial _{nn}v_{h} }   \|_{ \mathcal{F} _{h}  }^{  }\le   C_{j}^{\frac{1}{2}} \| \nabla ^2 v_{h} \|_{ \mathcal{T} _{h} }^{  } \quad \text{and} \quad   \| h^{\frac{1}{2}} \mean{ \partial _{nn}w_{h} }   \|_{ \mathcal{F} _{h}
+}^{  }\le   C_{j}^{\frac{1}{2}} \| \nabla ^2 w_{h} \|_{ \mathcal{T} _{h} }^{  }.
+\]
 
 \subsubsection{HC0IP Method copied from NGSolve}%
 \label{ssub:hc0ip_method_from_ngsolve}
