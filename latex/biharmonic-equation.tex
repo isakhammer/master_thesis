@@ -270,12 +270,22 @@ We may introduce the compact notation of \eqref{eq:C0IP_A_h_1}.
 
 To guarantee convergence and stability we may want to check coercivity and boundedness of the method.
 
+First of all, let us now establish some important inequalites.
+\[
+\begin{split}
+    \textbf{Cachy-Scwartz inequality: } & \| ab \|_{  }^{  }  \le \| a \|_{  }^{  } \| b \|_{  }^{  }   \\
+    \textbf{Inverse inequality: } & \| \partial _{nn}  v_{h} \|_{\mathcal{F}_{h}   }^{  }  \le C_{j} \| \nabla ^2 v_{h} \|_{ T }^{ 2 }   \\
+    \textbf{Youngs epsilon inequality: } & 2ab = 2\cdot  \sqrt{\varepsilon }a   \frac{b}{\sqrt{\varepsilon } } \le \varepsilon a+ b \frac{1}{\varepsilon }
+\end{split}
+\]
+
 Let the energy norm be on the form \[
     \begin{split}
 \| v_{h} \|_{ h }^{2  } & = \| v_{h} \|_{ a_{h} }^{ 2 } = \| \nabla ^2 v_{h} \|_{ \Omega  }^{ 2 }  + \|  h^{-\frac{1}{2}} \jump{ \partial _{n} v_{h}    }\|_{  \mathcal{F} _{h} }^{  } \\
-\| v \|_{ h }^{ 2 }  &= \| v \|_{ a_{h},* }^{ 2 } = \| v \|_{ a_{h} }^{ 2 }  + \| h^{\frac{1}{2}} \left\{ \partial _{nn } v\right\}  \|_{ \mathcal{F} _{h} }^{  } \quad  v\in V \oplus V_{h}
+\| v \|_{ h }^{ 2 }  &= \| v \|_{ a_{h},* }^{ 2 } = \| v \|_{ a_{h} }^{ 2 }  + \| h^{\frac{1}{2}} \left\{ \partial _{nn } v\right\}  \|_{ F  }^{  }, \quad  v\in V \oplus V_{h}
     \end{split}
 \]
+
 Suppose we have the C0IP problem described in \eqref{eq:C0IP_A_F} with the notation given in \eqref{eq:C0IP_A_h}. Then is the coercivity be computed such that
 \[
     \begin{split}
