@@ -274,40 +274,52 @@ First of all, let us now establish some important inequalites.
 \[
 \begin{split}
     \textbf{Cauchy-Schwarz inequality: } & \| ab \|_{  }^{  }  \le \| a \|_{  }^{  } \| b \|_{  }^{  }   \\
-    \textbf{Inverse inequality: } & \| \partial _{nn}  v_{h} \|_{\mathcal{F}_{h}   }^{  }  \le C_{j} \| \nabla ^2 v_{h} \|_{ T }^{ 2 }   \\
-    \textbf{Youngs epsilon inequality: } & 2ab = 2\cdot  \sqrt{\varepsilon }a   \frac{b}{\sqrt{\varepsilon } } \le \varepsilon a+ b \frac{1}{\varepsilon }
+    \textbf{Inverse inequality: } & \frac{1}{h}\| \partial _{nn}  v_{h} \|_{\mathcal{F}_{h}   }^{2  }  \le C_{j} \| \nabla ^2 v_{h} \|_{ \mathcal{T} _{h} }^{ 2 }   \\
+    \textbf{Youngs epsilon inequality: } & 2ab =   2\sqrt{\varepsilon }a\cdot    \frac{b}{\sqrt{\varepsilon } } \le \varepsilon a^2+ b^2 \frac{1}{\varepsilon }
 \end{split}
 \]
 
-Let the energy norm be on the form \[
+Let the energy norm be on the form
+\begin{equation}
+\label{eq:A_energy_norm}
     \begin{split}
 \| v_{h} \|_{ h }^{2  } & = \| v_{h} \|_{ a_{h} }^{ 2 } = \| \nabla ^2 v_{h} \|_{ \Omega  }^{ 2 }  + \|  h^{-\frac{1}{2}} \jump{ \partial _{n} v_{h}    }\|_{  \mathcal{F} _{h} }^{  } \\
 \| v \|_{ h }^{ 2 }  &= \| v \|_{ a_{h},* }^{ 2 } = \| v \|_{ a_{h} }^{ 2 }  + \| h^{\frac{1}{2}} \left\{ \partial _{nn } v\right\}  \|_{ F  }^{  }, \quad  v\in V \oplus V_{h}
     \end{split}
-\]
+.\end{equation}
 The method is said to be coercive if $\mathcal{A} _{h}\left( v_{h}, v_{h} \right) \ge  C \| v_{h} \|_{ a_{h} }^{  } $. Similarly, it is bounded if $ \mathcal{A} _{h} \left( v_{h}, u_{h} \right) \le  C \| u_{h} \|_{  a_{h}}^{ 2 }  \| v_{h} \|_{ a_{h}
-}^{ 2 } $
+}^{ 2 } $ and then, according to Lax Milgram (need reference), the solution does exist and be unique.
 
 Suppose we have the C0IP problem described in \eqref{eq:C0IP_A_F}. Then is the coercivity be computed such that
 \todo[inline]{ $\left( \alpha w_{h}, v_{h} \right) _{\Omega } $ is not included yet  }
 \[
     \begin{split}
-\mathcal{A} \left( v_{h}, v_{h} \right) & = \| D^2v_{h} \|_{ \mathcal{T} _{h} }^{  }  + 2 \left(  \mean{ \partial _{nn} v_{h} }    ,  \jump{ \partial _{n}v_{h} }     \right) _{\mathcal{F} _{h}} +  \frac{\gamma}{h} \|  \jump{ \partial _{n} v_{h} }
+\mathcal{A} \left( v_{h}, v_{h} \right) & = \| D^2v_{h} \|_{ \mathcal{T} _{h} }^{2  }  + 2 \left(  \mean{ \partial _{nn} v_{h} }    ,  \jump{ \partial _{n}v_{h} }     \right) _{\mathcal{F} _{h}} +  \frac{\gamma}{h} \|  \jump{ \partial _{n} v_{h} }
   \|_{ \mathcal{F} _{h} }^{ 2 } \\
 \quad \textit{Cauchy-Schwarz inequality} \quad
-& \ge \| \nabla ^2 v_{h} \|_{ \mathcal{F} _{h} }^{2  } -2 \| h^{-\frac{1}{2}} \mean{ \partial _{n}v_{h} }    \|_{  \mathcal{F} _{h}}^{  2} \| h^{\frac{1}{2}} \jump{ \partial _{n}v_{h} }    \|_{  \mathcal{F} _{h}}^{  2} + \gamma \| h^{-\frac{1}{2}}  \jump{ \partial _{n}v_{h} }   \|_{ \mathcal{F} _{h}  }^{ 2 } \\
+& \ge \| \nabla ^2 v_{h} \|_{ \mathcal{T} _{h} }^{2  } -2 \| h^{\frac{1}{2}} \mean{ \partial _{nn}v_{h} }    \|_{  \mathcal{F} _{h}}^{  } \| h^{-\frac{1}{2}} \jump{ \partial _{n}v_{h} }    \|_{  \mathcal{F} _{h}}^{  } + \gamma \| h^{-\frac{1}{2}}  \jump{ \partial _{n}v_{h} }   \|_{ \mathcal{F} _{h}  }^{ 2 } \\
 \quad \textit{Inverse inequality} \quad
- &  \ge  \| \nabla ^2 v_{h}  \|_{ \mathcal{T} _{h}  }^{ 2  } - 2 C^{\frac{1}{2}}_{j} \| h^{-\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{ \mathcal{T} _{h}  }^{  } \| h^{\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{ \mathcal{F} _{h} }^{  }  + \gamma \| h^{ -\frac{1}{2}} \jump{
+ &  \ge  \| \nabla ^2 v_{h}  \|_{ \mathcal{T} _{h}  }^{ 2  } - 2 C^{\frac{1}{2}}_{j} \|   \nabla ^2 v_{h}    \|_{ \mathcal{T} _{h}  }^{  } \| h^{-\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{ \mathcal{F} _{h} }^{  }  + \gamma \| h^{ -\frac{1}{2}} \jump{
  \partial _{n } v_{h}}   \|_{ \mathcal{F}_{h}}^{2}  \\
 \quad \textit{ Youngs epsilon inequality} \quad
-  &  \ge  \| \nabla ^2 v_{h} \|_{ \mathcal{T}_{h}  }^{  } - \varepsilon C_{j} \| \nabla ^2 v_{h} \|_{ \mathcal{T} _{h} }^{  } - \frac{1}{\varepsilon } \| h^{\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{ \mathcal{F} _{h} }^{  }  + \gamma \|
+  &  \ge  \| \nabla ^2 v_{h} \|_{ \mathcal{T}_{h}  }^{2  } - \varepsilon C_{j} \| \nabla ^2 v_{h} \|_{ \mathcal{T} _{h} }^{2  } - \frac{1}{\varepsilon } \| h^{\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{ \mathcal{F} _{h} }^{2  }  + \gamma \|
   h^{-\frac{1}{2}} \jump{ \partial _{n} v_{h}}   \|_{ \mathcal{F} _{h} }^{2  }  \\
   & =  \left( 1 - \varepsilon C_{j} \right) \| \nabla ^2 v_{h} \|_{  }^{ 2 } + \left( \gamma  - \frac{1}{\varepsilon } \right) \| h^{-\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{ \mathcal{T} _{h} }^{ 2 } \\
   (\varepsilon  = \frac{1}{2 C_{j} }) \to  \quad \quad &= \frac{1}{2} \| \nabla ^2 v_{h} \|_{ \mathcal{T} _{h} }^{ 2 }  + \underbrace{\left( \gamma -2 C_{j} \right)}_{ \ge  \frac{1}{2}}  \| h^{\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{
   \mathcal{F} _{h} }^{  } \ge \frac{1}{2} \| v_{h} \|_{ a_{h} }^{  2}    \\
     \end{split}
 \]
-Hence, the C0IP method is coercive.
+
+Observe that for the first inequality is the standard \textbf{Cauchy-Schwarz inequality} such that $$\left( \mean{ \partial_{nn} v_{h} }  , \jump{ \partial _{n} v_{h} }   \right) _{\mathcal{F} _{h}} \ge - \| h^{-\frac{1}{2}} \mean{ \partial _{nn}
+v_{h} }    \|_{\mathcal{F}_{h}   }^{  } \| \mean{ \partial _{n}v_{h} }   \|_{ \mathcal{F}_{h}   }^{  } .  $$ On the second inequality the \textbf{Inverse inequality} was applied,
+\[
+- \| h^{\frac{1}{2}} \mean{ \partial _{nn}v }   \|_{ \mathcal{F} _{h}  }^{  }\ge - C_{j}^{\frac{1}{2}} \| \nabla ^2 v_{h} \|_{ \mathcal{T} _{h} }^{  }
+\]
+The next step is then to use the \textbf{Youngs epsilon inequality} to be able to seperate the facets and triangulation norms. \[
+ - 2 C^{\frac{1}{2}}_{j} \|  \nabla ^2 v_{h}    \|_{ \mathcal{T} _{h}  }^{  } \| h^{\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{ \mathcal{F} _{h} }^{2  } \ge- \varepsilon C_{j} \| \nabla ^2 v_{h} \|_{ \mathcal{T} _{h} }^{2  } -
+ \frac{1}{\varepsilon } \| h^{\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{ \mathcal{F} _{h} }^{2  }
+\]
+The last step was to choose a $\varepsilon $ and $\gamma $ as some positive constant so that the second term is restricted to be multiplied with something bigger than $\frac{1}{2}$. Thus, the term fulfils coercivity of the \eqref{eq:A_energy_norm}. Hence, the C0IP method is coercive.
 
 We want the method to be bounded
 \begin{equation*}
