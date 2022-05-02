@@ -273,7 +273,7 @@ To guarantee convergence and stability we may want to check coercivity and bound
 First of all, let us now establish some important inequalites.
 \[
 \begin{split}
-    \textbf{Cachy-Scwartz inequality: } & \| ab \|_{  }^{  }  \le \| a \|_{  }^{  } \| b \|_{  }^{  }   \\
+    \textbf{Cauchy-Schwarz inequality: } & \| ab \|_{  }^{  }  \le \| a \|_{  }^{  } \| b \|_{  }^{  }   \\
     \textbf{Inverse inequality: } & \| \partial _{nn}  v_{h} \|_{\mathcal{F}_{h}   }^{  }  \le C_{j} \| \nabla ^2 v_{h} \|_{ T }^{ 2 }   \\
     \textbf{Youngs epsilon inequality: } & 2ab = 2\cdot  \sqrt{\varepsilon }a   \frac{b}{\sqrt{\varepsilon } } \le \varepsilon a+ b \frac{1}{\varepsilon }
 \end{split}
@@ -291,7 +291,7 @@ Suppose we have the C0IP problem described in \eqref{eq:C0IP_A_F} with the notat
     \begin{split}
 \mathcal{A} \left( v_{h}, v_{h} \right) & = \| D^2v_{h} \|_{ \mathcal{T} _{h} }^{  }  + 2 \left( \left\{ \partial _{nn} v_{h} \right\} , \left[ \partial _{n}v_{h} \right]  \right) _{\mathcal{F} _{h}} + \gamma \frac{1}{h} \| \left[ \partial _{n} v_{h}
 \right]  \|_{ \mathcal{F} _{h} }^{ 2 } \\
-\quad \textit{Cauchy-Scwartz inequality} \quad
+\quad \textit{Cauchy-Schwarz inequality} \quad
 & \ge \| \nabla ^2 v_{h} \|_{ \mathcal{F} _{h} }^{2  } -2 \| h^{\frac{1}{2}} \jump{ \partial _{n}v_{h} }    \|_{  \mathcal{F} _{h}}^{  2} + \gamma \|  \jump{ \partial _{n}v_{h} }   \|_{ \mathcal{F} _{h}  }^{ 2 } \\
 \quad \textit{Inverse inequality} \quad
  &  \ge  \| \nabla ^2 v_{h}  \|_{ \mathcal{T} _{h}  }^{ 2  } - 2 C^{\frac{1}{2}}_{j} \| h^{-\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{ \mathcal{T} _{h}  }^{  } \| h^{\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{ \mathcal{F} _{h} }^{  }  + \gamma \| h^{ -\frac{1}{2}} \jump{
