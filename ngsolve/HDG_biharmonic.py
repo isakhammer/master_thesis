@@ -40,41 +40,77 @@ mesh = Mesh (unit_square.GenerateMesh(maxh=0.1))
 # We cannot use the FacetSpace since it does not have the orientation, but we can use the normal traces of an HDiv space.
 # We don't need inner basis functions, so we set order inner to 0:
 
-order = 3
+def hybdrid_version():
+    order = 3
 
-V1 = H1(mesh, order=order, dirichlet="left|bottom|right|top")
-V2 = NormalFacetFESpace(mesh, order=order-1, dirichlet="left|bottom|right|top")
-V = V1*V2
+    V1 = H1(mesh, order=order, dirichlet="left|bottom|right|top")
+    V2 = NormalFacetFESpace(mesh, order=order-1, dirichlet="left|bottom|right|top")
+    V = V1*V2
 
-w,what = V.TrialFunction()
-v,vhat = V.TestFunction()
+    w,what = V.TrialFunction()
+    v,vhat = V.TestFunction()
 
-n = specialcf.normal(2)
-h = specialcf.mesh_size
+    n = specialcf.normal(2)
+    h = specialcf.mesh_size
 
-def jumpdn(v,vhat):
-    return n*(grad(v)-vhat)
-def hesse(v):
-    return v.Operator("hesse")
-def hessenn(v):
-    return InnerProduct(n, hesse(v)*n)
+    def jumpdn(v,vhat):
+        return n*(grad(v)-vhat)
+    def hesse(v):
+        return v.Operator("hesse")
+    def hessenn(v):
+        return InnerProduct(n, hesse(v)*n)
 
-dS = dx(element_boundary=True)
-a = BilinearForm(V)
-a += InnerProduct (hesse(w), hesse(v)) * dx \
-     - hessenn(w) * jumpdn(v,vhat) * dS \
-     - hessenn(v) * jumpdn(w,what) * dS \
-     + 3*order*order/h * jumpdn(w,what) * jumpdn(v,vhat) * dS
-a.Assemble()
+    dS = dx(element_boundary=True)
+    a = BilinearForm(V)
+    a += InnerProduct (hesse(w), hesse(v)) * dx \
+         - hessenn(w) * jumpdn(v,vhat) * dS \
+         - hessenn(v) * jumpdn(w,what) * dS \
+         + 3*order*order/h * jumpdn(w,what) * jumpdn(v,vhat) * dS
+    a.Assemble()
 
-f = LinearForm(V)
-f += 1*v*dx
-f.Assemble()
+    f = LinearForm(V)
+    f += 1*v*dx
+    f.Assemble()
 
+    u = GridFunction(V)
+    u.vec.data = a.mat.Inverse(V.FreeDofs()) * f.vec
 
-u = GridFunction(V)
-u.vec.data = a.mat.Inverse(V.FreeDofs()) * f.vec
+    # Draw (u.components[0], mesh, name="disp_DG")
+    # Draw (grad (u.components[0]), mesh, "grad")
+    # Draw (hesse (u.components[0]), mesh, "hesse")
 
-Draw (u.components[0], mesh, "disp_DG")
-Draw (grad (u.components[0]), mesh, "grad")
-Draw (hesse (u.components[0]), mesh, "hesse")
+def mixed_formulation():
+    order = 3
+
+    V = HDivDiv(mesh, order=order-1)
+    Q = H1(mesh, order=order, dirichlet="left|bottom|top|right")
+    X = V*Q
+
+    print ("ndof-V:", V.ndof, ", ndof-Q:", Q.ndof)
+
+    sigma, w = X.TrialFunction()
+    tau, v = X.TestFunction()
+
+    n = specialcf.normal(2)
+
+    def tang(u): return u-(u*n)*n
+
+    a = BilinearForm(X, symmetric=True)
+    a += (InnerProduct (sigma, tau) + div(sigma)*grad(v) \
+          + div(tau)*grad(w) - 1e-10*w*v )*dx \
+          + (-(sigma*n) * tang(grad(v)) - (tau*n)*tang(grad(w)))*dx(element_boundary=True)
+    a.Assemble()
+
+    f = LinearForm(X)
+    f += -1 * v * dx
+    f.Assemble()
+
+    gfu = GridFunction(X)
+    gfu.vec.data = a.mat.Inverse(X.FreeDofs()) * f.vec
+
+    Draw (gfu.components[0], mesh, name="sigma")
+    Draw (gfu.components[1], mesh, name="disp")
+
+if __name__ == "__main__":
+    # mixed_formulation()
+    hybdrid_version()
