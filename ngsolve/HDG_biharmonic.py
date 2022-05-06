@@ -4,113 +4,93 @@ from ngsolve import *
 # from ngsolve.webgui import Draw
 from netgen.geom2d import unit_square
 
+def biharmonic_DG():
 
-# 2.9 Fourth order equations
+    # \mathcal{A} \left( w_{h}, v_{h} \right)   =&
+    #   ( \alpha  w_{h}, v_{h} ) _{\Omega }\\
+    #   +  \left( D^2 w_{h}, D^2v_{h} \right) _{\mathcal{T} _{h}} \\
+    #   + < \mean{  \partial _{n n} w_{h} }, \jump{ \partial _{n }v_{h}} >_{\mathcal{F}_{h}}  +
+    #   <\mean{ \partial _{n n} v_{h} }, \jump{ \partial _{n}w }>_{\mathcal{F}_{h}}
+    #   + \frac{\gamma }{h}  < \jump{ \partial _{n} w_{h}}, \jump{ \partial _{n} v_{h}   }   >_{\mathcal{F}_{h}}
 
-# We consider the Kirchhoff plate equation: Find $w \in H^2$, such that
-# $$
-# \int \nabla^2 w : \nabla^2 v = \int f v
-# $$
+    print("eyy")
+    return
 
-# A conforming method requires $C^1$ continuous finite elements. But there is no good option available, and thus there is no $H^2$ conforming finite element space in NGSolve.
+def biharmonic_HDG():
+    # 2.9 Fourth order equations
 
-# We have the following two alternatives:
+    # We consider the Kirchhoff plate equation: Find $w \in H^2$, such that
+    # $$
+    # \int \nabla^2 w : \nabla^2 v = \int f v
+    # $$
 
-## Hybridized $C^0$-continuous interior penalty method:
+    # A conforming method requires $C^1$ continuous finite elements. But there is no good option available, and thus there is no $H^2$ conforming finite element space in NGSolve.
 
-# A simple way out is to use continuous elements, and treat the missing $C^1$-continuity by a Discontinuous Galerkin method. A DG formulation is
+    # We have the following two alternatives:
 
-# $$
-# \sum_T \nabla^2 w : \nabla^2 v
-# - \int_{E} \{\nabla^2 w\}_{nn} \, [\partial_n v]
-# - \int_{E} \{\nabla^2 v\}_{nn} \, [\partial_n w] + \alpha \int_E  [\partial_n w]  [\partial_n v]
-# $$
+    ## Hybridized $C^0$-continuous interior penalty method:
 
-# [Baker 77, Brenner Gudi Sung, 2010]
+    # A simple way out is to use continuous elements, and treat the missing $C^1$-continuity by a Discontinuous Galerkin method. A DG formulation is
 
-# We consider its hybrid DG version, where the normal derivative is a new, facet-based variable:
+    # $$
+    # \sum_T \nabla^2 w : \nabla^2 v
+    # - \int_{E} \{\nabla^2 w\}_{nn} \, [\partial_n v]
+    # - \int_{E} \{\nabla^2 v\}_{nn} \, [\partial_n w] + \alpha \int_E  [\partial_n w]  [\partial_n v]
+    # $$
 
-# $$
-# \sum_T \nabla^2 w : \nabla^2 v
-# - \int_{\partial T} (\nabla^2 w)_{nn} \, (\partial_n v - \widehat{v_n})
-# - \int_{\partial T} (\nabla^2 v)_{nn} \, (\partial_n w - \widehat{w_n}) + \alpha \int_E (\partial_n v - \widehat{v_n}) (\partial_n w - \widehat{w_n})
-# $$
+    # [Baker 77, Brenner Gudi Sung, 2010]
 
-# The facet variable is the normal derivative $n_E \cdot \nabla w$, what is oriented along the arbitrarily chosen edge normal-vector.
-# We cannot use the FacetSpace since it does not have the orientation, but we can use the normal traces of an HDiv space.
-# We don't need inner basis functions, so we set order inner to 0:
+    # We consider its hybrid DG version, where the normal derivative is a new, facet-based variable:
 
-mesh = Mesh (unit_square.GenerateMesh(maxh=0.1))
-order = 3
+    # $$
+    # \sum_T \nabla^2 w : \nabla^2 v
+    # - \int_{\partial T} (\nabla^2 w)_{nn} \, (\partial_n v - \widehat{v_n})
+    # - \int_{\partial T} (\nabla^2 v)_{nn} \, (\partial_n w - \widehat{w_n}) + \alpha \int_E (\partial_n v - \widehat{v_n}) (\partial_n w - \widehat{w_n})
+    # $$
 
-V1 = H1(mesh, order=order, dirichlet="left|bottom|right|top")
-V2 = NormalFacetFESpace(mesh, order=order-1, dirichlet="left|bottom|right|top")
-V = V1*V2
+    # The facet variable is the normal derivative $n_E \cdot \nabla w$, what is oriented along the arbitrarily chosen edge normal-vector.
+    # We cannot use the FacetSpace since it does not have the orientation, but we can use the normal traces of an HDiv space.
+    # We don't need inner basis functions, so we set order inner to 0:
 
-w,what = V.TrialFunction()
-v,vhat = V.TestFunction()
+    mesh = Mesh (unit_square.GenerateMesh(maxh=0.1))
+    order = 3
 
-n = specialcf.normal(2)
-h = specialcf.mesh_size
+    V1 = H1(mesh, order=order, dirichlet="left|bottom|right|top")
+    V2 = NormalFacetFESpace(mesh, order=order-1, dirichlet="left|bottom|right|top")
+    V = V1*V2
 
-def jumpdn(v,vhat):
-    return n*(grad(v)-vhat)
-def hesse(v):
-    return v.Operator("hesse")
-def hessenn(v):
-    return InnerProduct(n, hesse(v)*n)
+    w,what = V.TrialFunction()
+    v,vhat = V.TestFunction()
 
-dS = dx(element_boundary=True)
-a = BilinearForm(V)
-a += InnerProduct (hesse(w), hesse(v)) * dx \
-     - hessenn(w) * jumpdn(v,vhat) * dS \
-     - hessenn(v) * jumpdn(w,what) * dS \
-     + 3*order*order/h * jumpdn(w,what) * jumpdn(v,vhat) * dS
-a.Assemble()
+    n = specialcf.normal(2)
+    h = specialcf.mesh_size
 
-f = LinearForm(V)
-f += 1*v*dx
-f.Assemble()
+    def jumpdn(v,vhat):
+        return n*(grad(v)-vhat)
+    def hesse(v):
+        return v.Operator("hesse")
+    def hessenn(v):
+        return InnerProduct(n, hesse(v)*n)
 
-u = GridFunction(V)
-u.vec.data = a.mat.Inverse(V.FreeDofs()) * f.vec
+    dS = dx(element_boundary=True)
+    a = BilinearForm(V)
+    a += InnerProduct (hesse(w), hesse(v)) * dx \
+         - hessenn(w) * jumpdn(v,vhat) * dS \
+         - hessenn(v) * jumpdn(w,what) * dS \
+         + 3*order*order/h * jumpdn(w,what) * jumpdn(v,vhat) * dS
+    a.Assemble()
 
-Draw(u.components[0], mesh, name="disp_DG")
-Draw(grad (u.components[0]), mesh, "grad")
-Draw(hesse (u.components[0]), mesh, "hesse")
+    f = LinearForm(V)
+    f += 1*v*dx
+    f.Assemble()
 
-# def mixed_formulation():
-#     order = 3
+    u = GridFunction(V)
+    u.vec.data = a.mat.Inverse(V.FreeDofs()) * f.vec
 
-#     V = HDivDiv(mesh, order=order-1)
-#     Q = H1(mesh, order=order, dirichlet="left|bottom|top|right")
-#     X = V*Q
+    Draw(u.components[0], mesh, name="disp_DG")
+    Draw(grad (u.components[0]), mesh, "grad")
+    Draw(hesse (u.components[0]), mesh, "hesse")
 
-#     print ("ndof-V:", V.ndof, ", ndof-Q:", Q.ndof)
-
-#     sigma, w = X.TrialFunction()
-#     tau, v = X.TestFunction()
-
-#     n = specialcf.normal(2)
-
-#     def tang(u): return u-(u*n)*n
-
-#     a = BilinearForm(X, symmetric=True)
-#     a += (InnerProduct (sigma, tau) + div(sigma)*grad(v) \
-#           + div(tau)*grad(w) - 1e-10*w*v )*dx \
-#           + (-(sigma*n) * tang(grad(v)) - (tau*n)*tang(grad(w)))*dx(element_boundary=True)
-#     a.Assemble()
-
-#     f = LinearForm(X)
-#     f += -1 * v * dx
-#     f.Assemble()
-
-#     gfu = GridFunction(X)
-#     gfu.vec.data = a.mat.Inverse(X.FreeDofs()) * f.vec
-
-#     Draw (gfu.components[0], mesh, name="sigma")
-#     Draw (gfu.components[1], mesh, name="disp")
-
-# if __name__ == "__main__":
-#     # mixed_formulation()
-#     hybdrid_version()
+if __name__ == "__main__":
+    # biharmonic_HDG()
+    biharmonic_DG()
