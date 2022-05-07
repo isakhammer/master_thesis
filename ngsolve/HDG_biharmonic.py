@@ -4,7 +4,6 @@ from ngsolve import *
 # from ngsolve.webgui import Draw
 from netgen.geom2d import unit_square
 
-
 def biharmonic_HDG():
     # 2.9 Fourth order equations
 

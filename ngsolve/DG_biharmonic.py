@@ -58,14 +58,12 @@ def biharmonic_DG():
         return n*(grad(v)-vhat)
 
 
+    dS = dx(element_boundary=True)
     a = BilinearForm(fes)
     a += ( alpha*u*v )*dx \
         + ( InnerProduct(hesse(u),hesse(v)) )*dx \
         + ( mean_nn(wh)*jump_n(vh) )*dS + + ( mean_nn(vh)*jump_n(wh) )*dS \
         + ( gamma/h )*(jump_n(wh)*jump_n(vh))*dS
-
-    # a += SymbolicBFI(alpha*order**2/h*u*v, BND, skeleton=True)
-    # a += SymbolicBFI(-n*grad(u)*v-n*grad(v)*u, BND, skeleton=True)
 
     a.Assemble()
 
