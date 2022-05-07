@@ -4,17 +4,6 @@ from ngsolve import *
 # from ngsolve.webgui import Draw
 from netgen.geom2d import unit_square
 
-def biharmonic_DG():
-
-    # \mathcal{A} \left( w_{h}, v_{h} \right)   =&
-    #   ( \alpha  w_{h}, v_{h} ) _{\Omega }\\
-    #   +  \left( D^2 w_{h}, D^2v_{h} \right) _{\mathcal{T} _{h}} \\
-    #   + < \mean{  \partial _{n n} w_{h} }, \jump{ \partial _{n }v_{h}} >_{\mathcal{F}_{h}}  +
-    #   <\mean{ \partial _{n n} v_{h} }, \jump{ \partial _{n}w }>_{\mathcal{F}_{h}}
-    #   + \frac{\gamma }{h}  < \jump{ \partial _{n} w_{h}}, \jump{ \partial _{n} v_{h}   }   >_{\mathcal{F}_{h}}
-
-    print("eyy")
-    return
 
 def biharmonic_HDG():
     # 2.9 Fourth order equations
