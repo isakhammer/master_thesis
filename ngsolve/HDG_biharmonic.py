@@ -80,5 +80,4 @@ def biharmonic_HDG():
     Draw(hesse (u.components[0]), mesh, "hesse")
 
 if __name__ == "__main__":
-    # biharmonic_HDG()
-    biharmonic_DG()
+    biharmonic_HDG()
