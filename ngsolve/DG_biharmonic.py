@@ -39,12 +39,13 @@ def poission_DG():
 def biharmonic_DG():
 
     mesh = Mesh (unit_square.GenerateMesh(maxh=0.1))
-    order=4
+    order = 4
     fes = L2(mesh, order=order, dgjumps=True)
     wh,vh = fes.TnT()
     gfu = GridFunction(fes)  # solution
 
     alpha = 4
+    gamma = 3
     n = specialcf.normal(2)
     h = specialcf.mesh_size
 
@@ -57,21 +58,20 @@ def biharmonic_DG():
     def jump_n(v):
         return n*(grad(v)-vhat)
 
-
     dS = dx(element_boundary=True)
-    a = BilinearForm(fes)
-    a += ( alpha*u*v )*dx \
-        + ( InnerProduct(hesse(u),hesse(v)) )*dx \
-        + ( mean_nn(wh)*jump_n(vh) )*dS + + ( mean_nn(vh)*jump_n(wh) )*dS \
-        + ( gamma/h )*(jump_n(wh)*jump_n(vh))*dS
+    A = BilinearForm(fes)
+    A += ( alpha*u*v )*dx \
+    A += InnerProduct(hesse(u),hesse(v)), VOL
+    A += SymbolicBFI( mean_nn(wh)*jump_n(vh), VOL )
+    A += SymbolicBFI(( mean_nn(vh)*jump_n(wh) ), VOL)
+    A += SymbolicBFI( ( gamma/h )*jump_n(wh)*jump_n(vh), VOL)
+    A.Assemble()
 
-    a.Assemble()
+    F = LinearForm(fes)
+    F += SymbolicBFI(f*v)
+    F += SymbolicBFI(g_2*vh, BND) + SymbolicBFI(n*g_2*vh, BND) +
+    F.Assemble()
 
-    f = LinearForm(fes)
-    f += SymbolicLFI(1*v)
-    f.Assemble()
-
-    print(f.vec)
     gfu = GridFunction(fes, name="uDG")
     gfu.vec.data = a.mat.Inverse() * f.vec
     Draw (gfu)
