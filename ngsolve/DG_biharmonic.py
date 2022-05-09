@@ -44,6 +44,9 @@ def biharmonic_DG():
     wh,vh = fes.TnT()
     gfu = GridFunction(fes)  # solution
 
+    g_1 = 1
+    g_2 = 1
+    f= 1
     alpha = 4
     gamma = 3
     n = specialcf.normal(2)
@@ -52,28 +55,28 @@ def biharmonic_DG():
     def hesse(v):
         return v.Operator("hesse")
     def hesse_nn(v):
-        return InnerProduct(n, hesse(v)*n)
+        return InnerProduct(n,  hesse(v)*n)
     def mean_nn(v):
-        return 0.5*n * (hessenn(v)+hessenn(v.Other()))
+        return 0.5* (hesse_nn(v)+hesse_nn(v.Other()))
     def jump_n(v):
-        return n*(grad(v)-vhat)
+        return n*(grad(v)-grad(v.Other()))
 
     dS = dx(element_boundary=True)
     A = BilinearForm(fes)
-    A += ( alpha*u*v )*dx \
-    A += InnerProduct(hesse(u),hesse(v)), VOL
-    A += SymbolicBFI( mean_nn(wh)*jump_n(vh), VOL )
-    A += SymbolicBFI(( mean_nn(vh)*jump_n(wh) ), VOL)
-    A += SymbolicBFI( ( gamma/h )*jump_n(wh)*jump_n(vh), VOL)
+    A += ( alpha*wh*vh )*dx
+    A += InnerProduct(hesse(wh),hesse(vh))*dx
+    A += SymbolicBFI( mean_nn(wh)*jump_n(vh),  VOL, skeleton=True )
+    A += SymbolicBFI( ( gamma/h )*jump_n(wh)*jump_n(vh),  VOL,  skeleton=True)
     A.Assemble()
 
     F = LinearForm(fes)
-    F += SymbolicBFI(f*v)
-    F += SymbolicBFI(g_2*vh, BND) + SymbolicBFI(n*g_2*vh, BND) +
+    F += SymbolicLFI(f*vh)
+    F += SymbolicLFI(g_2*vh, BND, skeleton=True)
+    F += SymbolicLFI(g_2*n*grad( vh ), BND ,skeleton=True)
     F.Assemble()
 
     gfu = GridFunction(fes, name="uDG")
-    gfu.vec.data = a.mat.Inverse() * f.vec
+    gfu.vec.data = A.mat.Inverse() * F.vec
     Draw (gfu)
 
 
