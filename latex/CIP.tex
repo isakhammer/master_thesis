@@ -206,7 +206,7 @@ We may introduce the compact notation of \eqref{eq:CP_A_h_1}.
  \left< \mean{ \partial _{n n} v_{h} }, \jump{ \partial _{n}w }      \right>_{\mathcal{F}_{h}}
 + \frac{\gamma }{h}  \left< \jump{ \partial _{n} w_{h}}, \jump{ \partial _{n} v_{h}   }   \right>_{\mathcal{F}_{h}}
 \end{split}
-.\end{equation}
+\end{equation}
 
 \subsection{Error and Stability Analysis of CP}%
 \label{sub:error_and_stability_analysis_of_c0ip}
@@ -226,7 +226,7 @@ Let the energy norm be on the form
 \begin{equation}
 \label{eq:A_energy_norm}
     \begin{split}
-\| v_{h} \|_{ h }^{2  } & = \| v_{h} \|_{ a_{h} }^{ 2 } = \| \nabla ^2 v_{h} \|_{ \Omega  }^{ 2 }  + \|  h^{-\frac{1}{2}} \jump{ \partial _{n} v_{h}    }\|_{  \mathcal{F} _{h} }^{  } \\
+\| v_{h} \|_{ h }^{2  } & = \| v_{h} \|_{ a_{h} }^{ 2 } =  \|  w_{h} \|_{ \Omega  }^{  }\| v_{h} \|_{ \Omega  }^{  }  +  \| \nabla ^2 v_{h} \|_{ \mathcal{T} _{h}  }^{ 2 }  + \|  h^{-\frac{1}{2}} \jump{ \partial _{n} v_{h}    }\|_{  \mathcal{F} _{h} }^{  } \\
 \| v \|_{ h }^{ 2 }  &= \| v \|_{ a_{h},* }^{ 2 } = \| v \|_{ a_{h} }^{ 2 }  + \| h^{\frac{1}{2}} \left\{ \partial _{nn } v\right\}  \|_{ F  }^{  }, \quad  v\in V \oplus V_{h}
     \end{split}
 .\end{equation}
@@ -241,22 +241,22 @@ Suppose we have the CP problem described in \eqref{eq:CP_A_F}. Then is the coerc
 \todo[inline]{ $\left( \alpha w_{h}, v_{h} \right) _{\Omega } $ is not included yet  }
 \[
     \begin{split}
-\mathcal{A} \left( v_{h}, v_{h} \right) & = \| D^2v_{h} \|_{ \mathcal{T} _{h} }^{2  }  + 2 \left(  \mean{ \partial _{nn} v_{h} }    ,  \jump{ \partial _{n}v_{h} }     \right) _{\mathcal{F} _{h}} +  \frac{\gamma}{h} \|  \jump{ \partial _{n} v_{h} }
+\mathcal{A} \left( v_{h}, v_{h} \right) & =\alpha \|  w_{h}  v_{h} \|_{ \Omega  }^{  } +  \| D^2v_{h} \|_{ \mathcal{T} _{h} }^{2  }  + 2 \left(  \mean{ \partial _{nn} v_{h} }    ,  \jump{ \partial _{n}v_{h} }     \right) _{\mathcal{F} _{h}} +  \frac{\gamma}{h} \|  \jump{ \partial _{n} v_{h} }
   \|_{ \mathcal{F} _{h} }^{ 2 } \\
 \quad \textit{Cauchy-Schwarz inequality} \quad
-& \ge \| \nabla ^2 v_{h} \|_{ \mathcal{T} _{h} }^{2  } -2 \| h^{\frac{1}{2}} \mean{ \partial _{nn}v_{h} }    \|_{  \mathcal{F} _{h}}^{  } \| h^{-\frac{1}{2}} \jump{ \partial _{n}v_{h} }    \|_{  \mathcal{F} _{h}}^{  } + \gamma \| h^{-\frac{1}{2}}  \jump{ \partial _{n}v_{h} }   \|_{ \mathcal{F} _{h}  }^{ 2 } \\
+& \ge \alpha \| w_{h}  \|_{\Omega   }^{  } \| v_{h} \|_{\Omega   }^{  } +   \| \nabla ^2 v_{h} \|_{ \mathcal{T} _{h} }^{2  } -2 \| h^{\frac{1}{2}} \mean{ \partial _{nn}v_{h} }    \|_{  \mathcal{F} _{h}}^{  } \| h^{-\frac{1}{2}} \jump{ \partial _{n}v_{h} }    \|_{  \mathcal{F} _{h}}^{  } + \gamma \| h^{-\frac{1}{2}}  \jump{ \partial _{n}v_{h} }   \|_{ \mathcal{F} _{h}  }^{ 2 } \\
 \quad \textit{Inverse inequality} \quad
- &  \ge  \| \nabla ^2 v_{h}  \|_{ \mathcal{T} _{h}  }^{ 2  } - 2 C^{\frac{1}{2}}_{j} \|   \nabla ^2 v_{h}    \|_{ \mathcal{T} _{h}  }^{  } \| h^{-\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{ \mathcal{F} _{h} }^{  }  + \gamma \| h^{ -\frac{1}{2}} \jump{
+ &  \ge \alpha \| w_{h}  \|_{\Omega   }^{  } \| v_{h} \|_{\Omega   }^{  } + \| \nabla ^2 v_{h}  \|_{ \mathcal{T} _{h}  }^{ 2  } - 2 C^{\frac{1}{2}}_{j} \|   \nabla ^2 v_{h}    \|_{ \mathcal{T} _{h}  }^{  } \| h^{-\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{ \mathcal{F} _{h} }^{  }  + \gamma \| h^{ -\frac{1}{2}} \jump{
  \partial _{n } v_{h}}   \|_{ \mathcal{F}_{h}}^{2}  \\
 \quad \textit{ Youngs epsilon inequality} \quad
-  &  \ge  \| \nabla ^2 v_{h} \|_{ \mathcal{T}_{h}  }^{2  } - \varepsilon C_{j} \| \nabla ^2 v_{h} \|_{ \mathcal{T} _{h} }^{2  } - \frac{1}{\varepsilon } \| h^{\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{ \mathcal{F} _{h} }^{2  }  + \gamma \|
+  &  \ge\alpha \| w_{h}  \|_{\Omega   }^{  } \| v_{h} \|_{\Omega   }^{  } +  \| \nabla ^2 v_{h} \|_{ \mathcal{T}_{h}  }^{2  } - \varepsilon C_{j} \| \nabla ^2 v_{h} \|_{ \mathcal{T} _{h} }^{2  } - \frac{1}{\varepsilon } \| h^{\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{ \mathcal{F} _{h} }^{2  }  + \gamma \|
   h^{-\frac{1}{2}} \jump{ \partial _{n} v_{h}}   \|_{ \mathcal{F} _{h} }^{2  }  \\
-  & =  \left( 1 - \varepsilon C_{j} \right) \| \nabla ^2 v_{h} \|_{  }^{ 2 } + \left( \gamma  - \frac{1}{\varepsilon } \right) \| h^{-\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{ \mathcal{T} _{h} }^{ 2 } \\
-  (\varepsilon  = \frac{1}{2 C_{j} }) \to  \quad \quad &= \frac{1}{2} \| \nabla ^2 v_{h} \|_{ \mathcal{T} _{h} }^{ 2 }  + \underbrace{\left( \gamma -2 C_{j} \right)}_{ \ge  \frac{1}{2}}  \| h^{\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{
-  \mathcal{F} _{h} }^{  } \ge \frac{1}{2} \| v_{h} \|_{ a_{h} }^{  2}    \\
+  & =  \alpha \| w_{h}  \|_{\Omega   }^{  } \| v_{h} \|_{\Omega   }^{  } +\left( 1 - \varepsilon C_{j} \right) \| \nabla ^2 v_{h} \|_{  }^{ 2 } + \left( \gamma  - \frac{1}{\varepsilon } \right) \| h^{-\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{ \mathcal{T} _{h} }^{ 2 } \\
+  (\varepsilon  = \frac{1}{2 C_{j} })  \implies  \quad \quad &= \alpha \| w_{h}  \|_{\Omega   }^{  } \| v_{h} \|_{\Omega   }^{  } +\frac{1}{2} \| \nabla ^2 v_{h} \|_{ \mathcal{T} _{h} }^{ 2 }  + \underbrace{\left( \gamma -2 C_{j} \right)}_{ \ge  \frac{1}{2}}  \| h^{\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{
+  \mathcal{F} _{h} }^{  } \ge C \| v_{h} \|_{ a_{h} }^{  2}   \text{ where }
     \end{split}
 \]
-
+This is true if $C=\min\left\{  \alpha , 1 /2\right\}$.
 Observe that for the first inequality is the standard \textbf{Cauchy-Schwarz inequality} such that $$\left( \mean{ \partial_{nn} v_{h} }  , \jump{ \partial _{n} v_{h} }   \right) _{\mathcal{F} _{h}} \ge - \| h^{-\frac{1}{2}} \mean{ \partial _{nn}
 v_{h} }    \|_{\mathcal{F}_{h}   }^{  } \| \mean{ \partial _{n}v_{h} }   \|_{ \mathcal{F}_{h}   }^{  } .  $$ On the second inequality the \textbf{Inverse inequality} was applied,
 \[
@@ -273,43 +273,45 @@ The last step was to choose a $\varepsilon $ and $\gamma $ as some positive cons
 We want the CP method to be bounded.
 \begin{equation*}
     \begin{split}
-\mathcal{A} \left( w_{h}, v_{h} \right)   =&
+\mathcal{A} \left( w_{h}, v_{h} \right)   =& \left( \alpha w_{h}, v_{h} \right) _{\Omega } +
     \left( \nabla ^2 w_{h}, \nabla ^2v_{h} \right) _{\mathcal{T} _{h}}
   +
   \left< \mean{  \partial _{n n} w_{h} }, \jump{ \partial _{n }v_{h}} \right>_{\mathcal{F}_{h}}  +
  \left< \mean{ \partial _{n n} v_{h} }, \jump{ \partial _{n}w }      \right>_{\mathcal{F}_{h}}
 + \frac{\gamma }{h}  \left< \jump{ \partial _{n} w_{h}}, \jump{ \partial _{n} v_{h}   }   \right>_{\mathcal{F}_{h}} \\
-\quad \textit{Cauchy-Schwarz inequality }\quad  &\le
-\| \nabla ^2w_{h} \|_{\mathcal{T} _{h}   }^{ 2 }  \| \nabla ^2v_{h} \|_{\mathcal{T} _{h}   }^{ 2 } + \| h^{\frac{1}{2}}\mean{ \partial _{nn} w_{h} } \|_{ \mathcal{F}_{h}  }^{  } \| h^{-\frac{1}{2}}\jump{ \partial _{n} v_{h} } \|_{ \mathcal{F}_{h}  }^{  }   + \| h^{\frac{1}{2}}\mean{ \partial _{nn} v_{h} }
-\|_{ \mathcal{F}_{h}  }^{  } \| h^{-\frac{1}{2}}\jump{ \partial _{n} w_{h} } \|_{ \mathcal{F}_{h}  }^{  } \\
-& \quad   + \gamma \| h^{-1} \jump{ \partial _{n} v_{h}}   \|_{ \mathcal{F} _{h} }^{  }   \|  \jump{ \partial _{n} w_{h}}   \|_{ \mathcal{F} _{h} }^{  } \\
-\quad \textit{Inverse inequality }\quad  &\le
-\| \nabla ^2w_{h} \|_{\mathcal{T} _{h}   }^{ 2 }  \| \nabla ^2v_{h} \|_{\mathcal{T} _{h}   }^{ 2 } + C_{j}^{\frac{1}{2}} \| \nabla ^2 w_{h} \|_{\mathcal{T} _{h}  }^{  }  \| h^{-\frac{1}{2}}\jump{ \partial _{n} v_{h} } \|_{ \mathcal{F}_{h}  }^{  }   +
-C_{j}^{\frac{1}{2}} \| \nabla ^2 w_{h} \|_{\mathcal{T} _{h}  }^{  }
- \| h^{-\frac{1}{2}}\jump{ \partial _{n} w_{h} } \|_{ \mathcal{F}_{h}  }^{  } \\
-& \quad   + \gamma \| h^{-1} \jump{ \partial _{n} v_{h}}   \|_{ \mathcal{F} _{h} }^{  }   \|  \jump{ \partial _{n} w_{h}}   \|_{ \mathcal{F} _{h} }^{  }   \\
-\quad \textit{Inverse inequality }\quad  &\le
-\| \nabla ^2w_{h} \|_{\mathcal{T} _{h}   }^{ 2 }  \| \nabla ^2v_{h} \|_{\mathcal{T} _{h}   }^{ 2 } + C_{j}^{\frac{1}{2}} \| \nabla ^2 w_{h} \|_{\mathcal{T} _{h}  }^{  }  \| h^{-\frac{1}{2}}\jump{ \partial _{n} v_{h} } \|_{ \mathcal{F}_{h}  }^{  }   +
-C_{j}^{\frac{1}{2}} \| \nabla ^2 w_{h} \|_{\mathcal{T} _{h}  }^{  }
- \| h^{-\frac{1}{2}}\jump{ \partial _{n} w_{h} } \|_{ \mathcal{F}_{h}  }^{  } \\
-& \quad   + \gamma \| h^{-1} \jump{ \partial _{n} v_{h}}   \|_{ \mathcal{F} _{h} }^{  }   \|  \jump{ \partial _{n} w_{h}}   \|_{ \mathcal{F} _{h} }^{  }
+\quad \textit{Cauchy-Schwarz inequality }\quad  &\le \alpha  \|  w_{h} \|_{\Omega   }^{  } \| v_{h} \|_{ \Omega  }^{  }     +
+\| \nabla ^2w_{h} \|_{\mathcal{T} _{h}   }^{  }  \| \nabla ^2v_{h} \|_{\mathcal{T} _{h}   }^{  } + \| h^{\frac{1}{2}}\mean{ \partial _{nn} w_{h} } \|_{ \mathcal{F}_{h}  }^{  } \| h^{-\frac{1}{2}}\jump{ \partial _{n} v_{h} } \|_{ \mathcal{F}_{h}  }^{  }    \\
+& \quad  + \| h^{\frac{1}{2}}\mean{ \partial _{nn} v_{h} }
+\|_{ \mathcal{F}_{h}  }^{  } \| h^{-\frac{1}{2}}\jump{ \partial _{n} w_{h} } \|_{ \mathcal{F}_{h}  }^{  } + \gamma \| h^{-1} \jump{ \partial _{n} v_{h}}   \|_{ \mathcal{F} _{h} }^{  }   \|  \jump{ \partial _{n} w_{h}}   \|_{ \mathcal{F} _{h} }^{  } \\
+\quad \textit{Inverse inequality }\quad  &\le \alpha  \|  w_{h} \|_{\Omega   }^{  } \| v_{h} \|_{ \Omega  }^{  }  +
+\| \nabla ^2w_{h} \|_{\mathcal{T} _{h}   }^{  }  \| \nabla ^2v_{h} \|_{\mathcal{T} _{h}   }^{  } + C_{j}^{\frac{1}{2}} \| \nabla ^2 w_{h} \|_{\mathcal{T} _{h}  }^{  }  \| h^{-\frac{1}{2}}\jump{ \partial _{n} v_{h} } \|_{ \mathcal{F}_{h}  }^{  }   +
+ \\
+& \quad  C_{j}^{\frac{1}{2}} \| \nabla ^2 w_{h} \|_{\mathcal{T} _{h}  }^{  }
+ \| h^{-\frac{1}{2}}\jump{ \partial _{n} w_{h} } \|_{ \mathcal{F}_{h}  }^{  } + \gamma \| h^{-1} \jump{ \partial _{n} v_{h}}   \|_{ \mathcal{F} _{h} }^{  }   \|  \jump{ \partial _{n} w_{h}}   \|_{ \mathcal{F} _{h} }^{  } \\
+\textit{ Using \eqref{eq:bounded_ineq}}  \quad & \le\alpha  \|  w_{h} \|_{a_{h}   }^{  } \| v_{h} \|_{ a_{h}   }^{  } + \| w_{h} \|_{ a_{h} }^{  } \| v_{h} \|_{ a_{h} }^{  }  + 2C_{j}^{\frac{1}{2}} \| w_{h} \|_{ a_{h} }^{  } \| v_{h} \|_{ a_{h} }^{  } + \gamma \| v_{h} \|_{ a_{h} }^{  } \| w_{h} \|_{ a_{h} }^{  } \\
+& \le  \left( \alpha + 1 + 2C_{j}^{\frac{1}{2}} + \gamma  \right)  \| v_{h} \|_{a_{h}  }^{  }  \| w_{h} \|_{ a_{h} }^{  }  \le  K  \| v_{h} \|_{a_{h}  }^{  }  \| w_{h} \|_{ a_{h} }^{  }
 \end{split}
 \end{equation*}
 
-Again, the first step was to apply the \textbf{Cauchy-Schwarz inequality} for every term. On the second inequality the \textbf{Inverse inequality} was applied,
+Thus, the CP method is shown to be bounded.
+Again, the first step was to apply the \textbf{Cauchy-Schwarz inequality} for every term. On the second inequality the \textbf{Inverse inequality} was applied so that
 \[
 \| h^{\frac{1}{2}} \mean{ \partial _{nn}v_{h} }   \|_{ \mathcal{F} _{h}  }^{  }\le   C_{j}^{\frac{1}{2}} \| \nabla ^2 v_{h} \|_{ \mathcal{T} _{h} }^{  } \quad \text{and} \quad   \| h^{\frac{1}{2}} \mean{ \partial _{nn}w_{h} }   \|_{ \mathcal{F} _{h}
 }^{  }\le   C_{j}^{\frac{1}{2}} \| \nabla ^2 w_{h} \|_{ \mathcal{T} _{h} }^{  }.
 \]
-We can observe that for the second step must
-\[
+The second step can we luckily observe that all terms invidually is less than the norm such that
+\begin{equation}
+\label{eq:bounded_ineq}
 \begin{split}
+\| w_{h} \|_{\Omega    }^{  }  \| v_{h} \|_{ \Omega    }^{  } & \le \| w_{h} \|_{ a_{h} }^{  } \| v_{h} \|_{ a_{h} }^{  }, \\
 \| \nabla ^2w_{h} \|_{\mathcal{T}_{h}   }^{  }  \| \nabla ^2v_{h} \|_{\mathcal{T}_{h}   }^{  } & \le \| w_{h} \|_{ a_{h} }^{  } \| v_{h} \|_{ a_{h} }^{  }, \\
-C_{j}^{\frac{1}{2}}\|  \nabla ^2 w_{h} \|_{ \mathcal{T} _{h} }^{ } \| h^{-\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{ \mathcal{F} _{h} }^{  }  & \le \| w_{h} \|_{ a_{h} }^{  } \| v_{h} \|_{ a_{h} }^{  }, \quad \quad C_{j}^{\frac{1}{2}}\|  \nabla
+\|  \nabla ^2 w_{h} \|_{ \mathcal{T} _{h} }^{ } \| h^{-\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{ \mathcal{F} _{h} }^{  }  & \le  \| w_{h} \|_{ a_{h} }^{  } \| v_{h} \|_{ a_{h} }^{  }, \quad  \|  \nabla
 ^2 v_{h} \|_{ \mathcal{T} _{h} }^{ } \| h^{-\frac{1}{2}} \jump{ \partial _{n} w_{h} }   \|_{ \mathcal{F} _{h} }^{  }   \le \| v_{h} \|_{ a_{h} }^{  } \| w_{h} \|_{ a_{h} }^{  }, \\
-\gamma \| h^{-1 } \jump{ \partial _{n} v_{h} }   \|_{ \mathcal{F} _{h}  }^{  }  \| \jump{ \partial _{n} w_{h} }   \|_{\mathcal{F}_{h}   }^{  } &  \le \gamma \| v_{h} \|_{ a_{h} }^{  }  \| w_{h} \|_{ a_{h} }^{  }
+\text{and} \quad    \gamma \| h^{-1 } \jump{ \partial _{n} v_{h} }   & \|_{ \mathcal{F} _{h}  }^{  }  \| \jump{ \partial _{n} w_{h} }    \|_{\mathcal{F}_{h}   }^{  }   \le \gamma \| v_{h} \|_{ a_{h} }^{  }  \| w_{h} \|_{ a_{h} }^{  }.
 \end{split}
-\]
+\end{equation}
+
+Hence, the CP method is does fulfills the Lax Milgram criteria because it is both bounded and unique.
 
 
 \section{HCP Method copied from NGSolve}%
