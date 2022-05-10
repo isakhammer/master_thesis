@@ -287,12 +287,12 @@ We want the CP method to be bounded.
 \| \nabla ^2w_{h} \|_{\mathcal{T} _{h}   }^{ 2 }  \| \nabla ^2v_{h} \|_{\mathcal{T} _{h}   }^{ 2 } + C_{j}^{\frac{1}{2}} \| \nabla ^2 w_{h} \|_{\mathcal{T} _{h}  }^{  }  \| h^{-\frac{1}{2}}\jump{ \partial _{n} v_{h} } \|_{ \mathcal{F}_{h}  }^{  }   +
 C_{j}^{\frac{1}{2}} \| \nabla ^2 w_{h} \|_{\mathcal{T} _{h}  }^{  }
  \| h^{-\frac{1}{2}}\jump{ \partial _{n} w_{h} } \|_{ \mathcal{F}_{h}  }^{  } \\
+& \quad   + \gamma \| h^{-1} \jump{ \partial _{n} v_{h}}   \|_{ \mathcal{F} _{h} }^{  }   \|  \jump{ \partial _{n} w_{h}}   \|_{ \mathcal{F} _{h} }^{  }   \\
+\quad \textit{Inverse inequality }\quad  &\le
+\| \nabla ^2w_{h} \|_{\mathcal{T} _{h}   }^{ 2 }  \| \nabla ^2v_{h} \|_{\mathcal{T} _{h}   }^{ 2 } + C_{j}^{\frac{1}{2}} \| \nabla ^2 w_{h} \|_{\mathcal{T} _{h}  }^{  }  \| h^{-\frac{1}{2}}\jump{ \partial _{n} v_{h} } \|_{ \mathcal{F}_{h}  }^{  }   +
+C_{j}^{\frac{1}{2}} \| \nabla ^2 w_{h} \|_{\mathcal{T} _{h}  }^{  }
+ \| h^{-\frac{1}{2}}\jump{ \partial _{n} w_{h} } \|_{ \mathcal{F}_{h}  }^{  } \\
 & \quad   + \gamma \| h^{-1} \jump{ \partial _{n} v_{h}}   \|_{ \mathcal{F} _{h} }^{  }   \|  \jump{ \partial _{n} w_{h}}   \|_{ \mathcal{F} _{h} }^{  }
-% \quad \textit{Youngs epsilon inequality }\quad  &\le
-% \| \nabla ^2w_{h} \|_{\mathcal{T} _{h}   }^{ 2 }  \| \nabla ^2v_{h} \|_{\mathcal{T} _{h}   }^{ 2 } +  \varepsilon C_{j}/2 \| \nabla ^2 w_{h} \|_{ \mathcal{T} _{h} }^{2  }+
-% \varepsilon C_{j}/2 \| \nabla ^2 v_{h} \|_{ \mathcal{T} _{h} }^{2  } + \frac{1}{2\varepsilon } \| h^{\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{ \mathcal{F} _{h} }^{2  }    +
-%  \frac{1}{2\varepsilon } \| h^{\frac{1}{2}} \jump{ \partial _{n} w_{h} }   \|_{ \mathcal{F} _{h} }^{2  } \\
-% & \quad   + \gamma \| h^{-1} \jump{ \partial _{n} v_{h}}   \|_{ \mathcal{F} _{h} }^{  }   \|  \jump{ \partial _{n} w_{h}}   \|_{ \mathcal{F} _{h} }^{  }
 \end{split}
 \end{equation*}
 
@@ -301,16 +301,16 @@ Again, the first step was to apply the \textbf{Cauchy-Schwarz inequality} for ev
 \| h^{\frac{1}{2}} \mean{ \partial _{nn}v_{h} }   \|_{ \mathcal{F} _{h}  }^{  }\le   C_{j}^{\frac{1}{2}} \| \nabla ^2 v_{h} \|_{ \mathcal{T} _{h} }^{  } \quad \text{and} \quad   \| h^{\frac{1}{2}} \mean{ \partial _{nn}w_{h} }   \|_{ \mathcal{F} _{h}
 }^{  }\le   C_{j}^{\frac{1}{2}} \| \nabla ^2 w_{h} \|_{ \mathcal{T} _{h} }^{  }.
 \]
-And now again, we will apply
-
-The next step is then to use the \textbf{Youngs epsilon inequality} to be able to seperate the facets and triangulation norms. \[
-    \begin{split}
-   C^{\frac{1}{2}}_{j} \|  \nabla ^2 w_{h}    \|_{ \mathcal{T} _{h}  }^{  } \| h^{\frac{1}{2}} \jump{ \partial _{n} w_{h} }   \|_{ \mathcal{F} _{h} }^{  }  & \le \varepsilon C_{j}/2 \| \nabla ^2 w_{h} \|_{ \mathcal{T} _{h} }^{2  } +
-   \frac{1}{2\varepsilon } \| h^{\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{ \mathcal{F} _{h} }^{2  } \\
-   C^{\frac{1}{2}}_{j} \|  \nabla ^2 v_{h}    \|_{ \mathcal{T} _{h}  }^{  } \| h^{\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{ \mathcal{F} _{h} }^{  } &  \le \varepsilon C_{j}/2 \| \nabla ^2 v_{h} \|_{ \mathcal{T} _{h} }^{2  } +
- \frac{1}{2\varepsilon } \| h^{\frac{1}{2}} \jump{ \partial _{n} w_{h} }   \|_{ \mathcal{F} _{h} }^{2  }
+We can observe that for the second step must
+\[
+\begin{split}
+\| \nabla ^2w_{h} \|_{\mathcal{T}_{h}   }^{  }  \| \nabla ^2v_{h} \|_{\mathcal{T}_{h}   }^{  } & \le \| w_{h} \|_{ a_{h} }^{  } \| v_{h} \|_{ a_{h} }^{  }, \\
+C_{j}^{\frac{1}{2}}\|  \nabla ^2 w_{h} \|_{ \mathcal{T} _{h} }^{ } \| h^{-\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{ \mathcal{F} _{h} }^{  }  & \le \| w_{h} \|_{ a_{h} }^{  } \| v_{h} \|_{ a_{h} }^{  }, \quad \quad C_{j}^{\frac{1}{2}}\|  \nabla
+^2 v_{h} \|_{ \mathcal{T} _{h} }^{ } \| h^{-\frac{1}{2}} \jump{ \partial _{n} w_{h} }   \|_{ \mathcal{F} _{h} }^{  }   \le \| v_{h} \|_{ a_{h} }^{  } \| w_{h} \|_{ a_{h} }^{  }, \\
+\gamma \| h^{-1 } \jump{ \partial _{n} v_{h} }   \|_{ \mathcal{F} _{h}  }^{  }  \| \jump{ \partial _{n} w_{h} }   \|_{\mathcal{F}_{h}   }^{  } &  \le \gamma \| v_{h} \|_{ a_{h} }^{  }  \| w_{h} \|_{ a_{h} }^{  }
 \end{split}
 \]
+
 
 \section{HCP Method copied from NGSolve}%
 \label{ssub:hc0ip_method_from_ngsolve}
