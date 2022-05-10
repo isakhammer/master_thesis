@@ -27,16 +27,26 @@ Consider the weak formulation to solve for a $u \in  V$ such that
 \begin{equation}
     \label{eq:bi_weak1}
 a\left( u,v \right)_{\Omega } = F(v).\quad \forall v \in
-V,
+V.
 \end{equation}
-where the terms are computed as \[
+This can be
+where the terms are computed as
+\[
     \begin{split}
-a\left( u,v \right)_{\Omega } & = \int_{\Omega }^{} \left( D ^2 u : D ^2 v  +
-\alpha  u v \right) dx , \\
+\left( \Delta ^2 u, v \right) _{\Omega } & = - \left( \nabla  \Delta  u , \nabla v   \right)_{\Omega } + \left<\partial _{n} ( \Delta u ),  v \right>_{\partial \Omega } \\
+&= \left( \Delta u, \Delta v \right)_{\Omega } - \underbrace{\left< \partial _{n} \nabla u,v  \right>_{\partial \Omega }}_{\left< \nabla g_{1},v \right> _{\partial \Omega } }  +  \underbrace{\left<\partial _{n} ( \Delta u ) ,  v \right>_{\partial \Omega }} _{\left<g_2 ,v \right>_{\partial \Omega } } \\
+    \end{split}
+\]
+such that
+\[
+    \begin{split}
+a\left( u,v \right)_{\Omega } & =    \left( D ^2 u , D ^2 v\right)_{\Omega }  +
+\alpha \left( u, v \right)_{\Omega }  , \\
 F\left( v \right)_{\Omega } & = \left( f,v \right)_{\Omega } - \left<g_{2},v \right>_{\partial \Omega } + \left<\nabla g_{1}, \nabla v \right>_{\partial \Omega }.
     \end{split}
 \]
-We denote $D^2$ as the Hessian matrix operator. In fact, the solution is unique for $\alpha  > 0$. However, for $\alpha  = 0$ must we assume the solvability condtion,
+
+We denote $D^2$ as the Hessian matrix operator such that $$( D^2u, D^2v )_{\Omega } = \int_{\Omega }^{} D^{2}u : D^2v  dx$$, where $D^2u:D^2v$ is the inner product. In fact, the solution is unique for $\alpha  > 0$. However, for $\alpha  = 0$ must we assume the solvability condtion,
 \begin{equation*}
  \int_{\Omega }^{} f dx = \int_{\partial \Omega }^{} g_{2} ds
 .\end{equation*}
