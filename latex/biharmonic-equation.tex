@@ -22,6 +22,49 @@ Here is $\Delta ^2$ the biharmonic operator, also known as the bilaplacian. We w
 has no time dependencie. However, depending on how Cahn-Hilliard model is time discretized numerically can
 \eqref{eq:bi_problem} naturally arise. I refer to \cite{brenner2012quadratic} for more informastion on this.
 
+\subsection{Computational Domains}%
+\label{sub:computational_domain}
+
+We may want to define the computational domain. Recall that $\Omega \subset   \mathbb{R} ^2$ be a bounded polygonal domain. Let $\mathcal{T} _{h}$ be a triangular mesh of $\Omega$ where every triangle $T \subset \mathcal{T} _{h}$.
+
+\begin{figure}[!h]
+\centering
+\begin{tikzpicture}[scale=1]
+\coordinate (A) at (0,0);
+\coordinate (C) at (0,3);
+\coordinate (B) at (4,0);
+\coordinate (D) at (4,4);
+\coordinate (Tm) at (3.5,3.5);
+\coordinate (Tp) at (0.5, 0.5);
+\coordinate (e) at (1.5, 1.5);
+\coordinate (start) at (1.7, 1.7);
+\coordinate (end) at (2.25, 2.4);
+
+\draw (A) -- (B) -- (C) -- cycle;
+\fill[red, opacity=0.5] (A) -- (B) -- (C);
+\fill[blue, opacity=0.5] (B) -- (C) -- (D);
+\node[below left] at (Tm) {$T_{-} $ };
+\node[above right] at (Tp) {$T^{+}$ };
+\node[below right] at (e) {$E$ };
+
+\draw [|->, thick] (start) -- (end);
+% \node[above right] at (A) {A };
+% \node[below right] at (B) {B};
+% \node[above right] at (C) {C };
+% \node[below right] at (D) {D};
+\node[below right] at (end) {$n$};
+\end{tikzpicture}
+\caption{Edge $E \in \mathcal{F}_h $ shared by the triangles $T^{+}, T^{-} \in \mathcal{T}_{h} $ and the normal unit vector $n$.  }
+    \label{fig:normal}
+\end{figure}
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/mesh.jpg}
+    \caption{Example of $\Omega \subset \mathbb{R} ^{2}$ which includes $\mathcal{T} _{h}$ and $ \mathcal{F}_{h}$   }
+    \label{fig:mesh_example}
+\end{figure}
+
 
 \subsection{ Weak Form of Biharmonic Operator in $H^{4} \left( T  \right)$}%
 \label{sub:weak_form_biharmonic_identity_for_triangles}
@@ -56,7 +99,7 @@ where $D^2u:D^2v$ is the inner product. Also keep in mind that the last result n
 T} + \left< \partial _{nn} w, \partial _{n} v  \right> _{\partial T} .
 \]
 
-
+Remark that we have two formulations \eqref{eq:weak_form_identity_1} and \eqref{eq:weak_form_identity_2}
 \subsection{  Weak Form Biharmonic Equation in $H^{4}\left( \Omega  \right) $}%
 \label{sub:continious_weak_form_of_biharmonic_equation}
 
@@ -69,9 +112,11 @@ V = \left\{ v \in H^2\left( \Omega  \right) : \partial _{n} v = g_{1}  \text{ on
 Consider the weak formulation to solve for a $u \in  V$ such that
 \begin{equation}
     \label{eq:bi_weak1}
-a\left( u,v \right)_{\Omega } = F(v).\quad \forall v \in
+a\left( u,v \right) = F(v).\quad \forall v \in
 V.
 \end{equation}
+
+
 This can be
 where the terms are computed as
 \[

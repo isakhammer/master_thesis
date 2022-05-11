@@ -19,40 +19,9 @@ the problem \eqref{eq:bi_problem} produce wrong solutions if $\Omega $ is noncon
 \todo[inline]{ None-conform discretization of 4th order problem using C0 Elements. Hence CP Method }
 
 
-\begin{figure}[!h]
-\centering
-\begin{tikzpicture}[scale=1]
-\coordinate (A) at (0,0);
-\coordinate (C) at (0,3);
-\coordinate (B) at (4,0);
-\coordinate (D) at (4,4);
-\coordinate (Tm) at (3.5,3.5);
-\coordinate (Tp) at (0.5, 0.5);
-\coordinate (e) at (1.5, 1.5);
-\coordinate (start) at (1.7, 1.7);
-\coordinate (end) at (2.25, 2.4);
 
-\draw (A) -- (B) -- (C) -- cycle;
-\fill[red, opacity=0.5] (A) -- (B) -- (C);
-\fill[blue, opacity=0.5] (B) -- (C) -- (D);
-\node[below left] at (Tm) {$T_{-} $ };
-\node[above right] at (Tp) {$T^{+}$ };
-\node[below right] at (e) {$E$ };
-
-\draw [|->, thick] (start) -- (end);
-% \node[above right] at (A) {A };
-% \node[below right] at (B) {B};
-% \node[above right] at (C) {C };
-% \node[below right] at (D) {D};
-\node[below right] at (end) {$n$};
-\end{tikzpicture}
-\caption{Edge $E \in \mathcal{F}_h $ shared by the triangles $T^{+}, T^{-} \in \mathcal{T}_{h} $ and the normal unit vector $n$.  }
-    \label{fig:normal}
-\end{figure}
-
- Thus, letting $u,v \in
-H^{4}\left( T  \right) $ and using \eqref{eq:weak_form_identity_2}  does this hold ,
-
+ Let us again define $u,v \in
+H^{4}\left( T  \right) $ and recall the results \eqref{eq:weak_form_identity_2} so
 \begin{equation}
 \label{eq:bi_basic_dg}
 \left( \Delta  ^{2} u,v \right) _{T} =  \left( D^2u,D^2v \right) _{T } - \left<\partial _{nt} u, \partial _{t}v
