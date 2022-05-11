@@ -222,7 +222,6 @@ The method is said to be coercive if $\mathcal{A} _{h}\left( v_{h}, v_{h} \right
 
 
 Suppose we have the CP problem described in \eqref{eq:CP_A_F}. Then is the coercivity be computed such that
-\todo[inline]{ $\left( \alpha w_{h}, v_{h} \right) _{\Omega } $ is not included yet  }
 \[
     \begin{split}
 \mathcal{A} \left( v_{h}, v_{h} \right) & =\alpha \|  w_{h}  v_{h} \|_{ \Omega  }^{  } +  \| D^2v_{h} \|_{ \mathcal{T} _{h} }^{2  }  + 2 \left(  \mean{ \partial _{nn} v_{h} }    ,  \jump{ \partial _{n}v_{h} }     \right) _{\mathcal{F} _{h}} +  \frac{\gamma}{h} \|  \jump{ \partial _{n} v_{h} }
@@ -237,10 +236,11 @@ Suppose we have the CP problem described in \eqref{eq:CP_A_F}. Then is the coerc
   h^{-\frac{1}{2}} \jump{ \partial _{n} v_{h}}   \|_{ \mathcal{F} _{h} }^{2  }  \\
   & =  \alpha \| w_{h}  \|_{\Omega   }^{  } \| v_{h} \|_{\Omega   }^{  } +\left( 1 - \varepsilon C_{j} \right) \| \nabla ^2 v_{h} \|_{  }^{ 2 } + \left( \gamma  - \frac{1}{\varepsilon } \right) \| h^{-\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{ \mathcal{T} _{h} }^{ 2 } \\
   (\varepsilon  = \frac{1}{2 C_{j} })  \implies  \quad \quad &= \alpha \| w_{h}  \|_{\Omega   }^{  } \| v_{h} \|_{\Omega   }^{  } +\frac{1}{2} \| \nabla ^2 v_{h} \|_{ \mathcal{T} _{h} }^{ 2 }  + \underbrace{\left( \gamma -2 C_{j} \right)}_{ \ge  \frac{1}{2}}  \| h^{\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{
-  \mathcal{F} _{h} }^{  } \ge C \| v_{h} \|_{ a_{h} }^{  2}   \text{ where }
+  \mathcal{F} _{h} }^{  } \ge C \| v_{h} \|_{ a_{h} }^{  2}
+
     \end{split}
 \]
-This is true if $C=\min\left\{  \alpha , 1 /2\right\}$.
+This holds if $C=\min\left\{  \alpha , 1 /2\right\}$.
 Observe that for the first inequality is the standard \textbf{Cauchy-Schwarz inequality} such that $$\left( \mean{ \partial_{nn} v_{h} }  , \jump{ \partial _{n} v_{h} }   \right) _{\mathcal{F} _{h}} \ge - \| h^{-\frac{1}{2}} \mean{ \partial _{nn}
 v_{h} }    \|_{\mathcal{F}_{h}   }^{  } \| \mean{ \partial _{n}v_{h} }   \|_{ \mathcal{F}_{h}   }^{  } .  $$ On the second inequality the \textbf{Inverse inequality} was applied,
 \[
