@@ -43,30 +43,8 @@ the problem \eqref{eq:bi_problem} produce wrong solutions if $\Omega $ is noncon
     \label{fig:normal}
 \end{figure}
 
-Let $w,v \in  H^{4} \left( T  \right) $ and $\mathcal{T}_{h} $ the simplicial triangulation of $\Omega$. Using the same method as in \cite{gu2012c0, brenner2012quadratic} can we
-deduce that for every triangle $T \in  \mathcal{T}_{h} $ it holds that
-\begin{equation}
-\label{eq:weak_form_identity}
-    \begin{split}
-        \left( \Delta  ^{2} w, v \right) _{T} &= \left< \partial _{n} \nabla ^2 w, v \right>_{\partial T} - \left( \nabla \left( \nabla ^2 w
- \right), \nabla  v  \right)_{T}   \\
- &= \left( D^2w, D^2v \right)_{T} + \left< \partial _{n} \nabla ^2 w, v \right>_{\partial T}  - \left<\partial _{n}
- \nabla w, \nabla v \right>_{\partial T} \\
- &=  \left( D^2 w, D^2 v \right)_{T} - \left<\partial _{nt} w, \partial _{t} v \right>_{\partial T} - \left<\partial
- _{nn} w, \partial _{n} v \right> _{\partial T} +  \left<\partial _{n} \nabla ^2 w, v \right>_{\partial T} \\
-    \end{split}
-.\end{equation}
-Note that we in the second step we used that
-\[
-\left( \nabla \left( \nabla ^2 w \right), \nabla  v  \right)_{T} = \sum_{i=1}^{2}  \int_{T}^{} \left( \nabla \nabla w_{x_{i}} \right)\cdot  v_{x_{i}} \ dx   =  \int_{T}^{} D^2w: D^2v \ dx - \int_{\partial T}^{} \left( \partial _{n} \nabla w \right) \cdot  \nabla v  \ ds
-\]
-Keep in mind that this result naturally arise when defining $\nabla  = \left( \partial _{n}, \partial _{t} \right) $ such that
-\[
-\left<\partial _{n} \nabla w, \nabla v \right>_{\partial T} = \left<\partial _{nt} w, \partial _{t} v\right> _{\partial
-T} + \left< \partial _{nn} w, \partial _{n} v  \right> _{\partial T} .
-\]
  Thus, letting $u,v \in
-H^{4}\left( T  \right) $ and using \eqref{eq:weak_form_identity}  does this hold ,
+H^{4}\left( T  \right) $ and using \eqref{eq:weak_form_identity_2}  does this hold ,
 
 \begin{equation}
 \label{eq:bi_basic_dg}

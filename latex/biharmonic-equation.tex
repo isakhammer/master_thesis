@@ -18,11 +18,50 @@ Here is $\Delta ^2$ the biharmonic operator, also known as the bilaplacian. We w
 has no time dependencie. However, depending on how Cahn-Hilliard model is time discretized numerically can
 \eqref{eq:bi_problem} naturally arise. I refer to \cite{brenner2012quadratic} for more informastion on this.
 
-Before we start constructing a numerical method, we might want to introduce the basic weak formulation of \eqref{eq:bi_problem}. Now, let the solution space be on the form,
+
+\subsection{ Weak Form of Biharmonic Operator in $H^{4} \left( T  \right)$}%
+\label{sub:weak_form_biharmonic_identity_for_triangles}
+
+
+Let $w,v \in  H^{4} \left( T  \right) $ and $\mathcal{T}_{h} $ the simplicial triangulation of $\Omega$. Using the same method as in \cite{gu2012c0, brenner2012quadratic} can we
+deduce that for every triangle $T \in  \mathcal{T}_{h} $ it holds that
+\begin{align}
+        \left( \Delta  ^{2} w, v \right) _{T} &= \left< \partial _{n} \nabla ^2 w, v \right>_{\partial T} - \left( \nabla \left( \nabla ^2 w
+ \right), \nabla  v  \right)_{T} \nonumber   \\
+\label{eq:weak_form_identity_1}
+ &= \left( D^2w, D^2v \right)_{T} + \left< \partial _{n} \nabla ^2 w, v \right>_{\partial T}  - \left<\partial _{n}
+ \nabla w, \nabla v \right>_{\partial T} \\
+\label{eq:weak_form_identity_2}
+ &=  \left( D^2 w, D^2 v \right)_{T} - \left<\partial _{nt} w, \partial _{t} v \right>_{\partial T} - \left<\partial
+ _{nn} w, \partial _{n} v \right> _{\partial T} +  \left<\partial _{n} \nabla ^2 w, v \right>_{\partial T}
+.\end{align}
+Note that we in the second step we used that
+\[
+    \begin{split}
+\left( \nabla \left( \nabla ^2 w \right), \nabla  v  \right)_{T} & = \sum_{i=1}^{2}  \int_{T}^{} \left( \nabla \nabla w_{x_{i}} \right)\cdot  v_{x_{i}} \ dx    \\
+ & =  \int_{T}^{} D^2w: D^2v \ dx - \int_{\partial T}^{} \left( \partial _{n} \nabla w \right)
+\cdot  \nabla v  \ ds \\
+&= \left( D^2 w : D^2v  \right) _{ T} + \left<\partial _{n} \nabla w, \nabla v \right>_{\partial T }  \\
+    \end{split}
+\]
+We denote $D^2$ as the Hessian matrix operator such that
+$$( D^2u, D^2v )_{\Omega } = \int_{\Omega }^{} D^{2}u : D^2v  dx,$$
+where $D^2u:D^2v$ is the inner product. Also keep in mind that the last result naturally arise when defining $\nabla  = \left( \partial _{n}, \partial _{t} \right) $ such that
+\[
+\left<\partial _{n} \nabla w, \nabla v \right>_{\partial T} = \left<\partial _{nt} w, \partial _{t} v\right> _{\partial
+T} + \left< \partial _{nn} w, \partial _{n} v  \right> _{\partial T} .
+\]
+
+
+\subsection{  Weak Form Biharmonic Equation in $H^{4}\left( \Omega  \right) $}%
+\label{sub:continious_weak_form_of_biharmonic_equation}
+
+We might want to introduce the full basic weak formulation of \eqref{eq:bi_problem}. Now, let the solution space be on the form,
 \begin{equation*}
 V = \left\{ v \in H^2\left( \Omega  \right) : \partial _{n} v = g_{1}  \text{ on }
 \partial \Omega  \right\}.
 .\end{equation*}
+
 Consider the weak formulation to solve for a $u \in  V$ such that
 \begin{equation}
     \label{eq:bi_weak1}
@@ -46,7 +85,7 @@ F\left( v \right)_{\Omega } & = \left( f,v \right)_{\Omega } - \left<g_{2},v \ri
     \end{split}
 \]
 
-We denote $D^2$ as the Hessian matrix operator such that $$( D^2u, D^2v )_{\Omega } = \int_{\Omega }^{} D^{2}u : D^2v  dx$$, where $D^2u:D^2v$ is the inner product. In fact, the solution is unique for $\alpha  > 0$. However, for $\alpha  = 0$ must we assume the solvability condtion,
+ In fact, the solution is unique for $\alpha  > 0$. However, for $\alpha  = 0$ must we assume the solvability condtion,
 \begin{equation*}
  \int_{\Omega }^{} f dx = \int_{\partial \Omega }^{} g_{2} ds
 .\end{equation*}
