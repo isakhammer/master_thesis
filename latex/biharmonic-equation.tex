@@ -25,7 +25,16 @@ has no time dependencie. However, depending on how Cahn-Hilliard model is time d
 \subsection{Computational Domains}%
 \label{sub:computational_domain}
 
-We may want to define the computational domain. Recall that $\Omega \subset   \mathbb{R} ^2$ be a bounded polygonal domain. Let $\mathcal{T} _{h}$ be a triangular mesh of $\Omega$ where every triangle $T \subset \mathcal{T} _{h}$.
+We may want to define the computational domain. Recall that $\Omega \subset   \mathbb{R} ^2$ be a bounded polygonal domain. Let $\mathcal{T} _{h}$ be a triangular mesh of $\Omega$ where every triangle $T \in  \mathcal{T} _{h}$, which is illustrated
+in figure \ref{fig:mesh_example}. We define $h$ as
+the max diameter of the triangle $T$ such that $h = \max_{T \in \mathcal{T}_{h} }  h_T  $.
+
+We may also define the set of all edges $\mathcal{F}_{h}$ where every edge is denoted by $E \in \mathcal{F} _{h}$. However, we will distinguish between the
+set of external edges $\mathcal{F}^{ext} _{h}$, which is all edges along $\partial \Omega $, and the interior edges $\mathcal{F} ^{int}_{h}$. 
+
+
+
+
 
 \begin{figure}[!h]
 \centering
