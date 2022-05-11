@@ -3,7 +3,7 @@
 \label{sec:continious_interior_penalty_method}
 
 
-To solve this numerically do we want to introduce the $C^{0}$ Interior Penalty Method (CP), which is a Discontinious Galerkin
+To solve this numerically do we want to introduce the Continious Interior Penalty Method (CP), which is a Discontinious Galerkin
 method (DG) using $C^{0}$ finite elements. There is several reasons why we want to apply $C^{0}$ instead of the often used
 $C^{1}$ finite elements for fourth order problems. First and foremost is the $C^0$ finite elements simpler than
 obtaining $C^{1}$ finite elements.  Also, compared to other methods similar to the mixed
@@ -11,6 +11,13 @@ finite element method for the problem \eqref{eq:bi_problem}, CP has in fact
 preserved the symmetric positive definiteness, which means the stability analysis is more straight forward. Finally and most
 importantly according to \cite{brenner2012quadratic} can naive use mixed methods of splitting the boundary conditions of
 the problem \eqref{eq:bi_problem} produce wrong solutions if $\Omega $ is nonconvex.
+
+\todo[inline]{ TODOS: }
+\todo[inline]{ Conformal methods $V_{h} \subset V$ requires $C^{1}$. Exists in a good manner in 2D, but does not exist generalization in 3D. Need reference.}
+\todo[inline]{Use Bspline as alternative basis. . Less flexible when generating meshes for complicated domains. Need reference.  }
+\todo[inline]{ Write in mixed formulation $\overline{w}  = \Delta w$ }
+\todo[inline]{ None-conform discretization of 4th order problem using C0 Elements. Hence CP Method }
+
 
 \begin{figure}[!h]
 \centering
