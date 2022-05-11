@@ -29,12 +29,16 @@ We may want to define the computational domain. Recall that $\Omega \subset   \m
 in figure \ref{fig:mesh_example}. We define $h$ as
 the max diameter of the triangle $T$ such that $h = \max_{T \in \mathcal{T}_{h} }  h_T  $.
 
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figures/mesh.jpg}
+    \caption{Example of a mesh of $\Omega \subset \mathbb{R} ^{2}$ with triangulation $\mathcal{T} _{h}$.    }
+    \label{fig:mesh_example}
+\end{figure}
+
 We may also define the set of all edges $\mathcal{F}_{h}$ where every edge is denoted by $E \in \mathcal{F} _{h}$. However, we will distinguish between the
-set of external edges $\mathcal{F}^{ext} _{h}$, which is all edges along $\partial \Omega $, and the interior edges $\mathcal{F} ^{int}_{h}$.
-
-
-
-
+set of external edges $\mathcal{F}^{ext} _{h}$, which is all edges along $\partial \Omega $, and the interior edges $\mathcal{F} ^{int}_{h}$. Let the edges be denotes as $E \in \mathcal{F } _{h}$, then the normal vector $n$ is across the edge from
+$T_{+}$ to $T_{-}$, illustraded in figure \ref{fig:normal}.
 
 \begin{figure}[!h]
 \centering
@@ -52,7 +56,7 @@ set of external edges $\mathcal{F}^{ext} _{h}$, which is all edges along $\parti
 \draw (A) -- (B) -- (C) -- cycle;
 \fill[red, opacity=0.5] (A) -- (B) -- (C);
 \fill[blue, opacity=0.5] (B) -- (C) -- (D);
-\node[below left] at (Tm) {$T_{-} $ };
+\node[below left] at (Tm) {$T^{-} $ };
 \node[above right] at (Tp) {$T^{+}$ };
 \node[below right] at (e) {$E$ };
 
@@ -67,12 +71,6 @@ set of external edges $\mathcal{F}^{ext} _{h}$, which is all edges along $\parti
     \label{fig:normal}
 \end{figure}
 
-\begin{figure}[!h]
-    \centering
-    \includegraphics[width=0.5\textwidth]{figures/mesh.jpg}
-    \caption{Example of a mesh of $\Omega \subset \mathbb{R} ^{2}$ with triangulation $\mathcal{T} _{h}$.    }
-    \label{fig:mesh_example}
-\end{figure}
 
 
 \subsection{ Weak Form of Biharmonic Operator in $H^{4} \left( T  \right)$}%
@@ -125,13 +123,14 @@ a\left( u,v \right) = F(v).\quad \forall v \in
 V.
 \end{equation}
 
-
-This can be
-where the terms are computed as
+By using the identity \eqref{eq:weak_form_identity_1} and utilizing the solution space can we easily do a global summation over the triangulation. Hence, the global weak formulation can be expressed as,
 \[
     \begin{split}
-\left( \Delta ^2 u, v \right) _{\Omega } & = - \left( \nabla  \Delta  u , \nabla v   \right)_{\Omega } + \left<\partial _{n} ( \Delta u ),  v \right>_{\partial \Omega } \\
-&= \left( \Delta u, \Delta v \right)_{\Omega } - \underbrace{\left< \partial _{n} \nabla u,v  \right>_{\partial \Omega }}_{\left< \nabla g_{1},v \right> _{\partial \Omega } }  +  \underbrace{\left<\partial _{n} ( \Delta u ) ,  v \right>_{\partial \Omega }} _{\left<g_2 ,v \right>_{\partial \Omega } } \\
+\left( \Delta ^2 u, v \right) _{\Omega }  &= \sum_{T \in \mathcal{T} _{h}}^{}  - \left( \nabla  \Delta  u , \nabla v   \right)_{T } + \left<\partial _{n} ( \Delta u ),  v \right>_{\partial T } \\
+& = \sum_{T \in \mathcal{T} _{h}}^{} - \left( \nabla  \Delta  u , \nabla v   \right)_{T } + \left<\partial _{n} ( \Delta u ),  v \right>_{\partial T } \\
+&= \sum_{T \in \mathcal{T} _{h}}^{}  \left( \Delta u, \Delta v \right)_{T } - \underbrace{\left< \partial _{n} \nabla u,v  \right>_{\partial T }}_{\left< \nabla g_{1},v \right> _{\partial T } }  +  \underbrace{\left<\partial _{n} ( \Delta u ) ,  v
+\right>_{\partial T }} _{\left<g_2 ,v \right>_{\partial T } } \\
+&=   \left( \Delta u, \Delta v \right)_{\Omega  } - \left< \nabla g_{1},v \right> _{\partial \Omega  }   +  \left<g_2 ,v \right>_{\partial \Omega  }
     \end{split}
 \]
 such that
