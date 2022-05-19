@@ -340,7 +340,7 @@ Since we have discrete coercivity, then $V_{h} \not \subset V$, thus the standar
 \begin{equation*}
     \begin{split}
     \textit{Discrete coercivity } \quad & \hat{\alpha } \| u_{h} \|_{ a_{h} }^{ 2 }  \le  \mathcal{A} \left( u_{h}, u_{h} \right) \\
-    \textit{Boundedness (semi-discrete) }\quad  & \mathcal{A} \left( v,w_{h} \right)  \le  \widetilde{C} \| v \|_{ a_{h,*} }^{  }  \| w_{h} \|_{ a_{h} }^{  } \quad \forall v \in  V_{h} \oplus H^{s}\left( \Omega  \right) \\
+    \textit{Boundedness (semi-discrete) }\quad  & \mathcal{A} \left( v,w_{h} \right)  \le  \widetilde{C} \| v \|_{ a_{h,*} }^{  }  \| w_{h} \|_{ a_{h} }^{  } \quad \forall v \in  V_{h} \oplus H^{4}\left( \Omega  \right) \\
     \textit{Boundedness (fully discrete) }\quad  & \mathcal{A} \left( v_{h},w_{h} \right)  \le  \overline{C}  \| v \|_{ a_{h,*} }^{  }  \| w_{h} \|_{ a_{h} }^{  } \quad \forall v_{h}, w_{h} \in V_{h}
     \end{split}
 .\end{equation*}
@@ -365,7 +365,6 @@ Finally, following the same procedure as in \eqref{eq:cealemma_proof} we get
  &\le  \widetilde{C} \| u - v_{h} \|_{ a_{h,*} }^{  } \| u- v_{h} \|_{ a_{h} }^{  }
     \end{split}
 \]
-\todo[inline]{ Explain each step. }
 Hence, we have equivalent Céa's lemma for the CP method.
 \[
     \begin{split}
