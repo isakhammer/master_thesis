@@ -303,12 +303,52 @@ Let us recall the weak continious problem \eqref{eq:continious_problem} and the 
 
 In fact, the key property of this problem formulation is that $a\left( u, v_{h} \right)  = l \left( v_{h} \right) \quad  \forall v_{h} \in V_{h} \subset V  $. Thus, the Galerkin orthogonality property holds so that,
 $$
-a\left( u, v_{h} \right)  - a\left( u_{h}, v_{h} \right) = a\left( u- u_{h}, v_{h} \right) = 0 . $$
-
-\subsubsection{Ceas Lemma}%
+a\left( u, v_{h} \right)  - a\left( u_{h}, v_{h} \right) = a\left( u- u_{h}, v_{h} \right) = 0,   . $$
+Keep in mind that we define
+$ u - u_{h} \in V$
+\subsubsection{Céa's Lemma }%
 \label{ssub:ceas_lemma}
 
-Assume that $a\left( u,v \right)  \le C \| u \|_{  }^{  }  \| v \|_{  }^{  }  \quad  \forall u,v \in V\left( V_{h} \right) $ and $ \alpha \|  u\|_{   }^{     2} \le a \left( u,u \right)   $, also known as Lax Milgram.
+Assume that the problems \eqref{eq:continious_problem} and \eqref{eq:discrete_problem} satisfied the Lax Milgram criteria,
+\begin{equation*}
+    \begin{split}
+a\left( u,v \right)  & \le C \| u \|_{  }^{  }  \| v \|_{  }^{  }  \quad   \left( V_{h} \right) , \quad  \alpha \|  u\|_{   }^{     2} \le a \left( u,u \right) \quad \forall u,v\in V, \\
+a\left( u_{h},v_{h} \right)  & \le C \| u_{h} \|_{  }^{  }  \| v_{h} \|_{  }^{  }   \left( V_{h} \right) , \quad  \alpha \| u_{h}\|_{   }^{     2} \le a \left( u_{h},u_{h} \right)\quad  \forall u_{h},v_{h}\in V_{h}.
+    \end{split}
+.\end{equation*}
+
+Then the Céa's lemma says that this is satisfied,
+\begin{equation}
+\label{eq:Ceas_lemma_continious}
+\| u - u_{h} \|_{  }^{  } \le \frac{C}{\alpha }  \inf_{v_{h} \in V_{h}} \| v_{h} - v \|_{  }^{  } .
+\end{equation}
+
+The lemma naturally arise using the following argumentation,
+\[
+    \begin{split}
+\alpha \| u - u_{h} \|_{  }^{  2} & \le a\left( u-u_{h}, u - u_{h} \right) \\
+&= a\left( u - u_{h}, u - v_{h} \right)  - a\left( u - u_{h}, v_{h} - u_{h} \right)  \\
+& \le  C\| u - u_{h} \|_{  }^{  } \| u - v_{h} \|_{  }^{  } \\
+\implies &  \alpha \| u - u_{h} \|_{  }^{  }    \le  C \| v_{h} - u \|_{  }^{  } \le C \inf_{v_{h} \in V_{h}} \| v_{h} -u \|_{  }^{  }.
+    \end{split}
+\]
+
+\subsubsection{Céa's Lemma for CP Method, }%
+\label{ssub:ceas_lemma}
+Since we have discrete coercivity, then $V_{h} \not \subset V$, thus the standard method does not work. Firstly, we want to use the results from \ref{sub:error_and_stability_analysis_of_c0ip}. We have shown that
+\begin{equation*}
+    \begin{split}
+    \textit{Disrete coercivity } \quad & \hat{\alpha } \| u_{h} \|_{ a_{h} }^{ 2 }  \le  \mathcal{A} \left( u_{h}, u_{h} \right) \\
+    \textit{Boundedness }\quad  & \mathcal{A} \left( v,w_{h} \right)  \le  \widetilde{C} \| v \|_{ a_{h,*} }^{  }  \| w_{h} \|_{ a_{h} }^{  } \quad \forall v \in  V_{h} \oplus H^{s}\left( \Omega  \right) \\
+    \textit{Boundedness for Lax. Milgram }\quad  & \mathcal{A} \left( v,w_{h} \right)  \le  \overline{C}  \| v \|_{ a_{h,*} }^{  }  \| w_{h} \|_{ a_{h} }^{  } \quad \forall v_{h}, w_{h} \in V_{h}
+    \end{split}
+.\end{equation*}
+
+Let the difference have the form $u - u_{h} = (u - v_{h} )  + (v_{h} - u_{h})$ and the define identity $$\| w_{h} \|_{ a_{h,*} }^{  }  \le  D \| w_{h} \|_{ a_{h} }^{  }, \forall w_{h} \in V_{h} .$$
+
+Thus, the norm can now be computed such that\[
+\| u - u_{h} \|_{ a_{h,*} }^{  } \le \| u -v_{h} \|_{ a_{h,*} }^{  }  + D \| u_{h} - v_{h} \|_{a_{h}  }^{  }
+\]
 
 
 
