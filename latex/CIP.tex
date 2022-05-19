@@ -285,6 +285,33 @@ The second step can we luckily observe that all terms invidually is less than th
 Hence, the CP method is does fulfills the Lax Milgram criteria because it is both bounded and unique.
 
 
+\subsection{Apriori Estimates}%
+\label{sub:apriori_estimates}
+
+We will now introduce the notion of an apriori estimate, which can be used the estimate the size of a solution even before we have a solution. However, we will first introduce some basic results from the theory of Galerkin methods.
+
+\subsubsection{Galerkin Orthogonality}%
+\label{ssub:galerkin_orthonality}
+
+Let us recall the weak continious problem \eqref{eq:continious_problem} and the weak discrete problem \eqref{eq:discrete_problem}.
+\begin{align}
+    \label{eq:continious_problem}
+    \text{Find } u \in V \quad&  \text{s.t. } a\left( u,v \right) = l\left( v \right)  \quad \forall v \in V. \\
+    \label{eq:discrete_problem}
+    \text{Find } u_h \in V_h \quad&  \text{s.t. } a\left( u_h,v_h \right) = l\left( v_h \right)  \quad \forall v_h \in V_h.
+.\end{align}
+
+In fact, the key property of this problem formulation is that $a\left( u, v_{h} \right)  = l \left( v_{h} \right) \quad  \forall v_{h} \in V_{h} \subset V  $. Thus, the Galerkin orthogonality property holds so that,
+$$
+a\left( u, v_{h} \right)  - a\left( u_{h}, v_{h} \right) = a\left( u- u_{h}, v_{h} \right) = 0 . $$
+
+\subsubsection{Ceas Lemma}%
+\label{ssub:ceas_lemma}
+
+Assume that $a\left( u,v \right)  \le C \| u \|_{  }^{  }  \| v \|_{  }^{  }  \quad  \forall u,v \in V\left( V_{h} \right) $ and $ \alpha \|  u\|_{   }^{     2} \le a \left( u,u \right)   $, also known as Lax Milgram.
+
+
+
 \section{HCP Method copied from NGSolve}%
 \label{ssub:hc0ip_method_from_ngsolve}
 \todo[inline]{ TODO: Remove this chapter. }
