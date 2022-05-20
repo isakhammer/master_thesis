@@ -365,11 +365,11 @@ Finally, following the same procedure as in \eqref{eq:cealemma_proof} we get
  &\le  \widetilde{C} \| u - v_{h} \|_{ a_{h,*} }^{  } \| u- v_{h} \|_{ a_{h} }^{  }
     \end{split}
 \]
-Hence, we have equivalent Céa's lemma for the CP method.
+Observe that we now have $ \| u_{h} - v_{h} \|_{ a_{h} }^{  }   \le \frac{\widetilde{C}}{\hat{\alpha }}  \| u - v_{h} \|_{ a_{h, *} }^{  }$ and $\| u - u_{h} \|_{ a_{h,*} }^{  }   \le \left( 1 + D \widetilde{C} /\hat{\alpha } \right)\cdot  \| u - v_{h} \|_{ a_{h,*} }^{  } $. Hence, we have derived a equivalent Céa's lemma for the CP method.
 \[
     \begin{split}
-\| u_{h} - v_{h} \|_{ a_{h} }^{  }  & \le \frac{\widetilde{C}}{\hat{\alpha }}  \| u - v_{h} \|_{ a_{h, *} }^{  } \\
-\| u - u_{h} \|_{ a_{h,*} }^{  }  & \le \left( 1 + D \widetilde{C} /\hat{\alpha } \right)\cdot  \| u - v_{h} \|_{ a_{h,*} }^{  }
+\| u_{h} - v_{h} \|_{ a_{h} }^{  }  & \le \frac{\widetilde{C}}{\hat{\alpha }}  \inf_{v_{h} \in  V_{h}} \|  v_{h} - u \|_{ a_{h, *} }^{  } \\
+\| u - u_{h} \|_{ a_{h,*} }^{  }  & \le \left( 1 + D \widetilde{C} /\hat{\alpha } \right)\cdot \inf_{v_{h} \in  V_{h}}   \| u - v_{h} \|_{ a_{h,*} }^{  }
     \end{split}
 \]
 
