@@ -60,9 +60,28 @@ Remark that we have two formulations \eqref{eq:weak_form_identity_1} and \eqref{
 
 We might want to introduce the full basic weak formulation of \eqref{eq:bi_problem}. Now, let the solution space be on the form,
 \begin{equation*}
-V = \left\{ v \in H^2\left( \Omega  \right) : \partial _{n} v = g_{1}  \text{ on }
+V = \left\{ v \in H^2\left( \Omega  \right) : \partial _{n} v = 0  \text{ on }
 \partial \Omega  \right\}.
 .\end{equation*}
+Let $u,v \in  V$ then the derivation of the weak form where $\partial _{n} v$  is built in weakly is
+\[
+\begin{split}
+\left( \Delta ^2 u,v \right) _{\Omega }  &  = \left( \partial _{n} \Delta u, v \right) _{\partial \Omega } - \left( \nabla \left( \Delta  u \right) , \nabla v \right) _{\Omega }  \\
+ & = \left( g, v \right) _{\partial \Omega } - \left( \nabla \left( \Delta u
+\right) , \nabla v \right) _{\Omega }
+\end{split}
+\]
+Instead we write
+\[
+    \begin{split}
+\left( \nabla \left( \Delta u \right) , \nabla v \right) _{\Omega } & = \sum_{i = 1}^{ d}  \left( \Delta  \partial _{x_{i}} u, \partial _{x_{i}}v \right) _{\Omega }  \\
+&= \sum_{i = 1}^{d}  \left( \nabla \cdot \left( \nabla \partial _{x_{i}} u \right) , \partial _{x_{i}} v \right)  \\
+&= \sum_{i = 1}^{d}  \left( \frac{\partial }{\partial  n}  \partial _{x_{i}} u, \nabla  \partial _{x_{i}} v \right) _{\partial \Omega} -   \left( \nabla \partial _{x_{i}} u, \nabla \partial _{x_{i}} v \right)_{\Omega }  \\
+&= \left( \frac{\partial }{\partial  n} \nabla u, \nabla v \right) _{\partial \Omega } - \left( D^2 u, D^2v \right) _{\Omega } \\
+&= \underbrace{\left( \partial _{nn} u, \partial _{n} v  \right)_{\partial \Omega }}_{=0}   + \left( \partial _{nt} u, \partial _{t} v \right) _{\partial \Omega } - \left( D^2u, D^2v \right) _{\Omega }  \\ 
+    \end{split}
+\]
+
 
 Consider the weak formulation to solve for a $u \in  V$ such that
 \begin{equation}
