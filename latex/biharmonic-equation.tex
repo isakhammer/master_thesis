@@ -13,19 +13,19 @@ Let $\Omega \subset   \mathbb{R} ^2$ be a bounded polygonal domain and $\partial
 \label{eq:bi_problem}
 \begin{split}
     \Delta^2  u  + \alpha  u  & = f \quad \text{in } \Omega   \\
-    \partial _{n} u & = g_1\left( x \right)  \quad \text{on } \partial \Omega  \\
-    \partial _{n} \nabla ^2 u & = g_{2}\left( x \right)  \quad \text{on } \partial \Omega .  \\
+    \partial _{n} u & = 0  \quad \text{on } \partial \Omega  \\
+    \partial _{n} \Delta  u & = g\left( x \right)  \quad \text{on } \partial \Omega .  \\
 \end{split}
 .\end{equation}
-Here is $\Delta ^2$ the biharmonic operator, also known as the bilaplacian. We will assume for now that $u \in H^{4}\left( \Omega  \right) $, $\alpha $ is a nonnegative constant and $f \in L_{2}\left( \Omega  \right) $. We may consider the functions $g_{1}$ and $g_{2}$ as time independent boundary conditions. Such problems as \eqref{eq:bi_problem} are often associated with the Cahn-Hilliard model
-\cite{cahnhilliard1957} for phase seperation. As a matter of fact, the major difference is that \eqref{eq:bi_problem}
-has no time dependencie. However, depending on how Cahn-Hilliard model is time discretized numerically can
-\eqref{eq:bi_problem} naturally arise. I refer to \cite{brenner2012quadratic} for more informastion on this.
+Here is $\Delta ^2 = \Delta  \left( \Delta  \right) $ the biharmonic operator, also known as the bilaplacian. We will assume for now that $u \in H^{4}\left( \Omega  \right) $, $\alpha $ is a non-negative constant and $f \in L_{2}\left( \Omega  \right)
+$. We may consider the functions $g\left( x \right) $ as time independent boundary conditions. Such problems as \eqref{eq:bi_problem} are often associated with the Cahn-Hilliard model
+\cite{cahnhilliard1957} for phase separation. However, depending on how Cahn-Hilliard model is time discretized numerically can
+\eqref{eq:bi_problem} naturally arise. I refer to \cite{brenner2012quadratic} for more information on this.
 
 \subsection{Computational Domains}%
 \label{sub:computational_domain}
 
-We may want to define the computational domain. Recall that $\Omega \subset   \mathbb{R} ^2$ be a bounded polygonal domain. Let $\mathcal{T} _{h}$ be a triangular mesh of $\Omega$ where every triangle $T \in  \mathcal{T} _{h}$, which is illustrated
+First we need to define the computational domain. Recall that $\Omega \subset   \mathbb{R} ^2$ be a bounded polygonal domain. Let $\mathcal{T} _{h}$ be a triangular mesh of $\Omega$ where every triangle $T \in  \mathcal{T} _{h}$, which is illustrated
 in figure \ref{fig:mesh_example}. We define $h$ as
 the max diameter of the triangle $T$ such that $h = \max_{T \in \mathcal{T}_{h} }  h_T  $.
 
@@ -142,7 +142,7 @@ F\left( v \right)_{\Omega } & = \left( f,v \right)_{\Omega } - \left<g_{2},v \ri
     \end{split}
 \]
 
- In fact, the solution is unique for $\alpha  > 0$. However, for $\alpha  = 0$ must we assume the solvability condtion,
+ In fact, the solution is unique for $\alpha  > 0$. However, for $\alpha  = 0$ must we assume the solvability condition,
 \begin{equation*}
  \int_{\Omega }^{} f dx = \int_{\partial \Omega }^{} g_{2} ds
 .\end{equation*}
@@ -153,12 +153,12 @@ V^{*} = \begin{cases}
 \end{cases}
 \]
 where $p_{*}$ is a corner of the polygonal domain $\Omega $.
-Thus, the unique solution in $v \in V^{*}$ belongs to $H^{3 }\left( \Omega  \right) $ and we get the follwing
+Thus, the unique solution in $v \in V^{*}$ belongs to $H^{3 }\left( \Omega  \right) $ and we get the following
 elliptic regularity estimate \cite{gu2012c0},
 \begin{equation}
 \label{eq:bi_harmonic_ellitpic_regularity}
 \left| u \right| _{H^{3 }\left( \Omega  \right) }  \le C_{\Omega } \left( \| f \|_{  L_{2}( \Omega ) }^{  } + ( 1 + \alpha  ^{\frac{1}{2}}
 ) \cdot \| w  \|_{ H^{4}\left( \Omega  \right)  }^{  }    \right), \quad w\in H^{4}\left( \Omega  \right).
 \end{equation}
-This regularity estimate may be important for further usecases in terms of error analysis.
+This regularity estimate may be important for further use cases in terms of error analysis.
 
