@@ -1,3 +1,4 @@
+\newpage
 \section{Continuous Interior Penalty Method}%
 \label{sec:continious_interior_penalty_method}
 
@@ -25,12 +26,48 @@ the problem \eqref{eq:bi_problem} produce wrong solutions if $\Omega $ is non co
 \todo[inline]{ Write in mixed formulation $\overline{w}  = \Delta w$ }
 \todo[inline]{ None-conform discretization of 4th order problem using C0 Elements. Hence CP Method }
 
-\newpage
+
+
+\subsection{ Weak Form of Biharmonic Operator in $H^{4} \left( T  \right)$}%
+\label{sub:weak_form_biharmonic_identity_for_triangles}
+
+
+% Let $w,v \in  H^{4} \left( T  \right) $ and $\mathcal{T}_{h} $ the simplicial triangulation of $\Omega$. Using the same method as in \cite{gu2012c0, brenner2012quadratic} can we
+% deduce that for every triangle $T \in  \mathcal{T}_{h} $ it holds that
+% \begin{align}
+%         \left( \Delta  ^{2} w, v \right) _{T} &= \left< \partial _{n} \nabla ^2 w, v \right>_{\partial T} - \left( \nabla \left( \nabla ^2 w
+%  \right), \nabla  v  \right)_{T} \nonumber   \\
+% \label{eq:weak_form_identity_1}
+%  &= \left( D^2w, D^2v \right)_{T} + \left< \partial _{n} \nabla ^2 w, v \right>_{\partial T}  - \left<\partial _{n}
+%  \nabla w, \nabla v \right>_{\partial T} \\
+% \label{eq:weak_form_identity_2}
+%  &=  \left( D^2 w, D^2 v \right)_{T} - \left<\partial _{nt} w, \partial _{t} v \right>_{\partial T} - \left<\partial
+%  _{nn} w, \partial _{n} v \right> _{\partial T} +  \left<\partial _{n} \nabla ^2 w, v \right>_{\partial T}
+% .\end{align}
+% Note that we in the second step we used that
+% \[
+%     \begin{split}
+% \left( \nabla \left( \nabla ^2 w \right), \nabla  v  \right)_{T} & = \sum_{i=1}^{2}  \int_{T}^{} \left( \nabla \nabla w_{x_{i}} \right)\cdot  v_{x_{i}} \ dx    \\
+%  & =  \int_{T}^{} D^2w: D^2v \ dx - \int_{\partial T}^{} \left( \partial _{n} \nabla w \right)
+% \cdot  \nabla v  \ ds \\
+% &= \left( D^2 w : D^2v  \right) _{ T} + \left<\partial _{n} \nabla w, \nabla v \right>_{\partial T }  \\
+%     \end{split}
+% \]
+% We denote $D^2$ as the Hessian matrix operator such that
+% $$( D^2u, D^2v )_{\Omega } = \int_{\Omega }^{} D^{2}u : D^2v  dx,$$
+% where $D^2u:D^2v$ is the inner product. Also keep in mind that the last result naturally arise when defining $\nabla  = \left( \partial _{n}, \partial _{t} \right) $ such that
+% \[
+% \left<\partial _{n} \nabla w, \nabla v \right>_{\partial T} = \left<\partial _{nt} w, \partial _{t} v\right> _{\partial
+% T} + \left< \partial _{nn} w, \partial _{n} v  \right> _{\partial T} .
+% \]
+
+% Remark that we have two formulations \eqref{eq:weak_form_identity_1} and \eqref{eq:weak_form_identity_2}.
+
 \subsection{Computational Domains}%
 \label{sub:computational_domain}
 
-Let $\mathcal{T}  = \left\{ T \right\} $ be a triangulation of $\Omega \subset   \mathbb{R} ^2 $ consisting of triangles $T$. We may also define the set of all edges $\mathcal{F}_{h}$, where every edge is denoted by $E \in \mathcal{F} _{h}$. However, we will distinguish between the
-set of external edges $\mathcal{F}^{ext} _{h}$, which is all edges along $\partial \Omega $, and the interior edges $\mathcal{F} ^{int}_{h}$. Let the edges be denotes as $E \in \mathcal{F } _{h}$, then the normal vector $n$ is across the edge from
+Let $\mathcal{T}  = \left\{ T \right\} $ be a triangulation of $\Omega \subset   \mathbb{R} ^2 $ consisting of triangles $T$. We may also define the set of all facets $\mathcal{F}_{h}$, where every facet is denoted by $E \in \mathcal{F} _{h}$. However, we will distinguish between the
+set of external facets $\mathcal{F}^{ext} _{h}$, which is all facets along $\partial \Omega $, and the interior facets $\mathcal{F} ^{int}_{h}$. Let the facets be denotes as $E \in \mathcal{F } _{h}$, then the normal vector $n$ is across the facets from
 $T^{+}$ to $T^{-}$, illustrated in figure \ref{fig:normal}.
 
 \begin{figure}[!h]
@@ -82,7 +119,7 @@ A parameter which is useful is the maximum diameter $h$ of the set of triangles 
     \label{fig:mesh_example}
 \end{figure}
 
-where the $diam( T )$ is the largest edge for a triangle $T$. We will also assume mesh conform i.e., if $T_{1} \neq T_{2 }$  and $T \cap T_{2} \neq \emptyset  $ , then they share either a vertex or a edge.
+where the $diam( T )$ is the largest facet for a triangle $T$. We will also assume mesh conform i.e., if $T_{1} \neq T_{2 }$  and $T \cap T_{2} \neq \emptyset  $ , then they share either a vertex or a facet.
 
 Let the chunkiness parameter $c_{T} := h_{T}/r_{T}$, where $r_{T}$  is the largest ball that be inscribed inside the element $T$. We can then assume that the mesh is shape-regular i,e., that $c_{T}\le  c$ independent of $T$  and $h$. We may also assuming that
 the mesh is quasi-uniform only if it holds that the mesh is shape regular and $h_{max} \le  c h_{min}$.
@@ -134,7 +171,7 @@ However, this can be simplified to
 \end{split}
 \end{equation}
 Where $\mathcal{F}^{int}_h , \mathcal{F} ^{ext}_{h} \subset \mathcal{F}_{h} $ be the set of interior and exterior facets of the triangulation $\mathcal{T}_{h} $.
-Keep in mind that the jump over and edge $E$, visualized in figure \ref{fig:normal},   is defined as $\jump{ a } =    a^{+} - a^{-} $
+Keep in mind that the jump over and facet $E$, visualized in figure \ref{fig:normal},   is defined as $\jump{ a } =    a^{+} - a^{-} $
 and similarly will the mean be defined as $\mean{ a  } = \frac{1}{2}(   a^{+}
 + a^{-})$.  The equivalence of \eqref{eq:bi_basic_dg2} and \eqref{eq:bi_basic_dg_full_1} comes from the following argumentation.
 
@@ -157,7 +194,7 @@ and similarly will the mean be defined as $\mean{ a  } = \frac{1}{2}(   a^{+}
     \end{split}
 .\end{equation*}
 
-Where integration over all interior edges $ \forall E \in \mathcal{F}_{h}^{int}$ is computed in this way:
+Where integration over all interior facets $ \forall E \in \mathcal{F}_{h}^{int}$ is computed in this way:
 \begin{equation*}
     \begin{split}
         (I) &  =    \left<\partial _{n^{+}} \nabla ^2 u^{+} ,v^{+}\right>_{E} +
@@ -182,7 +219,8 @@ Where integration over all interior edges $ \forall E \in \mathcal{F}_{h}^{int}$
     \end{split}
 .\end{equation*}
 
-Observe that the cancellations in the term $(I)$ appears of the continuity of $v\in V $ and $u\in H^{4}\left( \Omega  \right) $ which makes the jumps zero. For the second term $(II)$ does the terms become zero cancelled because the tangential derivative at the edge
+Observe that the cancellations in the term $(I)$ appears of the continuity of $v\in V $ and $u\in H^{4}\left( \Omega  \right) $ which makes the jumps zero. For the second term $(II)$ does the terms become zero cancelled because the tangential
+derivative at the facet
 has no jump. However, The third term $(III)$  is fairly interesting since the discontinuity in normal vector for $v \in V$ is a jump, while the second term is still continious. It can also be raised that $\mean{ \partial _{nn} u } = \partial _{nn} u  $ holds by the continuity of $H^{4}\left( \Omega  \right) $. Anyhow, the definition of jump of should more interesting when we later weakend the continuity of $u$ during discretization.
 Hence, \eqref{eq:bi_basic_dg2} and \eqref{eq:bi_basic_dg_full_1} is equivalent.
 
@@ -229,7 +267,7 @@ and
 F\left( v_{h} \right)  = \left( f, v_{h} \right) _{\Omega } +  \sum_ {\mathcal{F} ^{ext}_{}}^{} \left<g_{2 }, v_{h}  \right> _{E}
 + \left<n g_{2}, \partial  _{n}v_{h} \right>_{E} + \left<\partial _{t} g_{1} , \partial _{t}v_{h} \right>_{E}
 \end{equation}
-Notice that the regulation term termined by respectively a global tuning parameter $\gamma >0 $ and edge length $h = \left\lvert E \right\rvert $. Another key component to the formulation
+Notice that the regulation term termined by respectively a global tuning parameter $\gamma >0 $ and facet length $h = \left\lvert E \right\rvert $. Another key component to the formulation
 in \eqref{eq:CP_A_h_1} after introduction of $ w_{h}, v_{h} \in V^{*}_{h}$  is that we expanded $\left< \partial _{nn}w, \jump{ \partial _{n} v }  \right>_{E} \to \left< \mean{ \partial _{nn}w_{h} }  , \jump{ \partial _{n} v_{h} }  \right>_{E} $ since we can longer not guarantee a
 continious jump. For symmetric purposes we also added $ \left< \mean{ \partial _{nn} v_{h}}  , \jump{ \partial _{n} w_{h} }  \right>_{E} $.
 
