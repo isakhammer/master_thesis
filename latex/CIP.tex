@@ -22,6 +22,68 @@ the problem \eqref{eq:bi_problem} produce wrong solutions if $\Omega $ is noncon
 \todo[inline]{ Write in mixed formulation $\overline{w}  = \Delta w$ }
 \todo[inline]{ None-conform discretization of 4th order problem using C0 Elements. Hence CP Method }
 
+\newpage
+\subsection{Computational Domains}%
+\label{sub:computational_domain}
+
+Let $\mathcal{T}  = \left\{ T \right\} $ be a triangulation of $\Omega $ consisting of triangles $T$ .
+
+First we need to define the computational domain. Recall that $\Omega \subset   \mathbb{R} ^2$ be a bounded polygonal domain. Let $\mathcal{T} _{h}$ be a triangular mesh of $\Omega$ where every triangle $T \in  \mathcal{T} _{h}$, which is illustrated
+in figure \ref{fig:mesh_example}. We define $h$ as
+the max diameter of the triangle $T$ such that $h = \max_{T \in \mathcal{T}_{h} }  h_T  $.
+
+\begin{equation}
+\label{eq:def }
+\begin{split}
+    h _{T} & = diam\left( T \right)  \\
+    h_{min} & = \min_{T \in \mathcal{T} } h_{T} \\
+    h_{max} &= \max_{T \in \mathcal{T} }  h_{T} = h \\
+\end{split}
+.\end{equation}
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.45\textwidth]{figures/mesh.jpg}
+    \caption{Example of a mesh of $\Omega \subset \mathbb{R} ^{2}$ with triangulation $\mathcal{T} _{h}$.    }
+    \label{fig:mesh_example}
+\end{figure}
+
+
+We may also define the set of all edges $\mathcal{F}_{h}$ where every edge is denoted by $E \in \mathcal{F} _{h}$. However, we will distinguish between the
+set of external edges $\mathcal{F}^{ext} _{h}$, which is all edges along $\partial \Omega $, and the interior edges $\mathcal{F} ^{int}_{h}$. Let the edges be denotes as $E \in \mathcal{F } _{h}$, then the normal vector $n$ is across the edge from
+$T^{+}$ to $T^{-}$, illustraded in figure \ref{fig:normal}.
+
+\begin{figure}[!h]
+\centering
+\begin{tikzpicture}[scale=1]
+\coordinate (A) at (0,0);
+\coordinate (C) at (0,3);
+\coordinate (B) at (4,0);
+\coordinate (D) at (4,4);
+\coordinate (Tm) at (3.5,3.5);
+\coordinate (Tp) at (0.5, 0.5);
+\coordinate (e) at (1.5, 1.5);
+\coordinate (start) at (1.7, 1.7);
+\coordinate (end) at (2.25, 2.4);
+
+\draw (A) -- (B) -- (C) -- cycle;
+\fill[red, opacity=0.5] (A) -- (B) -- (C);
+\fill[blue, opacity=0.5] (B) -- (C) -- (D);
+\node[below left] at (Tm) {$T^{-} $ };
+\node[above right] at (Tp) {$T^{+}$ };
+\node[below right] at (e) {$E$ };
+
+\draw [|->, thick] (start) -- (end);
+% \node[above right] at (A) {A };
+% \node[below right] at (B) {B};
+% \node[above right] at (C) {C };
+% \node[below right] at (D) {D};
+\node[below right] at (end) {$n$};
+\end{tikzpicture}
+\caption{Edge $E \in \mathcal{F}_h $ shared by the triangles $T^{+}, T^{-} \in \mathcal{T}_{h} $ and the normal unit vector $n$.  }
+    \label{fig:normal}
+\end{figure}
+
 
 
 \subsection{Constructing Continious Interior Penalty Method}%
