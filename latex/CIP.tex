@@ -1,4 +1,4 @@
-\section{Continous Interior Penalty Method}%
+\section{Continuous Interior Penalty Method}%
 \label{sec:continious_interior_penalty_method}
 
 
@@ -10,14 +10,14 @@
 \label{sub:introduction}
 
 
-To solve \eqref{eq:bi_problem} numerically do we want to introduce the Continious Interior Penalty Method (CP), which is a Discontinious Galerkin
+To solve \eqref{eq:bi_problem} numerically do we want to introduce the Continuous Interior Penalty Method (CP), which is a Discontinuous Galerkin
 method (DG) using $C^{0}$ finite elements. There is several reasons why we want to apply $C^{0}$ instead of the often used
 $C^{1}$ finite elements for fourth order problems. First and foremost is the $C^0$ finite elements simpler than
 obtaining $C^{1}$ finite elements.  Also, compared to other methods similar to the mixed
 finite element method for the problem \eqref{eq:bi_problem}, CP has in fact
 preserved the symmetric positive definiteness, which means the stability analysis is more straight forward. Finally and most
 importantly according to \cite{brenner2012quadratic} can naive use mixed methods of splitting the boundary conditions of
-the problem \eqref{eq:bi_problem} produce wrong solutions if $\Omega $ is nonconvex.
+the problem \eqref{eq:bi_problem} produce wrong solutions if $\Omega $ is non convex.
 
 \todo[inline]{ Write about this: }
 \todo[inline]{ Conformal methods $V_{h} \subset V$ requires $C^{1}$. Exists in a good manner in 2D, but does not exist generalization in 3D. Need reference.}
@@ -31,7 +31,7 @@ the problem \eqref{eq:bi_problem} produce wrong solutions if $\Omega $ is noncon
 
 Let $\mathcal{T}  = \left\{ T \right\} $ be a triangulation of $\Omega \subset   \mathbb{R} ^2 $ consisting of triangles $T$. We may also define the set of all edges $\mathcal{F}_{h}$, where every edge is denoted by $E \in \mathcal{F} _{h}$. However, we will distinguish between the
 set of external edges $\mathcal{F}^{ext} _{h}$, which is all edges along $\partial \Omega $, and the interior edges $\mathcal{F} ^{int}_{h}$. Let the edges be denotes as $E \in \mathcal{F } _{h}$, then the normal vector $n$ is across the edge from
-$T^{+}$ to $T^{-}$, illustraded in figure \ref{fig:normal}.
+$T^{+}$ to $T^{-}$, illustrated in figure \ref{fig:normal}.
 
 \begin{figure}[!h]
 \centering
@@ -64,10 +64,7 @@ $T^{+}$ to $T^{-}$, illustraded in figure \ref{fig:normal}.
     \label{fig:normal}
 \end{figure}
 
-A parameter whicch is useful is the maximum diameter $h$ of the set of triangles $\left\{ T \right\} $, which we to be defined s.t.,
-% First we need to define the computational domain. Recall that $\Omega \subset   \mathbb{R} ^2$ be a bounded polygonal domain. Let $\mathcal{T} _{h}$ be a triangular mesh of $\Omega$ where every triangle $T \in  \mathcal{T} _{h}$, which is illustrated
-% in figure \ref{fig:mesh_example}. We define $h$ as
-% the max diameter of the triangle $T$ such that $h = \max_{T \in \mathcal{T}_{h} }  h_T  $.
+A parameter which is useful is the maximum diameter $h$ of the set of triangles $\left\{ T \right\} $, which we to be defined s.t.,
 
 \begin{equation}
 \label{eq:def }
