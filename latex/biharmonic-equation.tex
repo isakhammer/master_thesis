@@ -21,40 +21,6 @@ $. We may consider the functions $g\left( x \right) $ as time independent bounda
 \cite{cahnhilliard1957} for phase separation. However, depending on how Cahn-Hilliard model is time discretized numerically can
 \eqref{eq:bi_problem} naturally arise. I refer to \cite{brenner2012quadratic} for more information on this.
 
-\subsection{ Weak Form of Biharmonic Operator in $H^{4} \left( T  \right)$}%
-\label{sub:weak_form_biharmonic_identity_for_triangles}
-
-
-Let $w,v \in  H^{4} \left( T  \right) $ and $\mathcal{T}_{h} $ the simplicial triangulation of $\Omega$. Using the same method as in \cite{gu2012c0, brenner2012quadratic} can we
-deduce that for every triangle $T \in  \mathcal{T}_{h} $ it holds that
-\begin{align}
-        \left( \Delta  ^{2} w, v \right) _{T} &= \left< \partial _{n} \nabla ^2 w, v \right>_{\partial T} - \left( \nabla \left( \nabla ^2 w
- \right), \nabla  v  \right)_{T} \nonumber   \\
-\label{eq:weak_form_identity_1}
- &= \left( D^2w, D^2v \right)_{T} + \left< \partial _{n} \nabla ^2 w, v \right>_{\partial T}  - \left<\partial _{n}
- \nabla w, \nabla v \right>_{\partial T} \\
-\label{eq:weak_form_identity_2}
- &=  \left( D^2 w, D^2 v \right)_{T} - \left<\partial _{nt} w, \partial _{t} v \right>_{\partial T} - \left<\partial
- _{nn} w, \partial _{n} v \right> _{\partial T} +  \left<\partial _{n} \nabla ^2 w, v \right>_{\partial T}
-.\end{align}
-Note that we in the second step we used that
-\[
-    \begin{split}
-\left( \nabla \left( \nabla ^2 w \right), \nabla  v  \right)_{T} & = \sum_{i=1}^{2}  \int_{T}^{} \left( \nabla \nabla w_{x_{i}} \right)\cdot  v_{x_{i}} \ dx    \\
- & =  \int_{T}^{} D^2w: D^2v \ dx - \int_{\partial T}^{} \left( \partial _{n} \nabla w \right)
-\cdot  \nabla v  \ ds \\
-&= \left( D^2 w : D^2v  \right) _{ T} + \left<\partial _{n} \nabla w, \nabla v \right>_{\partial T }  \\
-    \end{split}
-\]
-We denote $D^2$ as the Hessian matrix operator such that
-$$( D^2u, D^2v )_{\Omega } = \int_{\Omega }^{} D^{2}u : D^2v  dx,$$
-where $D^2u:D^2v$ is the inner product. Also keep in mind that the last result naturally arise when defining $\nabla  = \left( \partial _{n}, \partial _{t} \right) $ such that
-\[
-\left<\partial _{n} \nabla w, \nabla v \right>_{\partial T} = \left<\partial _{nt} w, \partial _{t} v\right> _{\partial
-T} + \left< \partial _{nn} w, \partial _{n} v  \right> _{\partial T} .
-\]
-
-Remark that we have two formulations \eqref{eq:weak_form_identity_1} and \eqref{eq:weak_form_identity_2}
 \subsection{  Weak Form Biharmonic Equation in $H^{4}\left( \Omega  \right) $}%
 \label{sub:continious_weak_form_of_biharmonic_equation}
 
@@ -78,10 +44,12 @@ Instead we write
 &= \sum_{i = 1}^{d}  \left( \nabla \cdot \left( \nabla \partial _{x_{i}} u \right) , \partial _{x_{i}} v \right)  \\
 &= \sum_{i = 1}^{d}  \left( \frac{\partial }{\partial  n}  \partial _{x_{i}} u, \nabla  \partial _{x_{i}} v \right) _{\partial \Omega} -   \left( \nabla \partial _{x_{i}} u, \nabla \partial _{x_{i}} v \right)_{\Omega }  \\
 &= \left( \frac{\partial }{\partial  n} \nabla u, \nabla v \right) _{\partial \Omega } - \left( D^2 u, D^2v \right) _{\Omega } \\
-&= \underbrace{\left( \partial _{nn} u, \partial _{n} v  \right)_{\partial \Omega }}_{=0}   + \left( \partial _{nt} u, \partial _{t} v \right) _{\partial \Omega } - \left( D^2u, D^2v \right) _{\Omega }  \\ 
+&= \underbrace{\left( \partial _{nn} u, \partial _{n} v  \right)_{\partial \Omega }}_{=0}   + \left( \partial _{nt} u, \partial _{t} v \right) _{\partial \Omega } - \left( D^2u, D^2v \right) _{\Omega }  \\
     \end{split}
 \]
-
+We denote $D^2$ as the Hessian matrix operator such that
+$$( D^2u, D^2v )_{\Omega } = \int_{\Omega }^{} D^{2}u : D^2v  dx,$$
+where $D^2u:D^2v$ is the inner product.
 
 Consider the weak formulation to solve for a $u \in  V$ such that
 \begin{equation}
@@ -90,33 +58,23 @@ a\left( u,v \right) = F(v).\quad \forall v \in
 V.
 \end{equation}
 
-By using the identity \eqref{eq:weak_form_identity_1} and utilizing the solution space can we easily do a global summation over the triangulation. Hence, the global weak formulation can be expressed as,
-\[
-    \begin{split}
-\left( \Delta ^2 u, v \right) _{\Omega }  &= \sum_{T \in \mathcal{T} _{h}}^{}  - \left( \nabla  \Delta  u , \nabla v   \right)_{T } + \left<\partial _{n} ( \Delta u ),  v \right>_{\partial T } \\
-& = \sum_{T \in \mathcal{T} _{h}}^{} - \left( \nabla  \Delta  u , \nabla v   \right)_{T } + \left<\partial _{n} ( \Delta u ),  v \right>_{\partial T } \\
-&= \sum_{T \in \mathcal{T} _{h}}^{}  \left( \Delta u, \Delta v \right)_{T } - \underbrace{\left< \partial _{n} \nabla u,v  \right>_{\partial T }}_{\left< \nabla g_{1},v \right> _{\partial T } }  +  \underbrace{\left<\partial _{n} ( \Delta u ) ,  v
-\right>_{\partial T }} _{\left<g_2 ,v \right>_{\partial T } } \\
-&=   \left( \Delta u, \Delta v \right)_{\Omega  } - \left< \nabla g_{1},v \right> _{\partial \Omega  }   +  \left<g_2 ,v \right>_{\partial \Omega  }
-    \end{split}
-\]
-such that
+By using the identity \eqref{eq:weak_form_identity_1} and utilizing the solution space can we easily do a global summation over the triangulation such that
 \[
     \begin{split}
 a\left( u,v \right)_{\Omega } & =    \left( D ^2 u , D ^2 v\right)_{\Omega }  +
 \alpha \left( u, v \right)_{\Omega }  , \\
-F\left( v \right)_{\Omega } & = \left( f,v \right)_{\Omega } - \left<g_{2},v \right>_{\partial \Omega } + \left<\nabla g_{1}, \nabla v \right>_{\partial \Omega }.
+F\left( v \right)_{\Omega } & = \left( f,v \right)_{\Omega } - \left<g,v \right>_{\partial \Omega }
     \end{split}
 \]
 
  In fact, the solution is unique for $\alpha  > 0$. However, for $\alpha  = 0$ must we assume the solvability condition,
 \begin{equation*}
- \int_{\Omega }^{} f dx = \int_{\partial \Omega }^{} g_{2} ds
+ \int_{\Omega }^{} f dx = \int_{\partial \Omega }^{} g ds
 .\end{equation*}
 This condition easily arise when using the substitution $v=1$ in \eqref{eq:bi_weak1}. To handle this, can we extended the solution space \[
 V^{*} = \begin{cases}
     V \quad & \alpha  > 0 \\
-    \left\{ v \in V: v\left( p_{*} \right)  = 0\right\}, \quad & \alpha  = 0
+    \left\{ v \in V: \int_{\Omega }^{} v dx  = 0\right\}, \quad & \alpha  = 0
 \end{cases}
 \]
 where $p_{*}$ is a corner of the polygonal domain $\Omega $.
