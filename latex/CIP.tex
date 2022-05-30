@@ -142,25 +142,24 @@ H^{4}\left( T  \right) $. Using that the results in \eqref{eq:weak_formulation} 
 
 For global continuity, let  $v \in V =  \left\{ v \in H^{1}\left( \Omega  \right): v_{T} \in  H^{4}\left( T \right), \ \forall T \in
 \mathcal{T}_{h}    \right\}   \cap C^{0} (
-\overline{\Omega }  ) $ and $u \in  H^{4}\left( \Omega  \right) $ such that,
+\Omega  ) $ and $u \in  H^{4}\left( \Omega  \right) $ such that,
 
 \begin{equation}
 \label{eq:bi_basic_dg2}
 \left( \Delta  ^{2} u,v \right) _{\Omega } = \sum_{T \in  \mathcal{T} _{h}}^{}  \left( D^2u,D^2v \right) _{T } - \left(\partial _{nt} u, \partial _{t}v
 \right)_{\partial T} - \left(\partial _{nn} u, \partial _{n}v \right)_{\partial T} + \left(\partial _{n} \Delta  u,v
-\right)_{\partial T}.\end{equation}
+\right)_{\partial T}.
+\end{equation}
 
-However, this can be simplified to
+However, this can be distinguished to separate integrating over triangles $\mathcal{T} _{h}$ , integrating over exterior facets $\mathcal{F} _{h}^{ext}$ and then integrate interior facets $\mathcal{F} _{h}^{int}$.
 
 \begin{equation}
 \label{eq:bi_basic_dg_full_1}
 \begin{split}
-\left( \Delta  ^{2} u, v \right) _{\Omega }
-=& \sum_{T \in  \mathcal{T} _{h}}^{} \left( D^2u, D^2v \right)_{T}  + \sum_{E \in
-\mathcal{F} ^{ext}_{}}^{} \left<\partial _{n} \nabla  ^2 u, v  \right> _{E}
-- \left<\partial _{nt} u, \partial _{t} v \right> _{E}+
-\left< \partial _{nn} u, \partial _{n} v \right>_{E} + \sum_{E \in \mathcal{F}  ^{int}}^{} \left<\partial _{nn} u , \jump{ \partial _{n} v }
-\right>_{E} \\
+\left( \Delta  ^{2} u, v \right) _{\Omega } =& \sum_{T \in  \mathcal{T} _{h}}^{} \left( D^2u, D^2v \right)_{T}  + \sum_{F \in \mathcal{F}_{h}^{ext}} + \left(\partial _{n} \Delta u, v  \right) _{F}
+- \left(\partial _{nt} u, \partial _{t} v \right) _{F}+
+\left( \partial _{nn} u, \partial _{n} v \right)_{F} + \sum_{F \in \mathcal{F}_{h}  ^{int}}^{} \left(\partial _{nn} u , \jump{ \partial _{n} v }
+\right)_{F} \\
 & = \sum_{T \in  \mathcal{T} _{h}}^{} \left( D^2u, D^2v \right)_{T} + \sum_{E \in
 \mathcal{F} ^{ext}_{}}^{} \left<g_{2 }, v  \right> _{E}
 + \left<n g_{2}, \nabla _{n}v \right>_{E} + \left<\partial _{t} g_{1} , \partial _{t}v \right>_{E}
@@ -168,9 +167,9 @@ However, this can be simplified to
 \end{split}
 \end{equation}
 Where $\mathcal{F}^{int}_h , \mathcal{F} ^{ext}_{h} \subset \mathcal{F}_{h} $ be the set of interior and exterior facets of the triangulation $\mathcal{T}_{h} $.
-Keep in mind that the jump over and facet $E$, visualized in figure \ref{fig:normal},   is defined as $\jump{ a } =    a^{+} - a^{-} $
+Keep in mind that any jump over a interior facet $F \subset \mathcal{F} _{h}^{int}   $, visualized in figure \ref{fig:normal}, is defined as $\jump{ a } =    a^{+} - a^{-} $
 and similarly will the mean be defined as $\mean{ a  } = \frac{1}{2}(   a^{+}
-+ a^{-})$.  The equivalence of \eqref{eq:bi_basic_dg2} and \eqref{eq:bi_basic_dg_full_1} comes from the following argumentation.
++ a^{-})$.    The equivalence of \eqref{eq:bi_basic_dg2} and \eqref{eq:bi_basic_dg_full_1} comes from the following argumentation.
 
 \begin{equation*}
     \begin{split}
