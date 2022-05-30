@@ -24,7 +24,7 @@ $. We may consider the functions $g\left( x \right) $ as time independent bounda
 \subsection{  Weak Form Biharmonic Equation in $H^{4}\left( \Omega  \right) $}%
 \label{sub:continious_weak_form_of_biharmonic_equation}
 
-We might want to introduce the full basic weak formulation of \eqref{eq:bi_problem}. Now, let the solution space be on the form,
+We want to introduce the full weak formulation of \eqref{eq:bi_problem}. Now, let the solution space be on the form,
 \begin{equation*}
 V = \left\{ v \in H^2\left( \Omega  \right) : \partial _{n} v = 0  \text{ on }
 \partial \Omega  \right\}.
@@ -37,11 +37,12 @@ Let $u,v \in  V$ then the derivation of the weak form where $\partial _{n} v$  i
 \right) , \nabla v \right) _{\Omega }
 \end{split}
 \]
+
 Instead we write
 \[
     \begin{split}
 \left( \nabla \left( \Delta u \right) , \nabla v \right) _{\Omega } & = \sum_{i = 1}^{ d}  \left( \Delta  \partial _{x_{i}} u, \partial _{x_{i}}v \right) _{\Omega }  \\
-&= \sum_{i = 1}^{d}  \left( \nabla \cdot \left( \nabla \partial _{x_{i}} u \right) , \partial _{x_{i}} v \right)  \\
+&= \sum_{i = 1}^{d}  \left( \nabla \cdot \left( \nabla \partial _{x_{i}} u \right) , \partial _{x_{i}} v \right)_{\Omega }  \\
 &= \sum_{i = 1}^{d}  \left( \frac{\partial }{\partial  n}  \partial _{x_{i}} u, \nabla  \partial _{x_{i}} v \right) _{\partial \Omega} -   \left( \nabla \partial _{x_{i}} u, \nabla \partial _{x_{i}} v \right)_{\Omega }  \\
 &= \left( \frac{\partial }{\partial  n} \nabla u, \nabla v \right) _{\partial \Omega } - \left( D^2 u, D^2v \right) _{\Omega } \\
 &= \underbrace{\left( \partial _{nn} u, \partial _{n} v  \right)_{\partial \Omega }}_{=0}   + \left( \partial _{nt} u, \partial _{t} v \right) _{\partial \Omega } - \left( D^2u, D^2v \right) _{\Omega }  \\
@@ -58,7 +59,9 @@ a\left( u,v \right) = F(v).\quad \forall v \in
 V.
 \end{equation}
 
-By using the identity \eqref{eq:weak_form_identity_1} and utilizing the solution space can we easily do a global summation over the triangulation such that
+% By using the identity \eqref{eq:weak_form_identity_1} and utilizing the solution space can we easily do a global summation over the triangulation such that
+
+In fact, the solution space is
 \[
     \begin{split}
 a\left( u,v \right)_{\Omega } & =    \left( D ^2 u , D ^2 v\right)_{\Omega }  +

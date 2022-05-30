@@ -66,8 +66,8 @@ the problem \eqref{eq:bi_problem} produce wrong solutions if $\Omega $ is non co
 \subsection{Computational Domains}%
 \label{sub:computational_domain}
 
-Let $\mathcal{T}  = \left\{ T \right\} $ be a triangulation of $\Omega \subset   \mathbb{R} ^2 $ consisting of triangles $T$. We may also define the set of all facets $\mathcal{F}_{h}$, where every facet is denoted by $E \in \mathcal{F} _{h}$. However, we will distinguish between the
-set of external facets $\mathcal{F}^{ext} _{h}$, which is all facets along $\partial \Omega $, and the interior facets $\mathcal{F} ^{int}_{h}$. Let the facets be denotes as $E \in \mathcal{F } _{h}$, then the normal vector $n$ is across the facets from
+Let $\mathcal{T}  = \left\{ T \right\} $ be a triangulation of $\Omega \subset   \mathbb{R} ^2 $ consisting of triangles $T$. We may also define the set of all facets $\mathcal{F}_{h}$, where every facet is denoted by $F \in \mathcal{F} _{h}$. However, we will distinguish between the
+set of external facets $\mathcal{F}^{ext} _{h}$, which is all facets along $\partial \Omega $, and the interior facets $\mathcal{F} ^{int}_{h}$. Let the facets be denotes as $F \in \mathcal{F } _{h}$, then the normal vector $n$ is across the facets from
 $T^{+}$ to $T^{-}$, illustrated in figure \ref{fig:normal}.
 
 \begin{figure}[!h]
@@ -88,7 +88,7 @@ $T^{+}$ to $T^{-}$, illustrated in figure \ref{fig:normal}.
 \fill[blue, opacity=0.5] (B) -- (C) -- (D);
 \node[below left] at (Tm) {$T^{-} $ };
 \node[above right] at (Tp) {$T^{+}$ };
-\node[below right] at (e) {$E$ };
+\node[below right] at (e) {$F$ };
 
 \draw [|->, thick] (start) -- (end);
 % \node[above right] at (A) {A };
@@ -97,18 +97,17 @@ $T^{+}$ to $T^{-}$, illustrated in figure \ref{fig:normal}.
 % \node[below right] at (D) {D};
 \node[below right] at (end) {$n$};
 \end{tikzpicture}
-\caption{Edge $E \in \mathcal{F}_h $ shared by the triangles $T^{+}, T^{-} \in \mathcal{T}_{h} $ and the normal unit vector $n$.  }
+\caption{Facet $F \in \mathcal{F}_h $ shared by the triangles $T^{+}, T^{-} \in \mathcal{T}_{h} $ and the normal unit vector $n$.  }
     \label{fig:normal}
 \end{figure}
 
 A parameter which is useful is the maximum diameter $h$ of the set of triangles $\left\{ T \right\} $, which we to be defined s.t.
 
 \begin{equation}
-\label{eq:def }
 \begin{split}
-    h _{T} & = diam\left( T \right)   = \max_{x_1, x_{2} \in T} dist(x_{1}, x_{2})  \\
-    h_{min} & = \min_{T \in \mathcal{T} } h_{T} \\
-    h_{max} &= \max_{T \in \mathcal{T} }  h_{T} := h \\
+    h _{T} & = diam\left( T \right)   = \max_{x_1, x_{2} \in T} dist(x_{1}, x_{2}),  \\
+    h_{min} & = \min_{T \in \mathcal{T} } h_{T}, \\
+    h_{max} &= \max_{T \in \mathcal{T} }  h_{T} := h,
 \end{split}
 .\end{equation}
 
@@ -133,8 +132,8 @@ the mesh is quasi-uniform only if it holds that the mesh is shape regular and $h
 \subsection{Constructing Continuous Interior Penalty Method}%
 \label{sub:constructing_continious_interior_penalty_method}
 
- Let us again define $u,v \in
-H^{4}\left( T  \right) $ and recall the results \eqref{eq:weak_form_identity_2} so
+ Let us assume that $u,v \in
+H^{4}\left( T  \right) $ and then the results \eqref{eq:weak_form_identity_2} so
 \begin{equation}
 \label{eq:bi_basic_dg}
 \left( \Delta  ^{2} u,v \right) _{T} =  \left( D^2u,D^2v \right) _{T } - \left<\partial _{nt} u, \partial _{t}v
