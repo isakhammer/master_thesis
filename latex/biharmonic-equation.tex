@@ -11,12 +11,12 @@ Let $\Omega \subset   \mathbb{R} ^2$ be a bounded polygonal domain and $\partial
 \begin{equation}
 \label{eq:bi_problem}
 \begin{split}
-    \Delta^2  u  + \alpha  u  & = f \quad \text{in } \Omega   \\
-    \partial _{n} u & = 0  \quad \text{on } \partial \Omega  \\
+    \Delta^2  u  + \alpha  u  & = f \quad \text{in } \Omega,   \\
+    \partial _{n} u & = 0  \quad \text{on } \partial \Omega,  \\
     \partial _{n} \Delta  u & = g\left( x \right)  \quad \text{on } \partial \Omega .  \\
 \end{split}
-.\end{equation}
-Here is $\Delta ^2 = \Delta  \left( \Delta  \right) $ the biharmonic operator, also known as the bilaplacian. We will assume for now that $u \in H^{4}\left( \Omega  \right) $, $\alpha $ is a non-negative constant and $f \in L_{2}\left( \Omega  \right)
+\end{equation}
+Here is $\Delta ^2 = \Delta  \left( \Delta  \right) $ the biharmonic operator, also known as the bilaplacian. We will assume for the strong form that $u \in H^{4}\left( \Omega  \right) $, $\alpha $ is a non-negative constant and $f \in L_{2}\left( \Omega  \right)
 $. We may consider the functions $g\left( x \right) $ as time independent boundary conditions. Such problems as \eqref{eq:bi_problem} are often associated with the Cahn-Hilliard model
 \cite{cahnhilliard1957} for phase separation. However, depending on how Cahn-Hilliard model is time discretized numerically can
 \eqref{eq:bi_problem} naturally arise. I refer to \cite{brenner2012quadratic} for more information on this.
@@ -24,52 +24,53 @@ $. We may consider the functions $g\left( x \right) $ as time independent bounda
 \subsection{  Weak Form Biharmonic Equation in $H^{4}\left( \Omega  \right) $}%
 \label{sub:continious_weak_form_of_biharmonic_equation}
 
+
 We want to introduce the full weak formulation of \eqref{eq:bi_problem}. Now, let the solution space be on the form,
 \begin{equation*}
 V = \left\{ v \in H^2\left( \Omega  \right) : \partial _{n} v = 0  \text{ on }
 \partial \Omega  \right\}.
-.\end{equation*}
-Let $u,v \in  V$ then the derivation of the weak form where $\partial _{n} v$  is built in weakly is
+\end{equation*}
+
+Let $u,v \in  V$ then the derivation of the general weak form is,
 \[
 \begin{split}
 \left( \Delta ^2 u,v \right) _{\Omega }  &  = \left( \partial _{n} \Delta u, v \right) _{\partial \Omega } - \left( \nabla \left( \Delta  u \right) , \nabla v \right) _{\Omega }  \\
- & = \left( g, v \right) _{\partial \Omega } - \left( \nabla \left( \Delta u
-\right) , \nabla v \right) _{\Omega }
+ & = \left( g, v \right) _{\partial \Omega } - \left( \nabla \left( \Delta u \right) , \nabla v \right) _{\Omega }. \\
 \end{split}
 \]
-
-Instead we write
+In fact, the simplest formulation has the form,
 \[
-    \begin{split}
+  \left( \nabla \left( \Delta u \right) , \nabla v \right) _{\Omega } =   \left( \Delta u, \partial _{n} v \right) _{\partial \Omega } - \left( \Delta u, \Delta v \right)_{\Omega },
+\]
+
+but we don't have boundary condition for $\Delta u$. \todo{ why no b.c. for $\Delta u$ ? } Instead, we can formulate the problem so
+
+\begin{align*}
 \left( \nabla \left( \Delta u \right) , \nabla v \right) _{\Omega } & = \sum_{i = 1}^{ d}  \left( \Delta  \partial _{x_{i}} u, \partial _{x_{i}}v \right) _{\Omega }  \\
 &= \sum_{i = 1}^{d}  \left( \nabla \cdot \left( \nabla \partial _{x_{i}} u \right) , \partial _{x_{i}} v \right)_{\Omega }  \\
-&= \sum_{i = 1}^{d}  \left( \frac{\partial }{\partial  n}  \partial _{x_{i}} u, \nabla  \partial _{x_{i}} v \right) _{\partial \Omega} -   \left( \nabla \partial _{x_{i}} u, \nabla \partial _{x_{i}} v \right)_{\Omega }  \\
-&= \left( \frac{\partial }{\partial  n} \nabla u, \nabla v \right) _{\partial \Omega } - \left( D^2 u, D^2v \right) _{\Omega } \\
-&= \underbrace{\left( \partial _{nn} u, \partial _{n} v  \right)_{\partial \Omega }}_{=0}   + \left( \partial _{nt} u, \partial _{t} v \right) _{\partial \Omega } - \left( D^2u, D^2v \right) _{\Omega }  \\
-    \end{split}
-\]
-We denote $D^2$ as the Hessian matrix operator such that
+&= \sum_{i = 1}^{d}  \left( \partial_n  \partial _{x_{i}} u, \nabla  \partial _{x_{i}} v \right) _{\partial \Omega} -   \left( \nabla \partial _{x_{i}} u, \nabla \partial _{x_{i}} v \right)_{\Omega }  \\
+&= \left(  \partial_n\nabla u, \nabla v \right) _{\partial \Omega } - \left( D^2 u, D^2v \right) _{\Omega } \\
+&= \underbrace{\left( \partial _{nn} u, \partial _{n} v  \right)_{\partial \Omega }}_{\partial _n v =0 \text{ on } \partial \Omega  }   + \left( \partial _{nt} u, \partial _{t} v \right) _{\partial \Omega } - \left( D^2u, D^2v \right) _{\Omega } .
+\end{align*}
+
+Hence, the boundary condition of $\Delta u$ is integrated into the formulation. Keep in mind that we denote $D^2$ as the Hessian matrix operator such that
 $$( D^2u, D^2v )_{\Omega } = \int_{\Omega }^{} D^{2}u : D^2v  dx,$$
 where $D^2u:D^2v$ is the inner product.
 
-Consider the weak formulation to solve for a $u \in  V$ such that
+We can now formulate the full weak formulation by solving for a $u \in  V$ such that
 \begin{equation}
     \label{eq:bi_weak1}
 a\left( u,v \right) = F(v).\quad \forall v \in
-V.
+V,
 \end{equation}
-
-% By using the identity \eqref{eq:weak_form_identity_1} and utilizing the solution space can we easily do a global summation over the triangulation such that
-
-In fact, the solution space is
+where
 \[
     \begin{split}
-a\left( u,v \right)_{\Omega } & =    \left( D ^2 u , D ^2 v\right)_{\Omega }  +
-\alpha \left( u, v \right)_{\Omega }  , \\
-F\left( v \right)_{\Omega } & = \left( f,v \right)_{\Omega } - \left<g,v \right>_{\partial \Omega }
-    \end{split}
-\]
+a\left( u,v \right)_{\Omega } & =    \left( D ^2 u , D ^2 v\right)_{\Omega } - \left( \partial _{nt} u, \partial _{t} v \right) _{\partial \Omega }  +
+\alpha \left( u, v \right)_{\Omega }   , \\
+F\left( v \right)_{\Omega } & = \left( f,v \right)_{\Omega } - \left(g,v \right)_{\partial \Omega }.
 
+\]
  In fact, the solution is unique for $\alpha  > 0$. However, for $\alpha  = 0$ must we assume the solvability condition,
 \begin{equation*}
  \int_{\Omega }^{} f dx = \int_{\partial \Omega }^{} g ds
@@ -77,11 +78,11 @@ F\left( v \right)_{\Omega } & = \left( f,v \right)_{\Omega } - \left<g,v \right>
 This condition easily arise when using the substitution $v=1$ in \eqref{eq:bi_weak1}. To handle this, can we extended the solution space \[
 V^{*} = \begin{cases}
     V \quad & \alpha  > 0 \\
-    \left\{ v \in V: \int_{\Omega }^{} v dx  = 0\right\}, \quad & \alpha  = 0
+    \left\{ v \in V: \int_{\Omega }^{} v dx  = 0\right\} \quad & \alpha  = 0,
 \end{cases}
 \]
 where $p_{*}$ is a corner of the polygonal domain $\Omega $.
-Thus, the unique solution in $v \in V^{*}$ belongs to $H^{3 }\left( \Omega  \right) $ and we get the following
+Thus, the unique solution in $v \in V^{*}$ belongs to $H^{3 }\left( \Omega  \right) $ \todo{why does it belong to $H^3(\Omega )$ } and we get the following
 elliptic regularity estimate \cite{gu2012c0},
 \begin{equation}
 \label{eq:bi_harmonic_ellitpic_regularity}
