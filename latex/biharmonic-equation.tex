@@ -53,9 +53,9 @@ but we don't have boundary condition for $\Delta u$. \todo{ why no b.c. for $\De
 &= \underbrace{\left( \partial _{nn} u, \partial _{n} v  \right)_{\partial \Omega }}_{\partial _n v =0 \text{ on } \partial \Omega  }   + \left( \partial _{nt} u, \partial _{t} v \right) _{\partial \Omega } - \left( D^2u, D^2v \right) _{\Omega } .
 \end{align*}
 
-Hence, the boundary condition of $\Delta u$ is integrated into the formulation. Keep in mind that we denote $D^2$ as the Hessian matrix operator such that
+Hence, the boundary condition of $\Delta u$ is integrated into the formulation.  It can be denoted that $D^2$ is the Hessian matrix operator such that
 $$( D^2u, D^2v )_{\Omega } = \int_{\Omega }^{} D^{2}u : D^2v  dx,$$
-where $D^2u:D^2v$ is the inner product.
+where $D^2u:D^2v$ is the inner product and similarly for $\partial _{nn} u = n\cdot D^2 u \cdot n$ .
 
 We can now formulate the full weak formulation by solving for a $u \in  V$ such that
 \begin{equation}
