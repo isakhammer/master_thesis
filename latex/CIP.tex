@@ -172,7 +172,7 @@ and similarly will the mean be defined as $\mean{ a  } = \frac{1}{2}(   a^{+}
 \begin{equation*}
     \begin{split}
  \left( \Delta  ^{2} u,v \right) _{\Omega } & =\sum_{T\in \mathcal{T} _{h}}^{} \left( D^2u,D^2v \right) _{T } - \left(\partial _{nt} u, \partial _{t}v
-\right)_{\partial T} - \left(\partial _{nn} u, \partial _{n}v \right)_{\partial T} + \left(\partial _{n} \nabla ^2 u,v
+\right)_{\partial T} - \left(\partial _{nn} u, \partial _{n}v \right)_{\partial T} + \left(\partial _{n} \Delta  u,v
 \right)_{\partial T} \\
 &= \sum_{T\in \mathcal{T} _{h}}^{} \left( D^2u,D^2v \right) _{T } \\
 &  \quad + \sum_{F \in \mathcal{F}_{h}^{ext} }^{} \underbrace{\left( \partial _{n} \nabla ^2 u, v  \right)_{E}}_{= \left( g_{2},v \right)_{E} }  -  \underbrace{\left(
@@ -273,9 +273,9 @@ We may introduce the compact notation of \eqref{eq:CP_A_h_1}.
   \quad  \left( \alpha  w_{h}, v_{h} \right) _{\Omega }\\
 &  +  \left( D^2 w_{h}, D^2v_{h} \right) _{\mathcal{T} _{h}} \\
  & +
-  \left< \mean{  \partial _{n n} w_{h} }, \jump{ \partial _{n }v_{h}} \right>_{\mathcal{F}_{h}}  +
- \left< \mean{ \partial _{n n} v_{h} }, \jump{ \partial _{n}w }      \right>_{\mathcal{F}_{h}}
-+ \frac{\gamma }{h}  \left< \jump{ \partial _{n} w_{h}}, \jump{ \partial _{n} v_{h}   }   \right>_{\mathcal{F}_{h}}
+  \left( \mean{  \partial _{n n} w_{h} }, \jump{ \partial _{n }v_{h}} \right)_{\mathcal{F}_{h}}  +
+ \left( \mean{ \partial _{n n} v_{h} }, \jump{ \partial _{n}w }      \right)_{\mathcal{F}_{h}}
++ \frac{\gamma }{h}  \left( \jump{ \partial _{n} w_{h}}, \jump{ \partial _{n} v_{h}   }   \right)_{\mathcal{F}_{h}}
 \end{split}
 \end{equation}
 
@@ -332,7 +332,7 @@ v_{h} }    \|_{\mathcal{F}_{h}   }^{  } \| \mean{ \partial _{n}v_{h} }   \|_{ \m
 \[
 - \| h^{\frac{1}{2}} \mean{ \partial _{nn}v }   \|_{ \mathcal{F} _{h}  }^{  }\ge - C_{j}^{\frac{1}{2}} \| \nabla ^2 v_{h} \|_{ \mathcal{T} _{h} }^{  }
 \]
-The next step is then to use the \textbf{Youngs epsilon inequality} to be able to seperate the facets and triangulation norms. \[
+The next step is then to use the \textbf{Youngs epsilon inequality} to be able to separate the facets and triangulation norms. \[
  - 2 C^{\frac{1}{2}}_{j} \|  \nabla ^2 v_{h}    \|_{ \mathcal{T} _{h}  }^{  } \| h^{\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{ \mathcal{F} _{h} }^{2  } \ge- \varepsilon C_{j} \| \nabla ^2 v_{h} \|_{ \mathcal{T} _{h} }^{2  } -
  \frac{1}{\varepsilon } \| h^{\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{ \mathcal{F} _{h} }^{2  }
 \]
@@ -346,9 +346,9 @@ We want the CP method to be bounded.
 \mathcal{A} \left( w_{h}, v_{h} \right)   =& \left( \alpha w_{h}, v_{h} \right) _{\Omega } +
     \left( \nabla ^2 w_{h}, \nabla ^2v_{h} \right) _{\mathcal{T} _{h}}
   +
-  \left< \mean{  \partial _{n n} w_{h} }, \jump{ \partial _{n }v_{h}} \right>_{\mathcal{F}_{h}}  +
- \left< \mean{ \partial _{n n} v_{h} }, \jump{ \partial _{n}w }      \right>_{\mathcal{F}_{h}} \\
- & + \frac{\gamma }{h}  \left< \jump{ \partial _{n} w_{h}}, \jump{ \partial _{n} v_{h}   }   \right>_{\mathcal{F}_{h}} \\
+  \left( \mean{  \partial _{n n} w_{h} }, \jump{ \partial _{n }v_{h}} \right)_{\mathcal{F}_{h}}  +
+ \left( \mean{ \partial _{n n} v_{h} }, \jump{ \partial _{n}w }      \right)_{\mathcal{F}_{h}} \\
+ & + \frac{\gamma }{h}  \left( \jump{ \partial _{n} w_{h}}, \jump{ \partial _{n} v_{h}   }   \right)_{\mathcal{F}_{h}} \\
 \quad \textit{Cauchy-Schwarz inequality }\quad  &\le \alpha  \|  w_{h} \|_{\Omega   }^{  } \| v_{h} \|_{ \Omega  }^{  }     +
 \| \nabla ^2w_{h} \|_{\mathcal{T} _{h}   }^{  }  \| \nabla ^2v_{h} \|_{\mathcal{T} _{h}   }^{  } + \| h^{\frac{1}{2}}\mean{ \partial _{nn} w_{h} } \|_{ \mathcal{F}_{h}  }^{  } \| h^{-\frac{1}{2}}\jump{ \partial _{n} v_{h} } \|_{ \mathcal{F}_{h}  }^{  }    \\
 & \quad  + \| h^{\frac{1}{2}}\mean{ \partial _{nn} v_{h} }
@@ -380,7 +380,6 @@ The second step can we luckily observe that all terms invidually is less than th
 \text{and} \quad    \gamma \| h^{-1 } \jump{ \partial _{n} v_{h} }   & \|_{ \mathcal{F} _{h}  }^{  }  \| \jump{ \partial _{n} w_{h} }    \|_{\mathcal{F}_{h}   }^{  }   \le \gamma \| v_{h} \|_{ a_{h} }^{  }  \| w_{h} \|_{ a_{h} }^{  }.
 \end{split}
 \end{equation}
-
 Hence, the CP method is does fulfills the Lax Milgram criteria because it is both bounded and unique.
 
 
@@ -392,7 +391,7 @@ We will now introduce the notion of an apriori estimate, which can be used the e
 \subsubsection{Galerkin Orthogonality}%
 \label{ssub:galerkin_orthonality}
 
-Let us recall the weak continious problem \eqref{eq:continious_problem} and the weak discrete problem \eqref{eq:discrete_problem}.
+Let us recall the weak continuous problem \eqref{eq:continious_problem} and the weak discrete problem \eqref{eq:discrete_problem}.
 \begin{align}
     \label{eq:continious_problem}
     \text{Find } u \in V \quad&  \text{s.t. } a\left( u,v \right) = l\left( v \right)  \quad \forall v \in V. \\
