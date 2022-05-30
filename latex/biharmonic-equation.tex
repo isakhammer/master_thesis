@@ -64,13 +64,15 @@ a\left( u,v \right) = F(v).\quad \forall v \in
 V,
 \end{equation}
 where
-\[
-    \begin{split}
+\begin{equation}
+\label{eq:weak_formulation}
+\begin{split}
 a\left( u,v \right)_{\Omega } & =    \left( D ^2 u , D ^2 v\right)_{\Omega } - \left( \partial _{nt} u, \partial _{t} v \right) _{\partial \Omega }  +
 \alpha \left( u, v \right)_{\Omega }   , \\
 F\left( v \right)_{\Omega } & = \left( f,v \right)_{\Omega } - \left(g,v \right)_{\partial \Omega }.
+\end{split}
+\end{equation}
 
-\]
  In fact, the solution is unique for $\alpha  > 0$. However, for $\alpha  = 0$ must we assume the solvability condition,
 \begin{equation*}
  \int_{\Omega }^{} f dx = \int_{\partial \Omega }^{} g ds
@@ -81,7 +83,6 @@ V^{*} = \begin{cases}
     \left\{ v \in V: \int_{\Omega }^{} v dx  = 0\right\} \quad & \alpha  = 0,
 \end{cases}
 \]
-where $p_{*}$ is a corner of the polygonal domain $\Omega $.
 Thus, the unique solution in $v \in V^{*}$ belongs to $H^{3 }\left( \Omega  \right) $ \todo{why does it belong to $H^3(\Omega )$ } and we get the following
 elliptic regularity estimate \cite{gu2012c0},
 \begin{equation}
