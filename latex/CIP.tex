@@ -248,17 +248,17 @@ where
   \quad  \left( \alpha  w_{h}, v_{h} \right) _{\Omega }\\
 &  + \sum_{T \in \mathcal{T} _{h}}^{} \left( D^2 w_{h}, D^2v_{h} \right) _{T} \\
  & +
-  \sum_{E \in \mathcal{F}_{h}^{int} }^{}
-  \left< \mean{  \partial _{n n} w_{h} }, \jump{ \partial _{n }v_{h}} \right>_{E}  +
- \left< \mean{ \partial _{n n} v_{h} }, \jump{ \partial _{n}w }      \right>_{E}
-+ \frac{\gamma}{h}  \left< \jump{ \partial _{n} w_{h}}, \jump{ \partial _{n} v_{h}   }   \right>_{E}
+  \sum_{F \in \mathcal{F}_{h}^{int} }^{}
+  \left( \mean{  \partial _{n n} w_{h} }, \jump{ \partial _{n }v_{h}} \right)_{F}  +
+ \left( \mean{ \partial _{n n} v_{h} }, \jump{ \partial _{n}w }      \right)_{F}
++ \frac{\gamma}{h}  \left( \jump{ \partial _{n} w_{h}}, \jump{ \partial _{n} v_{h}   }   \right)_{F}
 \end{split}
 \end{equation}
 and
 \begin{equation}
 \label{eq:CP_F_h}
-F\left( v_{h} \right)  = \left( f, v_{h} \right) _{\Omega } +  \sum_ {\mathcal{F} ^{ext}_{}}^{} \left<g_{2 }, v_{h}  \right> _{E}
-+ \left<n g_{2}, \partial  _{n}v_{h} \right>_{E} + \left<\partial _{t} g_{1} , \partial _{t}v_{h} \right>_{E}
+F\left( v_{h} \right)  = \left( f, v_{h} \right) _{\Omega } +  \sum_ {F \in \mathcal{F}_{h} ^{ext}_{}}^{} \left<g_{2 }, v_{h}  \right) _{F}
++ \left(n g_{2}, \partial  _{n}v_{h} \right>_{F} + \left<\partial _{t} g_{1} , \partial _{t}v_{h} \right)_{F}
 \end{equation}
 Notice that the regulation term termined by respectively a global tuning parameter $\gamma >0 $ and facet length $h = \left\lvert E \right\rvert $. Another key component to the formulation
 in \eqref{eq:CP_A_h_1} after introduction of $ w_{h}, v_{h} \in V^{*}_{h}$  is that we expanded $\left< \partial _{nn}w, \jump{ \partial _{n} v }  \right>_{E} \to \left< \mean{ \partial _{nn}w_{h} }  , \jump{ \partial _{n} v_{h} }  \right>_{E} $ since we can longer not guarantee a
