@@ -38,7 +38,7 @@ def poission_DG():
 
 def biharmonic_DG():
 
-    mesh = Mesh (unit_square.GenerateMesh(maxh=0.05))
+    mesh = Mesh (unit_square.GenerateMesh(maxh=1/6))
     order = 4
     fes = L2(mesh, order=order, dgjumps=True)
     wh,vh = fes.TnT()
