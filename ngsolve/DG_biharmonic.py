@@ -38,17 +38,16 @@ def poission_DG():
 
 def biharmonic_DG():
 
-    mesh = Mesh (unit_square.GenerateMesh(maxh=0.1))
+    mesh = Mesh (unit_square.GenerateMesh(maxh=0.05))
     order = 4
     fes = L2(mesh, order=order, dgjumps=True)
     wh,vh = fes.TnT()
     gfu = GridFunction(fes)  # solution
 
-    g_1 = 1
-    g_2 = 1
-    f= 1
-    alpha = 4
-    gamma = 3
+    g = 1.0
+    f = 1.0
+    alpha = 0.1 # has to be strictly above zero
+    gamma = 0.1
     n = specialcf.normal(2)
     h = specialcf.mesh_size
 
@@ -61,18 +60,27 @@ def biharmonic_DG():
     def jump_n(v):
         return n*(grad(v)-grad(v.Other()))
 
-    dS = dx(element_boundary=True)
-    A = BilinearForm(fes)
-    A += ( alpha*wh*vh )*dx
-    A += InnerProduct(hesse(wh),hesse(vh))*dx
+    dS = dx(element_boundary=False)
+    A = BilinearForm(fes, symmetric=True)
+
+
+    # Alternative 1
+    # A += ( alpha*wh*vh )*dx
+    # A += InnerProduct(hesse(wh),hesse(vh))*dx
+
+    # Alternative 2 (gives same results as Alternative 1)
+    A += SymbolicBFI( alpha*wh*vh +  InnerProduct( hesse(wh), hesse(vh)))
+
+    # Boundary terms
     A += SymbolicBFI( mean_nn(wh)*jump_n(vh),  VOL, skeleton=True )
+    A += SymbolicBFI( mean_nn(vh)*jump_n(wh),  VOL, skeleton=True )
     A += SymbolicBFI( ( gamma/h )*jump_n(wh)*jump_n(vh),  VOL,  skeleton=True)
+
     A.Assemble()
 
     F = LinearForm(fes)
     F += SymbolicLFI(f*vh)
-    F += SymbolicLFI(g_2*vh, BND, skeleton=True)
-    F += SymbolicLFI(g_2*n*grad( vh ), BND ,skeleton=True)
+    F += SymbolicLFI(g*vh, BND, skeleton=True)
     F.Assemble()
 
     gfu = GridFunction(fes, name="uDG")
