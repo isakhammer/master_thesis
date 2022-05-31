@@ -143,6 +143,8 @@ H^{4}\left( T  \right) $. Using that the results in \eqref{eq:weak_formulation} 
 For global continuity, let  $v \in V =  \left\{ v \in H^{1}\left( \Omega  \right): v_{T} \in  H^{4}\left( T \right), \ \forall T \in
 \mathcal{T}_{h}    \right\}   \cap C^{0} (
 \Omega  ) $ and $u \in  H^{4}\left( \Omega  \right) $ such that,
+\todo[inline]{ Should we require $ v \in V =  \left\{ v \in H^{1}\left( \Omega  \right): v_{T} \in  H^{4}\left( T \right) \ \forall T \in \mathcal{T}_{h} \text{ and } \partial _{n} v = 0 \text{ on } \partial \Omega \right\}   \cap C^{0} (
+\Omega  ) $  ??  }
 
 \begin{equation}
 \label{eq:bi_basic_dg2}
@@ -150,8 +152,7 @@ For global continuity, let  $v \in V =  \left\{ v \in H^{1}\left( \Omega  \right
 \right)_{\partial T} - \left(\partial _{nn} u, \partial _{n}v \right)_{\partial T} + \left(\partial _{n} \Delta  u,v
 \right)_{\partial T}.
 \end{equation}
-
-However, this can be distinguished to separate integrating over triangles $\mathcal{T} _{h}$ , integrating over exterior facets $\mathcal{F} _{h}^{ext}$ and then integrate interior facets $\mathcal{F} _{h}^{int}$.
+However, this expression can be written to distinguish integrating over triangles $\mathcal{T} _{h}$ , integrating over exterior facets $\mathcal{F} _{h}^{ext}$ and then integrate interior facets $\mathcal{F} _{h}^{int}$.
 
 \begin{equation}
 \label{eq:bi_basic_dg_full_1}
@@ -162,11 +163,11 @@ However, this can be distinguished to separate integrating over triangles $\math
 \right)_{F} \\
 & = \sum_{T \in  \mathcal{T} _{h}}^{} \left( D^2u, D^2v \right)_{T} + \sum_{F \in
 \mathcal{F} ^{ext}_{h}}^{} \left(g, v  \right) _{F}
-+ \left(n g, \nabla _{n}v \right)_{F}  + \sum_{F \in \mathcal{F}  ^{int}}^{} \left( \partial _{nn} u , \jump{ \partial_{n} v } \right)_{F}
+- \left(\partial_{nt} u , \partial _{t} v \right)_{F}  + \sum_{F \in \mathcal{F}  ^{int}}^{} \left( \partial _{nn} u , \jump{ \partial_{n} v } \right)_{F}
 \end{split}
 \end{equation}
 Keep in mind that any jump over a interior facet $F \subset \mathcal{F} _{h}^{int}   $, visualized in figure \ref{fig:normal}, is defined as $\jump{ a } =    a^{+} - a^{-} $
-and similarly will the mean be defined as $\mean{ a  } = \frac{1}{2}(   a^{+}
+and likewise for the mean, $\mean{ a  } = \frac{1}{2}(   a^{+}
 + a^{-})$.    The equivalence of \eqref{eq:bi_basic_dg2} and \eqref{eq:bi_basic_dg_full_1} comes from the following argumentation.
 
 \begin{equation*}
@@ -175,10 +176,10 @@ and similarly will the mean be defined as $\mean{ a  } = \frac{1}{2}(   a^{+}
 \right)_{\partial T} - \left(\partial _{nn} u, \partial _{n}v \right)_{\partial T} + \left(\partial _{n} \Delta  u,v
 \right)_{\partial T} \\
 &= \sum_{T\in \mathcal{T} _{h}}^{} \left( D^2u,D^2v \right) _{T } \\
-&  \quad + \sum_{F \in \mathcal{F}_{h}^{ext} }^{} \underbrace{\left( \partial _{n} \Delta  u, v  \right)_{E}}_{= \left( g_{2},v \right)_{E} }  -  \underbrace{\left(
-\partial _{nt} u, \partial _{t} v \right) _{E}}_{= \left(\partial _{t} g_{1} , \partial _{t}v \right) }  - \underbrace{\left( \partial _{nn} u, \partial _{n} v \right)}_{= \left(n g_{2}, \partial  _{n}v \right)_{F}  }    \\
+&  \quad + \sum_{F \in \mathcal{F}_{h}^{ext} }^{} \underbrace{\left( \partial _{n} \Delta  u, v  \right)_{F}}_{= \left( g,v \right)_{F} }  -  \left(
+\partial _{nt} u, \partial _{t} v \right) _{F}  - \underbrace{\left( \partial _{nn} u, \partial _{n} v \right)_{F}}_{ = 0}    \\
 & \quad  + \sum_{F \in \mathcal{F} _{h}^{int}}^{} \underbrace{\left( \left(\partial _{n^{+}} \Delta  u^{+}
-        ,v^{+}\right)_{E}
+        ,v^{+}\right)_{F}
 + \left(\partial _{n^{-}} \Delta  u^{+} ,v^{-}\right)_{F}  \right)}_{(I)} +
 \underbrace{\left( \left(\partial _{n^{+}t} u^{+}, \partial_{t} v^{+} \right)_{F} +  \left(\partial _{n^{-}t} u^{-},
         \partial_{t} v^{-}
@@ -188,7 +189,7 @@ and similarly will the mean be defined as $\mean{ a  } = \frac{1}{2}(   a^{+}
     \end{split}
 .\end{equation*}
 
-Where integration over all interior facets $ \forall E \in \mathcal{F}_{h}^{int}$ is computed in this way:
+Where integration over all interior facets $ \forall F \in \mathcal{F}_{h}^{int}$ is computed in this way,
 \begin{equation*}
     \begin{split}
         (I) &  =    \left(\partial _{n^{+}} \Delta  u^{+} ,v^{+}\right)_{F} +
@@ -226,6 +227,8 @@ We can finally start defining the fully discrete formulation. Let the basis be a
 V_{h} = \left\{ v \in C^{0}\left( \Omega  \right): v_{T} = v | _{T} \in P_{2}\left( T \right), \forall T \in
 \mathcal{T}_{h}    \right\}
 \]
+\todo[inline]{ Again as above. Should we require $ v \in V =  \left\{ v \in C^{0}\left( \Omega  \right): v_{T} = v | _{T} \in P_{2}\left( T \right), \forall T \in
+\mathcal{T}_{h}  \text{ and } \partial _{n} v = 0 \text{ on } \partial \Omega  \right\} $ ?  }
 and
 \[
 V_{h}^{*} = \begin{cases}
@@ -260,9 +263,9 @@ and
 F\left( v_{h} \right)  = \left( f, v_{h} \right) _{\Omega } +  \sum_ {F \in \mathcal{F}_{h} ^{ext}}^{} \left(g_{2 }, v_{h}  \right) _{F}
 + \left(n g_{2}, \partial  _{n}v_{h} \right)_{F} + \left(\partial _{t} g_{1} , \partial _{t}v_{h} \right)_{F}
 \end{equation}
-Notice that the regulation term determined by respectively a global tuning parameter $\gamma >0 $ and facet length $h = \left\lvert E \right\rvert $. Another key component to the formulation
-in \eqref{eq:CP_A_h_1} after introduction of $ w_{h}, v_{h} \in V^{*}_{h}$  is that we expanded $\left< \partial _{nn}w, \jump{ \partial _{n} v }  \right>_{E} \to \left< \mean{ \partial _{nn}w_{h} }  , \jump{ \partial _{n} v_{h} }  \right>_{E} $ since we can longer not guarantee a
-continuous jump. For symmetric purposes we also added $ \left< \mean{ \partial _{nn} v_{h}}  , \jump{ \partial _{n} w_{h} }  \right>_{E} $.
+Notice that the regulation term determined by respectively a global tuning parameter $\gamma >0 $. Another key component to the formulation
+in \eqref{eq:CP_A_h_1} after introduction of $ w_{h}, v_{h} \in V^{*}_{h}$  is that we expanded $\left( \partial _{nn}w, \jump{ \partial _{n} v }  \right)_{F} \to \left( \mean{ \partial _{nn}w_{h} }  , \jump{ \partial _{n} v_{h} }  \right)_{F} $ since we can longer not guarantee a
+continuous jump. For symmetric purposes we also added $ \left( \mean{ \partial _{nn} v_{h}}  , \jump{ \partial _{n} w_{h} }  \right)_{F} $.
 
 We may introduce the compact notation of \eqref{eq:CP_A_h_1}.
 
