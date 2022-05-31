@@ -175,11 +175,11 @@ and similarly will the mean be defined as $\mean{ a  } = \frac{1}{2}(   a^{+}
 \right)_{\partial T} - \left(\partial _{nn} u, \partial _{n}v \right)_{\partial T} + \left(\partial _{n} \Delta  u,v
 \right)_{\partial T} \\
 &= \sum_{T\in \mathcal{T} _{h}}^{} \left( D^2u,D^2v \right) _{T } \\
-&  \quad + \sum_{F \in \mathcal{F}_{h}^{ext} }^{} \underbrace{\left( \partial _{n} \nabla ^2 u, v  \right)_{E}}_{= \left( g_{2},v \right)_{E} }  -  \underbrace{\left(
+&  \quad + \sum_{F \in \mathcal{F}_{h}^{ext} }^{} \underbrace{\left( \partial _{n} \Delta  u, v  \right)_{E}}_{= \left( g_{2},v \right)_{E} }  -  \underbrace{\left(
 \partial _{nt} u, \partial _{t} v \right) _{E}}_{= \left(\partial _{t} g_{1} , \partial _{t}v \right) }  - \underbrace{\left( \partial _{nn} u, \partial _{n} v \right)}_{= \left(n g_{2}, \partial  _{n}v \right)_{F}  }    \\
-& \quad  + \sum_{F \in \mathcal{F} _{h}^{int}}^{} \underbrace{\left( \left(\partial _{n^{+}} \nabla ^2 u^{+}
+& \quad  + \sum_{F \in \mathcal{F} _{h}^{int}}^{} \underbrace{\left( \left(\partial _{n^{+}} \Delta  u^{+}
         ,v^{+}\right)_{E}
-+ \left(\partial _{n^{-}} \nabla ^2 u^{+} ,v^{-}\right)_{F}  \right)}_{(I)} +
++ \left(\partial _{n^{-}} \Delta  u^{+} ,v^{-}\right)_{F}  \right)}_{(I)} +
 \underbrace{\left( \left(\partial _{n^{+}t} u^{+}, \partial_{t} v^{+} \right)_{F} +  \left(\partial _{n^{-}t} u^{-},
         \partial_{t} v^{-}
 \right)_{F}  \right) }_{(II)} +
@@ -191,15 +191,15 @@ and similarly will the mean be defined as $\mean{ a  } = \frac{1}{2}(   a^{+}
 Where integration over all interior facets $ \forall E \in \mathcal{F}_{h}^{int}$ is computed in this way:
 \begin{equation*}
     \begin{split}
-        (I) &  =    \left(\partial _{n^{+}} \nabla ^2 u^{+} ,v^{+}\right)_{F} +
-        \left(\partial _{n^{-}} \nabla ^2 u^{+} ,v^{-}\right)_{F} =   \int_{F}^{}
-        \jump{ \partial _{n} \nabla ^2 u \cdot v } =
+        (I) &  =    \left(\partial _{n^{+}} \Delta  u^{+} ,v^{+}\right)_{F} +
+        \left(\partial _{n^{-}} \Delta  u^{+} ,v^{-}\right)_{F} =   \int_{F}^{}
+        \jump{ \partial _{n} \Delta  u \cdot v } =
          \int_{F}^{}
-         \mean{ \partial _{n} \nabla ^2 u } \underbrace{\jump{ v }}_{= 0}    + \underbrace{\jump{ \partial _{n} \nabla ^2 u
+         \mean{ \partial _{n} \Delta  u } \underbrace{\jump{ v }}_{= 0}    + \underbrace{\jump{ \partial _{n} \Delta  u
          }}_{= 0}    \mean{ v } = 0 \\
         (II) &  =     \left(\partial _{n^{+}t} u^{+}, \partial_{t} v^{+}
         \right)_{F} +  \left(\partial _{n^{-}t} u^{-}, \partial_{t} v^{-}
-\right)_{F}    =   \int_{E}^{}
+\right)_{F}    =   \int_{F}^{}
         \jump{ \partial _{nt} u \cdot  \partial_{t} v } =
          \int_{F}^{}
          \mean{ \partial _{nt} u    } \underbrace{\jump{ \partial_{t} v }  }_{= 0}    + \underbrace{\jump{ \partial
@@ -288,7 +288,7 @@ First of all, let us now establish some important inequalites.
 \[
 \begin{split}
     \textbf{Cauchy-Schwarz inequality: } & \| ab \|_{  }^{  }  \le \| a \|_{  }^{  } \| b \|_{  }^{  }   \\
-    \textbf{Inverse inequality: } & \frac{1}{h}\| \partial _{nn}  v_{h} \|_{\mathcal{F}_{h}   }^{2  }  \le C_{j} \| \nabla ^2 v_{h} \|_{ \mathcal{T} _{h} }^{ 2 }   \\
+    \textbf{Inverse inequality: } & \frac{1}{h}\| \partial _{nn}  v_{h} \|_{\mathcal{F}_{h}   }^{2  }  \le C_{j} \| D ^2 v_{h} \|_{ \mathcal{T} _{h} }^{ 2 }   \\
     \textbf{Youngs epsilon inequality: } & 2ab =   2\sqrt{\varepsilon }a\cdot    \frac{b}{\sqrt{\varepsilon } } \le \varepsilon a^2+ b^2 \frac{1}{\varepsilon }
 \end{split}
 \]
@@ -297,7 +297,7 @@ Let the energy norm be on the form
 \begin{equation}
 \label{eq:A_energy_norm}
     \begin{split}
-\| v_{h} \|_{ h }^{2  } & = \| v_{h} \|_{ a_{h} }^{ 2 } =  \|  w_{h} \|_{ \Omega  }^{  }\| v_{h} \|_{ \Omega  }^{  }  +  \| \nabla ^2 v_{h} \|_{ \mathcal{T} _{h}  }^{ 2 }  + \|  h^{-\frac{1}{2}} \jump{ \partial _{n} v_{h}    }\|_{  \mathcal{F} _{h} }^{  } \\
+\| v_{h} \|_{ h }^{2  } & = \| v_{h} \|_{ a_{h} }^{ 2 } =  \|  w_{h} \|_{ \Omega  }^{  }\| v_{h} \|_{ \Omega  }^{  }  +  \| D ^2 v_{h} \|_{ \mathcal{T} _{h}  }^{ 2 }  + \|  h^{-\frac{1}{2}} \jump{ \partial _{n} v_{h}    }\|_{  \mathcal{F} _{h} }^{  } \\
 \| v \|_{ h }^{ 2 }  &= \| v \|_{ a_{h},* }^{ 2 } = \| v \|_{ a_{h} }^{ 2 }  + \| h^{\frac{1}{2}} \left\{ \partial _{nn } v\right\}  \|_{ F  }^{  }, \quad  v\in V \oplus V_{h}
     \end{split}
 .\end{equation}
