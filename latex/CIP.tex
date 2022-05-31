@@ -5,8 +5,6 @@
 
 
 
-
-
 \subsection{Introduction}%
 \label{sub:introduction}
 
@@ -132,7 +130,7 @@ the mesh is quasi-uniform only if it holds that the mesh is shape regular and $h
 \label{sub:constructing_continious_interior_penalty_method}
 
  Let us assume that $u,v \in
-H^{4}\left( T  \right) $. Using that the results in \eqref{eq:weak_formulation} also holds for a triangle $T$ can we write
+H^{4}\left( T  \right) $. Using that the weak form identity \eqref{eq:weak_form_identity} also holds for a triangle $T$ can we write
 \begin{equation}
 \label{eq:bi_basic_dg}
 \left( \Delta  ^{2} u,v \right) _{T} =  \left( D^2u,D^2v \right) _{T } - \left(\partial _{nt} u, \partial _{t}v
@@ -141,10 +139,7 @@ H^{4}\left( T  \right) $. Using that the results in \eqref{eq:weak_formulation} 
 .\end{equation}
 
 For global continuity, let  $v \in V =  \left\{ v \in H^{1}\left( \Omega  \right): v_{T} \in  H^{4}\left( T \right), \ \forall T \in
-\mathcal{T}_{h}    \right\}   \cap C^{0} (
-\Omega  ) $ and $u \in  H^{4}\left( \Omega  \right) $ such that,
-\todo[inline]{ Should we require $ v \in V =  \left\{ v \in H^{1}\left( \Omega  \right): v_{T} \in  H^{4}\left( T \right) \ \forall T \in \mathcal{T}_{h} \text{ and } \partial _{n} v = 0 \text{ on } \partial \Omega \right\}   \cap C^{0} (
-\Omega  ) $  ??  }
+\mathcal{T}_{h}    \right\} $ and $u \in  H^{4}\left( \Omega  \right) $ such that,
 
 \begin{equation}
 \label{eq:bi_basic_dg2}
@@ -157,13 +152,12 @@ However, this expression can be written to distinguish integrating over triangle
 \begin{equation}
 \label{eq:bi_basic_dg_full_1}
 \begin{split}
-\left( \Delta  ^{2} u, v \right) _{\Omega } =& \sum_{T \in  \mathcal{T} _{h}}^{} \left( D^2u, D^2v \right)_{T}  + \sum_{F \in \mathcal{F}_{h}^{ext}}  \left(\partial _{n} \Delta u, v  \right) _{F}
-- \left(\partial _{nt} u, \partial _{t} v \right) _{F}+
+\left( \Delta  ^{2} u, v \right) _{\Omega } =& \sum_{T \in  \mathcal{T} _{h}}^{} \left( D^2u, D^2v \right)_{T}  + \sum_{F \in \mathcal{F}_{h}^{ext}}  \left(\partial _{n} \Delta u, v  \right) _{F} - \left(\partial _{nt} u, \partial _{t} v \right) _{F}-
 \left( \partial _{nn} u, \partial _{n} v \right)_{F} + \sum_{F \in \mathcal{F}_{h}  ^{int}}^{} \left(\partial _{nn} u , \jump{ \partial _{n} v }
 \right)_{F} \\
 & = \sum_{T \in  \mathcal{T} _{h}}^{} \left( D^2u, D^2v \right)_{T} + \sum_{F \in
 \mathcal{F} ^{ext}_{h}}^{} \left(g, v  \right) _{F}
-- \left(\partial_{nt} u , \partial _{t} v \right)_{F}  + \sum_{F \in \mathcal{F}  ^{int}}^{} \left( \partial _{nn} u , \jump{ \partial_{n} v } \right)_{F}
+  + \sum_{F \in \mathcal{F}  ^{int}}^{} \left( \partial _{nn} u , \jump{ \partial_{n} v } \right)_{F}
 \end{split}
 \end{equation}
 Keep in mind that any jump over a interior facet $F \subset \mathcal{F} _{h}^{int}   $, visualized in figure \ref{fig:normal}, is defined as $\jump{ a } =    a^{+} - a^{-} $
@@ -227,8 +221,6 @@ We can finally start defining the fully discrete formulation. Let the basis be a
 V_{h} = \left\{ v \in C^{0}\left( \Omega  \right): v_{T} = v | _{T} \in P_{2}\left( T \right), \forall T \in
 \mathcal{T}_{h}    \right\}
 \]
-\todo[inline]{ Again as above. Should we require $ v \in V =  \left\{ v \in C^{0}\left( \Omega  \right): v_{T} = v | _{T} \in P_{2}\left( T \right), \forall T \in
-\mathcal{T}_{h}  \text{ and } \partial _{n} v = 0 \text{ on } \partial \Omega  \right\} $ ?  }
 and
 \[
 V_{h}^{*} = \begin{cases}
@@ -255,11 +247,8 @@ where
   \left( \mean{  \partial _{n n} w_{h} }, \jump{ \partial _{n }v_{h}} \right)_{F}  +
  \left( \mean{ \partial _{n n} v_{h} }, \jump{ \partial _{n}w }      \right)_{F}
 + \frac{\gamma}{h}  \left( \jump{ \partial _{n} w_{h}}, \jump{ \partial _{n} v_{h}   }   \right)_{F}
- \\
- & +  \sum_ {F \in \mathcal{F}_{h} ^{ext}}^{}  -\left(\partial _{nt} w_{h} , \partial _{t}v_{h} \right)_{F} - \left(\partial _{nt} v_{h} , \partial _{t}w_{h} \right)_{F}
 \end{split}
 \end{equation}
-\todo[inline]{ Is the external summation correct? }
 and
 \begin{equation}
 \label{eq:CP_F_h}
@@ -267,8 +256,7 @@ F\left( v_{h} \right)  = \left( f, v_{h} \right) _{\Omega } +  \sum_ {F \in \mat
 \end{equation}
 Notice that the regulation term determined by respectively a global tuning parameter $\gamma >0 $. Another key component to the formulation
 in \eqref{eq:CP_A_h_1} after introduction of $ w_{h}, v_{h} \in V^{*}_{h}$  is that we expanded $\left( \partial _{nn}w, \jump{ \partial _{n} v }  \right)_{F} \to \left( \mean{ \partial _{nn}w_{h} }  , \jump{ \partial _{n} v_{h} }  \right)_{F} $ since we can longer not guarantee a
-continuous jump. For symmetric purposes we also added $ \left( \mean{ \partial _{nn} v_{h}}  , \jump{ \partial _{n} w_{h} }  \right)_{F} $. Similarly, for the summation over the external facets $\mathcal{F} _{h}^{ext}$ we added the minus term $- \left( \partial
-_{nt} v_{h} , \partial _{t}v \right) $ for symmetry.
+continuous jump. For symmetric purposes we also added $ \left( \mean{ \partial _{nn} v_{h}}  , \jump{ \partial _{n} w_{h} }  \right)_{F} $.
 
 We may introduce the compact notation of \eqref{eq:CP_A_h_1}.
 
@@ -282,11 +270,9 @@ We may introduce the compact notation of \eqref{eq:CP_A_h_1}.
   \left( \mean{  \partial _{n n} w_{h} }, \jump{ \partial _{n }v_{h}} \right)_{\mathcal{F}_{h}}  +
  \left( \mean{ \partial _{n n} v_{h} }, \jump{ \partial _{n}w }      \right)_{\mathcal{F}_{h}}
 + \frac{\gamma }{h}  \left( \jump{ \partial _{n} w_{h}}, \jump{ \partial _{n} v_{h}   }   \right)_{\mathcal{F}_{h}} \\
-& - (\partial _{nt} w_{h}, \partial _{t}v_{h})_{\mathcal{F} _{h}^{ext}} -  (\partial _{nt} w_{h}, \partial _{t}v_{h})_{\mathcal{F} _{h}^{ext}}
 \end{split}
 \end{equation}
 
-\todo[inline]{ TODO: correct the error analysis with this $\mathcal{A} _{h}$ including external facets $\mathcal{F} _{h}^{ext}$  }
 
 \subsection{Error and Stability Analysis of CP}%
 \label{sub:error_and_stability_analysis_of_c0ip}
