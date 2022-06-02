@@ -22,7 +22,7 @@ function main()
     domain2D = (0.0, L, 0.0, L)
     partition2D = (n,n)
     model = CartesianDiscreteModel(domain2D,partition2D)
-    writevtk(model,"model_mesh")
+    writevtk(model,"plots/model_mesh")
 
     V = TestFESpace(model, ReferenceFE(lagrangian,Float64,order), conformity=:L2)
     U = TrialFESpace(V)
@@ -31,7 +31,7 @@ function main()
 
     Λ = SkeletonTriangulation(model)
 
-    writevtk(Λ,"strian_cube")
+    writevtk(Λ,"plots/strian_cube")
 
     degree = 2*order
 
@@ -65,8 +65,8 @@ function main()
 
     op = AffineFEOperator(a, l, U, V)
     uh = solve(op)
-    writevtk(Λ,"jumps",cellfields=["jump_u"=>jump(uh)])
-    writevtk(Ω,"Omega",cellfields=["uh"=>uh])
+    writevtk(Λ,"plots/jumps",cellfields=["jump_u"=>jump(uh)])
+    writevtk(Ω,"plots/Omega",cellfields=["uh"=>uh])
 
 end
 
