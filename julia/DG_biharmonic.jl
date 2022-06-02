@@ -15,23 +15,22 @@ function main()
 
     # mesh generation
     L = 1.0
-    n = 4
+    n = 5
     α = 1
     order = 2
 
     domain2D = (0.0, L, 0.0, L)
     partition2D = (n,n)
     model = CartesianDiscreteModel(domain2D,partition2D)
-    writevtk(model,"plots/model_mesh")
+    writevtk(model,"plots/biharmonic_model")
 
     V = TestFESpace(model, ReferenceFE(lagrangian,Float64,order), conformity=:L2)
     U = TrialFESpace(V)
     Ω = Triangulation(model)
     Γ = BoundaryTriangulation(model)
-
     Λ = SkeletonTriangulation(model)
 
-    writevtk(Λ,"plots/strian_cube")
+    writevtk(Λ,"plots/biharmonic_skeleton")
 
     degree = 2*order
 
@@ -65,8 +64,8 @@ function main()
 
     op = AffineFEOperator(a, l, U, V)
     uh = solve(op)
-    writevtk(Λ,"plots/jumps",cellfields=["jump_u"=>jump(uh)])
-    writevtk(Ω,"plots/Omega",cellfields=["uh"=>uh])
+    writevtk(Λ,"plots/biharmonic_jumps",cellfields=["jump_u"=>jump(uh)])
+    writevtk(Ω,"plots/biharmonic_omega",cellfields=["uh"=>uh])
 
 end
 
