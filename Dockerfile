@@ -7,5 +7,5 @@ RUN cd ngsolve && python3 DG_biharmonic.py
 RUN cd ngsolve && python3 DG_poission.py
 
 RUN cd julia && julia DG_poission.jl
-# RUN cd julia && julia DG_biharmonic.jl
+RUN cd julia && julia DG_biharmonic.jl
 
