@@ -7,7 +7,7 @@ function main()
 
     # mesh generation
     L = 1.0
-    n = 5
+    n = 10
     α = 3
     order = 2
 
@@ -50,7 +50,7 @@ function main()
     a_Λ(u,v) = ∫(
                  + mean_∇∇(v)⊙jump_∇(u)
                  + mean_∇∇(u)⊙jump_∇(v)
-                 + (γ/h)⋅ jump(∇(v) ⋅ n_Λ )⊙jump(∇(u) ⋅ n_Λ )
+                 + (γ/h)⋅ jump_∇(v)⊙jump_∇(u)
                 )dΛ
 
     # Summation
