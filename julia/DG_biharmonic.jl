@@ -50,7 +50,7 @@ function main()
 ⋅
     # Inner facets
     a_Λ(u,v) = ∫(
-                 + mean_nn(v)⊙jump_n(u)
+                   + mean_nn(v)⊙jump_n(u)
                  + mean_nn(u)⊙jump_n(v)
                  + (γ/h)⋅ jump_n(v)⊙jump_n(u)
                 )dΛ
