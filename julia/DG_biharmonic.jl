@@ -1,22 +1,14 @@
 using Gridap
 import Gridap: ∇
 
-
-
 function main()
     f(x) = 1
-    g(x) = 0
-
-    # ∇u(x) = VectorValue(3   + x[2]*x[3],
-    #                 2*x[2]   + x[1]*x[3],
-    #                 6*x[3]^2 + x[1]*x[2])
-
-    # println(∇(u) === ∇u)
+    g(x) = 1
 
     # mesh generation
     L = 1.0
     n = 5
-    α = 1
+    α = 3
     order = 2
 
     domain2D = (0.0, L, 0.0, L)
@@ -24,7 +16,7 @@ function main()
     model = CartesianDiscreteModel(domain2D,partition2D)
     writevtk(model,"plots/biharmonic_model")
 
-    V = TestFESpace(model, ReferenceFE(lagrangian,Float64,order), conformity=:L2)
+    V = TestFESpace(model, ReferenceFE(lagrangian,Float64,order), conformity=:H1)
     U = TrialFESpace(V)
     Ω = Triangulation(model)
     Γ = BoundaryTriangulation(model)
@@ -49,13 +41,17 @@ function main()
     l_Γ(v) = ∫(- (g⋅v))dΓ
 
     h = L / n
-    γ = order*(order+1)
+    γ = 2
 
+    mean_∇∇(u) = 0.5*( n_Λ.plus⋅ ∇∇(u).plus⋅ n_Λ.plus + n_Λ.minus ⋅ ∇∇(u).minus ⋅ n_Λ.minus )
+    mean_∇(u) = 0.5*(  ∇(u).plus⋅ n_Λ.plus + ∇(u).minus ⋅ n_Λ.minus )
+    jump_∇(u) = ∇(u).plus⋅ n_Λ.plus - ∇(u).minus ⋅ n_Λ.minus
+⋅
     # Inner facets
     a_Λ(u,v) = ∫(
-                 + mean(n_Λ⋅ ∇∇(v)⋅ n_Λ)⊙jump(∇(u)⋅n_Λ)
-                 + mean(n_Λ⋅ ∇∇(u)⋅ n_Λ)⊙jump(∇(v)⋅n_Λ)
-              + (γ/h)⋅ mean(∇(v) ⋅ n_Λ)⊙jump(∇(u)⋅ n_Λ)
+                 + mean_∇∇(v)⊙jump_∇(u)
+                 + mean_∇∇(u)⊙jump_∇(v)
+              + (γ/h)⋅ jump_∇(v)⊙jump_∇(u)
                 )dΛ
 
     # Summation
@@ -66,9 +62,6 @@ function main()
     uh = solve(op)
     writevtk(Λ,"plots/biharmonic_jumps",cellfields=["jump_u"=>jump(uh)])
     writevtk(Ω,"plots/biharmonic_omega",cellfields=["uh"=>uh])
-
 end
 
-
-# main2()
 main()
