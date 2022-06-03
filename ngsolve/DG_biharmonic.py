@@ -51,7 +51,7 @@ def biharmonic_DG():
 
     F = LinearForm(fes)
     F += SymbolicLFI(f*vh)
-    F +=  SymbolicLFI(- g*vh, BND, skeleton=True)
+    F += SymbolicLFI(- g*vh, BND, skeleton=True)
     F.Assemble()
 
     gfu = GridFunction(fes, name="uDG")
