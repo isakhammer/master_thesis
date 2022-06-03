@@ -44,14 +44,13 @@ function main()
     γ = 2
 
     mean_∇∇(u) = 0.5*( n_Λ.plus⋅ ∇∇(u).plus⋅ n_Λ.plus + n_Λ.minus ⋅ ∇∇(u).minus ⋅ n_Λ.minus )
-    mean_∇(u) = 0.5*(  ∇(u).plus⋅ n_Λ.plus + ∇(u).minus ⋅ n_Λ.minus )
     jump_∇(u) = ∇(u).plus⋅ n_Λ.plus - ∇(u).minus ⋅ n_Λ.minus
 ⋅
     # Inner facets
     a_Λ(u,v) = ∫(
                  + mean_∇∇(v)⊙jump_∇(u)
                  + mean_∇∇(u)⊙jump_∇(v)
-              + (γ/h)⋅ jump_∇(v)⊙jump_∇(u)
+                 + (γ/h)⋅ jump(∇(v) ⋅ n_Λ )⊙jump(∇(u) ⋅ n_Λ )
                 )dΛ
 
     # Summation
