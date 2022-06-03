@@ -11,11 +11,13 @@ function main()
     α = 3
     order = 2
 
+    # Mesh
     domain2D = (0.0, L, 0.0, L)
     partition2D = (n,n)
     model = CartesianDiscreteModel(domain2D,partition2D)
     writevtk(model,"plots/biharmonic_model")
 
+    # Spaces
     V = TestFESpace(model, ReferenceFE(lagrangian,Float64,order), conformity=:H1)
     U = TrialFESpace(V)
     Ω = Triangulation(model)
@@ -43,14 +45,14 @@ function main()
     h = L / n
     γ = 2
 
-    mean_∇∇(u) = 0.5*( n_Λ.plus⋅ ∇∇(u).plus⋅ n_Λ.plus + n_Λ.minus ⋅ ∇∇(u).minus ⋅ n_Λ.minus )
-    jump_∇(u) = ∇(u).plus⋅ n_Λ.plus - ∇(u).minus ⋅ n_Λ.minus
+    mean_nn(u) = 0.5*( n_Λ.plus⋅ ∇∇(u).plus⋅ n_Λ.plus + n_Λ.minus ⋅ ∇∇(u).minus ⋅ n_Λ.minus )
+    jump_n(u) = ∇(u).plus⋅ n_Λ.plus - ∇(u).minus ⋅ n_Λ.minus
 ⋅
     # Inner facets
     a_Λ(u,v) = ∫(
-                 + mean_∇∇(v)⊙jump_∇(u)
-                 + mean_∇∇(u)⊙jump_∇(v)
-                 + (γ/h)⋅ jump_∇(v)⊙jump_∇(u)
+                 + mean_nn(v)⊙jump_n(u)
+                 + mean_nn(u)⊙jump_n(v)
+                 + (γ/h)⋅ jump_n(v)⊙jump_n(u)
                 )dΛ
 
     # Summation
