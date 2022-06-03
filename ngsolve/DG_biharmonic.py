@@ -5,16 +5,21 @@ from netgen.geom2d import unit_square
 
 
 def biharmonic_DG():
+
+    g = 1.0
+    f = 1.0
+    alpha = 0.1 # has to be strictly above zero
+    gamma = 2
+
+    # Mesh
     mesh = Mesh (unit_square.GenerateMesh(maxh=1/10))
+
+    # Spaces
     order = 4
     fes = L2(mesh, order=order, dgjumps=True)
     wh,vh = fes.TnT()
     gfu = GridFunction(fes)  # solution
 
-    g = 1.0
-    f = 1.0
-    alpha = 0.1 # has to be strictly above zero
-    gamma = 0.1
     n = specialcf.normal(2)
     h = specialcf.mesh_size
 
@@ -27,9 +32,8 @@ def biharmonic_DG():
     def jump_n(v):
         return n*(grad(v)-grad(v.Other()))
 
-    dS = dx(element_boundary=False)
-    A = BilinearForm(fes, symmetric=True)
 
+    A = BilinearForm(fes, symmetric=True)
 
     # Alternative 1
     # A += ( alpha*wh*vh )*dx
@@ -47,7 +51,7 @@ def biharmonic_DG():
 
     F = LinearForm(fes)
     F += SymbolicLFI(f*vh)
-    F += SymbolicLFI(g*vh, BND, skeleton=True)
+    F +=  SymbolicLFI(- g*vh, BND, skeleton=True)
     F.Assemble()
 
     gfu = GridFunction(fes, name="uDG")
