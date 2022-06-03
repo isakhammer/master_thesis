@@ -5,13 +5,13 @@ from netgen.geom2d import unit_square
 
 
 def biharmonic_DG():
-    mesh = Mesh (unit_square.GenerateMesh(maxh=1/6))
+    mesh = Mesh (unit_square.GenerateMesh(maxh=1/10))
     order = 4
     fes = L2(mesh, order=order, dgjumps=True)
     wh,vh = fes.TnT()
     gfu = GridFunction(fes)  # solution
 
-    g = 0.0
+    g = 1.0
     f = 1.0
     alpha = 0.1 # has to be strictly above zero
     gamma = 0.1
