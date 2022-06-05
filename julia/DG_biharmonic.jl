@@ -24,7 +24,6 @@ function run_biharmonic(; n=10, generate_vtk=false, dirname="biharmonic_results"
     Γ = BoundaryTriangulation(model)
     Λ = SkeletonTriangulation(model)
 
-
     degree = 1*order
 
     dΩ = Measure(Ω,degree)
