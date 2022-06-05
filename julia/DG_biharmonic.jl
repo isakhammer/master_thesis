@@ -1,8 +1,9 @@
 using Gridap
 using Plots
+using Test
 import Gridap: ∇
 
-function run_biharmonic(; n=10, generate_vtk=false, dirname="biharmonic_results")
+function run_biharmonic(; n=10, generate_vtk=false, dirname="biharmonic_results", test=false)
 
 
     # mesh generation
@@ -41,7 +42,7 @@ function run_biharmonic(; n=10, generate_vtk=false, dirname="biharmonic_results"
     f(x) = Δ(u)(x) + α*u(x) # Algorithmic Diff.
 
     # ERROR: we see that u_h -> 0 when g -> 0. This should now be the case!!
-    g(x) = 0
+    g(x) = 1
 
     # Inner triangulation
     a_Ω(u,v) = ∫( ∇∇(v)⊙∇∇(u) + α⋅(v⊙u) )dΩ
@@ -70,6 +71,11 @@ function run_biharmonic(; n=10, generate_vtk=false, dirname="biharmonic_results"
     el2 = sqrt(sum( ∫(e*e)dΩ ))
     eh1 = sqrt(sum( ∫( e*e + ∇(e)⋅∇(e) )*dΩ ))
 
+
+    if test==true
+        @test el2 < 10^-5
+    end
+
     if !generate_vtk
         return el2, eh1
     end
@@ -97,6 +103,7 @@ function conv_test()
     eh1s = Float64[]
     hs = Float64[]
 
+    println("Run convergence tests")
     for n in ns
 
         el2, eh1 = run_biharmonic(n=10)
@@ -122,8 +129,8 @@ end
 
 function main()
 
-    run_biharmonic(n=10, generate_vtk=true, dirname="biharmonic_results")
-    conv_test()
+    run_biharmonic(n=10, generate_vtk=true, dirname="biharmonic_results", test=true)
+    # conv_test()
 end
 
 main()
