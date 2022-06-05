@@ -18,7 +18,8 @@ function run_brenner(; n=10, generate_vtk=false, dirname="biharmonic_results", t
 
     # Spaces
     V = TestFESpace(model, ReferenceFE(lagrangian,Float64,order), conformity=:H1, dirichlet_tags= "boundary")
-    U = TrialFESpace(V, 0.0)
+    dirichlet_condition = 0
+    U = TrialFESpace(V, dirichlet_condition)
     Ω = Triangulation(model)
     Γ = BoundaryTriangulation(model)
     Λ = SkeletonTriangulation(model)
@@ -61,7 +62,7 @@ function run_brenner(; n=10, generate_vtk=false, dirname="biharmonic_results", t
     end
 
     mkdir(dirname)
-    writevtk(model, dirname*"/biharmonic_model")
+    writevtk(model, dirname*"/brenner_model")
     writevtk(Λ,dirname*"/brenner_skeleton")
     writevtk(Λ,dirname*"/brenner_jumps",cellfields=["jump_u"=>jump(uh)])
     writevtk(Ω,dirname*"/brenner_omega",cellfields=["uh"=>uh])
