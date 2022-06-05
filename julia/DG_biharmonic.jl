@@ -38,11 +38,11 @@ function run_biharmonic(; n=10, generate_vtk=false, dirname="biharmonic_results"
     # manufactured solution
     u(x) = cos(x[1])*cos(x[2])
 
-    # f(x) = (α + 4)* cos(x[1])*cos(x[2])
-    f(x) = Δ(u)(x) + α*u(x) # Algorithmic Diff.
+    f(x) = (α + 4)* cos(x[1])*cos(x[2])
+    # f(x) = Δ(u)(x) + α*u(x) # Algorithmic Diff.
 
     # ERROR: we see that u_h -> 0 when g -> 0. This should not be the case!!
-    g(x) = 1
+    g(x) = 0
 
     # Inner triangulation
     a_Ω(u,v) = ∫( ∇∇(v)⊙∇∇(u) + α⋅(v⊙u) )dΩ
@@ -129,8 +129,8 @@ end
 
 function main()
 
-    run_biharmonic(n=10, generate_vtk=true, dirname="biharmonic_results", test=true)
-    # conv_test()
+    run_biharmonic(n=10, generate_vtk=true, dirname="biharmonic_results", test=false)
+    conv_test()
 end
 
 main()
