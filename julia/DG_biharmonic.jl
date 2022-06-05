@@ -9,7 +9,7 @@ function run_biharmonic(; n=10, generate_vtk=false, dirname="biharmonic_results"
     L = 2*π
     α = 1
     h = L / n
-    γ = 2
+    γ = 1.0
 
     order = 2
     domain2D = (0, L, 0, L)
