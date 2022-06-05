@@ -36,10 +36,12 @@ function run_biharmonic(; n=10, generate_vtk=false, dirname="biharmonic_results"
     # manufactured solution
     u(x) = cos(x[1])*cos(x[2])
 
-    f(x) = (α + 4)* cos(x[1])*cos(x[2])
-    # f(x) = Δ(u)(x) + α*u(x) # Algorithmic Diff.
+    # Rhs
+    # f1(x) = (α + 4)* cos(x[1])*cos(x[2])
+    f(x) = Δ(Δ(u))(x) + α*u(x)
 
-    # ERROR: we see that u_h -> 0 when g -> 0. This should not be the case!!
+
+    # Neumann condition
     g(x) = 0
 
     # Inner triangulation
@@ -104,7 +106,7 @@ function conv_test()
     println("Run convergence tests")
     for n in ns
 
-        el2, eh1 = run_biharmonic(n=10)
+        el2, eh1 = run_biharmonic(n=n)
         println("Simulation with n:", n, ", Errors:  L2: ", el2, " H1:", eh1)
 
         h = ( 1/n )*2*π

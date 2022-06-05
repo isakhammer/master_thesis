@@ -31,7 +31,12 @@ function run_brenner(; n=10, generate_vtk=false, dirname="biharmonic_results", t
 
     n_Λ = get_normal_vector(Λ)
 
-    f=1
+    # manufactured solution
+    u(x) = 400*( x[1]*(x[1]-1) )^2*( x[2]*(x[2]-1) )^2
+    f(x) = Δ(Δ(u))(x)
+    # f(x) = 2*x[1]^2 *(x[1] - 1)^2*(x[2]^2 + 4*x[2]*(x[2] - 1) + (x[2] - 1)^2) + 2*x[2]^2*(x[2] - 1)^2*(x[1]^2 + 4*x[1]*(x[1] - 1) + (x[1] - 1)^2)
+
+
 
     # Inner triangulation
     a_Ω(u,v) = ∫( ∇∇(v)⊙∇∇(u) + α* u ⊙ v  )dΩ
@@ -53,8 +58,14 @@ function run_brenner(; n=10, generate_vtk=false, dirname="biharmonic_results", t
     op = AffineFEOperator(a, l, U, V)
     uh = solve(op)
 
+    e = u - uh
+    el2 = sqrt(sum( ∫(e*e)dΩ ))
+    eh1 = sqrt(sum( ∫( e*e + ∇(e)⋅∇(e) )*dΩ ))
+
+
+
     if !generate_vtk
-        return 0
+        return el2, eh1
     end
 
     if (isdir(dirname))
@@ -66,9 +77,50 @@ function run_brenner(; n=10, generate_vtk=false, dirname="biharmonic_results", t
     writevtk(Λ,dirname*"/brenner_skeleton")
     writevtk(Λ,dirname*"/brenner_jumps",cellfields=["jump_u"=>jump(uh)])
     writevtk(Ω,dirname*"/brenner_omega",cellfields=["uh"=>uh])
+    writevtk(Ω,dirname*"/brenner_error",cellfields=["e"=>e])
+    writevtk(Ω,dirname*"/brenner_manufatured",cellfields=["u"=>u])
 
-    return
+    if test==true
+        @test el2 < 10^-5
+    end
+    return el2, eh1
 end
 
-run_brenner(n=40, generate_vtk=true, dirname="brenner_results", test=false)
 
+
+function conv_test()
+    ns = [8,16,32,64,128]
+
+    el2s = Float64[]
+    eh1s = Float64[]
+    hs = Float64[]
+
+    println("Run convergence tests")
+    for n in ns
+
+        el2, eh1 = run_brenner(n=n)
+        println("Simulation with n:", n, ", Errors:  L2: ", el2, " H1:", eh1)
+
+        h = ( 1/n )*2*π
+
+        push!(el2s,el2)
+        push!(eh1s,eh1)
+        push!(hs,h)
+
+    end
+
+    p = PlotlyJS.plot(hs,[el2s eh1s],
+                      # xaxis=:log, yaxis=:log,
+                      label=["L2" "H1"],
+                      shape=:auto,
+                      xlabel="h",ylabel="error norm")
+
+    PlotlyJS.savefig(p, "brenner_convergence.png")
+end
+
+function main()
+    run_brenner(n=10, generate_vtk=true, dirname="brenner_results", test=false)
+    conv_test()
+end
+
+main()
