@@ -1,5 +1,5 @@
 using Gridap
-using Plots
+using PlotlyJS
 using Test
 import Gridap: ∇
 

@@ -1,5 +1,5 @@
 using Gridap
-using Plots
+using PlotlyJS
 using Test
 import Gridap: ∇
 
@@ -115,18 +115,17 @@ function conv_test()
 
     end
 
-    Plots.plot(hs,[el2s eh1s],
+    p = PlotlyJS.plot(hs,[el2s eh1s],
         # xaxis=:log, yaxis=:log,
         label=["L2" "H1"],
         shape=:auto,
         xlabel="h",ylabel="error norm")
 
-    savefig("biharmonic_convergence.png")
+    PlotlyJS.savefig(p, "biharmonic_convergence.png")
 end
 
 
 function main()
-
     run_biharmonic(n=10, generate_vtk=true, dirname="biharmonic_results", test=false)
     conv_test()
 end
