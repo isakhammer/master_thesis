@@ -54,7 +54,7 @@ function main2()
     uh = solve(op)
 
     # Generate plots
-    dirname = "possion_results"
+    dirname = "poission_results"
     if (isdir(dirname))
         rm(dirname, recursive=true)
     end

@@ -1,4 +1,5 @@
 plots/*
 biharmonic_convergence.png
 biharmonic_results/
+poission_results
 
