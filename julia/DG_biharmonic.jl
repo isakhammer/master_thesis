@@ -5,7 +5,6 @@ import Gridap: ∇
 
 function run_biharmonic(; n=10, generate_vtk=false, dirname="biharmonic_results", test=false)
 
-
     # mesh generation
     L = 2*π
     α = 1

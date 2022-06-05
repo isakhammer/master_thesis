@@ -17,7 +17,6 @@ function main2()
     domain2D = (0.0, L, 0.0, L)
     partition2D = (n,n)
     model = CartesianDiscreteModel(domain2D,partition2D)
-    writevtk(model,"plots/poission_model_mesh")
 
     V = TestFESpace(model, ReferenceFE(lagrangian,Float64,order), conformity=:L2)
     U = TrialFESpace(V)
@@ -26,7 +25,6 @@ function main2()
     Γ = BoundaryTriangulation(model)
     Λ = SkeletonTriangulation(model)
 
-    writevtk(Λ,"plots/poission_skeleton")
 
     degree = 2*order
     dΩ = Measure(Ω,degree)
@@ -54,9 +52,18 @@ function main2()
 
     op = AffineFEOperator(a, l, U, V)
     uh = solve(op)
-    writevtk(Λ, "plots/poission_jumps", cellfields=["jump_u"=>jump(uh)])
-    writevtk(Γ, "plots/poission_shell", cellfields=["uh"=>uh])
-    writevtk(Ω, "plots/poission_field", cellfields=["uh"=>uh])
+
+    # Generate plots
+    dirname = "possion_results"
+    if (isdir(dirname))
+        rm(dirname, recursive=true)
+    end
+    mkdir(dirname)
+
+    writevtk(Λ, dirname*"/poission_skeleton")
+    writevtk(Λ, dirname*"/poission_jumps", cellfields=["jump_u"=>jump(uh)])
+    writevtk(Γ, dirname*"/poission_shell", cellfields=["uh"=>uh])
+    writevtk(Ω, dirname*"/poission_field", cellfields=["uh"=>uh])
 
 end
 
