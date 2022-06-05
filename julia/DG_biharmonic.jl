@@ -41,7 +41,7 @@ function run_biharmonic(; n=10, generate_vtk=false, dirname="biharmonic_results"
     # f(x) = (α + 4)* cos(x[1])*cos(x[2])
     f(x) = Δ(u)(x) + α*u(x) # Algorithmic Diff.
 
-    # ERROR: we see that u_h -> 0 when g -> 0. This should now be the case!!
+    # ERROR: we see that u_h -> 0 when g -> 0. This should not be the case!!
     g(x) = 1
 
     # Inner triangulation
