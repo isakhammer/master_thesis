@@ -1,20 +1,20 @@
 using Gridap
+using Plots
 import Gridap: ∇
 
-function main()
+function run_biharmonic(n, generate_vtk=false, dirname="biharmonic_results")
 
 
     # mesh generation
     L = 2*π
-    n = 13
     α = 1
     h = L / n
     γ = 2
+
     order = 2
     domain2D = (0, L, 0, L)
     partition2D = (n,n)
     model = CartesianDiscreteModel(domain2D,partition2D)
-    writevtk(model,"plots/biharmonic_model")
 
 
     # Spaces
@@ -24,7 +24,6 @@ function main()
     Γ = BoundaryTriangulation(model)
     Λ = SkeletonTriangulation(model)
 
-    writevtk(Λ,"plots/biharmonic_skeleton")
 
     degree = 1*order
 
@@ -40,7 +39,7 @@ function main()
 
     # f(x) = (α + 4)* cos(x[1])*cos(x[2])
     f(x) = Δ(u)(x) + α*u(x) # Algorithmic Diff.
-    g(x) = 1  # we see that u_h -> 0 when g -> 0
+    g(x) = 0  # we see that u_h -> 0 when g -> 0
 
     # Inner triangulation
     a_Ω(u,v) = ∫( ∇∇(v)⊙∇∇(u) + α⋅(v⊙u) )dΩ
@@ -64,9 +63,64 @@ function main()
 
     op = AffineFEOperator(a, l, U, V)
     uh = solve(op)
-    writevtk(Λ,"plots/biharmonic_jumps",cellfields=["jump_u"=>jump(uh)])
-    writevtk(Ω,"plots/biharmonic_omega",cellfields=["uh"=>uh])
-    writevtk(Ω,"plots/biharmonic_manufatured",cellfields=["u"=>u])
+
+    e = u - uh
+    el2 = sqrt(sum( ∫(e*e)dΩ ))
+    eh1 = sqrt(sum( ∫( e*e + ∇(e)⋅∇(e) )*dΩ ))
+
+    if !generate_vtk
+        return el2, eh1
+    end
+
+    # Generate plots
+    if (isdir(dirname))
+        rm(dirname, recursive=true)
+    end
+
+    mkdir(dirname)
+    writevtk(model, dirname*"/biharmonic_model")
+    writevtk(Λ,dirname*"/biharmonic_skeleton")
+    writevtk(Λ,dirname*"/biharmonic_jumps",cellfields=["jump_u"=>jump(uh)])
+    writevtk(Ω,dirname*"/biharmonic_omega",cellfields=["uh"=>uh])
+    writevtk(Ω,dirname*"/biharmonic_error",cellfields=["e"=>e])
+    writevtk(Ω,dirname*"/biharmonic_manufatured",cellfields=["u"=>u])
+
+    return el2, eh1
 end
 
-main()
+function conv_test()
+    ns = [8,16,32,64,128]
+
+    el2s = Float64[]
+    eh1s = Float64[]
+    hs = Float64[]
+
+    for n in ns
+
+        el2, eh1 = run_biharmonic(n)
+        println("Simulation with n:", n, ", Errors:  L2: ", el2, " H1:", eh1)
+
+        h = ( 1/n )*2*π
+
+        push!(el2s,el2)
+        push!(eh1s,eh1)
+        push!(hs,h)
+
+    end
+
+    Plots.plot(hs,[el2s eh1s],
+        # xaxis=:log, yaxis=:log,
+        label=["L2" "H1"],
+        shape=:auto,
+        xlabel="h",ylabel="error norm")
+
+    savefig("biharmonic_convergence.png")
+end
+
+function single_run()
+    n= 10
+    run_biharmonic(n, generate_vtk=true)
+end
+
+single_run()
+conv_test()
