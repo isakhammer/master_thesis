@@ -99,7 +99,7 @@ function conv_test()
 
     for n in ns
 
-        el2, eh1 = run_biharmonic(n)
+        el2, eh1 = run_biharmonic(n=10)
         println("Simulation with n:", n, ", Errors:  L2: ", el2, " H1:", eh1)
 
         h = ( 1/n )*2*π
@@ -121,6 +121,7 @@ end
 
 
 function main()
+
     run_biharmonic(n=10, generate_vtk=true, dirname="biharmonic_results")
     conv_test()
 end
