@@ -2,7 +2,7 @@ using Gridap
 using Plots
 import Gridap: ∇
 
-function run_biharmonic(n, generate_vtk=false, dirname="biharmonic_results")
+function run_biharmonic(; n=10, generate_vtk=false, dirname="biharmonic_results")
 
 
     # mesh generation
@@ -39,7 +39,9 @@ function run_biharmonic(n, generate_vtk=false, dirname="biharmonic_results")
 
     # f(x) = (α + 4)* cos(x[1])*cos(x[2])
     f(x) = Δ(u)(x) + α*u(x) # Algorithmic Diff.
-    g(x) = 0  # we see that u_h -> 0 when g -> 0
+
+    # ERROR: we see that u_h -> 0 when g -> 0. This should now be the case!!
+    g(x) = 0
 
     # Inner triangulation
     a_Ω(u,v) = ∫( ∇∇(v)⊙∇∇(u) + α⋅(v⊙u) )dΩ
@@ -117,10 +119,10 @@ function conv_test()
     savefig("biharmonic_convergence.png")
 end
 
-function single_run()
-    n= 10
-    run_biharmonic(n, generate_vtk=true)
+
+function main()
+    run_biharmonic(n=10, generate_vtk=true, dirname="biharmonic_results")
+    conv_test()
 end
 
-single_run()
-conv_test()
+main()
