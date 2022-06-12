@@ -81,12 +81,6 @@ function run_biharmonic(; n=10, generate_vtk=false, dirname="biharmonic_results"
         return el2, eh1
     end
 
-    # Generate plots
-    if (isdir(dirname))
-        rm(dirname, recursive=true)
-    end
-
-    mkdir(dirname)
     writevtk(model, dirname*"/biharmonic_model")
     writevtk(Λ,dirname*"/biharmonic_skeleton")
     writevtk(Λ,dirname*"/biharmonic_jumps",cellfields=["jump_u"=>jump(uh)])

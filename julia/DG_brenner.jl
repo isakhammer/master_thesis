@@ -5,7 +5,7 @@ gr()
 using Test
 import Gridap: ∇
 
-function run_brenner(; n=10, generate_vtk=false, dirname="biharmonic_results", test=false)
+function run_brenner(; n=10, generate_vtk::Bool=false, dirname::String ="brenner_results", test::Bool=false)
 
     # mesh generation
     L = 1
@@ -70,11 +70,6 @@ function run_brenner(; n=10, generate_vtk=false, dirname="biharmonic_results", t
         return el2, eh1
     end
 
-    if (isdir(dirname))
-        rm(dirname, recursive=true)
-    end
-
-    mkdir(dirname)
     writevtk(model, dirname*"/brenner_model")
     writevtk(Λ,dirname*"/brenner_skeleton")
     writevtk(Λ,dirname*"/brenner_jumps",cellfields=["jump_u"=>jump(uh)])
@@ -128,7 +123,7 @@ function main()
     end
     mkdir(dirname)
 
-    run_biharmonic(n=10, generate_vtk=true, dirname=dirname, test=false)
+    run_brenner(n=10, generate_vtk=true, dirname=dirname, test=false)
     conv_test(dirname=dirname)
 end
 
