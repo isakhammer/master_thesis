@@ -1,4 +1,5 @@
 using Gridap
+using Plots
 
 function run_poission(; n=10, generate_vtk::Bool=true, dirname::String, test::Bool = false)
 
