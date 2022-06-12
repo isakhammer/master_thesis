@@ -4,17 +4,19 @@ using Plots
 function run_poission(; n=10, generate_vtk::Bool=true, dirname::String, test::Bool = false)
 
     # source: https://gridap.github.io/Tutorials/v0.5/pages/t005_dg_discretization/
+
+    # Problem statement:
+    # -Δu = f
+    # u = g
+    # Ω = (0,1)^2
+
     u(x) = 3*x[1] + x[2]^2
-
-    f(x) = -2 - 12*x[1]
+    f(x) = - Δ(u)(x)
     g(x) = u(x)
-
-    # ∇u(x) = VectorValue(3   ,
-    #                     2*x[2] )
 
     # mesh generation
     L = 1.0
-    order = 2
+    order = 1
 
     domain2D = (0.0, L, 0.0, L)
     partition2D = (n,n)
@@ -36,11 +38,13 @@ function run_poission(; n=10, generate_vtk::Bool=true, dirname::String, test::Bo
     n_Γ = get_normal_vector(Γ)
     n_Λ = get_normal_vector(Λ)
 
+    # Weak form
     a_Ω(u,v) = ∫( ∇(v)⊙∇(u) )dΩ
     l_Ω(v) = ∫( v*f )dΩ
 
     h = L / n
     γ = order*(order+1)
+
     a_Γ(u,v) = ∫( - v*(∇(u)⋅n_Γ) - (∇(v)⋅n_Γ) * u + (γ/h)*v*u )dΓ
     l_Γ(v)   = ∫(                - (∇(v)⋅n_Γ)*g + (γ/h)*v*g )dΓ
 
@@ -87,7 +91,7 @@ function conv_test(;dirname)
         el2, eh1 = run_poission(n=n,dirname=dirname)
         println("Simulation with n:", n, ", Errors:  L2: ", el2, " H1:", eh1)
 
-        h = ( 1/n )*2*π
+        h = ( 1/n )
 
         push!(el2s,el2)
         push!(eh1s,eh1)
@@ -96,7 +100,7 @@ function conv_test(;dirname)
     end
 
     p = Plots.plot(hs,[el2s eh1s],
-                      # xaxis=:log, yaxis=:log,
+                      xaxis=:log, yaxis=:log,
                       label=["L2" "H1"],
                       shape=:auto,
                       xlabel="h",ylabel="error norm")
@@ -112,7 +116,7 @@ function main()
     end
     mkdir(dirname)
 
-    run_poission(n=10, generate_vtk=true, dirname=dirname, test=false)
+    run_poission(n=10, generate_vtk=true, dirname=dirname, test=true)
     conv_test(dirname=dirname)
 end
 
