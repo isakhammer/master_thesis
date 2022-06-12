@@ -2,18 +2,23 @@
 
 
 
-
 \begin{verbatim}
 PLAN FOR REPORT
 
 1) Introduction
+- Classical Approaches to the problem
+     -> Finite Difference, Finite Element, Finite Volume
+     ->
+- What is CP method and why does it matter
+- What we will providee in chapter BiHarmonic Equation
 
 2) Biharmonic Equation
 - Introduction of Biharmonic Equation
-- Weak form in H4(T)
 - Weak form in H4(Omega)
 
 3) Continious Interior Penalty Method
+- Mesh Generation
+- Weak Form in H4(T)
 - CIP for Biharmonic equation
   -> Discussion of why we go for CIP method
         -> Mixed formulation
@@ -28,7 +33,29 @@ PLAN FOR REPORT
 
 5) Possible Extensions:
     Compare with mixed formulation
+
 \end{verbatim}
+
+
+The biharmonic equation is a fourth order partial differential equation (PDE) which has gained great importance in
+application such as mathematical modelling of linear elastic theory \cite{selvadurai13} and phase separation mechanics
+of two phase systems \cite{cahnhilliard1957, kim16}. However, methods for solving the biharmonic equation analytically
+is considered extensive and often impossible. Even on very simple plane problems on a unit square often requires advanced computations using integral transforms, variable separations, complex analysis and more. \cite{selvadurai13}. We therefore tend
+to lean towards approximating the solution using numerical methods for advanced problems.
+
+There is generally two classes of numerical methods to solve the biharmonic equation. The first class is known as Finite Difference Method (FDM) \cite{ehrlich75, hackbusch17}. Nevertheless, FDM does not handle complex domains well since it generally
+has strict requirements for the mesh generation. However, some methods have been introduced to solve problems on irregular domains, but is has shown to be relative extensive to implement \cite{hackbusch17, chen08, belyaev18}.
+
+The second class is denotes as Finite Element Method (FEM). Using this methods implies that there is theoretically no difference on solving problems on a regular or irregular domains, except for taking account for numerical stability and some
+restrictions on mesh generation \cite{chen08}. However, a major challenge in FEM is to choose a discrete solution space on the finite elements to approximate the exact solution. We say that a method is conforming if the discrete solution space
+$V_{h}$ is subspace of the exact solution space $V$\cite{shi02, brenner07math}, i.e. $V_{h} \subseteq  V$  . In General, for conforming methods requires that for a problem of order $2n$ must the discrete solution space be at least of order $n-1$. Thus, for a biharmonic problem
+will a conforming FEM method demand at least a basis that is $C^1$ globally \cite{shi02}. From this strong continuity conditions rises a lot of complexity when constructing a finite element. In fact, attempts to solve this problems has shown that it
+arise 21 degrees of freedom in a triangular element \cite{nair21}.
+
+For nonconforming methods, $V_{h} \not \subseteq  V_{h}$ is the $C^{1}$ requirement completely relaxed. This makes the methods more suitable for forth order problems with the cost of more extensive error analysis. In fact, designing nonconformal
+elements that does converge is rather difficult \cite{shi02, nair21}.
+
+A third approach to solve the biharmonic equation is to solve the problem doing a Mixed FEM method. This method seems promising, because it only require $C^{0}$ elements .
 
 
 
