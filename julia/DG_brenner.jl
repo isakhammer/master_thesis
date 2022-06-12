@@ -90,7 +90,7 @@ end
 
 
 
-function conv_test(dirname="brenner_results")
+function conv_test(;dirname)
     ns = [8,16,32,64,128]
 
     el2s = Float64[]
@@ -117,12 +117,19 @@ function conv_test(dirname="brenner_results")
                       shape=:auto,
                       xlabel="h",ylabel="error norm")
 
-    Plots.savefig(p, brenner_results*"/brenner_convergence.png")
+    Plots.savefig(p, dirname*"/convergence.png")
 end
 
 function main()
-    run_brenner(n=10, generate_vtk=true, dirname="brenner_results", test=false)
-    conv_test(dirname="brenner_results")
+    dirname = "brenner_results"
+
+    if (isdir(dirname))
+        rm(dirname, recursive=true)
+    end
+    mkdir(dirname)
+
+    run_biharmonic(n=10, generate_vtk=true, dirname=dirname, test=false)
+    conv_test(dirname=dirname)
 end
 
 main()

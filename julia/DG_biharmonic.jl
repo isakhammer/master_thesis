@@ -124,12 +124,19 @@ function conv_test(; dirname)
         shape=:auto,
         xlabel="h",ylabel="error norm")
 
-    Plots.savefig(p, dirname*"/biharmonic_convergence.png")
+    Plots.savefig(p, dirname*"/convergence.png")
 end
 
 function main()
-    run_biharmonic(n=10, generate_vtk=true, dirname="biharmonic_results", test=false)
-    conv_test(dirname="biharmonic_results")
+    dirname = "biharmonic_results"
+    # Generate plots
+    if (isdir(dirname))
+        rm(dirname, recursive=true)
+    end
+    mkdir(dirname)
+
+    run_biharmonic(n=10, generate_vtk=true, dirname=dirname, test=false)
+    conv_test(dirname=dirname)
 end
 
 main()
