@@ -1,5 +1,6 @@
 using Gridap
 using Plots
+using Test
 
 function run_poission(; n=10, generate_vtk::Bool=true, dirname::String, test::Bool = false)
 
@@ -63,9 +64,14 @@ function run_poission(; n=10, generate_vtk::Bool=true, dirname::String, test::Bo
     el2 = sqrt(sum( ∫(e*e)dΩ ))
     eh1 = sqrt(sum( ∫( e*e + ∇(e)⋅∇(e) )*dΩ ))
 
+    if test==true
+        @test el2 < 10^-3
+    end
+
     if !generate_vtk
         return el2, eh1
     end
+
 
     # Generate plots
     writevtk(Λ, dirname*"/poission_skeleton")
@@ -116,7 +122,7 @@ function main()
     end
     mkdir(dirname)
 
-    run_poission(n=10, generate_vtk=true, dirname=dirname, test=true)
+    run_poission(n=20, generate_vtk=true, dirname=dirname, test=true)
     conv_test(dirname=dirname)
 end
 
