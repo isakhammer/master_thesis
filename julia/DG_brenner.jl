@@ -9,9 +9,8 @@ function run_brenner(; n=10, generate_vtk::Bool=false, dirname::String ="brenner
 
     # mesh generation
     L = 1
-    α = 1
     h = L / n
-    γ = 1
+    γ = 0.5
 
     order = 2
     domain2D = (0, L, 0, L)
@@ -41,7 +40,7 @@ function run_brenner(; n=10, generate_vtk::Bool=false, dirname::String ="brenner
 
 
     # Inner triangulation
-    a_Ω(u,v) = ∫( ∇∇(v)⊙∇∇(u) + α* u ⊙ v  )dΩ
+    a_Ω(u,v) = ∫( ∇∇(v)⊙∇∇(u)  )dΩ
     l_Ω(v) = ∫( v ⋅ f )dΩ
 
     mean_nn(u) = 0.5*( n_Λ.plus⋅ ∇∇(u).plus⋅ n_Λ.plus + n_Λ.minus ⋅ ∇∇(u).minus ⋅ n_Λ.minus )
