@@ -17,7 +17,6 @@ function run_biharmonic(; n=10, generate_vtk=false, dirname="biharmonic_results"
     partition2D = (n,n)
     model = CartesianDiscreteModel(domain2D,partition2D)
 
-
     # Spaces
     V = TestFESpace(model, ReferenceFE(lagrangian,Float64,order), conformity=:H1)
     U = TrialFESpace(V)
@@ -123,6 +122,7 @@ end
 
 function main()
     dirname = "biharmonic_results"
+
     # Generate plots
     if (isdir(dirname))
         rm(dirname, recursive=true)

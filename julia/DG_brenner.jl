@@ -65,7 +65,6 @@ function run_brenner(; n=10, generate_vtk::Bool=false, dirname::String ="brenner
     eh1 = sqrt(sum( ∫( e*e + ∇(e)⋅∇(e) )*dΩ ))
 
 
-
     if !generate_vtk
         return el2, eh1
     end

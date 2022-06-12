@@ -8,8 +8,8 @@ function run_poission(; n=10, generate_vtk::Bool=true, dirname::String, test::Bo
     f(x) = -2 - 12*x[1]
     g(x) = u(x)
 
-    ∇u(x) = VectorValue(3   ,
-                        2*x[2] )
+    # ∇u(x) = VectorValue(3   ,
+    #                     2*x[2] )
 
     # mesh generation
     L = 1.0
@@ -62,10 +62,7 @@ function run_poission(; n=10, generate_vtk::Bool=true, dirname::String, test::Bo
         return el2, eh1
     end
 
-
     # Generate plots
-    dirname = "poission_results"
-
     writevtk(Λ, dirname*"/poission_skeleton")
     writevtk(Λ, dirname*"/poission_jumps", cellfields=["jump_u"=>jump(uh)])
     writevtk(Γ, dirname*"/poission_shell", cellfields=["uh"=>uh])
