@@ -1,42 +1,6 @@
 \section{Introduction}\label{sec:introduction}
 
 
-
-\begin{verbatim}
-PLAN FOR REPORT
-
-1) Introduction
-- Classical Approaches to the problem
-     -> Finite Difference, Finite Element, Finite Volume
-     ->
-- What is CP method and why does it matter
-- What we will providee in chapter BiHarmonic Equation
-
-2) Biharmonic Equation
-- Introduction of Biharmonic Equation
-- Weak form in H4(Omega)
-
-3) Continious Interior Penalty Method
-- Mesh Generation
-- Weak Form in H4(T)
-- CIP for Biharmonic equation
-  -> Discussion of why we go for CIP method
-        -> Mixed formulation
-        -> Bspline basis
-- Error Estimates
-- Apriori Estimates
-
-4) Numerical Experiments
-    * Manufactured solution
-    * Convergence rate
-    * Condition number (h^-4)
-
-5) Possible Extensions:
-    Compare with mixed formulation
-
-\end{verbatim}
-
-
 The biharmonic equation is a fourth order partial differential equation (PDE) which has gained great importance in
 application such as mathematical modelling of linear elastic theory \cite{selvadurai13} and phase separation mechanics
 of two phase systems \cite{cahnhilliard1957, kim16}. However, methods for solving the biharmonic equation analytically
@@ -55,11 +19,10 @@ arise 21 degrees of freedom in a triangular element \cite{nair21}.
 For nonconforming methods, $V_{h} \not \subseteq  V_{h}$ is the $C^{1}$ requirement completely relaxed. This makes the methods more suitable for forth order problems with the cost of more extensive error analysis. In fact, designing nonconformal
 elements that does converge is rather difficult \cite{shi02, nair21}.
 
-A third approach to solve the biharmonic equation is to solve the problem doing a Mixed FEM method. This method seems promising, because it only require $C^{0}$ elements .
+A third approach of FEM to solve the biharmonic equation is to solve the problem doing a Mixed FEM method. This method seems promising, because it only require $C^{0}$ elements \cite{chen08, brezzi91}.
+Though this work well from a numerical point of view, it has shown to have drawbacks by replacing symmetric positive definite continuous problem
+by a saddle point problem, which is certainly makes the existence and uniqueness proof more challenging \cite{brezzi74}.
 
-
-
-
-
-
+In this report will we focus to work on a fourth approach based on FEM called the Continuous Interior Penalty Method (CP). A major advantage is that the approach preserves the global $C^{0}$ continuity and the positive symmetric definiteness, thus
+makes it attractive to solve the biharmonic equation \cite{brenner2012, brenner2012quadratic}. In this report will we focus on presenting the derivation of CP and carry out a basic error analysis. We will also present a numerical analysis.
 
