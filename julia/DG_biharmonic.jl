@@ -1,5 +1,6 @@
 using Gridap
-using PlotlyJS
+using Plots
+gr()
 using Test
 import Gridap: ∇
 
@@ -37,8 +38,8 @@ function run_biharmonic(; n=10, generate_vtk=false, dirname="biharmonic_results"
     u(x) = cos(x[1])*cos(x[2])
 
     # Rhs
-    # f1(x) = (α + 4)* cos(x[1])*cos(x[2])
-    f(x) = Δ(Δ(u))(x) + α*u(x)
+    f(x) = (α + 4)* cos(x[1])*cos(x[2])
+    # f(x) = Δ(Δ(u))(x) + α*u(x)
 
 
     # Neumann condition
@@ -96,7 +97,7 @@ function run_biharmonic(; n=10, generate_vtk=false, dirname="biharmonic_results"
     return el2, eh1
 end
 
-function conv_test()
+function conv_test(; dirname)
     ns = [8,16,32,64,128]
 
     el2s = Float64[]
@@ -117,19 +118,18 @@ function conv_test()
 
     end
 
-    p = PlotlyJS.plot(hs,[el2s eh1s],
+    p = Plots.plot(hs,[el2s eh1s],
         # xaxis=:log, yaxis=:log,
         label=["L2" "H1"],
         shape=:auto,
         xlabel="h",ylabel="error norm")
 
-    PlotlyJS.savefig(p, "biharmonic_convergence.png")
+    Plots.savefig(p, dirname*"/biharmonic_convergence.png")
 end
-
 
 function main()
     run_biharmonic(n=10, generate_vtk=true, dirname="biharmonic_results", test=false)
-    conv_test()
+    conv_test(dirname="biharmonic_results")
 end
 
 main()

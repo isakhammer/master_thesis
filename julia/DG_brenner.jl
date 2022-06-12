@@ -1,5 +1,7 @@
 using Gridap
-using PlotlyJS
+
+using Plots
+gr()
 using Test
 import Gridap: ∇
 
@@ -88,7 +90,7 @@ end
 
 
 
-function conv_test()
+function conv_test(dirname="brenner_results")
     ns = [8,16,32,64,128]
 
     el2s = Float64[]
@@ -109,18 +111,18 @@ function conv_test()
 
     end
 
-    p = PlotlyJS.plot(hs,[el2s eh1s],
+    p = Plots.plot(hs,[el2s eh1s],
                       # xaxis=:log, yaxis=:log,
                       label=["L2" "H1"],
                       shape=:auto,
                       xlabel="h",ylabel="error norm")
 
-    PlotlyJS.savefig(p, "brenner_convergence.png")
+    Plots.savefig(p, brenner_results*"/brenner_convergence.png")
 end
 
 function main()
     run_brenner(n=10, generate_vtk=true, dirname="brenner_results", test=false)
-    conv_test()
+    conv_test(dirname="brenner_results")
 end
 
 main()

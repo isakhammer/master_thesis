@@ -177,7 +177,8 @@ and likewise for the mean, $\mean{ a  } = \frac{1}{2}(   a^{+}
 + \left(\partial _{n^{-}} \Delta  u^{+} ,v^{-}\right)_{F}  \right)}_{(I)} +
 \underbrace{\left( \left(\partial _{n^{+}t} u^{+}, \partial_{t} v^{+} \right)_{F} +  \left(\partial _{n^{-}t} u^{-},
         \partial_{t} v^{-}
-\right)_{F}  \right) }_{(II)} +
+\right)_{F}  \right) }_{(II)} \\
+ & \quad \quad \quad  \quad  +
 \underbrace{\left( \left(\partial _{n^{+}n^{+}} u^{+}, v^{+} \right) _{F} + \left(\partial _{n^{-}n^{-}} u^{-}, v^{-}
 \right) _{F} \right) }_{(III)}
     \end{split}
@@ -203,9 +204,7 @@ Where integration over all interior facets $ \forall F \in \mathcal{F}_{h}^{int}
         (III) &  =     \left(\partial _{n^{+}n^{+}} u^{+}, \partial_{n^{+}} v^{+} \right)_{F} +  \left(\partial _{n^{-}n^{-}} u^{-}, \partial_{n^{-}} v^{-} \right)_{F}    =    \int_{F}^{} \jump{ \partial _{nn} u \cdot  \partial_{n} v } = \int_{F}^{}
         \mean{ \partial _{nn} u    } \underbrace{\jump{ \partial_{n} v }  }_{\neq 0}    + \underbrace{\jump{ \partial
                  _{nn}  u
-         }}_{= 0}    \mean{ \partial _{n}v } =
-        \left( \partial _{nn} u    , \jump{ \partial_{n} v } \right)_{F}  \\
-    \end{split}
+         }}_{= 0}    \mean{ \partial _{n}v }  =  \left( \partial _{nn} u, \jump{ \partial_{n} v } \right)_{F}   \end{split}
 .\end{equation*}
 
 Observe that the cancellations in the term $(I)$ appears of the continuity of $v\in V $ and $u\in H^{4}\left( \Omega  \right) $ which makes the jumps zero. For the second term $(II)$ does the terms become zero cancelled because the tangential
