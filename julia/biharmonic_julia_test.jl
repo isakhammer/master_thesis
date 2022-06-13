@@ -44,19 +44,26 @@ function run_biharmonic_julia_test(; n=10, generate_vtk=false, dirname="biharmon
 
     # Weak form
     h = (domain[2]-domain[1]) / partition[1]
+    h = (L) / n
     γ = 1
 
     # PROBLEM 1
     # Statement: laplacian Δ(u) makes no sense since we need the hessian
     # we should use ∇∇(u) instead:
-    # Definition of  ∇∇: https://github.com/gridap/Gridap.jl/blob/7f5f15e53cd390b6ac82d51ee46fa5bc0792a7e3/src/Fields/AutoDiff.jl#L9
-    # Definition of  Δ: https://github.com/gridap/Gridap.jl/blob/3916f3c87d86dfc6deb2b24be0305614267c5785/src/Fields/DiffOperators.jl#L67
+    # Definition of  ∇∇:
+    # https://github.com/gridap/Gridap.jl/blob/7f5f15e53cd390b6ac82d51ee46fa5bc0792a7e3/src/Fields/AutoDiff.jl#L9
+    # Definition of  Δ:
+    # https://github.com/gridap/Gridap.jl/blob/3916f3c87d86dfc6deb2b24be0305614267c5785/src/Fields/DiffOperators.jl#L67
+
+    # PROBLEM 2
+    # Statement: Following up from the previous problem. It should be corrected to
+    # mean(Δ(u)) -> mean(n_Λ*∇∇(u)*n_Λ)
 
     a(u,v) = ∫( Δ(u)*Δ(v) + α* u⋅v )dΩ +
              ∫( - mean(Δ(u))*jump(∇(v)⋅n_Λ) - jump(∇(u)⋅n_Λ)*mean(Δ(v))
                + γ/h*jump(∇(u)⋅n_Λ)*jump(∇(v)⋅n_Λ) )dΛ
 
-    # PROBLEM 2
+    # PROBLEM 3
     # Why the directional derivative of test function v? Does not makes sense given the identity
     # (Δ^2 u, v)_Ω = (D^2 u , D^2 v)_Ω + (∂_n Δ u, v)_∂Ω - (∂_nn u, ∂_n v)_∂Ω  - (∂_nt u, ∂_t v)_∂Ω
     #              = (D^2 u , D^2 v)_Ω + (g, v)_∂Ω
