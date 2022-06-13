@@ -80,12 +80,12 @@ function run_biharmonic(; n=10, generate_vtk=false, dirname="biharmonic_results"
         return el2, eh1
     end
 
-    writevtk(model, dirname*"/biharmonic_model")
-    writevtk(Λ,dirname*"/biharmonic_skeleton")
-    writevtk(Λ,dirname*"/biharmonic_jumps",cellfields=["jump_u"=>jump(uh)])
-    writevtk(Ω,dirname*"/biharmonic_omega",cellfields=["uh"=>uh])
-    writevtk(Ω,dirname*"/biharmonic_error",cellfields=["e"=>e])
-    writevtk(Ω,dirname*"/biharmonic_manufatured",cellfields=["u"=>u])
+    writevtk(model, dirname*"/model")
+    writevtk(Λ,dirname*"/skeleton")
+    writevtk(Λ,dirname*"/jumps",cellfields=["jump_u"=>jump(uh)])
+    writevtk(Ω,dirname*"/omega",cellfields=["uh"=>uh])
+    writevtk(Ω,dirname*"/error",cellfields=["e"=>e])
+    writevtk(Ω,dirname*"/manufatured",cellfields=["u"=>u])
 
     return el2, eh1
 end

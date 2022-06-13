@@ -74,12 +74,12 @@ function run_poission(; n=10, generate_vtk::Bool=true, dirname::String, test::Bo
 
 
     # Generate plots
-    writevtk(Λ, dirname*"/poission_skeleton")
-    writevtk(Λ, dirname*"/poission_jumps", cellfields=["jump_u"=>jump(uh)])
-    writevtk(Γ, dirname*"/poission_shell", cellfields=["uh"=>uh])
-    writevtk(Ω, dirname*"/poission_field", cellfields=["uh"=>uh])
-    writevtk(Ω,dirname*"/poission_error",cellfields=["e"=>e])
-    writevtk(Ω,dirname*"/poission_manufatured",cellfields=["u"=>u])
+    writevtk(model, dirname*"/model")
+    writevtk(Λ,dirname*"/skeleton")
+    writevtk(Λ,dirname*"/jumps",cellfields=["jump_u"=>jump(uh)])
+    writevtk(Ω,dirname*"/omega",cellfields=["uh"=>uh])
+    writevtk(Ω,dirname*"/error",cellfields=["e"=>e])
+    writevtk(Ω,dirname*"/manufatured",cellfields=["u"=>u])
     return el2, eh1
 
 end

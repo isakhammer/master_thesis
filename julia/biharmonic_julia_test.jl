@@ -4,7 +4,7 @@ using Gridap
 using Plots
 gr()
 
-function run_biharmonic_julia_test(; n=10, generate_vtk=false, dirname="biharmonic_results", test=false)
+function run_biharmonic_julia_test(; n=10, generate_vtk=false, dirname="biharmonic_julia_test_results", test=false)
     # Analytical manufactured solution
     α = 1
 
@@ -38,15 +38,16 @@ function run_biharmonic_julia_test(; n=10, generate_vtk=false, dirname="biharmon
     dΩ = Measure(Ω,degree)
     dΓ = Measure(Γ,degree)
     dΛ = Measure(Λ,degree)
-    nΓ = get_normal_vector(Γ)
-    nΛ = get_normal_vector(Λ)
+
+    n_Γ = get_normal_vector(Γ)
+    n_Λ = get_normal_vector(Λ)
 
     # Weak form
     h = (domain[2]-domain[1]) / partition[1]
     γ = 1
     a(u,v) = ∫( Δ(u)*Δ(v) + α* u⋅v )dΩ +
-             ∫( - mean(Δ(u))*jump(∇(v)⋅nΛ) - jump(∇(u)⋅nΛ)*mean(Δ(v)) + γ/h*jump(∇(u)⋅nΛ)*jump(∇(v)⋅nΛ) )dΛ
-    l(v) = ∫( v*f )dΩ + ∫( g*(∇(v)⋅nΓ) )dΓ
+             ∫( - mean(Δ(u))*jump(∇(v)⋅n_Λ) - jump(∇(u)⋅n_Λ)*mean(Δ(v)) + γ/h*jump(∇(u)⋅n_Λ)*jump(∇(v)⋅n_Λ) )dΛ
+    l(v) = ∫( v*f )dΩ + ∫( g*(∇(v)⋅n_Γ) )dΓ
     op = AffineFEOperator(a,l,U,V)
 
     uh = solve(op)
