@@ -40,7 +40,6 @@ function run_biharmonic(; n=10, generate_vtk=false, dirname="biharmonic_results"
     f(x) = (α + 4)* cos(x[1])*cos(x[2])
     # f(x) = Δ(Δ(u))(x) + α*u(x)
 
-
     # Neumann condition
     g(x) = 0
 
