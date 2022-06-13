@@ -3,17 +3,23 @@ using Test
 using Gridap
 
 # Analytical manufactured solution
-u(x) = x[1]*(x[1]-1)*x[2]*(x[2]-1)
+α = 1
 
-f(x) = Δ(Δ(u))(x)
+# u(x) = x[1]*(x[1]-1)*x[2]*(x[2]-1)
+u(x) = cos(x[1])*cos(x[2])
+
+f(x) = Δ(Δ(u))(x)+ α*u(x)
 g(x) = Δ(u)(x)
 
-@test f(VectorValue(0.5,0.5)) == 8.0
-@test g(VectorValue(0.5,0.5)) == -1
 
 # Domain
-domain = (0,1,0,1)
-partition = (4,4)
+L = 2*π
+
+@test f(VectorValue(0.5,0.5)) == ( 4+α )*u(VectorValue(0.5,0.5))
+@test g(VectorValue(0.5,0.5)) == -2*u(VectorValue(0.5,0.5))
+
+domain = (0,L,0,L)
+partition = (90,90)
 model = CartesianDiscreteModel(domain,partition)
 
 # FE space
@@ -35,7 +41,7 @@ nΛ = get_normal_vector(Λ)
 # Weak form
 const h = (domain[2]-domain[1]) / partition[1]
 const γ = 1
-a(u,v) = ∫( Δ(u)*Δ(v) )dΩ +
+a(u,v) = ∫( Δ(u)*Δ(v) + α* u⋅v )dΩ +
          ∫( - mean(Δ(u))*jump(∇(v)⋅nΛ) - jump(∇(u)⋅nΛ)*mean(Δ(v)) + γ/h*jump(∇(u)⋅nΛ)*jump(∇(v)⋅nΛ) )dΛ
 l(v) = ∫( v*f )dΩ + ∫( g*(∇(v)⋅nΓ) )dΓ
 op = AffineFEOperator(a,l,U,V)
