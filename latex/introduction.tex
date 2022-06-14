@@ -13,7 +13,7 @@ The second class is denotes as finite element method (FEM). Using this methods i
 restrictions on mesh generation \cite{chen08}. However, a major challenge in FEM is to choose a discrete solution space on the finite elements to approximate the exact solution. We say that a method is conforming if the discrete solution space
 $V_{h}$ is subspace of the exact solution space $V$, i.e. $V_{h} \subseteq  V$ \cite{shi02, brenner07math}. In general, for conforming methods requires that for a problem of order $2n$ must the discrete solution space be at least of order $n-1$. Thus, for a biharmonic problem
 will a conforming FEM method demand at least a basis that is $C^1$ globally \cite{shi02}. From this strong continuity conditions rises a lot of complexity when constructing a finite element. In fact, attempts to solve this problems has shown that it
-arise 21 degrees of freedom in a triangular element \cite{nair21}.
+arise 21 degrees of freedom in a triangular Argyris element \cite{nair21}.
 
 For nonconforming methods, $V_{h} \not \subseteq  V_{h}$ is the $C^{1}$ requirement completely relaxed. This makes the methods more suitable for forth order problems with the cost of more extensive error analysis. In fact, designing nonconformal
 elements that does converge is rather difficult \cite{shi02, nair21}.
