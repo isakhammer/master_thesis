@@ -11,23 +11,13 @@
 To solve \eqref{eq:bi_problem} numerically do we want to introduce the continuous interior penalty method (CP), which is a discontinuous galerkin
 method (DG) using $C^{0}$ finite elements. There is several reasons why we want to apply nonconformal $C^{0}$ instead of the often used conformal $C^{1}$ finite elements for fourth order problems.
 
-However, it is known that $ H^{2}$ conforming methods requires global $C^{1}$ continuity \cite{ye19}, and creates difficulties creating elements which conserves this property. Some examples is the Argyris element, but it has been shown to be fairly complicated because you have to construct 21 degrees of freedom for triangle elements \cite{ nair21}. However, some sources tend to say that this method outperforms traditional $C^{0}$- methods \cite{kirby18}, but it still seems to be rarely applied. Anyhow, it also
-has been experimented with DG methods that is conform \cite{ye19}.
+However, it is known that $ H^{2}$ conforming methods requires global $C^{1}$ continuity \cite{ye19}, and creates difficulties creating elements which conserves this property. Some examples is the Argyris element, but it has been shown to be fairly
+complicated because you have to construct 21 degrees of freedom for triangle elements \cite{ nair21}. However, some sources tend to say that this method outperforms traditional $C^{0}$- methods \cite{kirby18}, but it still seems to be rarely applied.
+Nevertheless, it has also been shown DG methods that is conform and has no penalty terms that does converge\cite{ye19}. Hence, makes the method simpler since it does not involve tuning of penalty parameters, thus might be promising. None of these conform methods mentioned has shown to retain the same properties in 3D.
 
-First and foremost is the $C^0$ finite elements is simpler than obtaining $C^{1}$ finite elements. Also, compared to other methods similar to the mixed finite element method for the problem \eqref{eq:bi_problem}, CP has in fact
-preserved the symmetric positive definiteness, which means the stability analysis is more straight forward.
-
+For the CP case is $C^0$ finite elements much simpler than obtaining $C^{1}$ finite elements. Also, compared to other similar methods such as the mixed finite element method, CP has in fact preserved the symmetric positive definiteness, which means the stability analysis is more straight forward.
 Finally and most importantly according to \cite{brenner2012quadratic} can naive use mixed methods of splitting the boundary conditions of
 the problem \eqref{eq:bi_problem} produce wrong solutions if $\Omega $ is non convex.
-
-Conformal methods $V_{h} \subset V$ requires $C^{1}$. Exists in a good manner in 2D, but does not exist generalization in 3D.
-
-Use Bspline as alternative basis. . Less flexible when generating meshes for complicated domains.
-
-Write in mixed formulation $\overline{w}  = \Delta w$
-
-None-conform discretization of 4th order problem using C0 Elements. Hence CP Method
-
 
 
 
