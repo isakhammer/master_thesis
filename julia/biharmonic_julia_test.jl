@@ -2,13 +2,13 @@
 using Test
 using Gridap
 using Plots
-gr()
+# plotlyjs()
+
 
 function run_biharmonic_julia_test(; n=10, generate_vtk=false, dirname="biharmonic_julia_test_results", test=false)
     # Analytical manufactured solution
     α = 1
 
-    # u(x) = x[1]*(x[1]-1)*x[2]*(x[2]-1)
     u(x) = cos(x[1])*cos(x[2])
 
     f(x) = Δ(Δ(u))(x)+ α*u(x)
@@ -44,7 +44,7 @@ function run_biharmonic_julia_test(; n=10, generate_vtk=false, dirname="biharmon
 
     # Weak form
     h = (domain[2]-domain[1]) / partition[1]
-    h = (L) / n
+    h = L / n
     γ = 1
 
     # PROBLEM 1
@@ -58,6 +58,9 @@ function run_biharmonic_julia_test(; n=10, generate_vtk=false, dirname="biharmon
     # PROBLEM 2
     # Statement: Following up from the previous problem. It should be corrected to
     # mean(Δ(u)) -> mean(n_Λ*∇∇(u)*n_Λ)
+
+    # PROBLEM 3
+    # Statement: Why is the terms negative??
 
     a(u,v) = ∫( Δ(u)*Δ(v) + α* u⋅v )dΩ +
              ∫( - mean(Δ(u))*jump(∇(v)⋅n_Λ) - jump(∇(u)⋅n_Λ)*mean(Δ(v))
@@ -129,6 +132,15 @@ function conv_test(; dirname)
         shape=:auto,
         xlabel="h",ylabel="error norm")
 
+    function slope(hs,errors)
+      x = log10.(hs)
+      y = log10.(errors)
+      linreg = hcat(fill!(similar(x), 1), x) \ y
+      linreg[2]
+    end
+
+    println("Slope of L2 is ", slope(hs,el2s))
+    println("Slope of H1 is ", slope(hs,eh1s))
     Plots.savefig(p, dirname*"/convergence.png")
 end
 
