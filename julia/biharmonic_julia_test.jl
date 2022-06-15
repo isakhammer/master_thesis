@@ -26,8 +26,8 @@ function run_biharmonic_julia_test(; n=10, generate_vtk=false, dirname="biharmon
     model = CartesianDiscreteModel(domain,partition)
 
     # FE space
-    order = 2
-    V = TestFESpace(model,ReferenceFE(lagrangian,Float64,order),dirichlet_tags="boundary")
+    order = 3
+    V = TestFESpace(model,ReferenceFE(lagrangian,Float64,order))
     U = TrialFESpace(V,u)
 
     # Triangulation
@@ -126,12 +126,6 @@ function conv_test(; dirname)
 
     end
 
-    p = Plots.plot(hs,[el2s eh1s],
-        xaxis=:log, yaxis=:log,
-        label=["L2" "H1"],
-        shape=:auto,
-        xlabel="h",ylabel="error norm")
-
     function slope(hs,errors)
       x = log10.(hs)
       y = log10.(errors)
@@ -139,8 +133,19 @@ function conv_test(; dirname)
       linreg[2]
     end
 
-    println("Slope of L2 is ", slope(hs,el2s))
-    println("Slope of H1 is ", slope(hs,eh1s))
+    p_L2 = slope(hs,el2s)
+    p_H1 = slope(hs,eh1s)
+
+    println("Slope of L2 is ", p_L2)
+    println("Slope of H1 is ", p_H1)
+
+    p = Plots.plot(hs,[el2s eh1s ],
+        xaxis=:log, yaxis=:log,
+        label=["L2" "H1" ],
+        shape=:auto,
+        title="Convergence order for L2 = "*string(round(p_L2,digits=2))*" and H1 = "*string(round(p_H1,digits=2)),
+        xlabel="h",ylabel="error norm" , show = true)
+
     Plots.savefig(p, dirname*"/convergence.png")
 end
 
@@ -154,7 +159,7 @@ function main()
     end
     mkdir(dirname)
 
-    run_biharmonic_julia_test(n=90, generate_vtk=true, dirname=dirname, test=true)
+    run_biharmonic_julia_test(n=90, generate_vtk=true, dirname=dirname, test=false)
     conv_test(dirname=dirname)
 end
 
