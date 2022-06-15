@@ -81,43 +81,7 @@ where the $diam( T )$ is the largest facet for a triangle $T$. We will also assu
 Let the chunkiness parameter $c_{T} := h_{T}/r_{T}$, where $r_{T}$  is the largest ball that be inscribed inside the element $T$. We can then assume that the mesh is shape-regular i,e., that $c_{T}\le  c$ independent of $T$  and $h$. We may also assuming that
 the mesh is quasi-uniform only if it holds that the mesh is shape regular and $h_{max} \le  c h_{min}$.
 
-\todo[inline]{ Why is quasi-uniform important and how does shape regularity affect the numerical solution? }
 
-
-% \subsection{ Weak Form of Biharmonic Operator in $H^{4} \left( T  \right)$}%
-% \label{sub:weak_form_biharmonic_identity_for_triangles}
-
-
-% Let $w,v \in  H^{4} \left( T  \right) $ and $\mathcal{T}_{h} $ the simplicial triangulation of $\Omega$. Using the same method as in \cite{gu2012c0, brenner2012quadratic} can we
-% deduce that for every triangle $T \in  \mathcal{T}_{h} $ it holds that
-% \begin{align}
-%         \left( \Delta  ^{2} w, v \right) _{T} &= \left< \partial _{n} \nabla ^2 w, v \right>_{\partial T} - \left( \nabla \left( \nabla ^2 w
-%  \right), \nabla  v  \right)_{T} \nonumber   \\
-% \label{eq:weak_form_identity_1}
-%  &= \left( D^2w, D^2v \right)_{T} + \left< \partial _{n} \nabla ^2 w, v \right>_{\partial T}  - \left<\partial _{n}
-%  \nabla w, \nabla v \right>_{\partial T} \\
-% \label{eq:weak_form_identity_2}
-%  &=  \left( D^2 w, D^2 v \right)_{T} - \left<\partial _{nt} w, \partial _{t} v \right>_{\partial T} - \left<\partial
-%  _{nn} w, \partial _{n} v \right> _{\partial T} +  \left<\partial _{n} \nabla ^2 w, v \right>_{\partial T}
-% .\end{align}
-% Note that we in the second step we used that
-% \[
-%     \begin{split}
-% \left( \nabla \left( \nabla ^2 w \right), \nabla  v  \right)_{T} & = \sum_{i=1}^{2}  \int_{T}^{} \left( \nabla \nabla w_{x_{i}} \right)\cdot  v_{x_{i}} \ dx    \\
-%  & =  \int_{T}^{} D^2w: D^2v \ dx - \int_{\partial T}^{} \left( \partial _{n} \nabla w \right)
-% \cdot  \nabla v  \ ds \\
-% &= \left( D^2 w : D^2v  \right) _{ T} + \left<\partial _{n} \nabla w, \nabla v \right>_{\partial T }  \\
-%     \end{split}
-% \]
-% We denote $D^2$ as the Hessian matrix operator such that
-% $$( D^2u, D^2v )_{\Omega } = \int_{\Omega }^{} D^{2}u : D^2v  dx,$$
-% where $D^2u:D^2v$ is the inner product. Also keep in mind that the last result naturally arise when defining $\nabla  = \left( \partial _{n}, \partial _{t} \right) $ such that
-% \[
-% \left<\partial _{n} \nabla w, \nabla v \right>_{\partial T} = \left<\partial _{nt} w, \partial _{t} v\right> _{\partial
-% T} + \left< \partial _{nn} w, \partial _{n} v  \right> _{\partial T} .
-% \]
-
-% Remark that we have two formulations \eqref{eq:weak_form_identity_1} and \eqref{eq:weak_form_identity_2}.
 
 
 \subsection{Constructing Continuous Interior Penalty Method}%
@@ -469,8 +433,23 @@ Observe that we now have $ \| u_{h} - v_{h} \|_{ a_{h} }^{  }   \le \frac{\widet
 \subsection{Manufactured Solution}%
 \label{sub:manufactured_solution}
 
-\subsection{Convergence Rate}%
-\label{sub:convergence_rate}
+Let us consider the manufactured solution
+\[
+u\left( x \right) = \cos(x_{1}) \cos \left( x_{2} \right), \quad   x \in \Omega =  \left( 0,2 \pi  \right)^{2}
+\]
+
+For all experiments carried out will we define $\alpha  = 1 $. We also choose the penalty paramter to be $1$, even though the only requirement according to the results in subsection \ref{ssub:coercitivity}.
+
+We can observe that for the nor
+Then is the convergence described in  such that it has a order of $2$.
+f
+
+\begin{figure}[htpb]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/convergence.png}
+    \caption{Convergence plots for  }
+    \label{Convergence on domain.}
+\end{figure}
 
 \subsection{Condition Number}%
 \label{sub:condition_number}
@@ -504,8 +483,6 @@ $$
 - \int_{\partial T} (\nabla^2 w)_{nn} \, (\partial_n v - \widehat{v_n})
 - \int_{\partial T} (\nabla^2 v)_{nn} \, (\partial_n w - \widehat{w_n}) + \alpha \int_E (\partial_n v - \widehat{v_n}) (\partial_n w - \widehat{w_n})
 $$
-
-
 
 
 
