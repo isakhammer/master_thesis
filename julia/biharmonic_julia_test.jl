@@ -142,12 +142,11 @@ function conv_test(; dirname, order=2)
 
     p = Plots.plot(hs,[el2s eh1s ],
         xaxis=:log, yaxis=:log,
-        label=["L2" "H1" ],
+        label=[L"L2, $p = $"*string(round(p_L2,digits=2)) L"H1, $p =$"*string(round(p_H1,digits=2)) ],
         shape=:auto,
-        title="Order of Convergence: L2 = "*string(round(p_L2,digits=2))*" and H1 = "*string(round(p_H1,digits=2)),
         xlabel="h",ylabel="error norm" , show = true)
 
-    Plots.savefig(p, dirname*"/convergence_order_"*string(order)*".png")
+    Plots.savefig(p, dirname*"/convergence_d_"*string(order)*".png")
 end
 
 
@@ -174,7 +173,7 @@ function main()
     makedir(plotdir)
     orders = [1,2,3,4]
     for order in orders
-        conv_test(dirname=plotdir, order=order)
+        @timeit conv_test(dirname=plotdir, order=order)
     end
 end
 
