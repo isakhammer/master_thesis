@@ -2,10 +2,11 @@
 using Test
 using Gridap
 using Plots
+using LaTeXStrings
 # plotlyjs()
 
 
-function run_biharmonic_julia_test(; n=10, generate_vtk=false, dirname="biharmonic_julia_test_results", test=false)
+function run_biharmonic_julia_test(; n=10, order::Int, generate_vtk=false, dirname="biharmonic_julia_test_results", test=false)
     # Analytical manufactured solution
     α = 1
 
@@ -26,7 +27,6 @@ function run_biharmonic_julia_test(; n=10, generate_vtk=false, dirname="biharmon
     model = CartesianDiscreteModel(domain,partition)
 
     # FE space
-    order = 3
     V = TestFESpace(model,ReferenceFE(lagrangian,Float64,order))
     U = TrialFESpace(V,u)
 
@@ -105,17 +105,18 @@ function run_biharmonic_julia_test(; n=10, generate_vtk=false, dirname="biharmon
 
 end
 
-function conv_test(; dirname)
+function conv_test(; dirname, order=2)
     ns = [8,16,32,64,128]
 
     el2s = Float64[]
     eh1s = Float64[]
     hs = Float64[]
 
-    println("Run convergence tests")
+    println()
+    println("Run convergence tests: order = "*string(order))
     for n in ns
 
-        el2, eh1 = run_biharmonic_julia_test(n=n)
+        el2, eh1 = run_biharmonic_julia_test(n=n, order=order)
         println("Simulation with n:", n, ", Errors:  L2: ", el2, " H1:", eh1)
 
         h = ( 1/n )*2*π
@@ -143,24 +144,38 @@ function conv_test(; dirname)
         xaxis=:log, yaxis=:log,
         label=["L2" "H1" ],
         shape=:auto,
-        title="Convergence order for L2 = "*string(round(p_L2,digits=2))*" and H1 = "*string(round(p_H1,digits=2)),
+        title="Order of Convergence: L2 = "*string(round(p_L2,digits=2))*" and H1 = "*string(round(p_H1,digits=2)),
         xlabel="h",ylabel="error norm" , show = true)
 
-    Plots.savefig(p, dirname*"/convergence.png")
+    Plots.savefig(p, dirname*"/convergence_order_"*string(order)*".png")
 end
 
 
+
 function main()
-    dirname = "biharmonic_julia_test_results"
+
 
     # Generate plots
-    if (isdir(dirname))
-        rm(dirname, recursive=true)
+    function makedir(dirname)
+        if (isdir(dirname))
+            rm(dirname, recursive=true)
+        end
+        mkdir(dirname)
     end
-    mkdir(dirname)
 
-    run_biharmonic_julia_test(n=90, generate_vtk=true, dirname=dirname, test=false)
-    conv_test(dirname=dirname)
+    folder = "biharmonic_julia_test_results"
+    makedir(folder)
+
+    exampledir = folder*"/example"
+    makedir(exampledir)
+    run_biharmonic_julia_test(n=90, order=2, generate_vtk=true, dirname=exampledir, test=false)
+
+    plotdir = folder*"/plots"
+    makedir(plotdir)
+    orders = [1,2,3,4]
+    for order in orders
+        conv_test(dirname=plotdir, order=order)
+    end
 end
 
 main()
