@@ -11,3 +11,10 @@ main.log
 main.out
 main.dvi
 main.synctex(busy)
+
+bibliography.aux
+bibliography.fdb_latexmk
+bibliography.fls
+bibliography.log
+
+
