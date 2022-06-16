@@ -434,27 +434,57 @@ Observe that we now have $ \| u_{h} - v_{h} \|_{ a_{h} }^{  }   \le \frac{\widet
 \label{sub:manufactured_solution}
 
 Let us consider the manufactured solution
-\[
+\begin{equation*}
+    \label{eq:man_sol}
 u\left( x \right) = \cos(x_{1}) \cos \left( x_{2} \right), \quad   x \in \Omega =  \left( 0,2 \pi  \right)^{2}
-\]
+.\end{equation*}
+An visualization of \eqref{eq:man_sol} can be seen n fucute
 
-For all experiments carried out will we define $\alpha  = 1 $. We also choose the penalty paramter to be $1$, even though the only requirement according to the results in subsection \ref{ssub:coercitivity}.
+For all experiments carried out will we define $\alpha  = 1 $. We also choose the penalty paramter to be $1$, even though the only requirement according to the results in subsection \ref{ssub:coercitivity} is that $\gamma \ge  \frac{1}{2}$.
 
-We can observe that for the nor
-Then is the convergence described in  such that it has a order of $2$.
-f
+
+\begin{figure}[htpb]
+    \centering
+    \includegraphics[width=1.1\textwidth]{figures/manufactured_solution.png}
+    \caption{Manufactured solution }
+    \label{fig:man_sol}
+\end{figure}
 
 \begin{figure}[htpb]
     \centering
     \includegraphics[width=0.8\textwidth]{figures/convergence.png}
-    \caption{Convergence plots for  }
-    \label{Convergence on domain.}
+    \caption{Convergence on domain. }
+    \label{fig:conv_order}
 \end{figure}
 
-\subsection{Condition Number}%
-\label{sub:condition_number}
 
+\begin{figure}[htpb]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/convergence/convergence_d_1.png}
+    \caption{Convergence on domain. $d=1$  }
+    \label{fig:conv_d1}
+\end{figure}
 
+\begin{figure}[htpb]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/convergence/convergence_d_2.png}
+    \caption{Convergence on domain. $d=2$  }
+    \label{fig:conv_d2}
+\end{figure}
+
+\begin{figure}[htpb]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/convergence/convergence_d_3.png}
+    \caption{Convergence on domain. $d=3$  }
+    \label{fig:conv_d3}
+\end{figure}
+
+\begin{figure}[htpb]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/convergence/convergence_d_4.png}
+    \caption{Convergence on domain. $d=4$  }
+    \label{fig:conv_d4}
+\end{figure}
 
 \section{HCP Method copied from NGSolve}%
 \label{ssub:hc0ip_method_from_ngsolve}
@@ -477,13 +507,9 @@ $$
 
 We consider its hybrid DG version, where the normal derivative is a new, facet-based variable:
 
-
 $$
 \sum_T \nabla^2 w : \nabla^2 v
 - \int_{\partial T} (\nabla^2 w)_{nn} \, (\partial_n v - \widehat{v_n})
 - \int_{\partial T} (\nabla^2 v)_{nn} \, (\partial_n w - \widehat{w_n}) + \alpha \int_E (\partial_n v - \widehat{v_n}) (\partial_n w - \widehat{w_n})
 $$
-
-
-
 
