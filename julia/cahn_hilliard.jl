@@ -109,35 +109,6 @@ function run_cahn_hilliard(; n=10, order::Int, generate_vtk=false, dirname="cahn
         end
     end
 
-
-
-
-
-    # Error
-
-    # e = u - uh
-    # l2(u) = sqrt(sum( ∫( u⊙u )*dΩ ))
-    # h1(u) = sqrt(sum( ∫( u⊙u + ∇(u)⊙∇(u) )*dΩ ))
-    # el2 = l2(e)
-    # eh1 = h1(e)
-
-    # if test==true
-    #     @test el2 < 10^-3
-    # end
-
-    # if !generate_vtk
-    #     return el2, eh1
-    # end
-
-    # writevtk(model, dirname*"/model")
-    # writevtk(Λ,dirname*"/skeleton")
-    # writevtk(Λ,dirname*"/jumps",cellfields=["jump_u"=>jump(uh)])
-    # writevtk(Ω,dirname*"/omega",cellfields=["uh"=>uh])
-    # writevtk(Ω,dirname*"/error",cellfields=["e"=>e])
-    # writevtk(Ω,dirname*"/manufatured",cellfields=["u"=>u])
-
-    # return el2, eh1
-
 end
 
 
