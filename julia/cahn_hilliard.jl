@@ -5,6 +5,12 @@ using Plots
 using LaTeXStrings
 # plotlyjs()
 
+function makedir(dirname)
+    if (isdir(dirname))
+        rm(dirname, recursive=true)
+    end
+    mkdir(dirname)
+end
 
 function run_cahn_hilliard(; n=10, order::Int, generate_vtk=false, dirname="cahn_hilliard", test=false, Δt=0.1, t_0=0, T=3)
 
@@ -24,9 +30,9 @@ function run_cahn_hilliard(; n=10, order::Int, generate_vtk=false, dirname="cahn
     g(t) = x ->  Δ(u(t))(x)
 
     # Manufactured solution test
-    # tₜ, x1ₜ, x2ₜ  = 0.5, 0.5, 0.5
-    # @test f(tₜ)(VectorValue(x1ₜ,x2ₜ)) ==  4*tₜ*cos(x1ₜ)*cos(x2ₜ) + cos(x1ₜ)*cos(x2ₜ)
-    # @test g(tₜ)(VectorValue(x1ₜ,x2ₜ)) == -2*tₜ*cos(x1ₜ)*cos(x2ₜ)
+    tₜ, x1ₜ, x2ₜ  = 0.5, 0.5, 0.5
+    @test f(tₜ)(VectorValue(x1ₜ,x2ₜ)) ==  4*tₜ*cos(x1ₜ)*cos(x2ₜ) + cos(x1ₜ)*cos(x2ₜ)
+    @test g(tₜ)(VectorValue(x1ₜ,x2ₜ)) == -2*tₜ*cos(x1ₜ)*cos(x2ₜ)
 
     # u(x,t) = (1.0-x[1])*x[1]*(1.0-x[2])*x[2]*t
     # u(t::Real) = x -> u(x,t)
@@ -86,45 +92,10 @@ function run_cahn_hilliard(; n=10, order::Int, generate_vtk=false, dirname="cahn
 
     #################
 
-
     op = op_Af
-    # op = op_AD
-    tol = 10^-3
-
     U_h_t = solve(ode_solver, op, U_0, t_0, T)
 
-    # solname = dirname*"/sol"
-    # createpvd(solname) do pvd
-    #     for (U_h, t) in U_h_t
-    #         println("t "*string(t))
-    #         pvd[t] = createvtk(Ω, solname*"_$t"*".vtu",cellfields=["U_h"=>U_h])
-
-    #         e = u(t) - U_h
-    #         l2(w) = w*w
-    #         el2 = sqrt(sum( ∫(l2(e))dΩ ))
-    #         @test el2 < tol
-    #     end
-    # end
-
     return model, u, U_h_t, Ω, dΩ
-
-end
-
-function construct_pvd_mansol(dirname, u, U_h_t, Ω)
-
-    pvddirname =dirname*"/pvd"
-    if (!isdir(pvddirname))
-        mkdir(pvddirname)
-    end
-
-    solname = pvddirname*"/sol"
-
-    # mansolname = pvddirname*"/mansol"
-    # createpvd(mansolname) do pvd
-    #     for (U_h, t) in U_h_t
-    #         pvd[t] = createvtk(Ω, mansolname*"_$t"*".vtu",cellfields=["u"=>u(t)])
-    #     end
-    # end
 
 end
 
@@ -156,6 +127,11 @@ function analyze(dirname::String, model, u, U_h_t, Ω, dΩ)
         end
     end
 
+    # Checks if all error values are acceptable
+    @test all(el2_ts.<10^-2)
+    @test all(eh1_ts.<10^-1)
+
+
     writevtk(model,dirname*"/model")
     writevtk(Ω,dirname*"/Omega_triangulation", )
 
@@ -172,20 +148,26 @@ end
 
 function main()
 
+    maindirname = "cahn_hilliard"
     # Generate plots
-    function makedir(dirname)
-        if (isdir(dirname))
-            rm(dirname, recursive=true)
-        end
-        mkdir(dirname)
+
+
+    if (!isdir(maindirname))
+        mkdir(maindirname)
     end
 
-    folder = "cahn_hilliard"
-    makedir(folder)
-
-    exampledir = folder*"/example"
+    exampledir = maindirname*"/example"
     makedir(exampledir)
-    run_cahn_hilliard(n=90, order=2, generate_vtk=true, dirname=exampledir, test=false)
+
+    model, u, U_h_t, Ω, dΩ = run_cahn_hilliard(n=90, order=2, generate_vtk=true, dirname=exampledir, test=false)
+    ts, el2_ts, eh1_ts = analyze(exampledir, model, u, U_h_t, Ω, dΩ)
+
+    # mansolname = pvddirname*"/mansol"
+    # createpvd(mansolname) do pvd
+    #     for (U_h, t) in U_h_t
+    #         pvd[t] = createvtk(Ω, mansolname*"_$t"*".vtu",cellfields=["u"=>u(t)])
+    #     end
+    # end
 end
 
 
@@ -204,7 +186,12 @@ end
 
 
 function unit_square_convergence()
-    dirname = "cahn_hilliard/unit_square_convergence"
+
+    maindirname = "cahn_hilliard"
+    if (!isdir(maindirname))
+        mkdir(maindirname)
+    end
+    dirname = maindirname*"/unit_square_convergence"
 
     if (isdir(dirname))
         rm(dirname, recursive=true)
@@ -228,7 +215,7 @@ function unit_square_convergence()
         n_dirname = dirname*"/man_sol_se_"*string(n)
         model, u, U_h_t, Ω, dΩ = run_cahn_hilliard(; n=n,  order=2, generate_vtk=false, dirname="cahn_hilliard", test=false, Δt=Δt, t_0=t_0, T=T)
         ts2, el2_ts, eh1_ts = analyze(n_dirname, model, u, U_h_t, Ω, dΩ)
-        ts =ts2
+        ts =ts2 # huh?
         el2_matrix[i,:] = el2_ts
         eh1_matrix[i,:] = eh1_ts
         hs[i] = 2*π/n
@@ -267,8 +254,7 @@ function unit_square_convergence()
     println("Here")
     return
 
-
 end
 
+main()
 unit_square_convergence()
-# main()
