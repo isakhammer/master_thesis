@@ -7,11 +7,10 @@ using LaTeXStrings
 
 
 function run_cahn_hilliard(; n=10, order::Int, generate_vtk=false, dirname="cahn_hilliard", test=false)
+
     # Analytical manufactured solution
     α = 1
-
     u(x) = cos(x[1])*cos(x[2])
-
     f(x) = Δ(Δ(u))(x)+ α*u(x)
     g(x) = Δ(u)(x)
 

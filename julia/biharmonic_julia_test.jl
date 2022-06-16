@@ -171,7 +171,8 @@ function main()
 
     plotdir = folder*"/plots"
     makedir(plotdir)
-    orders = [1,2,3,4]
+    orders = [1,2,3]
+    # orders = [1,2,3,4]
     for order in orders
         conv_test(dirname=plotdir, order=order)
     end
