@@ -92,6 +92,7 @@ function run_cahn_hilliard(; n=10, order::Int, generate_vtk=false, dirname="cahn
     # op = op_AD
     t_0=0
     T=3
+    tol = 10^-3
 
     U_h_t = solve(ode_solver, op, U_0, t_0, T)
 
@@ -101,9 +102,10 @@ function run_cahn_hilliard(; n=10, order::Int, generate_vtk=false, dirname="cahn
             println("t "*string(t))
             pvd[t] = createvtk(Ω, solname*"_$t"*".vtu",cellfields=["U_h"=>U_h])
 
-            # e = u(tn) - uh_tn
-            # el2 = sqrt(sum( ∫(l2(e))dΩ ))
-            # @test el2 < tol
+            e = u(t) - U_h
+            l2(w) = w*w
+            el2 = sqrt(sum( ∫(l2(e))dΩ ))
+            @test el2 < tol
         end
     end
 
