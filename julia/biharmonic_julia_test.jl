@@ -173,7 +173,7 @@ function main()
     makedir(plotdir)
     orders = [1,2,3,4]
     for order in orders
-        @timeit conv_test(dirname=plotdir, order=order)
+        conv_test(dirname=plotdir, order=order)
     end
 end
 
