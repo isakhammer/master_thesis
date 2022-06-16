@@ -19,12 +19,6 @@ function run_cahn_hilliard(; n=10, order::Int, generate_vtk=false, dirname="cahn
     u(x,t::Real) = t*cos(x[1])*cos(x[2])
     u(t::Real) = x -> u(x,t)
 
-    # f(t::Real) = x -> Δ(Δ(u(t)))(x)+ α*∂t(u)
-    # g(t::Real) = x -> Δ(u(t))(x)
-
-    # f(x, t::Real) =  1
-    # g(x, t::Real) =  0
-    # f(t) = x -> ∂t(u)(x,t)-Δ(u(t))(x)
 
     f(t) = x -> α*∂t(u)(x,t)+Δ(Δ(u(t)))(x)
     g(t) = x ->  Δ(u(t))(x)
@@ -33,16 +27,6 @@ function run_cahn_hilliard(; n=10, order::Int, generate_vtk=false, dirname="cahn
     tₜ, x1ₜ, x2ₜ  = 0.5, 0.5, 0.5
     @test f(tₜ)(VectorValue(x1ₜ,x2ₜ)) ==  4*tₜ*cos(x1ₜ)*cos(x2ₜ) + cos(x1ₜ)*cos(x2ₜ)
     @test g(tₜ)(VectorValue(x1ₜ,x2ₜ)) == -2*tₜ*cos(x1ₜ)*cos(x2ₜ)
-
-    # u(x,t) = (1.0-x[1])*x[1]*(1.0-x[2])*x[2]*t
-    # u(t::Real) = x -> u(x,t)
-    # f(t) = x -> ∂t(u)(x,t)-Δ(u(t))(x)
-
-
-    # u(x) = cos(x[1])*cos(x[2])
-    # f(x) = Δ(Δ(u))(x)+ α*u(x)
-    # g(x) = Δ(u)(x)
-
 
     # Domain
     L = 2*π
