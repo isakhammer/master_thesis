@@ -59,7 +59,7 @@ function run_cahn_hilliard(; n=10, order::Int, generate_vtk=false, dirname="cahn
 
     # Solving time problem
     linear_solver = LUSolver()
-    Δt = 0.05
+    Δt = 0.1
     th = 0.5
     ode_solver = ThetaMethod(linear_solver,Δt,th)
 

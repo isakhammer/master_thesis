@@ -13,5 +13,6 @@ RUN julia DG_poission.jl
 RUN julia DG_biharmonic.jl
 RUN julia DG_brenner.jl
 RUN julia biharmonic_julia_test.jl
+RUN julia cahn_hilliard.jl
 
 
