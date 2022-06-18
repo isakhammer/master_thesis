@@ -69,12 +69,24 @@ A parameter which is useful is the maximum diameter $h$ of the set of triangles 
 \end{split}
 .\end{equation}
 
-\begin{figure}[!h]
-    \centering
-    \includegraphics[width=0.45\textwidth]{figures/mesh.jpg}
-    \caption{Example of a mesh of $\Omega \subset \mathbb{R} ^{2}$ with triangulation $\mathcal{T} _{h}$.    }
-    \label{fig:mesh_example}
+
+\begin{figure}
+\begin{minipage}{.4\linewidth}
+\centering
+\subfloat[]{\label{main:a}\includegraphics[scale=.15]{figures/refinements/n10.png}}
+\end{minipage}%
+\begin{minipage}{.4\linewidth}
+\centering
+\subfloat[]{\label{main:b}\includegraphics[scale=.15]{figures/refinements/n20.png}}
+\end{minipage}\par\medskip
+\centering
+\subfloat[]{\label{main:c}\includegraphics[scale=.15]{figures/refinements/n40.png}}
+
+\caption{Illustration of mesh on the unit square $\Omega = (0,L)^{2} \subseteq  \mathbb{R} ^{2}$ with triangulation $\mathcal{T} _{h}$. Here is $h = \left\{ L /10, L /20,L /40 \right\}$.
+}
+\label{fig:main}
 \end{figure}
+
 
 where the $diam( T )$ is the largest facet for a triangle $T$. We will also assume mesh conform i.e., if $T_{1} \neq T_{2 }$  and $T \cap T_{2} \neq \emptyset  $ , then they share either a vertex or a facet.
 
@@ -486,30 +498,4 @@ For all experiments carried out will we define $\alpha  = 1 $. We also choose th
     \label{fig:conv_d4}
 \end{figure}
 
-\section{HCP Method copied from NGSolve}%
-\label{ssub:hc0ip_method_from_ngsolve}
-
-We consider the Kirchhoff plate equation: Find $w \in H^2$, such that
-
-$$
-\int \nabla^2 w : \nabla^2 v = \int f v
-$$
-
-A conforming method requires $C^1$ continuous finite elements. But there is no good option available, and thus there is no $H^2$ conforming finite element space in NGSolve.
-
-$$
-\sum_T \nabla^2 w : \nabla^2 v
-- \int_{E} \{\nabla^2 w\}_{nn} \, [\partial_n v]
-- \int_{E} \{\nabla^2 v\}_{nn} \, [\partial_n w] + \alpha \int_E  [\partial_n w]  [\partial_n v]
-$$
-
-[Baker 77, Brenner Gudi Sung, 2010]
-
-We consider its hybrid DG version, where the normal derivative is a new, facet-based variable:
-
-$$
-\sum_T \nabla^2 w : \nabla^2 v
-- \int_{\partial T} (\nabla^2 w)_{nn} \, (\partial_n v - \widehat{v_n})
-- \int_{\partial T} (\nabla^2 v)_{nn} \, (\partial_n w - \widehat{w_n}) + \alpha \int_E (\partial_n v - \widehat{v_n}) (\partial_n w - \widehat{w_n})
-$$
 
