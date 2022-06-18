@@ -1,6 +1,7 @@
 plots/*
 biharmonic_convergence.png
 biharmonic_results/
+biharmonic_julia_test_result/
 poission_results
 brenner_results
 
