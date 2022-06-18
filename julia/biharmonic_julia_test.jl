@@ -6,12 +6,10 @@ using LaTeXStrings
 # plotlyjs()
 
 
-function run_biharmonic_julia_test(; n=10, order::Int, generate_vtk=false, dirname="biharmonic_julia_test_results", test=false)
+function run_biharmonic_julia_test(; n=10, order::Int, generate_vtk=false, dirname="biharmonic_julia_test_results", test=false, simplex=false)
     # Analytical manufactured solution
     α = 1
-
     u(x) = cos(x[1])*cos(x[2])
-
     f(x) = Δ(Δ(u))(x)+ α*u(x)
     g(x) = Δ(u)(x)
 
@@ -24,7 +22,12 @@ function run_biharmonic_julia_test(; n=10, order::Int, generate_vtk=false, dirna
 
     domain = (0,L,0,L)
     partition = (n,n)
-    model = CartesianDiscreteModel(domain,partition)
+
+    if simplex
+        model = CartesianDiscreteModel(domain,partition) |> simplexify
+    else
+        model = CartesianDiscreteModel(domain,partition)
+    end
 
     # FE space
     V = TestFESpace(model,ReferenceFE(lagrangian,Float64,order))
@@ -96,6 +99,7 @@ function run_biharmonic_julia_test(; n=10, order::Int, generate_vtk=false, dirna
 
     writevtk(model, dirname*"/model")
     writevtk(Λ,dirname*"/skeleton")
+    writevtk(Γ,dirname*"/boundary")
     writevtk(Λ,dirname*"/jumps",cellfields=["jump_u"=>jump(uh)])
     writevtk(Ω,dirname*"/omega",cellfields=["uh"=>uh])
     writevtk(Ω,dirname*"/error",cellfields=["e"=>e])
@@ -105,8 +109,9 @@ function run_biharmonic_julia_test(; n=10, order::Int, generate_vtk=false, dirna
 
 end
 
-function conv_test(; dirname, order=2)
-    ns = [8,16,32,64,128]
+function conv_test(; dirname, order)
+    ns = [8,16,25,32,64,128, 150]
+    # ns = collect(10:3:100)
 
     el2s = Float64[]
     eh1s = Float64[]
@@ -114,13 +119,11 @@ function conv_test(; dirname, order=2)
 
     println()
     println("Run convergence tests: order = "*string(order))
-    for n in ns
 
+    for n in ns
         el2, eh1 = run_biharmonic_julia_test(n=n, order=order)
         println("Simulation with n:", n, ", Errors:  L2: ", el2, " H1:", eh1)
-
         h = ( 1/n )*2*π
-
         push!(el2s,el2)
         push!(eh1s,eh1)
         push!(hs,h)
@@ -153,7 +156,6 @@ end
 
 function main()
 
-
     # Generate plots
     function makedir(dirname)
         if (isdir(dirname))
@@ -167,8 +169,16 @@ function main()
 
     exampledir = folder*"/example"
     makedir(exampledir)
-    run_biharmonic_julia_test(n=90, order=2, generate_vtk=true, dirname=exampledir, test=false)
 
+    println("Generating examples")
+    ns = [10, 20, 30]
+    for n in ns
+        ndir = exampledir*"/n_"*string(n)
+        makedir(ndir)
+        run_biharmonic_julia_test(n=n, order=2, generate_vtk=true, dirname=ndir, test=false ,simplex=true)
+    end
+
+    println("Generating convergence tests")
     plotdir = folder*"/plots"
     makedir(plotdir)
     orders = [1,2,3]
