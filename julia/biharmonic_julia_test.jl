@@ -110,8 +110,8 @@ function run_biharmonic_julia_test(; n=10, order::Int, generate_vtk=false, dirna
 end
 
 function conv_test(; dirname, order)
-    ns = [8,16,25,32,64,128, 150]
-    # ns = collect(10:3:100)
+    ns = [8,16,25,32,64]
+    # ns = collect(10:10:100)
 
     el2s = Float64[]
     eh1s = Float64[]
@@ -145,9 +145,10 @@ function conv_test(; dirname, order)
 
     p = Plots.plot(hs,[el2s eh1s ],
         xaxis=:log, yaxis=:log,
-        label=[L"L2, $p = $"*string(round(p_L2,digits=2)) L"H1, $p =$"*string(round(p_H1,digits=2)) ],
+        label=[L"Error norm in $L_2(\Omega)$ where $p_1 = $"*string(round(p_L2,digits=2)) L"Error norm in  $ H^1(\Omega)$ where $p_2 =$"*string(round(p_H1,digits=2)) ],
         shape=:auto,
-        xlabel="h",ylabel="error norm" , show = true)
+        legend=:topleft,
+        xlabel=L"$h$",ylabel="error norm" , show = true)
 
     Plots.savefig(p, dirname*"/convergence_d_"*string(order)*".png")
 end
@@ -181,8 +182,8 @@ function main()
     println("Generating convergence tests")
     plotdir = folder*"/plots"
     makedir(plotdir)
-    orders = [1,2,3]
-    # orders = [1,2,3,4]
+    # orders = [1,2,3]
+    orders = [1,2,3,4]
     for order in orders
         conv_test(dirname=plotdir, order=order)
     end
