@@ -148,7 +148,10 @@ function conv_test(; dirname, order)
         label=[L"Error norm in $L_2(\Omega)$ where $p_1 = $"*string(round(p_L2,digits=2)) L"Error norm in  $ H^1(\Omega)$ where $p_2 =$"*string(round(p_H1,digits=2)) ],
         shape=:auto,
         legend=:topleft,
+        legendfontsize=10,
         xlabel=L"$h$",ylabel="error norm" , show = true)
+
+
 
     Plots.savefig(p, dirname*"/convergence_d_"*string(order)*".png")
 end

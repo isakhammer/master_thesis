@@ -70,22 +70,6 @@ A parameter which is useful is the maximum diameter $h$ of the set of triangles 
 .\end{equation}
 
 
-\begin{figure}
-\begin{minipage}{.4\linewidth}
-\centering
-\subfloat[]{\label{main:a}\includegraphics[scale=.15]{figures/refinements/n10.png}}
-\end{minipage}%
-\begin{minipage}{.4\linewidth}
-\centering
-\subfloat[]{\label{main:b}\includegraphics[scale=.15]{figures/refinements/n20.png}}
-\end{minipage}\par\medskip
-\centering
-\subfloat[]{\label{main:c}\includegraphics[scale=.15]{figures/refinements/n40.png}}
-
-\caption{Illustration of mesh on the unit square $\Omega = (0,L)^{2} \subseteq  \mathbb{R} ^{2}$ with triangulation $\mathcal{T} _{h}$. Here is $h = \left\{ L /10, L /20,L /40 \right\}$.
-}
-\label{fig:main}
-\end{figure}
 
 
 where the $diam( T )$ is the largest facet for a triangle $T$. We will also assume mesh conform i.e., if $T_{1} \neq T_{2 }$  and $T \cap T_{2} \neq \emptyset  $ , then they share either a vertex or a facet.
@@ -134,6 +118,7 @@ Keep in mind that any jump over a interior facet $F \subset \mathcal{F} _{h}^{in
 and likewise for the mean, $\mean{ a  } = \frac{1}{2}(   a^{+}
 + a^{-})$.    The equivalence of \eqref{eq:bi_basic_dg2} and \eqref{eq:bi_basic_dg_full_1} comes from the following argumentation.
 
+{\footnotesize
 \begin{equation*}
     \begin{split}
  \left( \Delta  ^{2} u,v \right) _{\Omega } & =\sum_{T\in \mathcal{T} _{h}}^{} \left( D^2u,D^2v \right) _{T } - \left(\partial _{nt} u, \partial _{t}v
@@ -153,8 +138,10 @@ and likewise for the mean, $\mean{ a  } = \frac{1}{2}(   a^{+}
 \right) _{F} \right) }_{(III)}
     \end{split}
 .\end{equation*}
+}
 
 Where integration over all interior facets $ \forall F \in \mathcal{F}_{h}^{int}$ is computed in this way,
+{\footnotesize
 \begin{equation*}
     \begin{split}
         (I) &  =    \left(\partial _{n^{+}} \Delta  u^{+} ,v^{+}\right)_{F} +
@@ -171,11 +158,13 @@ Where integration over all interior facets $ \forall F \in \mathcal{F}_{h}^{int}
          \mean{ \partial _{nt} u    } \underbrace{\jump{ \partial_{t} v }  }_{= 0}    + \underbrace{\jump{ \partial
                  _{nt}  u
          }}_{= 0}    \mean{ \partial _{t}v }  = 0\\
-        (III) &  =     \left(\partial _{n^{+}n^{+}} u^{+}, \partial_{n^{+}} v^{+} \right)_{F} +  \left(\partial _{n^{-}n^{-}} u^{-}, \partial_{n^{-}} v^{-} \right)_{F}    =    \int_{F}^{} \jump{ \partial _{nn} u \cdot  \partial_{n} v } = \int_{F}^{}
+        (III) &  =     \left(\partial _{n^{+}n^{+}} u^{+}, \partial_{n^{+}} v^{+} \right)_{F} +  \left(\partial _{n^{-}n^{-}} u^{-}, \partial_{n^{-}} v^{-} \right)_{F}    =    \int_{F}^{} \jump{ \partial _{nn} u \cdot  \partial_{n} v }  \\
+        & = \int_{F}^{}
         \mean{ \partial _{nn} u    } \underbrace{\jump{ \partial_{n} v }  }_{\neq 0}    + \underbrace{\jump{ \partial
                  _{nn}  u
-         }}_{= 0}    \mean{ \partial _{n}v }  =  \left( \partial _{nn} u, \jump{ \partial_{n} v } \right)_{F}   \end{split}
+         }}_{= 0}    \mean{ \partial _{n}v }   =  \left( \partial _{nn} u, \jump{ \partial_{n} v } \right)_{F}   \end{split}
 .\end{equation*}
+}
 
 Observe that the cancellations in the term $(I)$ appears of the continuity of $v\in V $ and $u\in H^{4}\left( \Omega  \right) $ which makes the jumps zero. For the second term $(II)$ does the terms become zero cancelled because the tangential
 derivative at the facet has no jump. However, The third term $(III)$  is fairly interesting since the discontinuity in normal vector for $v \in V$ is a jump, while the second term is still continuous. It can also be raised that $\mean{ \partial _{nn} u } = \partial _{nn} u  $ holds by the continuity of $H^{4}\left( \Omega  \right) $. Anyhow, the definition of jump of should more interesting when we later weaken the continuity of $u$ during discretization.
@@ -308,6 +297,8 @@ The last step was to choose a $\varepsilon $ and $\gamma $ as some positive cons
 \subsubsection{Boundedness}%
 \label{ssub:bounded}
 We want the CP method to be bounded.
+
+{\footnotesize
 \begin{equation*}
     \begin{split}
 \mathcal{A} \left( w_{h}, v_{h} \right)   =& \left( \alpha w_{h}, v_{h} \right) _{\Omega } +
@@ -329,6 +320,7 @@ We want the CP method to be bounded.
 & \le  \left( \alpha + 1 + 2C_{j}^{\frac{1}{2}} + \gamma  \right)  \| v_{h} \|_{a_{h}  }^{  }  \| w_{h} \|_{ a_{h} }^{  }  \le  K  \| v_{h} \|_{a_{h}  }^{  }  \| w_{h} \|_{ a_{h} }^{  }
 \end{split}
 \end{equation*}
+}
 
 Thus, the CP method is shown to be bounded.
 Again, the first step was to apply the \textbf{Cauchy-Schwarz inequality} for every term. On the second inequality the \textbf{Inverse inequality} was applied so that
@@ -337,6 +329,8 @@ Again, the first step was to apply the \textbf{Cauchy-Schwarz inequality} for ev
 }^{  }\le   C_{j}^{\frac{1}{2}} \| D ^2 w_{h} \|_{ \mathcal{T} _{h} }^{  }.
 \]
 The second step can we luckily observe that all terms invidually is less than the norm such that
+
+{\footnotesize
 \begin{equation}
 \label{eq:bounded_ineq}
 \begin{split}
@@ -346,6 +340,7 @@ The second step can we luckily observe that all terms invidually is less than th
 \text{and} \quad    \gamma \| h^{-1 } \jump{ \partial _{n} v_{h} }   & \|_{ \mathcal{F} _{h}  }^{  }  \| \jump{ \partial _{n} w_{h} }    \|_{\mathcal{F}_{h}   }^{  }   \le \gamma \| v_{h} \|_{ a_{h} }^{  }  \| w_{h} \|_{ a_{h} }^{  }.
 \end{split}
 \end{equation}
+}
 Hence, the CP method is does fulfills the Lax Milgram criteria because it is both bounded and unique.
 
 
@@ -445,57 +440,63 @@ Observe that we now have $ \| u_{h} - v_{h} \|_{ a_{h} }^{  }   \le \frac{\widet
 \subsection{Manufactured Solution}%
 \label{sub:manufactured_solution}
 
+
+We want to apply the well known method of manufactured solution to solve this problem.
 Let us consider the manufactured solution
-\begin{equation*}
+\begin{equation}
     \label{eq:man_sol}
 u\left( x \right) = \cos(x_{1}) \cos \left( x_{2} \right), \quad   x \in \Omega =  \left( 0,2 \pi  \right)^{2}
-.\end{equation*}
-An visualization of \eqref{eq:man_sol} can be seen n fucute
-
-For all experiments carried out will we define $\alpha  = 1 $. We also choose the penalty paramter to be $1$, even though the only requirement according to the results in subsection \ref{ssub:coercitivity} is that $\gamma \ge  \frac{1}{2}$.
-
-
+.\end{equation}
+A visualization of \eqref{eq:man_sol} can be seen on figure \ref{fig:man_sol}.
 \begin{figure}[htpb]
     \centering
     \includegraphics[width=1.1\textwidth]{figures/manufactured_solution.png}
-    \caption{Manufactured solution }
+    \caption{ A plot of the manufactured solution \eqref{eq:man_sol} on $\Omega = (0, 2 \pi ) ^2$  }
     \label{fig:man_sol}
 \end{figure}
+For all experiments carried out will we define $\alpha  = 1 $. We also choose the penalty parameter $ \gamma = 1$, even though the only requirement according to the results in subsection \ref{ssub:coercitivity} is that $\gamma \ge  \frac{1}{2}$. The
+numerical experiments was done on the mesh discretization illustrated in figure \ref{fig:main} for different diameters $h$. Now let $e = u - u_{h}$. We want to show that $\| e \|_{ L_{2}\left( \Omega  \right)  }^{  } \le  C  h^{p_{1}} $ and $\| e \|_{
+H^{1}\left( \Omega  \right)  }  \le  C h^{p_{2}}$
 
-\begin{figure}[htpb]
-    \centering
-    \includegraphics[width=0.8\textwidth]{figures/convergence.png}
-    \caption{Convergence on domain. }
-    \label{fig:conv_order}
+\begin{figure}
+\begin{minipage}{.4\linewidth}
+\centering
+\subfloat[]{\label{main:a}\includegraphics[scale=.15]{figures/refinements/n10.png}}
+\end{minipage}%
+\begin{minipage}{.4\linewidth}
+\centering
+\subfloat[]{\label{main:b}\includegraphics[scale=.15]{figures/refinements/n20.png}}
+\end{minipage}\par\medskip
+\centering
+\subfloat[]{\label{main:c}\includegraphics[scale=.15]{figures/refinements/n40.png}}
+
+\caption{Illustration of mesh discretization on the unit square $\Omega = (0,2 \pi)^{2} \subseteq  \mathbb{R} ^{2}$
+    with triangulation $\mathcal{T} _{h}$. The chosen instances had the diameters $h = \left\{ 2\pi  /10, 2\pi /20,2\pi /40 \right\}$ in figures \ref{main:a},
+    \ref{main:b} and \ref{main:c}.
+}
+
+\label{fig:main}
 \end{figure}
 
 
-\begin{figure}[htpb]
+\begin{figure}
     \centering
-    \includegraphics[width=0.8\textwidth]{figures/convergence/convergence_d_1.png}
-    \caption{Convergence on domain. $d=1$  }
-    \label{fig:conv_d1}
+\begin{minipage}{.5\linewidth}
+\centering
+\subfloat[]{\label{fig:man_conv:a}\includegraphics[scale=.05]{figures/convergence/convergence_d_2.png}}
+\end{minipage}%
+\begin{minipage}{.5\linewidth}
+\centering
+\subfloat[]{\label{fig:man_conv:b}\includegraphics[scale=.05]{figures/convergence/convergence_d_3.png}}
+\end{minipage}\par\medskip
+\centering
+\subfloat[]{\label{main:c}\includegraphics[scale=.05]{figures/convergence/convergence_d_4.png}}
+
+% \subfloat[]{\label{main:c}\includegraphics[scale=.03]{figures/convergence/convergence_d_2.png}}
+
+\caption{ Convergence plots for $\| u - u_{h} \|_{ L_{2}\left( \Omega  \right)  }^{  } $ and $\| u - u_{h} \|_{ H^{1}\left( \Omega  \right)  }^{  } $  using lagrangian orders $\mathcal{P}_{k} $  .}
+\label{fig:man_conv}
 \end{figure}
 
-\begin{figure}[htpb]
-    \centering
-    \includegraphics[width=0.8\textwidth]{figures/convergence/convergence_d_2.png}
-    \caption{Convergence on domain. $d=2$  }
-    \label{fig:conv_d2}
-\end{figure}
-
-\begin{figure}[htpb]
-    \centering
-    \includegraphics[width=0.8\textwidth]{figures/convergence/convergence_d_3.png}
-    \caption{Convergence on domain. $d=3$  }
-    \label{fig:conv_d3}
-\end{figure}
-
-\begin{figure}[htpb]
-    \centering
-    \includegraphics[width=0.8\textwidth]{figures/convergence/convergence_d_4.png}
-    \caption{Convergence on domain. $d=4$  }
-    \label{fig:conv_d4}
-\end{figure}
 
 
