@@ -8,14 +8,15 @@
 \label{sub:introduction}
 
 
-To solve \eqref{eq:bi_problem} numerically do we want to introduce the continuous interior penalty method (CP), which is a discontinuous galerkin
+To solve \eqref{eq:bi_problem} numerically do we want to introduce the continuous interior penalty method (CP), which is a discontinuous Galerkin
 method (DG) using $C^{0}$ finite elements. There is several reasons why we want to apply nonconformal $C^{0}$ instead of the often used conformal $C^{1}$ finite elements for fourth order problems.
 
 However, it is known that $ H^{2}$ conforming methods requires global $C^{1}$ continuity \cite{ye19}, and creates difficulties creating elements which conserves this property. Some examples is the Argyris element, but it has been shown to be fairly
-complicated because you have to construct 21 degrees of freedom for triangle elements \cite{ nair21, brenner07math}. However, some sources tend to say that this method outperforms traditional $C^{0}$- methods \cite{kirby18}, but it still seems to be rarely applied.
-Nevertheless, it has also been shown DG methods that is conform and has no penalty terms that does converge\cite{ye19}. Hence, makes the method simpler since it does not involve tuning of penalty parameters, thus might be promising. None of these conform methods mentioned has shown to retain the same properties in 3D.
+complicated because you have to construct 21 degrees of freedom for triangle elements \cite{ nair21, brenner07math}. However, some sources tend to say that this method outperforms traditional $C^{0}$ methods \cite{kirby18}, but it still seems to be rarely applied.
+Nevertheless, it has also been shown DG methods that is conform and has no penalty terms that does converge \cite{ye19}. Hence, makes the method simpler since it does not involve tuning of penalty parameters, thus might be promising. None of these conform methods mentioned has shown to retain the same properties in 3D.
 
-For the CP case is $C^0$ finite elements much simpler than obtaining $C^{1}$ finite elements. Also, compared to other similar methods such as the mixed finite element method, CP has in fact preserved the symmetric positive definiteness, which means the stability analysis is more straight forward. Finally and most importantly according to \cite{brenner2012quadratic} can naive use mixed methods of splitting the boundary conditions of
+For the CP case is $C^0$ finite elements much simpler than obtaining $C^{1}$ finite elements. Also, compared to other similar methods such as the mixed finite element method, CP does in fact preserve the symmetric positive definiteness, which means
+the stability analysis is more straight forward. Finally and most importantly, according to \cite{brenner2012quadratic} can naive use mixed methods of splitting the boundary conditions of
 the problem \eqref{eq:bi_problem} produce wrong solutions if $\Omega $ is non convex.
 
 
@@ -74,7 +75,7 @@ A parameter which is useful is the maximum diameter $h$ of the set of triangles 
 
 where the $diam( T )$ is the largest facet for a triangle $T$. We will also assume mesh conform i.e., if $T_{1} \neq T_{2 }$  and $T \cap T_{2} \neq \emptyset  $ , then they share either a vertex or a facet.
 
-Let the chunkiness parameter $c_{T} := h_{T}/r_{T}$, where $r_{T}$  is the largest ball that be inscribed inside the element $T$. We can then assume that the mesh is shape-regular i,e., that $c_{T}\le  c$ independent of $T$  and $h$. We may also assuming that
+Let the chunkiness parameter $c_{T} := h_{T}/r_{T}$, where $r_{T}$  is the largest ball that be inscribed inside the element $T$. We can then assume that the mesh is shape regular, i.e., that $c_{T}\le  c$ independent of $T$  and $h$. We may also assuming that
 the mesh is quasi-uniform only if it holds that the mesh is shape regular and $h_{max} \le  c h_{min}$.
 
 
@@ -91,7 +92,6 @@ H^{4}\left( T  \right) $. Using that the weak form identity \eqref{eq:weak_form_
 \right)_{\partial T} - \left(\partial _{nn} u, \partial _{n}v \right)_{\partial T} + \left(\partial _{n} \Delta  u,v
 \right)_{\partial T}
 .\end{equation}
-
 For global continuity, let  $v \in V =  \left\{ v \in H^{1}\left( \Omega  \right): v_{T} \in  H^{4}\left( T \right), \ \forall T \in
 \mathcal{T}_{h}    \right\} $ and $u \in  H^{4}\left( \Omega  \right) $ such that,
 
@@ -234,6 +234,7 @@ We may introduce the compact notation of \eqref{eq:CP_A_h_1}.
 \end{split}
 \end{equation}
 
+\todo{ Write some goodies here }
 
 \subsection{Error and Stability Analysis of CP}%
 \label{sub:error_and_stability_analysis_of_c0ip}
@@ -480,7 +481,7 @@ that
 \subfloat[]{\label{fig:mesh_discretization:b}\includegraphics[scale=.15]{figures/refinements/n20.png}}
 \end{minipage}\par\medskip
 \centering
-\subfloat[]{\label{fig:mesh_discretization:b}\includegraphics[scale=.15]{figures/refinements/n40.png}}
+\subfloat[]{\label{fig:mesh_discretization:c}\includegraphics[scale=.15]{figures/refinements/n40.png}}
 
 \caption{Illustration of mesh discretization on the unit square $\Omega = (0,2 \pi)^{2} \subseteq  \mathbb{R} ^{2}$
     with triangulation $\mathcal{T} _{h}$. The chosen instances had the diameters $h = \left\{ 2\pi  /10, 2\pi /20,2\pi /40 \right\}$ in figures \ref{fig:mesh_discretization:a},
