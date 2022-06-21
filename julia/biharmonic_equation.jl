@@ -98,10 +98,11 @@ module BiharmonicEquation
     end
 
 
-    function run_CP_method(;ss::GridapSpaces)
+    function run_CP_method(;ss::GridapSpaces, u::Function)
         # Analytical manufactured solution
         α = 1
-        u(x) = cos(x[1])*cos(x[2])
+
+
         f(x) = Δ(Δ(u))(x)+ α*u(x)
         g(x) = Δ(u)(x)
 

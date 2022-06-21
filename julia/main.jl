@@ -69,9 +69,12 @@ function run_examples(dirname)
     ndir(n) = dirname*"/n_"*string(n)
     ns = [100]
     order=2
+
+    L = 1
+    u(x) = cos(( 2π/L )*x[1])*cos(( 2π/L )*x[2])
     for n in ns
-        ss = BiharmonicEquation.generate_square_spaces(n=n, L=2π, order=order)
-        sol = BiharmonicEquation.run_CP_method(ss=ss)
+        ss = BiharmonicEquation.generate_square_spaces(n=n, L=L, order=order)
+        sol = BiharmonicEquation.run_CP_method(ss=ss,u=u)
         BiharmonicEquation.generate_vtk(ss=ss,sol=sol,dirname=ndir(n))
         @test sol.el2 < 10^-1
     end
@@ -86,6 +89,9 @@ function convergence_analysis(dirname)
     hs = 1 .// ns # does not work for 2π
     hs_str =  latexify.(hs)
 
+    L = 1
+    u(x) = cos(( 2π/L )*x[1])*cos(( 2π/L )*x[2])
+
     for i in 1:length(orders)
         order = orders[i]
         γ = γs[i]
@@ -95,8 +101,8 @@ function convergence_analysis(dirname)
         println("Run convergence tests: order = "*string(order))
 
         for n in ns
-            ss = BiharmonicEquation.generate_square_spaces(n=n,L=2π, γ=γ, order=order)
-            sol = BiharmonicEquation.run_CP_method(ss=ss)
+            ss = BiharmonicEquation.generate_square_spaces(n=n,L=L, γ=γ, order=order)
+            sol = BiharmonicEquation.run_CP_method(ss=ss, u=u)
             push!(el2s, sol.el2)
             push!(eh1s, sol.eh1)
             # push!(hs,   ss.h)
