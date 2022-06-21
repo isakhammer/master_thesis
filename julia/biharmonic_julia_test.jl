@@ -31,7 +31,8 @@ function run_biharmonic_julia_test(; n=10, order::Int, generate_vtk=false, dirna
 
     # FE space
     V = TestFESpace(model,ReferenceFE(lagrangian,Float64,order))
-    U = TrialFESpace(V,u)
+    # U = TrialFESpace(V,u)
+    U = TrialFESpace(V)
 
     # Triangulation
     Ω = Triangulation(model)
@@ -90,7 +91,7 @@ function run_biharmonic_julia_test(; n=10, order::Int, generate_vtk=false, dirna
     # @test eh1 < tol
 
     if test==true
-        @test el2 < 10^-3
+        @test el2 < 10^-1
     end
 
     if !generate_vtk
@@ -151,8 +152,6 @@ function conv_test(; dirname, order)
         legendfontsize=10,
         xlabel=L"$h$",ylabel="error norm" , show = true)
 
-
-
     Plots.savefig(p, dirname*"/convergence_d_"*string(order)*".png")
 end
 
@@ -175,11 +174,11 @@ function main()
     makedir(exampledir)
 
     println("Generating examples")
-    ns = [10, 20, 30]
+    ns = [100]
     for n in ns
         ndir = exampledir*"/n_"*string(n)
         makedir(ndir)
-        run_biharmonic_julia_test(n=n, order=2, generate_vtk=true, dirname=ndir, test=false ,simplex=true)
+        run_biharmonic_julia_test(n=n, order=2, generate_vtk=true, dirname=ndir, test=true,simplex=true)
     end
 
     println("Generating convergence tests")
