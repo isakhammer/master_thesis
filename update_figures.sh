@@ -1,1 +1,2 @@
-cp -r julia/biharmonic_julia_test_results/plots/* latex/figures/convergence/
+mkdir -p latex/figures/convergence/
+cp -r julia/figures/* latex/figures/convergence/
