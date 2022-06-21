@@ -36,9 +36,8 @@ module BiharmonicEquation
     end
 
 
-    function generate_square_spaces(;n, L=2π, order=2, simplex=true)
+    function generate_square_spaces(;n, L, γ=1, order=2, simplex=true)
         h = L / n
-        γ = 1
 
         domain = (0,L,0,L)
         partition = (n,n)

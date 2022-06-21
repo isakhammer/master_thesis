@@ -4,8 +4,8 @@ using Plots
 using LaTeXStrings
 using PrettyTables
 
-function generate_figures(hs, el2s, eh1s, γs, order, dirname)
-    filename = dirname*"/convergence_d_"*string(order)
+function generate_figures(hs, hs_str, el2s, eh1s, γ::Integer, order::Integer, dirname::String)
+    filename = dirname*"/convergence_d_"*string(order)*"_gamma_"*string(γ)
 
     function slope(hs,errors)
       x = log10.(hs)
@@ -32,22 +32,27 @@ function generate_figures(hs, el2s, eh1s, γs, order, dirname)
         Plots.savefig(p,file )
     end
 
-    function generate_table(h::Vector{Float64}, eh1::Vector{Float64}, el2::Vector{Float64})
+    function generate_table(hs_str::Vector, eh1::Vector{Float64}, el2::Vector{Float64})
         lgl2 = log.(el2[2:end]./el2[1:end-1])
         lgh1 = log.(eh1[2:end]./eh1[1:end-1])
         lgl2 =  [nothing; lgl2]
         lgh1 =  [nothing; lgh1]
 
-        data = hcat(h, el2, eh1, lgl2, lgh1)
+        data = hcat(hs_str, el2, eh1, lgl2, lgh1)
         header = ["h", L"$L_2$", L"$H^1$", L"$log_2(e^{2h}_{L^2(\Omega )}/e^{h}_{L^2(\Omega )}) $", L"$log_2(e^{2h}_{H_1(\Omega )}/e^{h}_{H_1(\Omega )}) $"]
 
-        open(filename*".tex", "w") do io
-            pretty_table(io, data, header=header, backend=Val(:latex ), formatters = ( ft_printf("%.3E"), ft_nonothing ))
-        end
+
+        pretty_table(data, header=header, formatters = ( ft_printf("%.3E"), ft_nonothing )) # remove
+        # open(filename*".tex", "w") do io
+        #     pretty_table(io, data, header=header, backend=Val(:latex ), formatters = ( ft_printf("%.3E"), ft_nonothing ))
+        # end
     end
 
+    println("Generating plot", hs ,el2s)
     generate_plot(hs, el2s, eh1s)
-    generate_table(hs, el2s, eh1s)
+
+    println("Generating table")
+    generate_table(hs_str, el2s, eh1s)
 end
 
 
@@ -65,7 +70,7 @@ function run_examples(dirname)
     ns = [100]
     order=2
     for n in ns
-        ss = BiharmonicEquation.generate_square_spaces(n=n, order=order)
+        ss = BiharmonicEquation.generate_square_spaces(n=n, L=2π, order=order)
         sol = BiharmonicEquation.run_CP_method(ss=ss)
         BiharmonicEquation.generate_vtk(ss=ss,sol=sol,dirname=ndir(n))
         @test sol.el2 < 10^-1
@@ -73,27 +78,32 @@ function run_examples(dirname)
 end
 
 
+
 function convergence_analysis(dirname)
     orders = [2,3,4]
-    ns = [8,16,32,64]
-    for order in orders
+    γs = [1, 20, 40]
+    ns  = [2^3,2^4,2^5,2^6,2^7]
+    hs = 1 .// ns # does not work for 2π
+    hs_str =  latexify.(hs)
+
+    for i in 1:length(orders)
+        order = orders[i]
+        γ = γs[i]
+
         el2s = Float64[]
         eh1s = Float64[]
-        hs = Float64[]
-        γs = Float64[]
-        println()
         println("Run convergence tests: order = "*string(order))
 
         for n in ns
-            ss = BiharmonicEquation.generate_square_spaces(n=n, order=order)
+            ss = BiharmonicEquation.generate_square_spaces(n=n,L=2π, γ=γ, order=order)
             sol = BiharmonicEquation.run_CP_method(ss=ss)
             push!(el2s, sol.el2)
             push!(eh1s, sol.eh1)
-            push!(hs,   ss.h)
-            push!(γs,   ss.γ)
+            # push!(hs,   ss.h)
         end
 
-        generate_figures(hs, el2s, eh1s, γs, order, dirname)
+        println("Generate figures")
+        generate_figures(hs, hs_str, el2s, eh1s, γ, order, dirname)
     end
 
 end
