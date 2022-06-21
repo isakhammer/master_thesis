@@ -1,12 +1,93 @@
 
+
 using Test
 using Gridap
 using Plots
 using LaTeXStrings
 # plotlyjs()
 
+module BiharmonicEquation
+    using Gridap
 
-function run_biharmonic_julia_test(; n=10, order::Int, generate_vtk=false, dirname="biharmonic_julia_test_results", test=false, simplex=false)
+    struct GridapSpaces
+        model
+        h::Float64
+        order::Int
+        degree::Int
+
+        V
+        U
+
+        Ω
+        Γ
+        Λ
+
+        dΩ
+        dΓ
+        dΛ
+
+        n_Γ
+        n_Λ
+    end
+
+    function generate_square_space(;n, L=2π, order=2, simplex=true)
+        h = L / n
+        domain = (0,L,0,L)
+        partition = (n,n)
+
+        if simplex
+            model = CartesianDiscreteModel(domain,partition) |> simplexify
+        else
+            model = CartesianDiscreteModel(domain,partition)
+        end
+
+        # FE space
+        V = TestFESpace(model,ReferenceFE(lagrangian,Float64,order))
+        # U = TrialFESpace(V,u)
+        U = TrialFESpace(V)
+
+        # Triangulation
+        Ω = Triangulation(model)
+        Γ = BoundaryTriangulation(model)
+        Λ = SkeletonTriangulation(model)
+        degree = 2*order
+        dΩ = Measure(Ω,degree)
+        dΓ = Measure(Γ,degree)
+        dΛ = Measure(Λ,degree)
+        n_Γ = get_normal_vector(Γ)
+        n_Λ = get_normal_vector(Λ)
+
+        return BiharmonicEquation.GridapSpaces(model, h, order, degree,
+                                               V,U,
+                                               Ω, Γ, Λ,
+                                               dΩ, dΓ, dΛ,
+                                               n_Γ, n_Λ)
+    end
+
+    struct Solution
+        u
+        uh
+        e
+        el2
+        eh1
+    end
+
+    function generate_sol(u,uh, ss::GridapSpaces)
+        e = u - uh
+        l2(u) = sqrt(sum( ∫( u⊙u )*ss.dΩ ))
+        h1(u) = sqrt(sum( ∫( u⊙u + ∇(u)⊙∇(u) )*ss.dΩ ))
+        el2 = l2(e)
+        eh1 = h1(e)
+        Solution(u,uh,e,el2,eh1)
+    end
+
+end
+
+
+
+
+function run_biharmonic_julia_test(; n=10, order::Int, generate_vtk=false,
+        dirname="biharmonic_julia_test_results", test=false, simplex=false)
     # Analytical manufactured solution
     α = 1
     u(x) = cos(x[1])*cos(x[2])
@@ -15,40 +96,14 @@ function run_biharmonic_julia_test(; n=10, order::Int, generate_vtk=false, dirna
 
 
     # Domain
-    L = 2*π
-
     @test f(VectorValue(0.5,0.5)) == ( 4+α )*u(VectorValue(0.5,0.5))
     @test g(VectorValue(0.5,0.5)) == -2*u(VectorValue(0.5,0.5))
 
-    domain = (0,L,0,L)
-    partition = (n,n)
 
-    if simplex
-        model = CartesianDiscreteModel(domain,partition) |> simplexify
-    else
-        model = CartesianDiscreteModel(domain,partition)
-    end
-
-    # FE space
-    V = TestFESpace(model,ReferenceFE(lagrangian,Float64,order))
-    # U = TrialFESpace(V,u)
-    U = TrialFESpace(V)
-
-    # Triangulation
-    Ω = Triangulation(model)
-    Γ = BoundaryTriangulation(model)
-    Λ = SkeletonTriangulation(model)
-    degree = 2*order
-    dΩ = Measure(Ω,degree)
-    dΓ = Measure(Γ,degree)
-    dΛ = Measure(Λ,degree)
-
-    n_Γ = get_normal_vector(Γ)
-    n_Λ = get_normal_vector(Λ)
+    ss = BiharmonicEquation.generate_square_space(n=n, order=order)
 
     # Weak form
-    h = (domain[2]-domain[1]) / partition[1]
-    h = L / n
+    # h = (domain[2]-domain[1]) / partition[1]
     γ = 1
 
     # PROBLEM 1
@@ -66,47 +121,44 @@ function run_biharmonic_julia_test(; n=10, order::Int, generate_vtk=false, dirna
     # PROBLEM 3
     # Statement: Why is the terms negative??
 
-    a(u,v) = ∫( Δ(u)*Δ(v) + α* u⋅v )dΩ +
-             ∫( - mean(Δ(u))*jump(∇(v)⋅n_Λ) - jump(∇(u)⋅n_Λ)*mean(Δ(v))
-               + γ/h*jump(∇(u)⋅n_Λ)*jump(∇(v)⋅n_Λ) )dΛ
+    a(u,v) = ∫( Δ(u)*Δ(v) + α* u⋅v )ss.dΩ +
+             ∫( - mean(Δ(u))*jump(∇(v)⋅ss.n_Λ) - jump(∇(u)⋅ss.n_Λ)*mean(Δ(v))
+               + γ/ss.h*jump(∇(u)⋅ss.n_Λ)*jump(∇(v)⋅ss.n_Λ) )ss.dΛ
 
     # PROBLEM 3
     # Why the directional derivative of test function v? Does not makes sense given the identity
     # (Δ^2 u, v)_Ω = (D^2 u , D^2 v)_Ω + (∂_n Δ u, v)_∂Ω - (∂_nn u, ∂_n v)_∂Ω  - (∂_nt u, ∂_t v)_∂Ω
     #              = (D^2 u , D^2 v)_Ω + (g, v)_∂Ω
 
-    l(v) = ∫( v*f )dΩ + ∫( g*(∇(v)⋅n_Γ) )dΓ
-    op = AffineFEOperator(a,l,U,V)
+    l(v) = ∫( v*f )ss.dΩ + ∫( g*(∇(v)⋅ss.n_Γ) )ss.dΓ
+    op = AffineFEOperator(a,l,ss.U,ss.V)
 
     uh = solve(op)
 
+    sol = BiharmonicEquation.generate_sol(u,uh,ss)
+
     # Error
-    e = u - uh
-    l2(u) = sqrt(sum( ∫( u⊙u )*dΩ ))
-    h1(u) = sqrt(sum( ∫( u⊙u + ∇(u)⊙∇(u) )*dΩ ))
-    el2 = l2(e)
-    eh1 = h1(e)
     # tol = 1.0e-10
     # @test el2 < tol
     # @test eh1 < tol
 
     if test==true
-        @test el2 < 10^-1
+        @test sol.el2 < 10^-1
     end
 
     if !generate_vtk
-        return el2, eh1
+        return sol.el2, sol.eh1
     end
 
-    writevtk(model, dirname*"/model")
-    writevtk(Λ,dirname*"/skeleton")
-    writevtk(Γ,dirname*"/boundary")
-    writevtk(Λ,dirname*"/jumps",cellfields=["jump_u"=>jump(uh)])
-    writevtk(Ω,dirname*"/omega",cellfields=["uh"=>uh])
-    writevtk(Ω,dirname*"/error",cellfields=["e"=>e])
-    writevtk(Ω,dirname*"/manufatured",cellfields=["u"=>u])
+    writevtk(ss.model, dirname*"/model")
+    writevtk(ss.Λ,dirname*"/skeleton")
+    writevtk(ss.Γ,dirname*"/boundary")
+    writevtk(ss.Λ,dirname*"/jumps",cellfields=["jump_u"=>jump(sol.uh)])
+    writevtk(ss.Ω,dirname*"/omega",cellfields=["uh"=>sol.uh])
+    writevtk(ss.Ω,dirname*"/error",cellfields=["e"=>sol.e])
+    writevtk(ss.Ω,dirname*"/manufatured",cellfields=["u"=>sol.u])
 
-    return el2, eh1
+    return sol.el2, sol.eh1
 
 end
 
@@ -190,5 +242,7 @@ function main()
         conv_test(dirname=plotdir, order=order)
     end
 end
+
+
 
 main()
