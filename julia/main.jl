@@ -39,8 +39,11 @@ function generate_figures(hs, el2s, eh1s, γs, order, dirname)
         lgh1 =  [nothing; lgh1]
 
         data = hcat(h, el2, eh1, lgl2, lgh1)
-        header = ["h", L"$L_2$", L"$H^1$", L"$log_2(e_{L^2}) $", L"$log_2(e_{H_1}) $"]
-        p = pretty_table(data, header=header, backend=Val(:latex ), formatters = ( ft_printf("%.3E"), ft_nonothing ))
+        header = ["h", L"$L_2$", L"$H^1$", L"$log_2(e^{2h}_{L^2(\Omega )}/e^{h}_{L^2(\Omega )}) $", L"$log_2(e^{2h}_{H_1(\Omega )}/e^{h}_{H_1(\Omega )}) $"]
+
+        open(filename*".tex", "w") do io
+            pretty_table(io, data, header=header, backend=Val(:latex ), formatters = ( ft_printf("%.3E"), ft_nonothing ))
+        end
     end
 
     generate_plot(hs, el2s, eh1s)
