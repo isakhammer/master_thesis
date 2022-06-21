@@ -30,7 +30,16 @@ module BiharmonicEquation
         n_Λ
     end
 
-    function generate_square_space(;n, L=2π, order=2, simplex=true)
+    struct Solution
+        u
+        uh
+        e
+        el2
+        eh1
+    end
+
+
+    function generate_square_spaces(;n, L=2π, order=2, simplex=true)
         h = L / n
         domain = (0,L,0,L)
         partition = (n,n)
@@ -64,15 +73,7 @@ module BiharmonicEquation
                                                n_Γ, n_Λ)
     end
 
-    struct Solution
-        u
-        uh
-        e
-        el2
-        eh1
-    end
-
-    function generate_sol(u,uh, ss::GridapSpaces)
+    function generate_sol(;u, uh, ss::GridapSpaces)
         e = u - uh
         l2(u) = sqrt(sum( ∫( u⊙u )*ss.dΩ ))
         h1(u) = sqrt(sum( ∫( u⊙u + ∇(u)⊙∇(u) )*ss.dΩ ))
@@ -81,13 +82,30 @@ module BiharmonicEquation
         Solution(u,uh,e,el2,eh1)
     end
 
+    function generate_vtk(;ss::GridapSpaces, sol::Solution, dirname::String)
+        println("Generating vtk's in ", dirname)
+        if (isdir(dirname))
+            rm(dirname, recursive=true)
+        end
+        mkdir(dirname)
+
+        writevtk(ss.model, dirname*"/model")
+        writevtk(ss.Λ,dirname*"/skeleton")
+        writevtk(ss.Γ,dirname*"/boundary")
+        writevtk(ss.Λ,dirname*"/jumps",cellfields=["jump_u"=>jump(sol.uh)])
+        writevtk(ss.Ω,dirname*"/omega",cellfields=["uh"=>sol.uh])
+        writevtk(ss.Ω,dirname*"/error",cellfields=["e"=>sol.e])
+        writevtk(ss.Ω,dirname*"/manufatured",cellfields=["u"=>sol.u])
+
+    end
+
+
 end
 
 
 
 
-function run_biharmonic_julia_test(; n=10, order::Int, generate_vtk=false,
-        dirname="biharmonic_julia_test_results", test=false, simplex=false)
+function run_CP_method(;ss::BiharmonicEquation.GridapSpaces)
     # Analytical manufactured solution
     α = 1
     u(x) = cos(x[1])*cos(x[2])
@@ -100,7 +118,6 @@ function run_biharmonic_julia_test(; n=10, order::Int, generate_vtk=false,
     @test g(VectorValue(0.5,0.5)) == -2*u(VectorValue(0.5,0.5))
 
 
-    ss = BiharmonicEquation.generate_square_space(n=n, order=order)
 
     # Weak form
     # h = (domain[2]-domain[1]) / partition[1]
@@ -135,30 +152,9 @@ function run_biharmonic_julia_test(; n=10, order::Int, generate_vtk=false,
 
     uh = solve(op)
 
-    sol = BiharmonicEquation.generate_sol(u,uh,ss)
+    sol = BiharmonicEquation.generate_sol(u=u,uh=uh,ss=ss)
 
-    # Error
-    # tol = 1.0e-10
-    # @test el2 < tol
-    # @test eh1 < tol
-
-    if test==true
-        @test sol.el2 < 10^-1
-    end
-
-    if !generate_vtk
-        return sol.el2, sol.eh1
-    end
-
-    writevtk(ss.model, dirname*"/model")
-    writevtk(ss.Λ,dirname*"/skeleton")
-    writevtk(ss.Γ,dirname*"/boundary")
-    writevtk(ss.Λ,dirname*"/jumps",cellfields=["jump_u"=>jump(sol.uh)])
-    writevtk(ss.Ω,dirname*"/omega",cellfields=["uh"=>sol.uh])
-    writevtk(ss.Ω,dirname*"/error",cellfields=["e"=>sol.e])
-    writevtk(ss.Ω,dirname*"/manufatured",cellfields=["u"=>sol.u])
-
-    return sol.el2, sol.eh1
+    return sol
 
 end
 
@@ -220,27 +216,29 @@ function main()
     end
 
     folder = "biharmonic_julia_test_results"
-    makedir(folder)
-
     exampledir = folder*"/example"
+
+    makedir(folder)
     makedir(exampledir)
+    ndir(n) = exampledir*"/n_"*string(n)
 
-    println("Generating examples")
     ns = [100]
+    order=2
     for n in ns
-        ndir = exampledir*"/n_"*string(n)
-        makedir(ndir)
-        run_biharmonic_julia_test(n=n, order=2, generate_vtk=true, dirname=ndir, test=true,simplex=true)
+        ss = BiharmonicEquation.generate_square_spaces(n=n, order=order)
+        sol = run_CP_method(ss=ss)
+        BiharmonicEquation.generate_vtk(ss=ss,sol=sol,dirname=ndir(n))
+        @test sol.el2 < 10^-1
     end
 
-    println("Generating convergence tests")
-    plotdir = folder*"/plots"
-    makedir(plotdir)
-    # orders = [1,2,3]
-    orders = [1,2,3,4]
-    for order in orders
-        conv_test(dirname=plotdir, order=order)
-    end
+    # println("Generating convergence tests")
+    # plotdir = folder*"/plots"
+    # makedir(plotdir)
+    # # orders = [1,2,3]
+    # orders = [1,2,3,4]
+    # for order in orders
+    #     conv_test(dirname=plotdir, order=order)
+    # end
 end
 
 
