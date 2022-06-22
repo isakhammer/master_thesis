@@ -77,16 +77,7 @@ function run_examples(dirname)
 end
 
 
-function convergence_analysis(dirname, method="test")
-    orders = [2,3,4]
-    γs = [5, 25, 60]
-
-    # ns  = [2^3,2^4,2^5,2^6]
-    ns  = [2^3,2^4,2^5,2^6,2^7]
-    L = 0.01
-    m, r = 3, 4
-
-    u(x) = cos(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
+function convergence_analysis(;dirname, orders = [2,3,4], γs = [5, 25, 60], ns = [2^3,2^4,2^5,2^6,2^7], L=1, u::Function, method="test")
 
     hs = 1 .// ns # does render nice in latex table if L=2π
     hs_str =  latexify.(hs)
@@ -126,7 +117,19 @@ function main()
     println("Generating figures")
     figdir = "figures"
     makedir(figdir)
-    convergence_analysis(figdir)
+
+    function analysis(;L,m,r)
+        u(x) = cos(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
+        conv_dir = figdir*"/L_"*string(L)*"_m_"*string(m)*"_r_"*string(r)
+        makedir(conv_dir)
+        println("making ", conv_dir)
+        convergence_analysis(dirname=conv_dir, orders=[2,3,4], γs=[5,25,30], ns= [2^3,2^4,2^5,2^6,2^7], L=L, u=u)
+    end
+
+    analysis(L=2π, m=1, r=1)
+    analysis(L=1, m=2, r=3)
+    analysis(L=0.01, m=2, r=3)
+
 end
 
 main()
