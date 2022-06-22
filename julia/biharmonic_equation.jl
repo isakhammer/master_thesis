@@ -2,8 +2,9 @@
 
 module BiharmonicEquation
     using Gridap
+    using Test
 
-    # TODO: find a way to make structs in a oneliner
+    # TODO: find a way to make structs in a one-liner
     struct GridapSpaces
         model
         h::Real
@@ -24,7 +25,6 @@ module BiharmonicEquation
 
         n_Γ
         n_Λ
-
     end
 
     struct Solution
@@ -36,7 +36,7 @@ module BiharmonicEquation
     end
 
 
-    function generate_square_spaces(;n, L, γ=1, order=2, simplex=true)
+    function generate_square_spaces(;n, L, γ=1, order=2, simplex=true, u=nothing)
         h = L / n
 
         domain = (0,L,0,L)
@@ -50,8 +50,12 @@ module BiharmonicEquation
 
         # FE space
         V = TestFESpace(model,ReferenceFE(lagrangian,Float64,order))
-        # U = TrialFESpace(V,u)
-        U = TrialFESpace(V)
+
+        if u !== nothing
+            U = TrialFESpace(V,u)
+        else
+            U = TrialFESpace(V)
+        end
 
         # Triangulation
         Ω = Triangulation(model)
@@ -98,21 +102,18 @@ module BiharmonicEquation
     end
 
 
-    function run_CP_method(;ss::GridapSpaces, u::Function)
+    function run_test_method(;ss::GridapSpaces, u::Function)
         # Analytical manufactured solution
         α = 1
-
 
         f(x) = Δ(Δ(u))(x)+ α*u(x)
         g(x) = Δ(u)(x)
 
-        # # Domain
-        # @test f(VectorValue(0.5,0.5)) == ( 4+α )*u(VectorValue(0.5,0.5))
-        # @test g(VectorValue(0.5,0.5)) == -2*u(VectorValue(0.5,0.5))
+        # @test f(VectorValue(0.5,0.5)) == ( 4+α )*u(VectorValue(0.5,0.5)) # redo rhs
+        # @test g(VectorValue(0.5,0.5)) == -2*u(VectorValue(0.5,0.5))      # redo rhs
 
         # Weak form
-        # h = (domain[2]-domain[1]) / partition[1]
-        γ = 1
+        γ = ss.γ
 
         # PROBLEM 1
         # Statement: laplacian Δ(u) makes no sense since we need the hessian
@@ -144,9 +145,37 @@ module BiharmonicEquation
         uh = solve(op)
         sol = generate_sol(u=u,uh=uh,ss=ss)
         return sol
-
     end
-end
+
+    function run_DG_method(;ss::GridapSpaces, u::Function)
+        f(x) = Δ(Δ(u))(x)+ α*u(x)
+        g(x) = Δ(u)(x)
+
+        α = 1
+
+        mean_nn(u) = 0.5*( ss.n_Λ.plus⋅ ∇∇(u).plus⋅ ss.n_Λ.plus + ss.n_Λ.minus ⋅ ∇∇(u).minus ⋅ ss.n_Λ.minus )
+        jump_n(u) = ∇(u).plus⋅ ss.n_Λ.plus - ∇(u).minus ⋅ ss.n_Λ.minus
+⋅
+        # Inner facets
+        a(u,v) = ∫( ∇∇(v)⊙∇∇(u) + α⋅(v⊙u) )ss.dΩ + ∫(  mean_nn(v)⊙jump_n(u) + mean_nn(u)⊙jump_n(v) + (ss.γ/ss.h)⋅ jump_n(v)⊙jump_n(u))ss.dΛ
+
+        l(v) = ∫( v ⋅ f )ss.dΩ + ∫(- (g⋅v))ss.dΓ
+
+        op = AffineFEOperator(a, l, ss.U, ss.V)
+        uh = solve(op)
+
+        sol = generate_sol(u=u,uh=uh,ss=ss)
+        return sol
+    end
+
+
+    function run_CP_method(;ss::GridapSpaces, u::Function, method="test")
+        method=="test" && return run_test_method(ss=ss, u=u)
+        method=="DG" && return run_DG_method(ss=ss, u=u)
+        throw(DomainError(method, "Does not have a method with this name"))
+    end
+
+end # module
 
 
 

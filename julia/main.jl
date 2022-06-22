@@ -2,6 +2,7 @@ include("biharmonic_equation.jl")
 using Test
 using Plots
 using LaTeXStrings
+using Latexify
 using PrettyTables
 
 function generate_figures(hs, hs_str, el2s, eh1s, γ::Integer, order::Integer, dirname::String)
@@ -17,12 +18,9 @@ function generate_figures(hs, hs_str, el2s, eh1s, γ::Integer, order::Integer, d
     function generate_plot(hs,el2s, eh1s )
         p_L2 = slope(hs,el2s)
         p_H1 = slope(hs,eh1s)
-        println("p_H1: ", p_H1, ", p_L2: ", p_L2)
-
         p = Plots.plot(hs,[el2s eh1s ],
             xaxis=:log, yaxis=:log,
             label=[L"Error norm in $L_2(\Omega)$ where $p_1 = $"*string(round(p_L2,digits=2)) L"Error norm in $ H^1(\Omega)$ where $p_2 =$"*string(round(p_H1,digits=2)) ],
-            # label=[L"Error norm in $L_2(\Omega)$ where $p_1 = $" "1"],
             shape=:auto,
             legend=:topleft,
             legendfontsize=10,
@@ -33,22 +31,21 @@ function generate_figures(hs, hs_str, el2s, eh1s, γ::Integer, order::Integer, d
     end
 
     function generate_table(hs_str::Vector, eh1::Vector{Float64}, el2::Vector{Float64})
-        lgl2 = log.(el2[2:end]./el2[1:end-1])
-        lgh1 = log.(eh1[2:end]./eh1[1:end-1])
+        lgl2 = log2.(el2[2:end]./el2[1:end-1])
+        lgh1 = log2.(eh1[2:end]./eh1[1:end-1])
         lgl2 =  [nothing; lgl2]
         lgh1 =  [nothing; lgh1]
 
         data = hcat(hs_str, el2, eh1, lgl2, lgh1)
-        header = ["h", L"$L_2$", L"$H^1$", L"$log_2(e^{2h}_{L^2(\Omega )}/e^{h}_{L^2(\Omega )}) $", L"$log_2(e^{2h}_{H_1(\Omega )}/e^{h}_{H_1(\Omega )}) $"]
-
-
+        header = ["h", L"$L_2$", L"$H^1$", L"$log_2(e^{2h}/e^{h}}) $", L"$log_2(\mu^{2h}/\mu^{h}) $"]
         pretty_table(data, header=header, formatters = ( ft_printf("%.3E"), ft_nonothing )) # remove
-        # open(filename*".tex", "w") do io
-        #     pretty_table(io, data, header=header, backend=Val(:latex ), formatters = ( ft_printf("%.3E"), ft_nonothing ))
-        # end
+
+        open(filename*".tex", "w") do io
+            pretty_table(io, data, header=header, backend=Val(:latex ), formatters = ( ft_printf("%.3E"), ft_nonothing ))
+        end
     end
 
-    println("Generating plot", hs ,el2s)
+    println("Generating plot")
     generate_plot(hs, el2s, eh1s)
 
     println("Generating table")
@@ -56,7 +53,6 @@ function generate_figures(hs, hs_str, el2s, eh1s, γ::Integer, order::Integer, d
 end
 
 
-# Generate plots
 function makedir(dirname)
     if (isdir(dirname))
         rm(dirname, recursive=true)
@@ -81,16 +77,22 @@ function run_examples(dirname)
 end
 
 
-
-function convergence_analysis(dirname)
+function convergence_analysis(dirname, method="test")
     orders = [2,3,4]
-    γs = [1, 20, 40]
+    γs = [5, 25, 60]
+
+    # ns  = [2^3,2^4,2^5,2^6]
     ns  = [2^3,2^4,2^5,2^6,2^7]
-    hs = 1 .// ns # does not work for 2π
+    L = 0.01
+    m, r = 3, 4
+
+    u(x) = cos(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
+
+    hs = 1 .// ns # does render nice in latex table if L=2π
     hs_str =  latexify.(hs)
 
-    L = 1
-    u(x) = cos(( 2π/L )*x[1])*cos(( 2π/L )*x[2])
+    @test length( orders ) == length(γs)
+    @test length( ns ) == length(hs)
 
     for i in 1:length(orders)
         order = orders[i]
@@ -98,11 +100,11 @@ function convergence_analysis(dirname)
 
         el2s = Float64[]
         eh1s = Float64[]
-        println("Run convergence tests: order = "*string(order))
+        println("Run convergence tests: order = "*string(order), " Method: " , method)
 
         for n in ns
             ss = BiharmonicEquation.generate_square_spaces(n=n,L=L, γ=γ, order=order)
-            sol = BiharmonicEquation.run_CP_method(ss=ss, u=u)
+            sol = BiharmonicEquation.run_CP_method(ss=ss, u=u, method=method)
             push!(el2s, sol.el2)
             push!(eh1s, sol.eh1)
             # push!(hs,   ss.h)
@@ -116,10 +118,10 @@ end
 
 function main()
 
-    folder = "biharmonic_julia_test_results"
-    exampledir = folder*"/example"
-    makedir(folder)
-    run_examples(exampledir)
+    # folder = "biharmonic_equation_results"
+    # exampledir = folder*"/example"
+    # makedir(folder)
+    # run_examples(exampledir)
 
     println("Generating figures")
     figdir = "figures"
