@@ -38,7 +38,7 @@ module BiharmonicEquation
     end
 
 
-    function generate_square_spaces(;n, L, γ=1, order=2, simplex=true, u=nothing)
+    function generate_square_spaces(;n, L, γ, order, simplex=true, u=nothing)
         h = L / n
 
         domain = (0,L,0,L)
@@ -101,15 +101,16 @@ module BiharmonicEquation
         writevtk(ss.Ω,dirname*"/error",cellfields=["e"=>sol.e])
         writevtk(ss.Ω,dirname*"/manufatured",cellfields=["u"=>sol.u])
 
-        fig = plot(ss.Ω)
-        wireframe!(ss.Ω, color=:black, linewidth=2)
-        # scatter!(ss.Ω, marker=:star8, markersize=20, color=:blue)
-        save(dirname*"/grid.png", fig)
+        # fig = plot(ss.Ω)
+        # wireframe!(ss.Ω, color=:black, linewidth=2)
+        # # scatter!(ss.Ω, marker=:star8, markersize=20, color=:blue)
+        # save(dirname*"/grid.png", fig)
 
         fig = plot(ss.Λ)
         wireframe!(ss.Λ, color=:black, linewidth=2)
+        wireframe!(ss.Γ, color=:black, linewidth=2)
         # scatter!(ss.Ω, marker=:star8, markersize=20, color=:blue)
-        save(dirname*"/lambda.png", fig)
+        save(dirname*"/grid.png", fig)
 
         fig, _ , plt = plot(ss.Ω, sol.u)
         Colorbar(fig[1,2], plt)
@@ -187,8 +188,6 @@ module BiharmonicEquation
     function man_sol(;L=1,m=1,r=1)
         u(x) = cos(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
     end
-
-
 
     function run_CP_method(;ss::GridapSpaces, u::Function, method="test")
         method=="test" && return run_test_method(ss=ss, u=u)

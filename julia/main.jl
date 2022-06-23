@@ -61,26 +61,25 @@ function makedir(dirname)
     mkdir(dirname)
 end
 
-function run_examples(dirname)
+function run_examples(;figdir, L, u::Function, ns = [2^3,2^5], γ=2, order=2)
     println("Run Examples")
-    exampledir = dirname*"/example"
+    exampledir = figdir*"/example"
     makedir(exampledir)
     ndir(n) = exampledir*"/n_"*string(n)
-    ns = [2^3,2^5,2^7]
-    order=2
 
-    L = 1
-    u = BiharmonicEquation.man_sol(L=L,m=1,r=1)
     for n in ns
-        ss = BiharmonicEquation.generate_square_spaces(n=n, L=L, order=order)
+        ss = BiharmonicEquation.generate_square_spaces(n=n, L=L, order=order, γ=γ)
         sol = BiharmonicEquation.run_CP_method(ss=ss,u=u)
         BiharmonicEquation.generate_vtk(ss=ss,sol=sol,dirname=ndir(n))
-        @test sol.el2 < 10^0
+        # @test sol.el2 < 10^0
     end
 end
 
 
-function convergence_analysis(;dirname, orders = [2,3,4], γs = [5, 25, 60], ns = [2^3,2^4,2^5,2^6,2^7], L=1, u::Function, method="test")
+function convergence_analysis(;figdir, L, u::Function, orders = [2,3,4], γs = [5, 25, 60], ns = [2^3,2^4,2^5,2^6,2^7],  method="test")
+    println("Run convergence",)
+    conv_dir = figdir*"/convergence"
+    makedir(conv_dir)
 
     hs = 1 .// ns # does render nice in latex table if L=2π
     hs_str =  latexify.(hs)
@@ -103,17 +102,12 @@ function convergence_analysis(;dirname, orders = [2,3,4], γs = [5, 25, 60], ns 
             push!(eh1s, sol.eh1)
             # push!(hs,   ss.h)
         end
-        generate_figures(hs, hs_str, el2s, eh1s, γ, order, dirname)
+        generate_figures(hs, hs_str, el2s, eh1s, γ, order, conv_dir)
     end
 
 end
 
-function run_gamma_analysis(;dirname, orders = [2,3,4], γs = [2^0,2^1, 2^2,2^3,2^4,2^5,2^6], ns = [2^3,2^4,2^5,2^6,2^7], L=1, method="test")
-
-    m,r = 1,1
-    L = 2π
-    u = BiharmonicEquation.man_sol(L=L,m=m,r=r)
-
+function run_gamma_analysis(;figdir, L, u::Function, orders = [2,3,4], γs = [2^0,2^1, 2^2,2^3,2^4,2^5,2^6], ns = [2^3,2^4,2^5,2^6,2^7], method="test")
     hs = 1 .// ns
     for order in orders
         println("Run gamma analysis ", order, " of ", orders)
@@ -125,7 +119,7 @@ function run_gamma_analysis(;dirname, orders = [2,3,4], γs = [2^0,2^1, 2^2,2^3,
             γ = γs[i]
             el2s = Float64[]
             eh1s = Float64[]
-            println("Run gamma analysis: gamma = "*string(γ), " Method: " , method)
+            println("γ ", ": ", i, "/", length(γs))
 
             for n in ns
                 ss = BiharmonicEquation.generate_square_spaces(n=n,L=L, γ=γ, order=order)
@@ -141,38 +135,27 @@ function run_gamma_analysis(;dirname, orders = [2,3,4], γs = [2^0,2^1, 2^2,2^3,
         end
 
         CairoMakie.Legend(fig[1,2], ax,L"$\gamma$ values", framevisible = true)
-        CairoMakie.save(dirname*"/gamma_analysis_order"*string(order)*".png",fig)
+        CairoMakie.save(figdir*"/gamma_analysis_order"*string(order)*".png",fig)
     end
 end
 
-
-function run_convergence(figdir)
-
-
-    function analysis(;L,m,r)
-        conv_dir = figdir*"/L_"*string(L)*"_m_"*string(m)*"_r_"*string(r)
-        makedir(conv_dir)
-        println("Making ", conv_dir)
-        u = BiharmonicEquation.man_sol(L=1,m=1,r=1)
-        convergence_analysis(dirname=conv_dir, orders=[2,3,4], γs=[5,25,30], ns= [2^3,2^4,2^5,2^6,2^7], L=L, u=u)
-    end
-
-    println("Run Convergence 1/3",)
-    analysis(L=2π, m=1, r=1)
-    println("Run Convergence 2/3",)
-    analysis(L=1, m=2, r=3)
-    println("Run Convergence 3/3",)
-    analysis(L=0.01, m=2, r=3)
-
-end
 
 function main()
-    figdir = "figures"
-    makedir(figdir)
+    mainfigdir = "figures_tmp"
+    makedir(mainfigdir)
 
-    run_examples(figdir)
-    run_convergence(figdir)
-    run_gamma_analysis(dirname=figdir)
+    function run(L,m,r)
+        figdir = mainfigdir*"/L_"*string(round(L,digits=2))*"_m_"*string(m)*"_r_"*string(r);
+        makedir(figdir)
+        u = BiharmonicEquation.man_sol(L=L,m=m,r=r)
+        run_examples(figdir=figdir, L=L,u=u)
+        convergence_analysis(figdir=figdir, L=L, u=u,  orders=[2,3,4], γs=[2,8,32])
+        run_gamma_analysis(figdir=figdir, L=L,u=u)
+    end
+
+    @time run(1,1,1)
+    @time run(1,3,2)
+    @time run(2π, 1,1)
 
 end
 
