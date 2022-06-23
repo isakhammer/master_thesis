@@ -49,10 +49,7 @@ function generate_figures(hs, hs_str, el2s, eh1s, γ::Integer, order::Integer, d
         end
     end
 
-    println("Generating plot")
     generate_plot(hs, el2s, eh1s)
-
-    println("Generating table")
     generate_table(hs_str, el2s, eh1s)
 end
 
@@ -65,19 +62,20 @@ function makedir(dirname)
 end
 
 function run_examples(dirname)
+    println("Run Examples")
     exampledir = dirname*"/example"
     makedir(exampledir)
     ndir(n) = exampledir*"/n_"*string(n)
-    ns = [100]
+    ns = [2^3,2^5,2^7]
     order=2
 
     L = 1
-    u(x) = cos(( 2π/L )*x[1])*cos(( 2π/L )*x[2])
+    u = BiharmonicEquation.man_sol(L=L,m=1,r=1)
     for n in ns
         ss = BiharmonicEquation.generate_square_spaces(n=n, L=L, order=order)
         sol = BiharmonicEquation.run_CP_method(ss=ss,u=u)
         BiharmonicEquation.generate_vtk(ss=ss,sol=sol,dirname=ndir(n))
-        @test sol.el2 < 10^-1
+        @test sol.el2 < 10^0
     end
 end
 
@@ -105,23 +103,24 @@ function convergence_analysis(;dirname, orders = [2,3,4], γs = [5, 25, 60], ns 
             push!(eh1s, sol.eh1)
             # push!(hs,   ss.h)
         end
-
-        println("Generate figures")
         generate_figures(hs, hs_str, el2s, eh1s, γ, order, dirname)
     end
 
 end
 
-function run_gamma_analysis(;dirname, orders = [2,3,4], γs = [5, 10, 20, 25, 50, 70], ns = [2^3,2^4,2^5,2^6,2^7], L=1, method="test")
+function run_gamma_analysis(;dirname, orders = [2,3,4], γs = [2^0,2^1, 2^2,2^3,2^4,2^5,2^6], ns = [2^3,2^4,2^5,2^6,2^7], L=1, method="test")
 
     m,r = 1,1
-    L = 1
-    u(x) = cos(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
+    L = 2π
+    u = BiharmonicEquation.man_sol(L=L,m=m,r=r)
 
     hs = 1 .// ns
     for order in orders
-        fig = Figure()
-        ax = Axis(fig[1, 1], yscale = log10, xscale= log2, yminorticksvisible = true, yminorgridvisible = true, yminorticks = IntervalsBetween(8))
+        println("Run gamma analysis ", order, " of ", orders)
+        fig = CairoMakie.Figure()
+        ax = CairoMakie.Axis(fig[1, 1], yscale = log10, xscale= log2,
+                             yminorticksvisible = true, yminorgridvisible = true, yminorticks = CairoMakie.IntervalsBetween(8),
+                             xlabel = "h", ylabel = "L2-error" , title="Order: "*string(order))
         for i in 1:length(γs)
             γ = γs[i]
             el2s = Float64[]
@@ -136,36 +135,38 @@ function run_gamma_analysis(;dirname, orders = [2,3,4], γs = [5, 10, 20, 25, 50
                 # push!(hs,   ss.h)
             end
 
-            lines!(hs, el2s, label=string(γ), linewidth=2)
+            CairoMakie.lines!(hs, el2s, label=string(γ), linewidth=2)
+            CairoMakie.scatter!(hs, el2s)
+
         end
 
-        Legend(fig[1,2], ax,L"$\gamma$ values", framevisible = true)
-        save(dirname*"/gamma_analysis_order"*string(order)*".png",fig)
+        CairoMakie.Legend(fig[1,2], ax,L"$\gamma$ values", framevisible = true)
+        CairoMakie.save(dirname*"/gamma_analysis_order"*string(order)*".png",fig)
     end
 end
 
 
 function run_convergence(figdir)
 
-    # folder = "biharmonic_equation_results"
-
 
     function analysis(;L,m,r)
-        u(x) = cos(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
         conv_dir = figdir*"/L_"*string(L)*"_m_"*string(m)*"_r_"*string(r)
         makedir(conv_dir)
-        println("making ", conv_dir)
+        println("Making ", conv_dir)
+        u = BiharmonicEquation.man_sol(L=1,m=1,r=1)
         convergence_analysis(dirname=conv_dir, orders=[2,3,4], γs=[5,25,30], ns= [2^3,2^4,2^5,2^6,2^7], L=L, u=u)
     end
 
+    println("Run Convergence 1/3",)
     analysis(L=2π, m=1, r=1)
+    println("Run Convergence 2/3",)
     analysis(L=1, m=2, r=3)
+    println("Run Convergence 3/3",)
     analysis(L=0.01, m=2, r=3)
 
 end
 
 function main()
-    println("Generating figures")
     figdir = "figures"
     makedir(figdir)
 
@@ -175,4 +176,4 @@ function main()
 
 end
 
-main()
+@time main()
