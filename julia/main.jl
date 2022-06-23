@@ -127,10 +127,8 @@ function run_gamma_analysis(;figdir, L, u::Function, orders = [2,3,4], γs = [2^
                 push!(eh1s, sol.eh1)
                 # push!(hs,   ss.h)
             end
-
             CairoMakie.lines!(hs, el2s, label=string(γ), linewidth=2)
             CairoMakie.scatter!(hs, el2s)
-
         end
 
         CairoMakie.Legend(fig[1,2], ax,L"$\gamma$ values", framevisible = true)
@@ -140,10 +138,10 @@ end
 
 
 function main()
-    mainfigdir = "figures_tmp"
+    mainfigdir = "figures"
     makedir(mainfigdir)
 
-    function run(L,m,r, orders=[2,3,4], γs=[2,8,32])
+    function run(;  L,m,r, orders=[2,3,4], γs=[2,8,32])
         figdir = mainfigdir*"/L_"*string(round(L,digits=2))*"_m_"*string(m)*"_r_"*string(r);
         makedir(figdir)
         u = BiharmonicEquation.man_sol(L=L,m=m,r=r)
@@ -152,9 +150,9 @@ function main()
         run_gamma_analysis(figdir=figdir, L=L,u=u)
     end
 
-    @time run(1,1,1, orders=[2,3,4], γs=[2,8,32])
-    @time run(1,3,2, orders=[2,3,4], γs=[2,8,32])
-    @time run(2π, 1,1, orders=[2,3,4], γs=[2,8,32])
+    run(L=1,m=1,r=1, orders=[2,3,4], γs=[2,8,16])
+    run(L=1,m=3,r=2, orders=[2,3,4], γs=[2,8,16])
+    run(L=2π, m=1,r=1, orders=[2,3,4], γs=[2,8,16])
 
 end
 
