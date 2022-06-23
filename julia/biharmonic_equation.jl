@@ -80,7 +80,11 @@ module BiharmonicEquation
     function generate_sol(;u, uh, ss::GridapSpaces)
         e = u - uh
         l2(u) = sqrt(sum( ∫( u⊙u )*ss.dΩ ))
-        h1(u) = sqrt(sum( ∫( u⊙u + ∇(u)⊙∇(u) )*ss.dΩ ))
+        h1(u) = sqrt(sum( ∫( ∇(u)⊙∇(u) )*ss.dΩ
+                         + ( ss.γ/ss.h ) * ∫(jump(∇(e)⋅ss.n_Λ) ⊙ jump(∇(e)⋅ss.n_Λ))ss.dΛ
+                         + ( ss.h/ss.γ ) * ∫(mean(Δ(e)) ⊙ mean(Δ(e)))ss.dΛ
+                        ))
+
         el2 = l2(e)
         eh1 = h1(e)
         Solution(u,uh,e,el2,eh1)
@@ -117,15 +121,8 @@ module BiharmonicEquation
     function run_test_method(;ss::GridapSpaces, u::Function)
         # Analytical manufactured solution
         α = 1
-
         f(x) = Δ(Δ(u))(x)+ α*u(x)
         g(x) = Δ(u)(x)
-
-        # @test f(VectorValue(0.5,0.5)) == ( 4+α )*u(VectorValue(0.5,0.5)) # redo rhs
-        # @test g(VectorValue(0.5,0.5)) == -2*u(VectorValue(0.5,0.5))      # redo rhs
-
-        # Weak form
-        γ = ss.γ
 
         # PROBLEM 1
         # Statement: laplacian Δ(u) makes no sense since we need the hessian
@@ -144,12 +141,12 @@ module BiharmonicEquation
 
         a(u,v) = ∫( Δ(u)*Δ(v) + α* u⋅v )ss.dΩ +
                  ∫( - mean(Δ(u))*jump(∇(v)⋅ss.n_Λ) - jump(∇(u)⋅ss.n_Λ)*mean(Δ(v))
-                   + γ/ss.h*jump(∇(u)⋅ss.n_Λ)*jump(∇(v)⋅ss.n_Λ) )ss.dΛ
+                   + ss.γ/ss.h*jump(∇(u)⋅ss.n_Λ)*jump(∇(v)⋅ss.n_Λ) )ss.dΛ
 
         # PROBLEM 3
-        # Why the directional derivative of test function v? Does not makes sense given the identity
-        # (Δ^2 u, v)_Ω = (D^2 u , D^2 v)_Ω + (∂_n Δ u, v)_∂Ω - (∂_nn u, ∂_n v)_∂Ω  - (∂_nt u, ∂_t v)_∂Ω
-        #              = (D^2 u , D^2 v)_Ω + (g, v)_∂Ω
+        # Why the directional derivative of test function v? Does not makes sense given the identity:
+        # --> (Δ^2 u, v)_Ω  = (D^2 u , D^2 v)_Ω + (∂_n Δ u, v)_∂Ω - (∂_nn u, ∂_n v)_∂Ω  - (∂_nt u, ∂_t v)_∂Ω
+        #                   = (D^2 u , D^2 v)_Ω + (g, v)_∂Ω
 
         l(v) = ∫( v*f )ss.dΩ + ∫( g*(∇(v)⋅ss.n_Γ) )ss.dΓ
         op = AffineFEOperator(a,l,ss.U,ss.V)

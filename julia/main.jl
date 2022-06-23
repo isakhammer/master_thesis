@@ -1,6 +1,7 @@
 include("biharmonic_equation.jl")
 using Test
 using Plots
+import Dates
 import CairoMakie
 using LaTeXStrings
 using Latexify
@@ -42,7 +43,6 @@ function generate_figures(hs, hs_str, el2s, eh1s, γ::Integer, order::Integer, d
 
         data = hcat(hs_str, el2, eh1, lgl2, lgh1)
         header = ["h", L"$L_2$", L"$H^1$", L"$log_2(e^{2h}/e^{h}}) $", L"$log_2(\mu^{2h}/\mu^{h}) $"]
-        # pretty_table(data, header=header, formatters = ( ft_printf("%.3E"), ft_nonothing )) # remove
         open(filename*".tex", "w") do io
             pretty_table(io, data, header=header, backend=Val(:latex ), formatters = ( ft_printf("%.3E"), ft_nonothing ))
         end
@@ -75,7 +75,7 @@ function run_examples(;figdir, L, u::Function, ns = [2^3,2^5], γ=2, order=2)
 end
 
 
-function convergence_analysis(;figdir, L, u::Function, orders = [2,3,4], γs = [5, 25, 60], ns = [2^3,2^4,2^5,2^6,2^7],  method="test")
+function convergence_analysis(;figdir, L, u::Function, orders = [2,3,4], γs = [2, 8, 16], ns = [2^3,2^4,2^5,2^6,2^7],  method="test")
     println("Run convergence",)
     conv_dir = figdir*"/convergence"
     makedir(conv_dir)
@@ -139,21 +139,28 @@ end
 
 function main()
     mainfigdir = "figures"
+
+    if !(isdir(mainfigdir))
+        mkdir(mainfigdir)
+    end
+
+    # makedir(mainfigdir)
+    mainfigdir= mainfigdir*"/"*string(Dates.now())
     makedir(mainfigdir)
 
     function run(;  L,m,r, orders=[2,3,4], γs=[2,8,32])
         figdir = mainfigdir*"/L_"*string(round(L,digits=2))*"_m_"*string(m)*"_r_"*string(r);
         makedir(figdir)
         u = BiharmonicEquation.man_sol(L=L,m=m,r=r)
-        run_examples(figdir=figdir, L=L,u=u)
         convergence_analysis(figdir=figdir, L=L, u=u,  orders=orders, γs=γs)
-        run_gamma_analysis(figdir=figdir, L=L,u=u)
+        run_examples(figdir=figdir, L=L,u=u)
+        # run_gamma_analysis(figdir=figdir, L=L,u=u)
     end
 
     run(L=1,m=1,r=1, orders=[2,3,4], γs=[2,8,16])
     run(L=1,m=3,r=2, orders=[2,3,4], γs=[2,8,16])
     run(L=2π, m=1,r=1, orders=[2,3,4], γs=[2,8,16])
-
 end
+
 
 @time main()
