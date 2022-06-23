@@ -101,15 +101,10 @@ module BiharmonicEquation
         writevtk(ss.Ω,dirname*"/error",cellfields=["e"=>sol.e])
         writevtk(ss.Ω,dirname*"/manufatured",cellfields=["u"=>sol.u])
 
-        # fig = plot(ss.Ω)
-        # wireframe!(ss.Ω, color=:black, linewidth=2)
-        # # scatter!(ss.Ω, marker=:star8, markersize=20, color=:blue)
-        # save(dirname*"/grid.png", fig)
 
         fig = plot(ss.Λ)
         wireframe!(ss.Λ, color=:black, linewidth=2)
         wireframe!(ss.Γ, color=:black, linewidth=2)
-        # scatter!(ss.Ω, marker=:star8, markersize=20, color=:blue)
         save(dirname*"/grid.png", fig)
 
         fig, _ , plt = plot(ss.Ω, sol.u)

@@ -42,8 +42,7 @@ function generate_figures(hs, hs_str, el2s, eh1s, γ::Integer, order::Integer, d
 
         data = hcat(hs_str, el2, eh1, lgl2, lgh1)
         header = ["h", L"$L_2$", L"$H^1$", L"$log_2(e^{2h}/e^{h}}) $", L"$log_2(\mu^{2h}/\mu^{h}) $"]
-        pretty_table(data, header=header, formatters = ( ft_printf("%.3E"), ft_nonothing )) # remove
-
+        # pretty_table(data, header=header, formatters = ( ft_printf("%.3E"), ft_nonothing )) # remove
         open(filename*".tex", "w") do io
             pretty_table(io, data, header=header, backend=Val(:latex ), formatters = ( ft_printf("%.3E"), ft_nonothing ))
         end
@@ -144,18 +143,18 @@ function main()
     mainfigdir = "figures_tmp"
     makedir(mainfigdir)
 
-    function run(L,m,r)
+    function run(L,m,r, orders=[2,3,4], γs=[2,8,32])
         figdir = mainfigdir*"/L_"*string(round(L,digits=2))*"_m_"*string(m)*"_r_"*string(r);
         makedir(figdir)
         u = BiharmonicEquation.man_sol(L=L,m=m,r=r)
         run_examples(figdir=figdir, L=L,u=u)
-        convergence_analysis(figdir=figdir, L=L, u=u,  orders=[2,3,4], γs=[2,8,32])
+        convergence_analysis(figdir=figdir, L=L, u=u,  orders=orders, γs=γs)
         run_gamma_analysis(figdir=figdir, L=L,u=u)
     end
 
-    @time run(1,1,1)
-    @time run(1,3,2)
-    @time run(2π, 1,1)
+    @time run(1,1,1, orders=[2,3,4], γs=[2,8,32])
+    @time run(1,3,2, orders=[2,3,4], γs=[2,8,32])
+    @time run(2π, 1,1, orders=[2,3,4], γs=[2,8,32])
 
 end
 
