@@ -1,7 +1,7 @@
 include("biharmonic_equation.jl")
 using Test
 using Plots
-using CairoMakie
+import CairoMakie
 using LaTeXStrings
 using Latexify
 using PrettyTables
@@ -19,16 +19,19 @@ function generate_figures(hs, hs_str, el2s, eh1s, γ::Integer, order::Integer, d
     function generate_plot(hs,el2s, eh1s )
         p_L2 = slope(hs,el2s)
         p_H1 = slope(hs,eh1s)
-        p = Plots.plot(hs,[el2s eh1s ],
-            xaxis=:log, yaxis=:log,
-            label=[L"Error norm in $L_2(\Omega)$ where $p_1 = $"*string(round(p_L2,digits=2)) L"Error norm in $ H^1(\Omega)$ where $p_2 =$"*string(round(p_H1,digits=2)) ],
-            shape=:auto,
-            legend=:topleft,
-            legendfontsize=10,
-            xlabel=L"$h$",ylabel="error norm" , show = true)
 
+        fig = CairoMakie.Figure()
+        ax = CairoMakie.Axis(fig[1, 1], yscale = log10, xscale= log2,
+                             yminorticksvisible = true, yminorgridvisible = true, yminorticks = CairoMakie.IntervalsBetween(8),
+                             xlabel = "h", ylabel = "error norms")
+
+        CairoMakie.lines!(hs, el2s, label="L2 norm", linewidth=2)
+        CairoMakie.lines!(hs, eh1s, label="H1 norm", linewidth=2)
+        CairoMakie.scatter!(hs, el2s)
+        CairoMakie.scatter!(hs, eh1s)
         file = filename*".png"
-        Plots.savefig(p,file )
+        CairoMakie.Legend(fig[1,2], ax, framevisible = true)
+        CairoMakie.save(file,fig)
     end
 
     function generate_table(hs_str::Vector, eh1::Vector{Float64}, el2::Vector{Float64})
