@@ -2,6 +2,8 @@
 
 module BiharmonicEquation
     using Gridap
+    using GridapMakie
+    using GLMakie
     using Test
 
     # TODO: find a way to make structs in a one-liner
@@ -99,6 +101,20 @@ module BiharmonicEquation
         writevtk(ss.Ω,dirname*"/error",cellfields=["e"=>sol.e])
         writevtk(ss.Ω,dirname*"/manufatured",cellfields=["u"=>sol.u])
 
+        fig = plot(ss.Ω)
+        wireframe!(ss.Ω, color=:black, linewidth=2)
+        # scatter!(ss.Ω, marker=:star8, markersize=20, color=:blue)
+        save(dirname*"/grid.png", fig)
+
+        fig = plot(ss.Λ)
+        wireframe!(ss.Λ, color=:black, linewidth=2)
+        # scatter!(ss.Ω, marker=:star8, markersize=20, color=:blue)
+        save(dirname*"/lambda.png", fig)
+
+        fig, _ , plt = plot(ss.Ω, sol.u)
+        Colorbar(fig[1,2], plt)
+        save(dirname*"/man_sol.png", fig)
+
     end
 
 
@@ -167,6 +183,11 @@ module BiharmonicEquation
         sol = generate_sol(u=u,uh=uh,ss=ss)
         return sol
     end
+
+    function man_sol(;L=1,m=1,r=1)
+        u(x) = cos(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
+    end
+
 
 
     function run_CP_method(;ss::GridapSpaces, u::Function, method="test")
