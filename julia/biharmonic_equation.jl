@@ -34,7 +34,7 @@ module BiharmonicEquation
         uh
         e
         el2
-        eh1
+        eh
     end
 
 
@@ -80,14 +80,14 @@ module BiharmonicEquation
     function generate_sol(;u, uh, ss::GridapSpaces)
         e = u - uh
         l2(u) = sqrt(sum( ∫( u⊙u )*ss.dΩ ))
-        h1(u) = sqrt(sum( ∫( ∇(u)⊙∇(u) )*ss.dΩ
+        h(u) = sqrt(sum( ∫( ∇(u)⊙∇(u) )*ss.dΩ
                          + ( ss.γ/ss.h ) * ∫(jump(∇(e)⋅ss.n_Λ) ⊙ jump(∇(e)⋅ss.n_Λ))ss.dΛ
                          + ( ss.h/ss.γ ) * ∫(mean(Δ(e)) ⊙ mean(Δ(e)))ss.dΛ
                         ))
 
         el2 = l2(e)
-        eh1 = h1(e)
-        Solution(u,uh,e,el2,eh1)
+        eh = h(e)
+        Solution(u,uh,e,el2,eh)
     end
 
     function generate_vtk(;ss::GridapSpaces, sol::Solution, dirname::String)

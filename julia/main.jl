@@ -7,49 +7,49 @@ using LaTeXStrings
 using Latexify
 using PrettyTables
 
-function generate_figures(hs, hs_str, el2s, eh1s, γ::Integer, order::Integer, dirname::String)
+function generate_figures(hs, hs_str, el2s, ehs, γ::Integer, order::Integer, dirname::String)
     filename = dirname*"/convergence_d_"*string(order)*"_gamma_"*string(γ)
 
     function slope(hs,errors)
       x = log10.(hs)
       y = log10.(errors)
       linreg = hcat(fill!(similar(x), 1), x) \ y
-      linreg[2]
+      round(linreg[2], digits=2)
     end
 
-    function generate_plot(hs,el2s, eh1s )
-        p_L2 = slope(hs,el2s)
-        p_H1 = slope(hs,eh1s)
+    function generate_plot(hs,el2s, ehs )
+        p_l2 = slope(hs,el2s)
+        p_h = slope(hs,ehs)
 
         fig = CairoMakie.Figure()
         ax = CairoMakie.Axis(fig[1, 1], yscale = log10, xscale= log2,
                              yminorticksvisible = true, yminorgridvisible = true, yminorticks = CairoMakie.IntervalsBetween(8),
                              xlabel = "h", ylabel = "error norms")
 
-        CairoMakie.lines!(hs, el2s, label="L2 norm", linewidth=2)
-        CairoMakie.lines!(hs, eh1s, label="H1 norm", linewidth=2)
+        CairoMakie.lines!(hs, el2s, label= L"L2 norm, $p_{l2} =$ %$(p_l2) ", linewidth=2)
+        CairoMakie.lines!(hs, ehs, label= L"h norm, $p_h =$ %$(p_h)", linewidth=2)
         CairoMakie.scatter!(hs, el2s)
-        CairoMakie.scatter!(hs, eh1s)
+        CairoMakie.scatter!(hs, ehs)
         file = filename*".png"
         CairoMakie.Legend(fig[1,2], ax, framevisible = true)
         CairoMakie.save(file,fig)
     end
 
-    function generate_table(hs_str::Vector, eh1::Vector{Float64}, el2::Vector{Float64})
+    function generate_table(hs_str::Vector, eh::Vector{Float64}, el2::Vector{Float64})
         lgl2 = log2.(el2[2:end]./el2[1:end-1])
-        lgh1 = log2.(eh1[2:end]./eh1[1:end-1])
+        lgh = log2.(eh[2:end]./eh[1:end-1])
         lgl2 =  [nothing; lgl2]
-        lgh1 =  [nothing; lgh1]
+        lgh =  [nothing; lgh]
 
-        data = hcat(hs_str, el2, eh1, lgl2, lgh1)
+        data = hcat(hs_str, el2, eh, lgl2, lgh)
         header = ["h", L"$L_2$", L"$H^1$", L"$log_2(e^{2h}/e^{h}}) $", L"$log_2(\mu^{2h}/\mu^{h}) $"]
         open(filename*".tex", "w") do io
             pretty_table(io, data, header=header, backend=Val(:latex ), formatters = ( ft_printf("%.3E"), ft_nonothing ))
         end
     end
 
-    generate_plot(hs, el2s, eh1s)
-    generate_table(hs_str, el2s, eh1s)
+    generate_plot(hs, el2s, ehs)
+    generate_table(hs_str, el2s, ehs)
 end
 
 
@@ -91,17 +91,17 @@ function convergence_analysis(;figdir, L, u::Function, orders = [2,3,4], γs = [
         γ = γs[i]
 
         el2s = Float64[]
-        eh1s = Float64[]
+        ehs = Float64[]
         println("Run convergence tests: order = "*string(order), " Method: " , method)
 
         for n in ns
             ss = BiharmonicEquation.generate_square_spaces(n=n,L=L, γ=γ, order=order)
             sol = BiharmonicEquation.run_CP_method(ss=ss, u=u, method=method)
             push!(el2s, sol.el2)
-            push!(eh1s, sol.eh1)
+            push!(ehs, sol.eh)
             # push!(hs,   ss.h)
         end
-        generate_figures(hs, hs_str, el2s, eh1s, γ, order, conv_dir)
+        generate_figures(hs, hs_str, el2s, ehs, γ, order, conv_dir)
     end
 
 end
@@ -117,14 +117,14 @@ function run_gamma_analysis(;figdir, L, u::Function, orders = [2,3,4], γs = [2^
         for i in 1:length(γs)
             γ = γs[i]
             el2s = Float64[]
-            eh1s = Float64[]
+            ehs = Float64[]
             println("γ ", ": ", i, "/", length(γs))
 
             for n in ns
                 ss = BiharmonicEquation.generate_square_spaces(n=n,L=L, γ=γ, order=order)
                 sol = BiharmonicEquation.run_CP_method(ss=ss, u=u, method=method)
                 push!(el2s, sol.el2)
-                push!(eh1s, sol.eh1)
+                push!(ehs, sol.eh)
                 # push!(hs,   ss.h)
             end
             CairoMakie.lines!(hs, el2s, label=string(γ), linewidth=2)
@@ -158,8 +158,8 @@ function main()
     end
 
     run(L=1,m=1,r=1, orders=[2,3,4], γs=[2,8,16])
-    run(L=1,m=3,r=2, orders=[2,3,4], γs=[2,8,16])
-    run(L=2π, m=1,r=1, orders=[2,3,4], γs=[2,8,16])
+    # run(L=1,m=3,r=2, orders=[2,3,4], γs=[2,8,16])
+    # run(L=2π, m=1,r=1, orders=[2,3,4], γs=[2,8,16])
 end
 
 
