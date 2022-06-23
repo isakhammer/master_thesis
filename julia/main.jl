@@ -1,6 +1,7 @@
 include("biharmonic_equation.jl")
 using Test
 using Plots
+using CairoMakie
 using LaTeXStrings
 using Latexify
 using PrettyTables
@@ -61,8 +62,9 @@ function makedir(dirname)
 end
 
 function run_examples(dirname)
-    makedir(dirname)
-    ndir(n) = dirname*"/n_"*string(n)
+    exampledir = dirname*"/example"
+    makedir(exampledir)
+    ndir(n) = exampledir*"/n_"*string(n)
     ns = [100]
     order=2
 
@@ -107,16 +109,43 @@ function convergence_analysis(;dirname, orders = [2,3,4], γs = [5, 25, 60], ns 
 
 end
 
-function main()
+function run_gamma_analysis(;dirname, orders = [2,3,4], γs = [5, 10, 20, 25, 50, 70], ns = [2^3,2^4,2^5,2^6,2^7], L=1, method="test")
+
+    m,r = 1,1
+    L = 1
+    u(x) = cos(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
+
+    hs = 1 .// ns
+    for order in orders
+        fig = Figure()
+        ax = Axis(fig[1, 1], yscale = log10, xscale= log2, yminorticksvisible = true, yminorgridvisible = true, yminorticks = IntervalsBetween(8))
+        for i in 1:length(γs)
+            γ = γs[i]
+            el2s = Float64[]
+            eh1s = Float64[]
+            println("Run gamma analysis: gamma = "*string(γ), " Method: " , method)
+
+            for n in ns
+                ss = BiharmonicEquation.generate_square_spaces(n=n,L=L, γ=γ, order=order)
+                sol = BiharmonicEquation.run_CP_method(ss=ss, u=u, method=method)
+                push!(el2s, sol.el2)
+                push!(eh1s, sol.eh1)
+                # push!(hs,   ss.h)
+            end
+
+            lines!(hs, el2s, label=string(γ), linewidth=2)
+        end
+
+        Legend(fig[1,2], ax,L"$\gamma$ values", framevisible = true)
+        save(dirname*"/gamma_analysis_order"*string(order)*".png",fig)
+    end
+end
+
+
+function run_convergence(figdir)
 
     # folder = "biharmonic_equation_results"
-    # exampledir = folder*"/example"
-    # makedir(folder)
-    # run_examples(exampledir)
 
-    println("Generating figures")
-    figdir = "figures"
-    makedir(figdir)
 
     function analysis(;L,m,r)
         u(x) = cos(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
@@ -129,6 +158,17 @@ function main()
     analysis(L=2π, m=1, r=1)
     analysis(L=1, m=2, r=3)
     analysis(L=0.01, m=2, r=3)
+
+end
+
+function main()
+    println("Generating figures")
+    figdir = "figures"
+    makedir(figdir)
+
+    run_examples(figdir)
+    run_convergence(figdir)
+    run_gamma_analysis(dirname=figdir)
 
 end
 
