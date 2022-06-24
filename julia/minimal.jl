@@ -1,6 +1,6 @@
 using Gridap
-using Plots
-gr()
+using LaTeXStrings
+import CairoMakie
 using Test
 import Gridap: ∇
 
@@ -51,10 +51,13 @@ function run_CP(; n=10, generate_vtk::Bool=false, dirname::String, test::Bool=fa
 
     e = u - uh
     el2 = sqrt(sum( ∫(e*e)dΩ ))
-    eh1 = sqrt(sum( ∫( e*e + ∇(e)⋅∇(e) )*dΩ ))
+    eh = sqrt(sum( ∫( ∇(e)⊙∇(e) )*dΩ
+                    + ( γ/h ) * ∫(jump(∇(e)⋅n_Λ) ⊙ jump(∇(e)⋅n_Λ))dΛ
+                    + ( h/γ ) * ∫(mean(Δ(e)) ⊙ mean(Δ(e)))dΛ
+                   ))
 
     if !generate_vtk
-        return el2, eh1
+        return el2, eh
     end
 
     writevtk(model, dirname*"/model")
@@ -73,31 +76,37 @@ end
 
 
 function conv_test(;dirname)
-    ns = [8,16,32,64,128]
+    ns = [8,16,32,64]
 
     el2s = Float64[]
-    eh1s = Float64[]
+    ehs = Float64[]
     hs = Float64[]
 
     println("Run convergence tests")
     for n in ns
 
-        el2, eh1 = run_CP(n=n, dirname=dirname)
-        println("Simulation with n:", n, ", Errors:  L2: ", el2, " H1:", eh1)
+        el2, eh = run_CP(n=n, dirname=dirname)
+        println("Simulation with n:", n, ", Errors:  L2: ", el2, " h:", eh)
 
         h = ( 1/n )*2*π
         push!(el2s,el2)
-        push!(eh1s,eh1)
+        push!(ehs,eh)
         push!(hs,h)
     end
 
-    p = Plots.plot(hs,[el2s eh1s],
-                      # xaxis=:log, yaxis=:log,
-                      label=["L2" "H1"],
-                      shape=:auto,
-                      xlabel="h",ylabel="error norm")
+    fig = CairoMakie.Figure()
+    ax = CairoMakie.Axis(fig[1, 1], yscale = log10, xscale= log2,
+                         yminorticksvisible = true, yminorgridvisible = true, yminorticks = CairoMakie.IntervalsBetween(8),
+                         xlabel = "h", ylabel = "error norms")
 
-    Plots.savefig(p, dirname*"/convergence.png")
+
+    CairoMakie.lines!(hs, el2s, label= L"L2 norm,  ", linewidth=2)
+    CairoMakie.lines!(hs, ehs, label= L"h norm ", linewidth=2)
+    CairoMakie.scatter!(hs, el2s)
+    CairoMakie.scatter!(hs, ehs)
+    file = dirname*"/convergence.png"
+    CairoMakie.Legend(fig[1,2], ax, framevisible = true)
+    CairoMakie.save(file,fig)
 end
 
 function main()
