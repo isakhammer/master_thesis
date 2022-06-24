@@ -30,6 +30,7 @@ function run_CP(; n=10, generate_vtk::Bool=false, dirname::String, test::Bool=fa
     dΛ = Measure(Λ,degree)
 
     n_Λ = get_normal_vector(Λ)
+    n_Γ = get_normal_vector(Λ)
 
     # manufactured solution
     f(x) = Δ(Δ(u))(x)+ α*u(x)
@@ -54,7 +55,10 @@ function run_CP(; n=10, generate_vtk::Bool=false, dirname::String, test::Bool=fa
     eh = sqrt(sum( ∫( ∇(e)⊙∇(e) )*dΩ
                     + ( γ/h ) * ∫(jump(∇(e)⋅n_Λ) ⊙ jump(∇(e)⋅n_Λ))dΛ
                     + ( h/γ ) * ∫(mean(Δ(e)) ⊙ mean(Δ(e)))dΛ
+                    + ( γ/h ) * ∫(jump(∇(e)⋅n_Γ      ) ⊙ jump(∇(e)⋅n_Γ))dΓ
+                    + ( h/γ ) * ∫(mean(Δ(e)) ⊙ mean(Δ(e)))dΓ
                    ))
+
 
     if !generate_vtk
         return el2, eh
@@ -99,7 +103,6 @@ function conv_test(;dirname)
                          yminorticksvisible = true, yminorgridvisible = true, yminorticks = CairoMakie.IntervalsBetween(8),
                          xlabel = "h", ylabel = "error norms")
 
-
     CairoMakie.lines!(hs, el2s, label= L"L2 norm,  ", linewidth=2)
     CairoMakie.lines!(hs, ehs, label= L"h norm ", linewidth=2)
     CairoMakie.scatter!(hs, el2s)
@@ -108,6 +111,7 @@ function conv_test(;dirname)
     CairoMakie.Legend(fig[1,2], ax, framevisible = true)
     CairoMakie.save(file,fig)
 end
+
 
 function main()
     dirname = "minimal_example"
