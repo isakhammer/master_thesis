@@ -187,6 +187,7 @@ module BiharmonicEquation
         throw(DomainError(method, "Does not have a method with this name"))
     end
 
+
 end # module
 
 

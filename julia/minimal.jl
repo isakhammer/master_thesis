@@ -37,15 +37,20 @@ function run_CP(; n=10, generate_vtk::Bool=false, dirname::String, test::Bool=fa
     g(x) = Δ(u)(x)
     α = 1
 
-    mean_nn(u,n) = mean(n ⋅ (∇∇(u) ⋅ n))
-    mean_nn(u,n) = 0.5*( n.plus⋅ ∇∇(u).plus⋅ n.plus + n.minus ⋅ ∇∇(u).minus ⋅ n.minus )
+    function mean_nn(u,n; boundary=false)
+        !boundary && 0.5*( n.plus⋅ ∇∇(u).plus⋅ n.plus + n.minus ⋅ ∇∇(u).minus ⋅ n.minus )
+        boundary && n ⋅ ∇∇(u)⋅ n
+    end
+
     ⋅
     # Inner facets
-    a(u,v) = ∫( ∇∇(v)⊙∇∇(u) + α⋅(v⊙u) )dΩ + ∫(-mean_nn(v,n_Λ)⊙jump(∇(u)⋅n_Λ) - mean_nn(u,n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ + ∫((γ/h)⋅jump(∇(u)⋅n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ
-        # + ∫(-mean_nn(v,n_Γ )⊙jump(∇(u)⋅n_Γ) - mean_nn(u,n_Γ)⊙jump(∇(v)⋅n_Γ))dΓ + ∫((γ/h)⋅jump(∇(u)⋅n_Γ)⊙jump(∇(v)⋅n_Γ))dΓ
+    a(u,v) =( ∫( ∇∇(v)⊙∇∇(u) + α⋅(v⊙u) )dΩ
+             + ∫(-mean_nn(v,n_Λ)⊙jump(∇(u)⋅n_Λ) - mean_nn(u,n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ + ∫((γ/h)⋅jump(∇(u)⋅n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ
+             # + ∫(mean_nn(v,n_Γ, boundary=true)⊙jump(∇(u)⋅n_Γ) - mean_nn(u,n_Γ, boundary=true)⊙jump(∇(v)⋅n_Γ))dΓ + ∫((γ/h)⋅jump(∇(u)⋅n_Γ)⊙jump(∇(v)⋅n_Γ))dΓ
+             )
 
     l(v) = ∫( v ⋅ f )dΩ + ∫(- (g⋅v))dΓ
-
+dΓ
 
     op = AffineFEOperator(a, l, U, V)
     uh = solve(op)
