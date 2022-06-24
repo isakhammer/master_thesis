@@ -143,7 +143,7 @@ module BiharmonicEquation
                  ∫( - mean(Δ(u))*jump(∇(v)⋅ss.n_Λ) - jump(∇(u)⋅ss.n_Λ)*mean(Δ(v))
                    + ss.γ/ss.h*jump(∇(u)⋅ss.n_Λ)*jump(∇(v)⋅ss.n_Λ) )ss.dΛ
 
-        # PROBLEM 3
+        # PROBLEM 4
         # Why the directional derivative of test function v? Does not makes sense given the identity:
         # --> (Δ^2 u, v)_Ω  = (D^2 u , D^2 v)_Ω + (∂_n Δ u, v)_∂Ω - (∂_nn u, ∂_n v)_∂Ω  - (∂_nt u, ∂_t v)_∂Ω
         #                   = (D^2 u , D^2 v)_Ω + (g, v)_∂Ω
