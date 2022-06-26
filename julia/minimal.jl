@@ -19,7 +19,7 @@ function run_CP(; n=10, generate_vtk::Bool=false, dirname::String, test::Bool=fa
 
     # Spaces
     V = TestFESpace(model, ReferenceFE(lagrangian,Float64,order), conformity=:L2)
-    U = TrialFESpace(V)
+    U = TrialFESpace(V,u)
     Ω = Triangulation(model)
     Γ = BoundaryTriangulation(model)
     Λ = SkeletonTriangulation(model)
@@ -30,7 +30,7 @@ function run_CP(; n=10, generate_vtk::Bool=false, dirname::String, test::Bool=fa
     dΛ = Measure(Λ,degree)
 
     n_Λ = get_normal_vector(Λ)
-    n_Γ = get_normal_vector(Λ)
+    n_Γ = get_normal_vector(Γ)
 
     # manufactured solution
     f(x) = Δ(Δ(u))(x)+ α*u(x)
@@ -38,19 +38,22 @@ function run_CP(; n=10, generate_vtk::Bool=false, dirname::String, test::Bool=fa
     α = 1
 
     function mean_nn(u,n; boundary=false)
-        !boundary && 0.5*( n.plus⋅ ∇∇(u).plus⋅ n.plus + n.minus ⋅ ∇∇(u).minus ⋅ n.minus )
-        boundary && n ⋅ ∇∇(u)⋅ n
+        return 0.5*( n.plus⋅ ∇∇(u).plus⋅ n.plus + n.minus ⋅ ∇∇(u).minus ⋅ n.minus )
+        # !boundary && return 0.5*( n.plus⋅ ∇∇(u).plus⋅ n.plus + n.minus ⋅ ∇∇(u).minus ⋅ n.minus )
+        # boundary && return ( n ⋅ ∇∇(u)⋅ n )
     end
 
     ⋅
     # Inner facets
     a(u,v) =( ∫( ∇∇(v)⊙∇∇(u) + α⋅(v⊙u) )dΩ
-             + ∫(-mean_nn(v,n_Λ)⊙jump(∇(u)⋅n_Λ) - mean_nn(u,n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ + ∫((γ/h)⋅jump(∇(u)⋅n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ
-             # + ∫(mean_nn(v,n_Γ, boundary=true)⊙jump(∇(u)⋅n_Γ) - mean_nn(u,n_Γ, boundary=true)⊙jump(∇(v)⋅n_Γ))dΓ + ∫((γ/h)⋅jump(∇(u)⋅n_Γ)⊙jump(∇(v)⋅n_Γ))dΓ
+             + ∫(-mean_nn(v,n_Λ)⊙jump(∇(u)⋅n_Λ) - mean_nn(u,n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ
+             + ∫((γ/h)⋅jump(∇(u)⋅n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ
+             + ∫( u*v )dΓ
              )
+             # + ∫(mean_nn(v,n_Γ, boundary=true)⊙∇(u)⋅n_Γ - mean_nn(u,n_Γ, boundary=true)⊙∇(v)⋅n_Γ)dΓ
+             # + (γ/h)⋅∫( ∇(u)⋅n_Γ )⊙( ∇(v)⋅n_Γ )dΓ
 
     l(v) = ∫( v ⋅ f )dΩ + ∫(- (g⋅v))dΓ
-dΓ
 
     op = AffineFEOperator(a, l, U, V)
     uh = solve(op)
