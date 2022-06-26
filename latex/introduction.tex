@@ -28,7 +28,201 @@ In this report will we focus to work on a fourth approach based on a FEM method 
 \section{Mathematical Background}%
 \label{sub:mathematical_background}
 
-In this section will we establish some prerequisites of basic results of functional analysis and numerical analysis related to FEM. However, for a more thoroughly explanation i refer to \cite{brenner07math,manzoni2021optimal, quartdiff}
+In this section will we establish some prerequisites of basic results of functional analysis and numerical analysis related to FEM. However, for a more thoroughly explanation I refer to \cite{brenner07math,manzoni2021optimal, quartdiff}. In he first
+subsection will we define basic principles of Hilbert spaces which then will be applied to establish a theory for weak formulations in terms of well-posedness. We will also introduce the fundamentals of numerical discretization of the weak formulation with regards to error estimates and FEM.
+
+\subsection{Hilbert Spaces}%
+\label{sub:hilbert_spaces}
+
+Assume $\Omega $  to be a compact and open set in $\mathbb{R} ^{2}$ and the parameter $p \in \mathbb{R} $, $p\ge 1$. We define $L^{p}\left( \Omega  \right) $ to be the set of all measurable functions $f: \Omega  \mapsto \mathbb{R} $ such that
+$\left\lvert f \right\rvert ^{p}$ is Lebesgue measurable, i.e,
+
+\begin{equation*}
+    L^{p}\left( \Omega  \right) = \left\{ f: \Omega \mapsto \mathbb{R}  \mid \int_{\Omega }^{} \left\lvert f \right\rvert ^{p} d \Omega  < \infty  \right\}
+.\end{equation*}
+
+A useful extension which we will use later are the set of locally integrable functions such that for any compact subset $K \subseteq \text{Interior}\left( \Omega  \right) $, that is
+
+\begin{equation*}
+    L_{loc}^{1}\left( \Omega  \right)  = \left\{ f: f \in L^{1}\left( \Omega  \right)  \quad \forall K  \right\}.
+.\end{equation*}
+
+
+Let $u \in L^{p}\left( \Omega  \right) $, then we define the integral norm of order $p$ to be \[
+\| u \|_{ L^{p}\left( \Omega  \right)  }^{  }  = \left( \int_{\Omega }^{} \left\lvert u \right\rvert ^{p} dx  \right) ^{\frac{1}{p}}
+\]
+
+Since $p=2$ is very frequently used we also define a more compact notation $\| u \|_{ \Omega  }^{  }  = \| u \|_{ L^{2}\left( \Omega  \right)  }^{  } $ .  We say that $L^{2}\left( \Omega  \right) $ is a Hilbert space if it is equipped with a inner
+product of two functions $u,v \in L^{2}\left( \Omega  \right) $ such that
+\[
+\left( u,v \right) _{\Omega } = \left( u,v \right) _{L^2\left( \Omega  \right) } = \int_{\Omega }^{} u \cdot v dx
+\]
+
+In this report will we use the notation $\mathcal{V} $ for arbitrary Hilbert space. Note that we also use the notation $V^{*}$ for the dual space.
+
+We will now establish a nation of the weak derivative, but first are we going to characterize some useful definitions of continuity. The space $C^{k}\left( \Omega  \right) $ for $k\ge 0$ denotes the set of functions whose derivatives, up to order of
+$k$ , is continuous in $\Omega $. Note that we often use the shorthand notation \[
+C^{0} = C\left( \Omega  \right)  = C^{0}\left( \Omega  \right)
+\]
+From this definitions we let $C^{\infty}\left( \Omega  \right) $ be the set of infinitely differentiable functions in $\Omega $ such that the space $C^{\infty}_{0}\left( \Omega  \right)$ is the set of all functions $u \in C^{\infty}\left( \Omega
+\right) $ which is vanishing outside of any compact subset of $\Omega $. Let $u,v \in  C^{1}\left( \Omega  \right) $ and $\Gamma  = \partial \Omega $ with corresponding outer normal vector $n$, then this partial integration formula holds
+
+\[
+\int_{\Omega }^{} \nabla u \cdot v dx = \int_{\Gamma }^{} u\cdot v n ds - \int_{\Omega }^{} u \cdot \nabla v dx
+\]
+
+We now use this notation for derivatives \footnote{In literature is often $D^{\alpha } f$ commonly used, but later in the report is this notation reserved for the Hessian operator. }, $f \in C^{\left\lvert \alpha  \right\rvert } \left( \Omega  \right) $ so \[
+\partial _{\alpha  } f = \frac{\partial ^{\left\lvert \alpha  \right\rvert } f}{ \partial ^{\alpha _{1} } x_{1} \partial ^{\alpha _{2}} x_{2}  }, \quad \alpha=\left( \alpha _{1}, \alpha _{2} \right)
+\]
+
+
+Finally, let $u \in  L^{1}_{loc}\left( \Omega  \right) $. We call the function $w \in L_{loc}^{1}\left( \Omega  \right) $ the $\alpha $-th weak derivative of $u$  if \[
+\int_{\Omega }^{} w \varphi  dx = \left( -1 \right) ^{\left\lvert \alpha  \right\rvert } \int_{\Omega }^{} u \cdot \partial _{\alpha } \varphi dx, \quad \forall \varphi \in  C_{0}^{\infty}\left( \Omega  \right)
+\]
+
+Using the definitions introduced in this subsection can we construct the Sobolev space $H^{m}\left( \Omega  \right) , m>1$ , \[
+H^{m}\left( \Omega  \right) = \left\{ u \in L^{2}\left( \Omega  \right)  \mid  \partial _{\alpha } u \in L^{2}\left( \Omega  \right)  \forall \alpha : \left\lvert \alpha  \right\rvert  \le m \right\}
+\]
+
+Equipped with the inner product is $H^{m}\left( \Omega  \right) $  denoted as a Hilbert space, that is, for $u,v \in H^{m}\left( \Omega  \right) $ is \[
+    \left( u,v \right) _{H^{m}\left( \Omega   \right) } = \sum_{\left\lvert \alpha  \right\rvert  \le  m}^{}  \int_{\Omega }^{} \partial _{\alpha } u \partial _{\alpha } v dx.
+\]
+
+Similarly the integral norm is \[
+\| u \|_{ H^{m}\left( \Omega  \right)  }^{  }  = \left( \| u \|_{ L^{2}\left( \Omega  \right)  + \sum_{k = 1}^{m}  \left\lvert u \right\rvert ^{2}  }^{  H^{k}\left( \Omega  \right) }  \right) ^{\frac{1}{2}}
+\]
+where the seminorm is define such that \[
+\left\lvert u \right\rvert _{H^{k}\left( \Omega  \right) } = \left( \sum_{\left\lvert \alpha  \right\rvert  = k}^{} \| \partial _{\alpha }u \|_{ \Omega  }^{ 2 }  \right).
+\]
+
+We may also entitle the notation $H^{m}_{0} \left( \Omega  \right) = H^{m} \left( \Omega  \right) \cap C^{\infty}_{0} \left( \Omega  \right) $.
+
+
+
+
+
+\subsection{Weak Formulation}%
+\label{sub:weak_formulation}
+
+By applying the theory in the previous subsection can we use describe the notion of a so-called weak formulation. Let us consider the simplest case, that is the strong form of the Poisson's equation with homogeneous Dirichlet boundary conditions
+\begin{equation}
+\label{eq:poisson_strong}
+\begin{split}
+-\Delta u & = f \quad \text{in } \Omega \\
+u & =0 \quad \text{on } \partial \Omega
+\end{split}
+.\end{equation}
+
+We want to obtain the weak formulation of the problem \eqref{eq:poisson_strong}. Let the trial function be $u \in H_{0}^{1}\left( \Omega  \right) $, then by integrating with a test function we get \[
+\int_{\Omega }^{} - \Delta u \cdot v dx = \int_{\Omega }^{} f \cdot v dx \quad \forall v \in H^{1}_{0}\left( \Omega  \right)
+\]
+By using the partial integration formula and take the advantage of homogeneous Dirichlet boundary conditions the equation is in fact simplified to \[
+a\left( u,v \right) = \int_{\Omega }^{}  \nabla u\cdot \nabla v dx , \quad l\left( v \right)  = \int_{\Omega }^{}  f\cdot v dx
+\]
+
+Hence, the final weak formulation has a symmetric bilinear form, $a\left( \cdot ,\cdot  \right) $, and a linear functional, $l\left( \cdot  \right) $, where we want to find a solution $u \in H^{1}_{0}\left( \Omega  \right) $  so
+
+\begin{equation}
+\label{eq:poissons_weak_formulation}
+a\left( u,v \right) = l\left( v \right) \quad \forall v \in H^{1}_{0}\left( \Omega  \right).
+.\end{equation}
+
+We now want to establish that problems on this form is well-posed.
+Lax-Milgram Theorem says that if we assume a Hilbert space $\mathcal{V} $ and the bilinear symmetric problem where we want to find a $u \in \mathcal{V} $  such that
+
+\begin{equation*}
+    a\left( u,v \right)  = \left( F, v \right) _{\mathcal{V} ^{*}, \mathcal{V} }, \quad \forall v \in  \mathcal{V}
+.\end{equation*}
+
+ Assuming the bilinear form $a\left( \cdot ,\cdot  \right) $  is continuous and coercive, i.e., the two conditions below.
+
+\begin{enumerate}[label=\arabic*)]
+    \item There exists a constant $M>0$ s.t. \[
+    \left\lvert a\left( v,w \right)  \right\rvert \le M \| v \|_{ \mathcal{V}  }^{  } \| w \|_{ \mathcal{V}  }^{  }  \quad \forall v,w \in \mathcal{V}.
+    \]
+\item There exists a $\alpha  > 0$  so \[
+a\left( v,v \right)  \ge  \alpha \| v \|_{ \mathcal{V}  }^{ 2 }.
+\]
+\end{enumerate}
+
+We can then say there exists a unique solution $u \in \mathcal{V} $ and in additions it satisfied the stability estimate \cite{manzoni2021optimal}, \[
+\| w \|_{ \mathcal{V}   }^{  } \le  \| F \|_{ V^{*} }^{  }
+\]
+Problems that fulfills this criteria is said to be well posed.
+
+
+We can clearly see that this theorem applied to the weak formulation \eqref{eq:poissons_weak_formulation} since,
+\[
+\begin{split}
+    \left\lvert a\left( v,w \right)  \right\rvert & \le \| \nabla v \|_{ \Omega  }^{  } \| \nabla w \|_{ \Omega  }^{  }, \\
+\left\lvert a\left( v,v \right)  \right\rvert  & = \|  \nabla v\|_{\Omega   }^{  }  \| \nabla v  \|_{\Omega   }^{  } \ge  \| v \|_{ \Omega  }^{ 2 } \ge \| v \|_{ H^{1}\left( \Omega  \right)  }^{  }.
+\end{split}
+\]
+
+On the last inequality was the Poincare inequality applied, i.e., there exists a $C>0$  such that $\| u \|_{ \Omega  }^{  } \le C  \| \nabla u \|_{\Omega   }^{  } $.
+
+
+\subsection{Ceas' Lemma}%
+\label{sub:ceas_lemma}
+
+Since we have established a theory of a well-posed weak formulation we can now transition to setup a theory for a approximate solution. Assume that we have a problem that satisfied the Lax-Milgram theorem and let $\mathcal{V} _{h} \subseteq  \mathcal{V} $  be
+some finite dimensional subspace of $\mathcal{V} $ such that $dim\left( \mathcal{V} _{h} \right) =N_{h}$ , where $h$  is a discretization parameter. The discretized problem is now to find a solution $u_{h} \in  \mathcal{V}_{h}$ such that $a\left( u_{h},v_{h} \right)  =
+l\left( v_{h} \right) \quad  \forall v_{h} \in \mathcal{V} _{h} $. In fact, since the method is conform, i.e., $\mathcal{V} _{h} \subseteq  \mathcal{V} $ does it exists a exact solution $u \in  \mathcal{V} _{h}$ so, \[
+a \left( u, v_{h} \right)  = l\left( v_{h} \right)  \quad  \forall v_{h} \in  \mathcal{V} _{h}.
+\]
+
+Using property can  we say that the problem is strongly consistent since it fulfills the Galerkin Orthogonality property, that is,  $ a\left( u -u_{h} , v_{h} \right)  =0$.
+
+Now we have all the cornerstones for finding a error estimate . Again, assume that Lax-Milgram theorem holds. Let $v_{h} \in  \mathcal{V} _{h}$ so
+\[
+    \begin{split}
+\alpha \| u -u_{h} \|_{ \mathcal{V}  }^{ 2 } & \le  a\left( u - u_{h}, u - u_{h}  \right)    \\
+&= a\left( u - u_{h}, u -v_{h} \right) - a\left( u -u_{h}, v_{h} - u_{h} \right)  \\
+\le  M \| u - u_{h} \|_{ \mathcal{V}  }^{  }  \| u - v_{h} \|_{ \mathcal{V}  }^{  }
+    \end{split}
+\]
+Hence, the Ceas' lemma \cite{quartdiff} \[
+\| u - u_{h} \|_{ \mathcal{V}  }^{  }  \le  \frac{M}{\alpha } \inf_{v_{h} \in \mathcal{V} } \|  v_{h} - u \|_{  }^{  }
+\]
+
+A useful property is that for a conformal numerical method to converge can we now only require \[
+\lim_{h \to 0}  \inf_{v_{h} \in  V_{h}}  \| v - v_{h} \|_{ \mathcal{V }  }^{  } = 0 \quad  \forall v \in \mathcal{V}.
+\]
+
+In that case will $\| u - u_{h} \|_{ \mathcal{V}  }^{  }  \to  0$, $h \to  0$ .
+
+
+
+\subsection{Finite Element Method}%
+\label{sub:finite_element_method}
+The idea of a conformal FEM method is to approximate a solution $\mathcal{V}_h \subseteq \mathcal{V}  $. However, the build blocks of the discretization relies on constructing a trianguation $\mathcal{T } _h$ with non-overlapping triangles  $T \in
+\mathcal{T}_{h} $ so that \[
+\Omega _{h} = Interior(\bigcup_{T \in  \mathcal{T} _{h}}^{} T) \implies \lim_{h\to 0} measure(\Omega - \Omega _{h}) = 0 \text{ a.e.}.
+\]
+
+For convenience will we generally use the notation $\Omega  = \Omega  _{h}$. We also denote the parameter $h$ as the diameter of the triangle $T$, i.e., $h_{T} = diam(T)$. Anyhow, this is later more precisely in the subsection
+\ref{sub:computational_domain} later on, but for now does it hold as a basic introduction to conformal FEM.
+Furthermore, let the space of finite elements suitable for our test problem in subsection \ref{sub:weak_formulation}, using the definition from \cite{quartdiff}, to be
+\[
+\mathcal{V} _{h} = \left\{ v_{h} \in C^{0}\left( \Omega  \right)  \mid  v_{h} \in \mathcal{P} _{r}\left( T \right)  \quad \forall T \in \mathcal{T} _{h}  \right\}
+\]
+where $\mathcal{P } _{r}\left( T \right) $ is the space of polynomials with degree $r$ for each $T$, that is,
+\[
+\mathcal{P} _{r}\left( T \right)  = \left\{ p\left( x_{1}, x_{2} \right) = \sum_{}^{i + j}  a_{ij} x^{i}_{1} x^{j}_{2}  \mid  a_{ij} \in \mathbb{R}  \text{ and } i,j \ge  0   \right\}.
+\]
+
+For the test problem can we observe that it is convenient to deal with a Lagrangian functions $\varphi _{j} \in V_{h}$, thus, for ever node $N_{u}$, \[
+\varphi _{j}\left( N_{i} \right)  = \delta _{ij} = \begin{cases}
+    0, \quad & i \neq j \\
+    1,\quad & i=j
+\end{cases}
+\text{ where } i,j = 1,\ldots, N_{h}.
+\]
+
+Here is $N_{h}$  the total number of nodes which is chosen with caution. For the test problem, where $\Omega \subseteq \mathbb{R} ^{2} $, when $r=1$ is typically the nodes defined on the vertices and $ r=2 $ the nodes defined on the vertices and the
+center of the edges/facets \ref{quartdiff}.
+
+
 
 
 
