@@ -9,7 +9,7 @@ function run_CP(; n=10, generate_vtk::Bool=false, dirname::String, test::Bool=fa
     # mesh generation
     L = 2π
     h = L / n
-    γ = 0.5
+    γ = 5
     u(x) = cos(x[1])*cos(x[2])
 
     order = 2
@@ -19,10 +19,10 @@ function run_CP(; n=10, generate_vtk::Bool=false, dirname::String, test::Bool=fa
 
     # Spaces
     V = TestFESpace(model, ReferenceFE(lagrangian,Float64,order), conformity=:L2)
-    U = TrialFESpace(V,u)
+    U = TrialFESpace(V)
     Ω = Triangulation(model)
-    Γ = BoundaryTriangulation(model)
     Λ = SkeletonTriangulation(model)
+    Γ = BoundaryTriangulation(model)
 
     degree = 2*order
     dΩ = Measure(Ω,degree)
@@ -33,8 +33,10 @@ function run_CP(; n=10, generate_vtk::Bool=false, dirname::String, test::Bool=fa
     n_Γ = get_normal_vector(Γ)
 
     # manufactured solution
+    # f(x) = ( 4 + α )*u(x)
     f(x) = Δ(Δ(u))(x)+ α*u(x)
-    g(x) = Δ(u)(x)
+    g(x) = 0
+    # g(x) = Δ(u)(x)
     α = 1
 
     function mean_nn(u,n)
@@ -46,7 +48,7 @@ function run_CP(; n=10, generate_vtk::Bool=false, dirname::String, test::Bool=fa
     a(u,v) =( ∫( ∇∇(v)⊙∇∇(u) + α⋅(v⊙u) )dΩ
              + ∫(-mean_nn(v,n_Λ)⊙jump(∇(u)⋅n_Λ) - mean_nn(u,n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ
              + ∫((γ/h)⋅jump(∇(u)⋅n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ
-             + ∫(( n_Γ ⋅ ∇∇(v)⋅ n_Γ )⊙∇(u)⋅n_Γ + ( n_Γ ⋅ ∇∇(u)⋅ n_Γ )⊙∇(v)⋅n_Γ)dΓ
+             + ∫(-( n_Γ ⋅ ∇∇(v)⋅ n_Γ )⊙∇(u)⋅n_Γ - ( n_Γ ⋅ ∇∇(u)⋅ n_Γ )⊙∇(v)⋅n_Γ)dΓ
              + ∫((γ/h)⋅ ∇(u)⊙n_Γ⋅∇(v)⊙n_Γ )dΓ
              )
 
