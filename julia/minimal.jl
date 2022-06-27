@@ -59,7 +59,7 @@ function run_CP(; n=10, generate_vtk::Bool=false, dirname::String, test::Bool=fa
     el2 = sqrt(sum( ∫(e*e)dΩ ))
     eh = sqrt(sum( ∫( ∇(e)⊙∇(e) )*dΩ
                     + ( γ/h ) * ∫(jump(∇(e)⋅n_Λ) ⊙ jump(∇(e)⋅n_Λ))dΛ
-                    + ( h/γ ) * ∫(mean(Δ(e)) ⊙ mean(Δ(e)))dΛ
+                    + ( h/γ ) * ∫(mean_nn(e,n_Λ) ⊙ mean_nn(e,n_Λ))dΛ
                     + ( γ/h ) * ∫((∇(e)⋅n_Γ) ⊙ (∇(e)⋅n_Γ))dΓ
                     + ( h/γ ) * ∫(( n_Γ ⋅ ∇∇(e)⋅ n_Γ ) ⊙ ( n_Γ ⋅ ∇∇(e)⋅ n_Γ ))dΓ
                    ))
