@@ -54,82 +54,64 @@ module BiharmonicEquation
     end
 
 
-    function run_CP_method(;n, L, γ, order,  u::Function = man_sol(), simplex=true)
-        h = L / n
-        γ = 5*order*(order+1)
+    function run_CP_method(;n, L, γ, order,  u::Function, simplex=true)
+        h = L/n
+        domain2D = (0, L, 0, L)
+        partition2D = (n,n)
+        model = CartesianDiscreteModel(domain2D,partition2D)
 
-        domain = (0,L,0,L)
-        partition = (n,n)
-
-        if simplex
-            model = CartesianDiscreteModel(domain,partition) |> simplexify
-        else
-            model = CartesianDiscreteModel(domain,partition)
-        end
-
-        # FE space
-        V = TestFESpace(model,ReferenceFE(lagrangian,Float64,order),conformity=:H1)
+        # Spaces
+        V = TestFESpace(model, ReferenceFE(lagrangian,Float64,order), conformity=:H1)
         U = TrialFESpace(V)
-
-        # Triangulation
         Ω = Triangulation(model)
-        Γ = BoundaryTriangulation(model)
         Λ = SkeletonTriangulation(model)
+        Γ = BoundaryTriangulation(model)
+
         degree = 2*order
         dΩ = Measure(Ω,degree)
         dΓ = Measure(Γ,degree)
         dΛ = Measure(Λ,degree)
-        n_Γ = get_normal_vector(Γ)
-        n_Λ = get_normal_vector(Λ)
 
-        # Analytical manufactured solution
+        n_Λ = get_normal_vector(Λ)
+        n_Γ = get_normal_vector(Γ)
+
+        # manufactured solution
+        # g(x) = ( ∇( Δ(u))⊙n_Γ)(x) #this does not compile since u is a ordinary function inner product with normal field vector
         α = 1
         f(x) = Δ(Δ(u))(x)+ α*u(x)
-        g(x) = Δ(u)(x)
+        # f(x) = ( 4 + α )*u(x)
+        g(x) = 0
 
-        # PROBLEM 1
-        # Statement: laplacian Δ(u) makes no sense since we need the hessian
-        # we should use ∇∇(u) instead:
-        # Definition of  ∇∇:
-        # https://github.com/gridap/Gridap.jl/blob/7f5f15e53cd390b6ac82d51ee46fa5bc0792a7e3/src/Fields/AutoDiff.jl#L9
-        # Definition of  Δ:
-        # https://github.com/gridap/Gridap.jl/blob/3916f3c87d86dfc6deb2b24be0305614267c5785/src/Fields/DiffOperators.jl#L67
+        function mean_nn(u,n)
+            return 0.5*( n.plus⋅ ∇∇(u).plus⋅ n.plus + n.minus ⋅ ∇∇(u).minus ⋅ n.minus )
+        end
 
-        # PROBLEM 2
-        # Statement: Following up from the previous problem. It should be corrected to
-        # mean(Δ(u)) -> mean(n_Λ*∇∇(u)*n_Λ)
+        ⋅
+        # Inner facets
+        a(u,v) =( ∫( ∇∇(v)⊙∇∇(u) + α⋅(v⊙u) )dΩ
+                 + ∫(-mean_nn(v,n_Λ)⊙jump(∇(u)⋅n_Λ) - mean_nn(u,n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ
+                 + ∫((γ/h)⋅jump(∇(u)⋅n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ
+                 + ∫(-( n_Γ ⋅ ∇∇(v)⋅ n_Γ )⊙∇(u)⋅n_Γ - ( n_Γ ⋅ ∇∇(u)⋅ n_Γ )⊙∇(v)⋅n_Γ)dΓ
+                 + ∫((γ/h)⋅ ∇(u)⊙n_Γ⋅∇(v)⊙n_Γ )dΓ
+                )
 
-        # PROBLEM 3
-        # Statement: Why is the terms negative??
+        l(v) = ∫( v ⋅ f )dΩ + ∫(- (g⋅v))dΓ
 
-        a(u,v) = ∫( Δ(u)*Δ(v) + α* u⋅v )dΩ +
-                 ∫( - mean(Δ(u))*jump(∇(v)⋅n_Λ) - jump(∇(u)⋅n_Λ)*mean(Δ(v))
-                   + γ/h*jump(∇(u)⋅n_Λ)*jump(∇(v)⋅n_Λ) )dΛ
-
-        # PROBLEM 4
-        # Why the directional derivative of test function v? Does not makes sense given the identity:
-        # --> (Δ^2 u, v)_Ω  = (D^2 u , D^2 v)_Ω + (∂_n Δ u, v)_∂Ω - (∂_nn u, ∂_n v)_∂Ω  - (∂_nt u, ∂_t v)_∂Ω
-        #                   = (D^2 u , D^2 v)_Ω + (g, v)_∂Ω
-
-        l(v) = ∫( v*f )dΩ + ∫( g*(∇(v)⋅n_Γ) )dΓ
-        op = AffineFEOperator(a,l,U,V)
+        op = AffineFEOperator(a, l, U, V)
         uh = solve(op)
 
-        u_inter = interpolate_everywhere(u, V)
+        e = u - uh
+        el2 = sqrt(sum( ∫(e*e)dΩ ))
+        eh = sqrt(sum( ∫( ∇∇(e)⊙∇∇(e) )*dΩ
+                      + ( γ/h ) * ∫(jump(∇(e)⋅n_Λ) ⊙ jump(∇(e)⋅n_Λ))dΛ
+                      + ( h/γ ) * ∫(mean_nn(e,n_Λ) ⊙ mean_nn(e,n_Λ))dΛ
+                      + ( γ/h ) * ∫((∇(e)⋅n_Γ) ⊙ (∇(e)⋅n_Γ))dΓ
+                      + ( h/γ ) * ∫(( n_Γ ⋅ ∇∇(e)⋅ n_Γ ) ⊙ ( n_Γ ⋅ ∇∇(e)⋅ n_Γ ))dΓ
+                     ))
 
-        e = u_inter - uh
-        l2(u) = sqrt(sum( ∫( u⊙u )*dΩ ))
-        h_energy(u) = sqrt(sum( ∫( ∇(u)⊙∇(u) )*dΩ
-                         + ( γ/h ) * ∫(jump(∇(e)⋅n_Λ) ⊙ jump(∇(e)⋅n_Λ))dΛ
-                         + ( h/γ ) * ∫(mean(Δ(e)) ⊙ mean(Δ(e)))dΛ
-                        ))
-
-        el2 = l2(e)
-        eh = h_energy(e)
-        eh = el2
         res = Results( model=model, Ω=Ω, Γ=Γ, Λ=Λ,
                       h=h, γ=γ, order=order, degree=degree,
-                      u_inter=u_inter, uh=uh, e=e, el2=el2, eh=eh)
+                      u_inter=u, uh=uh, e=e, el2=el2, eh=eh)
 
         return res
     end
