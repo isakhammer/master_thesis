@@ -37,17 +37,16 @@ function run_CP(; n=10, generate_vtk::Bool=false, dirname::String, test::Bool=fa
     g(x) = Δ(u)(x)
     α = 1
 
-    function mean_nn(u,n; boundary=false)
-        !boundary && return 0.5*( n.plus⋅ ∇∇(u).plus⋅ n.plus + n.minus ⋅ ∇∇(u).minus ⋅ n.minus )
-        boundary && return ( n ⋅ ∇∇(u)⋅ n )
+    function mean_nn(u,n)
+        return 0.5*( n.plus⋅ ∇∇(u).plus⋅ n.plus + n.minus ⋅ ∇∇(u).minus ⋅ n.minus )
     end
 
     ⋅
     # Inner facets
     a(u,v) =( ∫( ∇∇(v)⊙∇∇(u) + α⋅(v⊙u) )dΩ
              + ∫(-mean_nn(v,n_Λ)⊙jump(∇(u)⋅n_Λ) - mean_nn(u,n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ
-             + ∫(-mean_nn(v,n_Γ, boundary=true)⊙∇(u)⋅n_Γ - mean_nn(u,n_Γ, boundary=true)⊙∇(v)⋅n_Γ)dΓ
              + ∫((γ/h)⋅jump(∇(u)⋅n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ
+             + ∫(( n_Γ ⋅ ∇∇(v)⋅ n_Γ )⊙∇(u)⋅n_Γ + ( n_Γ ⋅ ∇∇(u)⋅ n_Γ )⊙∇(v)⋅n_Γ)dΓ
              + ∫((γ/h)⋅ ∇(u)⊙n_Γ⋅∇(v)⊙n_Γ )dΓ
              )
 
@@ -62,7 +61,7 @@ function run_CP(; n=10, generate_vtk::Bool=false, dirname::String, test::Bool=fa
                     + ( γ/h ) * ∫(jump(∇(e)⋅n_Λ) ⊙ jump(∇(e)⋅n_Λ))dΛ
                     + ( h/γ ) * ∫(mean(Δ(e)) ⊙ mean(Δ(e)))dΛ
                     + ( γ/h ) * ∫((∇(e)⋅n_Γ) ⊙ (∇(e)⋅n_Γ))dΓ
-                    + ( h/γ ) * ∫(mean_nn(e,n_Γ,boundary=true) ⊙ mean_nn(e,n_Γ,boundary=true))dΓ
+                    + ( h/γ ) * ∫(( n_Γ ⋅ ∇∇(e)⋅ n_Γ ) ⊙ ( n_Γ ⋅ ∇∇(e)⋅ n_Γ ))dΓ
                    ))
 
 
