@@ -22,7 +22,8 @@ module BiharmonicEquation
         uh
         e
         el2
-        eh
+        eh1
+        eh_energy
     end
 
 
@@ -102,16 +103,17 @@ module BiharmonicEquation
 
         e = u - uh
         el2 = sqrt(sum( ∫(e*e)dΩ ))
-        eh = sqrt(sum( ∫( ∇∇(e)⊙∇∇(e) )*dΩ
+        eh_energy = sqrt(sum( ∫( ∇∇(e)⊙∇∇(e) )*dΩ
                       + ( γ/h ) * ∫(jump(∇(e)⋅n_Λ) ⊙ jump(∇(e)⋅n_Λ))dΛ
                       + ( h/γ ) * ∫(mean_nn(e,n_Λ) ⊙ mean_nn(e,n_Λ))dΛ
                       + ( γ/h ) * ∫((∇(e)⋅n_Γ) ⊙ (∇(e)⋅n_Γ))dΓ
                       + ( h/γ ) * ∫(( n_Γ ⋅ ∇∇(e)⋅ n_Γ ) ⊙ ( n_Γ ⋅ ∇∇(e)⋅ n_Γ ))dΓ
                      ))
+        eh1 = sqrt(sum( ∫( e⊙e + ∇(e)⊙∇(e) )*dΩ ))
 
         res = Results( model=model, Ω=Ω, Γ=Γ, Λ=Λ,
                       h=h, γ=γ, order=order, degree=degree,
-                      u_inter=u, uh=uh, e=e, el2=el2, eh=eh)
+                      u_inter=u, uh=uh, e=e, el2=el2, eh1=eh1, eh_energy=eh_energy)
 
         return res
     end

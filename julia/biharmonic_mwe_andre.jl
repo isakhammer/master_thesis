@@ -6,11 +6,11 @@ u(x) = 100*cos(x[1])*cos(x[2])
 
 # Mass term scaling
 α = 1
- 
+
 # Δ²u = f
 f(x) = 4*u(x) + α*u(x)
 
-# ∂Δu/∂n 
+# ∂Δu/∂n
 q(x) = 0
 
 function run_exp(n=8, k=2, use_quads=false)
@@ -25,7 +25,7 @@ function run_exp(n=8, k=2, use_quads=false)
         model = CartesianDiscreteModel(pmin, pmax, partition)
     end
 
-    # Define triangulation 
+    # Define triangulation
     Ω = Triangulation(model)
     Λ = SkeletonTriangulation(model)
     Γ = BoundaryTriangulation(model)
@@ -42,7 +42,7 @@ function run_exp(n=8, k=2, use_quads=false)
     V = TestFESpace(Ω, reffe, conformity=:H1)
     U = TrialFESpace(V)
 
-    ## Define the weak form 
+    ## Define the weak form
 
     # Measures
     degree = 2*order
@@ -61,16 +61,16 @@ function run_exp(n=8, k=2, use_quads=false)
     # Define forms
     # TODO: Make sure we have the right sign
     a_Ω(u, v) = ∇∇(u)⊙∇∇(v) + α*u*v
-    a_Λ(u, v) = (- n_Λ.⁺⋅(mean(∇∇(u))⋅n_Λ.⁺)*jump(n_Λ ⋅ ∇(v)) 
+    a_Λ(u, v) = (- n_Λ.⁺⋅(mean(∇∇(u))⋅n_Λ.⁺)*jump(n_Λ ⋅ ∇(v))
                 - n_Λ.⁺⋅(mean(∇∇(v))⋅n_Λ.⁺)*jump(n_Λ ⋅ ∇(u))
                 + γ/h*jump(n_Λ⋅∇(u))*jump(n_Λ⋅∇(v)))
-    a_Γ(u, v) = (- n_Γ⋅((∇∇(u))⋅ n_Γ)*(n_Γ ⋅ ∇(v)) 
-                - n_Γ⋅((∇∇(v))⋅ n_Γ)*(n_Γ ⋅ ∇(u)) 
+    a_Γ(u, v) = (- n_Γ⋅((∇∇(u))⋅ n_Γ)*(n_Γ ⋅ ∇(v))
+                - n_Γ⋅((∇∇(v))⋅ n_Γ)*(n_Γ ⋅ ∇(u))
                 + γ/h*(n_Γ⋅∇(u))*(n_Γ⋅∇(v)))
 
     a(u,v) = ∫(a_Ω(u,v))dΩ + ∫(a_Λ(u,v))dΛ + ∫(a_Γ(u,v))dΓ
 
-    # TODO: Need to check sign for q for zero q 
+    # TODO: Need to check sign for q for zero q
     #       Right now q = 0 with our test example
     l(v) = ∫( v*f )dΩ - ∫(v*q)dΓ
 
