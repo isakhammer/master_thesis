@@ -18,7 +18,7 @@ function run_CP(; n=10, generate_vtk::Bool=false, dirname::String, test::Bool=fa
     model = CartesianDiscreteModel(domain2D,partition2D)
 
     # Spaces
-    V = TestFESpace(model, ReferenceFE(lagrangian,Float64,order), conformity=:L2)
+    V = TestFESpace(model, ReferenceFE(lagrangian,Float64,order), conformity=:H1)
     U = TrialFESpace(V)
     Ω = Triangulation(model)
     Λ = SkeletonTriangulation(model)
