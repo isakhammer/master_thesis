@@ -48,9 +48,9 @@ function run_CP(; n=10, generate_vtk::Bool=false, dirname::String, test::Bool=fa
     a(u,v) =( ∫( ∇∇(v)⊙∇∇(u) + α⋅(v⊙u) )dΩ
              + ∫(-mean_nn(v,n_Λ)⊙jump(∇(u)⋅n_Λ) - mean_nn(u,n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ
              + ∫((γ/h)⋅jump(∇(u)⋅n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ
-             + ∫( u*v )dΓ
-             )
+             + ∫((γ/h)⋅ ∇(u)⊙n_Γ⋅∇(v)⊙n_Γ )dΓ
              # + ∫(mean_nn(v,n_Γ, boundary=true)⊙∇(u)⋅n_Γ - mean_nn(u,n_Γ, boundary=true)⊙∇(v)⋅n_Γ)dΓ
+             )
              # + (γ/h)⋅∫( ∇(u)⋅n_Γ )⊙( ∇(v)⋅n_Γ )dΓ
 
     l(v) = ∫( v ⋅ f )dΩ + ∫(- (g⋅v))dΓ
@@ -63,7 +63,8 @@ function run_CP(; n=10, generate_vtk::Bool=false, dirname::String, test::Bool=fa
     eh = sqrt(sum( ∫( ∇(e)⊙∇(e) )*dΩ
                     + ( γ/h ) * ∫(jump(∇(e)⋅n_Λ) ⊙ jump(∇(e)⋅n_Λ))dΛ
                     + ( h/γ ) * ∫(mean(Δ(e)) ⊙ mean(Δ(e)))dΛ
-                    + ( γ/h ) * ∫(jump(∇(e)⋅n_Γ      ) ⊙ jump(∇(e)⋅n_Γ))dΓ
+                    # + ( γ/h ) * ∫(jump(∇(e)⋅n_Γ) ⊙ jump(∇(e)⋅n_Γ))dΓ
+                    + ( γ/h ) * ∫((∇(e)⋅n_Γ) ⊙ (∇(e)⋅n_Γ))dΓ
                     + ( h/γ ) * ∫(mean(Δ(e)) ⊙ mean(Δ(e)))dΓ
                    ))
 
