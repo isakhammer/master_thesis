@@ -63,7 +63,7 @@ function run_CP(; n=10, generate_vtk::Bool=false, dirname::String, test::Bool=fa
                     + ( γ/h ) * ∫(jump(∇(e)⋅n_Λ) ⊙ jump(∇(e)⋅n_Λ))dΛ
                     + ( h/γ ) * ∫(mean(Δ(e)) ⊙ mean(Δ(e)))dΛ
                     + ( γ/h ) * ∫((∇(e)⋅n_Γ) ⊙ (∇(e)⋅n_Γ))dΓ
-                    + ( h/γ ) * ∫(mean(Δ(e)) ⊙ mean(Δ(e)))dΓ
+                    + ( h/γ ) * ∫(mean_nn(e,n_Γ,boundary=true) ⊙ mean_nn(e,n_Γ,boundary=true))dΓ
                    ))
 
 
