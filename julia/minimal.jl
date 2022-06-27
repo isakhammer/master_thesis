@@ -5,11 +5,11 @@ using Test
 import Gridap: ∇
 
 function run_CP(; n=10, generate_vtk::Bool=false, dirname::String, test::Bool=false)
-
-    # mesh generation
     L = 2π
     h = L / n
     γ = 5
+    α = 1
+
     u(x) = cos(x[1])*cos(x[2])
 
     order = 2
@@ -37,7 +37,6 @@ function run_CP(; n=10, generate_vtk::Bool=false, dirname::String, test::Bool=fa
     # f(x) = Δ(Δ(u))(x)+ α*u(x)
     f(x) = ( 4 + α )*u(x)
     g(x) = 0
-    α = 1
 
     function mean_nn(u,n)
         return 0.5*( n.plus⋅ ∇∇(u).plus⋅ n.plus + n.minus ⋅ ∇∇(u).minus ⋅ n.minus )
