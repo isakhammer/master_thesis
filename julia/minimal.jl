@@ -38,7 +38,6 @@ function run_CP(; n=10, generate_vtk::Bool=false, dirname::String, test::Bool=fa
     α = 1
 
     function mean_nn(u,n; boundary=false)
-        # return 0.5*( n.plus⋅ ∇∇(u).plus⋅ n.plus + n.minus ⋅ ∇∇(u).minus ⋅ n.minus )
         !boundary && return 0.5*( n.plus⋅ ∇∇(u).plus⋅ n.plus + n.minus ⋅ ∇∇(u).minus ⋅ n.minus )
         boundary && return ( n ⋅ ∇∇(u)⋅ n )
     end
@@ -47,9 +46,9 @@ function run_CP(; n=10, generate_vtk::Bool=false, dirname::String, test::Bool=fa
     # Inner facets
     a(u,v) =( ∫( ∇∇(v)⊙∇∇(u) + α⋅(v⊙u) )dΩ
              + ∫(-mean_nn(v,n_Λ)⊙jump(∇(u)⋅n_Λ) - mean_nn(u,n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ
+             + ∫(-mean_nn(v,n_Γ, boundary=true)⊙∇(u)⋅n_Γ - mean_nn(u,n_Γ, boundary=true)⊙∇(v)⋅n_Γ)dΓ
              + ∫((γ/h)⋅jump(∇(u)⋅n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ
              + ∫((γ/h)⋅ ∇(u)⊙n_Γ⋅∇(v)⊙n_Γ )dΓ
-             + ∫(mean_nn(v,n_Γ, boundary=true)⊙∇(u)⋅n_Γ - mean_nn(u,n_Γ, boundary=true)⊙∇(v)⋅n_Γ)dΓ
              )
 
     l(v) = ∫( v ⋅ f )dΩ + ∫(- (g⋅v))dΓ
