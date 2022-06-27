@@ -67,8 +67,8 @@ function run_examples(;figdir, L, u::Function, ns = [2^3,2^5], γ=2, order=2)
     ndir(n) = exampledir*"/n_"*string(n)
 
     for n in ns
-        sol, ss = BiharmonicEquation.run_CP_method(n=n, L=L, γ=γ, order=order)
-        BiharmonicEquation.generate_vtk(ss=ss,sol=sol,dirname=ndir(n))
+        res = BiharmonicEquation.run_CP_method(n=n, L=L, γ=γ, order=order)
+        BiharmonicEquation.generate_vtk(res=res,dirname=ndir(n))
         # @test sol.el2 < 10^0
     end
 end
@@ -94,9 +94,9 @@ function convergence_analysis(;figdir, L, u::Function, orders = [2,3,4], γs = [
         println("Run convergence tests: order = "*string(order))
 
         for n in ns
-            sol, ss = BiharmonicEquation.run_CP_method(n=n, L=L, γ=γ, order=order, u=u)
-            push!(el2s, sol.el2)
-            push!(ehs, sol.eh)
+            res = BiharmonicEquation.run_CP_method(n=n, L=L, γ=γ, order=order, u=u)
+            push!(el2s, res.el2)
+            push!(ehs, res.eh)
             # push!(hs,   ss.h)
         end
         generate_figures(hs, hs_str, el2s, ehs, γ, order, conv_dir)
@@ -149,7 +149,7 @@ function main()
         figdir = mainfigdir*"/L_"*string(round(L,digits=2))*"_m_"*string(m)*"_r_"*string(r);
         makedir(figdir)
         u = BiharmonicEquation.man_sol(L=L,m=m,r=r)
-        convergence_analysis(figdir=figdir, L=L, u=u,  orders=orders, γs=γs)
+        # convergence_analysis(figdir=figdir, L=L, u=u,  orders=orders, γs=γs)
         run_examples(figdir=figdir, L=L,u=u)
         # run_gamma_analysis(figdir=figdir, L=L,u=u)
     end

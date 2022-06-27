@@ -1,36 +1,24 @@
 
-
 module BiharmonicEquation
     using Gridap
+    using Parameters
     using GridapMakie
     using GLMakie
     using Test
 
-    # TODO: find a way to make structs in a one-liner
-    struct GridapSpaces
+
+    @with_kw struct Results
+        Ω
+        Γ
+        Λ
+
         model
         h::Real
         γ::Real
         order::Int
         degree::Int
 
-        V
-        U
-
-        Ω
-        Γ
-        Λ
-
-        dΩ
-        dΓ
-        dΛ
-
-        n_Γ
-        n_Λ
-    end
-
-    struct Solution
-        u
+        u_inter
         uh
         e
         el2
@@ -38,36 +26,37 @@ module BiharmonicEquation
     end
 
 
-    function generate_vtk(;ss::GridapSpaces, sol::Solution, dirname::String)
+    function generate_vtk(; res::Results, dirname::String)
         println("Generating vtk's in ", dirname)
         if (isdir(dirname))
             rm(dirname, recursive=true)
         end
         mkdir(dirname)
 
-        writevtk(ss.model, dirname*"/model")
-        writevtk(ss.Λ,dirname*"/skeleton")
-        writevtk(ss.Γ,dirname*"/boundary")
-        writevtk(ss.Λ,dirname*"/jumps",cellfields=["jump_u"=>jump(sol.uh)])
-        writevtk(ss.Ω,dirname*"/omega",cellfields=["uh"=>sol.uh])
-        writevtk(ss.Ω,dirname*"/error",cellfields=["e"=>sol.e])
-        writevtk(ss.Ω,dirname*"/manufatured",cellfields=["u"=>sol.u])
+        # writevtk(res.model, dirname*"/model")
+        # writevtk(res.Λ, dirname*"/skeleton")
+        # writevtk(res.Γ, dirname*"/boundary")
+        # writevtk(res.Λ, dirname*"/jumps",cellfields=["jump_u"=>jump(res.uh)])
+        # writevtk(res.Ω, dirname*"/omega",cellfields=["uh"=>res.uh])
+        # writevtk(res.Ω, dirname*"/error",cellfields=["e"=>res.e])
+        # writevtk(res.Ω, dirname*"/manufatured",cellfields=["u"=>res.u])
 
 
-        fig = plot(ss.Λ)
-        wireframe!(ss.Λ, color=:black, linewidth=2)
-        wireframe!(ss.Γ, color=:black, linewidth=2)
+        fig = plot(res.Λ)
+        wireframe!(res.Λ, color=:black, linewidth=2)
+        wireframe!(res.Γ, color=:black, linewidth=2)
         save(dirname*"/grid.png", fig)
 
-        fig, _ , plt = plot(ss.Ω, sol.u)
+        fig, _ , plt = plot(res.Ω, res.u_inter)
         Colorbar(fig[1,2], plt)
         save(dirname*"/man_sol.png", fig)
 
     end
 
 
-    function run_CP_method(;n, L, γ, order,  u::Function = man_sol(), simplex=true,)
+    function run_CP_method(;n, L, γ, order,  u::Function = man_sol(), simplex=true)
         h = L / n
+        γ = 5*order*(order+1)
 
         domain = (0,L,0,L)
         partition = (n,n)
@@ -79,13 +68,8 @@ module BiharmonicEquation
         end
 
         # FE space
-        V = TestFESpace(model,ReferenceFE(lagrangian,Float64,order))
-
-        if u !== nothing
-            U = TrialFESpace(V,u)
-        else
-            U = TrialFESpace(V)
-        end
+        V = TestFESpace(model,ReferenceFE(lagrangian,Float64,order),conformity=:H1)
+        U = TrialFESpace(V)
 
         # Triangulation
         Ω = Triangulation(model)
@@ -97,12 +81,6 @@ module BiharmonicEquation
         dΛ = Measure(Λ,degree)
         n_Γ = get_normal_vector(Γ)
         n_Λ = get_normal_vector(Λ)
-
-        ss = BiharmonicEquation.GridapSpaces(model, h, γ, order, degree,
-                                                    V,U,
-                                                    Ω, Γ, Λ,
-                                                    dΩ, dΓ, dΛ,
-                                                    n_Γ, n_Λ)
 
         # Analytical manufactured solution
         α = 1
@@ -124,30 +102,36 @@ module BiharmonicEquation
         # PROBLEM 3
         # Statement: Why is the terms negative??
 
-        a(u,v) = ∫( Δ(u)*Δ(v) + α* u⋅v )ss.dΩ +
-                 ∫( - mean(Δ(u))*jump(∇(v)⋅ss.n_Λ) - jump(∇(u)⋅ss.n_Λ)*mean(Δ(v))
-                   + ss.γ/ss.h*jump(∇(u)⋅ss.n_Λ)*jump(∇(v)⋅ss.n_Λ) )ss.dΛ
+        a(u,v) = ∫( Δ(u)*Δ(v) + α* u⋅v )dΩ +
+                 ∫( - mean(Δ(u))*jump(∇(v)⋅n_Λ) - jump(∇(u)⋅n_Λ)*mean(Δ(v))
+                   + γ/h*jump(∇(u)⋅n_Λ)*jump(∇(v)⋅n_Λ) )dΛ
 
         # PROBLEM 4
         # Why the directional derivative of test function v? Does not makes sense given the identity:
         # --> (Δ^2 u, v)_Ω  = (D^2 u , D^2 v)_Ω + (∂_n Δ u, v)_∂Ω - (∂_nn u, ∂_n v)_∂Ω  - (∂_nt u, ∂_t v)_∂Ω
         #                   = (D^2 u , D^2 v)_Ω + (g, v)_∂Ω
 
-        l(v) = ∫( v*f )ss.dΩ + ∫( g*(∇(v)⋅ss.n_Γ) )ss.dΓ
-        op = AffineFEOperator(a,l,ss.U,ss.V)
+        l(v) = ∫( v*f )dΩ + ∫( g*(∇(v)⋅n_Γ) )dΓ
+        op = AffineFEOperator(a,l,U,V)
         uh = solve(op)
 
-        e = u - uh
-        l2(u) = sqrt(sum( ∫( u⊙u )*ss.dΩ ))
-        h_energy(u) = sqrt(sum( ∫( ∇(u)⊙∇(u) )*ss.dΩ
-                         + ( ss.γ/ss.h ) * ∫(jump(∇(e)⋅ss.n_Λ) ⊙ jump(∇(e)⋅ss.n_Λ))ss.dΛ
-                         + ( ss.h/ss.γ ) * ∫(mean(Δ(e)) ⊙ mean(Δ(e)))ss.dΛ
+        u_inter = interpolate_everywhere(u, V)
+
+        e = u_inter - uh
+        l2(u) = sqrt(sum( ∫( u⊙u )*dΩ ))
+        h_energy(u) = sqrt(sum( ∫( ∇(u)⊙∇(u) )*dΩ
+                         + ( γ/h ) * ∫(jump(∇(e)⋅n_Λ) ⊙ jump(∇(e)⋅n_Λ))dΛ
+                         + ( h/γ ) * ∫(mean(Δ(e)) ⊙ mean(Δ(e)))dΛ
                         ))
 
         el2 = l2(e)
         eh = h_energy(e)
-        sol = Solution(u,uh,e,el2,eh)
-        return sol, ss
+        eh = el2
+        res = Results( model=model, Ω=Ω, Γ=Γ, Λ=Λ,
+                      h=h, γ=γ, order=order, degree=degree,
+                      u_inter=u_inter, uh=uh, e=e, el2=el2, eh=eh)
+
+        return res
     end
 
 
