@@ -33,10 +33,10 @@ function run_CP(; n=10, generate_vtk::Bool=false, dirname::String, test::Bool=fa
     n_Γ = get_normal_vector(Γ)
 
     # manufactured solution
-    # f(x) = ( 4 + α )*u(x)
-    f(x) = Δ(Δ(u))(x)+ α*u(x)
+    # g(x) = ( ∇( Δ(u))⊙n_Γ)(x) #this does not compile since u is a ordinary function inner product with normal field vector
+    # f(x) = Δ(Δ(u))(x)+ α*u(x)
+    f(x) = ( 4 + α )*u(x)
     g(x) = 0
-    # g(x) = Δ(u)(x)
     α = 1
 
     function mean_nn(u,n)
