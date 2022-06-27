@@ -67,15 +67,14 @@ function run_examples(;figdir, L, u::Function, ns = [2^3,2^5], γ=2, order=2)
     ndir(n) = exampledir*"/n_"*string(n)
 
     for n in ns
-        ss = BiharmonicEquation.generate_square_spaces(n=n, L=L, order=order, γ=γ)
-        sol = BiharmonicEquation.run_CP_method(ss=ss,u=u)
+        sol, ss = BiharmonicEquation.run_CP_method(n=n, L=L, γ=γ, order=order)
         BiharmonicEquation.generate_vtk(ss=ss,sol=sol,dirname=ndir(n))
         # @test sol.el2 < 10^0
     end
 end
 
 
-function convergence_analysis(;figdir, L, u::Function, orders = [2,3,4], γs = [2, 8, 16], ns = [2^3,2^4,2^5,2^6,2^7],  method="test")
+function convergence_analysis(;figdir, L, u::Function, orders = [2,3,4], γs = [2, 8, 16], ns = [2^3,2^4,2^5,2^6,2^7])
     println("Run convergence",)
     conv_dir = figdir*"/convergence"
     makedir(conv_dir)
@@ -92,11 +91,10 @@ function convergence_analysis(;figdir, L, u::Function, orders = [2,3,4], γs = [
 
         el2s = Float64[]
         ehs = Float64[]
-        println("Run convergence tests: order = "*string(order), " Method: " , method)
+        println("Run convergence tests: order = "*string(order))
 
         for n in ns
-            ss = BiharmonicEquation.generate_square_spaces(n=n,L=L, γ=γ, order=order)
-            sol = BiharmonicEquation.run_CP_method(ss=ss, u=u, method=method)
+            sol, ss = BiharmonicEquation.run_CP_method(n=n, L=L, γ=γ, order=order, u=u)
             push!(el2s, sol.el2)
             push!(ehs, sol.eh)
             # push!(hs,   ss.h)
@@ -106,7 +104,7 @@ function convergence_analysis(;figdir, L, u::Function, orders = [2,3,4], γs = [
 
 end
 
-function run_gamma_analysis(;figdir, L, u::Function, orders = [2,3,4], γs = [2^0,2^1, 2^2,2^3,2^4,2^5,2^6], ns = [2^3,2^4,2^5,2^6,2^7], method="test")
+function run_gamma_analysis(;figdir, L, u::Function, orders = [2,3,4], γs = [2^0,2^1, 2^2,2^3,2^4,2^5,2^6], ns = [2^3,2^4,2^5,2^6,2^7])
     hs = 1 .// ns
     for order in orders
         println("Run gamma analysis ", order, " of ", orders)
@@ -121,8 +119,7 @@ function run_gamma_analysis(;figdir, L, u::Function, orders = [2,3,4], γs = [2^
             println("γ ", ": ", i, "/", length(γs))
 
             for n in ns
-                ss = BiharmonicEquation.generate_square_spaces(n=n,L=L, γ=γ, order=order)
-                sol = BiharmonicEquation.run_CP_method(ss=ss, u=u, method=method)
+                sol,ss = BiharmonicEquation.run_CP_method(n=n,L=L, γ=γ, order=order, u=u)
                 push!(el2s, sol.el2)
                 push!(ehs, sol.eh)
                 # push!(hs,   ss.h)

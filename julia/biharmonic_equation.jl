@@ -38,7 +38,35 @@ module BiharmonicEquation
     end
 
 
-    function generate_square_spaces(;n, L, γ, order, simplex=true, u=nothing)
+    function generate_vtk(;ss::GridapSpaces, sol::Solution, dirname::String)
+        println("Generating vtk's in ", dirname)
+        if (isdir(dirname))
+            rm(dirname, recursive=true)
+        end
+        mkdir(dirname)
+
+        writevtk(ss.model, dirname*"/model")
+        writevtk(ss.Λ,dirname*"/skeleton")
+        writevtk(ss.Γ,dirname*"/boundary")
+        writevtk(ss.Λ,dirname*"/jumps",cellfields=["jump_u"=>jump(sol.uh)])
+        writevtk(ss.Ω,dirname*"/omega",cellfields=["uh"=>sol.uh])
+        writevtk(ss.Ω,dirname*"/error",cellfields=["e"=>sol.e])
+        writevtk(ss.Ω,dirname*"/manufatured",cellfields=["u"=>sol.u])
+
+
+        fig = plot(ss.Λ)
+        wireframe!(ss.Λ, color=:black, linewidth=2)
+        wireframe!(ss.Γ, color=:black, linewidth=2)
+        save(dirname*"/grid.png", fig)
+
+        fig, _ , plt = plot(ss.Ω, sol.u)
+        Colorbar(fig[1,2], plt)
+        save(dirname*"/man_sol.png", fig)
+
+    end
+
+
+    function run_CP_method(;n, L, γ, order,  u::Function = man_sol(), simplex=true,)
         h = L / n
 
         domain = (0,L,0,L)
@@ -70,55 +98,12 @@ module BiharmonicEquation
         n_Γ = get_normal_vector(Γ)
         n_Λ = get_normal_vector(Λ)
 
-        return BiharmonicEquation.GridapSpaces(model, h, γ, order, degree,
-                                               V,U,
-                                               Ω, Γ, Λ,
-                                               dΩ, dΓ, dΛ,
-                                               n_Γ, n_Λ)
-    end
+        ss = BiharmonicEquation.GridapSpaces(model, h, γ, order, degree,
+                                                    V,U,
+                                                    Ω, Γ, Λ,
+                                                    dΩ, dΓ, dΛ,
+                                                    n_Γ, n_Λ)
 
-    function generate_sol(;u, uh, ss::GridapSpaces)
-        e = u - uh
-        l2(u) = sqrt(sum( ∫( u⊙u )*ss.dΩ ))
-        h(u) = sqrt(sum( ∫( ∇(u)⊙∇(u) )*ss.dΩ
-                         + ( ss.γ/ss.h ) * ∫(jump(∇(e)⋅ss.n_Λ) ⊙ jump(∇(e)⋅ss.n_Λ))ss.dΛ
-                         + ( ss.h/ss.γ ) * ∫(mean(Δ(e)) ⊙ mean(Δ(e)))ss.dΛ
-                        ))
-
-        el2 = l2(e)
-        eh = h(e)
-        Solution(u,uh,e,el2,eh)
-    end
-
-    function generate_vtk(;ss::GridapSpaces, sol::Solution, dirname::String)
-        println("Generating vtk's in ", dirname)
-        if (isdir(dirname))
-            rm(dirname, recursive=true)
-        end
-        mkdir(dirname)
-
-        writevtk(ss.model, dirname*"/model")
-        writevtk(ss.Λ,dirname*"/skeleton")
-        writevtk(ss.Γ,dirname*"/boundary")
-        writevtk(ss.Λ,dirname*"/jumps",cellfields=["jump_u"=>jump(sol.uh)])
-        writevtk(ss.Ω,dirname*"/omega",cellfields=["uh"=>sol.uh])
-        writevtk(ss.Ω,dirname*"/error",cellfields=["e"=>sol.e])
-        writevtk(ss.Ω,dirname*"/manufatured",cellfields=["u"=>sol.u])
-
-
-        fig = plot(ss.Λ)
-        wireframe!(ss.Λ, color=:black, linewidth=2)
-        wireframe!(ss.Γ, color=:black, linewidth=2)
-        save(dirname*"/grid.png", fig)
-
-        fig, _ , plt = plot(ss.Ω, sol.u)
-        Colorbar(fig[1,2], plt)
-        save(dirname*"/man_sol.png", fig)
-
-    end
-
-
-    function run_test_method(;ss::GridapSpaces, u::Function)
         # Analytical manufactured solution
         α = 1
         f(x) = Δ(Δ(u))(x)+ α*u(x)
@@ -150,43 +135,25 @@ module BiharmonicEquation
 
         l(v) = ∫( v*f )ss.dΩ + ∫( g*(∇(v)⋅ss.n_Γ) )ss.dΓ
         op = AffineFEOperator(a,l,ss.U,ss.V)
-
-        uh = solve(op)
-        sol = generate_sol(u=u,uh=uh,ss=ss)
-        return sol
-    end
-
-    function run_DG_method(;ss::GridapSpaces, u::Function)
-        f(x) = Δ(Δ(u))(x)+ α*u(x)
-        g(x) = Δ(u)(x)
-
-        α = 1
-
-        mean_nn(u) = 0.5*( ss.n_Λ.plus⋅ ∇∇(u).plus⋅ ss.n_Λ.plus + ss.n_Λ.minus ⋅ ∇∇(u).minus ⋅ ss.n_Λ.minus )
-        jump_n(u) = ∇(u).plus⋅ ss.n_Λ.plus - ∇(u).minus ⋅ ss.n_Λ.minus
-⋅
-        # Inner facets
-        a(u,v) = ∫( ∇∇(v)⊙∇∇(u) + α⋅(v⊙u) )ss.dΩ + ∫(  mean_nn(v)⊙jump_n(u) + mean_nn(u)⊙jump_n(v) + (ss.γ/ss.h)⋅ jump_n(v)⊙jump_n(u))ss.dΛ
-
-        l(v) = ∫( v ⋅ f )ss.dΩ + ∫(- (g⋅v))ss.dΓ
-
-        op = AffineFEOperator(a, l, ss.U, ss.V)
         uh = solve(op)
 
-        sol = generate_sol(u=u,uh=uh,ss=ss)
-        return sol
+        e = u - uh
+        l2(u) = sqrt(sum( ∫( u⊙u )*ss.dΩ ))
+        h_energy(u) = sqrt(sum( ∫( ∇(u)⊙∇(u) )*ss.dΩ
+                         + ( ss.γ/ss.h ) * ∫(jump(∇(e)⋅ss.n_Λ) ⊙ jump(∇(e)⋅ss.n_Λ))ss.dΛ
+                         + ( ss.h/ss.γ ) * ∫(mean(Δ(e)) ⊙ mean(Δ(e)))ss.dΛ
+                        ))
+
+        el2 = l2(e)
+        eh = h_energy(e)
+        sol = Solution(u,uh,e,el2,eh)
+        return sol, ss
     end
+
 
     function man_sol(;L=1,m=1,r=1)
         u(x) = cos(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
     end
-
-    function run_CP_method(;ss::GridapSpaces, u::Function, method="test")
-        method=="test" && return run_test_method(ss=ss, u=u)
-        method=="DG" && return run_DG_method(ss=ss, u=u)
-        throw(DomainError(method, "Does not have a method with this name"))
-    end
-
 
 end # module
 
