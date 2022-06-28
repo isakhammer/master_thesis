@@ -2,8 +2,9 @@
 module BiharmonicEquation
     using Gridap
     using Parameters
-    using GridapMakie
-    using GLMakie
+    import GridapMakie
+    import Makie
+    import GLMakie
     using Test
 
 
@@ -43,15 +44,14 @@ module BiharmonicEquation
         # writevtk(res.Ω, dirname*"/manufatured",cellfields=["u"=>res.u])
 
 
-        fig = plot(res.Λ)
-        wireframe!(res.Λ, color=:black, linewidth=2)
-        wireframe!(res.Γ, color=:black, linewidth=2)
-        save(dirname*"/grid.png", fig)
+        fig = Makie.plot(res.Λ)
+        Makie.wireframe!(res.Λ, color=:black, linewidth=2)
+        Makie.wireframe!(res.Γ, color=:black, linewidth=2)
+        Makie.save(dirname*"/grid.png", fig)
 
-        fig, _ , plt = plot(res.Ω, res.u_inter)
-        Colorbar(fig[1,2], plt)
-        save(dirname*"/man_sol.png", fig)
-
+        fig, _ , plt = Makie.plot(res.Ω, res.u_inter)
+        Makie.Colorbar(fig[1,2], plt)
+        Makie.save(dirname*"/man_sol.png", fig)
     end
 
 
@@ -109,11 +109,14 @@ module BiharmonicEquation
                       + ( γ/h ) * ∫((∇(e)⋅n_Γ) ⊙ (∇(e)⋅n_Γ))dΓ
                       + ( h/γ ) * ∫(( n_Γ ⋅ ∇∇(e)⋅ n_Γ ) ⊙ ( n_Γ ⋅ ∇∇(e)⋅ n_Γ ))dΓ
                      ))
+
         eh1 = sqrt(sum( ∫( e⊙e + ∇(e)⊙∇(e) )*dΩ ))
 
+        u_inter = interpolate(u, V)
         res = Results( model=model, Ω=Ω, Γ=Γ, Λ=Λ,
                       h=h, γ=γ, order=order, degree=degree,
-                      u_inter=u, uh=uh, e=e, el2=el2, eh1=eh1, eh_energy=eh_energy)
+                      u_inter=u_inter, uh=uh, e=e, el2=el2, eh1=eh1, eh_energy=eh_energy)
+
 
         return res
     end

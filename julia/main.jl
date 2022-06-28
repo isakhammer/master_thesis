@@ -7,8 +7,8 @@ using LaTeXStrings
 using Latexify
 using PrettyTables
 
-function generate_figures(hs, hs_str, el2s, eh1s, ehs_energy, γ::Integer, order::Integer, dirname::String)
-    filename = dirname*"/conv_order_"*string(order)*"_gamma_"*string(γ)
+function generate_figures(hs, hs_str, el2s, eh1s, ehs_energy, γ, order::Integer, dirname::String)
+    filename = dirname*"/conv_order_"*string(order)*"_gamma_"*string(round( γ,digits=2 ))
 
     function generate_plot(hs, el2s, eh1s, ehs_energy)
         fig = CairoMakie.Figure()
@@ -64,21 +64,9 @@ function makedir(dirname)
     mkdir(dirname)
 end
 
-function run_examples(;figdir, L, u::Function, ns = [2^3,2^5], γ=2, order=2)
-    println("Run Examples")
-    exampledir = figdir*"/example"
-    makedir(exampledir)
-    ndir(n) = exampledir*"/n_"*string(n)
-
-    for n in ns
-        res = BiharmonicEquation.run_CP_method(n=n, L=L, γ=γ, order=order)
-        BiharmonicEquation.generate_vtk(res=res,dirname=ndir(n))
-        # @test sol.el2 < 10^0
-    end
-end
 
 
-function convergence_analysis(;figdir, L, u::Function, orders = [2,3,4], γs = [2, 8, 16], ns = [2^3,2^4,2^5,2^6,2^7])
+function convergence_analysis(;figdir, L, u::Function, orders, γs , ns)
     println("Run convergence",)
 
     hs = 1 .// ns # does not render nice in latex table if L=2π
@@ -107,7 +95,7 @@ function convergence_analysis(;figdir, L, u::Function, orders = [2,3,4], γs = [
 
 end
 
-function run_gamma_analysis(;figdir, L, u::Function, orders = [2,3,4], γs = [2^0,2^1, 2^2,2^3,2^4,2^5,2^6], ns = [2^3,2^4,2^5,2^6,2^7])
+function run_gamma_analysis(;figdir, L, u::Function, orders, γs, ns)
     hs = 1 .// ns
     for order in orders
         println("Run gamma = ", order, " of ", orders)
@@ -137,7 +125,6 @@ end
 
 function main()
     mainfigdir = "figures"
-
     if !(isdir(mainfigdir))
         mkdir(mainfigdir)
     end
@@ -146,18 +133,23 @@ function main()
     mainfigdir= mainfigdir*"/"*string(Dates.now())
     makedir(mainfigdir)
 
-    function run(;  L,m,r, orders=[2,3,4], γs=[2,8,32])
+    function run(;  L,m,r)
+        orders=[2,3,4]
+        # ns = [2^2,2^3,2^4,2^5,2^6,2^7,2^8]
+        γs_orders  = @. 1.5*orders*( orders+1)
+
+        ns = [2^2,2^3,2^4,2^5,2^6,2^7]
+        γs = [2^0, 2^1, 2^2,2^3,2^4,2^5,2^6]
         figdir = mainfigdir*"/L_"*string(round(L,digits=2))*"_m_"*string(m)*"_r_"*string(r);
         makedir(figdir)
         u = BiharmonicEquation.man_sol(L=L,m=m,r=r)
-        convergence_analysis(figdir=figdir, L=L, u=u,  orders=orders, γs=γs)
-        run_gamma_analysis(figdir=figdir, L=L,u=u)
-        # run_examples(figdir=figdir, L=L,u=u)
+        convergence_analysis(figdir=figdir, L=L, u=u,  orders=orders, γs=γs_orders, ns=ns)
+        run_gamma_analysis(figdir=figdir, L=L,u=u, orders=orders, γs=γs, ns=ns)
     end
 
-    run(L=2π, m=1,r=1, orders=[2,3,4], γs=[2,8,16])
-    run(L=1,m=1,r=1, orders=[2,3,4], γs=[2,8,16])
-    run(L=1,m=7,r=3, orders=[2,3,4], γs=[2,8,16])
+    run(L=1,m=1,r=1)
+    run(L=2π, m=1,r=1 )
+    run(L=1,m=7,r=3)
 end
 
 
