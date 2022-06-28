@@ -47,19 +47,23 @@ u\left( x; L,m,r \right) = \cos\left(  m\cdot \frac{2\pi}{L}  x_{1}\right)  \cos
     \centering
     \begin{minipage}{.5\linewidth}
     \centering
-    \subfloat[]{\label{fig:ex1_conv:a}\includegraphics[scale=.2]{figures/convergence/L_1.0_m_1_r_1/conv_order_2_gamma_9.0.png}}
+    \subfloat[]{\label{fig:ex1_conv:a}\includegraphics[scale=.25]{figures/convergence/L_1.0_m_1_r_1/conv_order_2_gamma_9.0.png}}
     \end{minipage}%
     \begin{minipage}{.5\linewidth}
     \centering
-    \subfloat[]{\label{fig:ex1_conv:b}\includegraphics[scale=.2]{figures/convergence/L_1.0_m_1_r_1/conv_order_3_gamma_18.0.png}}
+    \subfloat[]{\label{fig:ex1_conv:b}\includegraphics[scale=.25]{figures/convergence/L_1.0_m_1_r_1/conv_order_3_gamma_18.0.png}}
     \end{minipage}\par\medskip
     \centering
-    \subfloat[]{\label{fig:ex1_conv:c}\includegraphics[scale=.2]{figures/convergence/L_1.0_m_1_r_1/conv_order_4_gamma_30.0.png}}
+    \subfloat[]{\label{fig:ex1_conv:c}\includegraphics[scale=.25]{figures/convergence/L_1.0_m_1_r_1/conv_order_4_gamma_30.0.png}}
     \caption{ Example, $L=1$, $m=1$, $r=1$. Polynomials $\mathcal{P}_{k} $ with order $k$ . Figures \ref{fig:ex1_conv:a}, \ref{fig:ex1_conv:b} and \ref{fig:ex1_conv:c} has respectively the order $k=2,3, 4$ with penalty parameters $\gamma = 9,18,30 $.  }
     \label{fig:ex1_conv}
 \end{figure}
 
-Illustration can be seen on figure \ref{fig:sol_l1_m1_r1} with convergence rate \ref{fig:ex1_conv}.
+Illustration can be seen on figure \ref{fig:ex1_conv} with convergence rate \ref{fig:ex1_conv}. The following table is this
+
+\input{figures/convergence/L_1.0_m_1_r_1/conv_order_2_gamma_9.0}
+\input{figures/convergence/L_1.0_m_1_r_1/conv_order_3_gamma_18.0}
+\input{figures/convergence/L_1.0_m_1_r_1/conv_order_4_gamma_30.0}
 
 
 \subsubsection{Second Example, $L=1$, $m=7$, $r=3$}%
@@ -72,69 +76,63 @@ Illustration can be seen on figure \ref{fig:sol_l1_m1_r1} with convergence rate 
     \label{fig:sol_l1_m7_r3}
 \end{figure}
 
-Illustration can be seen on figure \ref{fig:sol_l1_m7_r3}
-
-\subsubsection{Third Example, $L=2 \pi $, $m=1$, $r=1$}%
-\label{sub:first_example}
-\begin{figure}[tbh!]
+\begin{figure}
     \centering
-    \includegraphics[width=0.5\textwidth]{figures/model/l_6.28_m_1_r_1n_100_sol.png}
-    \caption{Illustration of the manufactured solution \eqref{eq:man_sol}   with the parameters $L=2\pi$, $m=1$ and $r=1$ in $\Omega = (0,2\pi)^2$}
-    \label{fig:sol_l2pi_m1_r1}
+    \begin{minipage}{.5\linewidth}
+    \centering
+    \subfloat[]{\label{fig:ex2_conv:a}\includegraphics[scale=.25]{figures/convergence/L_1.0_m_7_r_3/conv_order_2_gamma_9.0.png}}
+    \end{minipage}%
+    \begin{minipage}{.5\linewidth}
+    \centering
+    \subfloat[]{\label{fig:ex2_conv:b}\includegraphics[scale=.25]{figures/convergence/L_1.0_m_7_r_3/conv_order_3_gamma_18.0.png}}
+    \end{minipage}\par\medskip
+    \centering
+    \subfloat[]{\label{fig:ex2_conv:c}\includegraphics[scale=.25]{figures/convergence/L_1.0_m_7_r_3/conv_order_4_gamma_30.0.png}}
+    \caption{ Example, $L=1$, $m=1$, $r=1$. Polynomials $\mathcal{P}_{k} $ with order $k$ . Figures \ref{fig:ex2_conv:a}, \ref{fig:ex2_conv:b} and \ref{fig:ex2_conv:c} has respectively the order $k=2,3, 4$ with penalty parameters $\gamma = 9,18,30 $.  }
+    \label{fig:ex2_conv}
 \end{figure}
 
-Illustration can be seen on figure \ref{fig:sol_l2pi_m1_r1}
+Illustration can be seen on figure \ref{fig:ex2_conv} with convergence rate \ref{fig:ex2_conv}. The following table is
+
+\input{figures/convergence/L_1.0_m_7_r_3/conv_order_2_gamma_9.0}
+\input{figures/convergence/L_1.0_m_7_r_3/conv_order_3_gamma_18.0}
+\input{figures/convergence/L_1.0_m_7_r_3/conv_order_4_gamma_30.0}
 
 
+% \subsubsection{Third Example, $L=2 \pi $, $m=1$, $r=1$}%
+% \label{sub:first_example}
 
-% \caption{Illustration of mesh discretization on the unit square $\Omega = (0,2 \pi)^{2} \subseteq  \mathbb{R} ^{2}$
-%     with triangulation $\mathcal{T} _{h}$. The chosen instances had the diameters $h = \left\{ 2\pi  /10, 2\pi /20,2\pi /40 \right\}$ in figures \ref{fig:mesh_discretization:a},
-%     \ref{fig:mesh_discretization:b} and \ref{fig:mesh_discretization:c}.
-% }
-
-% \label{fig:mesh_discretization}
+% \begin{figure}[tbh!]
+%     \centering
+%     \includegraphics[width=0.5\textwidth]{figures/model/l_6.28_m_1_r_1n_100_sol.png}
+%     \caption{Illustration of the manufactured solution \eqref{eq:man_sol}   with the parameters $L=2\pi$, $m=1$ and $r=1$ in $\Omega = (0,2\pi)^2$}
+%     \label{fig:sol_l2pi_m1_r1}
 % \end{figure}
 
+% Illustration can be seen on figure \ref{fig:sol_l2pi_m1_r1}
 
 % \begin{figure}
 %     \centering
-% \begin{minipage}{.5\linewidth}
-% \centering
-% \subfloat[]{\label{fig:man_conv:a}\includegraphics[scale=.05]{figures/convergence/convergence_d_2.png}}
-% \end{minipage}%
-% \begin{minipage}{.5\linewidth}
-% \centering
-% \subfloat[]{\label{fig:man_conv:b}\includegraphics[scale=.05]{figures/convergence/convergence_d_3.png}}
-% \end{minipage}\par\medskip
-% \centering
-% \subfloat[]{\label{fig:man_conv:c}\includegraphics[scale=.05]{figures/convergence/convergence_d_4.png}}
-
-
-% \caption{ Convergence plots for $\| u - u_{h} \|_{ L_{2}\left( \Omega  \right)  }^{  } \le Ch^{p_{1}} $ and $\| u - u_{h} \|_{ H^{1}\left( \Omega  \right)   }^{  }\le Ch^{p_{2}} $  using Lagrangian elements with polynomials $\mathcal{P}_{k} $ with
-%     order $k$ .
-%     Figures \ref{fig:man_conv:a},
-% \ref{fig:man_conv:b} and \ref{fig:man_conv:c} has respectively the order $k=2,3, 4$.  }
-% \label{fig:man_conv}
+%     \begin{minipage}{.5\linewidth}
+%     \centering
+%     \subfloat[]{\label{fig:ex3_conv:a}\includegraphics[scale=.2]{figures/convergence/L_6.28_m_1_r_1/conv_order_2_gamma_9.0.png}}
+%     \end{minipage}%
+%     \begin{minipage}{.5\linewidth}
+%     \centering
+%     \subfloat[]{\label{fig:ex3_conv:b}\includegraphics[scale=.2]{figures/convergence/L_6.28_m_1_r_1/conv_order_3_gamma_18.0.png}}
+%     \end{minipage}\par\medskip
+%     \centering
+%     \subfloat[]{\label{fig:ex3_conv:c}\includegraphics[scale=.2]{figures/convergence/L_6.28_m_1_r_1/conv_order_4_gamma_30.0.png}}
+%     \caption{ Example, $L=1$, $m=1$, $r=1$. Polynomials $\mathcal{P}_{k} $ with order $k$ . Figures \ref{fig:ex3_conv:a}, \ref{fig:ex3_conv:b} and \ref{fig:ex3_conv:c} has respectively the order $k=2,3, 4$ with penalty parameters $\gamma = 9,18,30 $.  }
+%     \label{fig:ex3_conv}
 % \end{figure}
 
+% Illustration can be seen on figure \ref{fig:ex3_conv} with convergence rate \ref{fig:ex3_conv}. The following table is
 
-% \begin{figure}
-% \begin{center}
-% \begin{tabular}{|c|c|}
-% \toprule
 
-% \textbf{A} & \adjustimage{height=8cm,valign=m}{PlotA} \\
-% \midrule
-% \textbf{B} & \adjustimage{height=8cm,valign=m}{PlotB} \\
-% \midrule
-% \textbf{C} & \adjustimage{height=8cm,valign=m}{PlotC} \\
+% here is tables
+% \input{figures/convergence/L_6.28_m_1_r_1/conv_order_2_gamma_9.0}
+% \input{figures/convergence/L_6.28_m_1_r_1/conv_order_3_gamma_18.0}
+% \input{figures/convergence/L_6.28_m_1_r_1/conv_order_4_gamma_30.0}
 
-% \bottomrule
-% \end{tabular}
-% \end{center}
-% \caption{I don't want a table: Andrew Cashner's way} \label{faketable:mul}
-
-% % \end{figure}
-
-% \input{figures/convergence/convergence_d_2.tex}
 
