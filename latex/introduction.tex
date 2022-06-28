@@ -35,50 +35,56 @@ establishing error estimates and constructing a numerical discretization of the 
 \subsection{Hilbert Spaces}%
 \label{sub:hilbert_spaces}
 
-Assume $\Omega $  to be a compact and open set in $\mathbb{R} ^{2}$ and the parameter $p \in \mathbb{R} $, $p\ge 1$. We define $L^{p}\left( \Omega  \right) $ to be the set of all measurable functions $f: \Omega  \mapsto \mathbb{R} $ such that
+We will generally in section \ref{sub:mathematical_background} assume $\Omega $ to be a compact and open set in $\mathbb{R} ^{2}$. Now let the parameter $p \in \mathbb{R} $, $p\ge 1$. We then define the space $L^{p}\left( \Omega  \right) $ to be the set of all measurable functions $f: \Omega  \mapsto \mathbb{R} $ such that
 $\left\lvert f \right\rvert ^{p}$ is Lebesgue measurable, i.e,
 
 \begin{equation*}
     L^{p}\left( \Omega  \right) = \left\{ f: \Omega \mapsto \mathbb{R}  \mid \int_{\Omega }^{} \left\lvert f \right\rvert ^{p} d \Omega  < \infty  \right\}
 .\end{equation*}
 
-A useful extension which we will use later are the set of locally integrable functions such that for any compact subset $K \subseteq \text{Interior}\left( \Omega  \right) $, that is
+A useful extension, which we will use later, are the set of locally integrable functions for any compact subset $K \subseteq \text{Interior}\left( \Omega  \right) $ \cite{brenner07math}, that is,
 
 \begin{equation*}
     L_{loc}^{1}\left( \Omega  \right)  = \left\{ f: f \in L^{1}\left( \Omega  \right)  \quad \forall K  \right\}.
-.\end{equation*}
-
-
-Let $u \in L^{p}\left( \Omega  \right) $, then we define the integral norm of order $p$ to be \[
-\| u \|_{ L^{p}\left( \Omega  \right)  }^{  }  = \left( \int_{\Omega }^{} \left\lvert u \right\rvert ^{p} dx  \right) ^{\frac{1}{p}}
+\end{equation*}
+Let $u \in L^{p}\left( \Omega  \right) $. We define the integral norm of order $p$ to be \[
+\| u \|_{ L^{p}\left( \Omega  \right)  }^{  }  = \left( \int_{\Omega }^{} \left\lvert u \right\rvert ^{p} dx  \right) ^{\frac{1}{p}}.
 \]
-
-Since $p=2$ is very frequently used we also define a more compact notation $\| u \|_{ \Omega  }^{  }  = \| u \|_{ L^{2}\left( \Omega  \right)  }^{  } $ .  We say that $L^{2}\left( \Omega  \right) $ is a Hilbert space if it is equipped with a inner
+Since $p=2$ is very frequently used in this report, we also define for convenience a compact notation $\| u \|_{ \Omega  }^{  }  = \| u \|_{ L^{2}\left( \Omega  \right)  }^{  } $ .  We say that $L^{2}\left( \Omega  \right) $ is a Hilbert space if it is equipped with a inner
 product of two functions $u,v \in L^{2}\left( \Omega  \right) $ such that
 \[
-\left( u,v \right) _{\Omega } = \left( u,v \right) _{L^2\left( \Omega  \right) } = \int_{\Omega }^{} u \cdot v dx
+\left( u,v \right) _{\Omega } = \left( u,v \right) _{L^2\left( \Omega  \right) } = \int_{\Omega }^{} u  v dx.
 \]
 
-In this report will we use the notation $\mathcal{V} $ for arbitrary Hilbert space. Note that we also use the notation $V^{*}$ for the dual space.
+To generalize do the notation $\mathcal{V} $ for a arbitrary Hilbert space. Furthermore, we define the dual space the be the space of linear and bounded functionals $F: \mathcal{V}  \mapsto \mathbb{R} $\cite{quartdiff}, i.e., \[
+\mathcal{V} ^{*} =
+\left.
+\begin{cases}
+F: \mathcal{V}  \mapsto \mathbb{R} \text{ such that }\forall v,w \in \mathcal{V}, \forall a,b \in \mathbb{R} \text{ and } C> 0 \text{ is }   \\
+  F\left( \lambda v + \mu w  \right) = \lambda F(v) + \mu F(w) \text{ and } \left\lvert F\left( v \right)  \right\rvert \le C \| v \|_{ \mathcal{V}  }^{  }
+\end{cases}
+  \right\}
+\]
+and we equip it with the functional norm,  \[
+    \| F \|_{ \mathcal{V} ^{*} }^{  } = \sup_{v \in \mathcal{V}   } \frac{\left\lvert F\left( v \right)  \right\rvert }{\| v \|_{ \mathcal{V}  }^{  } }.
+\]
 
 We will now establish a nation of the weak derivative, but first are we going to characterize some useful definitions of continuity. The space $C^{k}\left( \Omega  \right) $ for $k\ge 0$ denotes the set of functions whose derivatives, up to order of
-$k$ , is continuous in $\Omega $. Note that we often use the shorthand notation \[
-C^{0} = C\left( \Omega  \right)  = C^{0}\left( \Omega  \right)
-\]
-From this definitions we let $C^{\infty}\left( \Omega  \right) $ be the set of infinitely differentiable functions in $\Omega $ such that the space $C^{\infty}_{0}\left( \Omega  \right)$ is the set of all functions $u \in C^{\infty}\left( \Omega
-\right) $ which is vanishing outside of any compact subset of $\Omega $. Let $u,v \in  C^{1}\left( \Omega  \right) $ and $\Gamma  = \partial \Omega $ with corresponding outer normal vector $n$, then this partial integration formula holds
+$k$ , is continuous in $\Omega $. Note that we often use the shorthand notation $ C^{0} = C\left( \Omega  \right)  = C^{0}\left( \Omega  \right) $.
+From this we let $C^{\infty}\left( \Omega  \right) $ be the set of infinitely differentiable functions in $\Omega $. Furthermore, we then denote the space $C^{\infty}_{0}\left( \Omega  \right)$ as the space of all functions, $u \in C^{\infty}\left( \Omega
+\right) $, vanishing outside of any compact subset of $\Omega $. Let $u,v \in  C^{1}\left( \Omega  \right) $ and the define boundary $\Gamma  = \partial \Omega $ with a corresponding outer normal vector $n$. It is well known that this partial
+integration formula holds \cite{manzoni2021optimal},
 
 \[
-\int_{\Omega }^{} \nabla u \cdot v dx = \int_{\Gamma }^{} u\cdot v n ds - \int_{\Omega }^{} u \cdot \nabla v dx
+\int_{\Omega }^{} \nabla u \cdot v dx = \int_{\Gamma }^{} u\cdot v n ds - \int_{\Omega }^{} u \cdot \nabla v dx.
 \]
-
-We now use this notation for derivatives \footnote{In literature is often $D^{\alpha } f$ commonly used, but later in the report is this notation reserved for the Hessian operator. }, $f \in C^{\left\lvert \alpha  \right\rvert } \left( \Omega  \right) $ so \[
-\partial _{\alpha  } f = \frac{\partial ^{\left\lvert \alpha  \right\rvert } f}{ \partial ^{\alpha _{1} } x_{1} \partial ^{\alpha _{2}} x_{2}  }, \quad \alpha=\left( \alpha _{1}, \alpha _{2} \right)
+We now use this notation for derivatives
+\footnote{In literature is often $D^{\alpha } f$ commonly used, but later in the report is this notation reserved for the Hessian operator. Therefore, we then the notation $\partial ^{\alpha } f$ in this report} so \[
+\partial ^{\alpha  } f = \frac{\partial ^{\left\lvert \alpha  \right\rvert } f}{ \partial ^{\alpha _{1} } x_{1} \partial ^{\alpha _{2}} x_{2}  }, \quad \text{where } \alpha=\left( \alpha _{1}, \alpha _{2} \right) \text{ and } f \in C^{\left\lvert \alpha  \right\rvert }
+\left( \Omega  \right)
 \]
-
-
 Finally, let $u \in  L^{1}_{loc}\left( \Omega  \right) $. We call the function $w \in L_{loc}^{1}\left( \Omega  \right) $ the $\alpha $-th weak derivative of $u$  if \[
-\int_{\Omega }^{} w \varphi  dx = \left( -1 \right) ^{\left\lvert \alpha  \right\rvert } \int_{\Omega }^{} u \cdot \partial _{\alpha } \varphi dx, \quad \forall \varphi \in  C_{0}^{\infty}\left( \Omega  \right)
+\int_{\Omega }^{} w \varphi  dx = \left( -1 \right) ^{\left\lvert \alpha  \right\rvert } \int_{\Omega }^{} u \cdot \partial ^{\alpha } \varphi dx, \quad \forall \varphi \in  C_{0}^{\infty}\left( \Omega  \right).
 \]
 
 Using the definitions introduced in this subsection can we construct the Sobolev space $H^{m}\left( \Omega  \right) , m>1$ , \[
