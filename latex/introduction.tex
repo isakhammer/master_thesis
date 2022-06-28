@@ -18,18 +18,19 @@ arise 21 degrees of freedom in a triangular Argyris element \cite{nair21}.
 For nonconforming methods, $V_{h} \not \subseteq  V_{h}$ is the $C^{1}$ requirement completely relaxed. This makes the methods more suitable for forth order problems with the cost of more extensive error analysis. In fact, designing nonconformal
 elements that does converge is rather difficult \cite{shi02, nair21}.
 
-A third approach of FEM to solve the biharmonic equation is to solve the problem doing a Mixed FEM method. This method seems promising, because it only require $C^{0}$ elements \cite{chen08, brezzi91}.
-Though this work well from a numerical point of view, but it has shown to have drawbacks by replacing symmetric positive definite continuous problem
+A third approach of FEM to solve the biharmonic equation is to solve the problem doing a mixed FEM method. This method seems promising, because it only requires $C^{0}$ elements \cite{chen08, brezzi91}.
+Though this work well from a numerical point of view it has shown to have drawbacks by replacing symmetric positive definite continuous problem
 by a saddle point problem, which is certainly makes the existence and uniqueness proof more challenging \cite{brezzi74}.
 
-In this report will we focus to work on a fourth approach based on a FEM method called the continuous interior penalty method (CP). A major advantage is that the approach preserves the global $C^{0}$ continuity and the positive symmetric definiteness, thus makes it attractive to solve the biharmonic equation \cite{brenner2012, brenner2012quadratic}. In this report will we focus on presenting the derivation of CP and carry out a basic error analysis. We will also present a numerical analysis.
+In this report will we focus to work on a fourth approach known as the continuous interior penalty method (CP). A major advantage is that the approach preserves the global $C^{0}$ continuity and the positive symmetric definiteness, thus makes it attractive to solve the biharmonic equation \cite{brenner2012, brenner2012quadratic}. In this report will we focus on presenting the derivation of CP and carry out a basic error analysis. We will also present a numerical analysis.
 
 
 \section{Mathematical Background}%
 \label{sub:mathematical_background}
 
-In this section will we establish some prerequisites of basic results of functional analysis and numerical analysis related to FEM. However, for a more thoroughly explanation I refer to \cite{brenner07math,manzoni2021optimal, quartdiff}. In he first
-subsection will we define basic principles of Hilbert spaces which then will be applied to establish a theory for weak formulations in terms of well-posedness. We will also introduce the fundamentals of numerical discretization of the weak formulation with regards to error estimates and FEM.
+In this section will we briefly establish some basic results of functional analysis and numerical analysis in order to construct the foundations of the FEM method. However, for a more thoroughly explanation some recommended sources are
+\cite{brenner07math,manzoni2021optimal, quartdiff}. We will first define basic principles of Hilbert spaces which then will be applied to establish a theory for weak formulations the notion of a well-posed problem. Moreover, we will then continue by
+establishing error estimates and constructing a numerical discretization of the weak formulation using a simple test problem.
 
 \subsection{Hilbert Spaces}%
 \label{sub:hilbert_spaces}
