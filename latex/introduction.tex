@@ -99,14 +99,14 @@ Similarly the integral norm is, denoted as, \[
 where the seminorm is defined such that \[
 \left\lvert u \right\rvert _{H^{k}\left( \Omega  \right) } = \left( \sum_{\left\lvert \alpha  \right\rvert  = k}^{} \| \partial _{\alpha }u \|_{ \Omega  }^{ 2 }  \right).
 \]
-
 For convenience, we also entitle the notation $H^{m}_{0} \left( \Omega  \right) = H^{m} \left( \Omega  \right) \cap C^{\infty}_{0} \left( \Omega  \right) $.
 
 
 \subsection{Weak Formulation}%
 \label{sub:weak_formulation}
 
-By applying the theory in the previous subsection can we use describe the notion of a so-called weak formulation. Let us consider the simplest case, that is the strong form of the Poisson's equation with homogeneous Dirichlet boundary conditions
+By applying the theory of weak derivative it it possible describe the notion of a so-called weak formulation of a system. Let us consider a simple test problem, that is, the strong form of the Poisson's equation with homogeneous Dirichlet boundary
+conditions,
 \begin{equation}
 \label{eq:poisson_strong}
 \begin{split}
@@ -114,30 +114,25 @@ By applying the theory in the previous subsection can we use describe the notion
 u & =0 \quad \text{on } \partial \Omega
 \end{split}
 .\end{equation}
-
-We want to obtain the weak formulation of the problem \eqref{eq:poisson_strong}. Let the trial function be $u \in H_{0}^{1}\left( \Omega  \right) $, then by integrating with a test function we get \[
-\int_{\Omega }^{} - \Delta u \cdot v dx = \int_{\Omega }^{} f \cdot v dx \quad \forall v \in H^{1}_{0}\left( \Omega  \right)
+We want to obtain the weak formulation of the problem \eqref{eq:poisson_strong}. Let the trial function be $u \in H_{0}^{1}\left( \Omega  \right) $, then by integrating with a test function we get, \[
+\int_{\Omega }^{} - \Delta u \cdot v dx = \int_{\Omega }^{} f \cdot v dx \quad \forall v \in H^{1}_{0}\left( \Omega  \right).
 \]
-By using the partial integration formula and take the advantage of homogeneous Dirichlet boundary conditions the equation is in fact simplified to \[
-a\left( u,v \right) = \int_{\Omega }^{}  \nabla u\cdot \nabla v dx , \quad l\left( v \right)  = \int_{\Omega }^{}  f\cdot v dx
+By using the partial integration formula, and take the advantage of homogeneous Dirichlet boundary conditions the equation, can be simplified to \[
+a\left( u,v \right) = \int_{\Omega }^{}  \nabla u\cdot \nabla v dx , \quad l\left( v \right)  = \int_{\Omega }^{}  f v dx.
 \]
-
-Hence, the final weak formulation has a symmetric bilinear form, $a\left( \cdot ,\cdot  \right) $, and a linear functional, $l\left( \cdot  \right) $, where we want to find a solution $u \in H^{1}_{0}\left( \Omega  \right) $  so
-
+Thus, we say the final weak formulation is the problem where we want to find a solution $u \in H^{1}_{0}\left( \Omega  \right) $  such that it fulfills the criteria
 \begin{equation}
 \label{eq:poissons_weak_formulation}
 a\left( u,v \right) = l\left( v \right) \quad \forall v \in H^{1}_{0}\left( \Omega  \right).
-.\end{equation}
+\end{equation}
 
 We now want to establish that problems on this form is well-posed.
 Lax-Milgram Theorem says that if we assume a Hilbert space $\mathcal{V} $ and the bilinear symmetric problem where we want to find a $u \in \mathcal{V} $  such that
 
 \begin{equation*}
-    a\left( u,v \right)  = \left( F, v \right) _{\mathcal{V} ^{*}, \mathcal{V} }, \quad \forall v \in  \mathcal{V}
+    a\left( u,v \right)  = \left( F, v \right) _{\mathcal{V} ^{*}, \mathcal{V} }, \quad \forall v \in  \mathcal{V} \text{ and } F \in \mathcal{V} ^{*}
 .\end{equation*}
-
  Assuming the bilinear form $a\left( \cdot ,\cdot  \right) $  is continuous and coercive, i.e., the two conditions below.
-
 \begin{enumerate}[label=\arabic*)]
     \item There exists a constant $M>0$ s.t. \[
     \left\lvert a\left( v,w \right)  \right\rvert \le M \| v \|_{ \mathcal{V}  }^{  } \| w \|_{ \mathcal{V}  }^{  }  \quad \forall v,w \in \mathcal{V}.
@@ -146,23 +141,19 @@ Lax-Milgram Theorem says that if we assume a Hilbert space $\mathcal{V} $ and th
 a\left( v,v \right)  \ge  \alpha \| v \|_{ \mathcal{V}  }^{ 2 }.
 \]
 \end{enumerate}
-
-We can then say there exists a unique solution $u \in \mathcal{V} $ and in additions it satisfied the stability estimate \cite{manzoni2021optimal}, \[
-\| w \|_{ \mathcal{V}   }^{  } \le  \| F \|_{ V^{*} }^{  }
+If this is true, then there exists a unique solution $u \in \mathcal{V} $ which, in fact, satisfies the stability estimate \cite{manzoni2021optimal}, \[
+\| w \|_{ \mathcal{V}   }^{  } \le  \| F \|_{ \mathcal{V} ^{*} }^{  }.
 \]
 Problems that fulfills this criteria is said to be well posed.
 
-
-We can clearly see that this theorem applied to the weak formulation \eqref{eq:poissons_weak_formulation} since,
+Moreover, we can clearly see that this theorem is applicable to the weak formulation \eqref{eq:poissons_weak_formulation} since,
 \[
 \begin{split}
     \left\lvert a\left( v,w \right)  \right\rvert & \le \| \nabla v \|_{ \Omega  }^{  } \| \nabla w \|_{ \Omega  }^{  }, \\
 \left\lvert a\left( v,v \right)  \right\rvert  & = \|  \nabla v\|_{\Omega   }^{  }  \| \nabla v  \|_{\Omega   }^{  } \ge  \| v \|_{ \Omega  }^{ 2 } \ge \| v \|_{ H^{1}\left( \Omega  \right)  }^{  }.
 \end{split}
 \]
-
-On the last inequality was the Poincare inequality applied, i.e., there exists a $C>0$  such that $\| u \|_{ \Omega  }^{  } \le C  \| \nabla u \|_{\Omega   }^{  } $.
-
+The last inequality was the Poincare inequality applied, i.e., there exists a $C>0$  such that $\| u \|_{ \Omega  }^{  } \le C  \| \nabla u \|_{\Omega   }^{  } $. Hence, the weak formulation \eqref{eq:poissons_weak_formulation} is well posed.
 
 \subsection{Ceas' Lemma}%
 \label{sub:ceas_lemma}
