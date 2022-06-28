@@ -159,30 +159,30 @@ The last inequality was the Poincare inequality applied, i.e., there exists a $C
 \label{sub:ceas_lemma}
 
 Since we have established a theory of a well-posed weak formulation we can now transition to setup a theory for a approximate solution. Assume that we have a problem that satisfied the Lax-Milgram theorem and let $\mathcal{V} _{h} \subseteq  \mathcal{V} $  be
-some finite dimensional subspace of $\mathcal{V} $ such that $dim\left( \mathcal{V} _{h} \right) =N_{h}$ , where $h$  is a discretization parameter. The discretized problem is now to find a solution $u_{h} \in  \mathcal{V}_{h}$ such that $a\left( u_{h},v_{h} \right)  =
-l\left( v_{h} \right) \quad  \forall v_{h} \in \mathcal{V} _{h} $. In fact, since the method is conform, i.e., $\mathcal{V} _{h} \subseteq  \mathcal{V} $ does it exists a exact solution $u \in  \mathcal{V} _{h}$ so, \[
+some finite dimensional subspace of $\mathcal{V} $ such that $dim\left( \mathcal{V} _{h} \right) =N_{h}$ , where $h$  is a discretization parameter. The problem is transitioned to find a solution $u_{h} \in  \mathcal{V}_{h}$ such that,
+$$a\left( u_{h},v_{h} \right)  =
+l\left( v_{h} \right) \quad  \forall v_{h} \in \mathcal{V} _{h} .$$
+Since the method is conform, i.e., $\mathcal{V} _{h} \subseteq  \mathcal{V} $, does it exists a exact solution, $u \in  \mathcal{V} _{h}$, so, \[
 a \left( u, v_{h} \right)  = l\left( v_{h} \right)  \quad  \forall v_{h} \in  \mathcal{V} _{h}.
 \]
+Furthermore, the problem is said to be strongly consistent since it fulfills the Galerkin orthogonality property, that is,
+$$ a\left( u -u_{h} , v_{h} \right)  =0.$$
 
-Using property can  we say that the problem is strongly consistent since it fulfills the Galerkin Orthogonality property, that is,  $ a\left( u -u_{h} , v_{h} \right)  =0$.
-
-Now we have all the cornerstones for finding a error estimate . Again, assume that Lax-Milgram theorem holds. Let $v_{h} \in  \mathcal{V} _{h}$ so
+Now we have all the cornerstones for finding a error estimate. Let $v_{h} \in  \mathcal{V} _{h}$ so
 \[
     \begin{split}
 \alpha \| u -u_{h} \|_{ \mathcal{V}  }^{ 2 } & \le  a\left( u - u_{h}, u - u_{h}  \right)    \\
 &= a\left( u - u_{h}, u -v_{h} \right) - a\left( u -u_{h}, v_{h} - u_{h} \right)  \\
-\le  M \| u - u_{h} \|_{ \mathcal{V}  }^{  }  \| u - v_{h} \|_{ \mathcal{V}  }^{  }
+ &  \le  M \| u - u_{h} \|_{ \mathcal{V}  }^{  }  \| u - v_{h} \|_{ \mathcal{V}  }^{  }
     \end{split}
 \]
-Hence, the Ceas' lemma \cite{quartdiff} \[
-\| u - u_{h} \|_{ \mathcal{V}  }^{  }  \le  \frac{M}{\alpha } \inf_{v_{h} \in \mathcal{V} } \|  v_{h} - u \|_{  }^{  }
+Hence, we now have the Ceas' lemma \cite{quartdiff}, \[
+\| u - u_{h} \|_{ \mathcal{V}  }^{  }  \le  \frac{M}{\alpha } \inf_{v_{h} \in \mathcal{V} } \|  v_{h} - u \|_{  }^{  }.
 \]
-
 A useful property is that for a conformal numerical method to converge can we now only require \[
 \lim_{h \to 0}  \inf_{v_{h} \in  V_{h}}  \| v - v_{h} \|_{ \mathcal{V }  }^{  } = 0 \quad  \forall v \in \mathcal{V}.
 \]
-
-In that case will $\| u - u_{h} \|_{ \mathcal{V}  }^{  }  \to  0$, $h \to  0$ .
+In that case will $\| u - u_{h} \|_{ \mathcal{V}  }^{  }  \to  0$, $h \to  0$. Hence, if this requirement is fulfilled the numerical methods will converge to a unique solution.
 
 
 
