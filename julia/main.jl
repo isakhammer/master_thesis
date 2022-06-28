@@ -14,11 +14,11 @@ function generate_figures(hs, hs_str, el2s, eh1s, ehs_energy, γ::Integer, order
         fig = CairoMakie.Figure()
         ax = CairoMakie.Axis(fig[1, 1], yscale = log10, xscale= log2,
                              yminorticksvisible = true, yminorgridvisible = true, yminorticks = CairoMakie.IntervalsBetween(8),
-                             xlabel = "h", ylabel = "error norms")
+                             xlabel = L"h/{L}", ylabel = "error norms")
 
         CairoMakie.lines!(hs, el2s, label= L"$L^2$ norm", linewidth=2)
         CairoMakie.lines!(hs, eh1s, label= L"$H_1$ norm", linewidth=2)
-        CairoMakie.lines!(hs, ehs_energy, label= L"\text{energy norm}", linewidth=2)
+        CairoMakie.lines!(hs, ehs_energy, label= L"$energy$  norm ", linewidth=2)
         CairoMakie.scatter!(hs, el2s)
         CairoMakie.scatter!(hs, eh1s)
         CairoMakie.scatter!(hs, ehs_energy)
@@ -41,7 +41,7 @@ function generate_figures(hs, hs_str, el2s, eh1s, ehs_energy, γ::Integer, order
         eoc_eh_energy =  [nothing; eoc_eh_energy]
 
         data = hcat(hs_str, el2s,  eoc_l2, eh1s, eoc_eh1, ehs_energy, eoc_eh_energy)
-        header = [L"h", L"$L^2$ norm", "EOC", L"$H_1$ norm", "EOC", "energy norm", "EOC"]
+        header = [L"h/{L} ", L"$L^2$ norm", "EOC", L"$H_1$ norm", "EOC", "energy norm", "EOC"]
 
         open(filename*".tex", "w") do io
             pretty_table(io, data, header=header, backend=Val(:latex ), formatters = ( ft_printf("%.3E"), ft_nonothing ))
@@ -101,21 +101,20 @@ function convergence_analysis(;figdir, L, u::Function, orders = [2,3,4], γs = [
             push!(el2s, res.el2)
             push!(eh1s, res.eh1)
             push!(ehs_energy, res.eh_energy)
-            println(ehs_energy)
         end
         generate_figures(hs, hs_str, el2s, eh1s, ehs_energy, γ, order, figdir)
     end
 
 end
 
-function run_gamma_analysis(;figdir, L, u::Function, orders = [2,3,4], γs = [2^0,2^1, 2^2,2^3,2^4,2^5,2^6, 2^7], ns = [2^3,2^4,2^5,2^6,2^7])
+function run_gamma_analysis(;figdir, L, u::Function, orders = [2,3,4], γs = [2^0,2^1, 2^2,2^3,2^4,2^5,2^6], ns = [2^3,2^4,2^5,2^6,2^7])
     hs = 1 .// ns
     for order in orders
         println("Run gamma = ", order, " of ", orders)
         fig = CairoMakie.Figure()
         ax = CairoMakie.Axis(fig[1, 1], yscale = log10, xscale= log2,
                              yminorticksvisible = true, yminorgridvisible = true, yminorticks = CairoMakie.IntervalsBetween(8),
-                             xlabel = "h", ylabel = L"$L^2$ error" , title="Order: "*string(order))
+                             xlabel = L"h/{L}", ylabel = L"$L^2$ error" , title="Order: "*string(order))
         for i in 1:length(γs)
             γ = γs[i]
             el2s = Float64[]
