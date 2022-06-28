@@ -169,13 +169,14 @@ Furthermore, the problem is said to be strongly consistent since it fulfills the
 $$ a\left( u -u_{h} , v_{h} \right)  =0.$$
 
 Now we have all the cornerstones for finding a error estimate. Let $v_{h} \in  \mathcal{V} _{h}$ so
-\[
+\begin{equation}
+\label{eq:cealemma_proof}
     \begin{split}
 \alpha \| u -u_{h} \|_{ \mathcal{V}  }^{ 2 } & \le  a\left( u - u_{h}, u - u_{h}  \right)    \\
 &= a\left( u - u_{h}, u -v_{h} \right) - a\left( u -u_{h}, v_{h} - u_{h} \right)  \\
  &  \le  M \| u - u_{h} \|_{ \mathcal{V}  }^{  }  \| u - v_{h} \|_{ \mathcal{V}  }^{  }
     \end{split}
-\]
+.\end{equation}
 Hence, we now have the Ceas' lemma \cite{quartdiff}, \[
 \| u - u_{h} \|_{ \mathcal{V}  }^{  }  \le  \frac{M}{\alpha } \inf_{v_{h} \in \mathcal{V} } \|  v_{h} - u \|_{  }^{  }.
 \]
@@ -212,13 +213,14 @@ For the test problem can we observe that it is convenient to deal with a Lagrang
 \]
 Here is $N_{h}$  the total number of nodes which is chosen with caution. For the test problem, where $\Omega \subseteq \mathbb{R} ^{2} $, when $r=1$ is typically the nodes defined on the vertices and $ r=2 $ the nodes defined on the vertices and the center of the edges/facets \cite{quartdiff}.
 
-Finally, by using the basis $\left\{ \varphi _{j} \right\} $ can we discretize a solution $u_{j=1} = u_{h}\left( N_{j} \right) $ so that $u_{h} = \sum_{j}^{N_{h}} u_{j} \varphi _{j}\left( x_{1},x_{2} \right)  $    such that, \[
+Finally, by using the basis $\left\{ \varphi _{j} \right\} $ can we discretize a solution $u_{j=1} = u_{h}\left( N_{j} \right) $ so that $u_{h} = \sum_{j}^{N_{h}} u_{j} \varphi _{j}\left( x_{1},x_{2} \right)  $ such that, \[
 \sum_{j = 1}^{N_{h}} u_{j} a\left( \varphi _{j}, \varphi _{i} \right)  = l\left( \varphi _{i} \right)
 \]
-Hence, by letting $\mathbf{u} = \left[ u_{j} \right] $ , $\mathbf{f} = \left( f, \varphi  \right) _{\Omega }$  and $A = \left[ a\left( \varphi _{j}, \varphi _{i} \right)  \right] $ can we construct the final linear system, \[
+Hence, by letting $\mathbf{u} = \left[ u_{j} \right] $ , $\mathbf{f} = \left[ \left( f, \varphi  \right) _{\Omega } \right] $  and $A = \left[ a\left( \varphi _{j}, \varphi _{i} \right)  \right] $ can we construct a linear system, \[
 A \mathbf{u} =\mathbf{f}.
 \]
-Thus, we have a linear system where the vector of the unknown variables in $\mathbf{u}$.
+Thus, we have the final linear system where the vector of the unknown variables in $\mathbf{u}$.
+
 
 
 

@@ -347,55 +347,7 @@ Hence, the CP method is does fulfills the Lax Milgram criteria because it is bot
 \subsection{Apriori Estimates}%
 \label{sub:apriori_estimates}
 
-We will now introduce the notion of an apriori estimate, which can be used the estimate the size of a solution even before we have a solution. However, we will first introduce some basic results from the theory of Galerkin methods.
-
-\subsubsection{Galerkin Orthogonality}%
-\label{ssub:galerkin_orthonality}
-
-Let us recall the weak continuous problem \eqref{eq:continious_problem} and the weak discrete problem \eqref{eq:discrete_problem}.
-\begin{align}
-    \label{eq:continious_problem}
-    \text{Find } u \in V \quad&  \text{s.t. } a\left( u,v \right) = l\left( v \right)  \quad \forall v \in V. \\
-    \label{eq:discrete_problem}
-    \text{Find } u_h \in V_h \quad&  \text{s.t. } a\left( u_h,v_h \right) = l\left( v_h \right)  \quad \forall v_h \in V_h.
-.\end{align}
-
-In fact, the key property of this problem formulation is that $a\left( u, v_{h} \right)  = l \left( v_{h} \right) \quad  \forall v_{h} \in V_{h} \subset V  $. Thus, the Galerkin orthogonality property holds so that,
-$$
-a\left( u, v_{h} \right)  - a\left( u_{h}, v_{h} \right) = a\left( u- u_{h}, v_{h} \right) = 0,   . $$
-Keep in mind that we define
-$ u - u_{h} \in V$
-\subsubsection{Céa's Lemma }%
-\label{ssub:ceas_lemma}
-
-Assume that the problems \eqref{eq:continious_problem} and \eqref{eq:discrete_problem} satisfied the Lax Milgram criteria,
-\begin{equation*}
-    \begin{split}
-a\left( u,v \right)  & \le C \| u \|_{  }^{  }  \| v \|_{  }^{  }  \quad   \left( V_{h} \right) , \quad  \alpha \|  u\|_{   }^{     2} \le a \left( u,u \right) \quad \forall u,v\in V, \\
-a\left( u_{h},v_{h} \right)  & \le C \| u_{h} \|_{  }^{  }  \| v_{h} \|_{  }^{  }   \left( V_{h} \right) , \quad  \alpha \| u_{h}\|_{   }^{     2} \le a \left( u_{h},u_{h} \right)\quad  \forall u_{h},v_{h}\in V_{h}.
-    \end{split}
-.\end{equation*}
-
-Then the Céa's lemma says that this is satisfied,
-\begin{equation}
-\label{eq:Ceas_lemma_continious}
-\| u - u_{h} \|_{  }^{  } \le \frac{C}{\alpha }  \inf_{v_{h} \in V_{h}} \| v_{h} - v \|_{  }^{  } .
-\end{equation}
-
-The lemma naturally arise using the following argumentation,
-\begin{equation}
-\label{eq:cealemma_proof}
-    \begin{split}
-\alpha \| u - u_{h} \|_{  }^{  2} & \le a\left( u-u_{h}, u - u_{h} \right) \\
-&= a\left( u - u_{h}, u - v_{h} \right)  - a\left( u - u_{h}, v_{h} - u_{h} \right)  \\
-& \le  C\| u - u_{h} \|_{  }^{  } \| u - v_{h} \|_{  }^{  } \\
-\implies &  \alpha \| u - u_{h} \|_{  }^{  }    \le  C \| v_{h} - u \|_{  }^{  } \le C \inf_{v_{h} \in V_{h}} \| v_{h} -u \|_{  }^{  }.
-    \end{split}
-.\end{equation}
-
-\subsubsection{Céa's Lemma for CP Method, }%
-\label{ssub:ceas_lemma_cp}
-Since we have discrete coercivity, then $V_{h} \not \subset V$, thus the standard method does not work. Firstly, we want to use the results from \ref{sub:error_and_stability_analysis_of_c0ip}. We have shown that
+We will now introduce the notion of an apriori estimate, which can be used the estimate the size of a solution even before we have a solution. Since we have discrete coercivity, then $V_{h} \not \subset V$, thus the standard method does not work. Firstly, we want to use the results from \ref{sub:error_and_stability_analysis_of_c0ip}. We have shown that
 \begin{equation*}
     \begin{split}
     \textit{Discrete coercivity } \quad & \hat{\alpha } \| u_{h} \|_{ a_{h} }^{ 2 }  \le  \mathcal{A} \left( u_{h}, u_{h} \right) \\
@@ -408,8 +360,6 @@ Let the difference have the form $u - u_{h} = (u - v_{h} )  + (v_{h} - u_{h})$ a
 $$
 \| w_{h} \|_{ a_{h,*} }^{  }  \le  D \| w_{h} \|_{ a_{h} }^{  }, \forall w_{h} \in V_{h} .
 $$
-
-
 Thus, the norm can now be computed such that\[
 \| u - u_{h} \|_{ a_{h,*} }^{  } \le \|u - v_{h}  \|_{a_{h,*}  }^{  }  + \| v_{h} - u_{h} \|_{a_{h,*}  }^{  } \\
 \le \| u -v_{h} \|_{ a_{h,*} }^{  }  + D \| u_{h} - v_{h} \|_{a_{h}  }^{  }.
@@ -424,6 +374,7 @@ Finally, following the same procedure as in \eqref{eq:cealemma_proof} we get
  &\le  \widetilde{C} \| u - v_{h} \|_{ a_{h,*} }^{  } \| u- v_{h} \|_{ a_{h} }^{  }
     \end{split}
 \]
+
 Observe that we now have $ \| u_{h} - v_{h} \|_{ a_{h} }^{  }   \le \frac{\widetilde{C}}{\hat{\alpha }}  \| u - v_{h} \|_{ a_{h, *} }^{  }$ and $\| u - u_{h} \|_{ a_{h,*} }^{  }   \le \left( 1 + D \widetilde{C} /\hat{\alpha } \right)\cdot  \| u - v_{h} \|_{ a_{h,*} }^{  } $. Hence, we have derived a equivalent Céa's lemma for the CP method.
 \[
     \begin{split}
