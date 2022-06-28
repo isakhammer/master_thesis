@@ -212,6 +212,14 @@ For the test problem can we observe that it is convenient to deal with a Lagrang
 \]
 Here is $N_{h}$  the total number of nodes which is chosen with caution. For the test problem, where $\Omega \subseteq \mathbb{R} ^{2} $, when $r=1$ is typically the nodes defined on the vertices and $ r=2 $ the nodes defined on the vertices and the center of the edges/facets \cite{quartdiff}.
 
+Finally, by using the basis $\left\{ \varphi _{j} \right\} $ can we discretize a solution $u_{j=1} = u_{h}\left( N_{j} \right) $ so that $u_{h} = \sum_{j}^{N_{h}} u_{j} \varphi _{j}\left( x_{1},x_{2} \right)  $    such that, \[
+\sum_{j = 1}^{N_{h}} u_{j} a\left( \varphi _{j}, \varphi _{i} \right)  = l\left( \varphi _{i} \right)
+\]
+Hence, by letting $\mathbf{u} = \left[ u_{j} \right] $ , $\mathbf{f} = \left( f, \varphi  \right) _{\Omega }$  and $A = \left[ a\left( \varphi _{j}, \varphi _{i} \right)  \right] $ can we construct the final linear system, \[
+A \mathbf{u} =\mathbf{f}.
+\]
+Thus, we have a linear system where the vector of the unknown variables in $\mathbf{u}$.
+
 
 
 
