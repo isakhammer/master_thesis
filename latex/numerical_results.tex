@@ -16,11 +16,13 @@ All numerical experiments were carries out on the unit square with length $L$. T
 \frac{1}{16}, \frac{1}{32},\frac{1}{64}, \frac{1}{128} $.
 An illustration of the triangulation can be seen on figure \ref{fig:sol_l1_m1_r1}.
 
+We choose the manufactured solutions to be on the form,
 
 \begin{equation}
     \label{eq:man_sol}
-u\left( x; L,m,r \right) = \cos\left(  m\cdot \frac{2\pi}{L}  x_{1}\right)  \cos \left(r\cdot  \frac{2\pi}{L} x_{2} \right) \quad \text{ on }   \Omega =  \left( 0,L  \right)^{2}
+u\left( x; L,m,r \right) = \cos\left(  m\cdot \frac{2\pi}{L}  x_{1}\right)  \cos \left(r\cdot  \frac{2\pi}{L} x_{2} \right) \quad \text{ on }   \Omega =  \left( 0,L  \right)^{2}.
 .\end{equation}
+Notice that we customize the model parameters, $L, m, r$, freely.
 For convenience did we pick $\alpha = 1$ for all the numerical experiments. We define the error to have the form $e = u - u_{h}$ such that the $L^2$ norm is denoted as $\| e \|_{ L^{2}\left( \Omega  \right)   }^{  } $, $H^{1} $ norm is denoted as $\|
 e \|_{ H^{1}\left( \Omega  \right)  }^{  } $ and lastly the energy norm  \eqref{eq:A_energy_norm} denoted as $\| e \|_{ h }^{  } $. In this report will we provide two examples of convergence analysis based on different
 parametrization of \eqref{eq:man_sol}. Each examples consists of a convergence plot of different penalty parameters $\gamma$ using the $L^{2}$ norm and a more extensive analysis by comparing the convergence rate of their respective norms. A convenient tool to measure convergence is by computing the experimentally observed convergence rate (EOC), defined as follows,
@@ -33,6 +35,8 @@ The FEM software package used in the implementation was Gridap written in the Ju
 The first example, where $L=1$, $m=7$ and $r=3$, (illustrated on figure \ref{fig:sol_l1_m7_r3}) with a penalty parameter analysis on figure \ref{fig:ex1_gamma} and extensive convergence analysis on figures \ref{fig:ex1_conv:a}, \ref{fig:ex1_conv:b} and \ref{fig:ex1_conv:c} with
 corresponding tables \ref{tab:ex1_order:a}, \ref{tab:ex1_order:b} and \ref{tab:ex1_order:c}. Similarly, the second example, where $L=2\pi$, $m=1$ and $r=1$, (illustrated on figure \ref{fig:sol_l2pi_m1_r1}) with a penalty parameter analysis on figure \ref{fig:ex2_gamma} and extensive convergence analysis on figures \ref{fig:ex2_conv:a},
 \ref{fig:ex2_conv:b} and \ref{fig:ex2_conv:c} with corresponding tables \ref{tab:ex2_order:a}, \ref{tab:ex2_order:b} and \ref{tab:ex2_order:c}.
+
+
 
 \begin{figure}[tbh!]
     \centering
