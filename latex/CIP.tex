@@ -417,19 +417,21 @@ We denote a patch $\omega \left( T \right) $ as the set of elements in $\mathcal
 sharing at least one vertex with $F \in  \mathcal{F} _{h}$.
 
 The following inequalities holds
-% \[
-%     \begin{split}
-% I & \le  \| D^2\left( u - C_{h}u_{h} \right)  \|_{ \mathcal{T} _{h} }^{ 2 } = \sum_{T \in \mathcal{T} _{h}}^{} \| D^2 \left( u - C_{h}u_{h} \right)  \|_{ T }^{ 2 } \\
-%  & \le \sum_{T \in \mathcal{T} _{h}}^{}  \| \left( u - C_{h}u_{h} \right)  \|_{2,T  }^{  } \le  \sum_{T \in \mathcal{T} _{h}}^{}  h_{T}^{2\left( l-2 \right) } \| u \|_{l, \omega \left( T \right)   }^{  } \\
-%  II & \le  \alpha  \sum_{T \in \mathcal{T} _{h}}^{}  \| u - C_{h} \|_{ T }^{ 2 } \le  \sum_{T \in \mathcal{T} _{h}}^{} h^{2l} \| u \|_{ \omega \left( T \right)  }^{ 2 } \\
-%     III & \le  \sum_{T \in \mathcal{T} _{h}}^{}  h^{-1} \| \partial _{n} \left( u - C_{h} \right)  \|_{ \partial T  }^{  } \le  \sum_{T \in \mathcal{T} _{h}}^{}  h^{-1} \left( h^{l -1 -\frac{1}{2}} \| u \|_{ l, \omega \left( T \right)  }^{  }
-%     \right)^{2} \le \sum_{T \in \mathcal{T} _{h}}^{}  h^{2(l-2)} \| u \|_{ l, \Omega \left( F \right)  }^{ 2 } \\
-% IV \le \sum_{T \in \mathcal{T} _{h}}^{}  h \| \partial _{nn} \left( u - C_{h} \right)  \|_{\partial T  }^{  } \le  \sum_{T \in  \mathcal{T} _{h}}^{} h \left( h^{l -2 -\frac{1}{2}} \| u \|_{ l, \omega \left( F \right)  }^{  }  \right)
-% \]
-% and lastly
-% \[
-% I + II + III +  IV  \le  h^{2\left( l-2 \right) } \| u \|_{ H^{l}\left( \Omega  \right)  }^{  }
-% \]
+\begin{equation*}
+    \begin{split}
+I & \le  \| D^2\left( u - C_{h}u_{h} \right)  \|_{ \mathcal{T} _{h} }^{ 2 } = \sum_{T \in \mathcal{T} _{h}}^{} \| D^2 \left( u - C_{h}u_{h} \right)  \|_{ T }^{ 2 } \\
+ & \le \sum_{T \in \mathcal{T} _{h}}^{}  \| \left( u - C_{h}u_{h} \right)  \|_{2,T  }^{  } \le  \sum_{T \in \mathcal{T} _{h}}^{}  h_{T}^{2\left( l-2 \right) } \| u \|_{l, \omega \left( T \right)   }^{  } \\
+ II  &\le  \alpha  \sum_{T \in \mathcal{T} _{h}}^{}  \| u - C_{h} \|_{ T }^{ 2 } \le  \sum_{T \in \mathcal{T} _{h}}^{} h^{2l} \| u \|_{ \omega \left( T \right)  }^{ 2 } \\
+    III & \le  \sum_{T \in \mathcal{T} _{h}}^{}  h^{-1} \| \partial _{n} \left( u - C_{h} \right)  \|_{ \partial T  }^{  } \le  \sum_{T \in \mathcal{T} _{h}}^{}  h^{-1} \left( h^{l -1 -\frac{1}{2}} \| u \|_{ l, \omega \left( T \right)  }^{  }
+    \right)^{2}  \\
+    & \le \sum_{T \in \mathcal{T} _{h}}^{}  h^{2(l-2)} \| u \|_{ l, \Omega \left( F \right)  }^{ 2 } \\
+IV & \le \sum_{T \in \mathcal{T} _{h}}^{}  h \| \partial _{nn} \left( u - C_{h} \right)  \|_{\partial T  }^{  } \le  \sum_{T \in  \mathcal{T} _{h}}^{} h \left( h^{l -2 -\frac{1}{2}} \| u \|_{ l, \omega \left( F \right)  }^{  }  \right)
+ \end{split}
+.\end{equation*}
+and lastly
+\[
+I + II + III +  IV  \le  h^{2\left( l-2 \right) } \| u \|_{ H^{l}\left( \Omega  \right)  }^{  }
+\]
 
 
 
