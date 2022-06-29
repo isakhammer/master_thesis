@@ -30,15 +30,14 @@ EOC(i) = \frac{\log\left( \frac{\| e\left( h_{i} \right)  \|_{ \mathcal{V}  }^{ 
 The FEM software package used in the implementation was Gridap written in the Julia programming language \cite{verdugo22, julia17}.
 
 
-\subsection{First Example, $L=1$, $m=7$, $r=3$}%
-\label{sub:second_example}
-
-Illustration of manufactured solution can be seen on seen on figure \ref{fig:ex1_conv} . Furthermore,
+The first example, where $L=1$, $m=7$ and $r=3$, (illustrated on figure \ref{fig:sol_l1_m7_r3}) with a penalty parameter analysis on figure \ref{fig:ex1_gamma} and extensive convergence analysis on figures \ref{fig:ex1_conv:a}, \ref{fig:ex1_conv:b} and \ref{fig:ex1_conv:c} with
+corresponding tables \ref{tab:ex1_order:a}, \ref{tab:ex1_order:b} and \ref{tab:ex1_order:c}. Similarly, the second example, where $L=2\pi$, $m=1$ and $r=1$, (illustrated on figure \ref{fig:sol_l2pi_m1_r1}) with a penalty parameter analysis on figure \ref{fig:ex2_gamma} and extensive convergence analysis on figures \ref{fig:ex2_conv:a},
+\ref{fig:ex2_conv:b} and \ref{fig:ex2_conv:c} with corresponding tables \ref{tab:ex2_order:a}, \ref{tab:ex2_order:b} and \ref{tab:ex2_order:c}.
 
 \begin{figure}[tbh!]
     \centering
     \includegraphics[width=0.35\textwidth]{figures/model/l_1.0_m_7_r_3n_100_sol.png}
-    \caption{Illustration of the manufactured solution \eqref{eq:man_sol}   with the parameters $L=1$, $m=7$ and $r=3$ in $\Omega = (0,1)^2$}
+    \caption{Illustration  solution \eqref{eq:man_sol}   with the parameters $L=1$, $m=7$ and $r=3$ in $\Omega = (0,1)^2$}
     \label{fig:sol_l1_m7_r3}
 \end{figure}
 
@@ -54,7 +53,7 @@ Illustration of manufactured solution can be seen on seen on figure \ref{fig:ex1
     \end{minipage}\par\medskip
     \centering
     \subfloat[]{\label{fig:ex1_gamma:c}\includegraphics[scale=.25]{figures/convergence/L_1.0_m_7_r_3/gamma_analysis_order4.png}}
-    \caption{ Example, $L=1$, $m=1$, $r=1$. $\gamma$ exploration with polynomials $\mathcal{P}_{k} $ with order $k$ . Figures \ref{fig:ex1_gamma:a}, \ref{fig:ex1_gamma:b} and \ref{fig:ex1_gamma:c} has respectively the order $k=2,3, 4$ .  }
+    \caption{ Convergence study for penalty parameters $\gamma$ with the model parameters $L=1$, $m=7$ and $r=3$. Figures \ref{fig:ex1_gamma:a}, \ref{fig:ex1_gamma:b} and \ref{fig:ex1_gamma:c} has respectively the order $k=2,3, 4$.  }
     \label{fig:ex1_gamma}
 \end{figure}
 
@@ -78,7 +77,7 @@ Illustration of manufactured solution can be seen on seen on figure \ref{fig:ex1
 
 % Gammas for L=1
 \begin{table}
-  \caption{\label{tab:ex1_order2}  Order $k=2$ with $ \gamma = 9$.}
+  \caption{\label{tab:ex1_order:a} Convergence table with the model parameters $L=1$, $m=1$ and $r=1$ with order $k=2$ using $ \gamma = 9$.}
   \begin{tabular}{rrrrrrrr}
     \hline\hline
     $i$&\textbf{$h/{L} $} & \textbf{$L^2$ norm} & \textbf{EOC} & \textbf{$H_1$ norm} & \textbf{EOC} & \textbf{energy norm} & \textbf{EOC} \\\hline
@@ -90,8 +89,8 @@ Illustration of manufactured solution can be seen on seen on figure \ref{fig:ex1
     6&$\frac{1}{128}$ & 3.515E-03 & 1.979E+00 & 1.941E-01 & 1.981E+00 & 9.665E+01 & 1.018E+00 \\\hline\hline
   \end{tabular}
 % \end{table}
-% \begin{table}
-  \caption{\label{tab:ex1_order3} Order $k=3$ with $ \gamma = 18$}
+% \begin{table} .
+  \caption{\label{tab:ex1_order:b} Convergence table with the model parameters $L=1$, $m=1$ and $r=1$ with order $k=3$ using $ \gamma = 18$ }
   \begin{tabular}{rrrrrrrr}
     \hline\hline
     $i$&\textbf{$h/{L} $} & \textbf{$L^2$ norm} & \textbf{EOC} & \textbf{$H_1$ norm} & \textbf{EOC} & \textbf{energy norm} & \textbf{EOC} \\\hline
@@ -103,7 +102,8 @@ Illustration of manufactured solution can be seen on seen on figure \ref{fig:ex1
     6&$\frac{1}{128}$ & 6.988E-06 & 4.011E+00 & 4.131E-03 & 3.005E+00 & 5.461E+00 & 1.991E+00 \\\hline\hline
   \end{tabular}
 % \end{table}
-  \caption{\label{tab:ex1_order4}Order $k=4$ with $ \gamma = 30$}
+
+  \caption{\label{tab:ex1_order:c}Convergence table with the model parameters $L=1$, $m=1$ and $r=1$ with order $k=4$ using $ \gamma = 30$ }
 % \begin{table}
   \begin{tabular}{rrrrrrrr}
     \hline\hline
@@ -118,17 +118,14 @@ Illustration of manufactured solution can be seen on seen on figure \ref{fig:ex1
 \end{table}
 
 \newpage
-\subsection{Second Example, $L=2 \pi $, $m=1$, $r=1$}%
-\label{sub:first_example}
 
 \begin{figure}[tbh!]
     \centering
     \includegraphics[width=0.5\textwidth]{figures/model/l_6.28_m_1_r_1n_100_sol.png}
-    \caption{Illustration of the manufactured solution \eqref{eq:man_sol}   with the parameters $L=2\pi$, $m=1$ and $r=1$ in $\Omega = (0,2\pi)^2$}
+    \caption{Illustration of solution \eqref{eq:man_sol}   with the parameters $L=2\pi$, $m=1$ and $r=1$ in $\Omega = (0,2\pi)^2$}
     \label{fig:sol_l2pi_m1_r1}
 \end{figure}
 
-Illustration can be seen on figure \ref{fig:sol_l2pi_m1_r1} with gamma convergence plots on \ref{fig:ex2_gamma}. Also some convergence analysis on specified gammas on of \ref{fig:ex2_conv}.
 
 \begin{figure}
     \centering
@@ -142,7 +139,7 @@ Illustration can be seen on figure \ref{fig:sol_l2pi_m1_r1} with gamma convergen
     \end{minipage}\par\medskip
     \centering
     \subfloat[]{\label{fig:ex2_gamma:c}\includegraphics[scale=.25]{figures/convergence/L_6.28_m_1_r_1/gamma_analysis_order4.png}}
-    \caption{ Example, $L=1$, $m=1$, $r=1$. $\gamma$ exploration with polynomials $\mathcal{P}_{k} $ with order $k$ . Figures \ref{fig:ex2_gamma:a}, \ref{fig:ex2_gamma:b} and \ref{fig:ex2_gamma:c} has respectively the order $k=2,3, 4$ .  }
+    \caption{ Convergence study for penalty parameters $\gamma$ with the model parameters $L=2\pi$, $m=1$ and $r=1$. Figures \ref{fig:ex1_gamma:a}, \ref{fig:ex1_gamma:b} and \ref{fig:ex1_gamma:c} has respectively the order $k=2,3, 4$.  }
     \label{fig:ex2_gamma}
 \end{figure}
 
@@ -158,7 +155,7 @@ Illustration can be seen on figure \ref{fig:sol_l2pi_m1_r1} with gamma convergen
     \end{minipage}\par\medskip
     \centering
     \subfloat[]{\label{fig:ex2_conv:c}\includegraphics[scale=.2]{figures/convergence/L_6.28_m_1_r_1/conv_order_4_gamma_30.0.png}}
-    \caption{ Example, $L=1$, $m=1$, $r=1$. Polynomials $\mathcal{P}_{k} $ with order $k$ . Figures \ref{fig:ex2_conv:a}, \ref{fig:ex2_conv:b} and \ref{fig:ex2_conv:c} has respectively the order $k=2,3, 4$ with penalty parameters $\gamma = 9,18,30 $.  }
+    \caption{ Example, $L=2\pi$, $m=1$, $r=1$. Polynomials $\mathcal{P}_{k} $ with order $k$ . Figures \ref{fig:ex2_conv:a}, \ref{fig:ex2_conv:b} and \ref{fig:ex2_conv:c} has respectively the order $k=2,3, 4$ with penalty parameters $\gamma = 9,18,30 $.  }
     \label{fig:ex2_conv}
 \end{figure}
 
@@ -166,7 +163,7 @@ Illustration can be seen on figure \ref{fig:sol_l2pi_m1_r1} with gamma convergen
 
 % Gammas for L=2pi
 \begin{table}
-  \caption{\label{tab:ex2_order2} Order $k=2$ with $ \gamma = 9$}
+  \caption{\label{tab:ex2_order:a} Convergence table with the model parameters $L=2\pi$, $m=1$ and $r=1$ with order $k=2$ using $ \gamma = 9$}
   \begin{tabular}{rrrrrrrr}
     \hline\hline
     $i$&\textbf{$h/{L} $} & \textbf{$L^2$ norm} & \textbf{EOC} & \textbf{$H_1$ norm} & \textbf{EOC} & \textbf{energy norm} & \textbf{EOC} \\\hline
@@ -180,7 +177,7 @@ Illustration can be seen on figure \ref{fig:sol_l2pi_m1_r1} with gamma convergen
 % \end{table}
 
 % \begin{table}
-  \caption{\label{tab:ex2_order3} Order $k=3$ with $ \gamma = 18$.}
+  \caption{\label{tab:ex2_order:b} Convergence table with the model parameters $L=2\pi$, $m=1$ and $r=1$ with order $k=3$ using $ \gamma = 18$}
   \begin{tabular}{rrrrrrrr}
     \hline\hline
     $i$&\textbf{$h/{L} $} & \textbf{$L^2$ norm} & \textbf{EOC} & \textbf{$H_1$ norm} & \textbf{EOC} & \textbf{energy norm} & \textbf{EOC} \\\hline
@@ -194,7 +191,7 @@ Illustration can be seen on figure \ref{fig:sol_l2pi_m1_r1} with gamma convergen
 % \end{table}
 
 % \begin{table}
-  \caption{\label{tab:ex2_order4} Order $k=4$ with $ \gamma = 30$}
+  \caption{\label{tab:ex2_order:c} Convergence table with the model parameters $L=2\pi$, $m=1$ and $r=1$ with order $k=4$ using $ \gamma = 30$}
   \begin{tabular}{rrrrrrrr}
     \hline\hline
     $i$&\textbf{$h/{L} $} & \textbf{$L^2$ norm} & \textbf{EOC} & \textbf{$H_1$ norm} & \textbf{EOC} & \textbf{energy norm} & \textbf{EOC} \\\hline
