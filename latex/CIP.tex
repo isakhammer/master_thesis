@@ -443,26 +443,27 @@ Hence, we get the following inequalities,
 \begin{equation*}
     \begin{split}
 I & \le  \| D^2\left( u - C_{h}u_{h} \right)  \|_{ \mathcal{T} _{h} }^{ 2 } = \sum_{T \in \mathcal{T} _{h}}^{} \| D^2 \left( u - C_{h}u_{h} \right)  \|_{ T }^{ 2 } \\
- & \le \sum_{T \in \mathcal{T} _{h}}^{}  \| \left( u - C_{h}u_{h} \right)  \|_{2,T  }^{  } \le  \sum_{T \in \mathcal{T} _{h}}^{}  h_{T}^{2\left( l-2 \right) } \| u \|_{l, \omega \left( T \right)   }^{  } \\
+ & \lesssim \sum_{T \in \mathcal{T} _{h}}^{}  \| \left( u - C_{h}u_{h} \right)  \|_{2,T  }^{  2} \lesssim  \sum_{T \in \mathcal{T} _{h}}^{}  h_{T}^{2\left( l-2 \right) } \| u \|_{l, \omega \left( T \right)   }^{2  } \\
     II & \le  \sum_{T \in \mathcal{T} _{h}}^{}  h^{-1} \| \partial _{n} \left( u - C_{h} \right)  \|_{ \partial T  }^{  } \le  \sum_{T \in \mathcal{T} _{h}}^{}  h^{-1} \left( h^{l -1 -\frac{1}{2}} \| u \|_{ l, \omega \left( T \right)  }^{  }
     \right)^{2}  \\
-    & \le \sum_{T \in \mathcal{T} _{h}}^{}  h^{2(l-2)} \| u \|_{ l, \omega \left( F \right)  }^{ 2 } \\
- III  &\le  \alpha^2  \sum_{T \in \mathcal{T} _{h}}^{}  \| u - C_{h} \|_{ T }^{ 2 } \le  \sum_{T \in \mathcal{T} _{h}}^{} h^{2l} \| u \|_{ \omega \left( T \right)  }^{ 2 } \\
-IV & \le \sum_{T \in \mathcal{T} _{h}}^{}  h \| \partial _{nn} \left( u - C_{h} \right)  \|_{\partial T  }^{2  } \le  \sum_{T \in  \mathcal{T} _{h}}^{} h \left( h^{l -2 -\frac{1}{2}} \| u \|_{ l, \omega \left( F \right)  }^{  }  \right)^{2} \le
+    & \lesssim \sum_{T \in \mathcal{T} _{h}}^{}  h^{2(l-2)} \| u \|_{ l, \omega \left( F \right)  }^{ 2 } \\
+ III  &\le   \alpha^2  \sum_{T \in \mathcal{T} _{h}}^{}  \| u - C_{h} \|_{ T }^{ 2 } \lesssim   \sum_{T \in \mathcal{T} _{h}}^{} h^{2l} \| u \|_{ \omega \left( T \right)  }^{ 2 } \\
+IV & \le \sum_{T \in \mathcal{T} _{h}}^{}  h \| \partial _{nn} \left( u - C_{h} \right)  \|_{\partial T  }^{2  } \lesssim  \sum_{T \in  \mathcal{T} _{h}}^{} h \left( h^{l -2 -\frac{1}{2}} \| u \|_{ l, \omega \left( F \right)  }^{  }  \right)^{2}
+\lesssim
 \sum_{T  \in  \mathcal{T} _{h}}^{} h^{2(l-2)}  \| u \|_{ l, \omega \left( F \right)  }^{ 2 }
  \end{split}
 \end{equation*}
 By gathering all terms can we observe the results,
 \[
     \begin{split}
-        I + II + III +  IV  &  \le  \sum_{T \in \mathcal{T} _{h}}^{}  h_{T}^{2\left( l-2 \right) } \| u \|_{l, \omega \left( T \right)   }^{  } +   2\cdot h^{2(l-2)}  \| u \|_{ l, \omega \left( F \right)  }^{ 2 } + h_{T}^{2l} \| u \|_{l, \omega \left( T \right)}
+        I + II + III +  IV  &  \lesssim  \sum_{T \in \mathcal{T} _{h}}^{}  h_{T}^{2\left( l-2 \right) } \| u \|_{l, \omega \left( T \right)   }^{  } +   2\cdot h^{2(l-2)}  \| u \|_{ l, \omega \left( F \right)  }^{ 2 } + h_{T}^{2l} \| u \|_{l, \omega \left( T \right)}
         \\
-        &  \le  h^{2\left( l-2 \right) } \| u \|_{ H^{l}\left( \Omega  \right)  }^{2  }.
+        &  \lesssim  h^{2\left( l-2 \right) } \| u \|_{ H^{l}\left( \Omega  \right)  }^{2  }.
     \end{split}
 \]
 Ergo, we now have a convergence rate estimate,
 \[
-\| u - C_{h}u_{h} \|_{  }^{  } \le  h^{l(l-1)} \| u \|_{H^{l} \left( \Omega  \right)  }^{  }.
+\| u - C_{h}u_{h} \|_{  }^{  } \lesssim  h^{l(l-1)} \| u \|_{H^{l} \left( \Omega  \right)  }^{  }.
 \]
 
 
