@@ -445,13 +445,26 @@ I & \le  \| D^2\left( u - C_{h}u_{h} \right)  \|_{ \mathcal{T} _{h} }^{ 2 } = \s
     \right)^{2}  \\
     & \le \sum_{T \in \mathcal{T} _{h}}^{}  h^{2(l-2)} \| u \|_{ l, \omega \left( F \right)  }^{ 2 } \\
  III  &\le  \alpha^2  \sum_{T \in \mathcal{T} _{h}}^{}  \| u - C_{h} \|_{ T }^{ 2 } \le  \sum_{T \in \mathcal{T} _{h}}^{} h^{2l} \| u \|_{ \omega \left( T \right)  }^{ 2 } \\
-IV & \le \sum_{T \in \mathcal{T} _{h}}^{}  h \| \partial _{nn} \left( u - C_{h} \right)  \|_{\partial T  }^{  } \le  \sum_{T \in  \mathcal{T} _{h}}^{} h \left( h^{l -2 -\frac{1}{2}} \| u \|_{ l, \omega \left( F \right)  }^{  }  \right)
+IV & \le \sum_{T \in \mathcal{T} _{h}}^{}  h \| \partial _{nn} \left( u - C_{h} \right)  \|_{\partial T  }^{2  } \le  \sum_{T \in  \mathcal{T} _{h}}^{} h \left( h^{l -2 -\frac{1}{2}} \| u \|_{ l, \omega \left( F \right)  }^{  }  \right)^{2} \le
+\sum_{T  \in  \mathcal{T} _{h}}^{} h^{2(l-2)}  \| u \|_{ l, \omega \left( F \right)  }^{ 2 }
  \end{split}
 \end{equation*}
-thus
+
+By gathering all terms can we observe the results,
+
 \[
-I + II + III +  IV  \le  h^{2\left( l-2 \right) } \| u \|_{ H^{l}\left( \Omega  \right)  }^{  }
+    \begin{split}
+        I + II + III +  IV  &  \le  \sum_{T \in \mathcal{T} _{h}}^{}  h_{T}^{2\left( l-2 \right) } \| u \|_{l, \omega \left( T \right)   }^{  } +   2\cdot h^{2(l-2)}  \| u \|_{ l, \omega \left( F \right)  }^{ 2 } + h_{T}^{2l} \| u \|_{l, \omega \left( T \right)}
+        \\
+        &  \le  h^{2\left( l-2 \right) } \| u \|_{ H^{l}\left( \Omega  \right)  }^{2  }.
+    \end{split}
 \]
+
+Hence, we get the final convergence rate estimate,
+\[
+\| u - C_{h}u_{h} \|_{  }^{  } \le  h^{l(l-1)} \| u \|_{H^{l} \left( \Omega  \right)  }^{  }.
+\]
+
 
 
 
