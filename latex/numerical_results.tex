@@ -22,26 +22,31 @@ We choose the manufactured solutions to be on the form,
     \label{eq:man_sol}
 u\left( x; L,m,r \right) = \cos\left(  m\cdot \frac{2\pi}{L}  x_{1}\right)  \cos \left(r\cdot  \frac{2\pi}{L} x_{2} \right) \quad \text{ on }   \Omega =  \left( 0,L  \right)^{2}.
 .\end{equation}
-Notice that we customize the model parameters, $L, m, r$, freely.
+Notice that we customize the model parameters $L, m \text{ and } r$ freely.
 For convenience did we pick $\alpha = 1$ for all the numerical experiments. We define the error to have the form $e = u - u_{h}$ such that the $L^2$ norm is denoted as $\| e \|_{ L^{2}\left( \Omega  \right)   }^{  } $, $H^{1} $ norm is denoted as $\|
-e \|_{ H^{1}\left( \Omega  \right)  }^{  } $ and lastly the energy norm  \eqref{eq:A_energy_norm} denoted as $\| e \|_{ h }^{  } $. In this report will we provide two examples of convergence analysis based on different
+e \|_{ H^{1}\left( \Omega  \right)  }^{  } $ and the energy norm  \eqref{eq:A_energy_norm} denoted as $\| e \|_{ h }^{  } $ \footnote{
+It is worth mentioning that we have not proved any expected rate of convergence $L^2$ norm and $H_1$ norm. However, for practical purposes are these properties still useful to analyze.
+}. In this report will we provide two examples of convergence analysis based on different
 parametrization of \eqref{eq:man_sol}. Each examples consists of a convergence plot of different penalty parameters $\gamma$ using the $L^{2}$ norm and a more extensive analysis by comparing the convergence rate of their respective norms. A convenient tool to measure convergence is by computing the experimentally observed convergence rate (EOC), defined as follows,
 \[
 EOC(i) = \frac{\log\left( \frac{\| e\left( h_{i} \right)  \|_{ \mathcal{V}  }^{  }}{\| e\left( h_{i-1} \right) \|_{\mathcal{V}   }^{  } }   \right)}{\log\left( \frac{h_{i}}{h_{i-1}}  \right) }, \quad i>1   .
-\]
+\].
 The FEM software package used in the implementation was Gridap written in the Julia programming language \cite{verdugo22, julia17}.
 
 
-The first example, where $L=1$, $m=7$ and $r=3$, (illustrated on figure \ref{fig:sol_l1_m7_r3}) with a penalty parameter analysis on figure \ref{fig:ex1_gamma} and extensive convergence analysis on figures \ref{fig:ex1_conv:a}, \ref{fig:ex1_conv:b} and \ref{fig:ex1_conv:c} with
-corresponding tables \ref{tab:ex1_order:a}, \ref{tab:ex1_order:b} and \ref{tab:ex1_order:c}. Similarly, the second example, where $L=2\pi$, $m=1$ and $r=1$, (illustrated on figure \ref{fig:sol_l2pi_m1_r1}) with a penalty parameter analysis on figure \ref{fig:ex2_gamma} and extensive convergence analysis on figures \ref{fig:ex2_conv:a},
+The first example, where $L=1$, $m=7$ and $r=3$, (illustrated on figure \ref{fig:sol_l1_m7_r3}) with a penalty parameter analysis on figure \ref{fig:ex1_gamma} and a extensive convergence analysis on figures \ref{fig:ex1_conv:a}, \ref{fig:ex1_conv:b} and \ref{fig:ex1_conv:c} with
+corresponding tables \ref{tab:ex1_order:a}, \ref{tab:ex1_order:b} and \ref{tab:ex1_order:c}. Similarly, the second example, where $L=2\pi$, $m=1$ and $r=1$, (illustrated on figure \ref{fig:sol_l2pi_m1_r1}) with a penalty parameter analysis on figure
+\ref{fig:ex2_gamma} and a extensive convergence analysis on figures \ref{fig:ex2_conv:a},
 \ref{fig:ex2_conv:b} and \ref{fig:ex2_conv:c} with corresponding tables \ref{tab:ex2_order:a}, \ref{tab:ex2_order:b} and \ref{tab:ex2_order:c}.
 
+Generally speaking, for both examples do we observe that the convergence rate is robust for most choices of $\gamma$ for any order. However, we can also observe in both cases we see instabilities for order $k=4$ and $h=\frac{1}{128}$. The cause is
+likely because of a ill conditioned linear system. In fact, it has been shown that the condition number has a growth rate of $O\left( h^{-4} \right) $ \cite{li07}, so this behaviour is expected without preconditioning of the linear system.
 
 
 \begin{figure}[tbh!]
     \centering
     \includegraphics[width=0.35\textwidth]{figures/model/l_1.0_m_7_r_3n_100_sol.png}
-    \caption{Illustration  solution \eqref{eq:man_sol}   with the parameters $L=1$, $m=7$ and $r=3$ in $\Omega = (0,1)^2$}
+    \caption{Illustration of the manufactured solution \eqref{eq:man_sol} with the model parameters $L=1$, $m=7$ and $r=3$ in $\Omega = (0,1)^2$}
     \label{fig:sol_l1_m7_r3}
 \end{figure}
 
@@ -74,7 +79,7 @@ corresponding tables \ref{tab:ex1_order:a}, \ref{tab:ex1_order:b} and \ref{tab:e
     \end{minipage}\par\medskip
     \centering
     \subfloat[]{\label{fig:ex1_conv:c}\includegraphics[scale=.25]{figures/convergence/L_1.0_m_7_r_3/conv_order_4_gamma_30.0.png}}
-    \caption{ Example, $L=1$, $m=1$, $r=1$. Polynomials $\mathcal{P}_{k} $ with order $k$ . Figures \ref{fig:ex1_conv:a}, \ref{fig:ex1_conv:b} and \ref{fig:ex1_conv:c} has respectively the order $k=2,3, 4$ with penalty parameters $\gamma = 9,18,30 $.  }
+    \caption{ Convergence plots with model parameters $L=1$, $m=7$ and $r=3$ Figures \ref{fig:ex1_conv:a}, \ref{fig:ex1_conv:b} and \ref{fig:ex1_conv:c} has respectively the order $k=2,3, 4$ with penalty parameters $\gamma = 9,18,30 $.  }
     \label{fig:ex1_conv}
 \end{figure}
 
@@ -126,7 +131,7 @@ corresponding tables \ref{tab:ex1_order:a}, \ref{tab:ex1_order:b} and \ref{tab:e
 \begin{figure}[tbh!]
     \centering
     \includegraphics[width=0.5\textwidth]{figures/model/l_6.28_m_1_r_1n_100_sol.png}
-    \caption{Illustration of solution \eqref{eq:man_sol}   with the parameters $L=2\pi$, $m=1$ and $r=1$ in $\Omega = (0,2\pi)^2$}
+    \caption{Illustration of the manufactured solution \eqref{eq:man_sol} with the model parameters $L=2\pi$, $m=1$ and $r=1$ in $\Omega = (0,2\pi)^2$}
     \label{fig:sol_l2pi_m1_r1}
 \end{figure}
 
@@ -151,15 +156,15 @@ corresponding tables \ref{tab:ex1_order:a}, \ref{tab:ex1_order:b} and \ref{tab:e
     \centering
     \begin{minipage}{.5\linewidth}
     \centering
-    \subfloat[]{\label{fig:ex2_conv:a}\includegraphics[scale=.2]{figures/convergence/L_6.28_m_1_r_1/conv_order_2_gamma_9.0.png}}
+    \subfloat[]{\label{fig:ex2_conv:a}\includegraphics[scale=.25]{figures/convergence/L_6.28_m_1_r_1/conv_order_2_gamma_9.0.png}}
     \end{minipage}%
     \begin{minipage}{.5\linewidth}
     \centering
-    \subfloat[]{\label{fig:ex2_conv:b}\includegraphics[scale=.2]{figures/convergence/L_6.28_m_1_r_1/conv_order_3_gamma_18.0.png}}
+    \subfloat[]{\label{fig:ex2_conv:b}\includegraphics[scale=.25]{figures/convergence/L_6.28_m_1_r_1/conv_order_3_gamma_18.0.png}}
     \end{minipage}\par\medskip
     \centering
-    \subfloat[]{\label{fig:ex2_conv:c}\includegraphics[scale=.2]{figures/convergence/L_6.28_m_1_r_1/conv_order_4_gamma_30.0.png}}
-    \caption{ Example, $L=2\pi$, $m=1$, $r=1$. Polynomials $\mathcal{P}_{k} $ with order $k$ . Figures \ref{fig:ex2_conv:a}, \ref{fig:ex2_conv:b} and \ref{fig:ex2_conv:c} has respectively the order $k=2,3, 4$ with penalty parameters $\gamma = 9,18,30 $.  }
+    \subfloat[]{\label{fig:ex2_conv:c}\includegraphics[scale=.25]{figures/convergence/L_6.28_m_1_r_1/conv_order_4_gamma_30.0.png}}
+    \caption{ Convergence plots with model parameters $L=2\pi$, $m=1$ and $r=1$. Figures \ref{fig:ex2_conv:a}, \ref{fig:ex2_conv:b} and \ref{fig:ex2_conv:c} has respectively the order $k=2,3, 4$ with penalty parameters $\gamma = 9,18,30 $.  }
     \label{fig:ex2_conv}
 \end{figure}
 
