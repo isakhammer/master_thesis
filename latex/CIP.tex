@@ -403,7 +403,6 @@ u \in H^3\left( \Omega  \right)  \implies \begin{cases}
 \]
 Let $u_{h} \in \mathcal{P} ^{k}$ and $u \in  H^{l}$, then we assume $3 \le  l \le k+1$.
 
-
 We want to compute the expected convergence rate of the energy norm.
 Now, using the energy norm defined in \eqref{eq:A_energy_norm} will we be able to find a upper bound of convergence. A important tool in the process the Clement lemma from can we apply the Cléments interpolation operator $C_{h}$, for more detailed
 information please investigate \cite{ern04}. Now let the approximation of the global error function have the form $u - C_{h}u_{h}$. Hence
@@ -413,22 +412,30 @@ the energy norm error is formulated as, \[
 & + \alpha \underbrace{\| u - C_{h}u_{h} \|_{\Omega   }^{2}}_{III}  + \underbrace{\| h^{\frac{1}{2}} \mean{ \partial _{nn}\left(  u - C_{h}u_{h}\right)  }   \|_{\mathcal{F} _{h}  }^{ 2 }}_{IV}
     \end{split}
 \]
-We denote a patch $\omega \left( T \right) $ as the set of elements in $\mathcal{T} _{h}$  sharing at least one vertex with $T \in \mathcal{T} _{h}$ . And similarly we denote $\omega \left( F \right) $ the set of all elements in $\mathcal{T}_{h} $
-sharing at least one vertex with $F \in  \mathcal{F} _{h}$.
 
-The following inequalities holds
+We denote a patch $\omega \left( T \right) $ as the set of elements in $\mathcal{T} _{h}$  sharing at least one vertex with $T \in \mathcal{T} _{h}$ . And similarly we denote $\omega \left( F \right) $ the set of all elements in $\mathcal{T}_{h} $
+sharing at least one vertex with $F \in  \mathcal{F} _{h}$. Furthermore, we also introduce the notation $\partial T$ for integration along the facets for a triangle $T$. This is important for simplifying jump and mean terms, respectively $II$ and $IV$, since \[
+    \begin{split}
+\sum_{F \in \mathcal{F}_{h} }^{}  \| \jump{ v }   \|_{F  }^{  } & =\sum_{F \in \mathcal{F}_{h} }^{}  \|  v^{+} - v^{-}    \|_{F  }^{  } \le \sum_{F \in \mathcal{F}_{h} }^{} \| v^{+} \|_{  F}^{  }  + \| v^{-} \|_{F }^{  } \le \sum_{T \in
+\mathcal{T}_{h} }^{} \| v \|_{ \partial T }^{  } \\
+\sum_{F \in \mathcal{F}_{h} }^{}  \| \mean{ v }   \|_{F  }^{  } & =\sum_{F \in \mathcal{F}_{h} }^{} \frac{1}{2} \|  v^{+} + v^{-}    \|_{F  }^{  } \le \sum_{F \in \mathcal{F}_{h} }^{} \frac{1}{2} \| v^{+} \|_{  F}^{  }  + \| v^{-} \|_{F }^{  } \le \sum_{T \in
+\mathcal{T}_{h} }^{} \frac{1}{2}\| v \|_{ \partial T }^{  } \\
+    \end{split}
+\]
+
+Hence, we get the following inequalities,
 \begin{equation*}
     \begin{split}
 I & \le  \| D^2\left( u - C_{h}u_{h} \right)  \|_{ \mathcal{T} _{h} }^{ 2 } = \sum_{T \in \mathcal{T} _{h}}^{} \| D^2 \left( u - C_{h}u_{h} \right)  \|_{ T }^{ 2 } \\
  & \le \sum_{T \in \mathcal{T} _{h}}^{}  \| \left( u - C_{h}u_{h} \right)  \|_{2,T  }^{  } \le  \sum_{T \in \mathcal{T} _{h}}^{}  h_{T}^{2\left( l-2 \right) } \| u \|_{l, \omega \left( T \right)   }^{  } \\
- II  &\le  \alpha  \sum_{T \in \mathcal{T} _{h}}^{}  \| u - C_{h} \|_{ T }^{ 2 } \le  \sum_{T \in \mathcal{T} _{h}}^{} h^{2l} \| u \|_{ \omega \left( T \right)  }^{ 2 } \\
-    III & \le  \sum_{T \in \mathcal{T} _{h}}^{}  h^{-1} \| \partial _{n} \left( u - C_{h} \right)  \|_{ \partial T  }^{  } \le  \sum_{T \in \mathcal{T} _{h}}^{}  h^{-1} \left( h^{l -1 -\frac{1}{2}} \| u \|_{ l, \omega \left( T \right)  }^{  }
+    II & \le  \sum_{T \in \mathcal{T} _{h}}^{}  h^{-1} \| \partial _{n} \left( u - C_{h} \right)  \|_{ \partial T  }^{  } \le  \sum_{T \in \mathcal{T} _{h}}^{}  h^{-1} \left( h^{l -1 -\frac{1}{2}} \| u \|_{ l, \omega \left( T \right)  }^{  }
     \right)^{2}  \\
     & \le \sum_{T \in \mathcal{T} _{h}}^{}  h^{2(l-2)} \| u \|_{ l, \Omega \left( F \right)  }^{ 2 } \\
+ III  &\le  \alpha  \sum_{T \in \mathcal{T} _{h}}^{}  \| u - C_{h} \|_{ T }^{ 2 } \le  \sum_{T \in \mathcal{T} _{h}}^{} h^{2l} \| u \|_{ \omega \left( T \right)  }^{ 2 } \\
 IV & \le \sum_{T \in \mathcal{T} _{h}}^{}  h \| \partial _{nn} \left( u - C_{h} \right)  \|_{\partial T  }^{  } \le  \sum_{T \in  \mathcal{T} _{h}}^{} h \left( h^{l -2 -\frac{1}{2}} \| u \|_{ l, \omega \left( F \right)  }^{  }  \right)
  \end{split}
-.\end{equation*}
-and lastly
+\end{equation*}
+thus
 \[
 I + II + III +  IV  \le  h^{2\left( l-2 \right) } \| u \|_{ H^{l}\left( \Omega  \right)  }^{  }
 \]
