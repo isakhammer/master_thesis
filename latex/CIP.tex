@@ -119,7 +119,6 @@ Keep in mind that any jump over a interior facet $F \subset \mathcal{F} _{h}^{in
 and likewise for the mean, $\mean{ a  } = \frac{1}{2}(   a^{+}
 + a^{-})$.    The equivalence of \eqref{eq:bi_basic_dg2} and \eqref{eq:bi_basic_dg_full_1} comes from the following argumentation.
 
-{\footnotesize
 \begin{equation*}
     \begin{split}
  \left( \Delta  ^{2} u,v \right) _{\Omega } & =\sum_{T\in \mathcal{T} _{h}}^{} \left( D^2u,D^2v \right) _{T } - \left(\partial _{nt} u, \partial _{t}v
@@ -130,7 +129,8 @@ and likewise for the mean, $\mean{ a  } = \frac{1}{2}(   a^{+}
 \partial _{nt} u, \partial _{t} v \right) _{F}  - \underbrace{\left( \partial _{nn} u, \partial _{n} v \right)_{F}}_{ = 0}    \\
 & \quad  + \sum_{F \in \mathcal{F} _{h}^{int}}^{} \underbrace{\left( \left(\partial _{n^{+}} \Delta  u^{+}
         ,v^{+}\right)_{F}
-+ \left(\partial _{n^{-}} \Delta  u^{+} ,v^{-}\right)_{F}  \right)}_{(I)} +
++ \left(\partial _{n^{-}} \Delta  u^{+} ,v^{-}\right)_{F}  \right)}_{(I)} \\
+ & \quad \quad \quad  \quad +
 \underbrace{\left( \left(\partial _{n^{+}t} u^{+}, \partial_{t} v^{+} \right)_{F} +  \left(\partial _{n^{-}t} u^{-},
         \partial_{t} v^{-}
 \right)_{F}  \right) }_{(II)} \\
@@ -139,21 +139,21 @@ and likewise for the mean, $\mean{ a  } = \frac{1}{2}(   a^{+}
 \right) _{F} \right) }_{(III)}
     \end{split}
 .\end{equation*}
-}
 
-Where integration over all interior facets $ \forall F \in \mathcal{F}_{h}^{int}$ is computed in this way,
-{\footnotesize
+Where integration over all interior facets $ \forall F \in \mathcal{F}_{h}^{int}$ is computed in this way.
 \begin{equation*}
     \begin{split}
         (I) &  =    \left(\partial _{n^{+}} \Delta  u^{+} ,v^{+}\right)_{F} +
-        \left(\partial _{n^{-}} \Delta  u^{+} ,v^{-}\right)_{F} =   \int_{F}^{}
+        \left(\partial _{n^{-}} \Delta  u^{+} ,v^{-}\right)_{F}  \\
+        & =   \int_{F}^{}
         \jump{ \partial _{n} \Delta  u \cdot v } =
          \int_{F}^{}
          \mean{ \partial _{n} \Delta  u } \underbrace{\jump{ v }}_{= 0}    + \underbrace{\jump{ \partial _{n} \Delta  u
          }}_{= 0}    \mean{ v } = 0 \\
         (II) &  =     \left(\partial _{n^{+}t} u^{+}, \partial_{t} v^{+}
         \right)_{F} +  \left(\partial _{n^{-}t} u^{-}, \partial_{t} v^{-}
-\right)_{F}    =   \int_{F}^{}
+\right)_{F}   \\
+&  =   \int_{F}^{}
         \jump{ \partial _{nt} u \cdot  \partial_{t} v } =
          \int_{F}^{}
          \mean{ \partial _{nt} u    } \underbrace{\jump{ \partial_{t} v }  }_{= 0}    + \underbrace{\jump{ \partial
@@ -165,8 +165,6 @@ Where integration over all interior facets $ \forall F \in \mathcal{F}_{h}^{int}
                  _{nn}  u
          }}_{= 0}    \mean{ \partial _{n}v }   =  \left( \partial _{nn} u, \jump{ \partial_{n} v } \right)_{F}   \end{split}
 .\end{equation*}
-}
-
 Observe that the cancellations in the term $(I)$ appears of the continuity of $v\in V $ and $u\in H^{4}\left( \Omega  \right) $ which makes the jumps zero. For the second term $(II)$ does the terms become zero cancelled because the tangential
 derivative at the facet has no jump. However, The third term $(III)$  is fairly interesting since the discontinuity in normal vector for $v \in V$ is a jump, while the second term is still continuous. It can also be raised that $\mean{ \partial _{nn} u } = \partial _{nn} u  $ holds by the continuity of $H^{4}\left( \Omega  \right) $. Anyhow, the definition of jump of should more interesting when we later weaken the continuity of $u$ during discretization.
 Hence, \eqref{eq:bi_basic_dg2} and \eqref{eq:bi_basic_dg_full_1} is equivalent.
