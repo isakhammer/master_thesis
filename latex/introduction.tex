@@ -24,14 +24,15 @@ Though this works well from a numerical point of view, it has shown to have draw
 by a saddle point problem, which is certainly makes the existence and uniqueness proof more challenging, as well as the design of efficient preconditioner \cite{brezzi74}.
 
 In this report will we focus to work on a fourth approach known as the continuous interior penalty method (CIP). A major advantage is that the approach preserves the global $C^{0}$ continuity and the positive symmetric definiteness, thus makes it
-attractive to solve the biharmonic equation \cite{brenner2012, brenner2012quadratic}. The goal of this report is to give a detailed account on the derivations of CIP and its a priori error analysis, following the presentations in \cite{gu2012c0, brenner2012}. We will also present a numerical analysis.
+attractive to solve the biharmonic equation \cite{brenner2012, brenner2012quadratic}. The goal of this report is to give a detailed account on the derivations of CIP and its a priori error analysis following the presentations in \cite{gu2012c0,
+brenner2012}. We will also present a basic numerical analysis.
 
 
 \section{Mathematical Background}%
 \label{sub:mathematical_background}
 
 In this section will we briefly establish some basic results of functional analysis and numerical analysis in order to construct the foundations of the FEM method. However, for a more thoroughly explanation some recommended sources are
-\cite{brenner07math,manzoni2021optimal, quartdiff}. We will first define basic principles of Hilbert spaces which then will be applied to establish a theory for weak formulations the notion of a well-posed problem. Moreover, we will then continue by
+\cite{brenner07math,manzoni2021optimal, quartdiff}. We will first define basic principles of Hilbert spaces which then will be applied to establish a theory for weak formulations and the notion of a well posed problem. Moreover, we will then continue by
 establishing error estimates and constructing a numerical discretization of the weak formulation using a simple test problem.
 
 \subsection{Hilbert Spaces}%
