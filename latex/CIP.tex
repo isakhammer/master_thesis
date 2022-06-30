@@ -396,14 +396,14 @@ Observe that we now have $ \| u_{h} - v_{h} \|_{ a_{h} }^{  }   \le \frac{\widet
 
 
 We want to compute the expected convergence rate of the energy norm \eqref{eq:A_energy_norm}. An important tool in the process is the Cléments interpolation operator, $C_{h}$.
-It is used for interpolation on non smooth functions and is defined as a local $L^{2}$ projection onto the so-called macroelements, that is, $C_{h}: H^{m} \left( \Omega  \right) \mapsto V_{h}$. For further detailed information please investigate \cite{ern04}.
+It is used for interpolation on non smooth functions and is defined as a local $L^{2}$ projection onto the so-called macroelements, that is, $C_{h}: H^{m} \left( \Omega  \right) \mapsto V_{h}$. For further detailed information, please investigate \cite{ern04}.
 
 
 Recall the definition \eqref{eq:mixed_derivative} and let us define the integral norm notation,
 \[
 \| u \|_{ m,2,T }^{  } = \left( \sum_{ \left\lvert \alpha  \right\rvert \le m}^{} \int_{T}^{}  \left\lvert  \partial ^{\alpha } u \right\rvert^{2} dx   \right)^{\frac{1}{2}}
 \]
-We denote a patch, $\omega \left( T \right) $, as the set of elements in $\mathcal{T} _{h}$  sharing at least one vertex with $T \in \mathcal{T} _{h}$ . And similarly we denote $\omega \left( F \right) $ the set of all elements in $\mathcal{T}_{h} $
+We denote a patch, $\omega \left( T \right) $, as the set of elements in $\mathcal{T} _{h}$  sharing at least one vertex with $T \in \mathcal{T} _{h}$ . And similarly we denote a another patch, $\omega \left( F \right) $, as the set of all elements in $\mathcal{T}_{h} $
 sharing at least one vertex with $F \in  \mathcal{F} _{h}$.
 Furthermore, we also introduce the notation $\partial T$ for integration along the facets for a triangle $T$.
 
@@ -412,20 +412,18 @@ The stability and interpolation properties of the Cléments interpolation operat
 \[
  \| C_{h} v \|_{H^{m}\left( \Omega  \right)   }^{  } \lesssim \| v \|_{ H^{m}\left( \Omega  \right)  }^{  } \quad \forall v \in H^{m}\left( \Omega  \right),
 \]
-and that these conditions holds if the conditions of $m,l$ and $k$ is satisfied,
+and if the conditions of $m,l$ and $k$ is satisfied it exists error estimates,
 \[
     \begin{split}
       m\le l \le k+1  \implies \| v - C_{h} v \|_{ m,2,T   }^{  }  &  \lesssim h^{l-m}_{T} \| v \|_{l,2,\omega \left( T \right)  }^{  } \quad  \forall T \in \mathcal{T} _{h}, \forall v \in H^{l}\left( \omega \left( T \right)
       \right), \\
-      m +\frac{1}{2}\le l \le k+1  \implies \| v - C_{h} v \|_{ m,2,F }^{  } & \lesssim h^{l-m- \frac{1}{2}}_{T} \| v \|_{l,2,\omega \left( T \right)  }^{  } \quad  \forall \partial T \in \mathcal{T} _{h}, \forall v \in H^{l}\left( \omega \left( F
+      m +\frac{1}{2}\le l \le k+1  \implies \| v - C_{h} v \|_{ m,2,F }^{  } & \lesssim h^{l-m- \frac{1}{2}}_{T} \| v \|_{l,2,\omega \left( F \right)  }^{  } \quad  \forall \partial T \in \mathcal{T} _{h}, \forall v \in H^{l}\left( \omega \left( F
       \right)  \right).
     \end{split}
 \]
-These conditions are excellent for estimating
+We will use these estimates to compute convergence rate.
 
-
-Hence,
-the energy norm error is formulated as, \[
+Firstly, the energy norm error is formulated as, \[
     \begin{split}
 \| u - C_{h}u_{h} \|_{ a_{h},* }^{ 2 }  =&  \underbrace{\| D^2( u - C_{h}u_{h} ) \|_{\Omega   }^{2  }}_{I}  + \gamma \underbrace{\| h^{-\frac{1}{2}} \jump{ \partial _{n}\left( u - C_{h}u_{h} \right)  }    \|_{ \mathcal{F} _{h}  }^{2  }}_{II} \\
 & +  \underbrace{\alpha ^2 \| u - C_{h}u_{h} \|_{\Omega   }^{2}}_{III}  + \underbrace{\| h^{\frac{1}{2}} \mean{ \partial _{nn}\left(  u - C_{h}u_{h}\right)  }   \|_{\mathcal{F} _{h}  }^{ 2 }}_{IV}.
@@ -433,31 +431,31 @@ the energy norm error is formulated as, \[
 \]
 
 
- This is important for simplifying jump and mean terms, respectively term $II$ and
-$IV$, since this property arise, \[
+Observe that by summing over triangles the jump and mean terms (respectively term $II$ and
+$IV$) is notable simplified, \[
     \begin{split}
 \sum_{F \in \mathcal{F}_{h} }^{}  \| \jump{ v }   \|_{F  }^{  } & =\sum_{F \in \mathcal{F}_{h} }^{}  \|  v^{+} - v^{-}    \|_{F  }^{  } \le \sum_{F \in \mathcal{F}_{h} }^{} \| v^{+} \|_{  F}^{  }  + \| v^{-} \|_{F }^{  } \le \sum_{T \in
 \mathcal{T}_{h} }^{} \| v \|_{ \partial T }^{  } \\
 \sum_{F \in \mathcal{F}_{h} }^{}  \| \mean{ v }   \|_{F  }^{  } & =\sum_{F \in \mathcal{F}_{h} }^{} \frac{1}{2} \|  v^{+} + v^{-}    \|_{F  }^{  } \le \sum_{F \in \mathcal{F}_{h} }^{} \frac{1}{2} \| v^{+} \|_{  F}^{  }  +\frac{1}{2} \| v^{-} \|_{F }^{  } \le \sum_{T \in
-\mathcal{T}_{h} }^{} \| v \|_{ \partial T }^{  } \\
+\mathcal{T}_{h} }^{} \| v \|_{ \partial T }^{  }. \\
     \end{split}
 \]
-
-Hence, we get the following inequalities,
+Using this fact and applying Cléments lemma we get,
 \begin{equation*}
     \begin{split}
 I & \le  \| D^2\left( u - C_{h}u_{h} \right)  \|_{ \mathcal{T} _{h} }^{ 2 } = \sum_{T \in \mathcal{T} _{h}}^{} \| D^2 \left( u - C_{h}u_{h} \right)  \|_{ T }^{ 2 } \\
- & \lesssim \sum_{T \in \mathcal{T} _{h}}^{}  \| \left( u - C_{h}u_{h} \right)  \|_{2,T  }^{  2} \lesssim  \sum_{T \in \mathcal{T} _{h}}^{}  h_{T}^{2\left( l-2 \right) } \| u \|_{l, \omega \left( T \right)   }^{2  } \\
+ & \lesssim \sum_{T \in \mathcal{T} _{h}}^{}  \| \left( u - C_{h}u_{h} \right)  \|_{2,T  }^{  2} \lesssim  \sum_{T \in \mathcal{T} _{h}}^{}  h_{T}^{2\left( l-2 \right) } \| u \|_{l, \omega \left( T \right)   }^{2  }, \\
     II & \le  \sum_{T \in \mathcal{T} _{h}}^{}  h^{-1} \| \partial _{n} \left( u - C_{h} \right)  \|_{ \partial T  }^{  } \le  \sum_{T \in \mathcal{T} _{h}}^{}  h^{-1} \left( h^{l -1 -\frac{1}{2}} \| u \|_{ l, \omega \left( T \right)  }^{  }
-    \right)^{2}  \\
+    \right)^{2},  \\
     & \lesssim \sum_{T \in \mathcal{T} _{h}}^{}  h^{2(l-2)} \| u \|_{ l, \omega \left( F \right)  }^{ 2 } \\
- III  &\le   \alpha^2  \sum_{T \in \mathcal{T} _{h}}^{}  \| u - C_{h} \|_{ T }^{ 2 } \lesssim   \sum_{T \in \mathcal{T} _{h}}^{} h^{2l} \| u \|_{ \omega \left( T \right)  }^{ 2 } \\
+ III  &\le   \alpha^2  \sum_{T \in \mathcal{T} _{h}}^{}  \| u - C_{h} \|_{ T }^{ 2 } \lesssim   \sum_{T \in \mathcal{T} _{h}}^{} h^{2l} \| u \|_{ \omega \left( T \right)  }^{ 2 }, \\
 IV & \le \sum_{T \in \mathcal{T} _{h}}^{}  h \| \partial _{nn} \left( u - C_{h} \right)  \|_{\partial T  }^{2  } \lesssim  \sum_{T \in  \mathcal{T} _{h}}^{} h \left( h^{l -2 -\frac{1}{2}} \| u \|_{ l, \omega \left( F \right)  }^{  }  \right)^{2}
 \lesssim
-\sum_{T  \in  \mathcal{T} _{h}}^{} h^{2(l-2)}  \| u \|_{ l, \omega \left( F \right)  }^{ 2 }
+\sum_{T  \in  \mathcal{T} _{h}}^{} h^{2(l-2)}  \| u \|_{ l, \omega \left( F \right)  }^{ 2 }.
  \end{split}
 \end{equation*}
-By gathering all terms can we observe the results,
+
+ The result then follows easily,
 \[
     \begin{split}
         I + II + III +  IV  &  \lesssim  \sum_{T \in \mathcal{T} _{h}}^{}  h_{T}^{2\left( l-2 \right) } \| u \|_{l, \omega \left( T \right)   }^{  } +   2\cdot h^{2(l-2)}  \| u \|_{ l, \omega \left( F \right)  }^{ 2 } + h_{T}^{2l} \| u \|_{l, \omega \left( T \right)}
@@ -472,7 +470,7 @@ Ergo, we now have a convergence rate estimate,
 
 
 
-It is easy to that we must require $u$ to be at least be at $H^{3}\left( \Omega  \right) $ since,
+It is easy to that we must require $u$ to be at least be in $H^{3}\left( \Omega  \right) $ since,
 \[
 u \in H^3\left( \Omega  \right)  \implies \begin{cases}
     \Delta u \in  H^{1}\left( \Omega  \right ) \\
