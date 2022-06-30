@@ -13,7 +13,7 @@ However, it is known that $ H^{2}$ conforming methods requires global $C^{1}$ co
 complicated because you have to construct 21 degrees of freedom for triangle elements \cite{ nair21, brenner07math}. However, some sources tend to say that this method outperforms traditional $C^{0}$ methods \cite{kirby18}, but it still seems to be rarely applied.
 Nevertheless, it has also been shown DG methods that is conform and has no penalty terms that does converge \cite{ye19}. Hence, makes the method simpler since it does not involve tuning of penalty parameters, thus might be promising. None of these conform methods mentioned has shown to retain the same properties in 3D.
 
-For the CP case is $C^0$ finite elements much simpler than obtaining $C^{1}$ finite elements. Also, compared to other similar methods such as the mixed finite element method, CP does in fact preserve the symmetric positive definiteness, which means
+For the CIP case is $C^0$ finite elements much simpler than obtaining $C^{1}$ finite elements. Also, compared to other similar methods such as the mixed finite element method, CIP does in fact preserve the symmetric positive definiteness, which means
 the stability analysis is more straight forward. Finally and most importantly, according to \cite{brenner2012quadratic} can naive use mixed methods of splitting the boundary conditions of
 the problem \eqref{eq:bi_problem} produce wrong solutions if $\Omega $ is non convex.
 
@@ -182,7 +182,7 @@ V_{h}^{*} = \begin{cases}
 \end{cases}
 \]
 Now, if we choose $u \in V_{h}$ must we take account that the jump is discrete.
- We have now the final CP formulation.
+ We have now the final CIP formulation.
 The discretized numerical problem is to solve $w_{h} \in V_{h}^{*}$ such that
 \begin{equation}
 \label{eq:CP_A_F}
@@ -255,7 +255,7 @@ The method is said to be coercive if $\mathcal{A} _{h}\left( v_{h}, v_{h} \right
 \label{ssub:coercitivity}
 
 
-Suppose we have the CP problem described in \eqref{eq:CP_A_F}. Then is the coercivity be computed such that,
+Suppose we have the CIP problem described in \eqref{eq:CP_A_F}. Then is the coercivity be computed such that,
 \[
     \begin{split}
 \mathcal{A} \left( v_{h}, v_{h} \right)  =& \quad  \alpha \|  v_{h}  v_{h} \|_{ \Omega  }^{  } +  \| D^2v_{h} \|_{ \mathcal{T} _{h} }^{2  }   \\
@@ -289,11 +289,12 @@ The next step is then to use the \textbf{Youngs epsilon inequality} to be able t
  - 2 C^{\frac{1}{2}}_{j} \|  D ^2 v_{h}    \|_{ \mathcal{T} _{h}  }^{  } \| h^{\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{ \mathcal{F} _{h} }^{2  } \ge- \varepsilon C_{j} \| D ^2 v_{h} \|_{ \mathcal{T} _{h} }^{2  } -
  \frac{1}{\varepsilon } \| h^{\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{ \mathcal{F} _{h} }^{2  }
 \]
-The last step was to choose a $\varepsilon $ and $\gamma $ as some positive constant so that the second term is restricted to be multiplied with something bigger than $\frac{1}{2}$. Thus, the term fulfils coercivity of the \eqref{eq:A_energy_norm}. Hence, the CP method is coercive.
+The last step was to choose a $\varepsilon $ and $\gamma $ as some positive constant so that the second term is restricted to be multiplied with something bigger than $\frac{1}{2}$. Thus, the term fulfils coercivity of the \eqref{eq:A_energy_norm}.
+Hence, the CIP method is coercive.
 
 \subsubsection{Boundedness}%
 \label{ssub:bounded}
-We want the CP method to be bounded.
+We want the CIP method to be bounded.
 
 
 \begin{equation*}
@@ -325,7 +326,7 @@ a_{h} }^{  }  \\
 \end{split}
 \end{equation*}
 
-Thus, the CP method is shown to be bounded.
+Thus, the CIP method is shown to be bounded.
 Again, the first step was to apply the \textbf{Cauchy-Schwarz inequality} for every term. On the second inequality the \textbf{Inverse inequality} was applied so that
 \[
 \| h^{\frac{1}{2}} \mean{ \partial _{nn}v_{h} }   \|_{ \mathcal{F} _{h}  }^{  }\le   C_{j}^{\frac{1}{2}} \| D ^2 v_{h} \|_{ \mathcal{T} _{h} }^{  } \quad \text{and} \quad   \| h^{\frac{1}{2}} \mean{ \partial _{nn}w_{h} }   \|_{ \mathcal{F} _{h}
@@ -343,7 +344,7 @@ The second step can we luckily observe that all terms invidually is less than th
  \gamma \| h^{-1 } \jump{ \partial _{n} v_{h} }    \|_{ \mathcal{F} _{h}  }^{  }  \| \jump{ \partial _{n} w_{h} }    \|_{\mathcal{F}_{h}   }^{  }   & \le \gamma \| v_{h} \|_{ a_{h} }^{  }  \| w_{h} \|_{ a_{h} }^{  }.
 \end{split}
 \end{equation}
-Hence, the CP method is does fulfills the Lax Milgram criteria because it is both bounded and unique.
+Hence, the CIP method is does fulfills the Lax Milgram criteria because it is both bounded and unique.
 
 
 \subsection{A Priori Estimates}%
@@ -377,7 +378,8 @@ Finally, following the same procedure as in \eqref{eq:cealemma_proof} we get
     \end{split}
 \]
 
-Observe that we now have $ \| u_{h} - v_{h} \|_{ a_{h} }^{  }   \le \frac{\widetilde{C}}{\hat{\alpha }}  \| u - v_{h} \|_{ a_{h, *} }^{  }$ and $\| u - u_{h} \|_{ a_{h,*} }^{  }   \le \left( 1 + D \widetilde{C} /\hat{\alpha } \right)\cdot  \| u - v_{h} \|_{ a_{h,*} }^{  } $. Hence, we have derived a equivalent Céa's lemma for the CP method.
+Observe that we now have $ \| u_{h} - v_{h} \|_{ a_{h} }^{  }   \le \frac{\widetilde{C}}{\hat{\alpha }}  \| u - v_{h} \|_{ a_{h, *} }^{  }$ and $\| u - u_{h} \|_{ a_{h,*} }^{  }   \le \left( 1 + D \widetilde{C} /\hat{\alpha } \right)\cdot  \| u -
+v_{h} \|_{ a_{h,*} }^{  } $. Hence, we have derived a equivalent Céa's lemma for the CIP method.
 \[
     \begin{split}
 \| u_{h} - v_{h} \|_{ a_{h} }^{  }  & \le \frac{\widetilde{C}}{\hat{\alpha }}  \inf_{v_{h} \in  V_{h}} \|  v_{h} - u \|_{ a_{h, *} }^{  } \\
