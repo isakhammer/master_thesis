@@ -8,12 +8,26 @@
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.4 \textwidth]{figures/model/l_1.0_m_1_r_1n_30_grid.png}
-    \caption{Example of mesh on $ \Omega =  \left( 0,L  \right)^{2}$ where $\frac{h}{L}=\frac{1}{16}$ for $L=1$   }
+    \caption{Example of mesh on $ \Omega =  \left( 0,L  \right)^{2}$ where $h=\frac{L}{16}$ for $L=1$   }
     \label{fig:sol_l1_m1_r1}
 \end{figure}
 All numerical experiments were carried out on a square with side length $L$. The convergence analysis were performed for polynomial basis, $\mathcal{P}_{k} $, with order $k=2,3,4$, and a sequence of triangulations, $\mathcal{T} _{h_i}$, for $h_i =
 \frac{L}{4}\cdot 2^{-i}$ where $ i =0,\ldots,5 $.
 An illustration of the triangulation can be seen on figure \ref{fig:sol_l1_m1_r1}.
+
+\begin{figure}[tbh!]
+    \begin{minipage}{.5\linewidth}
+    \centering
+    \subfloat[]{\label{fig:sol_l1_m7_r3}\includegraphics[scale=.25]{figures/model/l_1.0_m_7_r_3n_100_sol.png}}
+    \end{minipage}%
+    \begin{minipage}{.5\linewidth}
+    \centering
+    \subfloat[]{\label{fig:sol_l2pi_m1_r1}\includegraphics[scale=.25]{figures/model/l_6.28_m_1_r_1n_100_sol.png}}
+    \end{minipage}%
+    \centering
+    \caption{The manufactured solution \eqref{eq:man_sol} with the model parameters $L=1$, $m=7$ and $r=3$ in $\Omega = (0,1)^2$ illustrated in \ref{fig:sol_l1_m7_r3} and similarly, $L=2 \pi$, $m=1$ and $r=1$ in $\Omega = (0,2\pi)^2$ illustrated
+    in \ref{fig:sol_l2pi_m1_r1}}
+\end{figure}
 
 We choose the manufactured solutions to be on the form,
 
@@ -40,11 +54,7 @@ corresponding tables \ref{tab:ex1_order:a}, \ref{tab:ex1_order:b} and \ref{tab:e
 Generally speaking, for both examples do we observe that the convergence rate is robust for most choices of $\gamma$ for any order. However, we can also observe in both cases we see numerical instabilities for order $k=4$ and $h=\frac{1}{128}$. The cause is
 likely because of a ill conditioned linear system. In fact, it has been shown that the condition number has a growth rate of $O\left( h^{-4} \right) $ \cite{li07}, so this behaviour is expected without preconditioning of the linear system.
 
-Observing the convergence rate can we see in both examples that the theoretical estimate for the energy norm,
-\[
-\| u - u_{h} \|_{h}^{  } \lesssim O\left( h^{k-1} \right),
-\]
-matches the observed EOC.
+Observing the convergence rate can we see in both examples that the theoretical estimate for the energy norm \eqref{eq:conv_estimate} matches the observed EOC.
 Furthermore, the we can see that the EOC is affected
 by the numerical instability discussed above. Likewise, it has been shown that the $L^{2}$ norm, while not presented in this report, has the expected the theoretical estimates \cite{engel02}, \[
     \begin{split}
@@ -63,19 +73,6 @@ seems like a reasonable approximation based on the EOC.
 
 
 
-\begin{figure}[tbh!]
-    \begin{minipage}{.5\linewidth}
-    \centering
-    \subfloat[]{\label{fig:sol_l1_m7_r3}\includegraphics[scale=.25]{figures/model/l_1.0_m_7_r_3n_100_sol.png}}
-    \end{minipage}%
-    \begin{minipage}{.5\linewidth}
-    \centering
-    \subfloat[]{\label{fig:sol_l2pi_m1_r1}\includegraphics[scale=.25]{figures/model/l_6.28_m_1_r_1n_100_sol.png}}
-    \end{minipage}%
-    \centering
-    \caption{The manufactured solution \eqref{eq:man_sol} with the model parameters $L=1$, $m=7$ and $r=3$ in $\Omega = (0,1)^2$ illustrated in \ref{fig:sol_l1_m7_r3} and similarly, $L=2 \pi$, $m=1$ and $r=1$ in $\Omega = (0,2\pi)^2$ illustrated
-    in \ref{fig:sol_l2pi_m1_r1}}
-\end{figure}
 
 \begin{figure}
     \centering
