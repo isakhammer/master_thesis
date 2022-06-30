@@ -32,7 +32,6 @@ EOC(i) = \frac{\log\left( \frac{\| e\left( h_{i} \right)  \|_{ \mathcal{V}  }^{ 
 \]
 The FEM software package used in the implementation was Gridap written in the Julia programming language \cite{verdugo22, julia17}.
 
-
 The first example, where $L=1$, $m=7$ and $r=3$, (illustrated on figure \ref{fig:sol_l1_m7_r3}) with a penalty parameter analysis on figure \ref{fig:ex1_gamma} and a extensive convergence analysis on figures \ref{fig:ex1_conv:a}, \ref{fig:ex1_conv:b} and \ref{fig:ex1_conv:c} with
 corresponding tables \ref{tab:ex1_order:a}, \ref{tab:ex1_order:b} and \ref{tab:ex1_order:c}. Similarly, the second example, where $L=2\pi$, $m=1$ and $r=1$, (illustrated on figure \ref{fig:sol_l2pi_m1_r1}) with a penalty parameter analysis on figure
 \ref{fig:ex2_gamma} and a extensive convergence analysis on figures \ref{fig:ex2_conv:a},
@@ -41,12 +40,18 @@ corresponding tables \ref{tab:ex1_order:a}, \ref{tab:ex1_order:b} and \ref{tab:e
 Generally speaking, for both examples do we observe that the convergence rate is robust for most choices of $\gamma$ for any order. However, we can also observe in both cases we see instabilities for order $k=4$ and $h=\frac{1}{128}$. The cause is
 likely because of a ill conditioned linear system. In fact, it has been shown that the condition number has a growth rate of $O\left( h^{-4} \right) $ \cite{li07}, so this behaviour is expected without preconditioning of the linear system.
 
-
 \begin{figure}[tbh!]
+    \begin{minipage}{.5\linewidth}
     \centering
-    \includegraphics[width=0.35\textwidth]{figures/model/l_1.0_m_7_r_3n_100_sol.png}
-    \caption{Illustration of the manufactured solution \eqref{eq:man_sol} with the model parameters $L=1$, $m=7$ and $r=3$ in $\Omega = (0,1)^2$}
-    \label{fig:sol_l1_m7_r3}
+    \subfloat[]{\label{fig:sol_l1_m7_r3}\includegraphics[scale=.25]{figures/model/l_1.0_m_7_r_3n_100_sol.png}}
+    \end{minipage}%
+    \begin{minipage}{.5\linewidth}
+    \centering
+    \subfloat[]{\label{fig:sol_l2pi_m1_r1}\includegraphics[scale=.25]{figures/model/l_6.28_m_1_r_1n_100_sol.png}}
+    \end{minipage}%
+    \centering
+    \caption{The manufactured solution \eqref{eq:man_sol} with the model parameters $L=1$, $m=7$ and $r=3$ in $\Omega = (0,1)^2$ illustrated in \ref{fig:sol_l1_m7_r3} and the model parameters $L=1$, $m=7$ and $r=3$ in $\Omega = (0,1)^2$ illustrated
+    in \ref{fig:sol_l2pi_m1_r1}}
 \end{figure}
 
 \begin{figure}
@@ -126,14 +131,6 @@ likely because of a ill conditioned linear system. In fact, it has been shown th
 \end{table}
 
 \newpage
-
-\begin{figure}[tbh!]
-    \centering
-    \includegraphics[width=0.5\textwidth]{figures/model/l_6.28_m_1_r_1n_100_sol.png}
-    \caption{Illustration of the manufactured solution \eqref{eq:man_sol} with the model parameters $L=2\pi$, $m=1$ and $r=1$ in $\Omega = (0,2\pi)^2$}
-    \label{fig:sol_l2pi_m1_r1}
-\end{figure}
-
 
 \begin{figure}
     \centering
