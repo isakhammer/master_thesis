@@ -108,7 +108,6 @@ For convenience, we also entitle the notation,
 H^{m}_{0} \left( \Omega  \right) = \left\{ \text{completion of }C_{0}^{\infty}\left( \Omega  \right) \text{ w.r.t. } \| \cdot  \|_{H^{m}\left( \Omega  \right)   }^{  }  \right\}.
 \]
 
-
 \subsection{Weak Formulation}%
 \label{sub:weak_formulation}
 
@@ -153,14 +152,14 @@ If this is true, then there exists a unique solution $u \in \mathcal{V} $ which,
 \]
 Problems that fulfills this criteria is said to be well posed.
 
-Moreover, we can clearly see that this theorem is applicable to the weak formulation \eqref{eq:poissons_weak_formulation} since,
+Moreover, we can clearly see that this theorem is applicable to the weak formulation \eqref{eq:poissons_weak_formulation}.
 \[
 \begin{split}
-    \left\lvert a\left( v,w \right)  \right\rvert & \le \| \nabla v \|_{ \Omega  }^{  } \| \nabla w \|_{ \Omega  }^{  }, \\
-\left\lvert a\left( v,v \right)  \right\rvert  & = \|  \nabla v\|_{\Omega   }^{  }  \| \nabla v  \|_{\Omega   }^{  } \ge  \| v \|_{ \Omega  }^{ 2 } \ge \| v \|_{ H^{1}\left( \Omega  \right)  }^{  }.
+    \left\lvert a\left( v,w \right)  \right\rvert & \le \| \nabla v \|_{ \Omega  }^{  } \| \nabla w \|_{ \Omega  }^{  } \le \| v \|_{ \mathcal{V}  }^{  } \| w \|_{\mathcal{V}   }^{  }   \\
+ a\left( v,v \right)    & = \frac{1}{2} \| \nabla u  \|_{ \Omega  }^{  2} + \frac{1}{2} \| \nabla u  \|_{ \Omega  }^{  2} \ge \beta \left( \| u \|_{\Omega   }^{ 2 }  + \| \nabla u \|_{\Omega   }^{ 2 } \right) \ge \beta \| v \|_{\mathcal{V}   }^{  }
 \end{split}
 \]
-The last inequality was the Poincare inequality applied, i.e., there exists a $C>0$  such that $\| u \|_{ \Omega  }^{  } \le C  \| \nabla u \|_{\Omega   }^{  } $. Hence, the weak formulation \eqref{eq:poissons_weak_formulation} is well posed.
+ Here is $\beta = \min_{} \left\{ \frac{1}{2}, \frac{1}{2C^{2}} \right\} $ where the last inequality was the Poincare inequality applied, i.e., there exists a $C>0$  such that $\| u \|_{ \Omega  }^{  } \le C  \| \nabla u \|_{\Omega   }^{  } $. Hence, the weak formulation \eqref{eq:poissons_weak_formulation} is well posed.
 
 \subsection{Ceas' Lemma}%
 \label{sub:ceas_lemma}
