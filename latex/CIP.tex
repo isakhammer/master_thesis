@@ -417,7 +417,23 @@ Recall the definition \eqref{eq:mixed_derivative} and let us define the integral
 \| u \|_{ m,2,T }^{  } = \left( \sum_{ \left\lvert \alpha  \right\rvert \le m}^{} \int_{T}^{}  \left\lvert  \partial ^{\alpha } u \right\rvert^{2} dx   \right)^{\frac{1}{2}}
 \]
 
-Now, let the approximation of the global error function have the form $u - C_{h}u_{h}$. Hence,
+Now, let the approximation of the global error function have the form $u - C_{h}u_{h}$.
+
+The stability and interpolation properties of the Cléments interpolation operator has in fact proven to be useful. Cléments lemma  
+\[
+ \| C_{h} v \|_{H^{m}\left( \Omega  \right)   }^{  } \lesssim \| v \|_{ H^{m}\left( \Omega  \right)  }^{  } \quad \forall v \in H^{m}\left( \Omega  \right),
+\]
+
+And the 
+\[
+    \begin{split}
+      m\le l \le k+1  \implies \| v - C_{h} v \|_{ m,2,T   }^{  }  &  \lesssim h^{l-m}_{T} \| v \|_{l,2,\omega \left( T \right)  }^{  } \quad  \forall T \in \mathcal{T} _{h}, \forall v \in H^{l}\left( \omega \left( T \right)
+      \right) \\
+      m +\frac{1}{2}\le l \le k+1  \implies \| v - C_{h} v \|_{ m,2,F }^{  } & \lesssim h^{l-m- \frac{1}{2}}_{T} \| v \|_{l,2,\omega \left( T \right)  }^{  } \quad  \forall \partial T \in \mathcal{T} _{h}, \forall v \in H^{l}\left( \omega \left( F \right)  \right)
+    \end{split}
+\]
+
+Hence,
 the energy norm error is formulated as, \[
     \begin{split}
 \| u - C_{h}u_{h} \|_{ a_{h},* }^{ 2 }  =&  \underbrace{\| D^2( u - C_{h}u_{h} ) \|_{\Omega   }^{2  }}_{I}  + \gamma \underbrace{\| h^{-\frac{1}{2}} \jump{ \partial _{n}\left( u - C_{h}u_{h} \right)  }    \|_{ \mathcal{F} _{h}  }^{2  }}_{II} \\
@@ -437,7 +453,6 @@ $IV$, since this property arise, \[
 \mathcal{T}_{h} }^{} \| v \|_{ \partial T }^{  } \\
     \end{split}
 \]
-
 
 Hence, we get the following inequalities,
 \begin{equation*}
