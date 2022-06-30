@@ -187,7 +187,7 @@ Now we have all the cornerstones for computing a error estimate. Let $v_{h} \in 
 Hence, we now have the Ceas' lemma \cite{quartdiff}, \[
 \| u - u_{h} \|_{ \mathcal{V}  }^{  }  \le  \frac{M}{\alpha } \inf_{v_{h} \in \mathcal{V} } \|  v_{h} - u \|_{  }^{  }.
 \]
-A useful property is that for a conformal numerical method to converge can we now only require \[
+A useful property is that for a conformal numerical method to converge can we now simply require \[
 \lim_{h \to 0}  \inf_{v_{h} \in  V_{h}}  \| v - v_{h} \|_{ \mathcal{V }  }^{  } = 0 \quad  \forall v \in \mathcal{V}.
 \]
 In that case will $\| u - u_{h} \|_{ \mathcal{V}  }^{  }  \to  0$, $h \to  0$. Hence, if this requirement is fulfilled, the numerical methods will converge to a unique solution.
@@ -196,37 +196,39 @@ In that case will $\| u - u_{h} \|_{ \mathcal{V}  }^{  }  \to  0$, $h \to  0$. H
 
 \subsection{Finite Element Method}%
 \label{sub:finite_element_method}
-The idea of a conformal FEM method is to approximate a solution space, $\mathcal{V}_h \subseteq \mathcal{V}  $. However, the build blocks of the discretization relies on constructing a triangulation $\mathcal{T } _h$ with non-overlapping triangles, $T \in
+The idea of a conformal FEM method is to approximate a solution space, $\mathcal{V}_h \subseteq \mathcal{V}  $. However, the building blocks of the discretization relies on constructing a triangulation $\mathcal{T } _h$ with non-overlapping triangles, $T \in
 \mathcal{T}_{h} $, so that, \[
 \Omega _{h} = Interior(\bigcup_{T \in  \mathcal{T} _{h}}^{} T) \implies \lim_{h\to 0} measure(\Omega - \Omega _{h}) = 0
 \]
 For convenience, we will generally use the notation $\Omega  = \Omega  _{h}$ \footnote{Some measure theorists  might be upset for this informality.}. We also denote the parameter $h$ as the diameter of the triangle $T$, i.e., $h_{T} = diam(T)$. Anyhow, this is later more precisely in the subsection
 \ref{sub:computational_domain}, but as a basic introduction to FEM is this sufficient.
-Furthermore, let the space of finite elements suitable for our test problem in subsection \ref{sub:weak_formulation}, using the definition from \cite{quartdiff}, to be
+Furthermore, let the space of finite elements suitable for our test problem in subsection \ref{sub:weak_formulation} to be, by using the definition from \cite{quartdiff},
 \[
-\mathcal{V} _{h} = \left\{ v_{h} \in C^{0}\left( \Omega  \right)  \mid  v_{h} \in \mathcal{P} _{r}\left( T \right)  \quad \forall T \in \mathcal{T} _{h}  \right\},
+\mathcal{V} _{h} = \left\{ v_{h} \in C^{0}\left( \Omega  \right)  \mid  v_{h} \in \mathcal{P} _{k}\left( T \right)  \quad \forall T \in \mathcal{T} _{h}  \right\},
 \]
-where $\mathcal{P } _{r}\left( T \right) $ is the space of polynomials with degree $r$ for each $T$, that is,
+where $\mathcal{P } _{k}\left( T \right) $ is the space of polynomials with degree $k$ for each $T$, that is,
 \[
-\mathcal{P} _{r}\left( T \right)  = \left\{ p\left( x_{1}, x_{2} \right) = \sum_{}^{i + j}  a_{ij} x^{i}_{1} x^{j}_{2}  \mid  a_{ij} \in \mathbb{R}  \text{ and } i,j \ge  0   \right\}.
+\mathcal{P} _{k}\left( T \right)  = \left\{ p\left( x_{1}, x_{2} \right) = \sum_{}^{i + j}  a_{ij} x^{i}_{1} x^{j}_{2}  \mid  a_{ij} \in \mathbb{R}  \text{ and } i,j \ge  0   \right\}.
 \]
 
-For the test problem can we observe that it is convenient to deal with a Lagrangian functions $\varphi _{j} \in V_{h}$. Thus, for ever node $N_{j}$, \[
+For the test problem can we observe that it is convenient to deal with a Lagrangian functions $\varphi _{j} \in V_{h}$. Thus, for every node $N_{j}$, \[
 \varphi _{j}\left( N_{i} \right)  = \delta _{ij} = \begin{cases}
     0, \quad & i \neq j \\
     1,\quad & i=j
 \end{cases}
 \text{ where } i,j = 1,\ldots, N_{h}.
 \]
-Here is $N_{h}$  the total number of nodes which is chosen with caution. For the test problem, where $\Omega \subseteq \mathbb{R} ^{2} $, when $r=1$ is typically the nodes defined on the vertices and $ r=2 $ the nodes defined on the vertices and the center of the edges/facets \cite{quartdiff}.
+Here is $N_{h}$  the total number of nodes which is chosen with caution. For the test problem, where $\Omega \subseteq \mathbb{R} ^{2} $, then for $k=1$ the nodes is typically defined on the vertices and for $ k=2 $ is the nodes defined on the
+vertices and the center of the facets \cite{quartdiff}.
 
-Finally, by using the basis $\left\{ \varphi _{j} \right\} $ can we discretize a solution $u_{j=1} = u_{h}\left( N_{j} \right) $ so that $u_{h} = \sum_{j}^{N_{h}} u_{j} \varphi _{j}\left( x_{1},x_{2} \right)  $ such that, \[
+Finally, by using the set of basis functions, $\left\{ \varphi _{j} \right\} $, can we discretize a solution, $u_{j} = u_{h}\left( N_{j} \right) $, so that $u_{h} = \sum_{j}^{N_{h}} u_{j} \varphi _{j}\left( x_{1},x_{2} \right)  $ fulfills the
+criteria, \[
 \sum_{j = 1}^{N_{h}} u_{j} a\left( \varphi _{j}, \varphi _{i} \right)  = l\left( \varphi _{i} \right)
 \]
-Hence, by letting $\mathbf{u} = \left[ u_{j} \right] $ , $\mathbf{f} = \left[ \left( f, \varphi  \right) _{\Omega } \right] $  and $A = \left[ a\left( \varphi _{j}, \varphi _{i} \right)  \right] $ can we construct a linear system, \[
+Hence, by letting $\mathbf{u} = \left[ u_{j} \right] $ , $\mathbf{f} = \left[ \left( f, \varphi _{i}  \right) _{\Omega } \right] $  and $A = \left[ a\left( \varphi _{j}, \varphi _{i} \right)  \right] $ can we construct a linear system, \[
 A \mathbf{u} =\mathbf{f}.
 \]
-Thus, we have the final linear system where the vector of the unknown variables in $\mathbf{u}$.
+Ultimately, we have the final linear system which can be solved for each unknown $u_{j}$.
 
 
 
