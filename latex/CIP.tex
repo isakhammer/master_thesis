@@ -405,7 +405,7 @@ We denote a patch, $\omega \left( T \right) $, as the set of elements in $\mathc
 sharing at least one vertex with $F \in  \mathcal{F} _{h}$.
 Furthermore, we also introduce the notation $\partial T$ for integration along the facets for a triangle $T$.
 
-Now, let the approximation of the global error function have the form $u - C_{h}u_{h}$.
+Now, let the approximation of the global error function have the form $u - C_{h}u$.
 The stability and interpolation properties of the Cléments interpolation operator has proven to be useful. In fact, Cléments lemma says that the operator satisfies \cite{ern04},
 \[
  \| C_{h} v \|_{H^{m}\left( \Omega  \right)   }^{  } \lesssim \| v \|_{ H^{m}\left( \Omega  \right)  }^{  } \quad \forall v \in H^{m}\left( \Omega  \right),
@@ -423,8 +423,8 @@ We will use these estimates to compute convergence rate.
 
 Firstly, the energy norm error is formulated as, \[
     \begin{split}
-\| u - C_{h}u_{h} \|_{ a_{h},* }^{ 2 }  =&  \underbrace{\| D^2( u - C_{h}u_{h} ) \|_{\Omega   }^{2  }}_{I}  + \gamma \underbrace{\| h^{-\frac{1}{2}} \jump{ \partial _{n}\left( u - C_{h}u_{h} \right)  }    \|_{ \mathcal{F} _{h}  }^{2  }}_{II} \\
-& +  \underbrace{\alpha ^2 \| u - C_{h}u_{h} \|_{\Omega   }^{2}}_{III}  + \underbrace{\| h^{\frac{1}{2}} \mean{ \partial _{nn}\left(  u - C_{h}u_{h}\right)  }   \|_{\mathcal{F} _{h}  }^{ 2 }}_{IV}.
+\| u - C_{h}u \|_{ a_{h},* }^{ 2 }  =&  \underbrace{\| D^2( u - C_{h}u ) \|_{\Omega   }^{2  }}_{I}  + \gamma \underbrace{\| h^{-\frac{1}{2}} \jump{ \partial _{n}\left( u - C_{h}u \right)  }    \|_{ \mathcal{F} _{h}  }^{2  }}_{II} \\
+& +  \underbrace{\alpha ^2 \| u - C_{h}u \|_{\Omega   }^{2}}_{III}  + \underbrace{\| h^{\frac{1}{2}} \mean{ \partial _{nn}\left(  u - C_{h}u\right)  }   \|_{\mathcal{F} _{h}  }^{ 2 }}_{IV}.
     \end{split}
 \]
 
@@ -441,8 +441,8 @@ $IV$) is notable simplified, \[
 Using this fact and applying Cléments lemma we get,
 \begin{equation*}
     \begin{split}
-I & \le  \| D^2\left( u - C_{h}u_{h} \right)  \|_{ \mathcal{T} _{h} }^{ 2 } = \sum_{T \in \mathcal{T} _{h}}^{} \| D^2 \left( u - C_{h}u_{h} \right)  \|_{ T }^{ 2 } \\
- & \lesssim \sum_{T \in \mathcal{T} _{h}}^{}  \| \left( u - C_{h}u_{h} \right)  \|_{2,T  }^{  2} \lesssim  \sum_{T \in \mathcal{T} _{h}}^{}  h_{T}^{2\left( l-2 \right) } \| u \|_{l, \omega \left( T \right)   }^{2  }, \\
+I & \le  \| D^2\left( u - C_{h}u \right)  \|_{ \mathcal{T} _{h} }^{ 2 } = \sum_{T \in \mathcal{T} _{h}}^{} \| D^2 \left( u - C_{h}u \right)  \|_{ T }^{ 2 } \\
+ & \lesssim \sum_{T \in \mathcal{T} _{h}}^{}  \| \left( u - C_{h}u \right)  \|_{2,T  }^{  2} \lesssim  \sum_{T \in \mathcal{T} _{h}}^{}  h_{T}^{2\left( l-2 \right) } \| u \|_{l, \omega \left( T \right)   }^{2  }, \\
     II & \le  \sum_{T \in \mathcal{T} _{h}}^{}  h^{-1} \| \partial _{n} \left( u - C_{h} \right)  \|_{ \partial T  }^{  } \le  \sum_{T \in \mathcal{T} _{h}}^{}  h^{-1} \left( h^{l -1 -\frac{1}{2}} \| u \|_{ l, \omega \left( T \right)  }^{  }
     \right)^{2},  \\
     & \lesssim \sum_{T \in \mathcal{T} _{h}}^{}  h^{2(l-2)} \| u \|_{ l, \omega \left( F \right)  }^{ 2 } \\
@@ -452,7 +452,6 @@ IV & \le \sum_{T \in \mathcal{T} _{h}}^{}  h \| \partial _{nn} \left( u - C_{h} 
 \sum_{T  \in  \mathcal{T} _{h}}^{} h^{2(l-2)}  \| u \|_{ l, \omega \left( F \right)  }^{ 2 }.
  \end{split}
 \end{equation*}
-
  The result then follows easily,
 \[
     \begin{split}
@@ -463,7 +462,7 @@ IV & \le \sum_{T \in \mathcal{T} _{h}}^{}  h \| \partial _{nn} \left( u - C_{h} 
 \]
 Ergo, we now have a convergence rate estimate,
 \[
-\| u - C_{h}u_{h} \|_{  }^{  } \lesssim  h^{l(l-1)} \| u \|_{H^{l} \left( \Omega  \right)  }^{  }.
+\| u - C_{h}u \|_{  }^{  } \lesssim  h^{l(l-2)} \| u \|_{H^{l} \left( \Omega  \right)  }^{  }.
 \]
 
 
