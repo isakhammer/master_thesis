@@ -249,11 +249,11 @@ Let the energy norm be on the form
 \label{eq:A_energy_norm}
     \begin{split}
 \| v_{h} \|_{ h }^{2  } & = \| v_{h} \|_{ a_{h} }^{ 2 } =  \| v_{h} \|_{ \Omega  }^{2  }  +  \| D ^2 v_{h} \|_{ \mathcal{T} _{h}  }^{ 2 }  + \|  h^{-\frac{1}{2}} \jump{ \partial _{n} v_{h}    }\|_{  \mathcal{F} _{h} }^{  } \\
-\| v \|_{ h }^{ 2 }  &= \| v \|_{ a_{h},* }^{ 2 } = \| v \|_{ a_{h} }^{ 2 }  + \| h^{\frac{1}{2}} \left\{ \partial _{nn } v\right\}  \|_{ F  }^{  }, \quad  v\in V \oplus V_{h}
+\| v \|_{ h }^{ 2 }  &= \| v \|_{ a_{h},* }^{ 2 } = \| v \|_{ a_{h} }^{ 2 }  + \| h^{\frac{1}{2}} \left\{ \partial _{nn } v\right\}  \|_{ \mathcal{F}_{h}   }^{  }, \quad  v\in V \oplus V_{h}
     \end{split}
 .\end{equation}
 The method is said to be coercive if $\mathcal{A} _{h}\left( v_{h}, v_{h} \right) \ge  C \| v_{h} \|_{ a_{h} }^{  } $. Similarly, it is bounded if $ \mathcal{A} _{h} \left( v_{h}, u_{h} \right) \le  C \| u_{h} \|_{  a_{h}}^{ 2 }  \| v_{h} \|_{ a_{h}
-}^{ 2 } $ and then, according to Lax Milgram the problem is well posed.
+}^{ 2 } $ and then, according to Lax Milgram the problem is said to be well posed.
 
 \subsubsection{Coercivity}%
 \label{ssub:coercitivity}
@@ -408,11 +408,11 @@ sharing at least one vertex with $F \in  \mathcal{F} _{h}$.
 Furthermore, we also introduce the notation $\partial T$ for integration along the facets for a triangle $T$.
 
 Now, let the approximation of the global error function have the form $u - C_{h}u_{h}$.
-The stability and interpolation properties of the Cléments interpolation operator has proven to be useful. In fact, Cléments lemma says that the operator satisfies,
+The stability and interpolation properties of the Cléments interpolation operator has proven to be useful. In fact, Cléments lemma says that the operator satisfies \cite{ern04},
 \[
  \| C_{h} v \|_{H^{m}\left( \Omega  \right)   }^{  } \lesssim \| v \|_{ H^{m}\left( \Omega  \right)  }^{  } \quad \forall v \in H^{m}\left( \Omega  \right),
 \]
-and if the conditions of $m,l$ and $k$ is satisfied it exists error estimates,
+and if the following conditions for $m,l$ and $k$ is satisfied, it exists error estimates such that,
 \[
     \begin{split}
       m\le l \le k+1  \implies \| v - C_{h} v \|_{ m,2,T   }^{  }  &  \lesssim h^{l-m}_{T} \| v \|_{l,2,\omega \left( T \right)  }^{  } \quad  \forall T \in \mathcal{T} _{h}, \forall v \in H^{l}\left( \omega \left( T \right)
