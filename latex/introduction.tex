@@ -21,7 +21,7 @@ elements that does converge is rather difficult \cite{shi02, nair21}.
 
 A third approach of FEM to solve the biharmonic equation is to solve the problem applying a mixed FEM method. This method seems promising, because it only requires $C^{0}$ elements \cite{chen08, brezzi91}.
 Though this works well from a numerical point of view, it has shown to have drawbacks by replacing symmetric positive definite continuous problem
-by a saddle point problem, which is certainly makes the existence and uniqueness proof more challenging, as well as the design of efficient preconditioned \cite{brezzi74}.
+by a saddle point problem, which is certainly makes the existence and uniqueness proof more challenging, as well as the design of efficient preconditioner \cite{brezzi74}.
 
 In this report will we focus to work on a fourth approach known as the continuous interior penalty method (CIP). A major advantage is that the approach preserves the global $C^{0}$ continuity and the positive symmetric definiteness, thus makes it
 attractive to solve the biharmonic equation \cite{brenner2012, brenner2012quadratic}. The goal of this report is to give a detailed account on the derivations of CIP and its a priori error analysis, following the presentations in \cite{gu2012c0, brenner2012}. We will also present a numerical analysis.
