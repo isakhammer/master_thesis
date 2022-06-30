@@ -28,7 +28,7 @@ It is worth mentioning that we have not proved any expected rate of convergence 
 }. In this report will we provide two examples of convergence analysis based on different
 parametrization of \eqref{eq:man_sol}. Each examples consists of a convergence plot of different penalty parameters $\gamma$ using the $L^{2}$ norm and a more extensive analysis by comparing the convergence rate of their respective norms. A convenient tool to measure convergence is by computing the experimentally observed convergence rate (EOC), defined as follows,
 \[
-EOC(i) = \frac{\log\left( \frac{\| e\left( h_{i} \right)  \|_{ \mathcal{V}  }^{  }}{\| e\left( h_{i-1} \right) \|_{\mathcal{V}   }^{  } }   \right)}{\log\left( \frac{h_{i}}{h_{i-1}}  \right) }, \quad i>1   .
+EOC(i) = \frac{\log\left( \frac{\| e\left( h_{i} \right)  \|_{ \mathcal{V}  }^{  }}{\| e\left( h_{i-1} \right) \|_{\mathcal{V}   }^{  } }   \right)}{\log\left( \frac{h_{i}}{h_{i-1}}  \right) }, \quad i = 1,\ldots,5.
 \]
 The FEM software package used in the implementation was Gridap written in the Julia programming language \cite{verdugo22, julia17}.
 
@@ -50,7 +50,7 @@ likely because of a ill conditioned linear system. In fact, it has been shown th
     \subfloat[]{\label{fig:sol_l2pi_m1_r1}\includegraphics[scale=.25]{figures/model/l_6.28_m_1_r_1n_100_sol.png}}
     \end{minipage}%
     \centering
-    \caption{The manufactured solution \eqref{eq:man_sol} with the model parameters $L=1$, $m=7$ and $r=3$ in $\Omega = (0,1)^2$ illustrated in \ref{fig:sol_l1_m7_r3} and the model parameters $L=1$, $m=7$ and $r=3$ in $\Omega = (0,1)^2$ illustrated
+    \caption{The manufactured solution \eqref{eq:man_sol} with the model parameters $L=1$, $m=7$ and $r=3$ in $\Omega = (0,1)^2$ illustrated in \ref{fig:sol_l1_m7_r3} and the model parameters $L=2 \pi$, $m=1$ and $r=1$ in $\Omega = (0,2\pi)^2$ illustrated
     in \ref{fig:sol_l2pi_m1_r1}}
 \end{figure}
 
