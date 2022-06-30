@@ -17,9 +17,9 @@ Let $\Omega \subseteq    \mathbb{R} ^2$ be a bounded polygonal domain and $\part
 \end{split}
 \end{equation}
 Here is $\Delta ^2 = \Delta  \left( \Delta  \right) $ the biharmonic operator, also known as the bilaplacian. We will assume for the strong form that $u \in H^{4}\left( \Omega  \right) $, $\alpha $ is a non-negative constant and $f \in L_{2}\left( \Omega  \right)
-$. We may consider the functions $g( x ) $ as time independent boundary conditions. Such problems as \eqref{eq:bi_problem} are often associated with the Cahn-Hilliard model
+$. We may consider the functions $g( x ) $ as a time independent boundary conditions. Such problems as \eqref{eq:bi_problem} are often associated with the Cahn-Hilliard model
 \cite{cahnhilliard1957} for phase separation. However, depending on how Cahn-Hilliard model is time discretized numerically can
-\eqref{eq:bi_problem} naturally arise. I refer to \cite{brenner2012quadratic} for more information on this.
+\eqref{eq:bi_problem} naturally arise. We refer to \cite{brenner2012quadratic} for more information on this.
 
 \subsection{  Weak Form Biharmonic Equation in $H^{4}\left( \Omega  \right) $}%
 \label{sub:continious_weak_form_of_biharmonic_equation}
@@ -31,7 +31,7 @@ V = \left\{ v \in H^2\left( \Omega  \right) : \partial _{n} v = 0  \text{ on }
 \partial \Omega  \right\}.
 \end{equation*}
 
-Let $u,v \in  V$ then the derivation of the general weak form is,
+Let $u,v \in  V$, then the derivation of the general weak form is,
 \[
 \begin{split}
 \left( \Delta ^2 u,v \right) _{\Omega }  &  = \left( \partial _{n} \Delta u, v \right) _{\partial \Omega } - \left( \nabla \left( \Delta  u \right) , \nabla v \right) _{\Omega }  \\
@@ -41,7 +41,7 @@ In fact, the simplest formulation has the form,
 \[
   \left( \nabla \left( \Delta u \right) , \nabla v \right) _{\Omega } =   \left( \Delta u, \partial _{n} v \right) _{\partial \Omega } - \left( \Delta u, \Delta v \right)_{\Omega },
 \]
-A major issue with this formulation is that we don not have boundary condition for $\Delta u$. Instead, we can expand the term in the following fashion.
+A major issue with this formulation is that we do not have boundary condition for $\Delta u$. Instead, we can expand the term in the following fashion.
 
 \begin{equation*}
     \begin{split}
