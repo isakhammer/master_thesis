@@ -6,8 +6,7 @@
 \subsection{Introduction}%
 \label{sub:introduction}
 
-
-To solve \eqref{eq:bi_problem} numerically do we want to introduce the continuous interior penalty method (CP), which is a discontinuous Galerkin
+To solve \eqref{eq:bi_problem} numerically do we want to introduce the continuous interior penalty method (CIP), which is a discontinuous Galerkin
 method (DG) using $C^{0}$ finite elements. There is several reasons why we want to apply nonconformal $C^{0}$ instead of the often used conformal $C^{1}$ finite elements for fourth order problems.
 
 However, it is known that $ H^{2}$ conforming methods requires global $C^{1}$ continuity \cite{ye19}, and creates difficulties creating elements which conserves this property. Some examples is the Argyris element, but it has been shown to be fairly
@@ -17,9 +16,6 @@ Nevertheless, it has also been shown DG methods that is conform and has no penal
 For the CP case is $C^0$ finite elements much simpler than obtaining $C^{1}$ finite elements. Also, compared to other similar methods such as the mixed finite element method, CP does in fact preserve the symmetric positive definiteness, which means
 the stability analysis is more straight forward. Finally and most importantly, according to \cite{brenner2012quadratic} can naive use mixed methods of splitting the boundary conditions of
 the problem \eqref{eq:bi_problem} produce wrong solutions if $\Omega $ is non convex.
-
-
-
 
 \subsection{Computational Domains}%
 \label{sub:computational_domain}
