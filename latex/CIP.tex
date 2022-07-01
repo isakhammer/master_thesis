@@ -55,7 +55,7 @@ $T^{+}$ to $T^{-}$, illustrated in figure \ref{fig:normal}.
     \label{fig:normal}
 \end{figure}
 
-A parameter which is useful is the maximum diameter $h$ of the set of triangles $\left\{ T \right\} $, which we to be defined s.t.
+A parameter which is useful is the maximum diameter $h$ of the set of triangles $\left\{ T \right\} $, which we to be defined such that,
 
 \begin{equation}
 \begin{split}
@@ -240,14 +240,14 @@ First of all, let us now establish some important inequalities.
 \end{split}
 \]
 
-Let the energy norm be on the form
+Let the energy norms be on the form,
 \begin{equation}
 \label{eq:A_energy_norm}
     \begin{split}
-\| v_{h} \|_{ h }^{2  } & = \| v_{h} \|_{ a_{h} }^{ 2 } =  \| v_{h} \|_{ \Omega  }^{2  }  +  \| D ^2 v_{h} \|_{ \mathcal{T} _{h}  }^{ 2 }  + \|  h^{-\frac{1}{2}} \jump{ \partial _{n} v_{h}    }\|_{  \mathcal{F} _{h} }^{2  } \\
-\| v \|_{ h }^{ 2 }  &= \| v \|_{ a_{h},* }^{ 2 } = \| v \|_{ a_{h} }^{ 2 }  + \| h^{\frac{1}{2}} \left\{ \partial _{nn } v\right\}  \|_{ \mathcal{F}_{h}   }^{  2}, \quad  v\in V \oplus V_{h}
+\| v_{h} \|_{ h }^{2  } & = \| v_{h} \|_{ a_{h} }^{ 2 } =  \| v_{h} \|_{ \Omega  }^{2  }  +  \| D ^2 v_{h} \|_{ \mathcal{T} _{h}  }^{ 2 }  + \|  h^{-\frac{1}{2}} \jump{ \partial _{n} v_{h}    }\|_{  \mathcal{F} _{h} }^{2  }, \\
+\| v \|_{ h }^{ 2 }  &= \| v \|_{ a_{h},* }^{ 2 } = \| v \|_{ a_{h} }^{ 2 }  + \| h^{\frac{1}{2}} \left\{ \partial _{nn } v\right\}  \|_{ \mathcal{F}_{h}   }^{  2}, \quad  v\in V \oplus V_{h}.
     \end{split}
-.\end{equation}
+\end{equation}
 The method is said to be coercive if $\mathcal{A} _{h}\left( v_{h}, v_{h} \right) \ge  C \| v_{h} \|_{ a_{h} }^{  } $. Similarly, it is bounded if $ \mathcal{A} _{h} \left( v_{h}, u_{h} \right) \le  C \| u_{h} \|_{  a_{h}}^{ 2 }  \| v_{h} \|_{ a_{h}
 }^{ 2 } $ and then, according to Lax Milgram the problem is said to be well posed.
 
