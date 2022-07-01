@@ -51,7 +51,7 @@ corresponding tables \ref{tab:ex1_order:a}, \ref{tab:ex1_order:b} and \ref{tab:e
 \ref{fig:ex2_gamma} and a extensive convergence analysis on figures \ref{fig:ex2_conv:a},
 \ref{fig:ex2_conv:b} and \ref{fig:ex2_conv:c} with corresponding tables \ref{tab:ex2_order:a}, \ref{tab:ex2_order:b} and \ref{tab:ex2_order:c}.
 
-Generally speaking, for both examples do we observe that the convergence rate is robust for most choices of $\gamma$ for any order. However, we can also observe in both cases we see numerical instabilities for order $k=4$ and $h=\frac{1}{128}$. The cause is
+Generally speaking, for both examples do we observe that the convergence rate is robust for most choices of $\gamma$ for any order. However, we can also observe in both cases some numerical instabilities for order $k=4$ and $h=\frac{1}{128}$. The cause is
 likely because of a ill conditioned linear system. In fact, it has been shown that the condition number has a growth rate of $O\left( h^{-4} \right) $ \cite{li07}, so this behaviour is expected without preconditioning of the linear system.
 
 Observing the convergence rate can we see in both examples that the theoretical estimate for the energy norm \eqref{eq:conv_estimate} matches the observed EOC.
@@ -59,7 +59,7 @@ Furthermore, the we can see that the EOC is affected
 by the numerical instability discussed above. Likewise, it has been shown that the $L^{2}$ norm, while not presented in this report, has the expected the theoretical estimates \cite{engel02}, \[
     \begin{split}
 \| u - u_{h} \|_{ \Omega  }^{  } & \lesssim O\left( h^{k} \right) , \quad k = 2 \\
-\| u - u_{h} \|_{ \Omega  }^{  }&  \lesssim O\left( h^{k+1} \right) , \quad k\ge  3
+\| u - u_{h} \|_{ \Omega  }^{  }&  \lesssim O\left( h^{k+1} \right) , \quad k\ge  3.
     \end{split}
 \]
 As predicted, the EOC matches with the estimates including some numerical artifacts.
