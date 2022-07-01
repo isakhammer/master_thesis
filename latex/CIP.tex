@@ -380,8 +380,8 @@ We will use these estimates to compute convergence rate.
 
 Firstly and foremost, let the energy norm error be formulated as, \[
     \begin{split}
-\| u - C_{h}u \|_{ a_{h},* }^{ 2 }  =&  \underbrace{\| D^2( u - C_{h}u ) \|_{\Omega   }^{2  }}_{I}  + \gamma \underbrace{\| h^{-\frac{1}{2}} \jump{ \partial _{n}\left( u - C_{h}u \right)  }    \|_{ \mathcal{F} _{h}  }^{2  }}_{II} \\
-& +  \underbrace{\alpha ^2 \| u - C_{h}u \|_{\Omega   }^{2}}_{III}  + \underbrace{\| h^{\frac{1}{2}} \mean{ \partial _{nn}\left(  u - C_{h}u\right)  }   \|_{\mathcal{F} _{h}  }^{ 2 }}_{IV}.
+\| u - C_{h}u \|_{ a_{h},* }^{ 2 }  =&  \underbrace{\| D^2( u - C_{h}u ) \|_{\Omega   }^{2  }}_{(I)}  + \gamma \underbrace{\| h^{-\frac{1}{2}} \jump{ \partial _{n}\left( u - C_{h}u \right)  }    \|_{ \mathcal{F} _{h}  }^{2  }}_{(II)} \\
+& +  \underbrace{\alpha ^2 \| u - C_{h}u \|_{\Omega   }^{2}}_{(III)}  + \underbrace{\| h^{\frac{1}{2}} \mean{ \partial _{nn}\left(  u - C_{h}u\right)  }   \|_{\mathcal{F} _{h}  }^{ 2 }}_{(IV)}.
     \end{split}
 \]
 
@@ -398,13 +398,13 @@ $IV$) is notable simplified, \[
 Using this fact and applying Cléments lemma we get,
 \begin{equation*}
     \begin{split}
-I & \le  \| D^2\left( u - C_{h}u \right)  \|_{ \mathcal{T} _{h} }^{ 2 } = \sum_{T \in \mathcal{T} _{h}}^{} \| D^2 \left( u - C_{h}u \right)  \|_{ T }^{ 2 } \\
+(I) & \le  \| D^2\left( u - C_{h}u \right)  \|_{ \mathcal{T} _{h} }^{ 2 } = \sum_{T \in \mathcal{T} _{h}}^{} \| D^2 \left( u - C_{h}u \right)  \|_{ T }^{ 2 } \\
  & \lesssim \sum_{T \in \mathcal{T} _{h}}^{}  \| \left( u - C_{h}u \right)  \|_{2,T  }^{  2} \lesssim  \sum_{T \in \mathcal{T} _{h}}^{}  h_{T}^{2\left( l-2 \right) } \| u \|_{l, \omega \left( T \right)   }^{2  }, \\
-    II & \le  \sum_{T \in \mathcal{T} _{h}}^{}  h^{-1} \| \partial _{n} \left( u - C_{h} \right)  \|_{ \partial T  }^{  } \le  \sum_{T \in \mathcal{T} _{h}}^{}  h^{-1} \left( h^{l -1 -\frac{1}{2}} \| u \|_{ l, \omega \left( T \right)  }^{  }
+    (II) & \le  \sum_{T \in \mathcal{T} _{h}}^{}  h^{-1} \| \partial _{n} \left( u - C_{h} \right)  \|_{ \partial T  }^{  } \le  \sum_{T \in \mathcal{T} _{h}}^{}  h^{-1} \left( h^{l -1 -\frac{1}{2}} \| u \|_{ l, \omega \left( T \right)  }^{  }
     \right)^{2},  \\
     & \lesssim \sum_{T \in \mathcal{T} _{h}}^{}  h^{2(l-2)} \| u \|_{ l, \omega \left( F \right)  }^{ 2 } \\
- III  &\le   \alpha^2  \sum_{T \in \mathcal{T} _{h}}^{}  \| u - C_{h} \|_{ T }^{ 2 } \lesssim   \sum_{T \in \mathcal{T} _{h}}^{} h^{2l} \| u \|_{ \omega \left( T \right)  }^{ 2 }, \\
-IV & \le \sum_{T \in \mathcal{T} _{h}}^{}  h \| \partial _{nn} \left( u - C_{h} \right)  \|_{\partial T  }^{2  } \lesssim  \sum_{T \in  \mathcal{T} _{h}}^{} h \left( h^{l -2 -\frac{1}{2}} \| u \|_{ l, \omega \left( F \right)  }^{  }  \right)^{2}
+ (III)  &\le   \alpha^2  \sum_{T \in \mathcal{T} _{h}}^{}  \| u - C_{h} \|_{ T }^{ 2 } \lesssim   \sum_{T \in \mathcal{T} _{h}}^{} h^{2l} \| u \|_{ \omega \left( T \right)  }^{ 2 }, \\
+(IV) & \le \sum_{T \in \mathcal{T} _{h}}^{}  h \| \partial _{nn} \left( u - C_{h} \right)  \|_{\partial T  }^{2  } \lesssim  \sum_{T \in  \mathcal{T} _{h}}^{} h \left( h^{l -2 -\frac{1}{2}} \| u \|_{ l, \omega \left( F \right)  }^{  }  \right)^{2}
 \lesssim
 \sum_{T  \in  \mathcal{T} _{h}}^{} h^{2(l-2)}  \| u \|_{ l, \omega \left( F \right)  }^{ 2 }.
  \end{split}
@@ -412,7 +412,7 @@ IV & \le \sum_{T \in \mathcal{T} _{h}}^{}  h \| \partial _{nn} \left( u - C_{h} 
  The result then follows easily,
 \[
     \begin{split}
-        I + II + III +  IV  &  \lesssim  \sum_{T \in \mathcal{T} _{h}}^{}  h_{T}^{2\left( l-2 \right) } \| u \|_{l, \omega \left( T \right)   }^{  } +   2\cdot h^{2(l-2)}  \| u \|_{ l, \omega \left( F \right)  }^{ 2 } + h_{T}^{2l} \| u \|_{l, \omega \left( T \right)}
+        (I) + (II) + (III) +  (IV)  &  \lesssim  \sum_{T \in \mathcal{T} _{h}}^{}  h_{T}^{2\left( l-2 \right) } \| u \|_{l, \omega \left( T \right)   }^{  } +   2\cdot h^{2(l-2)}  \| u \|_{ l, \omega \left( F \right)  }^{ 2 } + h_{T}^{2l} \| u \|_{l, \omega \left( T \right)}
         \\
         &  \lesssim  h^{2\left( l-2 \right) } \| u \|_{ H^{l}\left( \Omega  \right)  }^{2  }.
     \end{split}
