@@ -448,22 +448,22 @@ We will now introduce the notion of an a priori estimate, which can be used the 
     \end{split}
 .\end{equation*}
 
-Let the difference have the form $u - u_{h} = (u - v_{h} )  + (v_{h} - u_{h})$ and the define identity
+Let the difference have the form $u - u_{h} = (u - v_{h} )  + (v_{h} - u_{h})$ and the define identity,
 $$
 \| w_{h} \|_{ a_{h,*} }^{  }  \le  D \| w_{h} \|_{ a_{h} }^{  }, \forall w_{h} \in V_{h} .
 $$
-Thus, the norm can now be computed such that\[
+Thus, the norm can now be computed such that,\[
 \| u - u_{h} \|_{ a_{h,*} }^{  } \le \|u - v_{h}  \|_{a_{h,*}  }^{  }  + \| v_{h} - u_{h} \|_{a_{h,*}  }^{  } \\
 \le \| u -v_{h} \|_{ a_{h,*} }^{  }  + D \| u_{h} - v_{h} \|_{a_{h}  }^{  }.
 \]
 
-Finally, following the same procedure as in \eqref{eq:cealemma_proof} we get
+Finally, following the same procedure as in \eqref{eq:cealemma_proof} we get,
 \[
     \begin{split}
 \| u_{h} - v_{h} \|_{a_{h}  }^{2  } \hat{\alpha } & \le  \mathcal{A} \left( u_{h} - v_{h}, u_{h} - v_{h} \right) \\
 & =  \mathcal{A} _{h} \left( u_{h} -u, u_{h} -v_{h} \right) + \mathcal{A} \left( u - v_{h}, u_{h} - v_{h} \right) \\
  &  \le  \mathcal{A}  \left( u - v_{h}, u_{h} - v_{h} \right)   \\
- &\le  \widetilde{C} \| u - v_{h} \|_{ a_{h,*} }^{  } \| u- v_{h} \|_{ a_{h} }^{  }
+ &\le  \widetilde{C} \| u - v_{h} \|_{ a_{h,*} }^{  } \| u- v_{h} \|_{ a_{h} }^{  }.
     \end{split}
 \]
 
@@ -475,7 +475,7 @@ v_{h} \|_{ a_{h,*} }^{  } $. Hence, we have derived a equivalent Céa's lemma fo
 \| u - u_{h} \|_{ a_{h,*} }^{  }  & \le \left( 1 + D \widetilde{C} /\hat{\alpha } \right)\cdot \inf_{v_{h} \in  V_{h}}   \| u - v_{h} \|_{ a_{h,*} }^{  }
     \end{split}
 \]
-By combing Cléments lemma and Céa's lemma can we now, in fact, conclude that we have the convergence rate estimate,
+By combing Cléments lemma and Céa's lemma can we now, in fact, conclude that the energy norm has the convergence rate estimate,
 \begin{equation}
 \label{eq:conv_estimate}
 \| u - u_{h} \|_{ a_{h}, * }^{  } \lesssim h^{k-1}.
