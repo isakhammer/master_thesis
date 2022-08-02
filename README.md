@@ -1,5 +1,4 @@
 
-I did my specialization project under the supervision of André Massing 
 
 # Specialization Project - Finite Element Method
 ### Solving the Biharmonic Equation using a Continuous Interior Penalty Method
