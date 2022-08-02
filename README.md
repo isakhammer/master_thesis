@@ -1,6 +1,6 @@
 
 
-# Specialization Project - Finite Element Method
+# Specialization Project
 ### Solving the Biharmonic Equation using a Continuous Interior Penalty Method
 
 I did my specialization project at Norwegian University of Science and Technology under the supervision of André Massing.
