@@ -1,6 +1,6 @@
 
 
-# Specialization Project
+# Specialization Project Thesis
 ### Solving the Biharmonic Equation using a Continuous Interior Penalty Method
 
 I did my specialization project at Norwegian University of Science and Technology under the supervision of André Massing.
@@ -14,4 +14,4 @@ The goal of the thesis was to
 The thesis should be digestible for graduate students with with basic knowledge within FEM methods and numerical analysis.
 
 
-# Master thesis - Work in Progress
+# Master Thesis - Work in Progress
