@@ -14,4 +14,4 @@ The goal of the thesis was to
 The thesis should be digestible for graduate students with with basic knowledge within FEM methods and numerical analysis.
 
 
-# Master thesis - Work in progress
+# Master thesis - Work in Progress
