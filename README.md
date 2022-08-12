@@ -11,7 +11,7 @@ The goal of the thesis was to
 - Derive stability and apriori estimates.
 - Verify the estimates numerically.
 
-The thesis should be digestible for graduate students with basic knowledge within FEM methods and numerical analysis.
+The thesis should be digestible for graduate students with basic knowledge within finite element methods and numerical analysis.
 
 
 # Master Thesis - Work in Progress
