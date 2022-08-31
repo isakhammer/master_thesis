@@ -162,10 +162,12 @@ Where integration over all interior facets $ \forall F \in \mathcal{F}_{h}^{int}
          }}_{= 0}    \mean{ \partial _{n}v }   =  \left( \partial _{nn} u, \jump{ \partial_{n} v } \right)_{F}   \end{split}
 .\end{equation*}
 Observe that the cancellations in the term $(I)$ appears of the continuity of $v\in V $ and $u\in H^{4}\left( \Omega  \right) $ which makes the jumps zero. For the second term $(II)$ does the terms become zero cancelled because the tangential
-derivative at the facet has no jump. However, The third term $(III)$  is fairly interesting since the discontinuity in normal vector for $v \in V$ is a jump, while the second term is still continuous. It can also be raised that $\mean{ \partial _{nn} u } = \partial _{nn} u  $ holds by the continuity of $H^{4}\left( \Omega  \right) $. Anyhow, the definition of jump of should more interesting when we later weaken the continuity of $u$ during discretization.
-Hence, \eqref{eq:bi_basic_dg2} and \eqref{eq:bi_basic_dg_full_1} is equivalent.
+derivative at the facet has no jump. However, The third term $(III)$  is fairly interesting since the discontinuity in
+normal vector for $v \in V$ is a jump, while the second term is still continuous. It can also be raised that $\mean{
+\partial _{nn} u } = \partial _{nn} u  $ holds by the continuity of $H^{4}\left( \Omega  \right) $. Hence,
+\eqref{eq:bi_basic_dg2} and \eqref{eq:bi_basic_dg_full_1} is equivalent.
 
-\subsection{Formulation of Continious Interior Penalty Method}%
+\subsection{Formulation of the Continious Interior Penalty Method}%
 \label{sub:formulation_of_continious_interior_penalty_method}
 
 
@@ -181,8 +183,8 @@ V_{h}^{*} = \begin{cases}
     \left\{ v \in V_{h}: \int_{\Omega }^{} v dx   = 0   \right\} &  \text{ if } \alpha   = 0
 \end{cases}
 \]
-Now, if we choose $u \in V_{h}$ must we take account that the jump is discrete.
- We have now the final CIP formulation.
+Now, if we choose $u \in V_{h}$, then we must take account that the jump is discrete.
+ Finally, the CIP formulation can be stated as follows.
 The discretized numerical problem is to solve $w_{h} \in V_{h}^{*}$ such that
 \begin{equation}
 \label{eq:CP_A_F}
