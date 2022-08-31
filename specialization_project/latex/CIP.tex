@@ -108,7 +108,7 @@ However, this expression can be written to distinguish integrating over triangle
 \right)_{F} \\
 & = \sum_{T \in  \mathcal{T} _{h}}^{} \left( D^2u, D^2v \right)_{T} + \sum_{F \in
 \mathcal{F} ^{ext}_{h}}^{} \left(g, v  \right) _{F}
-  + \sum_{F \in \mathcal{F}  ^{int}}^{} \left( \partial _{nn} u , \jump{ \partial_{n} v } \right)_{F}
+  + \sum_{F \in \mathcal{F}_{h}  ^{int}}^{} \left( \partial _{nn} u , \jump{ \partial_{n} v } \right)_{F}
 \end{split}
 \end{equation}
 Keep in mind that any jump over a interior facet $F \subset \mathcal{F} _{h}^{int}   $, visualized in figure \ref{fig:normal}, is defined as $\jump{ a } =    a^{+} - a^{-} $
@@ -140,7 +140,7 @@ Where integration over all interior facets $ \forall F \in \mathcal{F}_{h}^{int}
 \begin{equation*}
     \begin{split}
         (I) &  =    \left(\partial _{n^{+}} \Delta  u^{+} ,v^{+}\right)_{F} +
-        \left(\partial _{n^{-}} \Delta  u^{+} ,v^{-}\right)_{F}  \\
+        \left(\partial _{n^{-}} \Delta  u^{-} ,v^{-}\right)_{F}  \\
         & =   \int_{F}^{}
         \jump{ \partial _{n} \Delta  u \cdot v } =
          \int_{F}^{}
