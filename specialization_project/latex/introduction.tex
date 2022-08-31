@@ -198,7 +198,7 @@ In that case will $\| u - u_{h} \|_{ \mathcal{V}  }^{  }  \to  0$, $h \to  0$. H
 \label{sub:finite_element_method}
 The idea of a conformal FEM method is to approximate a solution space, $\mathcal{V}_h \subseteq \mathcal{V}  $. However, the building blocks of the discretization relies on constructing a triangulation $\mathcal{T } _h$ with non-overlapping triangles, $T \in
 \mathcal{T}_{h} $, so that, \[
-\Omega _{h} = Interior(\bigcup_{T \in  \mathcal{T} _{h}}^{} T) \implies \lim_{h\to 0} measure(\Omega - \Omega _{h}) = 0
+\Omega _{h} = Interior(\bigcup_{T \in  \mathcal{T} _{h}}^{} T) \implies \lim_{h\to 0} Measure(\Omega - \Omega _{h}) = 0
 \]
 For convenience, we will generally use the notation $\Omega  = \Omega  _{h}$ \footnote{Some measure theorists  might be upset for this informality.}. We also denote the parameter $h$ as the diameter of the triangle $T$, i.e., $h_{T} = diam(T)$. Anyhow, this is later more precisely in the subsection
 \ref{sub:computational_domain}, but as a basic introduction to FEM is this sufficient.
