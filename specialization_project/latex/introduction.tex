@@ -9,7 +9,7 @@ to lean towards approximating the solution using numerical methods for complicat
 
 There is generally two classes of numerical methods to solve the biharmonic equation. The first class is known as finite difference method (FDM) \cite{geer06,ehrlich75, hackbusch17}. Nevertheless, FDM does not handle complex domains well since it generally has strict requirements for the mesh generation. However, some methods have been introduced to solve problems on irregular domains, but is has shown to be relative extensive to implement \cite{hackbusch17, chen08, belyaev18}.
 
-The second class is denotes as finite element method (FEM). Using this methods implies that there is theoretically no difference between solving problems on a regular or on an irregular domain, except for taking account for numerical stability and some
+The second class is denoted as finite element method (FEM). Using this methods implies that there is theoretically no difference between solving problems on a regular or on an irregular domain, except for taking account for numerical stability and some
 restrictions on mesh generation \cite{chen08}. However, a major challenge in FEM is to choose a discrete solution space on the finite elements to approximate the exact solution. We say that a method is conforming if the discrete solution space
 $V_{h}$ is subspace of the exact solution space $V$, i.e. $V_{h} \subseteq  V$ \cite{shi02, brenner07math}. In general, for conforming methods requires that for a problem of order $2n$ must the discrete solution space be at least $C^{n-1}$, i.e.,
 $(n-1)$ times continuously differentiable. Thus, for a biharmonic problem
