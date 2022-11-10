@@ -45,15 +45,18 @@ equations arise.
 \newpage
 \section{Energy Functionals}%
 \label{sec:energy_functionals}
-
-From \cite{yushutin19} can we observe the energy functionals
+Let $c\left( x,t \right)  : \Gamma \times [0,T] \mapsto [0,1] $. From \cite{yushutin19} can we observe the energy functionals
 \begin{equation*}
-   E _{1}(c) = \| f(c) \|_{ \Gamma  }^{ 2 }
+   E _{1}(c) = \int_\Gamma f(c)
 .\end{equation*}
 where \[
 f\left( c \right) = f_{0}\left( c \right) + \frac{1}{2}\varepsilon ^{2} \left\lvert \nabla _{\Gamma } c \right\rvert ^{2}
 \]
-and the conservation law  $\rho \frac{\partial c}{\partial  t}  + div_{\Gamma } \mathbf{j} = 0$, derived from the Ficks Law $\mathbf{j} = - M \nabla _{\Gamma } \mu $ for the chemical potential derived by the functional derivative $\mu = \frac{\delta  f}{\delta c} $.
+and the conservation law  $\rho \frac{\partial c}{\partial  t}  + div_{\Gamma } \mathbf{j} = 0$ for the evolution of  $c $, derived from the Ficks Law $\mathbf{j} = - M \nabla _{\Gamma } \mu $ for the chemical potential derived by the functional derivative $\mu = \frac{\delta
+f}{\delta c} $. The double well function is denoted as \[
+f_{0}\left( c \right)  = \frac{\zeta}{4} c^2(1- c)^2
+\]
+
 
 
 
