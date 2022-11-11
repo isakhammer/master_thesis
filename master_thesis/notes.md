@@ -61,6 +61,9 @@ three-phase flows F. Boyer,
 ![image](https://user-images.githubusercontent.com/43385748/201314328-2d63c0e6-2558-4e44-a23e-384b319f0007.png)
 ![image](https://user-images.githubusercontent.com/43385748/201314623-6774c4af-8636-4a30-9136-06f58f4a74ee.png)
 
+**TODO:** Need to derive Lyaponov function criterias and functional derivatives of cahn hilliard.
+
+
 - Cahn Hilliard on (predefined) Moving Surfaces
 ![image](https://user-images.githubusercontent.com/43385748/201315467-f454f962-5f3b-4831-a66a-943f6f6927b4.png)
 
