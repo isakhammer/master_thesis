@@ -69,7 +69,7 @@ three-phase flows F. Boyer,
 
 
 
-- General Research on Cell membranes
+## General Research on Cell membranes
   - Energy comes often in terms of surface tension. surface bending. Function of Mean and gaussian curvature, i.e. k1 + k2 and k2*k2 (What are the different properties?). Related terms: Helfrich free energy
   - Raylight Instability can be used to determine cell division.
   - Line energy and buddying is a thing. https://journals.aps.org/pre/pdf/10.1103/PhysRevE.91.022713
@@ -77,12 +77,21 @@ three-phase flows F. Boyer,
   - Ion pumps ( Na+/K+ pumps, H+ pumps, Ca2 + pumps and Cl− pumps are several specific ion pumps. ) can be a interesting phenomenon, since it relies on curvature (the pumps are triangular shaped), and in fact generates a force on the membrane. In fact, Ion channels transport ions passively without the use of energy while the ion pumps transport ions actively with the use of energy.   
   - Ion channels can transport 100 mill ions in one second
   - Membrane potential: Voltage difference across a membrane due to a slight excess of positive ions on one side and of negative ions on the other. A typical membrane potential for an animal cell plasma membrane is –60 mV (inside negative relative to the surrounding fluid).
+  - The Na+ -K+ pump helps maintain an osmotic balance across the animal cell membrane by keeping the intracellular concentration of Na+ low.  This balancing role is performed largely by K+, which is actively pumped into the cell by the Na+ -K+ pump and can also move freely in or out through the K + leak channels in the plasma membrane. https://www.ncbi.nlm.nih.gov/books/NBK26910/
+  
   - ![image](https://user-images.githubusercontent.com/43385748/201411415-b418b07d-b190-4cae-a66d-88c3c8871b24.png)
+   - Nernst equation: Description of a electrochemical potential (gradient) of a cell membrane gitt konsentrasjonen av ioner.
+![image](https://user-images.githubusercontent.com/43385748/201422482-c9b3fed5-83ae-448f-a8ef-4c1fe8e52c04.png)
+
+  
+  
+  
   - Cytoplasma er interior av cellen, som inneholder cytosol (intracellulære væsken, vann ioner, proteiner). 
   - Buzzwords: Eukaryote celler (inneholder kjerne med DNA samlet, plante/dyreceller), prokaryote celler er kjerneløse (bakterier, arker, encellede). 
   - Arker ligner på bakterier, men kan overleve i mye mer ekstreme miljø (saltsjøer, oksygensfattig. vulkan, syre)
    ![image](https://user-images.githubusercontent.com/43385748/201414763-165ecef0-b741-4db2-b1b0-61e03cf23d03.png)
-
+   
+  
 
 
   
