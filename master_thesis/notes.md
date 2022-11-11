@@ -40,13 +40,31 @@ Relevant articles:
   
 
 # Friday Afternoon 
+- Statements of Cahn
+Hilliard
+Energy conservation law in Cahn Hilliard
+![image](https://user-images.githubusercontent.com/43385748/201314179-a2f891c3-9975-4b40-8297-5c9ade0fa8c4.png)
 
-- Energy conservation in Cahn Hilliard
-  ![image](https://user-images.githubusercontent.com/43385748/201314179-a2f891c3-9975-4b40-8297-5c9ade0fa8c4.png)
+
+ Cahn-Hilliard/Navier-Stokes model for the simulation of
+three-phase flows F. Boyer, 
+
+![image](https://user-images.githubusercontent.com/43385748/201317008-7cf292ea-a87a-45ac-92b6-39e120c014d3.png)
+
+![image](https://user-images.githubusercontent.com/43385748/201317102-ac1ca7c9-d6ee-47ca-9a91-d2198295e042.png)
+
+![image](https://user-images.githubusercontent.com/43385748/201317279-7429b076-c69e-4f08-a073-aacbb1fcd693.png)
+
+
 
 - Lyaponov Functional in cahn hilliard. https://en.wikipedia.org/wiki/Cahn%E2%80%93Hilliard_equation
 ![image](https://user-images.githubusercontent.com/43385748/201314328-2d63c0e6-2558-4e44-a23e-384b319f0007.png)
 ![image](https://user-images.githubusercontent.com/43385748/201314623-6774c4af-8636-4a30-9136-06f58f4a74ee.png)
+
+- Cahn Hilliard on (predefined) Moving Surfaces
+![image](https://user-images.githubusercontent.com/43385748/201315467-f454f962-5f3b-4831-a66a-943f6f6927b4.png)
+
+
 
 
 
