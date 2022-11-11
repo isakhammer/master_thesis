@@ -44,9 +44,10 @@ Relevant articles:
 - Energy conservation in Cahn Hilliard
   ![image](https://user-images.githubusercontent.com/43385748/201314179-a2f891c3-9975-4b40-8297-5c9ade0fa8c4.png)
 
-- Lyaponov Functional
+- Lyaponov Functional in cahn hilliard. https://en.wikipedia.org/wiki/Cahn%E2%80%93Hilliard_equation
 ![image](https://user-images.githubusercontent.com/43385748/201314328-2d63c0e6-2558-4e44-a23e-384b319f0007.png)
-![image](https://user-images.githubusercontent.com/43385748/201314491-ce56a20a-18d4-4e55-8192-8644cb538407.png)
+![image](https://user-images.githubusercontent.com/43385748/201314623-6774c4af-8636-4a30-9136-06f58f4a74ee.png)
+
 
 
  
