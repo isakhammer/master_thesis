@@ -38,4 +38,15 @@ Relevant articles:
   Curvotaxis directs cell migration through cell-scale curvature landscapes: https://pubmed.ncbi.nlm.nih.gov/30266986/
   Dynamic Curvotaxis: Can cells surf the waves?: https://assets.researchsquare.com/files/rs-1718965/v1/abd6e5df-93e8-484f-8d45-84a3675f69c1.pdf?c=1655114484
   
+
+# Friday Afternoon 
+
+- Energy conservation in Cahn Hilliard
+  ![image](https://user-images.githubusercontent.com/43385748/201314179-a2f891c3-9975-4b40-8297-5c9ade0fa8c4.png)
+
+- Lyaponov Functional
+![image](https://user-images.githubusercontent.com/43385748/201314328-2d63c0e6-2558-4e44-a23e-384b319f0007.png)
+![image](https://user-images.githubusercontent.com/43385748/201314491-ce56a20a-18d4-4e55-8192-8644cb538407.png)
+
+
  
