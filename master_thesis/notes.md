@@ -69,6 +69,12 @@ three-phase flows F. Boyer,
 
 
 
-
+- General Research on Cell membranes
+  - Energy comes often in terms of surface tension. surface bending. Function of Mean and gaussian curvature, i.e. k1 + k2 and k2*k2 (What are the different properties?). Related terms: Helfrich free energy
+  - Raylight Instability can be used to determine cell division.
+  - Line energy and buddying is a thing. https://journals.aps.org/pre/pdf/10.1103/PhysRevE.91.022713
+  - Termal fluctuations (%1 of surface area) is used to determine the surface tension or bending physics.
+  - Ion pumps can be a interesting phenomenon, since it relies on protein crowing
+   -  
 
  
