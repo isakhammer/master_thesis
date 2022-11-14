@@ -22,3 +22,15 @@ Lipids are fatty acid phospholipids ![image](https://user-images.githubuserconte
 Cholesterol is at low temp increasing the distance between the lipids, which is as well increasing the lipid fluidity. And at high temperature does decrease the distane of the lipids which is reducing the fluidity. Hence, cholestorol is a buffer when temperature is increasing. 
 
 The lipid tails can be saturated or unsaturated. If the lipids are saturated, then the tails of the lipids are straight and nice with no fancy bondings, hence the fluidity is decreasing. With unsaturated lipids they tends to have more distance which is increasing the fluidity.
+
+- Types of proteins on the membrane:
+   Integral Proteins: Is inside the membrane and do alot of processes.
+       Ion channels Na+. No Energy needed/ATP. Will reduce the consentration gradient of Na+
+       Ion cannons/Carrier protein: Energy needed/ATP. Can go against the concentration gradient.
+       Glyco proteins: Sugar proteins and signalling. 
+   Peripheral proteins: Sticks on the outside of the proteins. Can be a hormone which does it things and leave
+   Lipid bound: protein that is stuck in the interior of the membrane (not too functional)
+
+- Fluid mosaic model https://en.wikipedia.org/wiki/Fluid_mosaic_model
+Discovered in 1972: SJ Singer and GL Nicolson proposed the fluid mosaic model as an explanation for the data and latest evidence regarding the structure and thermodynamics of cell membranes.[2]
+
