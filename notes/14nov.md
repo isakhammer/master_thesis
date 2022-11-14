@@ -43,5 +43,7 @@ Discovered in 1972: SJ Singer and GL Nicolson proposed the fluid mosaic model as
 
 A computational study of lateral phase separation in biological membranes. Vladimir Yushutin1 Annalisa Quaini1 Sheereen Majd2
 - ![image](https://user-images.githubusercontent.com/43385748/201790426-91b66f46-f0ea-47ed-9514-393c6b603548.png)
-
+-  => This paper is not considering bending and elastic energy and navier stokes!! ![image](https://user-images.githubusercontent.com/43385748/201790896-93928884-3959-460f-9533-4829e4b324b0.png) ![image](https://user-images.githubusercontent.com/43385748/201791054-f3f6be97-c7f7-4ac1-b4bb-1891dcd41324.png)
+- Both Cahn hilliard and Allehn-Cahn has Lyaponov stability. nice! 
+ 
 
