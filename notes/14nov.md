@@ -34,3 +34,14 @@ The lipid tails can be saturated or unsaturated. If the lipids are saturated, th
 - Fluid mosaic model https://en.wikipedia.org/wiki/Fluid_mosaic_model
 Discovered in 1972: SJ Singer and GL Nicolson proposed the fluid mosaic model as an explanation for the data and latest evidence regarding the structure and thermodynamics of cell membranes.[2]
 
+
+
+# Lipid Raft formation
+- Controversy of lipid rafts formation and the existence.
+- Conservation law of lipid rafts: Cahn Hilliard. Lipid rafts that join into bigger sections
+- Nonconservation law of lipid rafts: Allen Cahn. May be justified if phase seperation induces high curvature that leads to vesicle budding (transport of something interior of the cell). Question. How does phase seperation leads to higher curvature? mhmhmhm
+
+A computational study of lateral phase separation in biological membranes. Vladimir Yushutin1 Annalisa Quaini1 Sheereen Majd2
+- ![image](https://user-images.githubusercontent.com/43385748/201790426-91b66f46-f0ea-47ed-9514-393c6b603548.png)
+
+
