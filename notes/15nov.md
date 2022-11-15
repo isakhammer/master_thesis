@@ -110,7 +110,7 @@ https://link.springer.com/content/pdf/10.1007/s00211-014-0644-y.pdf
 ![image](https://user-images.githubusercontent.com/43385748/202032104-3cbc4d61-38ec-4f38-b655-76af31f78d74.png)
 
 
-# Zhu21 is dping Internal Volume and Pressure modelling
+# Zhu21 is considering Internal Volume and Pressure modelling
 
 **Mem3DG: Modeling Membrane Mechanochemical Dynamics in 3D usingDiscrete Differential GeometryC. Zhu1, C. T. Lee1∗, and, P. Rangamani1∗1Department of Mechanical and Aerospace Engineering, University of California San Diego, La Jolla CA92093;∗**
 
