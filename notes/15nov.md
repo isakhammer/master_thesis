@@ -31,4 +31,21 @@ https://phys.libretexts.org/Courses/University_of_California_Davis/UCD%3A_Biophy
  - High membrane tension favors exocytosis (fusion of vesicles). 
 ![image](https://user-images.githubusercontent.com/43385748/201904434-e16ebf2c-438c-4830-a626-1106b230c6f5.png)
 
+# Multicomponent Lipid Membrane surface tensions dynamics 
+ - Modelling and simulations of multi-component lipid
+membranes and open membranes via diffuse interface
+approaches Xiaoqiang Wang · Qiang Du
+https://link.springer.com/content/pdf/10.1007/s00285-007-0118-2.pdf
+https://onlinelibrary.wiley.com/doi/pdf/10.1002/pamm.200700446
+Assuming two lipids configurations. No phase seperation dynamics, Constant Volume
+
+![image](https://user-images.githubusercontent.com/43385748/201911486-d60ab4af-8d51-482b-b6c7-639722c1c9f3.png)
+
+![image](https://user-images.githubusercontent.com/43385748/201911434-26078266-5c9b-49ee-9250-13fe4822bf80.png)
+
+ -  A SURFACE PHASE FIELD MODEL FOR TWO-PHASE BIOLOGICAL MEMBRANES *CHARLES M. ELLIOTT* AND BJÖRN STINNERt
+
+ - NUMERICAL SHAPE OPTIMIZATION OF THE CANHAM-HELFRICH-EVANS BENDING ENERGY (Ngsolve 2021 )
+https://arxiv.org/pdf/2107.13794.pdf
+![image](https://user-images.githubusercontent.com/43385748/201913830-cc5c5ccd-df9e-4b64-ab21-8e3918893888.png)
 
