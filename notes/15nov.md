@@ -37,13 +37,25 @@ membranes and open membranes via diffuse interface
 approaches Xiaoqiang Wang · Qiang Du
 https://link.springer.com/content/pdf/10.1007/s00285-007-0118-2.pdf
 https://onlinelibrary.wiley.com/doi/pdf/10.1002/pamm.200700446
+
 Assuming two lipids configurations. No phase seperation dynamics, Constant Volume
 
 ![image](https://user-images.githubusercontent.com/43385748/201911486-d60ab4af-8d51-482b-b6c7-639722c1c9f3.png)
 
 ![image](https://user-images.githubusercontent.com/43385748/201911434-26078266-5c9b-49ee-9250-13fe4822bf80.png)
 
- -  A SURFACE PHASE FIELD MODEL FOR TWO-PHASE BIOLOGICAL MEMBRANES *CHARLES M. ELLIOTT* AND BJÖRN STINNERt
+ -  A SURFACE PHASE FIELD MODEL FOR TWO-PHASE BIOLOGICAL MEMBRANES *CHARLES M. ELLIOTT* AND BJÖRN STINNER
+ https://www.jstor.org/stable/pdf/41111185.pdf?refreqid=excelsior%3A86dc81735ef1f028640eeda75aafab67&ab_segments=&origin=&acceptTC=1
+Changing out line tension with the Ginzburg-Landau energy (i.e. energy functional to allen cahn/cahn hilliard)
+
+Combining it with the  Canham-Helfrich-Evans energy functional for elasticity for single phase
+
+![image](https://user-images.githubusercontent.com/43385748/201918890-147828f7-a162-4842-a6b3-f684c1804775.png)
+
+s.t. the total energy has the form
+
+![image](https://user-images.githubusercontent.com/43385748/201919039-b73cefeb-af31-4dbd-89a6-c4a8c5cf681e.png)
+
 
  - NUMERICAL SHAPE OPTIMIZATION OF THE CANHAM-HELFRICH-EVANS BENDING ENERGY (Ngsolve 2021 )
 https://arxiv.org/pdf/2107.13794.pdf
