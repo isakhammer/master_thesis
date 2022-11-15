@@ -44,7 +44,8 @@ Assuming two lipids configurations. No phase seperation dynamics, Constant Volum
 
 ![image](https://user-images.githubusercontent.com/43385748/201911434-26078266-5c9b-49ee-9250-13fe4822bf80.png)
 
- -  A SURFACE PHASE FIELD MODEL FOR TWO-PHASE BIOLOGICAL MEMBRANES *CHARLES M. ELLIOTT* AND BJÖRN STINNER
+  
+ # SURFACE PHASE FIELD MODEL FOR TWO-PHASE BIOLOGICAL MEMBRANES *CHARLES M. ELLIOTT* AND BJÖRN STINNER
  https://www.jstor.org/stable/pdf/41111185.pdf?refreqid=excelsior%3A86dc81735ef1f028640eeda75aafab67&ab_segments=&origin=&acceptTC=1
 Changing out line tension with the Ginzburg-Landau energy (i.e. energy functional to allen cahn/cahn hilliard)
 
@@ -57,15 +58,15 @@ s.t. the total energy has the form
 ![image](https://user-images.githubusercontent.com/43385748/201919039-b73cefeb-af31-4dbd-89a6-c4a8c5cf681e.png)
 
 
- - NUMERICAL SHAPE OPTIMIZATION OF THE CANHAM-HELFRICH-EVANS BENDING ENERGY (Ngsolve 2021 )
+# NUMERICAL SHAPE OPTIMIZATION OF THE CANHAM-HELFRICH-EVANS BENDING ENERGY (Ngsolve 2021 )
+
 https://arxiv.org/pdf/2107.13794.pdf
 ![image](https://user-images.githubusercontent.com/43385748/201913830-cc5c5ccd-df9e-4b64-ab21-8e3918893888.png)
 
 
 
 # Variations of the classical Canham Helfrich bending elasticity model
-
-ELASTIC BENDING ENERGY: A VARIATIONAL APPROACH- RICCARDO CAPOVILLA
+ **ELASTIC BENDING ENERGY: A VARIATIONAL APPROACH- RICCARDO CAPOVILLA**
  -  The paper has alot of good (and technical) riemann geometry! The author has done tons of papers on General Relativity.
  
 The free energy on surface S depends on the shape
