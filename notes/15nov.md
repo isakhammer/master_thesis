@@ -66,8 +66,8 @@ https://arxiv.org/pdf/2107.13794.pdf
 # Variations of the classical Canham Helfrich bending elasticity model
 
 ELASTIC BENDING ENERGY: A VARIATIONAL APPROACH- RICCARDO CAPOVILLA
- -  The paper has alot of good riemann geometry!
-
+ -  The paper has alot of good (and technical) riemann geometry! The author has done tons of papers on General Relativity.
+ 
 The free energy on surface S depends on the shape
 functions through the mean curvature K, the intrinsic curvature R, 
 ![image](https://user-images.githubusercontent.com/43385748/202016337-86282136-9ec1-4a48-8ab1-2a784e6226c5.png)
