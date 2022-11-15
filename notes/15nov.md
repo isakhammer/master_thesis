@@ -109,3 +109,14 @@ https://link.springer.com/content/pdf/10.1007/s00211-014-0644-y.pdf
 
 ![image](https://user-images.githubusercontent.com/43385748/202032104-3cbc4d61-38ec-4f38-b655-76af31f78d74.png)
 
+
+# Zhu21 is dping Internal Volume and Pressure modelling
+
+**Mem3DG: Modeling Membrane Mechanochemical Dynamics in 3D usingDiscrete Differential GeometryC. Zhu1, C. T. Lee1∗, and, P. Rangamani1∗1Department of Mechanical and Aerospace Engineering, University of California San Diego, La Jolla CA92093;∗**
+
+We can observe that it is possible to model E_p internal volume and pressure with ideal gas low
+
+![image](https://user-images.githubusercontent.com/43385748/202036646-366c0d39-67db-42df-9dc7-6c20872a2470.png)
+![image](https://user-images.githubusercontent.com/43385748/202036770-8ff9f323-846f-463e-8ddc-c183c86dbb81.png)
+
+
