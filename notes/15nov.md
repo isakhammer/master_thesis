@@ -79,9 +79,20 @@ functions through the mean curvature K, the intrinsic curvature R,
 ![image](https://user-images.githubusercontent.com/43385748/202016337-86282136-9ec1-4a48-8ab1-2a784e6226c5.png)
 
 
+
 ![image](https://user-images.githubusercontent.com/43385748/202015786-ee4bcd8f-cd5d-4d15-a380-f557dfa495fc.png)
 
 Need to rememebr that if there is a 2D surface with no boundary, then does the Gauss-Bonnet Theorem hold here g is the genus of the surface.  https://en.wikipedia.org/wiki/Gauss%E2%80%93Bonnet_theorem
 
 ![image](https://user-images.githubusercontent.com/43385748/202015995-5741b161-22e2-44d2-b017-0781fb42af1c.png)
 
+
+
+
+
+# Cahn Hilliard on Evolving surfaces
+- Evolving surface finite element method for the Cahn–Hilliard equation Charles M. Elliott · Thomas Ranner
+- 
+https://link.springer.com/content/pdf/10.1007/s00211-014-0644-y.pdf
+
+- Predescribed velocity. 
