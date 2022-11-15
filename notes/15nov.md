@@ -96,3 +96,16 @@ Need to rememebr that if there is a 2D surface with no boundary, then does the G
 https://link.springer.com/content/pdf/10.1007/s00211-014-0644-y.pdf
 
 - Predescribed velocity. 
+
+# ON THE SHARP INTERFACE LIMIT OF A MODEL FOR PHASE SEPARATION ON BIOLOGICAL MEMBRANES HELMUT ABELS AND JOHANNES KAMPMANN
+- Diffusion inside domain B
+- Cholestorol Dynamics inluding the classical Ginzburg-Landau energy
+-
+- ![image](https://user-images.githubusercontent.com/43385748/202029776-75f1f00c-58a3-4897-b9e3-a40edb868f67.png)
+
+![image](https://user-images.githubusercontent.com/43385748/202029832-04843c08-03bd-4e49-ae45-7ac2d439abe2.png)
+
+- There is btw a interesting results in terms of the weak form of the formulations above
+
+![image](https://user-images.githubusercontent.com/43385748/202032104-3cbc4d61-38ec-4f38-b655-76af31f78d74.png)
+
