@@ -61,3 +61,21 @@ s.t. the total energy has the form
 https://arxiv.org/pdf/2107.13794.pdf
 ![image](https://user-images.githubusercontent.com/43385748/201913830-cc5c5ccd-df9e-4b64-ab21-8e3918893888.png)
 
+
+
+# Variations of the classical Canham Helfrich bending elasticity model
+
+ELASTIC BENDING ENERGY: A VARIATIONAL APPROACH- RICCARDO CAPOVILLA
+ -  The paper has alot of good riemann geometry!
+
+The free energy on surface S depends on the shape
+functions through the mean curvature K, the intrinsic curvature R, 
+![image](https://user-images.githubusercontent.com/43385748/202016337-86282136-9ec1-4a48-8ab1-2a784e6226c5.png)
+
+
+![image](https://user-images.githubusercontent.com/43385748/202015786-ee4bcd8f-cd5d-4d15-a380-f557dfa495fc.png)
+
+Need to rememebr that if there is a 2D surface with no boundary, then does the Gauss-Bonnet Theorem hold here g is the genus of the surface.  https://en.wikipedia.org/wiki/Gauss%E2%80%93Bonnet_theorem
+
+![image](https://user-images.githubusercontent.com/43385748/202015995-5741b161-22e2-44d2-b017-0781fb42af1c.png)
+
