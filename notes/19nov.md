@@ -11,3 +11,8 @@ This is the system. The good old biharmonic equation is here again!
 ## Nitsche Method and other implementations of Dirichlet Boundary Conditions
 https://www.youtube.com/watch?v=AzcZFQOlVmg&t=530s&ab_channel=Mathlessons
 https://docu.ngsolve.org/nightly/how_to/howto_dirichlet.html
+
+
+## Paper about Nitsches Method, but I did not understand much,
+![image](https://user-images.githubusercontent.com/43385748/202904745-ad0e8ef7-c3a8-44c5-ac44-009a85d24d5c.png)
+https://www.ams.org/journals/mcom/2009-78-267/S0025-5718-08-02183-2/S0025-5718-08-02183-2.pdf
