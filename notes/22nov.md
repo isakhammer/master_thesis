@@ -17,3 +17,6 @@ A C¹-FINITE ELEMENT METHOD FOR THE WILLMORE FLOW OF TWO-DIMENSIONAL
 GRAPHS
 Author(s): KLAUS DECKELNICK, JAKOB KATZ and FRIEDHELM SCHIEWECK
 https://www.jstor.org/stable/pdf/45106634.pdf?refreqid=excelsior%3Af2b2ff60638c897fc985d17ce4e3a023&ab_segments=&origin=&acceptTC=1
+
+
+TODO: Parametric representation of FEM is important. 
