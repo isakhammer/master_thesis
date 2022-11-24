@@ -3,6 +3,9 @@
 
 ![image](https://user-images.githubusercontent.com/43385748/203814777-e4cfe466-137a-42ac-8948-49f359f588c5.png)
 
+# Their interepratation of willmore flow
+![image](https://user-images.githubusercontent.com/43385748/203837443-b0ed8b04-8b7e-4782-a8a6-0d09e3aa80e5.png)
+
  ## Also someone proved a fun theorem concerning willmore energy on a immersed sphere!
 
 ![image](https://user-images.githubusercontent.com/43385748/203836870-1497292d-4210-4af0-8198-edc2ae5cb16e.png)
