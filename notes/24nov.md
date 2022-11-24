@@ -12,3 +12,13 @@
 # Notes on L2 flow
 https://math.stackexchange.com/questions/1687804/what-is-the-l2-gradient-flow
 ![image](https://user-images.githubusercontent.com/43385748/203830241-348f1969-2f3b-480f-8222-aec59e22e7c0.png)
+
+
+
+# Paper full of nice notations
+![image](https://user-images.githubusercontent.com/43385748/203833448-f1a134a3-138c-478c-8e35-ca1a05701e7b.png)
+
+
+# Computational parametric Willmore flow - Gerhard Dziuk
+![image](https://user-images.githubusercontent.com/43385748/203834602-91a69c3d-e607-4294-8fde-bdbb42679557.png)
+Which is actually readable
