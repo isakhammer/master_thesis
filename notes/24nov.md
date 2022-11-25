@@ -32,4 +32,9 @@ https://math.stackexchange.com/questions/1687804/what-is-the-l2-gradient-flow
 ![image](https://user-images.githubusercontent.com/43385748/203834602-91a69c3d-e607-4294-8fde-bdbb42679557.png)
 Which is actually readable
 
+# Mayer 20021
+
+
+![image](https://user-images.githubusercontent.com/43385748/204054820-31bd8059-f7b4-49a6-85ed-ce4079424371.png)
+![image](https://user-images.githubusercontent.com/43385748/204054854-3f493fb8-9013-4d8f-9c43-c9ca1a7d328b.png)
 
