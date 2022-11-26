@@ -26,3 +26,7 @@ https://arxiv.org/pdf/1805.06667.pdf
 
 # A convergent evolving finite element algorithm for Willmore flow of closed surfaces
 ![image](https://user-images.githubusercontent.com/43385748/204096928-23e943ee-c5c8-4dda-8379-507555b527d6.png)
+
+Not gonna lie. It was a descent generalization to use the matrix A
+
+![image](https://user-images.githubusercontent.com/43385748/204098375-0a816f4d-f363-4bd5-bf68-b69e356d9d07.png)
