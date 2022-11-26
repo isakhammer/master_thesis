@@ -14,3 +14,15 @@ https://www.youtube.com/watch?v=UewzuzaPlxA&ab_channel=JustinSolomon
 
 **And it is indeed very hardcore mathematically**
 ![image](https://user-images.githubusercontent.com/43385748/204089742-58bf042a-b75d-46e8-b8ce-fcbc350ff7d2.png)
+
+
+
+
+
+# A convergent evolving finite element algorithm for mean curvature flow of closed surfaces
+https://arxiv.org/pdf/1805.06667.pdf
+![image](https://user-images.githubusercontent.com/43385748/204096895-bff47cc2-0aed-4213-9ae0-9a7791f1ddf1.png)
+
+
+# A convergent evolving finite element algorithm for Willmore flow of closed surfaces
+![image](https://user-images.githubusercontent.com/43385748/204096928-23e943ee-c5c8-4dda-8379-507555b527d6.png)
