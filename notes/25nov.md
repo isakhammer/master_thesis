@@ -32,6 +32,18 @@ Not gonna lie. It was a descent generalization to use the matrix A
 ![image](https://user-images.githubusercontent.com/43385748/204098375-0a816f4d-f363-4bd5-bf68-b69e356d9d07.png)
 
  - FEM for willmore flow on closed surfaces remain open?
- - 
 ![image](https://user-images.githubusercontent.com/43385748/204101134-8cf5e2f6-2c54-4124-9d3c-48f9c458cba8.png)
+
+
+
+I looked through the derivations and I see the definition of Q like this 
+![image](https://user-images.githubusercontent.com/43385748/204104028-176d1a5f-db7a-4bfa-b5ef-270b5194ce4b.png)
+
+Where they have rewritten it the normal velocity evolvement equation- 
+![image](https://user-images.githubusercontent.com/43385748/204104065-88e4ab25-61ae-44bb-b829-1d0c222fa6d8.png)
+
+Q kinda doesnt make sence in terms of the minus signs, and 
+
+- |A|^2 = k_1^2 + k_2^2 != K = k_1k_2
+
 
