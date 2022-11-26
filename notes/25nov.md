@@ -10,5 +10,7 @@ https://www.youtube.com/watch?v=UewzuzaPlxA&ab_channel=JustinSolomon
 
 
 # Another moderns willmore flow paper
+- The parametric approach to the Willmore flow, Francesco Palmurella a, Tristan Rivière b,∗
+
 **And it is indeed very hardcore mathematically**
 ![image](https://user-images.githubusercontent.com/43385748/204089742-58bf042a-b75d-46e8-b8ce-fcbc350ff7d2.png)
