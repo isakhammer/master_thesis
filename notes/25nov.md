@@ -47,3 +47,8 @@ Q kinda doesnt make sence in terms of the minus signs, and
 - |A|^2 = k_1^2 + k_2^2 != K = k_1k_2
 
 
+
+# Probably a nice read
+https://spiral.imperial.ac.uk/bitstream/10044/1/73024/2/1903.09462v1.pdf
+![image](https://user-images.githubusercontent.com/43385748/204104872-1a55e367-6f55-4a34-b9a9-26fee9994c0c.png)
+
