@@ -30,3 +30,8 @@ https://arxiv.org/pdf/1805.06667.pdf
 Not gonna lie. It was a descent generalization to use the matrix A
 
 ![image](https://user-images.githubusercontent.com/43385748/204098375-0a816f4d-f363-4bd5-bf68-b69e356d9d07.png)
+
+ - FEM for willmore flow on closed surfaces remain open?
+ - 
+![image](https://user-images.githubusercontent.com/43385748/204101134-8cf5e2f6-2c54-4124-9d3c-48f9c458cba8.png)
+
