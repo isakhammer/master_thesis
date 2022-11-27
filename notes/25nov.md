@@ -52,3 +52,14 @@ Q kinda doesnt make sence in terms of the minus signs, and
 https://spiral.imperial.ac.uk/bitstream/10044/1/73024/2/1903.09462v1.pdf
 ![image](https://user-images.githubusercontent.com/43385748/204104872-1a55e367-6f55-4a34-b9a9-26fee9994c0c.png)
 
+
+
+# bdfs
+- Unconditional error analysis of a linearized BDF2 virtual element
+method for nonlinear Ginzburg-Landau equation with variable time
+step. Nan Wang. Meng Lia
+
+![image](https://user-images.githubusercontent.com/43385748/204153946-24453d23-643a-468b-bc9e-567ec310f8f8.png)
+
+![image](https://user-images.githubusercontent.com/43385748/204153925-ec9348f8-c45c-4e44-8c16-424fc9ca75f8.png)
+
