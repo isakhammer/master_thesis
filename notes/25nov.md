@@ -72,3 +72,14 @@ https://cpb-us-e1.wpmucdn.com/blogs.gwu.edu/dist/9/297/files/2018/01/66bdd115ac1
 ![image](https://user-images.githubusercontent.com/43385748/204154116-38d9d833-c16b-4e6f-9913-18c0f43a174d.png)
 
 ![image](https://user-images.githubusercontent.com/43385748/204154093-6ef51870-cea1-4bca-bb7f-181f73a234ba.png)
+
+# Basic Introduction to BDF1 and BDF2 
+
+![image](https://user-images.githubusercontent.com/43385748/204161997-27e700c9-d23d-4e2a-a991-38c0e7c9f893.png)
+
+https://dc.uwm.edu/cgi/viewcontent.cgi?article=1405&context=etd
+
+![image](https://user-images.githubusercontent.com/43385748/204162031-7c4f807f-bc97-4f14-a251-95f032dcd9a2.png)
+
+
+![image](https://user-images.githubusercontent.com/43385748/204162024-dd976f4d-5ccf-4137-8b98-5636b6237bcf.png)
