@@ -63,3 +63,12 @@ step. Nan Wang. Meng Lia
 
 ![image](https://user-images.githubusercontent.com/43385748/204153925-ec9348f8-c45c-4e44-8c16-424fc9ca75f8.png)
 
+
+
+
+# IMEX
+https://cpb-us-e1.wpmucdn.com/blogs.gwu.edu/dist/9/297/files/2018/01/66bdd115ac105ea17af303e73d4fec449754-v448bk.pdf
+
+![image](https://user-images.githubusercontent.com/43385748/204154116-38d9d833-c16b-4e6f-9913-18c0f43a174d.png)
+
+![image](https://user-images.githubusercontent.com/43385748/204154093-6ef51870-cea1-4bca-bb7f-181f73a234ba.png)
