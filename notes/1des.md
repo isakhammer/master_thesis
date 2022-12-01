@@ -28,6 +28,24 @@ https://epubs.siam.org/doi/epdf/10.1137/20M136935X
 
 
 
+# Parametric approaches has problems 
+In fact, it can be stated that the formation of degenerate meshes in the
+simulation of geometric flows is the Achilles heel of many state of the art algorithms that are
+based on the parametric approach. 
+- On Approximations of the Curve Shortening Flow and of the Mean Curvature Flow based on the DeTurck trick. Charles M. Elliott∗ and Hans Fritz∗
+
+
+![image](https://user-images.githubusercontent.com/43385748/205048357-f87ecdc2-e6b3-44fc-9900-089571a90379.png)
+
+
+# I think this is a extremely relevant article 
+https://arxiv.org/pdf/2202.03302.pdf
+![image](https://user-images.githubusercontent.com/43385748/205049505-27e48e0b-15c2-410f-8ec6-40162c1162ee.png)
+
+
+
+
+
 #  Software for surface parameterizaition 
 https://journals.ub.uni-heidelberg.de/index.php/ans/article/view/75917/81085
 ![image](https://user-images.githubusercontent.com/43385748/205040967-91d95848-ad4a-42ab-9e75-998c36549b37.png)
