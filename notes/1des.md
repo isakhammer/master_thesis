@@ -42,7 +42,15 @@ based on the parametric approach.
 https://arxiv.org/pdf/2202.03302.pdf
 ![image](https://user-images.githubusercontent.com/43385748/205049505-27e48e0b-15c2-410f-8ec6-40162c1162ee.png)
 
+However, I dont understand the gouverning equations, i.e,
 
+![image](https://user-images.githubusercontent.com/43385748/205113657-d54e47a1-39ef-465d-b788-025d46b508da.png)
+
+
+ - Nice section about surface finite element methods 
+  ![image](https://user-images.githubusercontent.com/43385748/205115335-957a43d7-fde3-4d67-9d6e-b499e99c1e3a.png)
+![image](https://user-images.githubusercontent.com/43385748/205115539-31535413-f478-4848-a003-1c146121bc8a.png)
+![image](https://user-images.githubusercontent.com/43385748/205115929-7d3ce521-417b-4b81-9ea9-2085be3555bc.png)
 
 
 
@@ -54,3 +62,6 @@ https://journals.ub.uni-heidelberg.de/index.php/ans/article/view/75917/81085
 # Found this great paper doing multiphysics using HDG
 https://arxiv.org/pdf/1912.07465.pdf
 ![image](https://user-images.githubusercontent.com/43385748/205046008-387d898c-a7e7-4326-8df2-f6a39bda5908.png)
+
+
+
