@@ -9,6 +9,7 @@ https://reader.elsevier.com/reader/sd/pii/S0021999107005141?token=3CD8C624902201
 
 
 # The Dziuk legend
+
 https://www.semanticscholar.org/author/G.-Dziuk/49968677
 - Dziuk, G.: An algorithm for evolutionary surfaces. Numer. Math. 58(1), 603–611 (1990)
 - Dziuk,G.:Convergenceofasemi-discreteschemeforthecurveshorteningflow.(1994)
@@ -21,3 +22,17 @@ https://www.semanticscholar.org/author/G.-Dziuk/49968677
 # Even got a name for his algorithm
 ![image](https://user-images.githubusercontent.com/43385748/205038750-6dd41feb-c2ab-4b68-ade2-61a64e7937e6.png)
 https://epubs.siam.org/doi/epdf/10.1137/20M136935X
+
+# Here is the socalled BNG algorithm 
+![image](https://user-images.githubusercontent.com/43385748/205042913-748e4fb6-243a-4613-a9c6-226c97839c16.png)
+
+
+
+#  Software for surface parameterizaition 
+https://journals.ub.uni-heidelberg.de/index.php/ans/article/view/75917/81085
+![image](https://user-images.githubusercontent.com/43385748/205040967-91d95848-ad4a-42ab-9e75-998c36549b37.png)
+
+
+# Found this great paper doing multiphysics using HDG
+https://arxiv.org/pdf/1912.07465.pdf
+![image](https://user-images.githubusercontent.com/43385748/205046008-387d898c-a7e7-4326-8df2-f6a39bda5908.png)
