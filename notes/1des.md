@@ -17,3 +17,7 @@ https://www.semanticscholar.org/author/G.-Dziuk/49968677
 - Dziuk, G., Elliott, C.: Finite elements on evolving surfaces (2007)
 - Dziuk, G., Elliott, C.: Finite element methods for surface PDEs. Acta Numer. 22, 289–396 (2013)
 - Dziuk, G., Kröner, D., Müller, T.: Scalar conservation laws on moving hypersurfaces. (2013)
+
+# Even got a name for his algorithm
+![image](https://user-images.githubusercontent.com/43385748/205038750-6dd41feb-c2ab-4b68-ade2-61a64e7937e6.png)
+https://epubs.siam.org/doi/epdf/10.1137/20M136935X
