@@ -1,11 +1,9 @@
-\section{Introduction}\label{sec:introduction}
+section{Introduction}\label{sec:introduction}
 
 
 % Why are cell membrane dynamics important
 
-The value of understanding the basic underlying mechanics of the cell membrane dynamics has quite a lot of application. First can we detect deceases such as Alzheimer's disease, cancer cells and develop new methods and vaccines \cite{small2006sorting}.
-
-One of the primary components of the cell membranes are lipids which serve many different functions. A key function is that it is consisting of a bilayer of lipids which controls the structural rigidity and the fluidity of the membrane \cite{ neidleman87}. It also turns out that the lipids often accumulate into so-called lipid rafts which serves as a rigid platform for proteins with special properties such as intracellular trafficking of lipids and lipid-anchored proteins \cite{Edidin03}.
+First can we detect deceases such as Alzheimer's disease, cancer cells and develop new methods and vaccines \cite{small2006sorting}. One of the primary components of the cell membranes are lipids which serve many different functions. A key function is that it is consisting of a bilayer of lipids which controls the structural rigidity and the fluidity of the membrane \cite{ neidleman87}. It also turns out that the lipids often accumulate into so-called lipid rafts which serves as a rigid platform for proteins with special properties such as intracellular trafficking of lipids and lipid-anchored proteins \cite{Edidin03}.
 
 Modelling of lipid rafts formation can be modelled as a two-phase separation problem based on minimization of the Ginzburg-Landau energy functional \cite{yushutin19}
 \[
@@ -15,25 +13,23 @@ which is describing the chemical energy for a concentration $c: \Gamma \times \l
 Hilliard Equation or Allen Cahn Equation if the concentration is not conserved both standstill and evolving domains \cite{yushutin19, ratz16,Gera2017, caetano21,yushutin19} .
 
 Assuming that the system is a single-phase system can the elastic bending energy be modelled using the Canham Helrich energy functional \cite{wang08} \[
-\mathcal{E} _{e}\left( \Gamma  \right) =   \int_{\Gamma }^{}  2 c_{b} H^{2} + c_{k} K  dx
+\mathcal{E} _{e}\left( \Gamma  \right) =   \int_{\Gamma }^{}  c_{b} H^{2} + c_{k} K  dx
 \].
 
-Here is $H$ denoted as the mean curvature and $K$ as the gaussian curvature with respectively $c_{b}$ and $c_{k}$ as tuning parameters.
+Here is $H = \frac{ \kappa_1 + \kappa_2 }{2}$ denoted as the mean curvature and $K = \kappa_1 \kappa_2$ as the gaussian curvature with respectively $c_{b}$ and $c_{k}$ as tuning parameters and $\kappa_1$ and $\kappa_2$ as principal curvatures. Using the Gauss-Bonnet theorem can it be shown that the problem above is equivalent to the Willmore energy
+functional \cite[Ch 8.5 Thm 8.29]{montiel2009curves},
 
+\[
+\mathcal{E} \left( \Gamma  \right) = \int_{\Gamma }^{}  H ^2 dx
+\]
 
+This is a well known problem in the mathematical community and since it describes lipid
 
+and there has been developed both ananlytical and numerical tools to handle this problem.
 
-
-
-
-
-
-
-
-
-
-
-
+In general can this functional be established as
+In this report will we establish a numerical scheme on minimization on this functional.However, we will first establish notation by including a section for definitions and important results from differential geometry. We will then derive  the
+underlying PDE's for this equation. Lastly we will establish the model for the problem and discretize the problem using evolationary parametric FEM methods.
 
 
 
