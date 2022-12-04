@@ -1,4 +1,4 @@
-section{Introduction}\label{sec:introduction}
+\section{Introduction}\label{sec:introduction}
 
 
 % Why are cell membrane dynamics important
@@ -7,25 +7,24 @@ First can we detect deceases such as Alzheimer's disease, cancer cells and devel
 
 Modelling of lipid rafts formation can be modelled as a two-phase separation problem based on minimization of the Ginzburg-Landau energy functional \cite{yushutin19}
 \[
-\mathcal{E}_{ch}  \left( \Gamma  \right) = \int_{\Gamma  }^{}\Psi \left( c \right) + \frac{\gamma}{2} \left\lvert \nabla c \right\rvert^{2} dx,
+\mathcal{E}_{ch}  \left( \Gamma  \right) = \int_{\Gamma  }^{}\Psi \left( c \right) + \frac{\gamma}{2} \left\lvert \nabla c \right\rvert^{2} ,
 \]
 which is describing the chemical energy for a concentration $c: \Gamma \times \left[ 0,T \right] \mapsto  \left[ 0,1 \right]  $ over a surface membrane $\Gamma$. Several authors have solved this problem often results by deriving variants of Cahn
 Hilliard Equation or Allen Cahn Equation if the concentration is not conserved both standstill and evolving domains \cite{yushutin19, udo97, ratz16,Gera2017, caetano21,yushutin19} .
 
 Assuming that the system is a single-phase system can the elastic bending energy be modelled using the Canham Helrich energy functional \cite{wang08, udo97} \[
-\mathcal{E} _{e}\left( \Gamma  \right) =   \int_{\Gamma }^{}  c_{b} H^{2} + c_{k} K  dx
+\mathcal{E} _{e}\left( \Gamma  \right) =   \int_{\Gamma }^{}  c_{b} H^{2} + c_{k} K
 \].
 
 Here is $H = \frac{ \kappa_1 + \kappa_2 }{2}$ denoted as the mean curvature and $K = \kappa_1 \kappa_2$ as the gaussian curvature with respectively $c_{b}$ and $c_{k}$ as tuning parameters and $\kappa_1$ and $\kappa_2$ as principal curvatures. Using
 the Gauss-Bonnet theorem can it be shown that the problem above is equivalent to the so-called Willmore energy
 functional \cite[Ch 8.5 Thm 8.29]{montiel2009curves},
 
-\[
-\mathcal{E} \left( \Gamma  \right) = \int_{\Gamma }^{}  H ^2 dx
-\]
-
-This is a well known problem in the mathematical community \cite{ topping2000towards, marques2014willmore}. In fact, it is a mathematical tool used to study the geometry of surfaces because it can be used to study the properties of minimal surfaces, which are surfaces with the least
-possible area for a given boundary. This is important in many areas of mathematics, including differential geometry, topology and mathematical physics \cite{koerber2021area,jakob2022singularities, rupp21}.
+\begin{equation}
+\label{eq:WE}
+\mathcal{E} \left( \Gamma  \right) = \int_{\Gamma }^{}  H ^2
+.\end{equation}
+This is a well known problem in the mathematical community \cite{ topping2000towards, marques2014willmore}. In fact, it is a mathematical tool used to study the geometry of surfaces because it can be used to study the properties of minimal surfaces, which are surfaces with the least possible area for a given boundary. This is important in many areas of mathematics, including differential geometry, topology and mathematical physics \cite{koerber2021area,jakob2022singularities, rupp21}.
 
 In this report will we establish a numerical scheme on minimization on this functional. However, we will first establish notation by including a section for definitions and important results from differential geometry. We will then derive the underlying PDE's for this equation. Lastly we will establish the model for the problem and discretize the problem using evolationary parametric FEM methods.
 
