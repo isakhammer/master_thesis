@@ -1,0 +1,63 @@
+
+
+% \documentclass[12pt]{article}
+\documentclass[10.8pt, a4paper, USenglish, twocolumn]{article}
+
+\usepackage{isaks_template} % Contains all included packages. See isaks_template.sty.
+
+% latex margins
+% \linespread{1.5}
+\newgeometry{vmargin={15mm}, hmargin={25mm,37mm}}
+%
+% \title{Project Thesis\\ Solving the Biharmonic Equation using \\ a Continuous Interior Penalty Method}
+% \author{Isak Hammer, \\[1cm]{\small Advisor: André Massing} }
+% \date{\today}
+
+\begin{document}
+\begin{titlepage}
+    \begin{center}
+        \vspace*{1cm}
+
+        \Huge
+        \textbf{Research Project}
+
+        \vspace{0.5cm}
+        \Large
+        Mathematical Modelling of Cell Membrane Dynamics  \\
+
+        \vspace{1.5cm}
+
+        \textbf{Isak Hammer} \\
+        \vspace{0.5cm}
+        % Supervisor: André Massing
+
+
+        \vfill
+
+
+        \vspace{0.8cm}
+
+        \includegraphics[width=0.5\textwidth]{figures/front_page/bac.jpg}\\
+
+        \Large
+        Department of Mathematical Sciences\\
+        Norwegian University of Science and Technology\\
+
+    \end{center}
+
+\end{titlepage}
+
+    \newpage
+    \label{sec:eyyy}
+
+
+    \input{introduction}
+    % \input{CIP}
+    % \input{numerical_results}
+    \input{cahn-hilliard}
+    % \input{appendix}
+
+    \newpage
+    \printbibliography
+
+\end{document}

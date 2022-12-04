@@ -1,0 +1,39 @@
+\section{Introduction}\label{sec:introduction}
+
+
+% Why are cell membrane dynamics important
+
+The value of understanding the basic underlying mechanics of the cell membrane dynamics has quite a lot of application. First can we detect deceases such as Alzheimer's disease, cancer cells and develop new methods and vaccines \cite{small2006sorting}.
+
+One of the primary components of the cell membranes are lipids which serve many different functions. A key function is that it is consisting of a bilayer of lipids which controls the structural rigidity and the fluidity of the membrane \cite{ neidleman87}. It also turns out that the lipids often accumulate into so-called lipid rafts which serves as a rigid platform for proteins with special properties such as intracellular trafficking of lipids and lipid-anchored proteins \cite{Edidin03}.
+
+Modelling of lipid rafts formation can be modelled as a two-phase separation problem based on minimization of the Ginzburg-Landau energy functional \cite{yushutin19}
+\[
+\mathcal{E}_{ch}  \left( \Gamma  \right) = \int_{\Gamma  }^{}\Psi \left( c \right) + \frac{\gamma}{2} \left\lvert \nabla c \right\rvert^{2} dx,
+\]
+which is describing the chemical energy for a concentration $c: \Gamma \times \left[ 0,T \right] \mapsto  \left[ 0,1 \right]  $ over a surface membrane $\Gamma$. Several authors have solved this problem often results by deriving variants of Cahn
+Hilliard Equation or Allen Cahn Equation if the concentration is not conserved both standstill and evolving domains \cite{yushutin19, ratz16,Gera2017, caetano21,yushutin19} .
+
+Assuming that the system is a single-phase system can the elastic bending energy be modelled using the Canham Helrich energy functional \cite{wang08} \[
+\mathcal{E} _{e}\left( \Gamma  \right) =   \int_{\Gamma }^{}  2 c_{b} H^{2} + c_{k} K  dx
+\].
+
+Here is $H$ denoted as the mean curvature and $K$ as the gaussian curvature with respectively $c_{b}$ and $c_{k}$ as tuning parameters.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

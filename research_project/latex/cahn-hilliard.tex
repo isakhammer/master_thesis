@@ -1,0 +1,65 @@
+
+\newpage
+\section{Cahn Hilliard Equation on a Closed Membrane}%
+\label{sec:cahn_hilliard_equation}
+
+
+Let $c_0$ and $c_1$  indicate the concentration profile of the substances in a $2$ -phase system such
+that $c_0 \left( \mathbf{x},t \right): \Omega  \times \left[ 0, \infty \right] \to \left[ 0,1 \right]$ and
+similarly $c_1 \left( \mathbf{x},t \right): \Omega \times \left[ 0, \infty \right] \to \left[ 0,1 \right]$, where
+$\mathbf{x} $ is a element of some surface $\Omega $ and $t$ is time.
+However, in the $2$ phase problem will we will restrict ourself so that $c_0\left( t,\mathbf{x} \right) + c_1\left( t,
+\mathbf{x} \right) = 1$ at any $\mathbf{x} $ at time $t$. A property of the restriction is that we now can express
+$c_0$ using $c_1$, with no loss of information. Hence, let us now define $c = c_0$ so $c \left( \mathbf{x},t \right):
+\Omega  \times \left[ 0, \infty \right] \to \left[ 0,1 \right]$. It has been shown that $2$ phase system if
+thermodynamically unstable can be evolve
+into a phase separation
+described by a evolutional differential equation \cite{cahnhilliard1957} using a model based on chemical energy of the
+substances. However, further development has been done \cite{yushutin19} to solve this equation on surfaces. Now assume
+model that we want to describe is a phase-separation on a closed membrane surface $\Gamma $, so that $c \left( \mathbf{x},t \right):
+\Gamma \times \left[ 0, T \right] \to \left[ 0,1 \right]$. Then is the surface Cahn Hilliard equation described such that
+
+\begin{equation}
+    \label{eq:cahn1}
+\rho \frac{\partial c}{\partial  t}  - \nabla_{\Gamma } \left( M \nabla _{\Gamma } \left( f_{0}'  - \varepsilon ^2
+        \nabla^2
+_{\Gamma } c \right) \right) = 0  \quad \text{on } \Gamma
+.\end{equation}
+
+We define here the tangential gradient operator to be $\nabla _{\Gamma } c = \nabla c - \left( \mathbf{n} \nabla c
+\right)\mathbf{n} $ applied on the surface $\Gamma $ restricted to $\mathbf{n} \cdot \nabla _{\Gamma } c = 0$.
+
+Lets define $\varepsilon $ to be the size of the layer between the substances $c_{1}$ and $c_{2}$. The density $\rho $ is
+simply defined such that $\rho = \frac{m}{S_{\Gamma }}$ is a constant based on the total mass divided by the total
+surface area of $\Gamma $.
+Here is the mobility $M$ often derived such that is is dependent on $c$ and is crucial for the result during a possible
+coarsening event \cite{yushutin19}.  However, the free energy per unit surface
+$f_{0} = f_{0}\left( c \right)$ is derived based on the thermodynamical model and should according to \cite{yushutin19} be non convex and
+nonlinear.
+
+A important observation is that equation \eqref{eq:cahn1} is a fourth order equation which makes it more challenging to
+solve using conventional FEM methods. This clear when writing the equation on the equivalent weak form and second order
+equations arise.
+
+
+\newpage
+\section{Energy Functionals}%
+\label{sec:energy_functionals}
+Let $c\left( x,t \right)  : \Gamma \times [0,T] \mapsto [0,1] $. From \cite{yushutin19} can we observe the energy functionals
+\begin{equation*}
+   E _{1}(c) = \int_\Gamma f(c)
+.\end{equation*}
+where \[
+f\left( c \right) = f_{0}\left( c \right) + \frac{1}{2}\varepsilon ^{2} \left\lvert \nabla _{\Gamma } c \right\rvert ^{2}
+\]
+and the conservation law  $\rho \frac{\partial c}{\partial  t}  + div_{\Gamma } \mathbf{j} = 0$ for the evolution of  $c $, derived from the Ficks Law $\mathbf{j} = - M \nabla _{\Gamma } \mu $ for the chemical potential derived by the functional derivative $\mu = \frac{\delta
+f}{\delta c} $. The double well function is denoted as \[
+f_{0}\left( c \right)  = \frac{\zeta}{4} c^2(1- c)^2
+\]
+
+
+
+
+
+\newpage
+
