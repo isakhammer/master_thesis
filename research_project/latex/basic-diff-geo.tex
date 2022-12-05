@@ -4,21 +4,51 @@
 \label{sec:differential_geometry}
 
 We may define $\Gamma \left( t \right) $ to be a time evolutionary, smooth compact and oriented surface with no boundary in $\mathbb{R} ^{3}$. We will denote the normal unit vector outer normal vector of $\Gamma \left( t \right) $  to be  $
-\boldsymbol{\nu} \left( \mathbf{x} \right) $ for $\mathbf{x} \in \Gamma  $ .  Now, let $v$ be some vector field defined in
+\boldsymbol{\nu} \left( \mathbf{x} \right) $ for some point $\mathbf{x} \in \Gamma \left( t \right)   $ .  Now, let $v$ be some vector field defined in
 $\mathcal{V} \in  \mathbb{R}^{3}  $ s.t. the vector $\mathbf{v} = v \boldsymbol{\nu } $  is describing the normal component deformation velocity of the surfaces $\left\{ \Gamma \left( t \right)  \right\}_{t=0}^{T} $.
 
-Let us now define a arbitrary energy functional containing some the surface dynamics $\mathbf{v}$ and a evolutionary surface $\Gamma \left( t \right) $. We may apply the $L_{2}\left( \Gamma  \right) $  gradient flow.
+% Let us now define a arbitrary energy functional containing some the surface dynamics $\mathbf{v}$ and a evolutionary surface $\Gamma \left( t \right) $. We may apply the $L_{2}\left( \Gamma  \right) $  gradient flow.
 
-To minimize our energy functional of the surface dynamics will we utilize a method called gradient flows. Gradient flows in surface partial differential equation (PDE) are used to solve physical problems where the surface is changing due to some
-external force. The PDE describes how the surface changes over time in response to this force, thus allowing us to model real-world phenomena such as fluid and heat flow. The gradient of the surface PDE determines the direction and magnitude of the
-change over time, while the PDE itself may contain additional terms that modify or influence the solution. \cite{dogan2007discrete} An alternative approach would be to solve the problem using standard shape optimization techniques using $\Gamma$ as a variable surface \cite{dalphin2014study}.
+To minimize our energy functional of the surface dynamics will we utilize a method called gradient flows. Gradient flows in surface partial differential equation (PDE) are used to solve physical problems where the surface is changing due to some external force. The PDE describes how the surface changes over time in response to this force, thus allowing us to model real-world phenomena such as fluid and heat flow. The gradient of the surface PDE determines the direction and magnitude of the change over time, while the PDE itself may contain additional terms that modify or influence the solution. \cite{dogan2007discrete} An alternative approach would be to solve the problem using standard shape optimization techniques using $\Gamma$ as a variable surface \cite{dalphin2014study}.
 
-To be able do develop the evolutionary PDE's we may introduce the gradient flow of the energy functional \eqref{eq:WE}.  Using the definition from \cite{bouchitte2014shape, bonito2010parametric} can we define the shape derivative of some energy
-functional $$\mathcal{J} = \int_{\Gamma }^{} \varphi    $$  to be the limit
+To be able do develop the evolutionary PDE's we may introduce the gradient flow of the energy functional \eqref{eq:WE}. Let some arbitrary energy functional have the form
+\[
+\mathcal{J} = \int_{\Gamma }^{} \varphi,.
+\]
+For instance, the special case in \eqref{eq:WE} is $\varphi = H ^2$.
+Using the definition from \cite{bonito2010parametric, troltzsch2010optimal} can we define the shape derivative of some energy
+functional $\mathcal{J} \left( \Gamma \left( t \right)  \right)  $ towards any directions $\mathbf{w} = w\boldsymbol{\nu }, \forall w \in \mathcal{V}  $  to be the limit
+
+% Det e no som skurra i dennar notasjonen
 \begin{equation*}
-d\mathcal{J} \left( \Gamma; w  \right)  = \lim_{t \to 0} \frac{\mathcal{J}\left( \Gamma \left( t \right)  \right) - \mathcal{J} (  \Gamma \left( 0 \right))}{t} \quad \forall w \in  \mathcal{V}
+    \begin{split}
+d\mathcal{J} \left( \Gamma \left( t \right) ; w  \right)  & = \lim_{t \to 0} \frac{\mathcal{J}\left( \Gamma \left( t \right)  \right) - \mathcal{J} (  \Gamma \left( 0 \right))}{t} \\
+&= \left(  \varphi ,w\right)_{\Gamma \left( t \right) }  \\
+    \end{split}
 .\end{equation*}
-Where it is for our case $\varphi = H ^2$.
+\todo[inline]{ Dennar definisjonen e litt rar, sjekk Troltzsch ch2.6 istedenfor  }
+The notation used here is $\left( v,w \right)_{\Gamma } = \int_{\Gamma }^{}  vw   $ for some $ v,w \in L^{2}\left( \Gamma \right) $ .
+Let us define the identity function $$\chi: G \mapsto  \mathbb{R} ^{3}$$ where we denote the trajectory space,
+$$G = \left\{ \left( \mathbf{x},t \right) : \mathbf{x} \in \Gamma \left( t \right), \quad t \in \left[ 0,T \right]   \right\},  $$
+s.t. the
+identity $\chi \left( \mathbf{x},t \right)
+= \mathbf{x} $ holds for all $  x \in \Gamma \left( t \right) $. We say that the $L^{2}$  gradient flow is defined as
+\[
+\left( \dot{\chi } , w \right)_{\Gamma \left( t \right)  } = -d\mathcal{J}\left( \Gamma \left( t \right); w  \right).
+\]
+
+It has been shown that the shape derivative of\eqref{eq:WE} has the form \cite{willmore1996riemannian}
+\[
+    \begin{split}
+        d\mathcal{E} \left( \Gamma; w  \right)  =& \int_{\Gamma \left( t \right) }^{}  \nabla_{\Gamma } H  \nabla _{\Gamma } w    \\
+    & - \int_{\Gamma }^{} H  |\nabla _{\Gamma }  h |^{2} w   \\
+    &  + \frac{1}{2} \int_{\Gamma }^{} h^{3} w
+    \end{split}
+\]
+
+
+
+
 
 
 
