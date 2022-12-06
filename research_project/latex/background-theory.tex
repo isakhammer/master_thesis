@@ -22,23 +22,34 @@ We will define a unique evolutionary point $x \in \Gamma \left( t \right) $ base
 \frac{\partial }{\partial  t}  \chi \left( p,t \right)  = v\left( x,t \right).
 .\end{equation}
 Given a model of the velocity $v$ can we solve the differential equation \eqref{eq:vel} and determine the evolution of a point on the surface $\Gamma $
-Assume we have a function $f: \Gamma \mapsto \mathbb{R}  $. We can then denote the material derivative as,
+Assume we have a scalar function $f: \Gamma \mapsto \mathbb{R}  $. We can then denote the material derivative as,
 \[
     \begin{split}
 \frac{D}{Dt}  f\left( x,t \right)  & = \frac{d}{dt} f \left( \chi \left( p,t \right) , t \right) \\
-&= \frac{\partial f\left( x,t \right) }{\partial  t} + \frac{\partial f\left( x,t \right) }{\partial  x}  \frac{\partial \chi \left( p,t \right) }{\partial  t}   \\
     \end{split}
 \]
 for $x \in \Gamma \left( t \right)  $.
-\todo[inline]{ Not sure about the second line }
-We can then finally define the tangential gradient mapping (project gradient) $\nabla _{\Gamma } f: \Gamma \mapsto \mathbb{R} ^{3}$ and the divergence mapping $\nabla _{\Gamma } \cdot  f: \Gamma \mapsto \mathbb{R} $ s.t.
-\[
-\begin{split}
-\nabla_{\Gamma } f & = \nabla f - \left<\nu, \nabla f \right> \nu. \\
-\nabla_{\Gamma } \cdot f &= \text{TODO}  \\
-\end{split}
+
+We will now define the basic surface differential operators using the notation constructed in \cite{dougan2012first} and \cite{kovacs2021convergent}.
+Consider a scalar function, $u: \Gamma \mapsto \mathbb{R} $, and a vector-valued function, $\hat{u}: \Gamma  \mapsto \mathbb{R} ^3$. We can then denote $ \nabla _{\Gamma } u: \Gamma \mapsto \mathbb{R} ^{3}$ as the tangential operator,
+$$
+\nabla_{\Gamma
+} u  = \nabla u - \left<\nu, \nabla u \right> \nu.
+$$
+Similarly, for the vector-valued function is the operator defined s.t.
+$$\nabla_{\Gamma } \hat{u} = \left( \nabla_{\Gamma } u_{1},\nabla_{\Gamma } u_{2},\nabla_{\Gamma } u_{3}   \right)^{T}.$$ The surface divergence for a vector field is defined as \[
+\nabla_{\Gamma } \cdot \hat{u} = \nabla  \cdot \hat{u} - \nu^{T} D \hat{u} \cdot \nu
 \]
-and the Laplace-Beltrami operator $\Delta _{\Gamma }f: \Gamma \mapsto \mathbb{R}$ s.t. $ \Delta _{\Gamma } f  = \nabla _{\Gamma } \cdot  \nabla _{\Gamma }f$.
+Here $D\hat{u}$ denotes the Jacobian of $\hat{u}$. Similarly  the Laplace-Beltrami operator $\Delta _{\Gamma }u: \Gamma \mapsto \mathbb{R}$ is defined s.t.
+\begin{equation*}
+    \begin{split}
+ \Delta _{\Gamma } u  & = \nabla _{\Gamma } \cdot  \nabla _{\Gamma }u \\
+ &=  \Delta u  - \nu ^{T} D^2 u \cdot \nu - H \partial _{\nu } f
+    \end{split}
+.\end{equation*}
+Again here is $D^2u$ the Hessian of the scalar function $u$. In the case of a vector valued function is the operator defined as \[
+\Delta _{\Gamma } \hat{u} = \left( \Delta _{\Gamma } u_{1}, \Delta _{\Gamma } u_{2}, \Delta _{\Gamma } u_{3} \right)
+\]
 
 A method to compute the mean curvature and the so-called Frobenius norm of matrix $A$ involves applying the
 extended Weingarten map, $ A\left( x \right) = \nabla \nu \left( x \right) $, s.t. these identities holds \cite{kovacs2021convergent},
