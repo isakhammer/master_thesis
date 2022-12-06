@@ -3,7 +3,11 @@
 \section{Background Theory}%
 \label{sec:differential_geometry}
 
-The section is highly inspired by the notation used in \cite{kovacs2021convergent}.
+
+\subsection{Differential Calculus}%
+\label{sub:differential_calculus}
+
+This subsection is inspired by the notation used in \cite{kovacs2021convergent, dougan2012first}.
 Let some initial surface $\Gamma^{0} \subset \mathbb{R} ^3  $ smooth compact and oriented surface with no boundary where we can assign a unique point $p \in \Gamma ^{0}$. We define define the time evolutionary surface to be on the form,
 \[
     \begin{split}
@@ -16,7 +20,40 @@ transformed via the smooth mapping
 \chi : \Gamma^{0} \times  \left[ 0,T \right]  \mapsto  \mathbb{R} ^3.
 \]
 We will define a unique evolutionary point $x \in \Gamma \left( t \right) $ based on the smooth mapping $\chi \left( p,t \right) = x$. A way to imagine this is to have a initial point in $\Gamma ^{0}$ and the mapping $\chi $ describes how this point will deform over time. The outer unit normal vector field of $\Gamma \left( t \right) $ is defined as the mapping $\nu : \Gamma \mapsto
-\mathbb{R} ^{3}$. The velocity $v$ for a point $x = \chi \left( p,t \right) $ can be defined as
+\mathbb{R} ^{3}$. We will now define the basic surface differential operators using the notation constructed in \cite{dougan2012first} and \cite{kovacs2021convergent}.
+Consider a scalar function, $u: \Gamma \mapsto \mathbb{R} $, and a vector-valued function, $\hat{u}: \Gamma  \mapsto \mathbb{R} ^3$. We can then denote $ \nabla _{\Gamma } u: \Gamma \mapsto \mathbb{R} ^{3}$ as the tangential operator,
+$$
+\nabla_{\Gamma
+} u  = \nabla u - \left<\nu, \nabla u \right> \nu.
+$$
+Similarly, for the vector-valued function is the operator defined s.t.
+$$\nabla_{\Gamma } \hat{u} = \left( \nabla_{\Gamma } u_{1},\nabla_{\Gamma } u_{2},\nabla_{\Gamma } u_{3}   \right)^{T}.$$ The surface divergence for a vector field is defined as \[
+\nabla_{\Gamma } \cdot \hat{u} = \nabla  \cdot \hat{u} - \nu^{T} D \hat{u} \cdot \nu
+\]
+Here $D\hat{u}$ denotes the Jacobian of $\hat{u}$. Similarly, the Laplace-Beltrami operator $\Delta _{\Gamma }u: \Gamma \mapsto \mathbb{R}$ is defined s.t.
+\begin{equation*}
+    \begin{split}
+ \Delta _{\Gamma } u  & = \nabla _{\Gamma } \cdot  \nabla _{\Gamma }u \\
+ &=  \Delta u  - \nu ^{T} D^2 u \cdot \nu - H \partial _{\nu } f
+    \end{split}
+.\end{equation*}
+Here is $D^2u$ denotes as the Hessian of the scalar function $u$. In the case of a vector valued function is the operator defined as \[
+\Delta _{\Gamma } \hat{u} = \left( \Delta _{\Gamma } u_{1}, \Delta _{\Gamma } u_{2}, \Delta _{\Gamma } u_{3} \right)
+\]
+A method to compute the mean curvature and the so-called Frobenius norm of matrix $A$ involves applying the
+extended Weingarten map, $ A\left( x \right) = \nabla \nu \left( x \right) $, s.t. these identities holds \cite{kovacs2021convergent},
+\begin{equation*}
+    \begin{split}
+    H & = tr(A) = k_{1} + k_{2} \\
+    \left\lvert A \right\rvert^{2}  & = k_{1}^2 + k_{2}^2
+    \end{split}
+.\end{equation*}
+
+
+\subsection{Evolutionary Equations}%
+\label{sub:evolutionary_equations}
+
+The velocity $v$ for a point $x = \chi \left( p,t \right) $ can be defined as
 \begin{equation}
     \label{eq:vel}
 \frac{\partial }{\partial  t}  \chi \left( p,t \right)  = v\left( x,t \right).
@@ -30,35 +67,7 @@ Assume we have a scalar function $f: \Gamma \mapsto \mathbb{R}  $. We can then d
 \]
 for $x \in \Gamma \left( t \right)  $.
 
-We will now define the basic surface differential operators using the notation constructed in \cite{dougan2012first} and \cite{kovacs2021convergent}.
-Consider a scalar function, $u: \Gamma \mapsto \mathbb{R} $, and a vector-valued function, $\hat{u}: \Gamma  \mapsto \mathbb{R} ^3$. We can then denote $ \nabla _{\Gamma } u: \Gamma \mapsto \mathbb{R} ^{3}$ as the tangential operator,
-$$
-\nabla_{\Gamma
-} u  = \nabla u - \left<\nu, \nabla u \right> \nu.
-$$
-Similarly, for the vector-valued function is the operator defined s.t.
-$$\nabla_{\Gamma } \hat{u} = \left( \nabla_{\Gamma } u_{1},\nabla_{\Gamma } u_{2},\nabla_{\Gamma } u_{3}   \right)^{T}.$$ The surface divergence for a vector field is defined as \[
-\nabla_{\Gamma } \cdot \hat{u} = \nabla  \cdot \hat{u} - \nu^{T} D \hat{u} \cdot \nu
-\]
-Here $D\hat{u}$ denotes the Jacobian of $\hat{u}$. Similarly  the Laplace-Beltrami operator $\Delta _{\Gamma }u: \Gamma \mapsto \mathbb{R}$ is defined s.t.
-\begin{equation*}
-    \begin{split}
- \Delta _{\Gamma } u  & = \nabla _{\Gamma } \cdot  \nabla _{\Gamma }u \\
- &=  \Delta u  - \nu ^{T} D^2 u \cdot \nu - H \partial _{\nu } f
-    \end{split}
-.\end{equation*}
-Again here is $D^2u$ the Hessian of the scalar function $u$. In the case of a vector valued function is the operator defined as \[
-\Delta _{\Gamma } \hat{u} = \left( \Delta _{\Gamma } u_{1}, \Delta _{\Gamma } u_{2}, \Delta _{\Gamma } u_{3} \right)
-\]
 
-A method to compute the mean curvature and the so-called Frobenius norm of matrix $A$ involves applying the
-extended Weingarten map, $ A\left( x \right) = \nabla \nu \left( x \right) $, s.t. these identities holds \cite{kovacs2021convergent},
-\begin{equation*}
-    \begin{split}
-    H & = tr(A) = k_{1} + k_{2} \\
-    \left\lvert A \right\rvert^{2}  & = k_{1}^2 + k_{2}^2
-    \end{split}
-.\end{equation*}
 
 Now, let some arbitrary energy functional have the form
 \[

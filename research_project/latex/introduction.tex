@@ -1,9 +1,10 @@
 \section{Introduction}\label{sec:introduction}
 
 
-% Why are cell membrane dynamics important
-
-First can we detect deceases such as Alzheimer's disease, cancer cells and develop new methods and vaccines \cite{small2006sorting}. One of the primary components of the cell membranes are lipids which serve many different functions. A key function is that it is consisting of a bilayer of lipids which controls the structural rigidity and the fluidity of the membrane \cite{ neidleman87}. It also turns out that the lipids often accumulate into so-called lipid rafts which serves as a rigid platform for proteins with special properties such as intracellular trafficking of lipids and lipid-anchored proteins \cite{Edidin03}.
+Cell membrane dynamics has recently had many important applications. For instance, it has been linked to detecting deceases such as Alzheimer's disease, cancer cells and is as well important for development new methods and vaccines
+\cite{small2006sorting}.
+\todo[inline]{ Add more sources. }
+One of the primary components of the cell membranes are lipids which serve many different functions. A key function is that it is consisting of a bilayer of lipids which controls the structural rigidity and the fluidity of the membrane \cite{ neidleman87}. It also turns out that the lipids often accumulate into so-called lipid rafts which serves as a rigid platform for proteins with special properties such as intracellular trafficking of lipids and lipid-anchored proteins \cite{Edidin03}.
 
 Modelling of lipid rafts formation can be modelled as a two-phase separation problem based on minimization of the Ginzburg-Landau energy functional \cite{yushutin19}
 \[
@@ -16,17 +17,16 @@ Assuming that the system is a single-phase system can the elastic bending energy
 \mathcal{E} _{e}\left( \Gamma  \right) =   \int_{\Gamma }^{}  c_{b} H^{2} + c_{k} K
 \].
 
-Here is $H = \frac{ \kappa_1 + \kappa_2 }{2}$ denoted as the mean curvature and $K = \kappa_1 \kappa_2$ as the gaussian curvature with respectively $c_{b}$ and $c_{k}$ as tuning parameters and $\kappa_1$ and $\kappa_2$ as principal curvatures. Using
-the Gauss-Bonnet theorem can it be shown that the problem above is equivalent to the so-called Willmore energy
+Here is $H =  \kappa_1 + \kappa_2 $ denoted as the mean curvature and $K = \kappa_1 \kappa_2$ as the gaussian curvature with respectively $c_{b}$ and $c_{k}$ as tuning parameters and $\kappa_1$ and $\kappa_2$ as principal curvatures. Using the Gauss-Bonnet theorem can it be shown that the problem above is equivalent to the so-called Willmore energy
 functional \cite{montiel2009curves, willmore1996riemannian}
 
 \begin{equation}
 \label{eq:WE}
-\mathcal{E} \left( \Gamma  \right) = \int_{\Gamma }^{}  H ^2
+\mathcal{E} \left( \Gamma  \right) = \int_{\Gamma }^{} \frac{1}{2} H ^2
 .\end{equation}
 This is a well known problem in the mathematical community \cite{ topping2000towards, marques2014willmore}. In fact, it is a mathematical tool used to study the geometry of surfaces because it can be used to study the properties of minimal surfaces, which are surfaces with the least possible area for a given boundary. This is important in many areas of mathematics, including differential geometry, topology and mathematical physics \cite{koerber2021area,jakob2022singularities, rupp21}.
 
-In this report will we establish a numerical scheme on minimization on this functional. However, we will first establish notation by including a section for definitions and important results from differential geometry. We will then derive the underlying PDE's for this equation. Lastly we will establish the model for the problem and discretize the problem using evolationary parametric FEM methods.
+In this report will we establish a numerical scheme on minimization on this functional. However, we will first establish notation by including a section for definitions and important results from differential geometry. We will then derive the underlying PDE's for this equation. Lastly we will establish the model for the problem and discretize the problem using evolutionary parametric FEM methods.
 
 
 
