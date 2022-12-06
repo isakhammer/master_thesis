@@ -71,33 +71,31 @@ Recall that the point $x = \chi \left( p,t \right)  $ is arising from the smooth
 \[
 \mathcal{J} = \int_{\Gamma }^{} \varphi \left( x, \Gamma^{0}  \right) .
 \]
-For instance, in the case presented in \eqref{eq:WE} we define $\varphi = H ^2$. The shape derivative of this energy functional at some time $t$ in the direction of the velocity-field $v$ from \eqref{eq:vel} is defined as \[
+For instance, in the case presented in \eqref{eq:WE} we define $\varphi = H ^2$. Based on \cite{dougan2012first},the shape derivative of this energy functional at some time $t$ in the direction of the velocity-field $v$ from \eqref{eq:vel} is defined as \[
 d \mathcal{J} \left( \Gamma \left( t \right) ; v  \right) = \lim_{\varepsilon  \to 0} \frac{\mathcal{J} \left( \Gamma \left( t + \varepsilon  \right) - \mathcal{J}\left( \Gamma \left( t  \right) \right)      \right)}{\varepsilon }.
 \]
 
-
-
-Assume we have a scalar function $f: \Gamma \mapsto \mathbb{R}  $. We can then denote the material derivative as,
+Assume we have a scalar function $f: \Gamma\left( t \right)  \mapsto \mathbb{R}  $. Similarly, as for the shape derivative, we can now denote the material derivative at time $t$ as
 \[
     \begin{split}
 \frac{D}{Dt}  f\left( x,t \right)  & = \frac{d}{dt} f \left( \chi \left( p,t \right) , t \right) \\
+&= \lim_{\varepsilon \to 0}  \frac{f \left( \chi \left( p, t + \varepsilon  \right)  \right) - f \left( \chi \left( p, t  \right)  \right) }{ \varepsilon }
     \end{split}
 \]
-for $x \in \Gamma \left( t \right)  $.
 
 
 
-Using the definition from \cite{bonito2010parametric, troltzsch2010optimal} can we define the shape derivative of some energy
-functional $\mathcal{J} \left( \Gamma \left( t \right)  \right)  $ towards any directions $ w \forall w \in \mathcal{V}  $  to be the limit
+% Using the definition from \cite{bonito2010parametric, troltzsch2010optimal} can we define the shape derivative of some energy
+% functional $\mathcal{J} \left( \Gamma \left( t \right)  \right)  $ towards any directions $ w \forall w \in \mathcal{V}  $  to be the limit
 
-% Det e no som skurra i dennar notasjonen
-\begin{equation*}
-    \begin{split}
-d\mathcal{J} \left( \Gamma \left( t \right) ; w  \right)  & = \lim_{t \to 0} \frac{\mathcal{J}\left( \Gamma \left( t \right)  \right) - \mathcal{J} (  \Gamma \left( 0 \right))}{t} \\
-&= \left(  \varphi ,w\right)_{\Gamma \left( t \right) }  \\
-    \end{split}
-.\end{equation*}
-\todo[inline]{ Dennar definisjonen e litt rar, sjekk Troltzsch ch2.6 istedenfor  } The notation used here is $\left( v,w \right)_{\Gamma } = \int_{\Gamma }^{}  vw   $ for some $ v,w \in L^{2}\left( \Gamma \right) $ .
+% % Det e no som skurra i dennar notasjonen
+% \begin{equation*}
+%     \begin{split}
+% d\mathcal{J} \left( \Gamma \left( t \right) ; w  \right)  & = \lim_{t \to 0} \frac{\mathcal{J}\left( \Gamma \left( t \right)  \right) - \mathcal{J} (  \Gamma \left( 0 \right))}{t} \\
+% &= \left(  \varphi ,w\right)_{\Gamma \left( t \right) }  \\
+%     \end{split}
+% .\end{equation*}
+% \todo[inline]{ Dennar definisjonen e litt rar, sjekk Troltzsch ch2.6 istedenfor  } The notation used here is $\left( v,w \right)_{\Gamma } = \int_{\Gamma }^{}  vw   $ for some $ v,w \in L^{2}\left( \Gamma \right) $ .
 
 % Our goal is to develop the evolutionary dynamics by minimizing the energy functional \eqref{eq:WE}.
 
