@@ -15,33 +15,47 @@ transformed via the smooth mapping
 \[
 \chi : \Gamma^{0} \times  \left[ 0,T \right]  \mapsto  \mathbb{R} ^3.
 \]
-We will define a unique evolutionary point $x \in \Gamma \left( t \right) $ based on the smooth mapping $\chi \left( p,t \right) = x$. A way to imagine this is to have a initial point in $\Gamma ^{0}$ and the mapping $\chi $ describes how this point will deform over time.
-
-Assume we have a function $f\left( x,t \right) $ for $x = \chi \left( p,t \right)  $, then will we denote the material derivative as
+We will define a unique evolutionary point $x \in \Gamma \left( t \right) $ based on the smooth mapping $\chi \left( p,t \right) = x$. A way to imagine this is to have a initial point in $\Gamma ^{0}$ and the mapping $\chi $ describes how this point will deform over time. The outer unit normal vector field of $\Gamma \left( t \right) $ is defined as the mapping $\nu : \Gamma \mapsto
+\mathbb{R} ^{3}$. The velocity $v$ for a point $x = \chi \left( p,t \right) $ can be defined as
+\begin{equation}
+    \label{eq:vel}
+\frac{\partial }{\partial  t}  \chi \left( p,t \right)  = v\left( x,t \right).
+.\end{equation}
+Given a model of the velocity $v$ can we solve the differential equation \eqref{eq:vel} and determine the evolution of a point on the surface $\Gamma $
+Assume we have a function $f: \Gamma \mapsto \mathbb{R}  $. We can then denote the material derivative as,
 \[
     \begin{split}
 \frac{D}{Dt}  f\left( x,t \right)  & = \frac{d}{dt} f \left( \chi \left( p,t \right) , t \right) \\
 &= \frac{\partial f\left( x,t \right) }{\partial  t} + \frac{\partial f\left( x,t \right) }{\partial  x}  \frac{\partial \chi \left( p,t \right) }{\partial  t}   \\
     \end{split}
 \]
+for $x \in \Gamma \left( t \right)  $.
 \todo[inline]{ Not sure about the second line }
-The outer unit normal vector field of $\Gamma \left( t \right) $ is defined as the mapping $\nu : \Gamma \mapsto
-\mathbb{R} ^{3}$.
+We can then finally define the tangential gradient mapping (project gradient) $\nabla _{\Gamma } f: \Gamma \mapsto \mathbb{R} ^{3}$ and the divergence mapping $\nabla _{\Gamma } \cdot  f: \Gamma \mapsto \mathbb{R} $ s.t.
+\[
+\begin{split}
+\nabla_{\Gamma } f & = \nabla f - \left<\nu, \nabla f \right> \nu. \\
+\nabla_{\Gamma } \cdot f &= \text{TODO}  \\
+\end{split}
+\]
+and the Laplace-Beltrami operator $\Delta _{\Gamma }f: \Gamma \mapsto \mathbb{R}$ s.t. $ \Delta _{\Gamma } f  = \nabla _{\Gamma } \cdot  \nabla _{\Gamma }f$.
 
-% Maybe use this later?
-% Let us define the normal unit vector outer normal vector of $\Gamma \left( t \right) $  to be  $
-% \boldsymbol{\nu} \left( \mathbf{x} \right) $ for some point $\mathbf{x} \in \Gamma \left( t \right)   $. Now, let $v$ be some vector field defined in
-% $\mathcal{V} \in  \mathbb{R}^{3}  $ s.t. the vector $\mathbf{v} = v \boldsymbol{\nu } $  is describing the normal component deformation velocity of the surfaces $\left\{ \Gamma \left( t \right)  \right\}_{t=0}^{T} $.
+A method to compute the mean curvature and the so-called Frobenius norm of matrix $A$ involves applying the
+extended Weingarten map, $ A\left( x \right) = \nabla \nu \left( x \right) $, s.t. these identities holds \cite{kovacs2021convergent},
+\begin{equation*}
+    \begin{split}
+    H & = tr(A) = k_{1} + k_{2} \\
+    \left\lvert A \right\rvert^{2}  & = k_{1}^2 + k_{2}^2
+    \end{split}
+.\end{equation*}
 
-To minimize our energy functional of the surface dynamics will we utilize a method called gradient flows. Gradient flows in surface partial differential equation (PDE) are used to solve physical problems where the surface is changing due to some external force. The PDE describes how the surface changes over time in response to this force, thus allowing us to model real-world phenomena such as fluid and heat flow. The gradient of the surface PDE determines the direction and magnitude of the change over time, while the PDE itself may contain additional terms that modify or influence the solution. \cite{dogan2007discrete} An alternative approach would be to solve the problem using standard shape optimization techniques using $\Gamma$ as a variable surface \cite{dalphin2014study}.
-
-To be able do develop the evolutionary PDE's we may introduce the gradient flow of the energy functional \eqref{eq:WE}. Let some arbitrary energy functional have the form
+Now, let some arbitrary energy functional have the form
 \[
 \mathcal{J} = \int_{\Gamma }^{} \varphi,.
 \]
-For instance, the special case in \eqref{eq:WE} is $\varphi = H ^2$.
+For instance, the case in \eqref{eq:WE} is $\varphi = H ^2$.
 Using the definition from \cite{bonito2010parametric, troltzsch2010optimal} can we define the shape derivative of some energy
-functional $\mathcal{J} \left( \Gamma \left( t \right)  \right)  $ towards any directions $\mathbf{w} = w\boldsymbol{\nu }, \forall w \in \mathcal{V}  $  to be the limit
+functional $\mathcal{J} \left( \Gamma \left( t \right)  \right)  $ towards any directions $ w \forall w \in \mathcal{V}  $  to be the limit
 
 % Det e no som skurra i dennar notasjonen
 \begin{equation*}
@@ -50,24 +64,11 @@ d\mathcal{J} \left( \Gamma \left( t \right) ; w  \right)  & = \lim_{t \to 0} \fr
 &= \left(  \varphi ,w\right)_{\Gamma \left( t \right) }  \\
     \end{split}
 .\end{equation*}
-\todo[inline]{ Dennar definisjonen e litt rar, sjekk Troltzsch ch2.6 istedenfor  }
-The notation used here is $\left( v,w \right)_{\Gamma } = \int_{\Gamma }^{}  vw   $ for some $ v,w \in L^{2}\left( \Gamma \right) $ .
-Let us define the identity function $$\chi: G \mapsto  \mathbb{R} ^{3}$$ where we denote the trajectory space,
-$$G = \left\{ \left( \mathbf{x},t \right) : \mathbf{x} \in \Gamma \left( t \right), \quad t \in \left[ 0,T \right]   \right\},  $$
-s.t. the
-identity $\chi \left( \mathbf{x},t \right)
-= \mathbf{x} $ holds for all $  x \in \Gamma \left( t \right) $.
-The velocity field is for a point on the surface is denoted as
-\begin{equation}
-\label{eq:vel}
-\partial _{t} \chi \left( \mathbf{x},t \right) = v\left( \chi \left( \mathbf{x},t \right)  \right).
-.\end{equation}
+\todo[inline]{ Dennar definisjonen e litt rar, sjekk Troltzsch ch2.6 istedenfor  } The notation used here is $\left( v,w \right)_{\Gamma } = \int_{\Gamma }^{}  vw   $ for some $ v,w \in L^{2}\left( \Gamma \right) $ .
 
-Given a model of the velocity $v$ can we solve the differential equation \eqref{eq:vel} and determine the evolution of a point on the surface $\mathbf{x}$
+Our goal is to develop the evolutionary dynamics by minimizing the energy functional \eqref{eq:WE}.
 
-
-
-
+To minimize our energy functional \eqref{eq:WE} of the surface dynamics will we utilize a method called gradient flows. Gradient flows in surface partial differential equation (PDE) are used to solve physical problems where the surface is changing due to some external force. The PDE describes how the surface changes over time in response to this force, thus allowing us to model real-world phenomena such as fluid and heat flow. The gradient of the surface PDE determines the direction and magnitude of the change over time, while the PDE itself may contain additional terms that modify or influence the solution. \cite{dogan2007discrete} An alternative approach would be to solve the problem using standard shape optimization techniques using $\Gamma$ as a variable surface \cite{dalphin2014study}.
 We say that the $L^{2}$  gradient flow is defined as
 \[
 \left( \dot{\chi } , w \right)_{\Gamma \left( t \right)  } = -d\mathcal{J}\left( \Gamma \left( t \right); w  \right).
