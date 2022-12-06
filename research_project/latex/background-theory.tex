@@ -15,10 +15,13 @@ Let some initial surface $\Gamma^{0} \subset \mathbb{R} ^3  $ smooth compact and
                                   &= \left\{ \chi \left( p,t \right): \ p \in \Gamma^{0}  \right\}
     \end{split}
 \]
-transformed via the smooth mapping
+transformed via the smooth mapping,
 \[
 \chi : \Gamma^{0} \times  \left[ 0,T \right]  \mapsto  \mathbb{R} ^3.
 \]
+An important regularity result is that if $\Gamma ^{0}$ is of class $C^{\infty}$, then $\Gamma $ is also of class $C^{\infty}$ for $\forall t \in \left[ 0,T \right] $ \cite{sokolowski1992introduction, dougan2012first}.
+\todo[inline]{ Formally in \cite[p 48]{sokolowski1992introduction}, it might be an idea to formulate normal unit-vector regularity as $C^{\infty}$ }
+
 We will define a unique evolutionary point $x \in \Gamma \left( t \right) $ based on the smooth mapping $\chi \left( p,t \right) = x$. A way to imagine this is to have a initial point in $\Gamma ^{0}$ and the mapping $\chi $ describes how this point will deform over time. The outer unit normal vector field of $\Gamma \left( t \right) $ is defined as the mapping $\nu : \Gamma \mapsto
 \mathbb{R} ^{3}$. We will now define the basic surface differential operators using the notation constructed in \cite{dougan2012first} and \cite{kovacs2021convergent}.
 Consider a scalar function, $u: \Gamma \mapsto \mathbb{R} $, and a vector-valued function, $\hat{u}: \Gamma  \mapsto \mathbb{R} ^3$. We can then denote $ \nabla _{\Gamma } u: \Gamma \mapsto \mathbb{R} ^{3}$ as the tangential operator,
@@ -53,12 +56,13 @@ extended Weingarten map, $ A\left( x \right) = \nabla \nu \left( x \right) $, s.
 \subsection{Evolutionary Equations}%
 \label{sub:evolutionary_equations}
 
-The velocity $v$ for a point $x = \chi \left( p,t \right) $ can be defined as
+We now want to develop theory evolutionary surface dynamics.
+First of all, we can denote the velocity field $v: \Gamma \mapsto \mathbb{R} ^3$ to be
 \begin{equation}
     \label{eq:vel}
-\frac{\partial }{\partial  t}  \chi \left( p,t \right)  = v\left( x,t \right).
+\frac{dx }{ d t}  = v\left( x \right) \quad \forall x \in \Gamma \left( t \right) .
 .\end{equation}
-Given a model of the velocity $v$ can we solve the differential equation \eqref{eq:vel} and determine the evolution of a point on the surface $\Gamma $
+Given a model of the velocity $v$ can we solve the differential equation \eqref{eq:vel} and determine the evolution of a point on the surface $\Gamma\left( t \right)  $.
 Assume we have a scalar function $f: \Gamma \mapsto \mathbb{R}  $. We can then denote the material derivative as,
 \[
     \begin{split}
