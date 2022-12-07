@@ -30,6 +30,7 @@ $$
 \nabla_{\Gamma
 } u  = \nabla u - \left<\nu, \nabla u \right> \nu.
 $$
+\todo[inline]{May be an idea to define a extension $\widetilde{u} \mid _{\Gamma }$ and look into regularity. See definitions in \cite{dziuk2013finite}.  }
 Similarly, for the vector-valued function is the operator defined s.t.
 $$\nabla_{\Gamma } \hat{u} = \left( \nabla_{\Gamma } u_{1},\nabla_{\Gamma } u_{2},\nabla_{\Gamma } u_{3}   \right)^{T}.$$ The surface divergence for a vector-valued function is defined as \[
 \nabla_{\Gamma } \cdot \hat{u} = \nabla  \cdot \hat{u} - \nu^{T} D \hat{u} \cdot \nu
@@ -91,29 +92,6 @@ Assume we have a scalar function $f: \Gamma\left( t \right)  \mapsto \mathbb{R} 
 &= \lim_{\varepsilon \to 0}  \frac{f \left( \chi \left( p, t + \varepsilon  \right)  \right) - f \left( \chi \left( p, t  \right)  \right) }{ \varepsilon }
     \end{split}
 \]
-
-
-
-
-% Using the definition from \cite{bonito2010parametric, troltzsch2010optimal} can we define the shape derivative of some energy
-% functional $\mathcal{J} \left( \Gamma \left( t \right)  \right)  $ towards any directions $ w \forall w \in \mathcal{V}  $  to be the limit
-
-% % Det e no som skurra i dennar notasjonen
-% \begin{equation*}
-%     \begin{split}
-% d\mathcal{J} \left( \Gamma \left( t \right) ; w  \right)  & = \lim_{t \to 0} \frac{\mathcal{J}\left( \Gamma \left( t \right)  \right) - \mathcal{J} (  \Gamma \left( 0 \right))}{t} \\
-% &= \left(  \varphi ,w\right)_{\Gamma \left( t \right) }  \\
-%     \end{split}
-% .\end{equation*}
-% \todo[inline]{ Dennar definisjonen e litt rar, sjekk Troltzsch ch2.6 istedenfor  } The notation used here is $\left( v,w \right)_{\Gamma } = \int_{\Gamma }^{}  vw   $ for some $ v,w \in L^{2}\left( \Gamma \right) $ .
-
-% Our goal is to develop the evolutionary dynamics by minimizing the energy functional \eqref{eq:WE}.
-
-% To minimize our energy functional \eqref{eq:WE} of the surface dynamics will we utilize a method called gradient flows. Gradient flows in surface partial differential equation (PDE) are used to solve physical problems where the surface is changing due to some external force. The PDE describes how the surface changes over time in response to this force, thus allowing us to model real-world phenomena such as fluid and heat flow. The gradient of the surface PDE determines the direction and magnitude of the change over time, while the PDE itself may contain additional terms that modify or influence the solution. \cite{dogan2007discrete} An alternative approach would be to solve the problem using standard shape optimization techniques using $\Gamma$ as a variable surface \cite{dalphin2014study}.
-% We say that the $L^{2}$  gradient flow is defined as
-% \[
-% \left( \dot{\chi } , w \right)_{\Gamma \left( t \right)  } = -d\mathcal{J}\left( \Gamma \left( t \right); w  \right).
-% \]
 
 
 
