@@ -52,7 +52,15 @@ extended Weingarten map, $ A\left( x \right) = \nabla \nu \left( x \right) $, s.
     \left\lvert A \right\rvert^{2}  & = k_{1}^2 + k_{2}^2
     \end{split}
 .\end{equation*}
-
+We may also want to use these definitions to introduce the following identities ,
+\[
+    \begin{split}
+         \partial _{\nu } H & = - \left\lvert A \right\rvert ^{2}, \\
+    \nabla _{\Gamma } H & = \nabla _{\Gamma } \nu  + \left\lvert A \right\rvert ^2 \nu,  \\
+\Delta _{\Gamma } \nu  & = - \left\lvert A \right\rvert ^{2} + \nabla _{\Gamma } H,
+    \end{split}
+\]
+see Lemma 3.3 and Lemma 3.2 in \cite{dougan2012first}.
 
 \subsection{Evolutionary Surface Dynamics}%
 \label{sub:evolutionary_equations}
@@ -64,7 +72,8 @@ First of all, we can denote the velocity field $v: \Gamma \mapsto \mathbb{R} ^3$
     \label{eq:vel}
 \frac{dx }{ d t}  = v\left( x \right) \quad \forall x \in \Gamma \left( t \right) .
 .\end{equation}
-Given a model of the velocity $v$ can we solve the ordinary differential equation (ODE) \eqref{eq:vel} and determine the evolution of a point on the surface $\Gamma\left( t \right)  $.
+Given a model of the velocity $v$ can we solve the ordinary differential equation (ODE) \eqref{eq:vel} and determine the evolution of a point on the surface $\Gamma\left( t \right)  $. In this article will we assume that the velocity only has a
+normal component to the surface, i.e., it exists a scalar function $V: \Gamma \mapsto \mathbb{R} $ s.t. $v = V \nu  $.
 
 % Define shape derivatives
 Recall that the point $x = \chi \left( p,t \right)  $ is arising from the smooth mapping from the point $p $ in  $\Gamma ^{0} $ to $\Gamma \left( t \right) $. Now, let some arbitrary energy functional have the form,
