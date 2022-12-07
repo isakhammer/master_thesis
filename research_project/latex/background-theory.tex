@@ -45,22 +45,22 @@ Here is $D^2u$ denotes as the Hessian of the scalar function $u$. In the case of
 \Delta _{\Gamma } \hat{u} = \left( \Delta _{\Gamma } u_{1}, \Delta _{\Gamma } u_{2}, \Delta _{\Gamma } u_{3} \right)^{T}
 \]
 A method to compute the mean curvature and the so-called Frobenius norm of matrix $A$ involves applying the
-extended Weingarten map, $ A\left( x \right) = \nabla \nu \left( x \right) $, s.t. these identities holds \cite{kovacs2021convergent},
+extended Weingarten map, $ A\left( x \right) = \nabla_{\Gamma } \nu \left( x \right) $, s.t. these identities holds ,
 \begin{equation*}
     \begin{split}
-    H & = tr(A) = k_{1} + k_{2} \\
-    \left\lvert A \right\rvert^{2}  & = k_{1}^2 + k_{2}^2
+    H & = tr(A) = k_{1} + k_{2}, \\
+    \left\lvert A \right\rvert^{2}  & = k_{1}^2 + k_{2}^2,
     \end{split}
 .\end{equation*}
+see \cite{kovacs2021convergent}.
 We may also want to use these definitions to introduce the following identities ,
 \[
     \begin{split}
          \partial _{\nu } H & = - \left\lvert A \right\rvert ^{2}, \\
-    \nabla _{\Gamma } H & = \nabla _{\Gamma } \nu  + \left\lvert A \right\rvert ^2 \nu,  \\
-\Delta _{\Gamma } \nu  & = - \left\lvert A \right\rvert ^{2} + \nabla _{\Gamma } H,
+    \nabla _{\Gamma } H & = \Delta  _{\Gamma } \nu  + \left\lvert A \right\rvert ^2 \nu.  \\
     \end{split}
 \]
-see Lemma 3.3 and Lemma 3.2 in \cite{dougan2012first}.
+Again, see Lemma 3.3 and Lemma 3.2 in \cite{dougan2012first}.
 
 \subsection{Evolutionary Surface Dynamics}%
 \label{sub:evolutionary_equations}
@@ -91,6 +91,7 @@ Assume we have a scalar function $f: \Gamma\left( t \right)  \mapsto \mathbb{R} 
 &= \lim_{\varepsilon \to 0}  \frac{f \left( \chi \left( p, t + \varepsilon  \right)  \right) - f \left( \chi \left( p, t  \right)  \right) }{ \varepsilon }
     \end{split}
 \]
+
 
 
 
