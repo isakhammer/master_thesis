@@ -124,13 +124,15 @@ If we have a vector-valued function that $u: \Gamma  \mapsto  \mathbb{R} ^{3} $ 
 
 The method we will use in this paper to minimize the energy functional \eqref{eq:WE} is to compute the so-called gradient flow. The fundamental idea of the gradient flow is to give rise of evolutionary dynamics to decrease the overall energy
 functional both in space and time, i.e., $\mathcal{J}\left( \Gamma \left( t_{2} \right)  \right) <   \mathcal{J}\left( \Gamma \left( t_{1} \right)\right)$ for all  $t_{2} > t_{1}$. For for information about gradient flows please check out
-    \cite{dogan2007discrete, dogan2005finite}. Now assume we have the velocity defined in \eqref{eq:vel} to be $v \in \left[ L^{2}\left( \Gamma  \right)  \right]^3 $, then we define the gradient flow s.t. \[
+    \cite{dogan2007discrete, dogan2005finite}. Now assume we have the velocity defined in \eqref{eq:vel} to be $v \in \left[ L^{2}\left( \Gamma  \right)  \right]^3 $, then we define the $L^2$  gradient flow s.t. \[
       \left( v,\varphi  \right) _{\Gamma  }  = - d \mathcal{J} \left( \Gamma ; \varphi  \right) \  \forall \varphi \in \left[ L^2\left( \Gamma  \right)   \right] ^3.
     \]
     It turns out, if $v \neq 0$ then is this equivalent to
 \[
 d \mathcal{J} \left( \Gamma ; v \right) = -\| v \|_{ L^2\left( \Gamma  \right)  }^{^2  } < 0.
 \]
+Hence, we finally have a toolbox which can be used to model evolutionary dynamics for moving surfaces.
+
 
 
 
