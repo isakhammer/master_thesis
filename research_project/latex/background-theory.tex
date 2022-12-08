@@ -93,6 +93,31 @@ Assume we have a scalar function $f: \Gamma\left( t \right)  \mapsto \mathbb{R} 
     \end{split}
 \]
 
+We denote the $L^2\left( \Gamma  \right)  $ as the space of all functions that are square-integrable with respect to the surface measure, i.e., \[
+   L^{2}\left( \Gamma   \right)  = \left\{ u: \Gamma \mapsto \mathbb{R}  \mid  \int_{\Gamma }^{}    \left\lvert u \right\rvert ^{2} < \infty   \right\} \\
+\]
+Let $u,v \in L^{2}\left( \Gamma  \right) $, then can we define the norm and the inner-product \[
+    \begin{split}
+        \| u \|_{ L^{2}\left( \Gamma  \right)  }^{ 2 } & = \int_{\Gamma }^{} \left\lvert u \right\rvert ^2 \\
+        \left( u, v \right)_{L^2\left( \Gamma  \right) } &= \int_{\Gamma }^{} uv  \\
+    \end{split}
+\]
+In this paper will we also the shorthand notation $\| u \|_{ L^2\left( \Gamma  \right)  }^{  }  = \| u \|_{ \Gamma  }^{  } $ and $\left( u,v \right)_{L^2\left( \Gamma  \right) } = \left( u,v \right) _{\Gamma } $.
+The Sobolev space $H^1\left( \Gamma  \right) $ is defined as the space of all functions and its first weak derivative with a finite $L^{2}$-norm, i.e,
+\[
+H^{1}\left( \Gamma  \right) = \left\{ f: \Gamma \mapsto \mathbb{R}   \mid  \int_{\Gamma }^{}
+\left\lvert f \right\rvert ^2  + \left\lvert \nabla_\Gamma  f \right\rvert ^2 < \infty \right\},
+\]
+with the following norm and inner product $u,v \in H^{1}\left( \Gamma  \right) $,
+\[
+    \begin{split}
+        \| u \|_{ H ^{1}\left( \Gamma  \right)  }^{  }  & = \| u \|_{ \Gamma  }^{  }  + \| \nabla \Gamma u \|_{ \Gamma  }^{  },  \\
+        \left( u, v \right)_{H^1\left( \Gamma  \right) } &= \left( u,v \right) _{\Gamma } + \left( \nabla_\Gamma u, \nabla _{\Gamma } v  \right) _{\Gamma }.   \\
+    \end{split}
+\]
+
+
+
 The method we will use in this paper to minimize the energy functional \eqref{eq:WE} is to compute the so-called gradient flow. The fundamental idea of the gradient flow is to give rise of evolutionary dynamics to decrease the overall energy
 functional both in space and time, i.e., $\mathcal{J}\left( \Gamma \left( t_{2} \right)  \right) \le   \mathcal{J}\left( \Gamma \left( t_{1} \right)\right)$ for all  $t_{2} > t_{1}$. For for information about gradient flows please check out
     \cite{dogan2007discrete, dogan2005finite}.
