@@ -1,13 +1,38 @@
 
 
-\section{The Willmore flow}%
+\section{Evolutionary dynamics of the Willmore energy}%
 \label{sec:evolutionary_pde_s_of_the_willmore_flow}
 
-We may define the shape derivative for \eqref{eq:WE} in the direction of the velocity $v\left( x \right)  = V \nu  $  to have the form \[
+Recall that we define the velocity \eqref{eq:vel}to only have a normal component, i.e., $v\left( x \right)  = V \nu $.
+The shape derivative for \eqref{eq:WE} in the direction of some velocity $v \in \left[ H^{1}\left( \Gamma  \right)  \right]^3   $ has the form \[
 d\mathcal{E} \left( \Gamma; v  \right)  = \int_{\Gamma }^{} \left( - \Delta _{\Gamma } H + \frac{1}{2} H^{3} - H \left\lvert A \right\rvert^2  \right) V
 \]
-A complete derivation of the shape derivative can be found in \cite[Corally 4.7]{dougan2012first}.
+A complete derivation of the shape derivative can be found in \cite[Corally 4.7]{dougan2012first}. Consequently, by applying the gradient flow in \eqref{eq:gradient_flow} and using that $\| v \|_{ \Gamma  }^{  }  = \| V \|_{ \Gamma   }^{2  }   $ can
+we easily see that,
+\[
+      \| V \|_{ \Gamma   }^{2  } = \int_{\Gamma }^{} V^2 = -d \mathcal{E} \left( \Gamma ;v \right).
+\]
+Hence, the gradient flow is equivalent to
 
+\begin{equation}
+\label{eq:gradient_velocity}
+V  =   \Delta _{\Gamma } H + Q,
+.\end{equation}
+\[
+\]
+where $Q  = - \frac{1}{2} H^{3} + H \left\lvert A \right\rvert^2$.
+\todo[inline]{ Need to define the laplace operator for the curvature in background theory }
+
+From \cite{kovacs2021convergent,hu2022evolving} is it said that \eqref{eq:gradient_velocity} must satisfy the following material derivatives,
+\[
+    \begin{split}
+\frac{D}{Dt}H & = - \left( \Delta _{\Gamma } + \| A \|_{  }^{ 2 }  \right) \left( \Delta _{\Gamma }H + Q \right) \\
+\frac{D}{Dt} \nu
+& = \left( -\Delta _{\Gamma } + \left( HA - A^2 \right)  \right) \left( \Delta _{\Gamma } \nu  +  \left\lvert A \right\rvert ^2   \nu    \right)  \\
+&  + \left\lvert \nabla _{\Gamma } H \right\rvert ^2   \nu       - 2\left( \nabla _{\Gamma }\cdot \left( A \nabla _{\Gamma } H \right)  \right) \nu  \\
+  & -A^2 \nabla _{\Gamma } H  - \nabla _{\Gamma } Q
+    \end{split}
+\]
 
 
 % Say we have a vector $v\left( x \right) $ and a test function $\varphi $ \[
