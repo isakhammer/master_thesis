@@ -17,7 +17,7 @@ Hence, the gradient flow is equivalent to
 \begin{equation}
 \label{eq:gradient_velocity}
 V  =   \Delta _{\Gamma } H + Q,
-.\end{equation}
+\end{equation}
 \[
 \]
 where we denote the nonlinear term as $Q  = - \frac{1}{2} H^{3} + H \left\lvert A \right\rvert^2$.
@@ -32,9 +32,15 @@ From \cite[Lemma 2.1]{kovacs2021convergent} it derived that \eqref{eq:gradient_v
   & -A^2 \nabla _{\Gamma } H  - \nabla _{\Gamma } Q.
     \end{split}
 \]
-We applied the substitution $z = \Delta  _{\Gamma } \nu  + \left\lvert A \right\rvert ^2 \nu $.
+Here is the substitution variable introduced s.t. $z = \Delta  _{\Gamma } \nu  + \left\lvert A \right\rvert ^2 \nu $.
 
-\todo[inline]{ Should mention recent results used introducing tangential velocity \cite{hu2022evolving} }
+It exists methods which do not exploit the material derivatives \cite{bonito2010parametric, bartezzaghi2016isogeometric}.However, it turns out that including these material derivatives brings additional computational costs, but provides so-called full-order
+approximation to the mean curvature, $H$, and the normal vector, $\nu $, and ,thus, allows us to construct rigorous convergence proofs for evolving surface FEM, see \cite{kovacs2021convergent}.
+
+An interesting recent used introducing tangential velocity \cite{hu2022evolving}
+Finally we end up with the following fourth-order time dependent system of equation
+
+
 
 
 
