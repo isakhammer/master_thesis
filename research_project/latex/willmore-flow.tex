@@ -20,30 +20,22 @@ V  =   \Delta _{\Gamma } H + Q,
 .\end{equation}
 \[
 \]
-where $Q  = - \frac{1}{2} H^{3} + H \left\lvert A \right\rvert^2$.
-\todo[inline]{ Need to define the laplace operator for the curvature in background theory }
+where we denote the nonlinear term as $Q  = - \frac{1}{2} H^{3} + H \left\lvert A \right\rvert^2$.
+\todo[inline]{ Need to define a way to compute $\Delta _{\Gamma } H $ in the background theory. }
 
-From \cite{kovacs2021convergent,hu2022evolving} is it said that \eqref{eq:gradient_velocity} must satisfy the following material derivatives,
+From \cite[Lemma 2.1]{kovacs2021convergent} it derived that \eqref{eq:gradient_velocity} must satisfy the following material derivatives,
 \[
     \begin{split}
-\frac{D}{Dt}H & = - \left( \Delta _{\Gamma } + \| A \|_{  }^{ 2 }  \right) \left( \Delta _{\Gamma }H + Q \right) \\
-\frac{D}{Dt} \nu
-& = \left( -\Delta _{\Gamma } + \left( HA - A^2 \right)  \right) \left( \Delta _{\Gamma } \nu  +  \left\lvert A \right\rvert ^2   \nu    \right)  \\
-&  + \left\lvert \nabla _{\Gamma } H \right\rvert ^2   \nu       - 2\left( \nabla _{\Gamma }\cdot \left( A \nabla _{\Gamma } H \right)  \right) \nu  \\
-  & -A^2 \nabla _{\Gamma } H  - \nabla _{\Gamma } Q
+\frac{D}{Dt}H & = - \left( \Delta _{\Gamma } + \left\lvert A \right\rvert ^2   \right) V, \\
+\frac{D}{Dt} \nu & = \left( -\Delta _{\Gamma } + \left( HA - A^2 \right)  \right) z  \\
+&  + \left\lvert \nabla _{\Gamma } H \right\rvert ^2   \nu - 2\left( \nabla _{\Gamma }\cdot \left( A \nabla _{\Gamma } H \right)  \right) \nu  \\
+  & -A^2 \nabla _{\Gamma } H  - \nabla _{\Gamma } Q.
     \end{split}
 \]
+We applied the substitution $z = \Delta  _{\Gamma } \nu  + \left\lvert A \right\rvert ^2 \nu $.
 
+\todo[inline]{ Should mention recent results used introducing tangential velocity \cite{hu2022evolving} }
 
-% Say we have a vector $v\left( x \right) $ and a test function $\varphi $ \[
-% \begin{split}
-%     \int_{\Gamma }^{}  v \varphi   = &  -  \int_{}^{}   \left( I - \left( \nabla _{\Gamma } x + \nabla _{\Gamma } x ^{T} \right) \right)  \nabla \varphi : \nabla _{\Gamma } H  \\
-%      &  + \frac{1}{2} \int_{\Gamma }^{}  \nabla _{\Gamma }\cdot \varphi \nabla
-%      _{\Gamma } \cdot H \\
-%      \int_{\Gamma }^{} H \varphi  =&  \int_{\Gamma }^{} \nabla _{\Gamma } x : \nabla _{\Gamma } \varphi
-% \end{split}
-% \]
-% from \cite{bonito2010parametric, dougan2012first}.
 
 
 
