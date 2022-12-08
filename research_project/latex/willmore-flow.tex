@@ -35,12 +35,26 @@ From \cite[Lemma 2.1]{kovacs2021convergent} it derived that \eqref{eq:gradient_v
 Here is the substitution variable introduced s.t. $z = \Delta  _{\Gamma } \nu  + \left\lvert A \right\rvert ^2 \nu $.
 
 It exists methods which do not exploit the material derivatives \cite{bonito2010parametric, bartezzaghi2016isogeometric}.However, it turns out that including these material derivatives brings additional computational costs, but provides so-called full-order
-approximation to the mean curvature, $H$, and the normal vector, $\nu $, and ,thus, allows us to construct rigorous convergence proofs for evolving surface FEM, see \cite{kovacs2021convergent}.
+approximation to the mean curvature, $H$, and the normal vector, $\nu $, and ,thus, allows us to construct rigorous convergence proofs for evolving surface FEM, see \cite{kovacs2021convergent, binz2022convergent}.
 
-An interesting recent used introducing tangential velocity \cite{hu2022evolving}
-Finally we end up with the following fourth-order time dependent system of equation
+Recent work has proposed that current method may not conserve the mesh quality while the surface is restricted to evolve along the normal velocity. Thus, a new variation of the standard methods has been considered by introducing an tangential
+velocity component via the equation  $H = - v\cdot \nu  $. Hence, also allowing the mesh to be less deformed, see more at \cite{hu2022evolving}. However, in this report will we not consider it.
 
-
+Finally, we end up with the following second-order evolutionary system of PDE.
+\begin{subequations}
+    \begin{align}
+ \frac{d}{dt} x & = v, \\
+    v &= V\nu,  \\
+V  & =   \Delta _{\Gamma } H + Q, \\
+Q &=  - \frac{1}{2} H^{3} + H \left\lvert A \right\rvert^2,  \\
+\frac{d}{dt}H & = - \left( \Delta _{\Gamma } + \left\lvert A \right\rvert ^2   \right) V, \\
+\frac{d}{dt} \nu & = \left( -\Delta _{\Gamma } + \left( HA - A^2 \right)  \right) z \nonumber \\
+& \quad   + \left\lvert \nabla _{\Gamma } H \right\rvert ^2   \nu - 2\left( \nabla _{\Gamma }\cdot \left( A \nabla _{\Gamma } H \right)  \right) \nu \nonumber  \\
+  & \quad  -A^2 \nabla _{\Gamma } H  - \nabla _{\Gamma } Q, \\
+z & = \Delta  _{\Gamma } \nu  + \left\lvert A \right\rvert ^2 \nu
+    .\end{align}
+.\end{subequations}
+Recall that the material derivative operator $\frac{D}{Dt} $ is simply equivalent to the time derivative $\frac{d}{dt}$, thus, it is now possible to apply normal techniques for time discretization.
 
 
 
