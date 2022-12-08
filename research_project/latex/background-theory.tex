@@ -11,18 +11,18 @@ This subsection is inspired by the notation used in \cite{kovacs2021convergent, 
 Let some initial surface $\Gamma^{0} \subset \mathbb{R} ^3  $ smooth compact and oriented surface with no boundary where we can assign a unique point $p \in \Gamma ^{0}$. We define define the time evolutionary surface to be on the form,
 \[
     \begin{split}
-\Gamma  = \Gamma \left( t \right) & = \Gamma \left( \chi \left( p,t \right)  \right) \\
-                                  &= \left\{ \chi \left( p,t \right): \ p \in \Gamma^{0}  \right\}
+\Gamma  = \Gamma \left( t \right) & = \Gamma \left( X \left( p,t \right)  \right) \\
+                                  &= \left\{ X \left( p,t \right): \ p \in \Gamma^{0}  \right\}
     \end{split}
 \]
 transformed via the smooth mapping,
 \[
-\chi : \Gamma^{0} \times  \left[ 0,T \right]  \mapsto  \mathbb{R} ^3.
+X : \Gamma^{0} \times  \left[ 0,T \right]  \mapsto  \mathbb{R} ^3.
 \]
 An important regularity result is that if $\Gamma ^{0}$ is of class $C^{\infty}$, then $\Gamma $ is also of class $C^{\infty}$ for $\forall t \in \left[ 0,T \right] $ \cite{sokolowski1992introduction, dougan2012first}.
 \todo[inline]{ Formally in \cite[p 48]{sokolowski1992introduction}, it might be an idea to formulate normal unit-vector regularity as $C^{\infty}$ }
 
-We will define a unique evolutionary point $x \in \Gamma \left( t \right) $ based on the smooth mapping $\chi \left( p,t \right) = x$. A way to imagine this is to have a initial point in $\Gamma ^{0}$ and the mapping $\chi $ describes how this point will deform over time. The outer unit normal vector field of $\Gamma \left( t \right) $ is defined as the mapping $\nu : \Gamma \mapsto
+We will define a unique evolutionary point $x \in \Gamma \left( t \right) $ based on the smooth mapping $X \left( p,t \right) = x$. A way to imagine this is to have a initial point in $\Gamma ^{0}$ and the mapping $X $ describes how this point will deform over time. The outer unit normal vector field of $\Gamma \left( t \right) $ is defined as the mapping $\nu : \Gamma \mapsto
 \mathbb{R} ^{3}$.
 
 Using the notation presented in \cite{dougan2012first} and \cite{kovacs2021convergent} can we define the basic surface differential operators. Consider a scalar function, $u: \Gamma \mapsto \mathbb{R} $, and a vector-valued function, $\hat{u}: \Gamma  \mapsto \mathbb{R} ^3$. We can then denote $ \nabla _{\Gamma } u: \Gamma \mapsto \mathbb{R} ^{3}$ as the tangential operator,
@@ -77,7 +77,7 @@ Given a model of the velocity $v$ can we solve the ordinary differential equatio
 normal component to the surface, i.e., it exists a scalar function $V: \Gamma \mapsto \mathbb{R} $ s.t. $v = V \nu  $.
 
 % Define shape derivatives
-Recall that the point $x = \chi \left( p,t \right)  $ is arising from the smooth mapping from the point $p $ in  $\Gamma ^{0} $ to $\Gamma \left( t \right) $. Now, let some arbitrary energy functional have the form,
+Recall that the point $x = X \left( p,t \right)  $ is arising from the smooth mapping from the point $p $ in  $\Gamma ^{0} $ to $\Gamma \left( t \right) $. Now, let some arbitrary energy functional have the form,
 \[
 \mathcal{J}\left( \Gamma\left( t \right)   \right)  = \int_{\Gamma\left( t \right)  }^{} \varphi \left( x  \right) .
 \]
@@ -88,8 +88,8 @@ d \mathcal{J} \left( \Gamma \left( t \right) ; v  \right) = \lim_{\varepsilon  \
 Assume we have a scalar function $f: \Gamma\left( t \right)  \mapsto \mathbb{R}  $. Similarly, as for the shape derivative, we can now denote the material derivative at time $t$ as
 \[
     \begin{split}
-\frac{D}{Dt}  f\left( x,t \right)  & = \frac{d}{dt} f \left( \chi \left( p,t \right) , t \right) \\
-&= \lim_{\varepsilon \to 0}  \frac{f \left( \chi \left( p, t + \varepsilon  \right)  \right) - f \left( \chi \left( p, t  \right)  \right) }{ \varepsilon }
+\frac{D}{Dt}  f\left( x,t \right)  & = \frac{d}{dt} f \left( X \left( p,t \right) , t \right) \\
+&= \lim_{\varepsilon \to 0}  \frac{f \left( X \left( p, t + \varepsilon  \right)  \right) - f \left( X \left( p, t  \right)  \right) }{ \varepsilon }
     \end{split}
 \]
 
