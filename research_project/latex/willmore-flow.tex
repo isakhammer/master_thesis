@@ -43,18 +43,25 @@ velocity component via the equation  $H = - v\cdot \nu  $. Hence, also allowing 
 Finally, we end up with the following second-order evolutionary system of PDE.
 \begin{subequations}
     \begin{align}
- \frac{d}{dt} x & = v, \\
-    v &= V\nu,  \\
-V  & =   \Delta _{\Gamma } H + Q, \\
-Q &=  - \frac{1}{2} H^{3} + H \left\lvert A \right\rvert^2,  \\
 \frac{d}{dt}H & = - \left( \Delta _{\Gamma } + \left\lvert A \right\rvert ^2   \right) V, \\
+V  & =   \Delta _{\Gamma } H + Q, \\
 \frac{d}{dt} \nu & = \left( -\Delta _{\Gamma } + \left( HA - A^2 \right)  \right) z \nonumber \\
 & \quad   + \left\lvert \nabla _{\Gamma } H \right\rvert ^2   \nu - 2\left( \nabla _{\Gamma }\cdot \left( A \nabla _{\Gamma } H \right)  \right) \nu \nonumber  \\
   & \quad  -A^2 \nabla _{\Gamma } H  - \nabla _{\Gamma } Q, \\
-z & = \Delta  _{\Gamma } \nu  + \left\lvert A \right\rvert ^2 \nu
-    .\end{align}
-.\end{subequations}
+z & = \Delta  _{\Gamma } \nu  + \left\lvert A \right\rvert ^2 \nu \\
+\frac{d}{dt} x  &= v
+    \end{align}
+\end{subequations}
+where the terms are
+\[
+    \begin{split}
+Q & =  - \frac{1}{2} H^{3} + H \left\lvert A \right\rvert^2 \\
+A & = \nabla _{\Gamma } \nu \\
+v & = V\nu
+    \end{split}
+\]
 Recall that the material derivative operator $\frac{D}{Dt} $ is simply equivalent to the time derivative $\frac{d}{dt}$, thus, it is now possible to apply normal techniques for time discretization.
+
 
 
 
