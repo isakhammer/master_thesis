@@ -4,7 +4,7 @@
 
 
  To be able to find a numerical approximation the weak formulation \eqref{eq:WE_weak_form} will we to formulate a evolving surface element method (ESFEM) for the evolutionary equation PDE's coupled with the evolving surface velocity. We will mostly
- use the notation and methods described in \cite{kovacs2021convergent}.
+ use the notation and methods described in \cite{kovacs2021convergent, hu2022evolving}.
 
 \subsection{ Triangular mesh for $\Gamma ^{0}$  }%
 \label{sub:triangular_mesh}
@@ -25,12 +25,16 @@ For more information, see \cite{dziuk2007finite}.
 
 \subsection{Surface element method}%
 \label{sub:surface_element_method}
+In this section is the goal to develop discrete analogs of the definitions we introduced in subsection \ref{sub:differential_calculus}.
+
+
+
 Let $\mathcal{T}_{h}  $ be the triangulation of $\Gamma ^{0}$. Now denote the vector $ \mathbf{x} = \mathbf{x} \left( t \right)  \in \mathbb{R} ^{3N}$ as a collection of all evolving nodes, $x_{j}\left( t \right)  \in  \mathbb{R} ^3$, $j = \mathcal{I} $, by a piecewise polynomial interpolation
 with degree $k$. Here is the index of all the nodes defined as $\mathcal{I} =\left\{ 1, \ldots, N \right\}  $, where $N$ is the total number of nodes.
 
 We denote the discretized surface, $\Gamma _{h} \left[ \mathbf{x}\left( t \right)  \right] $, to be the numerical approximation of the surface $\Gamma \left( t \right) $. As an initial condition do we construct the initial nodes, $
  x_{j}( 0 )  = p_{j} \forall j \in  \mathcal{I}  $, s.t.
- $\Gamma _{h} \left[ \mathbf{x}\left( 0 \right)   \right] $ interpolates the initial surface, $\Gamma ^{0}$ in the nodal points $p_{j} \in \Gamma ^{0}, \  j \in  \mathcal{I} $.
+ $\Gamma _{h}^{0  } = \Gamma _{h} \left[ \mathbf{x}\left( 0 \right)   \right] $ interpolates the initial surface, $\Gamma ^{0}$ in the nodal points $p_{j} \in \Gamma ^{0}, \  j \in  \mathcal{I} $.
 
 We denote the finite element basis on $\Gamma _{h}\left[ \mathbf{x} \right] $ to have the form,
 \[
@@ -47,6 +51,16 @@ S_{h}\left[ \mathbf{x} \right]   & = S_{h}\left( \Gamma _{h}\left[ \mathbf{x} \r
     \end{split}
 \]
 
+The discretized surface mapping, $X_{h}: \Gamma_{h} ^{0} \mapsto  \Gamma _{h} \left[ \mathbf{x}\left( t \right)  \right] $, is denoted as \[
+X_{h}\left( p_{h},t \right) = \sum_{j \in \mathcal{I} }^{}  x_{j}\left( t \right)  \phi \left[ x\left( 0 \right)  \right] \left( p_{h} \right), \  p_{h} \in \Gamma ^{0}_{h},
+\]
+and obviously satisfied $X_{h}\left( p_{h},0 \right)  = p_{h} \forall p_{h} \in \Gamma _{h}$, the evolutionary property $X_{h} \left( p_{j}, t \right)  = x_{j}\left( t \right)  \forall j \in \mathcal{I} $, and
+\[
+    \begin{split}
+\Gamma_{h} \left[ \mathbf{x}\left( t \right)  \right]  & = \Gamma_{h}\left[ X_{h}\left( .,t \right)  \right] \\
+&=\left\{ X_{h}\left( p_{h},t \right): p_{h} \in  \Gamma ^{0}_{h} \right\}.
+    \end{split}
+\]
 
 
 
