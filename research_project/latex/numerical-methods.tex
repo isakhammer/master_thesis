@@ -67,7 +67,22 @@ For shorthand notation do we define the discretized point as $x_{h} = X_{h}\left
 Thus discretized velocity $v_{h}\left( x_{h},t \right): \Gamma _{h} \mapsto  \mathbb{R} ^{3} $ is defined as \[
     v_{h}\left( x_{h},t \right)  = \sum_{j \in \mathcal{I} }^{} v_{j}\left( t \right) \phi _{j}\left[ \mathbf{x}\left( t \right)  \right] \left( x_{h} \right)
 \]
-Hence, the evolutionary discrete velocity is defined as $ \frac{d}{dt}x_{h} = v_{h}\left( x_{h},t \right).$
+Hence, by introducing  $\mathbf{v} = \mathbf{v}\left( t \right)  $ as a collection of the velocity nodes,  $v_{j} \in \mathbb{R} ^3$, can we define the evolutionary dynamics of the nodal points $\mathbf{x}$ s.t. this holds,
+\[
+\frac{d}{dt}\mathbf{x}\left( t \right) = \mathbf{v}\left( t \right).
+\]
+
+Ultimately, the discrete material derivative of a function $f_{h}: \Gamma _{h} \mapsto  \mathbb{R} $ is simply defined in the direction in the velocity $c_{h}$  as \[
+    \begin{split}
+\frac{D}{Dt}f_{h}\left( x_{h}, t; v_{h}   \right) & = \frac{d}{dt} f_{h}\left( x_{h}, t; v_{h}   \right) \\
+ & = \sum_{j \in \mathcal{I} }^{} \frac{d f_{j} \left( t \right) }{dt} \phi _{j}\left[ \mathbf{x} \right] \left( x_{h} \right)
+    \end{split}
+\]
+where $f_{j}$ is the nodal variables
+
+\todo[inline]{ Is $ \frac{d f_{j} \left( t \right) }{dt}$  this consistent with  with the similar definition of the velocity? I guess so since $\dot{x_{j}} = v_{j}$. Anyhow, I am also wondering if the basis functions should have time derivative as
+well.  }.
+
 
 
 
