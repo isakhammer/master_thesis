@@ -3,7 +3,6 @@
 \section{Evolutionary dynamics of the Willmore flow}%
 \label{sec:evolutionary_pde_s_of_the_willmore_flow}
 
-
 The goal is to derive the evolutionary dynamics of the Willmore energy $\eqref{eq:WE} $.
 
 Recall that we define the velocity \eqref{eq:vel}to only have a normal component, i.e., $v\left( x \right)  = V \nu $.
@@ -68,10 +67,8 @@ A & = \nabla _{\Gamma } \nu
 \]
 Recall that the material derivative operator $\frac{D}{Dt} $ is simply equivalent to the time derivative $\frac{d}{dt}$, thus, it is now possible to apply normal techniques for time discretization.
 
-\section{Weak formulation of Willmore flow}%
-\label{sub:weak_formulation}
-
-The FEM is based on approximating a PDE using the weak formulation.
+It turns out from basic numerical theory that rewriting an equivalent weak formulations (integral form) of the system dynamics \eqref{eq:WE_strong_form} makes the problem suitable for numerical approximations since it involves complex shape dynamics.
+Hence, we will now introduce the weak formulation of the system dynamics.
 
 Let us denote the following trial and test functions,
 We want to find the following trial functions,
@@ -109,6 +106,10 @@ then for all test functions,
 .\end{align}
 \end{subequations}
 Note that the time dependent variables $\nu, H $ and $x$ is initialized at $t=0$  based on $\Gamma ^{0}$. See \cite{kovacs2021convergent} for derivation of the weak formulation.
+
+\newpage
+\section{Evolving finite element method}%
+\label{sec:evolving_finite_element_method}
 
 
 
