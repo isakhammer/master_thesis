@@ -25,8 +25,7 @@ For more information, see \cite{dziuk2007finite}.
 
 \subsection{Surface element method}%
 \label{sub:surface_element_method}
-In this section is the goal to develop discrete analogs of the definitions we introduced in subsection \ref{sub:differential_calculus}.
-
+In this section is the goal to develop discrete analogs of the definitions we introduced in subsections \ref{sub:differential_calculus} and \ref{sub:evolutionary_equations}.
 
 
 Let $\mathcal{T}_{h}  $ be the triangulation of $\Gamma ^{0}$. Now denote the vector $ \mathbf{x} = \mathbf{x} \left( t \right)  \in \mathbb{R} ^{3N}$ as a collection of all evolving nodes, $x_{j}\left( t \right)  \in  \mathbb{R} ^3$, $j = \mathcal{I} $, by a piecewise polynomial interpolation
@@ -36,11 +35,12 @@ We denote the discretized surface, $\Gamma _{h} \left[ \mathbf{x}\left( t \right
  x_{j}( 0 )  = p_{j} \forall j \in  \mathcal{I}  $, s.t.
  $\Gamma _{h}^{0  } = \Gamma _{h} \left[ \mathbf{x}\left( 0 \right)   \right] $ interpolates the initial surface, $\Gamma ^{0}$ in the nodal points $p_{j} \in \Gamma ^{0}, \  j \in  \mathcal{I} $.
 
-We denote the finite element basis on $\Gamma _{h}\left[ \mathbf{x} \right] $ to have the form,
+An essential piece of the puzzle is the finite element basis on $\Gamma _{h}\left[ \mathbf{x} \right] $ which is denoted to have the form,
 \[
  \phi_{j} \left[ \mathbf{x} \right]: \Gamma_{h}\left[ \mathbf{x} \right] \mapsto \mathbb{R} , \quad   j \in  \mathcal{I} .
 \]
-which in fact satisfies the identity, \[
+\todo[inline]{ How can the basis vectors move? And how is it related to the definition of $X_{h}$ later in the subsection?  }
+In fact, the basis satisfies the identity, \[
 \phi _{j} \left[ \mathbf{x} \right] \left( x_{i} \right)  = \delta _{ij} \quad \forall i,j \in  \mathcal{I} .
 \]
 
@@ -54,13 +54,20 @@ S_{h}\left[ \mathbf{x} \right]   & = S_{h}\left( \Gamma _{h}\left[ \mathbf{x} \r
 The discretized surface mapping, $X_{h}: \Gamma_{h} ^{0} \mapsto  \Gamma _{h} \left[ \mathbf{x}\left( t \right)  \right] $, is denoted as \[
 X_{h}\left( p_{h},t \right) = \sum_{j \in \mathcal{I} }^{}  x_{j}\left( t \right)  \phi \left[ x\left( 0 \right)  \right] \left( p_{h} \right), \  p_{h} \in \Gamma ^{0}_{h},
 \]
-and obviously satisfied $X_{h}\left( p_{h},0 \right)  = p_{h} \forall p_{h} \in \Gamma _{h}$, the evolutionary property $X_{h} \left( p_{j}, t \right)  = x_{j}\left( t \right)  \forall j \in \mathcal{I} $, and
+and the problem obviously does satisfy the identities; $X_{h}\left( p_{h},0 \right)  = p_{h} \forall p_{h} \in \Gamma _{h}$, the evolutionary property $X_{h} \left( p_{j}, t \right)  = x_{j}\left( t \right)  \forall j \in \mathcal{I} $, and
 \[
     \begin{split}
-\Gamma_{h} \left[ \mathbf{x}\left( t \right)  \right]  & = \Gamma_{h}\left[ X_{h}\left( .,t \right)  \right] \\
+        \Gamma _{h} & = \Gamma_{h} \left( t \right) =   \Gamma_{h} \left[ \mathbf{x}\left( t \right)  \right]  \\
+                                    &= \Gamma_{h}\left[ X_{h}\left( \cdot ,t \right)  \right] \\
 &=\left\{ X_{h}\left( p_{h},t \right): p_{h} \in  \Gamma ^{0}_{h} \right\}.
     \end{split}
 \]
+\todo[inline]{TODO: Need to check if the definition of $\Gamma _{h}\left[ \mathbf{x}  \right] = \Gamma_{h}\left[ X_{h}\left( \cdot ,t \right)  \right] $ makes sense. Also made $\Gamma _{h} = \Gamma _{h}\left[ \mathbf{x}\left( t \right)  \right] $ som et kunstig innslag. }
+For shorthand notation do we define the discretized point as $x_{h} = X_{h}\left( p_{h},t \right) \in \Gamma _{h} $.
+Thus discretized velocity $v_{h}\left( x_{h},t \right): \Gamma _{h} \mapsto  \mathbb{R} ^{3} $ is defined as \[
+    v_{h}\left( x_{h},t \right)  = \sum_{j \in \mathcal{I} }^{} v_{j}\left( t \right) \phi _{j}\left[ \mathbf{x}\left( t \right)  \right] \left( x_{h} \right)
+\]
+Hence, the evolutionary discrete velocity is defined as $ \frac{d}{dt}x_{h} = v_{h}\left( x_{h},t \right).$
 
 
 
