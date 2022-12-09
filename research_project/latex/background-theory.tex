@@ -35,11 +35,11 @@ Similarly, for the vector-valued function is the operator defined s.t.
 $$\nabla_{\Gamma } \hat{u} = \left( \nabla_{\Gamma } u_{1},\nabla_{\Gamma } u_{2},\nabla_{\Gamma } u_{3}   \right)^{T}.$$ The surface divergence for a vector-valued function is defined as \[
 \nabla_{\Gamma } \cdot \hat{u} = \nabla  \cdot \hat{u} - \nu^{T} D \hat{u} \cdot \nu
 \]
-Here $D\hat{u}$ denotes the Jacobian of $\hat{u}$. Similarly, the Laplace-Beltrami operator $\Delta _{\Gamma }u: \Gamma \mapsto \mathbb{R}$ is defined s.t.
+Here $D\hat{u}$ denotes the Jacobian of $\hat{u}$. Similarly, the Laplace-Beltrami operator $\Delta _{\Gamma }u  : \Gamma \mapsto \mathbb{R}$  is proven to have the form \cite[Lemma 1]{xu2003eulerian},
 \begin{equation*}
     \begin{split}
  \Delta _{\Gamma } u  & = \nabla _{\Gamma } \cdot  \nabla _{\Gamma }u \\
- &=  \Delta u  - \nu ^{T} D^2 u \cdot \nu - H \partial _{\nu } f
+ &=  \Delta u  - \nu ^{T} D^2 u \cdot \nu - H \partial _{\nu } u
     \end{split}
 .\end{equation*}
 Here is $D^2u$ denotes as the Hessian of the scalar function $u$. In the case of a vector valued function is the operator defined as \[
@@ -81,17 +81,22 @@ Recall that the point $x = X \left( p,t \right)  $ is arising from the smooth ma
 \[
 \mathcal{J}\left( \Gamma\left( t \right)   \right)  = \int_{\Gamma\left( t \right)  }^{} \varphi \left( x  \right) .
 \]
-For instance, in the case presented in \eqref{eq:WE} we define $\varphi = H ^2$. Based on \cite{dougan2012first},the shape derivative of this energy functional at some time $t$ in the direction of the velocity $v\left( x \right) $ from \eqref{eq:vel} is defined as \[
+For instance, in the case presented in \eqref{eq:WE} we define $\varphi = H ^2$.
+
+Based on \cite{dougan2012first},the shape derivative of this energy functional at some time $t$ in the direction of the velocity $v\left( x \right) $ from \eqref{eq:vel} is defined as \[
 d \mathcal{J} \left( \Gamma \left( t \right) ; v  \right) = \lim_{\varepsilon  \to 0} \frac{\mathcal{J}  \left( \Gamma \left( t + \varepsilon  \right) \right)  - \mathcal{J}\left( \Gamma \left( t  \right) \right)      }{\varepsilon }.
 \]
+For a more detailed description of the shape derivative, see \cite[Definition 2.19]{sokolowski1992introduction}.
 
-Assume we have a scalar function $f: \Gamma\left( t \right)  \mapsto \mathbb{R}  $. Similarly, as for the shape derivative, we can now denote the material derivative at time $t$ as
+Assume we have a scalar function $f: \Gamma\left( t \right)  \mapsto \mathbb{R}  $. Similarly, as for the shape derivative, we can now denote the material derivative at time $t$ in the direction of the velocity $v\left( x \right) $ as
 \[
     \begin{split}
-\frac{D}{Dt}  f\left( x,t \right)  & = \frac{d}{dt} f \left( X \left( p,t \right) , t \right) \\
-&= \lim_{\varepsilon \to 0}  \frac{f \left( X \left( p, t + \varepsilon  \right)  \right) - f \left( X \left( p, t  \right)  \right) }{ \varepsilon }
+\frac{D}{Dt}  f\left( x,t; v \right)  & = \frac{d}{dt} f \left( X \left( p,t \right) , t \right) \\
+&= \lim_{\varepsilon \to 0}  \frac{f \left( X \left( p, t + \varepsilon  \right)  \right) - f \left( X \left( p, t  \right)  \right) }{ \varepsilon },
     \end{split}
 \]
+see \cite[Definition 2.74]{sokolowski1992introduction}.
+
 
 We denote the $L^2\left( \Gamma  \right)  $ as the space of all functions that are square-integrable with respect to the surface measure, i.e., \[
    L^{2}\left( \Gamma   \right)  = \left\{ u: \Gamma \mapsto \mathbb{R}  \mid  \int_{\Gamma }^{}    \left\lvert u \right\rvert ^{2} < \infty   \right\} \\
@@ -123,7 +128,7 @@ If we have a vector-valued function that $u: \Gamma  \mapsto  \mathbb{R} ^{3} $ 
 
 
 The method we will use in this paper to minimize the energy functional \eqref{eq:WE} is to compute the so-called gradient flow. The fundamental idea of the gradient flow is to give rise of evolutionary dynamics to decrease the overall energy
-functional both in space and time, i.e., $\mathcal{J}\left( \Gamma \left( t_{2} \right)  \right) <   \mathcal{J}\left( \Gamma \left( t_{1} \right)\right)$ for all  $t_{2} > t_{1}$. For for information about gradient flows please check out
+functional both in space and time, i.e., $\mathcal{J}\left( \Gamma \left( t_{2} \right)  \right) <   \mathcal{J}\left( \Gamma \left( t_{1} \right)\right)$ for all  $t_{2} > t_{1}$. For more information about gradient flows, see
     \cite{dogan2007discrete, dogan2005finite}. Now assume we have the velocity defined in \eqref{eq:vel} to be $v \in \left[ L^{2}\left( \Gamma  \right)  \right]^3 $, then we define the $L^2$  gradient flow s.t. \[
       \left( v,\varphi  \right) _{\Gamma  }  = - d \mathcal{J} \left( \Gamma ; \varphi  \right) \  \forall \varphi \in \left[ L^2\left( \Gamma  \right)   \right] ^3.
     \]
