@@ -54,13 +54,13 @@ V  & =   \Delta _{\Gamma } H + Q, \\
 & \quad   + \left\lvert \nabla _{\Gamma } H \right\rvert ^2   \nu \nonumber  \\
  & \quad - 2\left( \nabla _{\Gamma }\cdot \left( A \nabla _{\Gamma } H \right)  \right) \nu \nonumber  \\
   & \quad  -A^2 \nabla _{\Gamma } H  - \nabla _{\Gamma } Q, \\
-z & = \Delta  _{\Gamma } \nu  + \left\lvert A \right\rvert ^2 \nu \\
+z & = \Delta  _{\Gamma } \nu  + \left\lvert A \right\rvert ^2 \nu,\\
+\frac{d}{dt} x  &= v.
     \end{align}
 \end{subequations}
 where the terms are,
 \[
     \begin{split}
-\frac{d}{dt} x  &= v,\\
 v & = V\nu, \\
 Q & =  - \frac{1}{2} H^{3} + H \left\lvert A \right\rvert^2, \\
 A & = \nabla _{\Gamma } \nu
@@ -71,8 +71,7 @@ Recall that the material derivative operator $\frac{D}{Dt} $ is simply equivalen
 \section{Weak formulation of Willmore flow}%
 \label{sub:weak_formulation}
 
-The FEM is based on approximating a PDE using the weak form.
-From \cite{kovacs2021convergent} has it been shown that the weak form for the dynamics presented in \eqref{eq:WE_strong_form} can we written in the following weak form. We
+The FEM is based on approximating a PDE using the weak formulation.
 
 Let us denote the following trial and test functions,
 We want to find the following trial functions,
@@ -82,33 +81,34 @@ We want to find the following trial functions,
 &\left( H^{1}\left( \Gamma  \right), H^1 \left( \Gamma  \right), \left[ H^{1} \left( \Gamma  \right)  \right] ^3, \left[ H^{1}\left( \Gamma  \right)  \right]^3   \right),
     \end{split}
 \]
-s.t. for all test functions,
+then for all test functions,
 \[
     \begin{split}
 & ( \chi_{H}  \times \chi _{V} \times \chi _{\nu }  \times \chi _{z} ) \in \\
  &\left( H^{1}\left( \Gamma  \right), H^1 \left( \Gamma  \right), \left[ H^{1} \left( \Gamma  \right)  \right] ^3, \left[ H^{1}\left( \Gamma  \right)  \right]^3   \right),
     \end{split}
 \]
-the following system of weak system of PDE's is satisfied.
+ then is it shown that if following weak formulation is satisfied then is the problem equivalent to the dynamics presented in \eqref{eq:WE_strong_form}.
 
 \begin{subequations}
 \begin{align}
 \label{eq:WE_weak_form}
-\left( \frac{d}{dt}H, \chi _{H} \right)_{\Gamma } =&  \left( \nabla _{\Gamma } V, \chi _{H} \right) _{\Gamma } \nonumber \\
-                                                   &- \left( \left\lvert A \right\rvert ^2 V, \chi _{H} \right) _{\Gamma }   \\
-\left( V, \chi _{V} \right) =& -\left( \nabla _{\Gamma } H, \nabla _{\Gamma } \chi _{V} \right) \nonumber \\
- & + \left( Q, \chi _{V} \right)   \\
+\left( \frac{d}{dt}H, \chi _{H} \right)_{\Gamma } =&  \left( \nabla _{\Gamma } V, \nabla _{\Gamma }\chi _{H} \right) _{\Gamma } \nonumber \\
+                                                   &- \left( \left\lvert A \right\rvert ^2 V, \chi _{H} \right) _{\Gamma },   \\
+\left( V, \chi _{V} \right)_{\Gamma } =& -\left( \nabla _{\Gamma } H, \nabla _{\Gamma } \chi _{V} \right) \nonumber \\
+ & + \left( Q, \chi _{V} \right)_{\Gamma },   \\
 \left( \frac{d}{dt} \nu , \chi _{\nu } \right)_{\Gamma } =& \left( \nabla _{\Gamma }z, \nabla _{\Gamma } \chi _{\nu } \right) _{\Gamma }\nonumber   \\
  & + \left( ( HA - A^2  )z,\chi_\nu  \right)_{\Gamma }   \nonumber \\
-& + \left( \left\lvert \nabla _{\Gamma } H \right\rvert^2 \nu + A^2\nabla _{\Gamma } H, \chi _{\nu }  \right) \nonumber  \\
- & + 2 \left( A \nabla _{\Gamma } H, \nabla _{\Gamma } \chi _{\nu } \nu  \right)\nonumber    \\
- &  + \left( Q, \nabla _{\Gamma } \chi _{\nu }  \right)_{\Gamma } \nonumber  \\
-  &- \left( QH\nu , \chi _{\nu } \right) \\
-\left( z, \chi _{z} \right) _{\Gamma }  =& - \left( \nabla _{\Gamma } \nu , \nabla _{\Gamma } \chi _{z} \right) \nonumber \\
- & + \left( \left\lvert A \right\rvert ^2 \nu , \chi _{z} \right)
+ & + \left( \left\lvert \nabla _{\Gamma } H \right\rvert^2 \nu + A^2\nabla _{\Gamma } H, \chi _{\nu }  \right)_{\Gamma} \nonumber  \\
+ & + 2 \left( A \nabla _{\Gamma } H, \nabla _{\Gamma } \chi _{\nu } \nu  \right)_{\Gamma} \nonumber    \\
+ &  + \left( Q, \nabla _{\Gamma } \cdot \chi _{\nu }  \right)_{\Gamma } \nonumber  \\
+  &- \left( QH\nu , \chi _{\nu } \right) _{\Gamma},\\
+\left( z, \chi _{z} \right) _{\Gamma }  =& - \left( \nabla _{\Gamma } \nu , \nabla _{\Gamma } \chi _{z} \right)_{\Gamma} \nonumber \\
+ & + \left( \left\lvert A \right\rvert ^2 \nu , \chi _{z} \right) \\
+\frac{d}{dt}x &= v
 .\end{align}
 \end{subequations}
-
+Here is the time dependent variables $\nu, H $ and $x$ is initialized based on $\Gamma ^{0}$. See \cite{kovacs2021convergent} for proof.
 
 
 
