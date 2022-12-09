@@ -1,10 +1,58 @@
 
-\newpage
 \section{Numerical Methods}%
 \label{sec:numerical_methods}
 
-\subsection{Surface finite elements}%
-\label{sub:surface_finite_elements}
+
+ To be able to find a numerical approximation the weak formulation \eqref{eq:WE_weak_form} will we to formulate a evolving surface element method (ESFEM) for the evolutionary equation PDE's coupled with the evolving surface velocity. We will mostly
+ use the notation and methods described in \cite{kovacs2021convergent}.
+
+\subsection{ Triangular mesh for $\Gamma ^{0}$  }%
+\label{sub:triangular_mesh}
+
+Let initial surface $\Gamma ^{0} \in  \mathbb{R} ^3$ have the triangular mesh $\mathcal{T}_{h} $ constisting of triangles $T$. We will assume that the mesh is inform, i.e., for any $T_{1}, T_{2}$ $T_{1} \neq T_{2}$ and $T_{1} \cap T_{2} \neq \emptyset
+$, then must $T_{1}$  and $T_{2}$ share either a vertex or a facet. Let diameter of each triangle $h_{T}$  be denoted as,
+\[
+    \begin{split}
+    h_{T} & = \max_{x_{1}, x_{2} \in \Gamma ^{0}} dist(x_{1}, x_{2}), \\
+h_{min} & = \min_{T \in \mathcal{T} _{h}} h_{T}, \\
+h_{max} & = \max_{T \in \mathcal{T} _{h}} h_{T},
+    \end{split}
+\]
+where $h_{min}$ and $h_{max}$ is the maximum and minimum diameter of an individual triangle $T$ in $\mathcal{T}_{h} $. We define the chunkiness parameter $c_{T} = h_{T}/r_{T}$, where $r_{T}$ is the largest ball inside inscribed in $T$. We will then
+assume that the mesh is shape regular and quasi-uniform, i.e., $c_{T} \le c $ and $h_{max} \le c h_{min} $ for a  constant $c$ independent of $h_{T} $ and $T$.
+For more information, see \cite{dziuk2007finite}.
+\todo[inline]{  Apparently some quasi-uniform and shape regular definitions in \cite{dziuk2007finite}, need to check this.}
+
+\subsection{Surface element method}%
+\label{sub:surface_element_method}
+Let $\mathcal{T}_{h}  $ be the triangulation of $\Gamma ^{0}$. Now denote the vector $ \mathbf{x} = \mathbf{x} \left( t \right)  \in \mathbb{R} ^{3N}$ as a collection of all evolving nodes, $x_{j}\left( t \right)  \in  \mathbb{R} ^3$, $j = \mathcal{I} $, by a piecewise polynomial interpolation
+with degree $k$. Here is the index of all the nodes defined as $\mathcal{I} =\left\{ 1, \ldots, N \right\}  $, where $N$ is the total number of nodes.
+
+We denote the discretized surface, $\Gamma _{h} \left[ \mathbf{x}\left( t \right)  \right] $, to be the numerical approximation of the surface $\Gamma \left( t \right) $. As an initial condition do we construct the initial nodes, $
+ x_{j}( 0 )  = p_{j} \forall j \in  \mathcal{I}  $, s.t.
+ $\Gamma _{h} \left[ \mathbf{x}\left( 0 \right)   \right] $ interpolates the initial surface, $\Gamma ^{0}$ in the nodal points $p_{j} \in \Gamma ^{0}, \  j \in  \mathcal{I} $.
+
+We denote the finite element basis on $\Gamma _{h}\left[ \mathbf{x} \right] $ to have the form,
+\[
+ \phi_{j} \left[ \mathbf{x} \right]: \Gamma_{h}\left[ \mathbf{x} \right] \mapsto \mathbb{R} , \quad   j \in  \mathcal{I} .
+\]
+which in fact satisfies the identity, \[
+\phi _{j} \left[ \mathbf{x} \right] \left( x_{i} \right)  = \delta _{ij} \quad \forall i,j \in  \mathcal{I} .
+\]
+
+Finally, we can now define the so-called evolving finite element space of $\Gamma _{h}\left[ \mathbf{x}\left( t \right)  \right] $ as, \[
+    \begin{split}
+S_{h}\left[ \mathbf{x} \right]   & = S_{h}\left( \Gamma _{h}\left[ \mathbf{x} \right]  \right) \\
+ & = span\left\{ \sum_{j \in  \mathcal{I}  }^{}  c_{j} \phi _{j}\left[ \mathbf{x} \right]  \mid  c_{j} \in \mathbb{R}   \right\}.
+    \end{split}
+\]
+
+
+
+
+
+
+
 
 
 

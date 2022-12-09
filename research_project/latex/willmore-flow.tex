@@ -70,26 +70,27 @@ Recall that the material derivative operator $\frac{D}{Dt} $ is simply equivalen
 It turns out from basic numerical theory that rewriting an equivalent weak formulations (integral form) of the system dynamics \eqref{eq:WE_strong_form} makes the problem suitable for numerical approximations since it involves complex shape dynamics.
 Hence, we will now introduce the weak formulation of the system dynamics.
 
-Let us denote the following trial and test functions,
-We want to find the following trial functions,
-\[
+Let us denote the following trial functions,
+\begin{equation}
+\label{eq:WE_trial}
     \begin{split}
 & ( H \times V \times \nu  \times z ) \in \\
 &\left( H^{1}\left( \Gamma  \right), H^1 \left( \Gamma  \right), \left[ H^{1} \left( \Gamma  \right)  \right] ^3, \left[ H^{1}\left( \Gamma  \right)  \right]^3   \right),
     \end{split}
-\]
-then for all test functions,
-\[
+\end{equation}
+and similarly the test functions,
+\begin{equation}
+\label{eq:WE_test}
     \begin{split}
 & ( \chi_{H}  \times \chi _{V} \times \chi _{\nu }  \times \chi _{z} ) \in \\
  &\left( H^{1}\left( \Gamma  \right), H^1 \left( \Gamma  \right), \left[ H^{1} \left( \Gamma  \right)  \right] ^3, \left[ H^{1}\left( \Gamma  \right)  \right]^3   \right),
     \end{split}
-\]
- then is it shown that if following weak formulation is satisfied then is the problem equivalent to the dynamics presented in \eqref{eq:WE_strong_form}.
+.\end{equation}
+ It has been proven that if you can find any trial functions \eqref{eq:WE_trial} that does satisfy the following weak formulation \eqref{eq:WE_weak_form} for all test functions \eqref{eq:WE_test}, then the solution is equivalent to solving the dynamics presented in \eqref{eq:WE_strong_form}. See \cite{kovacs2021convergent} for more information.
 
 \begin{subequations}
-\begin{align}
 \label{eq:WE_weak_form}
+\begin{align}
 \left( \frac{d}{dt}H, \chi _{H} \right)_{\Gamma } =&  \left( \nabla _{\Gamma } V, \nabla _{\Gamma }\chi _{H} \right) _{\Gamma } \nonumber \\
                                                    &- \left( \left\lvert A \right\rvert ^2 V, \chi _{H} \right) _{\Gamma },   \\
 \left( V, \chi _{V} \right)_{\Gamma } =& -\left( \nabla _{\Gamma } H, \nabla _{\Gamma } \chi _{V} \right) \nonumber \\
@@ -105,7 +106,7 @@ then for all test functions,
 \frac{d}{dt}x &= v
 .\end{align}
 \end{subequations}
-Note that the time dependent variables $\nu, H $ and $x$ is initialized at $t=0$  based on $\Gamma ^{0}$. See \cite{kovacs2021convergent} for derivation of the weak formulation.
+Note that the time dependent variables $\nu, H $ and $x$ is initialized at $t=0$  based on $\Gamma ^{0}$.
 
 
 
