@@ -88,12 +88,11 @@ well.  }.
 \subsection{Surface finite element method}%
 \label{sub:surface_finite_element_method}
 
-
 Let us denote the following trial functions,
 \begin{equation}
 \label{eq:WE_trial}
     \begin{split}
-& ( H \times V \times \nu  \times z ) \in \\
+& ( H_{h} \times V_{h} \times \nu_{h}  \times z_{h} ) \in \\
 &\left( S_{h}\left[ \mathbf{x} \right],S_{h}\left[ \mathbf{x} \right], S_{h}\left[ \mathbf{x} \right] ^3,S_{h}\left[ \mathbf{x} \right] ^3    \right),
     \end{split}
 \end{equation}
@@ -106,26 +105,41 @@ and similarly the test functions,
     \end{split}
 .\end{equation}
 
+Define the helping functions
+\[
+    \begin{split}
+v_{h} & = V_{h}\nu_{h}, \\
+Q_{h} & =  - \frac{1}{2} H_{h}^{3} + H_{h} \left\lvert A_{h} \right\rvert^2, \\
+A_{h} & = \frac{1}{2}\left( \nabla _{\Gamma_{h} } \nu_{h} + \left( \nabla _{\Gamma _{h}}\nu _{h} \right) ^{T} \right)
+    \end{split}
+\]
+\todo[inline]{ Why is the $A_{h}$ symmetric, and maybe $v_{h}$ has to be interpolated. \cite[p.13]{kovacs2021convergent}   }
+\todo[inline]{ Maybe interpolate $v_{h}$.}
+
+
  It has been proven that if you can find any trial functions \eqref{eq:WE_trial} that does satisfy the following weak formulation \eqref{eq:WE_weak_form} for all test functions \eqref{eq:WE_test}, then the solution is equivalent to solving the dynamics presented in \eqref{eq:WE_strong_form}. See \cite{kovacs2021convergent} for more information.
 
-\begin{subequations}
-\label{eq:WE_weak_form}
-\begin{align}
-\left( \frac{d}{dt}H, \chi_{h} ^{H} \right)_{\Gamma } =&  \left( \nabla _{\Gamma } V, \nabla _{\Gamma }\chi_{h} ^{H} \right) _{\Gamma } \nonumber \\
-                                                   &- \left( \left\lvert A \right\rvert ^2 V, \chi_{h} ^{H} \right) _{\Gamma },   \\
-\left( V, \chi_{h} ^{V} \right)_{\Gamma } =& -\left( \nabla _{\Gamma } H, \nabla _{\Gamma } \chi_{h} ^{V} \right) \nonumber \\
- & + \left( Q, \chi_{h} ^{V} \right)_{\Gamma },   \\
-\left( \frac{d}{dt} \nu , \chi_{h} ^{\nu } \right)_{\Gamma } =& \left( \nabla _{\Gamma }z, \nabla _{\Gamma } \chi_{h} ^{\nu } \right) _{\Gamma }\nonumber   \\
- & + \left( ( HA - A^2  )z,\chi_{h}^\nu  \right)_{\Gamma }   \nonumber \\
- & + \left( \left\lvert \nabla _{\Gamma } H \right\rvert^2 \nu + A^2\nabla _{\Gamma } H, \chi_{h} ^{\nu }  \right)_{\Gamma} \nonumber  \\
- & + 2 \left( A \nabla _{\Gamma } H, \nabla _{\Gamma } \chi_{h} ^{\nu } \nu  \right)_{\Gamma} \nonumber    \\
- &  + \left( Q, \nabla _{\Gamma } \cdot \chi_{h} ^{\nu }  \right)_{\Gamma } \nonumber  \\
-  &- \left( QH\nu , \chi_{h} ^{\nu } \right) _{\Gamma},\\
-\left( z, \chi_{h} ^{z} \right) _{\Gamma }  =& - \left( \nabla _{\Gamma } \nu , \nabla _{\Gamma } \chi_{h} ^{z} \right)_{\Gamma} \nonumber \\
- & + \left( \left\lvert A \right\rvert ^2 \nu , \chi_{h} ^{z} \right) \\
+% \begin{subequations}
+% \label{eq:WE_fem}
+% \end{subequations}
+
+\begin{equation*}
+    \begin{split}
+\left( \frac{d}{dt}H_{h}, \chi_{h} ^{H} \right)_{\Gamma_{h} } =&  \left( \nabla _{\Gamma_{h} } V_{h}, \nabla _{\Gamma_{h} }\chi_{h} ^{H} \right) _{\Gamma_{h} } \nonumber \\
+                                                   &- \left( \left\lvert A_{h} \right\rvert ^2 V_{h}, \chi_{h} ^{H} \right) _{\Gamma_{h} },   \\
+\left( V_{h}, \chi_{h} ^{V} \right)_{\Gamma } =& -\left( \nabla _{\Gamma_{h} } H_{h}, \nabla _{\Gamma_{h} } \chi_{h} ^{V} \right) \nonumber \\
+ & + \left( Q_{h}, \chi_{h} ^{V} \right)_{\Gamma_{h} },   \\
+\left( \frac{d}{dt} \nu_{h} , \chi_{h} ^{\nu } \right)_{\Gamma_{h} } =& \left( \nabla _{\Gamma_{h} }z_{h}, \nabla _{\Gamma_{h} } \chi_{h} ^{\nu } \right) _{\Gamma_{h} }\nonumber   \\
+ & + \left( ( H_{h}A_{h} - A_{h}^2  )z_{h},\chi_{h}^\nu  \right)_{\Gamma_{h} }   \nonumber \\
+ & + \left( \left\lvert \nabla _{\Gamma_{h} } H_{h} \right\rvert^2 \nu_{h} + A_{h}^2\nabla _{\Gamma_{h} } H_{h}, \chi_{h} ^{\nu_{h} }  \right)_{\Gamma_{h}} \nonumber  \\
+ & + 2 \left( A_{h} \nabla _{\Gamma_{h} } H_{h}, \nabla _{\Gamma_{h} } \chi_{h} ^{\nu_{h} } \nu_{h}  \right)_{\Gamma_{h}} \nonumber    \\
+ &  + \left( Q_{h}, \nabla _{\Gamma_{h} } \cdot \chi_{h} ^{\nu_{h} }  \right)_{\Gamma_{h} } \nonumber  \\
+  &- \left( Q_{h}H_{h}\nu_{h} , \chi_{h} ^{\nu_{h} } \right) _{\Gamma_{h}},\\
+\left( z_{h}, \chi_{h} ^{z} \right) _{\Gamma_{h} }  =& - \left( \nabla _{\Gamma_{h} } \nu , \nabla _{\Gamma_{h} } \chi_{h} ^{z_{h}} \right)_{\Gamma_{h}} \nonumber \\
+ & + \left( \left\lvert A_{h} \right\rvert ^2 \nu_{h} , \chi_{h} ^{z} \right) \\
 \frac{d}{dt}x_h &= v_h
-.\end{align}
-\end{subequations}
+    \end{split}
+.\end{equation*}
 Note that the time dependent variables $\nu, H $ and $x$ is initialized at $t=0$  based on $\Gamma ^{0}$.
 
 
