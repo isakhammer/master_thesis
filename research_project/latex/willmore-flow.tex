@@ -36,6 +36,7 @@ From \cite[Lemma 2.1]{kovacs2021convergent} it derived that \eqref{eq:gradient_v
 \]
 Here is the substitution variable introduced s.t. $z = \Delta  _{\Gamma } \nu  + \left\lvert A \right\rvert ^2 \nu $.
 
+
 It exists methods which do not exploit the material derivatives \cite{bonito2010parametric, bartezzaghi2016isogeometric}.However, it turns out that including these material derivatives brings additional computational costs, but provides so-called full-order
 approximation to the mean curvature, $H$, and the normal vector, $\nu $, and ,thus, allows us to construct rigorous convergence proofs for evolving surface FEM, see \cite{kovacs2021convergent, binz2022convergent}.
 \todo[inline]{ Should probably find sources with Reynolds theorem or something for why material derivatives is used. }
@@ -67,6 +68,7 @@ A & = \nabla _{\Gamma } \nu
 \]
 Recall that the material derivative operator $\frac{D}{Dt} $ is simply equivalent to the time derivative $\frac{d}{dt}$, thus, it is now possible to apply normal techniques for time discretization.
 
+
 It turns out from basic numerical theory that rewriting an equivalent weak formulations (integral form) of the system dynamics \eqref{eq:WE_strong_form} makes the problem suitable for numerical approximations since it involves complex shape dynamics.
 Hence, we will now introduce the weak formulation of the system dynamics.
 
@@ -82,7 +84,7 @@ and similarly the test functions,
 \begin{equation}
 \label{eq:WE_test}
     \begin{split}
-& ( \chi_{H}  \times \chi _{V} \times \chi _{\nu }  \times \chi _{z} ) \in \\
+& ( \chi^{H}  \times \chi ^{V} \times \chi ^{\nu }  \times \chi ^{z} ) \in \\
  &\left( H^{1}\left( \Gamma  \right), H^1 \left( \Gamma  \right), \left[ H^{1} \left( \Gamma  \right)  \right] ^3, \left[ H^{1}\left( \Gamma  \right)  \right]^3   \right),
     \end{split}
 .\end{equation}
@@ -91,18 +93,18 @@ and similarly the test functions,
 \begin{subequations}
 \label{eq:WE_weak_form}
 \begin{align}
-\left( \frac{d}{dt}H, \chi _{H} \right)_{\Gamma } =&  \left( \nabla _{\Gamma } V, \nabla _{\Gamma }\chi _{H} \right) _{\Gamma } \nonumber \\
-                                                   &- \left( \left\lvert A \right\rvert ^2 V, \chi _{H} \right) _{\Gamma },   \\
-\left( V, \chi _{V} \right)_{\Gamma } =& -\left( \nabla _{\Gamma } H, \nabla _{\Gamma } \chi _{V} \right) \nonumber \\
- & + \left( Q, \chi _{V} \right)_{\Gamma },   \\
-\left( \frac{d}{dt} \nu , \chi _{\nu } \right)_{\Gamma } =& \left( \nabla _{\Gamma }z, \nabla _{\Gamma } \chi _{\nu } \right) _{\Gamma }\nonumber   \\
- & + \left( ( HA - A^2  )z,\chi_\nu  \right)_{\Gamma }   \nonumber \\
- & + \left( \left\lvert \nabla _{\Gamma } H \right\rvert^2 \nu + A^2\nabla _{\Gamma } H, \chi _{\nu }  \right)_{\Gamma} \nonumber  \\
- & + 2 \left( A \nabla _{\Gamma } H, \nabla _{\Gamma } \chi _{\nu } \nu  \right)_{\Gamma} \nonumber    \\
- &  + \left( Q, \nabla _{\Gamma } \cdot \chi _{\nu }  \right)_{\Gamma } \nonumber  \\
-  &- \left( QH\nu , \chi _{\nu } \right) _{\Gamma},\\
-\left( z, \chi _{z} \right) _{\Gamma }  =& - \left( \nabla _{\Gamma } \nu , \nabla _{\Gamma } \chi _{z} \right)_{\Gamma} \nonumber \\
- & + \left( \left\lvert A \right\rvert ^2 \nu , \chi _{z} \right) \\
+\left( \frac{d}{dt}H, \chi ^{H} \right)_{\Gamma } =&  \left( \nabla _{\Gamma } V, \nabla _{\Gamma }\chi ^{H} \right) _{\Gamma } \nonumber \\
+                                                   &- \left( \left\lvert A \right\rvert ^2 V, \chi ^{H} \right) _{\Gamma },   \\
+\left( V, \chi ^{V} \right)_{\Gamma } =& -\left( \nabla _{\Gamma } H, \nabla _{\Gamma } \chi ^{V} \right) \nonumber \\
+ & + \left( Q, \chi ^{V} \right)_{\Gamma },   \\
+\left( \frac{d}{dt} \nu , \chi ^{\nu } \right)_{\Gamma } =& \left( \nabla _{\Gamma }z, \nabla _{\Gamma } \chi ^{\nu } \right) _{\Gamma }\nonumber   \\
+ & + \left( ( HA - A^2  )z,\chi^\nu  \right)_{\Gamma }   \nonumber \\
+ & + \left( \left\lvert \nabla _{\Gamma } H \right\rvert^2 \nu + A^2\nabla _{\Gamma } H, \chi ^{\nu }  \right)_{\Gamma} \nonumber  \\
+ & + 2 \left( A \nabla _{\Gamma } H, \nabla _{\Gamma } \chi ^{\nu } \nu  \right)_{\Gamma} \nonumber    \\
+ &  + \left( Q, \nabla _{\Gamma } \cdot \chi ^{\nu }  \right)_{\Gamma } \nonumber  \\
+  &- \left( QH\nu , \chi ^{\nu } \right) _{\Gamma},\\
+\left( z, \chi ^{z} \right) _{\Gamma }  =& - \left( \nabla _{\Gamma } \nu , \nabla _{\Gamma } \chi ^{z} \right)_{\Gamma} \nonumber \\
+ & + \left( \left\lvert A \right\rvert ^2 \nu , \chi ^{z} \right) \\
 \frac{d}{dt}x &= v
 .\end{align}
 \end{subequations}

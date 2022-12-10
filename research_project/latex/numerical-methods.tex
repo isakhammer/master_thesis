@@ -23,19 +23,19 @@ assume that the mesh is shape regular and quasi-uniform, i.e., $c_{T} \le c $ an
 For more information, see \cite{dziuk2007finite}.
 \todo[inline]{  Apparently some quasi-uniform and shape regular definitions in \cite{dziuk2007finite}, need to check this.}
 
-\subsection{Surface element method}%
+\subsection{Finite surface element}%
 \label{sub:surface_element_method}
 In this section is the goal to develop discrete analogs of the definitions we introduced in subsections \ref{sub:differential_calculus} and \ref{sub:evolutionary_equations}.
 
 
-Let $\mathcal{T}_{h}  $ be the triangulation of $\Gamma ^{0}$. Now denote the vector $ \mathbf{x} = \mathbf{x} \left( t \right)  \in \mathbb{R} ^{3N}$ as a collection of all evolving nodes, $x_{j}\left( t \right)  \in  \mathbb{R} ^3$, $j = \mathcal{I} $, by a piecewise polynomial interpolation
+Let $\mathcal{T}_{h}  $ be the triangulation of $\Gamma ^{0}$. Now denote the vector $ \mathbf{x} = \mathbf{x} \left( t \right)  \in \mathbb{R} ^{3N}$ as a collection of all evolving nodes, $x_{j}\left( t \right)  \in  \mathbb{R} ^3$, $j \in  \mathcal{I} $, by a piecewise polynomial interpolation
 with degree $k$. Here is the index of all the nodes defined as $\mathcal{I} =\left\{ 1, \ldots, N \right\}  $, where $N$ is the total number of nodes.
 
 We denote the discretized surface, $\Gamma _{h} \left[ \mathbf{x}\left( t \right)  \right] $, to be the numerical approximation of the surface $\Gamma \left( t \right) $. As an initial condition do we construct the initial nodes, $
  x_{j}( 0 )  = p_{j} \forall j \in  \mathcal{I}  $, s.t.
  $\Gamma _{h}^{0  } = \Gamma _{h} \left[ \mathbf{x}\left( 0 \right)   \right] $ interpolates the initial surface, $\Gamma ^{0}$ in the nodal points $p_{j} \in \Gamma ^{0}, \  j \in  \mathcal{I} $.
 
-An essential piece of the puzzle is the finite element basis on $\Gamma _{h}\left[ \mathbf{x} \right] $ which is denoted to have the form,
+An essential piece of the puzzle is the finite element basis on $\Gamma _{h}\left[ \mathbf{x} \right] $, which is denoted to have the form,
 \[
  \phi_{j} \left[ \mathbf{x} \right]: \Gamma_{h}\left[ \mathbf{x} \right] \mapsto \mathbb{R} , \quad   j \in  \mathcal{I} .
 \]
@@ -84,6 +84,49 @@ where $f_{j}$ is the nodal variables
 well.  }.
 
 
+
+\subsection{Surface finite element method}%
+\label{sub:surface_finite_element_method}
+
+
+Let us denote the following trial functions,
+\begin{equation}
+\label{eq:WE_trial}
+    \begin{split}
+& ( H \times V \times \nu  \times z ) \in \\
+&\left( S_{h}\left[ \mathbf{x} \right],S_{h}\left[ \mathbf{x} \right], S_{h}\left[ \mathbf{x} \right] ^3,S_{h}\left[ \mathbf{x} \right] ^3    \right),
+    \end{split}
+\end{equation}
+and similarly the test functions,
+\begin{equation}
+\label{eq:WE_test}
+    \begin{split}
+& ( \chi^{H}  \times \chi ^{V} \times \chi ^{\nu }  \times \chi ^{z} ) \in \\
+&\left( S_{h}\left[ \mathbf{x} \right],S_{h}\left[ \mathbf{x} \right], S_{h}\left[ \mathbf{x} \right] ^3,S_{h}\left[ \mathbf{x} \right] ^3    \right),
+    \end{split}
+.\end{equation}
+
+ It has been proven that if you can find any trial functions \eqref{eq:WE_trial} that does satisfy the following weak formulation \eqref{eq:WE_weak_form} for all test functions \eqref{eq:WE_test}, then the solution is equivalent to solving the dynamics presented in \eqref{eq:WE_strong_form}. See \cite{kovacs2021convergent} for more information.
+
+\begin{subequations}
+\label{eq:WE_weak_form}
+\begin{align}
+\left( \frac{d}{dt}H, \chi ^{H} \right)_{\Gamma } =&  \left( \nabla _{\Gamma } V, \nabla _{\Gamma }\chi ^{H} \right) _{\Gamma } \nonumber \\
+                                                   &- \left( \left\lvert A \right\rvert ^2 V, \chi ^{H} \right) _{\Gamma },   \\
+\left( V, \chi ^{V} \right)_{\Gamma } =& -\left( \nabla _{\Gamma } H, \nabla _{\Gamma } \chi ^{V} \right) \nonumber \\
+ & + \left( Q, \chi ^{V} \right)_{\Gamma },   \\
+\left( \frac{d}{dt} \nu , \chi ^{\nu } \right)_{\Gamma } =& \left( \nabla _{\Gamma }z, \nabla _{\Gamma } \chi ^{\nu } \right) _{\Gamma }\nonumber   \\
+ & + \left( ( HA - A^2  )z,\chi^\nu  \right)_{\Gamma }   \nonumber \\
+ & + \left( \left\lvert \nabla _{\Gamma } H \right\rvert^2 \nu + A^2\nabla _{\Gamma } H, \chi ^{\nu }  \right)_{\Gamma} \nonumber  \\
+ & + 2 \left( A \nabla _{\Gamma } H, \nabla _{\Gamma } \chi ^{\nu } \nu  \right)_{\Gamma} \nonumber    \\
+ &  + \left( Q, \nabla _{\Gamma } \cdot \chi ^{\nu }  \right)_{\Gamma } \nonumber  \\
+  &- \left( QH\nu , \chi ^{\nu } \right) _{\Gamma},\\
+\left( z, \chi ^{z} \right) _{\Gamma }  =& - \left( \nabla _{\Gamma } \nu , \nabla _{\Gamma } \chi ^{z} \right)_{\Gamma} \nonumber \\
+ & + \left( \left\lvert A \right\rvert ^2 \nu , \chi ^{z} \right) \\
+\frac{d}{dt}x &= v
+.\end{align}
+\end{subequations}
+Note that the time dependent variables $\nu, H $ and $x$ is initialized at $t=0$  based on $\Gamma ^{0}$.
 
 
 
