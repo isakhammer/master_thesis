@@ -12,11 +12,14 @@ bending forces, temperature and diffusion is essential on how a cell membrane wi
 \subsection{Elastic bending energy on surfaces}%
 \label{sub:willmore_flow}
 
-Assuming that the system is a single-phase system, i.e., the lipids are uniformly distributed, can the elastic bending energy be modelled using the Canham-Helrich energy functional \cite{helfrich1973elastic, wang08, udo97} \[
-\mathcal{E} _{e}\left( \Gamma\left( t \right)   \right) =   \int_{\Gamma\left( t \right)  }^{}  c_{b} H^{2} + c_{k} K
-\].
-Here is $H =  \kappa_1 + \kappa_2 $ denoted as the mean curvature and $K = \kappa_1 \kappa_2$ as the gaussian curvature with respectively $c_{b}$ and $c_{k}$ as tuning parameters and $\kappa_1$ and $\kappa_2$ as principal curvatures. $\Gamma \left( t
-\right) $ is here a evolving surface in $\mathbb{R} ^3$. Using the Gauss-Bonnet theorem can it be shown that the problem above is equivalent to the so-called Willmore energy
+Assuming that the system is a single-phase system, i.e., the lipids are uniformly distributed, can the elastic bending energy be modelled using the Canham-Helrich energy functional \cite{helfrich1973elastic, wang08, udo97}. Let us denote $b_{b},
+b_{k}$ and $H_{0}$ as parameters based on physical models, then can the energy functional be denoted as,
+\begin{equation}
+\label{eq:CH}
+\mathcal{E} _{CH}\left( \Gamma\left( t \right)   \right) =   \int_{\Gamma\left( t \right)  }^{}  b_{b} \left( H- H_{0} \right) ^{2} + b_{k} K
+.\end{equation}
+Here is $H =  \kappa_1 + \kappa_2 $ denoted as the mean curvature and $K = \kappa_1 \kappa_2$ as the gaussian curvature with respectively and $\kappa_1$ and $\kappa_2$ as principal curvatures. $\Gamma \left( t
+\right) $ is here a evolving surface in $\mathbb{R} ^3$, for more info see section \ref{sec:background}.  Using the Gauss-Bonnet theorem can it be shown that the problem above is equivalent to the so-called Willmore energy
 functional \cite{montiel2009curves, willmore1996riemannian},
 
 \begin{equation}
@@ -37,7 +40,7 @@ It also turns out that the lipids often accumulate into so-called lipid rafts wh
 lipid rafts formation can be modelled as a two-phase separation problem based on minimization of the Ginzburg-Landau energy functional \cite{yushutin19},
 \begin{equation}
 \label{eq:GL}
-\mathcal{E}_{ch}  \left( c   \right) = \int_{\Gamma\left(t  \right)   }^{}\Psi \left( c \right) + \frac{\gamma}{2} \left\lvert \nabla c \right\rvert^{2} ,
+\mathcal{E}_{GL}  \left( c   \right) = \int_{\Gamma\left(t  \right)   }^{}\Psi \left( c \right) + \frac{\gamma}{2} \left\lvert \nabla c \right\rvert^{2} ,
 .\end{equation}
 which is describing the chemical energy for a concentration $c: \Gamma\left( t \right)  \times \left[ 0,T \right] \mapsto  \left[ 0,1 \right]  $ and $ \Psi \left( c \right)$ is a chemical potential function. Keep in mind that unlike
 the willmore energy functional \eqref{eq:WE}, where the $\Gamma\left( t \right)  $ is determined the elastic properties, should the energy functional \eqref{eq:GL} be interpreted as a chemical diffusion problem a predefined evolving domain $\Gamma \left( t \right) $.
@@ -46,24 +49,33 @@ domains \cite{yushutin19, udo97, ratz16,Gera2017, caetano21}.
 
 \subsection{Multiphysics problems on surfaces}%
 
-Ultimately will the cell membrane consists of interaction several kinds of physics (temperature, elasticity, chemical diffusion, internal fluid pressure etc.), hence, is it by interest to try to model the interaction. An example is to try to the energy functionals \eqref{eq:GL}  and \eqref{eq:WE}, since the lipid-rafts formation is said to change the elasticity properties of the membrane, may be a good model for how cell membranes evolve to specific shapes or execute cell division.
-
+Ultimately will the cell membrane consists of interaction several kinds of physics (temperature, elasticity, chemical diffusion, internal fluid pressure etc.), hence, is it by interest to try to model the interaction. An example is to try to the
+energy functionals \eqref{eq:GL}  and \eqref{eq:WE}, since the lipid-rafts formation is said to change the elasticity properties of the membrane, may be a good model for how cell membranes evolve to specific shapes or execute cell division. In fact,
+some concluded that this process can be the background to cell fission. One way to couple the equations \eqref{eq:CH} and \eqref{eq:GL} is to let the parameters $b_{b}, b_{k}, H_{0} $  be some function of the concentration $c$ , i.e.,
+\[
+    \begin{split}
+        \mathcal{E}_{CHGL} \left( \Gamma\left( t \right) ,c   \right) =  & \int_{\Gamma\left( t \right)  }^{}  b_{b}\left( c \right)  \left( H- H_{0}\left( c \right)  \right) ^{2}  \\
+        & + \int_{\Gamma\left(t  \right)   }^{} b_{k}\left( c \right)  K \\
+        &+ \int_{\Gamma\left(t  \right)   }^{}\Psi \left( c \right) + \frac{\gamma}{2} \left\lvert \nabla c \right\rvert^{2} ,
+    \end{split}
+\]
+For more information, see \cite{elliott2010surface}. Recently have some authors have also couple diffusion processes and the so-called mean curvature energy \cite{burger2021interaction, elliott2022numerical}.
 \todo[inline]{Area restriction and volume restriction, need to find it  }
 
+
+
+
 The osmotic pressure can be introduced by adding a energy functional using the van't Hoff formula ,
-Let $\Omega $ be the volume of a closed evolving surface,  then does
+Let $V_{p}$ be the volume of a closed evolving surface $\Gamma \left( t \right) $ ,  then does
 \[
-\Delta P \left( V \right) = P_{in} - P_{out} = iRT\left( \frac{n}{V} - \overline{c}  \right),
+\Delta P \left( V_{p} \right) = P_{in} - P_{out} = iRT\left( \frac{n}{V_{p}} - \overline{c}  \right),
 \]
-where $i, R, T, \overline{c} $ and $n$ are the van't Hoff index, ideal gass constant, temperature , ambient molar concentration and molar amount of the enclosed solute.  the energy
+where $i, R, T, \overline{c} $ and $n$ are the van't Hoff index, ideal gass constant, temperature , ambient molar concentration and molar amount of the enclosed solute. Then the energy
 functional have the form,
 \[
-\mathcal{E} _{p}\left( \Gamma    \right)  = \int_{\Gamma   }^{   } \Delta P,
+\mathcal{E} _{p}\left( \Gamma    \right)  = \int_{\Gamma   }^{   } \Delta P\left( V_{p} \right) ,
 \]
 For more information, see \cite{zhu2022mem3dg}.
-
-In fact, some concluded that this process can be the background to cell fission.
-Recently have some authors have also couple diffusion processes and the so-called mean curvature flow \cite{burger2021interaction, elliott2022numerical}.
 
 
 \subsection{Outline of this report}%
