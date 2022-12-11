@@ -113,8 +113,9 @@ Q_{h} & =  - \frac{1}{2} H_{h}^{3} + H_{h} \left\lvert A_{h} \right\rvert^2, \\
 A_{h} & = \frac{1}{2}\left( \nabla _{\Gamma_{h} } \nu_{h} + \left( \nabla _{\Gamma _{h}}\nu _{h} \right) ^{T} \right)
     \end{split}
 \]
+For the error analysis is it the discrete velocity denoted as, $v_{h} = \widetilde{I}_{h}\left( V_{h} \nu _{h} \right)  $,  where the interpolation operator is defined s.t. $ \widetilde{I}_{h}: C\left( \Gamma _{h}\left[ \mathbf{x} \right]  \mapsto  S_{h}\left[
+\mathbf{x} \right]   \right)  $, however, in this article will this not be discussed, hence, we will note use the interpolation estimate. For more information see \cite[Remark 3.1]{kovacs2021convergent}.
 \todo[inline]{ Why is the $A_{h}$ symmetric, and maybe $v_{h}$ has to be interpolated. \cite[p.13]{kovacs2021convergent}   }
-\todo[inline]{ May introduce the interpolation $v_{h} = \widetilde{I}_{h}: C\left( \Gamma _{h}\left[ \mathbf{x} \right]  \mapsto  S_{h}\left[ \mathbf{x} \right]   \right)  $  check \cite[Remark 3.1]{kovacs2021convergent}, it important for the error analysis. }
 
 
  It has been proven that if you can find any trial functions \eqref{eq:FE_trial} that does satisfy the following weak formulation \eqref{eq:WE_weak_form} for all test functions \eqref{eq:WE_test}, then the solution is equivalent to solving the dynamics presented in \eqref{eq:WE_strong_form}. See \cite{kovacs2021convergent} for more information.
