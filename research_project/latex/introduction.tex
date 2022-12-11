@@ -9,7 +9,7 @@ bending forces, temperature and diffusion is essential on how a cell membrane wi
 
 
 
-\subsection{Elastic bending energy on surfaces}%
+\subsection{Elastic bending energy on evolving surfaces}%
 \label{sub:willmore_flow}
 
 Assuming that the system is a single-phase system, i.e., the lipids are uniformly distributed, can the elastic bending energy be modelled using the Canham-Helrich energy functional \cite{helfrich1973elastic, wang08, udo97}. Let us denote $b_{b},
@@ -33,7 +33,7 @@ It has been established many numerical methods for for shape optimization proble
 binz2022convergent, barrett2007parametric, barrett2007variational, kovacs2019convergent, lehrenfeld2018stabilized} and specific
 algorithms for the Willmore energy problem \eqref{eq:WE} \cite{palmurella2022parametric, dziuk2008computational, bonito2010parametric,  kovacs2021convergent, hu2022evolving}.
 
-\subsection{Two-phase separation modelling on surfaces }%
+\subsection{Two-phase separation modelling on predefine evolving surfaces }%
 \label{sub:two_phase_seperation_modelling_on_surfaces_}
 
 It also turns out that the lipids often accumulate into so-called lipid rafts which serves as a rigid platform for proteins with special properties such as intracellular trafficking of lipids and lipid-anchored proteins \cite{Edidin03, miller2020divide}. Modelling of
@@ -41,13 +41,12 @@ lipid rafts formation can be modelled as a two-phase separation problem based on
 \begin{equation}
 \label{eq:GL}
 \mathcal{E}_{GL}  \left( c   \right) = \int_{\Gamma\left(t  \right)   }^{}\Psi \left( c \right) + \frac{\gamma}{2} \left\lvert \nabla c \right\rvert^{2} ,
-.\end{equation}
+\end{equation}
 which is describing the chemical energy for a concentration $c: \Gamma\left( t \right)  \times \left[ 0,T \right] \mapsto  \left[ 0,1 \right]  $ and $ \Psi \left( c \right)$ is a chemical potential function. Keep in mind that unlike
 the willmore energy functional \eqref{eq:WE}, where the $\Gamma\left( t \right)  $ is determined the elastic properties, should the energy functional \eqref{eq:GL} be interpreted as a chemical diffusion problem a predefined evolving domain $\Gamma \left( t \right) $.
-Several authors have solved this problem often results by deriving variants of partial differential equations (PDE) such as Allen-Cahn equation (or Cahn-Hilliard equation if the total concentration is globally conserved) on evolving
-domains \cite{yushutin19, udo97, ratz16,Gera2017, caetano21}.
+Usually is this problem solved by deriving equivalent variants of partial differential equations (PDE) such as Allen-Cahn equation (or Cahn-Hilliard equation if the total concentration is globally conserved) on evolving domains. See \cite{yushutin19, udo97, ratz16,Gera2017, caetano21}.
 
-\subsection{Multiphysics problems on surfaces}%
+\subsection{Multiphysics problems on evolving surfaces}%
 
 Ultimately will the cell membrane consists of interaction several kinds of physics (temperature, elasticity, chemical diffusion, internal fluid pressure etc.), hence, is it by interest to try to model the interaction. An example is to try to the
 energy functionals \eqref{eq:GL}  and \eqref{eq:WE}, since the lipid-rafts formation is said to change the elasticity properties of the membrane, may be a good model for how cell membranes evolve to specific shapes or execute cell division. In fact,
@@ -59,7 +58,7 @@ some concluded that this process can be the background to cell fission. One way 
         &+ \int_{\Gamma\left(t  \right)   }^{}\Psi \left( c \right) + \frac{\gamma}{2} \left\lvert \nabla c \right\rvert^{2} ,
     \end{split}
 \]
-For more information, see \cite{elliott2010surface}. Recently have some authors have also couple diffusion processes and the so-called mean curvature energy \cite{burger2021interaction, elliott2022numerical}.
+For more information, see \cite{elliott2010surface}. Recently have some authors also coupled diffusion processes and the so-called mean curvature energy, see \cite{burger2021interaction, elliott2022numerical}.
 \todo[inline]{Area restriction and volume restriction, need to find it  }
 
 
