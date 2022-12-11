@@ -78,7 +78,7 @@ Ultimately, the discrete material derivative of a function $f_{h}: \Gamma _{h} \
  & = \sum_{j \in \mathcal{I} }^{} \frac{d f_{j} \left( t \right) }{dt} \phi _{j}\left[ \mathbf{x} \right] \left( x_{h} \right)
     \end{split}
 \]
-where $f_{j}$ is the nodal variables
+where $f_{j}$ is the nodal variables.
 
 \todo[inline]{ Is $ \frac{d f_{j} \left( t \right) }{dt}$  this consistent with  with the similar definition of the velocity? I guess so since $\dot{x_{j}} = v_{j}$. Anyhow, I am also wondering if the basis functions should have time derivative as
 well.  }.
@@ -135,13 +135,14 @@ A_{h} & = \frac{1}{2}\left( \nabla _{\Gamma_{h} } \nu_{h} + \left( \nabla _{\Gam
  & + 2 \left( A_{h} \nabla _{\Gamma_{h} } H_{h}, \nabla _{\Gamma_{h} } \chi_{h} ^{\nu_{h} } \nu_{h}  \right)_{\Gamma_{h}} \nonumber    \\
  &  + \left( Q_{h}, \nabla _{\Gamma_{h} } \cdot \chi_{h} ^{\nu_{h} }  \right)_{\Gamma_{h} } \nonumber  \\
   &- \left( Q_{h}H_{h}\nu_{h} , \chi_{h} ^{\nu_{h} } \right) _{\Gamma_{h}},\\
-\left( z_{h}, \chi_{h} ^{z} \right) _{\Gamma_{h} }  =& - \left( \nabla _{\Gamma_{h} } \nu , \nabla _{\Gamma_{h} } \chi_{h} ^{z_{h}} \right)_{\Gamma_{h}} \nonumber \\
+\left( z_{h}, \chi_{h} ^{z} \right) _{\Gamma_{h} }  =& - \left( \nabla _{\Gamma_{h} } \nu_{h} , \nabla _{\Gamma_{h} } \chi_{h} ^{z_{h}} \right)_{\Gamma_{h}} \nonumber \\
  & + \left( \left\lvert A_{h} \right\rvert ^2 \nu_{h} , \chi_{h} ^{z} \right) \\
 \frac{d}{dt}x_h &= v_h
     \end{split}
 .\end{equation*}
 Note that the time dependent variables $\nu, H $ and $x$ is initialized at $t=0$  based on $\Gamma ^{0}$.
 
+\todo[inline]{ For the interpolation based on $v_{h} $  check \cite[Remark 3.1]{kovacs2021convergent} }
 
 
 
