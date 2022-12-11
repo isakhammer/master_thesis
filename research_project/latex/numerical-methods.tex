@@ -85,7 +85,7 @@ well.  }.
 
 
 
-\subsection{Surface finite element method}%
+\subsection{Evolving surface finite element method}%
 \label{sub:surface_finite_element_method}
 
 Let us denote the following trial functions,
@@ -139,8 +139,15 @@ For the error analysis is it the discrete velocity denoted as, $v_{h} = \widetil
 \frac{d}{dt}x_h &= v_h
  .\end{align}
 \end{subequations}
+Remark that we have not yet discretized in the time-dimension, but, we will try
+Note that the time dependent variables $\nu_{h}, H_{h} $ and $x_{h}$ is initialized at $t=0$  based on $\Gamma ^{0}$.
 
-Note that the time dependent variables $\nu, H $ and $x$ is initialized at $t=0$  based on $\Gamma ^{0}$.
+
+
+\subsection{The matrix formulation}%
+\label{sub:the_matrix_formulation_of_esfem}
+
+Fundamentally, solving \eqref{eq:FEM}
 
 
 
