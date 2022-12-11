@@ -25,8 +25,8 @@ functional \cite{montiel2009curves, willmore1996riemannian},
 \mathcal{E} _{W} \left( \Gamma\left( t \right)   \right) = \int_{\Gamma\left( t \right)  }^{} \frac{1}{2} H ^2
 .\end{equation}
 
-This is a well known problem in the mathematical community \cite{ topping2000towards, marques2014willmore,link2013gradient,kuwert2012willmore}. In fact, it is a mathematical tool used to study the geometry of surfaces because it can be used to study the properties of minimal surfaces, which are surfaces with the least possible area for a given boundary. This is important in many areas of mathematics, including differential geometry, topology and mathematical physics \cite{koerber2021area,jakob2022singularities, rupp21}.
-
+This is a well known problem in the mathematical community \cite{ topping2000towards, marques2014willmore,link2013gradient,kuwert2012willmore}. In fact, it is a mathematical tool used to study the geometry of surfaces because it can be used to study
+the diffeomorphism from a initial surface to a minimal energy configuration, which are surfaces with the least possible area for a given boundary. This is important in many areas of mathematics, including differential geometry, topology and mathematical physics \cite{koerber2021area,jakob2022singularities, rupp21}.
 
 It has been established many numerical methods for for shape optimization problems \cite{sokolowski1992introduction,ito2008variational}, evolving surface partial differential equations (PDE) \cite{dziuk2013finite, dziuk2007finite,
 binz2022convergent, barrett2007parametric, barrett2007variational, kovacs2019convergent, lehrenfeld2018stabilized} and specific
@@ -58,13 +58,12 @@ to couple the equations \eqref{eq:CH} and \eqref{eq:GL} is to let the parameters
     \end{split}
 \]
 For more information, see \cite{elliott2010surface}. Recently have some authors also coupled diffusion processes and the so-called mean curvature energy, see \cite{burger2021interaction, elliott2022numerical}.
-\todo[inline]{Area restriction and volume restriction, need to find it  }
+
+Some physical processes may require constant area and volume. This can simply be added by introducing respectively area and volume functionals, see \cite[Definition 2.5]{muller2013volume}.
 
 
-
-
-The osmotic pressure can be introduced by adding a energy functional using the van't Hoff formula ,
-Let $V_{p}$ be the volume of a closed evolving surface $\Gamma \left( t \right) $ ,  then does
+Until now have all the models assumed that the membrane has no difference in internal and external pressure. As a matter of fact, osmotic pressure can be introduced by adding a energy functional using the van't Hoff formula. Let $V_{p}$ be the volume
+of a closed evolving surface $\Gamma \left( t \right) $, we can then model the difference of internal and external pressure as,
 \[
 \Delta P \left( V_{p} \right) = P_{in} - P_{out} = iRT\left( \frac{n}{V_{p}} - \overline{c}  \right),
 \]
@@ -80,7 +79,7 @@ For more information, see \cite{zhu2022mem3dg}.
 \label{sub:outline_of_this_report}
 
 The long-term goal would be to solve the multi-physics problems above. However, many of the problems above is fairly complicated to solve numerically and requires sophisticated techniques. Hence, in this report we focus on the latest research withing
-the numerical methods of finding the minima of the energy functional \eqref{eq:WE}. However, we will first establish notation by including a section for definitions and important results from differential geometry. We will then derive the
+the numerical methods of finding the minima of the energy functional \eqref{eq:WE}. However, we will first establish notation by including a section for definitions and important results from differential geometry and shape derivatives. We will then derive the
 underlying dynamics system of evolutionary system dynamics using the gradient flow technique inspired by shape optimization methods based on the work done in \cite{ dougan2012first}. Lastly, we will establish the numerical methods of the system
 dynamics by applying recent methods using a evolutionary surface finite element method (FEM) \cite{kovacs2021convergent, hu2022evolving}.
 
