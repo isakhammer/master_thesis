@@ -90,7 +90,7 @@ well.  }.
 
 Let us denote the following trial functions,
 \begin{equation}
-\label{eq:WE_trial}
+\label{eq:FE_trial}
     \begin{split}
 & ( H_{h} \times V_{h} \times \nu_{h}  \times z_{h} ) \in \\
 &\left( S_{h}\left[ \mathbf{x} \right],S_{h}\left[ \mathbf{x} \right], S_{h}\left[ \mathbf{x} \right] ^3,S_{h}\left[ \mathbf{x} \right] ^3    \right),
@@ -98,7 +98,7 @@ Let us denote the following trial functions,
 \end{equation}
 and similarly the test functions,
 \begin{equation}
-\label{eq:WE_test}
+\label{eq:FE_test}
     \begin{split}
 & ( \chi_{h}^{H}  \times \chi_{h} ^{V} \times \chi_{h} ^{\nu }  \times \chi_{h} ^{z} ) \in \\
 &\left( S_{h}\left[ \mathbf{x} \right],S_{h}\left[ \mathbf{x} \right], S_{h}\left[ \mathbf{x} \right] ^3,S_{h}\left[ \mathbf{x} \right] ^3    \right),
@@ -114,35 +114,33 @@ A_{h} & = \frac{1}{2}\left( \nabla _{\Gamma_{h} } \nu_{h} + \left( \nabla _{\Gam
     \end{split}
 \]
 \todo[inline]{ Why is the $A_{h}$ symmetric, and maybe $v_{h}$ has to be interpolated. \cite[p.13]{kovacs2021convergent}   }
-\todo[inline]{ Maybe interpolate $v_{h}$.}
+\todo[inline]{ May introduce the interpolation $v_{h} = \widetilde{I}_{h}: C\left( \Gamma _{h}\left[ \mathbf{x} \right]  \mapsto  S_{h}\left[ \mathbf{x} \right]   \right)  $  check \cite[Remark 3.1]{kovacs2021convergent}, it important for the error analysis. }
 
 
- It has been proven that if you can find any trial functions \eqref{eq:WE_trial} that does satisfy the following weak formulation \eqref{eq:WE_weak_form} for all test functions \eqref{eq:WE_test}, then the solution is equivalent to solving the dynamics presented in \eqref{eq:WE_strong_form}. See \cite{kovacs2021convergent} for more information.
+ It has been proven that if you can find any trial functions \eqref{eq:FE_trial} that does satisfy the following weak formulation \eqref{eq:WE_weak_form} for all test functions \eqref{eq:WE_test}, then the solution is equivalent to solving the dynamics presented in \eqref{eq:WE_strong_form}. See \cite{kovacs2021convergent} for more information.
 
-% \begin{subequations}
-% \label{eq:WE_fem}
-% \end{subequations}
-
-\begin{equation*}
-    \begin{split}
+\begin{subequations}
+\label{eq:FEM}
+ \begin{align}
 \left( \frac{d}{dt}H_{h}, \chi_{h} ^{H} \right)_{\Gamma_{h} } =&  \left( \nabla _{\Gamma_{h} } V_{h}, \nabla _{\Gamma_{h} }\chi_{h} ^{H} \right) _{\Gamma_{h} } \nonumber \\
                                                    &- \left( \left\lvert A_{h} \right\rvert ^2 V_{h}, \chi_{h} ^{H} \right) _{\Gamma_{h} },   \\
 \left( V_{h}, \chi_{h} ^{V} \right)_{\Gamma } =& -\left( \nabla _{\Gamma_{h} } H_{h}, \nabla _{\Gamma_{h} } \chi_{h} ^{V} \right) \nonumber \\
  & + \left( Q_{h}, \chi_{h} ^{V} \right)_{\Gamma_{h} },   \\
 \left( \frac{d}{dt} \nu_{h} , \chi_{h} ^{\nu } \right)_{\Gamma_{h} } =& \left( \nabla _{\Gamma_{h} }z_{h}, \nabla _{\Gamma_{h} } \chi_{h} ^{\nu } \right) _{\Gamma_{h} }\nonumber   \\
  & + \left( ( H_{h}A_{h} - A_{h}^2  )z_{h},\chi_{h}^\nu  \right)_{\Gamma_{h} }   \nonumber \\
- & + \left( \left\lvert \nabla _{\Gamma_{h} } H_{h} \right\rvert^2 \nu_{h} + A_{h}^2\nabla _{\Gamma_{h} } H_{h}, \chi_{h} ^{\nu_{h} }  \right)_{\Gamma_{h}} \nonumber  \\
+ & + \left( \left\lvert \nabla _{\Gamma_{h} } H_{h} \right\rvert^2 \nu_{h} , \chi_{h} ^{\nu_{h} }  \right)_{\Gamma_{h}} \nonumber  \\
+ & + \left(  A_{h}^2\nabla _{\Gamma_{h} } H_{h}, \chi_{h} ^{\nu_{h} }  \right)_{\Gamma_{h}} \nonumber  \\
  & + 2 \left( A_{h} \nabla _{\Gamma_{h} } H_{h}, \nabla _{\Gamma_{h} } \chi_{h} ^{\nu_{h} } \nu_{h}  \right)_{\Gamma_{h}} \nonumber    \\
  &  + \left( Q_{h}, \nabla _{\Gamma_{h} } \cdot \chi_{h} ^{\nu_{h} }  \right)_{\Gamma_{h} } \nonumber  \\
   &- \left( Q_{h}H_{h}\nu_{h} , \chi_{h} ^{\nu_{h} } \right) _{\Gamma_{h}},\\
 \left( z_{h}, \chi_{h} ^{z} \right) _{\Gamma_{h} }  =& - \left( \nabla _{\Gamma_{h} } \nu_{h} , \nabla _{\Gamma_{h} } \chi_{h} ^{z_{h}} \right)_{\Gamma_{h}} \nonumber \\
  & + \left( \left\lvert A_{h} \right\rvert ^2 \nu_{h} , \chi_{h} ^{z} \right) \\
 \frac{d}{dt}x_h &= v_h
-    \end{split}
-.\end{equation*}
+ .\end{align}
+\end{subequations}
+
 Note that the time dependent variables $\nu, H $ and $x$ is initialized at $t=0$  based on $\Gamma ^{0}$.
 
-\todo[inline]{ For the interpolation based on $v_{h} $  check \cite[Remark 3.1]{kovacs2021convergent} }
 
 
 
