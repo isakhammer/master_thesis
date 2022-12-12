@@ -32,7 +32,7 @@ It has been established many numerical methods for for shape optimization proble
 binz2022convergent, barrett2007parametric, barrett2007variational, kovacs2019convergent, lehrenfeld2018stabilized} and specific
 algorithms for the Willmore energy problem \eqref{eq:WE} \cite{palmurella2022parametric, dziuk2008computational, bonito2010parametric,  kovacs2021convergent, hu2022evolving}.
 
-\subsection{Two-phase separation modelling on predefine evolving surfaces }%
+\subsection{Two-phase separation modelling on predefined evolving surfaces }%
 \label{sub:two_phase_seperation_modelling_on_surfaces_}
 
 It also turns out that the lipids often accumulate into so-called lipid rafts which serves as a rigid platform for proteins with special properties such as intracellular trafficking of lipids and lipid-anchored proteins \cite{ miller2020divide}. Modelling of
@@ -43,7 +43,8 @@ lipid rafts formation can be modelled as a two-phase separation problem based on
 \end{equation}
 which is describing the chemical energy for a concentration $c: \Gamma\left( t \right)  \times \left[ 0,T \right] \mapsto  \left[ 0,1 \right]  $ and $ \Psi \left( c \right)$ is a chemical potential function. Keep in mind that unlike
 the willmore energy functional \eqref{eq:WE}, where the $\Gamma\left( t \right)  $ is determined the elastic properties, should the energy functional \eqref{eq:GL} be interpreted as a chemical diffusion problem a predefined evolving domain $\Gamma \left( t \right) $.
-Usually is this problem solved by deriving equivalent variants of partial differential equations (PDE) such as Allen-Cahn equation (or Cahn-Hilliard equation if the total concentration is globally conserved) on evolving domains. See \cite{yushutin19, udo97, ratz16,Gera2017, caetano21}.
+Usually is this problem solved by deriving equivalent variants of partial differential equations (PDE) such as Allen-Cahn equation (or Cahn-Hilliard equation if the total concentration is globally conserved) on evolving domains. See \cite{yushutin19,
+udo97, ratz16,Gera2017, caetano21, elliott2015evolving}.
 
 \subsection{Multiphysics problems on evolving surfaces}%
 
@@ -57,10 +58,11 @@ to couple the equations \eqref{eq:CH} and \eqref{eq:GL} is to let the parameters
         &+ \int_{\Gamma\left(t  \right)   }^{}\Psi \left( c \right) + \frac{\gamma}{2} \left\lvert \nabla c \right\rvert^{2} ,
     \end{split}
 \]
-For more information, see \cite{elliott2010surface}. Recently have some authors also coupled diffusion processes and the so-called mean curvature energy, see \cite{burger2021interaction, elliott2022numerical}.
+For more information, see \cite{elliott2010surface}. Recently have some authors also coupled diffusion processes and the so-called mean curvature energy, see \cite{burger2021interaction, elliott2022numerical}. It is well known that lipids travels
+along the cell membrane in a fluidic manner, hence, it has also been of interest to couple the Ginzburg-Landau energy functional \eqref{eq:GL}, or more specifically Cahn-Hilliard equation, with Navier-Stokes equation. Some methods has been proposed methods for solving it on surfaces
+and evolving surfaces and remains a field of active research \cite{olshanskii2022comparison}. As far as a author knows, coupling the Canham-Helrich energy functional \eqref{eq:CH}, Ginzburg-Landau energy functional and Navier-Stokes equation remains a open problem.
 
 Some physical processes may require constant area and volume. This can simply be added by introducing respectively area and volume functionals, see \cite[Definition 2.5]{muller2013volume}.
-
 
 Until now have all the models assumed that the membrane has no difference in internal and external pressure. As a matter of fact, osmotic pressure can be introduced by adding a energy functional using the van't Hoff formula. Let $V_{p}$ be the volume
 of a closed evolving surface $\Gamma \left( t \right) $, we can then model the difference of internal and external pressure as,
