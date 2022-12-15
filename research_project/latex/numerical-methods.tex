@@ -1,31 +1,31 @@
 
-\section{Numerical Methods}%
+\section{Numerical methods}%
 \label{sec:numerical_methods}
 
 
- To be able to find a numerical approximation the weak formulation \eqref{eq:WE_weak_form} will we to formulate a evolving surface element method (ESFEM) for the evolutionary equation PDE's coupled with the evolving surface velocity. We will mostly
+ To be able to find a numerical approximation of the weak formulation \eqref{eq:WE_weak_form} will we formulate an evolving surface element method (FEM) for the evolutionary equation PDEs coupled with the evolving surface velocity. We will mostly
  use the notation and methods described in \cite{kovacs2021convergent, hu2022evolving}.
 
 \subsection{ Triangular mesh for $\Gamma ^{0}$  }%
 \label{sub:triangular_mesh}
 
-Let initial surface $\Gamma ^{0} \in  \mathbb{R} ^3$ have the triangular mesh $\mathcal{T}_{h} $ constisting of triangles $T$. We will assume that the mesh is inform, i.e., for any $T_{1}, T_{2}$ $T_{1} \neq T_{2}$ and $T_{1} \cap T_{2} \neq \emptyset
+Let initial surface $\Gamma ^{0} \in  \mathbb{R} ^3$ have the triangular mesh $\mathcal{T}_{h} $ constisting of triangles $T$. We will assume that the mesh is conform, i.e., for any $T_{1}, T_{2} \in \mathcal{T}_h$,  $T_{1} \neq T_{2}$ and $T_{1} \cap T_{2} \neq \emptyset
 $, then must $T_{1}$  and $T_{2}$ share either a vertex or a facet. Let diameter of each triangle $h_{T}$  be denoted as,
 \[
     \begin{split}
-    h_{T} & = \max_{x_{1}, x_{2} \in \Gamma ^{0}} dist(x_{1}, x_{2}), \\
+    h_{T} & = \max_{x_{1}, x_{2} \in T} dist(x_{1}, x_{2}), \\
 h_{min} & = \min_{T \in \mathcal{T} _{h}} h_{T}, \\
 h_{max} & = \max_{T \in \mathcal{T} _{h}} h_{T},
     \end{split}
 \]
 where $h_{min}$ and $h_{max}$ is the maximum and minimum diameter of an individual triangle $T$ in $\mathcal{T}_{h} $. We define the chunkiness parameter $c_{T} = h_{T}/r_{T}$, where $r_{T}$ is the largest ball inside inscribed in $T$. We will then
 assume that the mesh is shape regular and quasi-uniform, i.e., $c_{T} \le c $ and $h_{max} \le c h_{min} $ for a  constant $c$ independent of $h_{T} $ and $T$.
-For more information, see \cite{dziuk2007finite}.
-\todo[inline]{  Apparently some quasi-uniform and shape regular definitions in \cite{dziuk2007finite}, need to check this.}
+See \cite[Section 4.1]{dziuk2013finite} for more information.
+
 
 \subsection{Finite surface element}%
 \label{sub:surface_element_method}
-In this section is the goal to develop discrete analogs of the definitions we introduced in subsections \ref{sub:differential_calculus} and \ref{sub:evolutionary_equations}.
+In this section is, the goal to develop discrete analogues of the definitions we introduced in subsections \ref{sub:differential_calculus} and \ref{sub:evolutionary_equations}.
 
 
 Let $\mathcal{T}_{h}  $ be the triangulation of $\Gamma ^{0}$. Now denote the vector $ \mathbf{x} = \mathbf{x} \left( t \right)  \in \mathbb{R} ^{3N}$ as a collection of all evolving nodes, $x_{j}\left( t \right)  \in  \mathbb{R} ^3$, $j \in  \mathcal{I} $, by a piecewise polynomial interpolation
@@ -53,6 +53,16 @@ S_{h}\left[ \mathbf{x} \right]   & = S_{h}\left( \Gamma _{h}\left[ \mathbf{x} \r
     \end{split}
 \]
 
+More precisely, can we denote a $C^{0}$ finite element space of $k$-th order as,
+\begin{equation*}
+    \begin{split}
+S_{h,k}\left[ \mathbf{x} \right]   =   \{ & \chi  _{h} \in C^{0}\left( \Gamma _{h}\left[ \mathbf{x} \right]  \right),  \\ 
+&\chi _{h} \in \mathcal{P}^{k }\left( T \right) \forall T \in \mathcal{T}_{h}           \},
+    \end{split}
+\end{equation*}
+where $\mathcal{P}^{k} $ is the set of all polynomials in three dimensions with order less or equal to $k$. We will use the notation $S_{h}\left[ \mathbf{x} \right] = S_{h,k}\left[ \mathbf{x} \right] $ unless the order of the element is specified.
+
+
 The discretized surface mapping, $X_{h}: \Gamma_{h} ^{0} \mapsto  \Gamma _{h} \left[ \mathbf{x}\left( t \right)  \right] $, is denoted as \[
 X_{h}\left( p_{h},t \right) = \sum_{j \in \mathcal{I} }^{}  x_{j}\left( t \right)  \phi \left[ x\left( 0 \right)  \right] \left( p_{h} \right), \  p_{h} \in \Gamma ^{0}_{h},
 \]
@@ -64,8 +74,8 @@ and the problem obviously does satisfy the identities; $X_{h}\left( p_{h},0 \rig
 &=\left\{ X_{h}\left( p_{h},t \right): p_{h} \in  \Gamma ^{0}_{h} \right\}.
     \end{split}
 \]
-\todo[inline]{TODO: Need to check if the definition of $\Gamma _{h}\left[ \mathbf{x}  \right] = \Gamma_{h}\left[ X_{h}\left( \cdot ,t \right)  \right] $ makes sense. Also made $\Gamma _{h} = \Gamma _{h}\left[ \mathbf{x}\left( t \right)  \right] $ som et kunstig innslag. }
-For shorthand notation do we define the discretized point as $x_{h} = X_{h}\left( p_{h},t \right) \in \Gamma _{h} $.
+\todo[inline]{Need to check if the definition of $\Gamma _{h}\left[ \mathbf{x}  \right] = \Gamma_{h}\left[ X_{h}\left( \cdot ,t \right)  \right] $ makes sense. Also made $\Gamma _{h} = \Gamma _{h}\left[ \mathbf{x}\left( t \right)  \right] $ som et kunstig innslag. }
+For shorthand notation, is the discretized point defined as $x_{h} = X_{h}\left( p_{h},t \right) \in \Gamma _{h} $.
 Thus discretized velocity $v_{h}\left( x_{h},t \right): \Gamma _{h} \mapsto  \mathbb{R} ^{3} $ is defined as \[
     v_{h}\left( x_{h},t \right)  = \sum_{j \in \mathcal{I} }^{} v_{j}\left( t \right) \phi _{j}\left[ \mathbf{x}\left( t \right)  \right] \left( x_{h} \right)
 \]
@@ -82,14 +92,19 @@ Ultimately, the discrete material derivative of a function $f_{h}: \Gamma _{h} \
 \]
 where $f_{j}$ is the nodal variables.
 
-\todo[inline]{ Is $ \frac{d f_{j} \left( t \right) }{dt}$  this consistent with  with the similar definition of the velocity? I guess so since $\dot{x_{j}} = v_{j}$. Anyhow, I am also wondering if the basis functions should have time derivative as
+\todo[inline]{ Is $ \frac{d f_{j} \left( t \right) }{dt}$  this consistent with  the similar definition of the velocity? I guess so since $\dot{x_{j}} = v_{j}$. Anyhow, I am also wondering if the basis functions should have time derivatives as
 well.  }.
 
 
 
-\subsection{Evolving surface finite element method}%
+\subsection{Evolving surface finite element method }%
 \label{sub:surface_finite_element_method}
-\todo[inline]{ Write an introduce about the finite element method }
+
+\todo[inline]{Need to write an introduction based on dzuik13 page 332, but also understand the equivalence between my notation and the one used.}
+
+
+
+We will now construct the final numerical scheme, finally arriving at the surface finite element method.
 Let us denote the following trial functions,
 \begin{equation}
 \label{eq:FE_trial}
@@ -114,12 +129,14 @@ Q_{h} & =  - \frac{1}{2} H_{h}^{3} + H_{h} \left\lvert A_{h} \right\rvert^2, \\
 A_{h} & = \frac{1}{2}\left( \nabla _{\Gamma_{h} } \nu_{h} + \left( \nabla _{\Gamma _{h}}\nu _{h} \right) ^{T} \right)
     \end{split}
 \]
-For the error analysis is it the discrete velocity denoted as, $v_{h} = \widetilde{I}_{h}\left( V_{h} \nu _{h} \right)  $,  where the interpolation operator is defined s.t. $ \widetilde{I}_{h}: C\left( \Gamma _{h}\left[ \mathbf{x} \right]  \mapsto  S_{h}\left[
-\mathbf{x} \right]   \right)  $, however, in this article will this not be discussed, hence, we will note use the interpolation estimate. For more information see \cite[Remark 3.1]{kovacs2021convergent}.
-\todo[inline]{ Why is the $A_{h}$ symmetric, and maybe $v_{h}$ has to be interpolated. \cite[p.13]{kovacs2021convergent}   }
+\todo[inline]{ Why is the $A_{h}$ symmetric denoted in this fashion?   }
+
+For the error analysis, is a good idea to define the discrete velocity as, $v_{h} = \widetilde{I}_{h}\left( V_{h} \nu _{h} \right)  $,  where the interpolation operator is defined s.t. $ \widetilde{I}_{h}: C\left( \Gamma _{h}\left[ \mathbf{x} \right] \right) \mapsto  S_{h}\left[
+\mathbf{x} \right]     $. However, we will not use the interpolation estimate since it is out of the scope of this article. For more information see \cite[Remark 3.1]{kovacs2021convergent}.
 
 
- It has been proven that if you can find any trial functions \eqref{eq:FE_trial} that does satisfy the following weak formulation \eqref{eq:WE_weak_form} for all test functions \eqref{eq:WE_test}, then the solution is equivalent to solving the dynamics presented in \eqref{eq:WE_strong_form}. See \cite{kovacs2021convergent} for more information.
+The evolving surface FEM for \eqref{eq:WE_strong_form} is to find trial functions \eqref{eq:FE_trial} and $x_{h} \in  \left[ S\left( \mathbf{x} \right)  \right] ^3$ s.t. it satisfies the following discrete weak formulation \eqref{eq:WE_weak_form} for
+all test functions \eqref{eq:WE_test}. Again, see \cite{kovacs2021convergent} for more information.
 
 \begin{subequations}
 \label{eq:FEM}
@@ -140,25 +157,19 @@ For the error analysis is it the discrete velocity denoted as, $v_{h} = \widetil
 \frac{d}{dt}x_h &= v_h
  .\end{align}
 \end{subequations}
-Remark that we have not yet discretized in the time-dimension, but, we will try
-Note that the time dependent variables $\nu_{h}, H_{h} $ and $x_{h}$ is initialized at $t=0$  based on $\Gamma ^{0}$.
-
-
-
-\subsection{The matrix formulation}%
-\label{sub:the_matrix_formulation_of_esfem}
-
-Fundamentally, solving \eqref{eq:FEM} straight forward can be cumbersome.
+Note that the time-dependent variables $\nu_{h}, H_{h} $ and $x_{h}$ is initialized at $t=0$  based on $\Gamma ^{0}$.
 
 
 
 
+\todo[inline]{Remark that we have not yet discretized in the time dimension. Check \cite[p. 363]{dziuk2013finite}} 
+
+\todo[inline]{Should probably mention that further work will be to implement this in Ngsolve.} 
+
+\todo[inline]{Things to discuss are convergence estimates, lifting operator, time discretization and how to treat the nonlinear parts.} 
 
 
+\section{Further work}
+The final scheme described in \eqref{eq:FEM} (referred from \cite{kovacs2021convergent}) is not completely solvable. First of all, the formulation is highly nonlinear and very coupled, implying that it is necessary to implement nonlinear PDE-solver methods such as the Newton's method. Secondly, it remains to find a proper method for time discretization. However, this should be reasonably straightforward by applying the implicit Euler scheme or more sophisticated standard methods such as the backward differential formula or Runge-Kutta methods. 
 
-
-
-
-
-
-
+If the numerical schemes above are provided, then the formulation should be fairly possible to implement the problem using the modern finite element software framework NGSolve \cite{schoberl2017netgen}. In fact, recently it was shown that a modified formulation of \eqref{eq:FEM} could be solved using the same software library \cite{hu2022evolving}.     

@@ -9,8 +9,7 @@ Recall that we define the velocity \eqref{eq:vel}to only have a normal component
 The shape derivative for \eqref{eq:WE} in the direction of some velocity $v \in \left[ H^{1}\left( \Gamma  \right)  \right]^3   $ has the form \[
 d\mathcal{E}_{W} \left( \Gamma; v  \right)  = \int_{\Gamma }^{} \left( - \Delta _{\Gamma } H + \frac{1}{2} H^{3} - H \left\lvert A \right\rvert^2  \right) V
 \]
-A complete derivation of the shape derivative can be found in \cite[Corally 4.7]{dougan2012first}. Consequently, by applying the gradient flow in \eqref{eq:gradient_flow} and using that $\| v \|_{ \Gamma  }^{  }  = \| V \|_{ \Gamma   }^{2  }   $ can
-we easily see that,
+A complete derivation of the shape derivative can be found in \cite[Corally 4.7]{dougan2012first}. Consequently, by applying the gradient flow in \eqref{eq:gradient_flow} and using that $\| v \|_{ \Gamma  }^{  }  = \| V \|_{ \Gamma   }^{2  }   $, will we end up with
 \[
       \| V \|_{ \Gamma   }^{2  } = \int_{\Gamma }^{} V^2 = -d \mathcal{E} \left( \Gamma ;v \right).
 \]
@@ -23,7 +22,7 @@ V  =   \Delta _{\Gamma } H + Q,
 \[
 \]
 where we denote the nonlinear term as $Q  = - \frac{1}{2} H^{3} + H \left\lvert A \right\rvert^2$.
-\todo[inline]{ Need to define a way to compute $\Delta _{\Gamma } H $ in the background theory. }
+\todo[inline]{ Could be nice to find a way to compute $\Delta _{\Gamma } H $ in the background theory. Have not found a theory for it yet. }
 
 From \cite[Lemma 2.1]{kovacs2021convergent} it derived that \eqref{eq:gradient_velocity} must satisfy the following material derivatives,
 \[
@@ -37,12 +36,12 @@ From \cite[Lemma 2.1]{kovacs2021convergent} it derived that \eqref{eq:gradient_v
 Here is the substitution variable introduced s.t. $z = \Delta  _{\Gamma } \nu  + \left\lvert A \right\rvert ^2 \nu $.
 
 
-It exists methods which do not exploit the material derivatives \cite{bonito2010parametric, bartezzaghi2016isogeometric}.However, it turns out that including these material derivatives brings additional computational costs, but provides so-called full-order
-approximation to the mean curvature, $H$, and the normal vector, $\nu $, and ,thus, allows us to construct rigorous convergence proofs for evolving surface FEM, see \cite{kovacs2021convergent, binz2022convergent}.
-\todo[inline]{ Should probably find sources with Reynolds theorem or something for why material derivatives is used. }
+It exists methods which do not exploit the material derivatives \cite{bonito2010parametric, bartezzaghi2016isogeometric}. However, it turns out that including these material derivatives brings additional computational costs, but provides so-called full-order
+approximation to the mean curvature, $H$, and the normal vector, $\nu $, and, thus, allows us to construct rigorous convergence proofs for evolving surface FEM, see \cite{kovacs2021convergent, binz2022convergent}.
+\todo[inline]{ Should probably find sources with Reynolds theorem or something for why material derivatives are used. My intuition is that we restrict ourselves to that the time-dependent curvature and normal values has to be globally "conserved", which is a trick to make a system which can be proven to be stable.}
 
-Recent work has proposed that current method may not conserve the mesh quality while the surface is restricted to evolve along the normal velocity. Thus, a new variation of the standard methods has been considered by introducing an tangential
-velocity component via the equation  $H = - v\cdot \nu  $. Hence, also allowing the mesh to be less deformed, see more at \cite{hu2022evolving}. However, in this report will we not consider it.
+Recent work has proposed that the current method may not conserve the mesh quality while the surface is restricted to evolving along the normal velocity. Thus, a new variation of the standard methods has been considered by introducing a tangential
+velocity component via the equation  $H = - v\cdot \nu  $. Hence, also allows the mesh to be less deformed, see more at \cite{hu2022evolving}. However, in this article will we not consider it.
 
 Finally, we end up with the following strong form of the second-order evolutionary system of PDE.
 \begin{subequations}
@@ -69,7 +68,7 @@ A & = \nabla _{\Gamma } \nu
 Recall that the material derivative operator $\frac{D}{Dt} $ is simply equivalent to the time derivative $\frac{d}{dt}$, thus, it is now possible to apply normal techniques for time discretization.
 
 
-It turns out from basic numerical theory that rewriting an equivalent weak formulations (integral form) of the system dynamics \eqref{eq:WE_strong_form} makes the problem suitable for numerical approximations since it involves complex shape dynamics.
+It turns out from basic numerical theory that rewriting an equivalent weak formulation (integral form) of the system dynamics \eqref{eq:WE_strong_form} makes the problem suitable for numerical approximations since it involves complex shape dynamics.
 Hence, we will now introduce the weak formulation of the system dynamics.
 
 Let us denote the following trial functions,
@@ -85,9 +84,9 @@ and similarly the test functions,
 \label{eq:WE_test}
     \begin{split}
 & ( \chi^{H}  \times \chi ^{V} \times \chi ^{\nu }  \times \chi ^{z} ) \in \\
- &\left( H^{1}\left( \Gamma  \right), H^1 \left( \Gamma  \right), \left[ H^{1} \left( \Gamma  \right)  \right] ^3, \left[ H^{1}\left( \Gamma  \right)  \right]^3   \right),
+ &\left( H^{1}\left( \Gamma  \right), H^1 \left( \Gamma  \right), \left[ H^{1} \left( \Gamma  \right)  \right] ^3, \left[ H^{1}\left( \Gamma  \right)  \right]^3   \right).
     \end{split}
-.\end{equation}
+\end{equation}
  It has been proven that if you can find any trial functions \eqref{eq:WE_trial} that does satisfy the following weak formulation \eqref{eq:WE_weak_form} for all test functions \eqref{eq:WE_test}, then the solution is equivalent to solving the dynamics presented in \eqref{eq:WE_strong_form}. See \cite{kovacs2021convergent} for more information.
 
 \begin{subequations}
@@ -109,9 +108,9 @@ and similarly the test functions,
 \frac{d}{dt}x &= v
 .\end{align}
 \end{subequations}
-Note that the time dependent variables $\nu, H $ and $x$ is initialized at $t=0$  based on $\Gamma ^{0}$. It is also essential to take account that this is a highly nonlinear PDE, hence, proving uniqueness is a difficult task. However, it has been
-proved that the willmore flow has a unique solution if the initial surface $ \Gamma ^{0} $ is close to a sphere \cite{simonett2001willmore}. It has also been discussed that under some shapes, does the willmore functional, in fact, develop
-singularities \cite{mayer2002numerical}. Furthermore, no literature has shown the uniqueness of the willmore flow coupled with the material derivatives, i.e., dynamics presented in \eqref{eq:WE_strong_form}.
+Note that the time-dependent variables $\nu, H $ and $x$ are initialized at $t=0$  based on $\Gamma ^{0}$. It is also essential to take into account that this is a highly nonlinear PDE, hence, proving uniqueness is a difficult task. However, it has been
+proved that the Willmore flow has a unique solution if the initial surface $ \Gamma ^{0} $ is close to a sphere \cite{simonett2001willmore}. It has also been discussed that under some shapes, does the Willmore functional, in fact, develop
+singularities \cite{mayer2002numerical}. Furthermore, no literature has shown the uniqueness of the Willmore flow coupled with the material derivatives, i.e., dynamics presented in \eqref{eq:WE_strong_form}.
 
 
 

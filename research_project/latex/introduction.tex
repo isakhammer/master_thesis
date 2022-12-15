@@ -1,10 +1,11 @@
 \section{Introduction}\label{sec:introduction}
 
-Cell membranes are the foundation of the origin of life, but also linked to the dynamics of virus al infections and genetic mutations since it controls what substances that can exit or enter the cell \cite{ hurley2010membrane}. In fact, a good
-understanding of the cell membrane is important of engineering proteins to manipulate various intracellular processes in living systems \cite{rojas1998genetic}.
+Cell membranes are the foundation of the origin of life, but are also linked to the dynamics of virus infections and genetic mutations since it controls what substances can exit or enter the cell \cite{nelson2008lehninger,hurley2010membrane}. In fact, a good understanding of the cell membrane is important for engineering proteins to manipulate various intracellular processes in living systems \cite{rojas1998genetic}.
 
-One of the primary components of the cell membranes are lipids which serve many different functions. A key function is that it is consisting of a bilayer of lipids which controls the structural rigidity and the fluidity of the membrane. Thus, elastic
-bending forces, temperature and diffusion is essential on how a cell membrane will evolve \cite{udo97,neidleman87}.
+One of the primary components of the cell membranes is lipids which serve many different functions. The lipids form a bilayer with remarkable properties such as selective flexibility, fluidity, shape optimization and its ability to fuse or divide without creating any form of leakage \cite{nelson2008lehninger}. Thus, physical processes like elastic
+bending forces, fluid dynamics, temperature and diffusion are essential to how a cell membrane will evolve \cite{udo97,neidleman87}. 
+
+Generally, based on the principle of least action,\todo{Princple of leas action! Is that the correct wording?} will the dynamical system seek the minimal membrane energy configuration. For instance, let the membrane have an elastic bending energy functional, then will the cell membrane evolve towards an optimal shape for minimum mechanical energy. Another example is if there is a diffusion of a two-phase system on the membrane such that the concentrations of the two phases seek their minimal potential chemical energy. We will now describe how we could approach some of these problems mathematically.
 
 
 \subsection{Elastic bending energy on evolving surfaces}%
@@ -17,7 +18,7 @@ b_{k}$ and $H_{0}$ as parameters based on physical models, then can the energy f
 \mathcal{E} _{CH}\left( \Gamma\left( t \right)   \right) =   \int_{\Gamma  }^{}  b_{b} \left( H- H_{0} \right) ^{2} + b_{k} K
 .\end{equation}
 Here is $H =  \kappa_1 + \kappa_2 $ denoted as the mean curvature and $K = \kappa_1 \kappa_2$ as the gaussian curvature with respectively and $\kappa_1$ and $\kappa_2$ as principal curvatures. $\Gamma \left( t
-\right) = \Gamma  $ is here an evolving surface in $\mathbb{R} ^3$, for more info see section \ref{sec:background}.  Using the Gauss-Bonnet theorem can it be shown that the problem above is equivalent to the so-called Willmore energy
+\right) = \Gamma  $ is here an evolving 2-dimensional and closed surface in $\mathbb{R} ^3$, for more info see section \ref{sec:background}.  Using the Gauss-Bonnet theorem, can it be shown that the problem above is equivalent to the so-called Willmore energy
 functional \cite{montiel2009curves, willmore1996riemannian},
 
 \begin{equation}
@@ -25,17 +26,17 @@ functional \cite{montiel2009curves, willmore1996riemannian},
 \mathcal{E} _{W} \left( \Gamma\left( t \right)   \right) = \int_{\Gamma  }^{} \frac{1}{2} H ^2
 .\end{equation}
 
-This is a well known problem in the mathematical community \cite{ topping2000towards, marques2014willmore,link2013gradient,kuwert2012willmore}. In fact, it is a mathematical tool used to study the geometry of surfaces because it can be used to study
-the diffeomorphism from a initial surface to a minimal energy configuration, which are surfaces with the least possible area for a given boundary. This is important in many areas of mathematics, including differential geometry, topology and mathematical physics \cite{koerber2021area,jakob2022singularities, rupp21}.
+This is a well-known problem in the mathematical community \cite{ topping2000towards, marques2014willmore,link2013gradient,kuwert2012willmore}. In fact, it is a mathematical tool used to study the geometry of surfaces because it can be used to study
+the diffeomorphism from an initial surface to a minimal energy configuration, which are surfaces with the least possible area for a given boundary. This is important in many areas of mathematics, including differential geometry, topology, and mathematical physics \cite{koerber2021area,jakob2022singularities, rupp21}.
 
-It has been established many numerical methods for for shape optimization problems \cite{sokolowski1992introduction,ito2008variational}, evolving surface partial differential equations (PDE) \cite{dziuk2013finite, dziuk2007finite,
+It has been established many numerical methods for shape optimization problems \cite{sokolowski1992introduction,ito2008variational}, evolving surface partial differential equations (PDE) \cite{dziuk2013finite, dziuk2007finite,
 binz2022convergent, barrett2007parametric, barrett2007variational, kovacs2019convergent, lehrenfeld2018stabilized} and specific
-algorithms for the Willmore energy problem \eqref{eq:WE} \cite{palmurella2022parametric, dziuk2008computational, bonito2010parametric,  kovacs2021convergent, hu2022evolving}.
+algorithms for the Willmore energy problem \eqref{eq:WE} \cite{palmurella2022parametric, dziuk2008computational, bonito2010parametric,  kovacs2021convergent, hu2022evolving}. However, the field is still in active research since many methods is not rigorously shown to be consistent.
 
 \subsection{Two-phase separation modelling on predefined evolving surfaces }%
 \label{sub:two_phase_seperation_modelling_on_surfaces_}
 
-It also turns out that the lipids often accumulate into so-called lipid rafts which serves as a rigid platform for proteins with special properties such as intracellular trafficking of lipids and lipid-anchored proteins \cite{ miller2020divide}. Modelling of
+It also turns out that the lipids often accumulate into so-called lipid rafts, which serve as a rigid platform for proteins with special properties such as intracellular trafficking of lipids and lipid-anchored proteins \cite{ miller2020divide}. Modelling of
 lipid rafts formation can be modelled as a two-phase separation problem based on minimization of the Ginzburg-Landau energy functional \cite{yushutin19},
 \begin{equation}
 \label{eq:GL}
@@ -43,15 +44,15 @@ lipid rafts formation can be modelled as a two-phase separation problem based on
 \end{equation}
 which describes the chemical energy for a concentration $c: \Gamma\left( t \right)  \times \left[ 0,T \right] \mapsto  \left[ 0,1 \right]  $. Here is $ \Psi \left( c \right): \mathbb{R} \mapsto \mathbb{R} $ denoted as a nonlinear scalar chemical potential function. Keep in mind that unlike
 the Willmore energy functional \eqref{eq:WE}, where the $\Gamma\left( t \right)  $ is determined by the elastic properties, should the energy functional \eqref{eq:GL} be interpreted as a chemical diffusion problem a predefined evolving domain $\Gamma \left( t \right) $.
-Usually is this problem solved by deriving equivalent variants of partial differential equations (PDE) such as Allen-Cahn equation (or Cahn-Hilliard equation if the total concentration is globally conserved) on evolving domains. For further details,
+Usually is this problem solved by deriving equivalent variants of partial differential equations (PDE), such as the Allen-Cahn equation (or the Cahn-Hilliard equation if the total concentration is globally conserved) on evolving domains. For further details,
 see \cite{yushutin19,
  ratz16,Gera2017, caetano21, elliott2015evolving}.
 
 \subsection{Multiphysics problems on evolving surfaces}%
 
-Ultimately will the cell membrane consists of interaction several kinds of physics (temperature, elasticity, chemical diffusion, internal fluid pressure etc.)\cite{udo97}. Hence, being able to model several processes may give unforeseen results.
+Ultimately, the cell membrane will consist of interactions of several physics (temperature, elasticity, chemical diffusion, internal fluid pressure etc.)\cite{udo97}. Hence, being able to model several processes may give unforeseen results.
 
-An interesting example is to couple the energy functionals \eqref{eq:GL}  and \eqref{eq:CH}, since the lipid-rafts formation is said to change the elasticity properties of the membrane, may be a good model for how cell membranes evolve to specific shapes or execute cell division. One way
+An interesting example is to couple the energy functionals \eqref{eq:GL}  and \eqref{eq:CH} since the lipid-rafts formation is said to change the elasticity properties of the membrane, maybe a good model for how cell membranes evolve to specific shapes or execute cell division. One way
 to couple the energy functionals is to let the parameters $b_{b}, b_{k}$ and $ H_{0} $ be some function of the time dependent concentration $c$, i.e.,
 \[
     \begin{split}
@@ -62,20 +63,20 @@ to couple the energy functionals is to let the parameters $b_{b}, b_{k}$ and $ H
 \]
 For more information, see \cite{elliott2010surface}.
 
-Recently have some authors also coupled diffusion processes and the so-called mean curvature energy, see \cite{burger2021interaction, elliott2022numerical}. It is well known that lipids travels
-along the cell membrane in a fluidic manner, hence, it is also of interest to couple the Ginzburg-Landau energy functional \eqref{eq:GL} (or more specifically the Cahn-Hilliard equation) with the Navier-Stokes equation. Some methods has been proposed
+Recently some authors also coupled diffusion processes and the so-called mean curvature energy, see \cite{burger2021interaction, elliott2022numerical}. It is well known that lipids travel
+along the cell membrane in a fluidic manner, hence, it is also of interest to couple the Ginzburg-Landau energy functional \eqref{eq:GL} (or more specifically, the Cahn-Hilliard equation) with the Navier-Stokes equation. Some methods have been proposed
 methods for solving the problem on surfaces
-and evolving surfaces, but it remains a field of active research \cite{olshanskii2022comparison}. As far as a author knows, coupling the Canham-Helrich energy functional \eqref{eq:CH}, Ginzburg-Landau energy functional \eqref{eq:GL}  and Navier-Stokes equation remains a open problem.
+and evolving surfaces, but it remains a field of active research \cite{olshanskii2022comparison}. As far as an author knows, coupling the Canham-Helrich energy functional \eqref{eq:CH}, Ginzburg-Landau energy functional \eqref{eq:GL},  and Navier-Stokes equation remains an open problem.
 
-Some physical processes may require constant area and volume. This can simply be added by introducing respectively area and volume functionals, see \cite[Definition 2.5]{muller2013volume}.
+Some physical processes may require constant area and volume. This can be added by introducing respective area and volume functionals, see \cite[Definition 2.5]{muller2013volume}.
 
-Until now have all the models assumed that the membrane has no difference in internal and external pressure. As a matter of fact, osmotic pressure can be introduced by adding a energy functional using the van't Hoff formula. Let $V_{p}$ be the volume
+Until now have all the models assumed that the membrane has no difference in internal and external pressure. As a matter of fact, osmotic pressure can be introduced by adding an energy functional using the van't Hoff formula. Let $V_{p}$ be the volume
 of a closed evolving surface $\Gamma \left( t \right) $, we can then model the difference of internal and external pressure as,
 \[
 \Delta P \left( V_{p} \right) = P_{in} - P_{out} = iRT\left( \frac{n}{V_{p}} - \overline{c}  \right),
 \]
-where $i, R, T, \overline{c} $ and $n$ are the van't Hoff index, ideal gass constant, temperature , ambient molar concentration and molar amount of the enclosed solute. Then the energy
-functional have the form,
+where $i, R, T, \overline{c} $ and $n$ are the van't Hoff index, ideal gas constant, temperature, ambient molar concentration and molar amount of the enclosed solute. Then the energy
+functional has the form,
 \[
 \mathcal{E} _{p}\left( \Gamma\left( t \right)     \right)  = \int_{\Gamma   }^{   } \Delta P\left( V_{p} \right) ,
 \]
@@ -85,9 +86,11 @@ For more information, see \cite{zhu2022mem3dg}.
 \subsection{Outline of this report}%
 \label{sub:outline_of_this_report}
 
-The long-term goal would be to solve the multi-physics problems above. However, many of the problems above is fairly complicated to solve numerically and requires sophisticated techniques. Hence, in this report we focus on the latest research withing
-the numerical methods of finding the minima of the energy functional \eqref{eq:WE}. However, we will first establish notation by including a section for definitions and important results from differential geometry and shape derivatives. We will then derive the
-underlying dynamics system of evolutionary system dynamics using the gradient flow technique inspired by shape optimization methods based on the work done in \cite{ dougan2012first}. Lastly, we will establish the numerical methods of the system
-dynamics by applying recent methods using an evolutionary surface finite element method (FEM) \cite{kovacs2021convergent, hu2022evolving}.
+The long-term goal would be to solve the multi-physics problems above. However, many of the problems presented are fairly complicated to solve numerically and require sophisticated techniques. Hence, in this report, we focus on the latest research within
+the numerical optimizations methods of finding the minima of the energy functional \eqref{eq:WE}. 
+
+First of all, we will establish notation by including a section for definitions and important results from differential geometry and shape derivatives. We will then derive the
+underlying dynamical system of evolutionary system dynamics using the gradient flow technique inspired by shape optimization methods based on the work done in \cite{ dougan2012first}. Lastly, we will establish the numerical methods of the system
+dynamics by applying recent methods using an evolutionary surface finite element method (FEM) \cite{kovacs2021convergent, hu2022evolving}. 
 
 

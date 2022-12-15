@@ -9,50 +9,36 @@
 % \linespread{1.5}
 \newgeometry{vmargin={15mm}, hmargin={25mm,37mm}}
 %
-% \title{Project Thesis\\ Solving the Biharmonic Equation using \\ a Continuous Interior Penalty Method}
-% \author{Isak Hammer, \\[1cm]{\small Advisor: André Massing} }
-% \date{\today}
+\title{ {\Large \textbf{Mathematical modelling of cell membranes }} }
+% IF ONE AUTHOR
+%\address{Norwegian University of Science and Technology \\ 
+%Department of Mathematical Sciences \\ 
+%{\tt isakhammer@gmail.com}} 
+%
 
+\author{Isak Hammer\footnote{isakhammer@gmail.com} \\{\small Supervisor: André Massing\footnote{Department of Mathematical Sciences, NTNU}} }
+\date{\today}
 \begin{document}
-\begin{titlepage}
-    \begin{center}
-        \vspace*{1cm}
 
-        \Huge
-        \textbf{Research Project}
-
-        \vspace{0.5cm}
-        \Large
-        Mathematical Modelling of Cell Membrane Dynamics  \\
-
-        \vspace{1.5cm}
-
-        \textbf{Isak Hammer} \\
-        \vspace{0.5cm}
-        % Supervisor: André Massing
+% Comment this out to remove todos
+% https://tex.stackexchange.com/questions/4830/how-to-hide-todo-notes-without-deleting-them-manually
+%\renewcommand{\todo}[1]{}
+\maketitle
+\begin{sloppy}
+\textit{ \textbf{Note.} This article is submitted as an examination in the course TK8115 Numerical Optimal Control for the autumn semester 2022 at the Department of Engineering Cybernetics, NTNU. So it is by no means peer-reviewed or validated.}
 
 
-        \vfill
-
-        \vspace{0.8cm}
-
-        \includegraphics[width=0.5\textwidth]{figures/front_page/bac.jpg}\\
-
-        \Large
-        Department of Mathematical Sciences\\
-        Norwegian University of Science and Technology\\
-
-    \end{center}
-
-\end{titlepage}
-
-    \newpage
-
+\begin{abstract}
+This article aims to show novel methods of mathematical modelling of biological cell membranes. We first presented general research on incorporating multi-physics into mathematical models. We then presented a mathematical and numerical shape optimization framework using a gradient flow method and a finite element method to solve cell membrane dynamics specifically for the elastic bending energy on evolving surfaces. 
+\end{abstract}
+    
     \input{introduction}
     \input{background-theory}
     \input{willmore-flow}
     \input{numerical-methods}
-    \newpage
+    \input{conclusion}
+
     \printbibliography
+\end{sloppy}
 
 \end{document}

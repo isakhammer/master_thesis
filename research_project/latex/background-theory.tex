@@ -4,11 +4,11 @@
 \label{sec:background}
 
 
-\subsection{Differential Calculus}%
+\subsection{ Calculus on surfaces}%
 \label{sub:differential_calculus}
 
 This subsection is inspired by the notation used in \cite{kovacs2021convergent, dougan2012first}.
-Let some initial surface $\Gamma^{0} \subset \mathbb{R} ^3  $ smooth compact and oriented surface with no boundary where we can assign a unique point $p \in \Gamma ^{0}$. We define define the time evolutionary surface to be on the form,
+Let $\Gamma^{0} \subset \mathbb{R} ^3  $ be an initial 2-dimensional, smooth, compact, and oriented surface with no boundary at $t=0$ s.t. we can assign any unique points $p \in \Gamma ^{0}$. We define the time evolutionary surface to be on the form \cite[Section 2.1]{kovacs2021convergent},
 \[
     \begin{split}
 \Gamma  = \Gamma \left( t \right) & = \Gamma \left( X \left(\cdot ,t \right)  \right) \\
@@ -19,18 +19,22 @@ transformed via the smooth mapping,
 \[
 X : \Gamma^{0} \times  \left[ 0,T \right]  \mapsto  \mathbb{R} ^3.
 \]
-An important regularity result is that if $\Gamma ^{0}$ is of class $C^{\infty}$, then $\Gamma $ is also of class $C^{\infty}$ for $\forall t \in \left[ 0,T \right] $ \cite{sokolowski1992introduction, dougan2012first}.
-\todo[inline]{ Formally in \cite[p 48]{sokolowski1992introduction}, it might be an idea to formulate normal unit-vector regularity as $C^{\infty}$ }
+\todo[inline]{ Need to establish the equivalence of this notation the following definition: Where $x = a\left( x \right)  + d\left( x \right) \nu \left( a\left( x \right)  \right) $, $\Gamma _{h} \subset U_{\delta } =  \left\{ y + s \nu \left( y \right)  \mid  \left\lvert s
+    \right\rvert  < \delta \left( y \right), y \in  \Gamma    \right\} $ introduced in \cite[Equation 2.3]{dziuk2013finite}. Here is $a\left( x \right) $  the projection of $x$  onto $\Gamma $  and $d\left( x \right) $ is the distance function from $x $ and $\Gamma
+$. Obviously is $\nu\left( a\left( x \right)  \right)   $ the normal vector on the projection point on $\Gamma $.}
 
-We will define a unique evolutionary point $x \in \Gamma \left( t \right) $ based on the smooth mapping $X \left( p,t \right) = x$. A way to imagine this is to have a initial point in $\Gamma ^{0}$ and the mapping $X $ describes how this point will deform over time. The outer unit normal vector field of $\Gamma \left( t \right) $ is defined as the mapping $\nu : \Gamma \mapsto
+An important regularity result is that if $\Gamma ^{0}$ is of class $C^{\infty}$, then $\Gamma $ is also of class $C^{\infty}$ for $\forall t \in \left[ 0,T \right] $ \cite{sokolowski1992introduction, dougan2012first}.
+\todo[inline]{ Formally in \cite[p 48]{sokolowski1992introduction} says that it might be an idea to formulate normal unit-vector regularity as $C^{\infty}$ }
+
+We will define a unique evolutionary point $x \in \Gamma \left( t \right) $ based on the smooth mapping $X \left( p,t \right) = x$. A way to imagine this is to have an initial point in $\Gamma ^{0}$ and the mapping $X $ describes how this point will deform over time. The outer unit normal vector field of $\Gamma \left( t \right) $ is defined as the mapping $\nu : \Gamma \mapsto
 \mathbb{R} ^{3}$.
 
-Using the notation presented in \cite{dougan2012first} and \cite{kovacs2021convergent} can we define the basic surface differential operators. Consider a scalar function, $u: \Gamma \mapsto \mathbb{R} $, and a vector-valued function, $\hat{u}: \Gamma  \mapsto \mathbb{R} ^3$. We can then denote $ \nabla _{\Gamma } u: \Gamma \mapsto \mathbb{R} ^{3}$ as the tangential operator,
+Using the notation presented in \cite{dougan2012first} and \cite{kovacs2021convergent} can we define the basic surface differential operators. Consider a scalar function, $u: \Gamma \mapsto \mathbb{R} $, and a vector-valued function, $\hat{u}: \Gamma  \mapsto \mathbb{R} ^3$. We can then denote $ \nabla _{\Gamma } u: \Gamma \mapsto \mathbb{R} ^{3}$ as the projection gradient operator,
 $$
 \nabla_{\Gamma
 } u  = \nabla u - \left<\nu, \nabla u \right> \nu.
 $$
-\todo[inline]{May be an idea to define a extension $\widetilde{u} \mid _{\Gamma }$ and look into regularity. See definitions in \cite{dziuk2013finite}.  }
+\todo[inline]{May be an idea to define a extension $\widetilde{u} \mid _{\Gamma }$ and look into regularity. See definitions in the proof \cite[Theorem 2.10]{dziuk2013finite}.  }
 Similarly, for the vector-valued function is the operator defined s.t.
 $$\nabla_{\Gamma } \hat{u} = \left( \nabla_{\Gamma } u_{1},\nabla_{\Gamma } u_{2},\nabla_{\Gamma } u_{3}   \right)^{T}.$$ The surface divergence for a vector-valued function is defined as \[
 \nabla_{\Gamma } \cdot \hat{u} = \nabla  \cdot \hat{u} - \nu^{T} D \hat{u} \cdot \nu
@@ -42,10 +46,10 @@ Here $D\hat{u}$ denotes the Jacobian of $\hat{u}$. Similarly, the Laplace-Beltra
  &=  \Delta u  - \nu ^{T} D^2 u \cdot \nu - H \partial _{\nu } u
     \end{split}
 .\end{equation*}
-Here is $D^2u$ denotes as the Hessian of the scalar function $u$. In the case of a vector valued function is the operator defined as \[
+Here is $D^2u$ denotes the Hessian of the scalar function $u$. In the case of a vector-valued function is the operator defined as \[
 \Delta _{\Gamma } \hat{u} = \left( \Delta _{\Gamma } u_{1}, \Delta _{\Gamma } u_{2}, \Delta _{\Gamma } u_{3} \right)^{T}
 \]
-A method to compute the mean curvature and the so-called Frobenius norm of matrix $A$ involves applying the
+A method to compute the mean curvature and the so-called Frobenius norm of the matrix $A$ involves applying the
 extended Weingarten map, $ A\left( x \right) = \nabla_{\Gamma } \nu \left( x \right) $, s.t. these identities holds ,
 \begin{equation*}
     \begin{split}
@@ -54,7 +58,7 @@ extended Weingarten map, $ A\left( x \right) = \nabla_{\Gamma } \nu \left( x \ri
     \end{split}
 .\end{equation*}
 see \cite{kovacs2021convergent}.
-We may also want to use these definitions to introduce the following identities ,
+We may also want to use these definitions to introduce the following identities,
 \[
     \begin{split}
          \partial _{\nu } H & = - \left\lvert A \right\rvert ^{2}, \\
@@ -66,14 +70,14 @@ Again, see Lemma 3.3 and Lemma 3.2 in \cite{dougan2012first}.
 \subsection{Evolutionary Surface Dynamics}%
 \label{sub:evolutionary_equations}
 
-In this section will we develop a framework evolutionary surface dynamics.
+In this section will we develop a framework for evolutionary surface dynamics.
 
 First of all, we can denote the velocity $v: \Gamma \mapsto \mathbb{R} ^3$ to be
 \begin{equation}
     \label{eq:vel}
 \frac{dx }{ d t}  = v\left( x \right) \quad \forall x \in \Gamma \left( t \right) .
 \end{equation}
-Given a model of the velocity $v$ can we solve the ordinary differential equation (ODE) \eqref{eq:vel} and determine the evolution of a point on the surface $\Gamma\left( t \right)  $. In this article will we assume that the velocity only has a
+Given a model of the velocity $v$ makes it possible to solve the ordinary differential equation (ODE) \eqref{eq:vel} and determine the evolution of a point on the surface $\Gamma\left( t \right)  $. In this article will we assume that the velocity only has a
 normal component to the surface, i.e., it exists a scalar function $V: \Gamma \mapsto \mathbb{R} $ s.t. $v = V \nu  $.
 
 % Define shape derivatives
@@ -91,11 +95,12 @@ For a more detailed description of the shape derivative, see \cite[Definition 2.
 Assume we have a scalar function $f: \Gamma\left( t \right)  \mapsto \mathbb{R}  $. Similarly, as for the shape derivative, we can now denote the material derivative at time $t$ in the direction of the velocity $v\left( x \right) $ as
 \[
     \begin{split}
-\frac{D}{Dt}  f\left( x,t; v \right)  & = \frac{d}{dt} f \left( X \left( p,t \right) , t \right) \\
-&= \lim_{\varepsilon \to 0}  \frac{f \left( X \left( p, t + \varepsilon  \right)  \right) - f \left( X \left( p, t  \right)  \right) }{ \varepsilon },
+\frac{D}{Dt}  f( x,t; v )  & = \frac{d}{dt} f ( X ( p,t ) , t ) \\
+&= \lim_{\varepsilon \to 0}  \frac{f ( X ( p, t + \varepsilon  ), t + \varepsilon  ) - f ( X ( p, t  ), t  ) }{ \varepsilon } \\
+&= \frac{\partial f}{ \partial t} + v \cdot \nabla f.
     \end{split}
 \]
-see \cite[Definition 2.74]{sokolowski1992introduction}.
+See \cite[Definition 2.74]{sokolowski1992introduction} or more specifically \cite[Equation 5.1]{dziuk2013finite} for more information.
 
 
 We denote the $L^2\left( \Gamma  \right)  $ as the space of all functions that are square-integrable with respect to the surface measure, i.e., \[
@@ -127,7 +132,7 @@ If we have a vector-valued function that $u: \Gamma  \mapsto  \mathbb{R} ^{3} $ 
 
 
 
-The method we will use in this paper to minimize the energy functional \eqref{eq:WE} is to compute the so-called gradient flow. The fundamental idea of the gradient flow is to give rise of evolutionary dynamics to decrease the overall energy
+The method we will use in this paper to minimize the energy functional \eqref{eq:WE} is to compute the so-called gradient flow. The fundamental idea of the gradient flow is to give rise to evolutionary dynamics to decrease the overall energy
 functional both in space and time, i.e., $\mathcal{J}\left( \Gamma \left( t_{2} \right)  \right) <   \mathcal{J}\left( \Gamma \left( t_{1} \right)\right)$ for all  $t_{2} > t_{1}$. For more information about gradient flows, see
     \cite{dogan2007discrete, dogan2005finite}. Now assume we have the velocity defined in \eqref{eq:vel} to be $v \in \left[ L^{2}\left( \Gamma  \right)  \right]^3 $, then we define the $L^2$  gradient flow s.t. \[
       \left( v,\varphi  \right) _{\Gamma  }  = - d \mathcal{J} \left( \Gamma ; \varphi  \right) \  \forall \varphi \in \left[ L^2\left( \Gamma  \right)   \right] ^3.
@@ -135,8 +140,8 @@ functional both in space and time, i.e., $\mathcal{J}\left( \Gamma \left( t_{2} 
     It turns out that if $v \neq 0$, then is this equivalent to
     \begin{equation}
     \label{eq:gradient_flow}
-d \mathcal{J} \left( \Gamma ; v \right) = -\| v \|_{ L^2\left( \Gamma  \right)  }^{^2  } < 0.
-    .\end{equation}
+d \mathcal{J} \left( \Gamma ; v \right) = -\| v \|_{ L^2\left( \Gamma  \right)  }^{^2  } < 0,
+    \end{equation}
 see \cite{ito2008variational}.
 Hence, we finally have a toolbox which can be used to model evolutionary dynamics for moving surfaces.
 
