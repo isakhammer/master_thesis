@@ -1,10 +1,7 @@
 
 
 # Specialization project (15 credit points) 
-### Solving the Biharmonic Equation using a Continuous Interior Penalty Finite Element Method
-
-I did my specialization project at Norwegian University of Science and Technology under the supervision of André Massing.
-
+### Solving the biharmonic equation using a continuous interior penalty finite element method
 The goal of the thesis was to
 - State the issues that arise when solving the biharmonic equation
 - Derive the continuous penalty method method based on the work done by Gu`s [PhD Dissertation](https://digitalcommons.lsu.edu/gradschool_dissertations/1744/)
