@@ -13,8 +13,6 @@ The thesis should be digestible for graduate students with basic knowledge withi
 
 # Research project (7.5 credit points) 
 
-Name: Isak Hammer
-Student Number: 257390
 ### Mathematical modelling of cell membranes 
 **Abstract:** This article aims to show the latest methods of mathematical modelling of biological cell membranes. We first presented general research on incorporating multi-physics into mathematical models. We then presented a mathematical and numerical shape optimization framework using a gradient flow method and a finite element method to solve cell membrane dynamics specifically for the elastic bending energy on evolving surfaces.
 
