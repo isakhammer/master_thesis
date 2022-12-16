@@ -11,7 +11,7 @@ The goal of the thesis was to
 The thesis should be digestible for graduate students with basic knowledge within finite element methods and numerical analysis.
 
 
-# Research Project (7.5 credit points) 
+# Research project (7.5 credit points) 
 
 Name: Isak Hammer
 Student Number: 257390
