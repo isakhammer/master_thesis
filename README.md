@@ -4,7 +4,7 @@
 ### Solving the biharmonic equation using a continuous interior penalty finite element method
 The goal of the thesis was to
 - State the issues that arise when solving the biharmonic equation
-- Derive the continuous penalty method method based on the work done by Gu`s [PhD Dissertation](https://digitalcommons.lsu.edu/gradschool_dissertations/1744/)
+- Derive the continuous penalty method method based on the work done by this [PhD Dissertation](https://digitalcommons.lsu.edu/gradschool_dissertations/1744/)
 - Derive stability and apriori estimates.
 - Verify the estimates numerically.
 
