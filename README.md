@@ -18,4 +18,4 @@ The thesis should be digestible for graduate students with basic knowledge withi
 
 
 
-# Master thesis - (30 credit points) 
+# Master thesis (Work in progress) 
