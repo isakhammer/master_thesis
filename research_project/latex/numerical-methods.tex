@@ -56,7 +56,7 @@ S_{h}\left[ \mathbf{x} \right]   & = S_{h}\left( \Gamma _{h}\left[ \mathbf{x} \r
 More precisely, can we denote a $C^{0}$ finite element space of $k$-th order as,
 \begin{equation*}
     \begin{split}
-S_{h,k}\left[ \mathbf{x} \right]   =   \{ & \chi  _{h} \in C^{0}\left( \Gamma _{h}\left[ \mathbf{x} \right]  \right),  \\ 
+S_{h,k}\left[ \mathbf{x} \right]   =   \{ & \chi  _{h} \in C^{0}\left( \Gamma _{h}\left[ \mathbf{x} \right]  \right),  \\
 &\chi _{h} \in \mathcal{P}^{k }\left( T \right) \forall T \in \mathcal{T}_{h}           \},
     \end{split}
 \end{equation*}
@@ -162,14 +162,22 @@ Note that the time-dependent variables $\nu_{h}, H_{h} $ and $x_{h}$ is initiali
 
 
 
-\todo[inline]{Remark that we have not yet discretized in the time dimension. Check \cite[p. 363]{dziuk2013finite}} 
+\todo[inline]{Remark that we have not yet discretized in the time dimension. Check \cite[p. 363]{dziuk2013finite}}
 
-\todo[inline]{Should probably mention that further work will be to implement this in Ngsolve.} 
+\todo[inline]{Should probably mention that further work will be to implement this in Ngsolve.}
 
-\todo[inline]{Things to discuss are convergence estimates, lifting operator, time discretization and how to treat the nonlinear parts.} 
+\todo[inline]{Things to discuss are convergence estimates, lifting operator, time discretization and how to treat the nonlinear parts.}
+
+\subsection{The matrix-vector formulation}%
+\label{sub:the_matrix_formulation}
+
+To simplify the system presented in \eqref{eq:FEM} is it possible to solve a equivalent i a matrix-vector formulation. First of all, let us represent the nodal variables. $\mathbf{v} = \left( v_{j} \right) \in \mathbb{R} ^{3N}$ , $\mathbf{H}  =
+\left( H_{j} \right)  \in  \mathbb{R} ^{N}  $, $\mathbf{n} = \left( \nu _{j} \right) \in  \mathbb{R} ^{N}$ , $\mathbf{z} = \left( z_{j} \right) \in \mathbb{R} ^{3N}$     
+
+
 
 
 \section{Further work}
-The final scheme described in \eqref{eq:FEM} (referred from \cite{kovacs2021convergent}) is not completely solvable. First of all, the formulation is highly nonlinear and very coupled, implying that it is necessary to implement nonlinear PDE-solver methods such as the Newton's method. Secondly, it remains to find a proper method for time discretization. However, this should be reasonably straightforward by applying the implicit Euler scheme or more sophisticated standard methods such as the backward differential formula or Runge-Kutta methods. 
+The final scheme described in \eqref{eq:FEM} (referred from \cite{kovacs2021convergent}) is not completely solvable. First of all, the formulation is highly nonlinear and very coupled, implying that it is necessary to implement nonlinear PDE-solver methods such as the Newton's method. Secondly, it remains to find a proper method for time discretization. However, this should be reasonably straightforward by applying the implicit Euler scheme or more sophisticated standard methods such as the backward differential formula or Runge-Kutta methods.
 
-If the numerical schemes above are provided, then the formulation should be fairly possible to implement the problem using the modern finite element software framework NGSolve \cite{schoberl2017netgen}. In fact, recently it was shown that a modified formulation of \eqref{eq:FEM} could be solved using the same software library \cite{hu2022evolving}.     
+If the numerical schemes above are provided, then the formulation should be fairly possible to implement the problem using the modern finite element software framework NGSolve \cite{schoberl2017netgen}. In fact, recently it was shown that a modified formulation of \eqref{eq:FEM} could be solved using the same software library \cite{hu2022evolving}.
