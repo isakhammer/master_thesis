@@ -135,7 +135,7 @@ For the error analysis, is a good idea to define the discrete velocity as, $v_{h
 \mathbf{x} \right]     $. However, we will not use the interpolation estimate since it is out of the scope of this article. For more information see \cite[Remark 3.1]{kovacs2021convergent}.
 
 
-The evolving surface FEM for \eqref{eq:WE_strong_form} is to find trial functions \eqref{eq:FE_trial} and $x_{h} \in  \left[ S\left( \mathbf{x} \right)  \right] ^3$ s.t. it satisfies the following discrete weak formulation \eqref{eq:WE_weak_form} for
+The evolving surface FEM for \eqref{eq:WE_strong_form} is to find trial functions \eqref{eq:FE_trial} and $x_{h} $ s.t. it satisfies the following discrete weak formulation \eqref{eq:WE_weak_form} for
 all test functions \eqref{eq:WE_test}. Again, see \cite{kovacs2021convergent} for more information.
 
 \begin{subequations}
@@ -195,7 +195,18 @@ Since the basis function $\phi_{i} \left[ \mathbf{x} \right] \in S_{h}\left[ \ma
 and \[
 \mathbf{A}\left( \mathbf{x} \right)_{i,j} = \left( \nabla _{\Gamma _{h}} \phi _{i} \left[ \mathbf{x} \right], \nabla _{\Gamma _{h}}\phi _{j} \left[ \mathbf{x} \right]  \right)_{\Gamma _{h}}, \ \   \forall i,j \in \mathcal{I}.
 \]
-We may want to 
+
+We may also define the corresponding diagonal block matrices using the Kronecker product s.t.
+\[
+    \begin{split}
+        \mathbf{M}^{4}( \mathbf{x} )  &= I \otimes \mathbf{M}( \mathbf{x}) \in \mathbb{R} ^{4N \times 4N} \\
+\mathbf{A}^{4}( \mathbf{x} )   & = I \otimes \mathbf{A}( \mathbf{x}
+) \in \mathbb{R} ^{4N \times 4N}
+    \end{split}
+\]
+using the identity $I \in \mathbb{R} ^{4\times 4}$. We let the  
+
+
 
 
 \section{Further work}
