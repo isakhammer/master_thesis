@@ -171,10 +171,31 @@ Note that the time-dependent variables $\nu_{h}, H_{h} $ and $x_{h}$ is initiali
 \subsection{The matrix-vector formulation}%
 \label{sub:the_matrix_formulation}
 
-To simplify the system presented in \eqref{eq:FEM} is it possible to solve a equivalent i a matrix-vector formulation. First of all, let us represent the nodal variables. $\mathbf{v} = \left( v_{j} \right) \in \mathbb{R} ^{3N}$ , $\mathbf{H}  =
-\left( H_{j} \right)  \in  \mathbb{R} ^{N}  $, $\mathbf{n} = \left( \nu _{j} \right) \in  \mathbb{R} ^{N}$ , $\mathbf{z} = \left( z_{j} \right) \in \mathbb{R} ^{3N}$     
+To simplify the system presented in \eqref{eq:FEM} is it possible to solve a equivalent i a matrix-vector formulation.
 
+First of all, let us represent the nodal values as vectors. Let the velocity have the form $\mathbf{v} = \left( v_{j} \right) \in \mathbb{R} ^{3N}$ with the
+corresponding speed $\mathbf{V} =
+\left( V_{j} \right) \in \mathbb{R} ^{N} $ and normal vector $\mathbf{n} = \left( \nu _{j} \right) \in  \mathbb{R} ^{3N}$. Similarly, we define the mean curvature $\mathbf{H}  = ( H_{j})  \in  \mathbb{R} ^{N}  $ and the substitution variable
+$\mathbf{z} = \left( z_{j} \right) \in \mathbb{R} ^{3N}$. To simplify notation will we introduce the block structured vectors,\[
+\mathbf{u} = \begin{pmatrix}
+\mathbf{H} \\
+\mathbf{n}
+\end{pmatrix}
+\in \mathbb{R} ^{4N}
+\quad \text{and} \quad \begin{pmatrix}
+\mathbf{V} \\
+\mathbf{z}
+\end{pmatrix}
+\in \mathbb{R} ^{4N}
+\]
 
+Since the basis function $\phi_{i} \left[ \mathbf{x} \right] \in S_{h}\left[ \mathbf{x} \right]  $ is known for $\forall i \in \mathcal{I}  $, is it possible to define the matrices \[
+\mathbf{M}\left( x \right)_{i,j} =  \left( \phi _{i}\left[ \mathbf{x} \right], \phi_{j} \left[ \mathbf{x} \right] \right) _{ \Gamma _{h}},  \ \  \forall i,j \in \mathcal{I}.
+\]
+and \[
+\mathbf{A}\left( \mathbf{x} \right)_{i,j} = \left( \nabla _{\Gamma _{h}} \phi _{i} \left[ \mathbf{x} \right], \nabla _{\Gamma _{h}}\phi _{j} \left[ \mathbf{x} \right]  \right)_{\Gamma _{h}}, \ \   \forall i,j \in \mathcal{I}.
+\]
+We may want to 
 
 
 \section{Further work}
