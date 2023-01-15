@@ -235,7 +235,7 @@ Our goal now is to simplify the notation for the nonlinear functions. Let $\math
         \mathbf{f}_{2}( \mathbf{x}, \mathbf{u}&)_{j + (l-1)N} = ( ( \left\lvert \nabla _{\Gamma _{h}} H_{h} \right\rvert ^2 \nu _{h})_{l} , \phi_{j}\left[ \mathbf{x} \right]   ) _{\Gamma _{h}}   \\
         & + ((A_{h}^2 \nabla _{\Gamma _{h}}H_{h})_{l}, \phi _{j} \left[ \mathbf{x} \right]  )_{\Gamma _{h}} \\
         & + 2((A_{h} \nabla _{\Gamma _{h}} H_{h})\cdot \nabla _{\Gamma _{h}} \phi _{j} \left[ \mathbf{x} \right] , ( v_{h}) _{l})_{\Gamma _{h}} \\
-    & + \left(Q_{h}\nabla _{\Gamma _{h}})_{l},  \phi_{j} \left[ \mathbf{x} \right]  \right)_{\Gamma _{h}} \\
+    & + \left((Q_{h})_{l},  ( \nabla _{\Gamma _{h}} )_{l} \phi_{j} \left[ \mathbf{x} \right]  \right)_{\Gamma _{h}} \\
     &- \left(Q_{h} H_{h} ( v_{h}) _{l}, \phi _{j} \left[ \mathbf{x} \right]   \right)_{\Gamma_{h} },
     \end{split}
 \end{equation*}
@@ -248,7 +248,6 @@ for $j \in \mathcal{I} $ and $l = 1,2,3$. Similarly, we let
     \end{split}
 \]
 for $j \in \mathcal{I} $ and $l=1,2,3$.
-
 This can now be collected into the vectors $\mathbf{f}( \mathbf{x}, \mathbf{u}), \mathbf{g}(\mathbf{x},\mathbf{u} ) \in \mathbb{R} ^{4N}  $ s.t. \[
 \mathbf{f}( \mathbf{x}, \mathbf{u}) = \begin{pmatrix}
 0\\
@@ -257,21 +256,21 @@ This can now be collected into the vectors $\mathbf{f}( \mathbf{x}, \mathbf{u}),
 , \ \ \mathbf{g} (\mathbf{x}, \mathbf{u})
  = \begin{pmatrix}
 \mathbf{g}_{1}( \mathbf{x}, \mathbf{u}) \\
-\mathbf{g_{2}( \mathbf{x}, \mathbf{u}) }
+\mathbf{g}_{2}( \mathbf{x}, \mathbf{u})
 \end{pmatrix}
 \]
 
-Finally, we can write the matrix-vector formulation of \eqref{eq:FEM}.
+Finally, we can write the fully matrix-vector formulation of \eqref{eq:FEM}.
 
-\begin{equation}
+\begin{subequations}
+\begin{align}
 \label{eq:matrix_form}
-\begin{split}
-   \mathbf{M}^{4}( \mathbf{x}) \frac{d \mathbf{u}}{dt}    & = \mathbf{A}( \mathbf{x}) ^{4} \mathbf{w} +  \mathbf{F}( \mathbf{x}, \mathbf{u}) \mathbf{w} + \mathbf{f}( \mathbf{x}, \mathbf{u}),     \\
-   \mathbf{M}^{4}( \mathbf{x}) \mathbf{w}    & =- \mathbf{A}( \mathbf{x}) ^{4} \mathbf{u}+  \mathbf{g}( \mathbf{x}, \mathbf{u}), \\
-   \frac{d\mathbf{x}}{dt}  & = \mathbf{v}
-\end{split}
-.\end{equation}
-
+    \mathbf{M}^{4}( \mathbf{x}) \frac{d \mathbf{u}}{dt}    & = \mathbf{A}( \mathbf{x}) ^{4} \mathbf{w} +  \mathbf{F}( \mathbf{x}, \mathbf{u}) \mathbf{w} \nonumber  \\ & \quad  + \mathbf{f}( \mathbf{x}, \mathbf{u}),     \\
+   \mathbf{M}^{4}( \mathbf{x}) \mathbf{w}  & =- \mathbf{A}( \mathbf{x}) ^{4} \mathbf{u}+  \mathbf{g}( \mathbf{x}, \mathbf{u}), \\
+   \frac{d\mathbf{x}}{dt}  & = \mathbf{v}.
+\end{align}
+\end{subequations}
+Remark that $\mathbf{g}$ and $\mathbf{f}$ are heavily nonlinear and unfortunately quite hard to discretize properly. Another observation is that the inital condition of $\mathbf{u}$ and $\mathbf{x}$  is easy to compute using the inital closed surface $\Gamma _{0}$. On the other hand, inital conditions for $\mathbf{w}$ has to be evaluated using \eqref{eq:WE_strong_form_V} and \eqref{eq:WE_strong_form_z}.
 
 
 \section{Further work}
