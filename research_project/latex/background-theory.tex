@@ -32,9 +32,10 @@ We will define a unique evolutionary point $x \in \Gamma \left( t \right) $ base
 Using the notation presented in \cite{dougan2012first} and \cite{kovacs2021convergent} can we define the basic surface differential operators. Consider a scalar function, $u: \Gamma \mapsto \mathbb{R} $, and a vector-valued function, $\hat{u}: \Gamma  \mapsto \mathbb{R} ^3$. We can then denote $ \nabla _{\Gamma } u: \Gamma \mapsto \mathbb{R} ^{3}$ as the projection gradient operator,
 $$
 \nabla_{\Gamma
-} u  = \nabla u - \left<\nu, \nabla u \right> \nu.
+} u  = \nabla \widetilde{u} \mid _{\Gamma } - \left<\nu, \nabla \widetilde{u} \mid _{\Gamma } \right> \nu.
 $$
-\todo[inline]{May be an idea to define a extension $\widetilde{u} \mid _{\Gamma }$ and look into regularity. See definitions in the proof \cite[Theorem 2.10]{dziuk2013finite}.  }
+Here $\widetilde{u}$ is a smooth extension of $u: \Gamma \to \mathbb{R} $ to an $3$-dim neighbourhood $U\in \mathbb{R} ^{3} $ of the surface $\Gamma $ so that $\widetilde{u} \mid _{\Gamma } = u$. For more information see \cite[ Definition 2.3]{dziuk2013finite}.
+
 Similarly, for the vector-valued function is the operator defined s.t.
 $$\nabla_{\Gamma } \hat{u} = \left( \nabla_{\Gamma } u_{1},\nabla_{\Gamma } u_{2},\nabla_{\Gamma } u_{3}   \right)^{T}.$$ The surface divergence for a vector-valued function is defined as \[
 \nabla_{\Gamma } \cdot \hat{u} = \nabla  \cdot \hat{u} - \nu^{T} D \hat{u} \cdot \nu
