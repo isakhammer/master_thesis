@@ -60,9 +60,15 @@ S_{h,k}\left[ \mathbf{x} \right]   =   \{ & \chi  _{h} \in C^{0}\left( \Gamma _{
 &\chi _{h} \in \mathcal{P}^{k }\left( T \right) \forall T \in \mathcal{T}_{h}           \},
     \end{split}
 \end{equation*}
-where $\mathcal{P}^{k} $ is the set of all polynomials in three dimensions with order less or equal to $k$. We will use the notation $S_{h}\left[ \mathbf{x} \right] = S_{h,k}\left[ \mathbf{x} \right] $ unless the order of the element is specified.
-
-
+where $\mathcal{P}^{k} $ is the set of all polynomials in three dimensions with order less or equal to $k$. We will use the notation $S_{h}\left[ \mathbf{x} \right] = S_{h,k}\left[ \mathbf{x} \right] $ unless the order of the element is specified. In
+the three dimensions defined as, \[
+S_{h}\left[ \mathbf{x} \right] ^{3}  =
+(
+S_{h}\left[ \mathbf{x} \right],
+S_{h}\left[ \mathbf{x} \right],
+S_{h}\left[ \mathbf{x} \right]
+)^{T}.
+\]
 The discretized surface mapping, $X_{h}: \Gamma_{h} ^{0} \mapsto  \Gamma _{h} \left[ \mathbf{x}\left( t \right)  \right] $, is denoted as \[
 X_{h}\left( p_{h},t \right) = \sum_{j \in \mathcal{I} }^{}  x_{j}\left( t \right)  \phi \left[ x\left( 0 \right)  \right] \left( p_{h} \right), \  p_{h} \in \Gamma ^{0}_{h},
 \]
@@ -77,7 +83,7 @@ and the problem obviously does satisfy the identities; $X_{h}\left( p_{h},0 \rig
 \todo[inline]{Need to check if the definition of $\Gamma _{h}\left[ \mathbf{x}  \right] = \Gamma_{h}\left[ X_{h}\left( \cdot ,t \right)  \right] $ makes sense. Also made $\Gamma _{h} = \Gamma _{h}\left[ \mathbf{x}\left( t \right)  \right] $ som et kunstig innslag. }
 For shorthand notation, is the discretized point defined as $x_{h} = X_{h}\left( p_{h},t \right) \in \Gamma _{h} $.
 Thus discretized velocity $v_{h}\left( x_{h},t \right): \Gamma _{h} \mapsto  \mathbb{R} ^{3} $ is defined as \[
-    v_{h}\left( x_{h},t \right)  = \sum_{j \in \mathcal{I} }^{} v_{j}\left( t \right) \phi _{j}\left[ \mathbf{x}\left( t \right)  \right] \left( x_{h} \right)
+    v_{h}\left( x_{h},t \right)  = \sum_{j \in \mathcal{I} }^{} v_{j}\left( t \right) \phi _{j}\left[ \mathbf{x}\left( t \right)  \right] \left( x_{h} \right).
 \]
 Hence, by introducing  $\mathbf{v} = \mathbf{v}\left( t \right)  $ as a collection of the velocity nodes,  $v_{j} \in \mathbb{R} ^3$, can we define the evolutionary dynamics of the nodal points $\mathbf{x}$ s.t. this holds,
 \[
@@ -102,9 +108,7 @@ well.  }.
 
 \todo[inline]{Need to write an introduction based on dzuik13 page 332, but also understand the equivalence between my notation and the one used.}
 
-
-
-We will now construct the final numerical scheme, finally arriving at the surface finite element method.
+The goal is to construct a evolving finite element scheme using the evolving finite element space.
 Let us denote the following trial functions,
 \begin{equation}
 \label{eq:FE_trial}
@@ -131,8 +135,8 @@ A_{h} & = \frac{1}{2}\left( \nabla _{\Gamma_{h} } \nu_{h} + \left( \nabla _{\Gam
 \]
 \todo[inline]{ Why is the $A_{h}$ symmetric denoted in this fashion?   }
 
-For the error analysis, is a good idea to define the discrete velocity as, $v_{h} = \widetilde{I}_{h}\left( V_{h} \nu _{h} \right)  $,  where the interpolation operator is defined s.t. $ \widetilde{I}_{h}: C\left( \Gamma _{h}\left[ \mathbf{x} \right] \right) \mapsto  S_{h}\left[
-\mathbf{x} \right]     $. However, we will not use the interpolation estimate since it is out of the scope of this article. For more information see \cite[Remark 3.1]{kovacs2021convergent}.
+% For the error analysis, is a good idea to define the discrete velocity as, $v_{h} = \widetilde{I}_{h}\left( V_{h} \nu _{h} \right)  $,  where the interpolation operator is defined s.t. $ \widetilde{I}_{h}: C\left( \Gamma _{h}\left[ \mathbf{x} \right] \right) \mapsto  S_{h}\left[
+% \mathbf{x} \right]     $. However, we will not use the interpolation estimate since it is out of the scope of this article. For more information see \cite[Remark 3.1]{kovacs2021convergent}.
 
 
 The evolving surface FEM for \eqref{eq:WE_strong_form} is to find trial functions \eqref{eq:FE_trial} and $x_{h} $ s.t. it satisfies the following discrete weak formulation \eqref{eq:WE_weak_form} for
@@ -197,7 +201,6 @@ Recall the basis functions, $\phi_{i} \left[ \mathbf{x} \right] \in S_{h}\left[ 
 and \[
 \mathbf{A}\left( \mathbf{x} \right)_{i,j} = \left( \nabla _{\Gamma _{h}} \phi _{i} \left[ \mathbf{x} \right], \nabla _{\Gamma _{h}}\phi _{j} \left[ \mathbf{x} \right]  \right)_{\Gamma _{h}}, \ \    i,j \in \mathcal{I}.
 \]
-
 We may also define the corresponding diagonal block matrices using the Kronecker product s.t.
 \[
     \begin{split}
@@ -211,7 +214,7 @@ using the identity $I \in \mathbb{R} ^{4\times 4}$. Moreover, we can also define
 \[
     \mathbf{F}_{1}\left( \mathbf{x},\mathbf{u} \right)_{i,j}    = - \left( \left\lvert A_{h} \right\rvert^2  \phi_{j} \left[ \mathbf{x} \right] , \phi_{i} \left[ \mathbf{x} \right]  \right)_{\Gamma _{h}},  \\
 \]
-Where $i,j = 1,\ldots,N $ and similarly,
+where $i,j \in \mathcal{I}  $. Likewise we define,
 \[
     \mathbf{F}_{2}\left( \mathbf{x},\mathbf{u} \right)_{i,j}    =  \left( (H_{h} A_{h} - A^2_{h})  \phi_{j} \left[ \mathbf{x} \right] , \phi_{i} \left[ \mathbf{x} \right]  \right)_{\Gamma _{h}},
 \]
