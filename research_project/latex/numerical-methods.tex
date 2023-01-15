@@ -175,22 +175,24 @@ To simplify the system presented in \eqref{eq:FEM} is it possible to solve a equ
 
 First of all, let us represent the nodal values as vectors. Let the velocity have the form $\mathbf{v} = \left( v_{j} \right) \in \mathbb{R} ^{3N}$ with the
 corresponding speed $\mathbf{V} =
-\left( V_{j} \right) \in \mathbb{R} ^{N} $ and normal vector $\mathbf{n} = \left( \nu _{j} \right) \in  \mathbb{R} ^{3N}$. Similarly, we define the mean curvature $\mathbf{H}  = ( H_{j})  \in  \mathbb{R} ^{N}  $ and the substitution variable
+\left( V_{j} \right) \in \mathbb{R} ^{N} $ and normal vector $\mathbf{n} = \left( \nu _{j} \right) \in  \mathbb{R} ^{3N}$ s.t. it fulfills the Hadamard product $\mathbf{v} = \mathbf{V} \circ \mathbf{n}$.
+
+Similarly, we define the mean curvature $\mathbf{H}  = ( H_{j})  \in  \mathbb{R} ^{N}  $ and the substitution variable
 $\mathbf{z} = \left( z_{j} \right) \in \mathbb{R} ^{3N}$. To simplify notation will we introduce the block structured vectors,\[
 \mathbf{u} = \begin{pmatrix}
 \mathbf{H} \\
 \mathbf{n}
 \end{pmatrix}
 \in \mathbb{R} ^{4N}
-\quad \text{and} \quad \begin{pmatrix}
+\quad \text{and} \quad \mathbf{w} = \begin{pmatrix}
 \mathbf{V} \\
 \mathbf{z}
 \end{pmatrix}
-\in \mathbb{R} ^{4N}
+\in \mathbb{R} ^{4N}.
 \]
 
-Recall the basis functions, $\phi_{i} \left[ \mathbf{x} \right] \in S_{h}\left[ \mathbf{x} \right], \   i \in \mathcal{I}  $, hence, we  is it possible to define the matrices \[
-\mathbf{M}\left( x \right)_{i,j} =  \left( \phi _{i}\left[ \mathbf{x} \right], \phi_{j} \left[ \mathbf{x} \right] \right) _{ \Gamma _{h}},  \ \   i,j \in \mathcal{I}.
+Recall the basis functions, $\phi_{i} \left[ \mathbf{x} \right] \in S_{h}\left[ \mathbf{x} \right], \   i \in \mathcal{I}  $. We can then define the matrices \[
+\mathbf{M}\left( \mathbf{x} \right)_{i,j} =  \left( \phi _{i}\left[ \mathbf{x} \right], \phi_{j} \left[ \mathbf{x} \right] \right) _{ \Gamma _{h}},  \ \   i,j \in \mathcal{I}.
 \]
 and \[
 \mathbf{A}\left( \mathbf{x} \right)_{i,j} = \left( \nabla _{\Gamma _{h}} \phi _{i} \left[ \mathbf{x} \right], \nabla _{\Gamma _{h}}\phi _{j} \left[ \mathbf{x} \right]  \right)_{\Gamma _{h}}, \ \    i,j \in \mathcal{I}.
@@ -223,30 +225,49 @@ where the indices are $i,j = 1,\ldots, 3N$.
 \]
 
 Our goal now is to simplify the notation for the nonlinear functions. Let $\mathbf{f}_{2}( \mathbf{x}, \mathbf{u}) \in  \mathbb{R} ^{3N} $, $\mathbf{g}_{1}( \mathbf{x}, \mathbf{u}) \in \mathbb{R} ^{N} $ and $\mathbf{g}_{2}( \mathbf{x} , \mathbf{u})
-\in \mathbf{R}^{3N} $. We define the following functions
+\in \mathbf{R}^{3N} $. We can first define the function
 
 \begin{equation*}
     \begin{split}
-        \mathbf{f}_{2}( \mathbf{x}, \mathbf{u})_{j+(l-1)N} =& ( ( \left\lvert \nabla _{\Gamma _{h}} H_{h} \right\rvert ^2 \nu _{h})_{l} , \phi_{j}\left[ \mathbf{x} \right]   ) _{\Gamma _{h}}   \\
-        & + ((A_{h}^2 \nabla _{\Gamma _{h}}H_{h})_{l}, \phi _{j} \left[ \mathbf{x} \right]  )_{\Gamma _{h}} \\ 
-        & + 2
+        \mathbf{f}_{2}( \mathbf{x}, \mathbf{u}&)_{j + (l-1)N} = ( ( \left\lvert \nabla _{\Gamma _{h}} H_{h} \right\rvert ^2 \nu _{h})_{l} , \phi_{j}\left[ \mathbf{x} \right]   ) _{\Gamma _{h}}   \\
+        & + ((A_{h}^2 \nabla _{\Gamma _{h}}H_{h})_{l}, \phi _{j} \left[ \mathbf{x} \right]  )_{\Gamma _{h}} \\
+        & + 2((A_{h} \nabla _{\Gamma _{h}} H_{h})\cdot \nabla _{\Gamma _{h}} \phi _{j} \left[ \mathbf{x} \right] , ( v_{h}) _{l})_{\Gamma _{h}} \\
+    & + \left(Q_{h}\nabla _{\Gamma _{h}})_{l},  \phi_{j} \left[ \mathbf{x} \right]  \right)_{\Gamma _{h}} \\
+    &- \left(Q_{h} H_{h} ( v_{h}) _{l}, \phi _{j} \left[ \mathbf{x} \right]   \right)_{\Gamma_{h} },
     \end{split}
-.\end{equation*}
+\end{equation*}
+
+for $j \in \mathcal{I} $ and $l = 1,2,3$. Similarly, we let
+\[
+    \begin{split}
+\mathbf{g}_{1}( \mathbf{x}, \mathbf{u}) _{j} & = \left( Q_{h}, \phi _{j}\left[ \mathbf{x} \right]  \right) _{\Gamma _{h}}, \\
+\mathbf{g}_{2}\left( \mathbf{x}, \mathbf{u} \right)_{j + (l-1)N} & = \left( \left\lvert A_{h} \right\rvert ^2 ( v_{h}) _{l}, \phi _{j} \left[ \mathbf{x} \right]  \right)     _{\Gamma _{h}},
+    \end{split}
+\]
+for $j \in \mathcal{I} $ and $l=1,2,3$.
 
 This can now be collected into the vectors $\mathbf{f}( \mathbf{x}, \mathbf{u}), \mathbf{g}(\mathbf{x},\mathbf{u} ) \in \mathbb{R} ^{4N}  $ s.t. \[
 \mathbf{f}( \mathbf{x}, \mathbf{u}) = \begin{pmatrix}
 0\\
 \mathbf{f}_{2}(\mathbf{x},\mathbf{u} )
 \end{pmatrix}
-, \ \ \mathbf{g}( \mathbf{x}, \mathbf{u})
+, \ \ \mathbf{g} (\mathbf{x}, \mathbf{u})
  = \begin{pmatrix}
 \mathbf{g}_{1}( \mathbf{x}, \mathbf{u}) \\
 \mathbf{g_{2}( \mathbf{x}, \mathbf{u}) }
 \end{pmatrix}
-.
 \]
 
+Finally, we can write the matrix-vector formulation of \eqref{eq:FEM}.
 
+\begin{equation}
+\label{eq:matrix_form}
+\begin{split}
+   \mathbf{M}^{4}( \mathbf{x}) \frac{d \mathbf{u}}{dt}    & = \mathbf{A}( \mathbf{x}) ^{4} \mathbf{w} +  \mathbf{F}( \mathbf{x}, \mathbf{u}) \mathbf{w} + \mathbf{f}( \mathbf{x}, \mathbf{u}),     \\
+   \mathbf{M}^{4}( \mathbf{x}) \mathbf{w}    & =- \mathbf{A}( \mathbf{x}) ^{4} \mathbf{u}+  \mathbf{g}( \mathbf{x}, \mathbf{u}), \\
+   \frac{d\mathbf{x}}{dt}  & = \mathbf{v}
+\end{split}
+.\end{equation}
 
 
 
