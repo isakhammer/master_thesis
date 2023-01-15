@@ -263,17 +263,20 @@ This can now be collected into the vectors $\mathbf{f}( \mathbf{x}, \mathbf{u}),
 Finally, we can write the fully matrix-vector formulation of \eqref{eq:FEM}.
 
 \begin{subequations}
+\label{eq:WE_matrix_form}
 \begin{align}
-\label{eq:matrix_form}
     \mathbf{M}^{4}( \mathbf{x}) \frac{d \mathbf{u}}{dt}    & = \mathbf{A}( \mathbf{x}) ^{4} \mathbf{w} +  \mathbf{F}( \mathbf{x}, \mathbf{u}) \mathbf{w} \nonumber  \\ & \quad  + \mathbf{f}( \mathbf{x}, \mathbf{u}),     \\
    \mathbf{M}^{4}( \mathbf{x}) \mathbf{w}  & =- \mathbf{A}( \mathbf{x}) ^{4} \mathbf{u}+  \mathbf{g}( \mathbf{x}, \mathbf{u}), \\
    \frac{d\mathbf{x}}{dt}  & = \mathbf{v}.
 \end{align}
 \end{subequations}
-Remark that $\mathbf{g}$ and $\mathbf{f}$ are heavily nonlinear and unfortunately quite hard to discretize properly. Another observation is that the inital condition of $\mathbf{u}$ and $\mathbf{x}$  is easy to compute using the inital closed surface $\Gamma _{0}$. On the other hand, inital conditions for $\mathbf{w}$ has to be evaluated using \eqref{eq:WE_strong_form_V} and \eqref{eq:WE_strong_form_z}.
+Another observation is that the initial condition of $\mathbf{u}$ and $\mathbf{x}$  is easy to compute using the initial closed surface $\Gamma _{0}$. On the other hand, initial conditions for $\mathbf{w}$ has to be evaluated using \eqref{eq:WE_strong_form_V} and \eqref{eq:WE_strong_form_z}.
+
 
 
 \section{Further work}
-The final scheme described in \eqref{eq:FEM} (referred from \cite{kovacs2021convergent}) is not completely solvable. First of all, the formulation is highly nonlinear and very coupled, implying that it is necessary to implement nonlinear PDE-solver methods such as the Newton's method. Secondly, it remains to find a proper method for time discretization. However, this should be reasonably straightforward by applying the implicit Euler scheme or more sophisticated standard methods such as the backward differential formula or Runge-Kutta methods.
+The final scheme described in \eqref{eq:WE_matrix_form} is not yet completely numerical solvable and still need some work, thus, implying that it is necessary to implement an nonlinear PDE-solver method, such as the Newton's method, to obtain a solution.
 
-If the numerical schemes above are provided, then the formulation should be fairly possible to implement the problem using the modern finite element software framework NGSolve \cite{schoberl2017netgen}. In fact, recently it was shown that a modified formulation of \eqref{eq:FEM} could be solved using the same software library \cite{hu2022evolving}.
+Secondly, it also remains to find a proper method for time discretization. However, this should be reasonably straightforward by applying the implicit Euler scheme or more sophisticated standard methods such as the backward differential formulas or Runge-Kutta methods.
+
+If the numerical schemes above are provided, then the formulation should be reasonably possible to implement the problem using the modern finite element software framework NGSolve \cite{schoberl2017netgen}. In fact, recently it was shown that a modified formulation of \eqref{eq:FEM} could be solved using the same software library \cite{hu2022evolving}.
