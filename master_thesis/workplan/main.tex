@@ -38,7 +38,6 @@
 
 \begin{table}[htpb]
     \centering
-    \label{tab:label}
     \begin{tabular}{|c|p{0.15\textwidth}|p{0.15\textwidth}|p{0.15\textwidth}|p{0.15\textwidth}|p{0.15\textwidth}|}
     \hline & \textbf{ Phase 1}       & \textbf{Phase 2} & \textbf{Phase 3}& \textbf{Phase 4} & \textbf{Report}  \\
     \hline Estimated time & 2 Weeks & 3 Weeks & 4 Weeks & 5 Weeks &  \\
@@ -48,11 +47,14 @@
                         & $\partial _{t} u + \Delta ^2 u =g $
                         &   $\partial _{t} u + \Delta ^2 u + f(u) = g $
                         &  \\
-        \hline Goals &
+        \hline Goals
+        % \\
+        % \footnotesize{  $ \dagger $ Not prioritized }
 
+        &
         % Phase 1
         % How to use todolist: https://tex.stackexchange.com/a/313337
-        \begin{itemize}[leftmargin=2mm]
+        \begin{itemize}[leftmargin=3mm]
             \item Analysis \begin{todolist}
                     \item Coercivity
                     \item Boundedness
@@ -67,38 +69,37 @@
         &
         % Phase 2
         % How to use todolist: https://tex.stackexchange.com/a/313337
-        \begin{itemize}[leftmargin=2mm]
+        \begin{itemize}[leftmargin=3mm]
             \item Analysis \begin{todolist}
                     \item Coercivity
                     \item Boundedness
                     \item A priori estimates
-                    \item Condition number
+                    \item Condition number $\dagger $
                 \end{todolist}
             \item Implementation
                 \begin{todolist}
-                \item $L^{2}$ convergence
-                \item $H^{1}$ convergence
+                \item $L^2 L^{2}$ convergence
+                \item $L^2H^{1}$ convergence
                 \end{todolist}
         \end{itemize}
 
         &
-        % Phase 1
-        \begin{itemize}[leftmargin=2mm]
-            \item Column 2 content 1
-            \item Column 2 content 2
-        \end{itemize}
-        &
-        % Phase 1
-        \begin{itemize}[leftmargin=2mm]
-            \item Column 2 content 1
-            \item Column 2 content 2
-        \end{itemize}
-        &
-        % Phase 1
-        \begin{itemize}[leftmargin=2mm]
-            \item Column 2 content 1
-            \item Column 2 content 2
-        \end{itemize}
+        % Phase 3
+        % How to use todolist: https://tex.stackexchange.com/a/313337
+        % \begin{itemize}[leftmargin=2mm]
+        %     \item Analysis \begin{todolist}
+        %             \item Coercivity
+        %             \item Boundedness
+        %             \item A priori estimates
+        %             \item Condition number $\dagger $
+        %         \end{todolist}
+        %     \item Implementation
+        %         \begin{todolist}
+        %         \item $L^2 L^{2}$ convergence
+        %         \item $L^2  H^{1}$ convergence
+        %         \end{todolist}
+        % \end{itemize}
+        &&
 
     \\  \hline
         Comments
