@@ -1,15 +1,163 @@
-\documentclass{article}
-\usepackage{pgfgantt}
-\usepackage{pdflscape}
+%\documentclass{article}
+%\usepackage{pgfgantt}
+%\usepackage{pdflscape}
+
+
+%\begin{document}
+
+%\begin{landscape}
+
+
+%\end{landscape}
+
+%\end{document}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Weekly Timetable Calendar
+% LaTeX Template
+% Version 1.1 (4/6/13)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original calendar style author:
+% Evan Sultanik (http://www.sultanik.com/LaTeX_calendar_style)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+% Important note:
+% This template requires the calendar.sty file to be in the same directory as the
+% .tex file. The calendar.sty file provides the necessary structure to create the
+% calendar.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[landscape,a4paper]{article}
+
+\usepackage{calendar} % Use the calendar.sty style
 
 \usepackage{pgfgantt}
+\usepackage[landscape,margin=0.5in]{geometry}
 
 \begin{document}
 
-\begin{landscape}
+\pagestyle{empty} % Removes the page number from the bottom of the page
+
+\noindent
+
+\StartingDayNumber=1 % Calendar starting day, default of 1 means Sunday, 2 for Monday, etc
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\begin{center}
+\textsc{\LARGE Week work}\\
+\textsc{\large January Weeks}
+\end{center}
+
+%----------------------------------------------------------------------------------------
+
+\begin{calendar}{\hsize}
+
+%----------------------------------------------------------------------------------------
+%	FIRST DAY
+%----------------------------------------------------------------------------------------
+
+\day{}{\textbf{9am-5pm} \daysep Work at Max fiesta} % By default all daily events are centered in the box, in order to bring them up use \vspace{2cm} after the event text; you may need to change the 2cm
+
+%----------------------------------------------------------------------------------------
+%	SECOND DAY
+%----------------------------------------------------------------------------------------
+
+\day{}{
+\textbf{7:00am-8:00} \daysep Female and male athletics - training on the courts  \\[3pt]
+\textbf{9am-11am} \daysep Ec.Dif. -C102 \\[3pt]
+\textbf{11:30am-13:30am} \daysep Distributed Systems - B104 \\[3pt]
+\textbf{13:30am-2:30pm} \daysep Dinner-Cafeteria \\[3pt]
+%\textbf{1pm-2pm} \daysep No Lecture \\[3pt]
+%\textbf{3pm-4pm} \daysep BIOSCI101 Laboratory \\[3pt]
+%\textbf{4pm-5pm} \daysep BIOSCI101 Laboratory
+}
+
+%----------------------------------------------------------------------------------------
+%	THIRD DAY
+%----------------------------------------------------------------------------------------
+
+\day{}{ % Tuesday
+\textbf{7am-9am} \daysep English - F002 \\[3pt]
+\textbf{9am-11am} \daysep Knowledge-based systems - B104 \\[3pt]
+\textbf{11:30am-13:30pm} \daysep Networks and telecommunications - B104 \\[3pt]
+%\textbf{12pm-1pm} \daysep No Lecture \\[3pt]
+%\textbf{1pm-2pm} \daysep No Lecture \\[3pt]
+\textbf{14:30pm-16:30pm} \daysep Descriptive and inferential statistics - B104 \\[3pt]
+\textbf{17:00pm-19:00pm} \daysep Women's and men's basketball - Training on the courts \\[3pt]
+%\textbf{4pm-5pm} \daysep No Lecture
+}
+
+%----------------------------------------------------------------------------------------
+%	FOURTH DAY
+%----------------------------------------------------------------------------------------
+
+\day{}{ % Wednesday
+\textbf{7:00am-8:00am} \daysep Female and male athletics - Training on the courts \\[3pt]
+\textbf{9am-11am} \daysep differential equations
+ - C003 \\[3pt]
+%\textbf{11am-12pm} \daysep No Lecture \\[3pt]
+\textbf{11:30am-13:30pm} \daysep Distributed Systems - B104 \\[3pt]
+\textbf{14:00pm-15:00pm} \daysep Distributed Database \\[3pt]
+\textbf{16:00pm-18:00pm} \daysep Capoeira  - Multi-Purpose Classroom Ground floor of the cafeteria. \\[3pt]
+\textbf{18:00pm-19:30pm} \daysep CSCE - Showroom \\[3pt]
+\textbf{19:30pm-21:00pm} \daysep Gym \\[3pt]
+}
+
+%----------------------------------------------------------------------------------------
+%	FIFTH DAY
+%----------------------------------------------------------------------------------------
+
+\day{}{ % Thursday
+\textbf{7:00am-9:00am} \daysep English Class - F002\\[3pt]
+\textbf{9:00am-11:00am} \daysep Knowledge-Based Systems - B104 \\[3pt]
+\textbf{11:30 am-13:30pm} \daysep Networks and Telecommunications - B104 \\[3pt]
+\textbf{14:30pm-16:30pm} \daysep Descriptive and inferential statistics - B104\\[3pt]
+\textbf{17:00pm-19:00pm} \daysep Women's and men's basketball - Training on the courts \\[3pt]
+\textbf{19:00pm-21:00pm} \daysep Gym \\[3pt]
+}
+%----------------------------------------------------------------------------------------
+%	SIXTH DAY
+%----------------------------------------------------------------------------------------
+
+\day{}{ % Friday
+\textbf{8:00am-10:00am} \daysep Critical Thinking - Aula Magna B \\[3pt]
+\textbf{9:00am-11:00m} \daysep Distributed Databases  - B104 \\[3pt]
+%\textbf{11am-12pm} \daysep No Lecture \\[3pt]
+\textbf{16:00am-18:00pm} \daysep Capoeria -  Multi-Purpose Classroom Ground floor of the cafeteria\\[3pt]
+\textbf{18:00pm-20:00pm} \daysep Gym \\[3pt]
+%\textbf{2pm-3pm} \daysep No Lecture \\[3pt]
+%\textbf{3pm-4pm} \daysep GEO101 Tutorial \\ Room A \\[3pt]
+%\textbf{4pm-5pm} \daysep No Lecture
+}
+
+%----------------------------------------------------------------------------------------
+%	SEVENTH DAY
+%----------------------------------------------------------------------------------------
+
+\day{}{ % Saturday
+\textbf{13:00pm-17:00pm} \daysep Lecture\\[3pt]
+}
+%----------------------------------------------------------------------------------------
+
+\finishCalendar
+\end{calendar}
 
 
-\begin{figure}[tbp]
+\begin{figure}[tbph!]
 \begin{center}
 % https://tex.stackexchange.com/questions/587422/draw-gantt-chart-latex-with-pgfgantt
 \begin{ganttchart}[y unit title=0.4cm,
@@ -54,8 +202,10 @@ group height=.3]{1}{24}
 % \ganttlink{elem5}{elem7}
 \end{ganttchart}
 \end{center}
-\caption{Phase Chart}
+% \caption{Phase Chart}
 \end{figure}
-\end{landscape}
 
-\end{document}}
+
+
+\end{document}
+
