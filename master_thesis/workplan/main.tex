@@ -31,7 +31,7 @@
 
 \begin{center}
 \textsc{\LARGE Master Plan - Isak Hammer}\\
-\textsc{\large Solving Cahn-Hilliard Equation using CutDGFEM }
+\textsc{\large Solving Cahn-Hilliard Equation using CutCIPFEM }
 \end{center}
 
 \begin{table}[htpb]
@@ -49,12 +49,19 @@
         \hline Goals &
 
         % Phase 1
-        \newcommand\itemmargin{2mm}
-        \begin{itemize}[leftmargin=\itemmargin]
+        % How to use todolist: https://tex.stackexchange.com/a/313337
+        \begin{itemize}[leftmargin=2mm]
             \item Analysis
+                \begin{todolist}
+                    \item[\done] Coercivity
+                    \item Define norms
+                    \item[\wontfix] profit
+                \end{todolist}
+                  \item Column 2 content 2
             \item Implementation
         \end{itemize}
-                     &
+
+        &
         % Phase 1
         \begin{itemize}[leftmargin=2mm]
             \item Column 2 content 1
@@ -62,7 +69,7 @@
                     \item[\done] Frame the problem
                     \item Write solution
                     \item[\wontfix] profit
-                            \end{todolist}
+                \end{todolist}
                               \item Column 2 content 2
                 \end{itemize}
 
@@ -85,7 +92,10 @@
             \item Column 2 content 2
         \end{itemize}
 
-    \\ \hline
+    \\  \hline
+        Comments &&&&&
+        \\  \hline Digression & & 2nd order mixed formulation &2nd order mixed formulation &2nd order mixed formulation& \\
+        \hline
     \end{tabular}
 
 \end{table}
