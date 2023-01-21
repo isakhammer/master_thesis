@@ -38,9 +38,10 @@
 
 \begin{table}[htpb]
     \centering
+    \footnotesize
     \begin{tabular}{|c|p{0.15\textwidth}|p{0.15\textwidth}|p{0.15\textwidth}|p{0.15\textwidth}|p{0.15\textwidth}|}
     \hline & \textbf{ Phase 1}       & \textbf{Phase 2} & \textbf{Phase 3}& \textbf{Phase 4} & \textbf{Report}  \\
-    \hline Estimated time & 2 Weeks & 3 Weeks & 4 Weeks & 5 Weeks &  \\
+    \hline Estimated time & 2-3 Weeks & 4-5 Weeks & 2 Weeks & 3 Weeks &  \\
     \hline &&&&& \\[-1em] % Alignmenttrick https://tex.stackexchange.com/a/316016
          Problem & CutDG for $ -\Delta u = f  $
                         & CutCIP for $\Delta ^2 u = f$
@@ -52,13 +53,13 @@
         &
         % Phase 1
         % How to use todolist: https://tex.stackexchange.com/a/313337
-        \begin{itemize}[leftmargin=3mm]
-            \item Analysis \begin{todolist}
+        \begin{itemize}[leftmargin=3mm,noitemsep]
+            \item Analysis \begin{todolist}[noitemsep]
                     \item Coercivity
                     \item Boundedness
                 \end{todolist}
             \item Implementation
-                \begin{todolist}
+                \begin{todolist}[noitemsep]
                 \item $L^{2}$ convergence
                 \item $H^{1}$ convergence
                 \end{todolist}
@@ -68,14 +69,14 @@
         % Phase 2
         % How to use todolist: https://tex.stackexchange.com/a/313337
         \begin{itemize}[leftmargin=3mm]
-            \item Analysis \begin{todolist}
+            \item Analysis \begin{todolist}[noitemsep]
                     \item Coercivity
                     \item Boundedness
                     \item A priori estimates
                     \item Condition number $\dagger $
                 \end{todolist}
             \item Implementation
-                \begin{todolist}
+                \begin{todolist}[noitemsep]
                 \item $ L^{2}$ convergence
                 \item $H^{1}$ convergence
                 \end{todolist}
@@ -85,11 +86,11 @@
         % Phase 3
         % How to use todolist: https://tex.stackexchange.com/a/313337
         \begin{itemize}[leftmargin=2mm]
-            \item Analysis \begin{todolist}
+            \item Analysis \begin{todolist}[noitemsep]
                     \item BDF analysis
                 \end{todolist}
             \item Implementation
-                \begin{todolist}
+                \begin{todolist}[noitemsep]
                 \item $L^2 L^{2}$ convergence
                 \item $L^2  H^{1}$ convergence
                 \end{todolist}
@@ -99,20 +100,37 @@
         % How to use todolist: https://tex.stackexchange.com/a/313337
         \begin{itemize}[leftmargin=2mm]
             \item Implementation
-                \begin{todolist}
+                \begin{todolist}[noitemsep]
                 \item  Fixed point method
                 \item $L^2 L^{2}$ convergence
                 \item $L^2  H^{1}$ convergence
                 \end{todolist}
         \end{itemize}
         &
-        \begin{todolist}[leftmargin=3mm]
+        \begin{todolist}[leftmargin=3mm, noitemsep]
             \item Introduction
             \item CutDG $- \Delta u =f$
-                \begin{todolist}
+                \begin{todolist}[leftmargin=3mm, noitemsep]
                 \item  Formulation
-                \item Coercivity and boundedness
-                \item Numerical experiments
+                \item Closed and bounded
+                \item Numerical exp.
+                \end{todolist}
+            \item CutCIP for $ \Delta ^2 u = f$
+                \begin{todolist}[leftmargin=3mm, noitemsep]
+                \item  Formulation
+                \item Closed and bounded
+                \item A priori Estimates
+                \item Numerical exp.
+                \end{todolist}
+            \item CutCIP for $ \partial _{t}u +  \Delta ^2 u = g$
+                \begin{todolist}[leftmargin=3mm, noitemsep]
+                \item  Time discretization
+                \item Numerical Experiments
+                \end{todolist}
+            \item CutCIP for $ \partial _{t}u +  \Delta ^2 u + f(u) = g$
+                \begin{todolist}[leftmargin=3mm, noitemsep]
+                \item  Nonlinear iterative methods
+                \item Numerical Experiments
                 \end{todolist}
             \end{todolist}
 
@@ -183,7 +201,6 @@ group height=.3]{1}{24}
 % \ganttlink{elem5}{elem7}
 \end{ganttchart}
 \end{center}
-\caption{Phase Chart}
 
 \end{figure}
 
