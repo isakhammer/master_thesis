@@ -156,7 +156,8 @@
 \finishCalendar
 \end{calendar}
 
-
+% Documentation of pgfgantt:
+% http://bay.uchicago.edu/CTAN/graphics/pgf/contrib/pgfgantt/pgfgantt.pdf
 \begin{figure}[tbph!]
 \begin{center}
 % https://tex.stackexchange.com/questions/587422/draw-gantt-chart-latex-with-pgfgantt
@@ -171,6 +172,7 @@ progress label text={},
 bar height=0.7,
 group right shift=0,
 group top shift=.6,
+expand chart=1.2\textwidth,
 group height=.3]{1}{24}
 %labels
 \gantttitle{Master Plan}{24} \\
@@ -202,7 +204,8 @@ group height=.3]{1}{24}
 % \ganttlink{elem5}{elem7}
 \end{ganttchart}
 \end{center}
-% \caption{Phase Chart}
+\caption{Phase Chart}
+
 \end{figure}
 
 
