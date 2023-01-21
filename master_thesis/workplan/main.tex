@@ -48,8 +48,6 @@
                         &   $\partial _{t} u + \Delta ^2 u + f(u) = g $
                         &  \\
         \hline Goals
-        % \\
-        % \footnotesize{  $ \dagger $ Not prioritized }
 
         &
         % Phase 1
@@ -78,28 +76,45 @@
                 \end{todolist}
             \item Implementation
                 \begin{todolist}
-                \item $L^2 L^{2}$ convergence
-                \item $L^2H^{1}$ convergence
+                \item $ L^{2}$ convergence
+                \item $H^{1}$ convergence
                 \end{todolist}
         \end{itemize}
 
         &
         % Phase 3
         % How to use todolist: https://tex.stackexchange.com/a/313337
-        % \begin{itemize}[leftmargin=2mm]
-        %     \item Analysis \begin{todolist}
-        %             \item Coercivity
-        %             \item Boundedness
-        %             \item A priori estimates
-        %             \item Condition number $\dagger $
-        %         \end{todolist}
-        %     \item Implementation
-        %         \begin{todolist}
-        %         \item $L^2 L^{2}$ convergence
-        %         \item $L^2  H^{1}$ convergence
-        %         \end{todolist}
-        % \end{itemize}
-        &&
+        \begin{itemize}[leftmargin=2mm]
+            \item Analysis \begin{todolist}
+                    \item BDF analysis
+                \end{todolist}
+            \item Implementation
+                \begin{todolist}
+                \item $L^2 L^{2}$ convergence
+                \item $L^2  H^{1}$ convergence
+                \end{todolist}
+        \end{itemize}
+        &
+        % Phase 3
+        % How to use todolist: https://tex.stackexchange.com/a/313337
+        \begin{itemize}[leftmargin=2mm]
+            \item Implementation
+                \begin{todolist}
+                \item  Fixed point method
+                \item $L^2 L^{2}$ convergence
+                \item $L^2  H^{1}$ convergence
+                \end{todolist}
+        \end{itemize}
+        &
+        \begin{todolist}[leftmargin=3mm]
+            \item Introduction
+            \item CutDG $- \Delta u =f$
+                \begin{todolist}
+                \item  Formulation
+                \item Coercivity and boundedness
+                \item Numerical experiments
+                \end{todolist}
+            \end{todolist}
 
     \\  \hline
         Comments
@@ -107,6 +122,7 @@
         Mostly based on \parencite{gurkan2019stabilized}
 
         & % Phase 2 Comments
+        $\dagger $ Not prioritized
         & % Phase 3 Comments
         & % Phase 4 Comments
         &
