@@ -41,14 +41,14 @@ Version: \today
 \begin{table}[htpb]
     \centering
     \footnotesize
-    \begin{tabular}{|c|p{0.15\textwidth}|p{0.15\textwidth}|p{0.15\textwidth}|p{0.15\textwidth}|p{0.15\textwidth}|}
+    \begin{tabular}{|p{0.15\textwidth}|p{0.15\textwidth}|p{0.15\textwidth}|p{0.15\textwidth}|p{0.15\textwidth}|p{0.15\textwidth}|}
     \hline & \textbf{ Phase 1}       & \textbf{Phase 2} & \textbf{Phase 3}& \textbf{Phase 4} & \textbf{Report}  \\
     \hline Estimated time & 2-3 Weeks & 4-5 Weeks & 2 Weeks & 3 Weeks &  \\
     \hline &&&&& \\[-1em] % Alignmenttrick https://tex.stackexchange.com/a/316016
          Problem & CutDG for $ -\Delta u = f  $
                         & CutCIP for $\Delta ^2 u = f$
-                        & $\partial _{t} u + \Delta ^2 u =g $
-                        &   $\partial _{t} u + \Delta ^2 u + f(u) = g $
+                        & CutCIP for $\partial _{t} u + \Delta ^2 u =g $
+                        & CutCIP for  $\partial _{t} u + \Delta ^2 u + f(u) = g $
                         &  \\
         \hline Goals
 
@@ -115,15 +115,16 @@ Version: \today
             \item Introduction
             \item CutDG $- \Delta u =f$
                 \begin{todolist}[leftmargin=3mm, noitemsep]
-                \item  Formulation
-                \item Closed and bounded
+                \item  Construction of CutDG
+                \item Well-posedness
                 \item Numerical exp.
                 \end{todolist}
             \item CutCIP for $ \Delta ^2 u = f$
                 \begin{todolist}[leftmargin=3mm, noitemsep]
-                \item  Formulation
-                \item Closed and bounded
-                \item A priori Estimates
+                \item  Weak form in $H^{4}$
+                \item Construction of CutCIP
+                \item Well-posedness
+                \item A priori estimates
                 \item Numerical experiments
                 \end{todolist}
             \item CutCIP for $ \partial _{t}u +  \Delta ^2 u = g$
@@ -181,7 +182,6 @@ group top shift=.6,
 expand chart=1.0\textwidth,
 group height=.3]{1}{24}
 %labels
-\gantttitle{Master Plan}{24} \\
 \gantttitle{January}{4}
 \gantttitle{February}{4}
 \gantttitle{March}{4}
@@ -194,7 +194,7 @@ group height=.3]{1}{24}
 \ganttbar[progress=100]{Phase 2}{8}{12} \\
 \ganttbar[progress=100]{Phase 3}{13}{15} \\
 \ganttbar[progress=100]{Phase 4}{16}{18} \\
-\ganttbar[progress=100]{Final }{19}{24} \\
+\ganttbar[progress=100]{Final }{19}{24}
 
 %relations
 % \ganttlink{elem0}{elem1}
