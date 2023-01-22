@@ -1,4 +1,19 @@
 \section{Introduction}\label{sec:introduction}
+The goal of the thesis implement modern FEM methods to solve the Cahn-Hilliard equation. The plan is to first understand the methods we want to use for the Poisson equation and then implement and do a thoughtful analysis for the method for the fourth order Biharmonic equation. Once this framework is established will we aim for solving the Chan-Hilliard equation using well known techniques for time-discretization and nonlinear problems.
 
+
+The thesis is planned to have the following structure:
+
+
+\begin{enumerate}[label=(\alph*)]
+    \item
+ Understand and implement a discontinuous Galerkin method for the Poisson equation.
+    \item
+ Derive an unfitted continuous interior penalty method for the biharmonic equation and show that the method is well-posed.
+    \item
+ Implement a time discretization scheme of an linear Cahn-Hilliard equation
+    \item
+ Implement nonlinear iteration methods for the (nonlinear) Cahn-Hilliard Equation
+\end{enumerate}
 
 
