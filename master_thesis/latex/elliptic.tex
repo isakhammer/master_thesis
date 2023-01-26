@@ -1,14 +1,9 @@
 
 \newpage
-\section{Unfitted cut discontinuous Galerkin method for the Poisson equation}%
-\label{sec:elliptic}
-
-\subsection{Introduction}%
-\label{sub:introduction}
+\section{Mathematical Background }%
+\label{sec:background_}
 
 
-\subsection{Notation}%
-\label{sub:notation}
 
 \subsection{Hilbert Spaces}%
 
@@ -90,13 +85,31 @@ H^{m}_{0} \left( \Omega  \right) = \left\{ \text{completion of }C_{0}^{\infty}\l
 \todo[inline]{ Write definitions considering $H^{\frac{1}{2}}( \Gamma ) $  }
 
 
-\subsection{Possion problem}%
-\label{sub:possion_problem}
 
-Let $f \in H^1( \Omega ) $ and $g \in H^{\frac{1}{2}}( \Gamma ) $ and $\Omega  \in \mathbb{R} ^{d}$ . We then define the strong formulation of the Possion problem to be \[
+
+\subsection{Elementary Inequalities}%
+\label{sub:elementary_inequalities}
+
+\[
 \begin{split}
-    -\Delta u &= f \in \Omega  \\
-     u &= g \in \Omega  \\
+    \textbf{Cauchy-Schwarz inequality: } & \| ab \|_{  }^{  }  \le \| a \|_{  }^{  } \| b \|_{  }^{  }   \\
+    \textbf{Inverse inequality: } & \frac{1}{h}\| \partial _{nn}  v_{h} \|_{\mathcal{F}_{h}   }^{2  }  \le C_{j} \| D ^2 v_{h} \|_{ \mathcal{T} _{h} }^{ 2 }   \\
+    \textbf{Youngs epsilon inequality: } & 2ab =   2\sqrt{\varepsilon }a\cdot    \frac{b}{\sqrt{\varepsilon } } \le \varepsilon a^2+ b^2 \frac{1}{\varepsilon }
+\end{split}
+\]
+
+
+
+\newpage
+\section{Unfitted cut discontinuous Galerkin method for the Poisson problem}%
+\label{sec:elliptic}
+
+\subsection{Poisson problem}%
+\label{sub:possion_problem}
+We will first consider the continuous Poisson problem. Let $f \in H^1( \Omega ) $ and $g \in H^{\frac{1}{2}}( \Gamma ) $ and $\Omega  \in \mathbb{R} ^{d}$ . We then define the strong formulation of the Possion problem to be \[
+\begin{split}
+    -\Delta u &= f \quad  \text{in }\Omega  \\
+     u &= g  \quad \text{on } \Gamma    \\
 \end{split} .
 \]
 Let us define the Hilbert spaces $V=H^{1}( \Omega ) $,   $V_{g} = \left\{ v \in H^{1}( \Omega ): v \mid _{\Gamma } = g \right\} $, the bilinear form $a: V \times V  \to \mathbb{R}  $ and the linear form $l: V'\to \mathbb{R}  $ s.t. \[
@@ -105,6 +118,13 @@ a( u,v) = ( \nabla u, \nabla v) _{\Omega }, \quad l( v) = (f,v)_{\Omega }.
 We say the weak formulation is to find a $u \in V_{g}$ so this equation holds  \[
 a( u,v) = l( v), \quad  \forall v \in V
 \]
+\subsection{CutFEM}%
+\label{sub:cutfem}
+
+
+
+
+
 
 
 
