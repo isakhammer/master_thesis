@@ -138,8 +138,8 @@ function main()
         # ns = [2^2,2^3,2^4,2^5,2^6,2^7,2^8]
         γs_orders  = @. 1.5*orders*( orders+1)
 
-        ns = [2^2,2^3,2^4,2^5,2^6,2^7]
-        γs = [2^0, 2^1, 2^2,2^3,2^4,2^5,2^6]
+        ns = [2^2, 2^3, 2^4, 2^5]#, 2^6, 2^7]
+        γs = [2^0, 2^1, 2^2, 2^3, 2^4, 2^5,2^6]
         figdir = mainfigdir*"/L_"*string(round(L,digits=2))*"_m_"*string(m)*"_r_"*string(r);
         makedir(figdir)
         u = BiharmonicEquation.man_sol(L=L,m=m,r=r)
@@ -148,8 +148,8 @@ function main()
     end
 
     run(L=1,m=1,r=1)
-    run(L=2π, m=1,r=1 )
-    run(L=1,m=7,r=3)
+    # run(L=2π, m=1,r=1 )
+    # run(L=1,m=7,r=3)
 end
 
 
