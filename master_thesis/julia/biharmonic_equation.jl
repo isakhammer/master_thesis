@@ -9,10 +9,17 @@ module BiharmonicEquation
 
 
     @with_kw struct SolverSettings
-        L::Real # Square Length
-        k::Int  # Order on elements
-        γ::Real # Nitsche Penalty
-        n::Int  # Partition
+
+        # Manufactured solution parameters
+        m::Int
+        r::Int
+
+        k::Int          # Order on elements
+        γ::Real         # Penalty parameter
+
+        # Domain Specific
+        L::Real         # Square length
+        n::Int          # Number of partitions
         simplex::Bool
     end
 
