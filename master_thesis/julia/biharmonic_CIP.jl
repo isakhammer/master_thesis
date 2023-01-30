@@ -18,7 +18,7 @@ module BiharmonicCIP
         # Domain Specific
         L::Real         # Square length
         n::Int          # Number of partitions
-        simplex::Bool = false
+        use_quads::Bool = false
 
         # Manufactured solution parameters
         m::Int
@@ -75,7 +75,11 @@ module BiharmonicCIP
         γ = 1.5*set.order*( set.order+1)
         domain2D = (0, set.L, 0, set.L)
         partition2D = (set.n, set.n)
-        model = CartesianDiscreteModel(domain2D,partition2D)
+        if !set.use_quads
+            model = CartesianDiscreteModel(domain2D,partition2D) |> simplexify
+        else
+            model = CartesianDiscreteModel(domain2D,partition2D)
+        end
 
         # Manufactured solution
         function man_sol(;L=1,m=1,r=1)

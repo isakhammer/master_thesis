@@ -39,10 +39,20 @@ module Results
         eoc_l2 = compute_eoc(hs, el2s)
         eoc_eh1 = compute_eoc(hs,eh1s)
         eoc_eh_energy = compute_eoc(hs,ehs_energy)
+
+        println("==============")
+        println("Order = $order")
+        println("Mesh sizes = $hs")
+        println("L2 errors  = $el2s")
+        println("H1 errors  = $eh1s")
+        println("Energy errors  = $eh1s")
+        println("EOC L2 = $eoc_l2")
+        println("EOC H1 = $eoc_eh1")
+        println("EOC Energy = $eoc_eh_energy")
+
         eoc_l2 =  [nothing; eoc_l2]
         eoc_eh1 =  [nothing; eoc_eh1]
         eoc_eh_energy =  [nothing; eoc_eh_energy]
-
         data = hcat(hs_str, el2s,  eoc_l2, eh1s, eoc_eh1, ehs_energy, eoc_eh_energy)
         header = [L"h/{L} ", L"$L^2$ norm", "EOC", L"$H_1$ norm", "EOC", "energy norm", "EOC"]
 

@@ -1,124 +1,143 @@
-##
-using Gridap
 
-# Define manufactured solution
-u(x) = 100*cos(x[1])*cos(x[2])
+module PoissonDirichlet
+    using Gridap
+    using Parameters
+    import GridapMakie
+    import Makie
+    import GLMakie
+    using Test
 
-# -Δu = f
-f(x) = 2*u(x)
-g(x) = u(x)
+    @with_kw struct SolverSettings
 
-# ∂Δu/∂n
-# q(x) = 0
+        order::Int      # Order on elements
 
-function run_exp(n=8, k=2, use_quads=false)
-    ## Mesh
-    pmin = Point(0.,0.0)
-    pmax = Point(2π, 2π)
-    partition = (n, n)
+        # Domain Specific
+        L::Real         # Square length
+        n::Int          # Number of partitions
+        use_quads::Bool = true
 
-    if !use_quads
-        model = CartesianDiscreteModel(pmin, pmax, partition) |> simplexify
-    else
-        model = CartesianDiscreteModel(pmin, pmax, partition)
+        # Manufactured solution parameters
+        m::Int
+        r::Int
     end
 
-    # Define triangulation
-    Ω = Triangulation(model)
-    Γ = BoundaryTriangulation(model)
+    @with_kw struct Results
+        Ω
+        Γ
+        Λ
 
-    # Write out meshes
-    folder = "figures/poisson_dirichlet/"
-    mkpath(folder)
-    writevtk(model, folder*"model_n_$(n)")
-    writevtk(Ω, folder*"mesh_n_$(n)")
-    println(folder*"mesh_n_$(n)")
+        model
+        h::Real
 
-    ## Function spaces
-    order = k
-    reffe = ReferenceFE(lagrangian, Float64, order)
-    # V = TestFESpace(Ω, reffe, conformity=:H1)
-    # U = TrialFESpace(V)
-
-    V = TestFESpace(Ω, reffe, conformity=:H1, dirichlet_tags="boundary")
-    U = TrialFESpace(V,g)
-
-    ## Define the weak form
-    degree = 2*order
-    dΩ = Measure(Ω, degree)
-
-    # Define mesh and stabilization parameters
-    h = norm((pmax-pmin)./VectorValue(partition))
-
-    a_Ω(u,v) =∫( ∇(v)⋅∇(u) )dΩ
-    a(u,v) = a_Ω(u,v)# + a_Γ(u,v)
-
-    l_Ω(v) = ∫( v⊙f )dΩ
-    l(v) = l_Ω(v) #+ l_Γ(v)
-
-    ## Solve and postprocess
-    op = AffineFEOperator(a, l, U, V)
-    uh = solve(op)
-
-    # Compute interpolation of exact solution for visual comparison
-    u_inter = interpolate_everywhere(u, V)
-
-    # Compute error
-    e = u - uh
-
-    outputfile = folder*"possion_dirichlet_n_$(n)_k_$(k)_use_quads_$(use_quads)"
-    writevtk(Ω, outputfile, cellfields=["uh" => uh, "u_inter" => u_inter, "error" => e])
-
-    l2(u) = sqrt(sum( ∫( u⊙u )*dΩ ))
-    h1(u) = sqrt(sum( ∫( u⊙u + ∇(u)⊙∇(u) )*dΩ ))
-    el2 = l2(e)
-    eh1 = h1(e)
-
-    println("h = $h, L2 error = $el2")
-    println("h = $h, H1 error = $eh1")
-
-    (h, el2, eh1)
-end
-
-function conv_test(ns, k, use_quads)
-
-    hs = Float64[]
-    el2s = Float64[]
-    eh1s = Float64[]
-
-    for n in ns
-        h, el2, eh1 = run_exp(n, k, use_quads)
-        push!(hs, h)
-        push!(el2s, el2)
-        push!(eh1s, eh1)
+        u
+        uh
+        e
+        el2
+        eh1
+        eh_energy
     end
 
-    println("Mesh sizes = $hs")
-    println("L2 errors  = $el2s")
-    println("H1 errors  = $eh1s")
+    function generate_vtk(; res::Results, dirname::String)
+        println("Generating vtk's in ", dirname)
+        if (isdir(dirname))
+            rm(dirname, recursive=true)
+        end
+        mkdir(dirname)
 
-    # Compute eoc
-    (hs, el2s, eh1s)
-end
+        writevtk(res.model, dirname*"/model")
+        writevtk(res.Λ, dirname*"/skeleton")
+        writevtk(res.Γ, dirname*"/boundary")
+        writevtk(res.Λ, dirname*"/jumps",cellfields=["jump_u"=>jump(res.uh)])
+        writevtk(res.Ω, dirname*"/omega",cellfields=["uh"=>res.uh])
+        writevtk(res.Ω, dirname*"/error",cellfields=["e"=>res.e])
+        writevtk(res.Ω, dirname*"/manufatured",cellfields=["u"=>res.u])
 
-function compute_eoc(hs, errs)
-    eoc = log.(errs[1:end-1]./errs[2:end])./log.(hs[1:end-1]./hs[2:end])
-end
 
-function main()
-    use_quads = false
-    ks  = [2, 3, 4]
-    ns = [4, 8, 16, 32, 64, 128]
-    for k in ks
-        println("Running EOC test for k = $k")
-        println("========================================")
-        hs, el2s, eh1s = conv_test(ns, k, use_quads)
-        eoc_l2 = compute_eoc(hs, el2s)
-        eoc_h1 = compute_eoc(hs, eh1s)
-        println("L2 EOC = $eoc_l2")
-        println("H1 EOC = $eoc_h1")
-        println("========================================")
+        fig = Makie.plot(res.Λ)
+        Makie.wireframe!(res.Λ, color=:black, linewidth=2)
+        Makie.wireframe!(res.Γ, color=:black, linewidth=2)
+        Makie.save(dirname*"/grid.png", fig)
+
+        # (Isak): Doesnt work :( Please fix
+        # fig, _ , plt = Makie.plot(res.Ω, res.uh)
+        # Makie.Colorbar(fig[1,2], plt)
+        # Makie.save(dirname*"/man_sol.png", fig)
     end
-end
 
-main()
+
+    function run(set::SolverSettings)
+        # Some parameters
+        # h = set.L/set.n
+        # γ = 1.5*set.order*( set.order+1)
+        # domain2D = (0, set.L, 0, set.L)
+        # partition2D = (set.n, set.n)
+        # if !set.use_quads
+        #     model = CartesianDiscreteModel(domain2D,partition2D) |> simplexify
+        # else
+        #     model = CartesianDiscreteModel(domain2D,partition2D)
+        # end
+
+        ##
+        n = set.n
+
+        pmin = Point(0.,0.0)
+        pmax = Point(2π, 2π)
+        partition = (n, n)
+
+        if !set.use_quads
+            model = CartesianDiscreteModel(pmin, pmax, partition) |> simplexify
+        else
+            model = CartesianDiscreteModel(pmin, pmax, partition)
+        end
+        h = norm((pmax-pmin)./VectorValue(partition))
+        ##
+
+        # u is the manufactured solution
+        # -Δu = f in Ω, and u = g on Γ
+        # u = man_sol(L=set.L, m=set.m, r=set.r)
+        u(x) = 100*cos(x[1])*cos(x[2])
+        f(x) = 2*u(x)
+        g(x) = u(x)
+
+        # Define triangulation
+        Ω = Triangulation(model)
+        Γ = BoundaryTriangulation(model)
+        Λ = SkeletonTriangulation(model)
+
+        ## Function spaces
+        # order = 2
+        # reffe = ReferenceFE(lagrangian, Float64, order)
+        reffe = ReferenceFE(lagrangian, Float64, set.order)
+
+        V = TestFESpace(Ω, reffe, conformity=:H1, dirichlet_tags="boundary")
+        U = TrialFESpace(V,g)
+
+        ## Define the weak form
+        degree = 2*set.order
+        dΩ = Measure(Ω, degree)
+
+        a_Ω(u,v) =∫( ∇(v)⋅∇(u) )dΩ
+        a(u,v) = a_Ω(u,v)
+
+        l_Ω(v) = ∫( v⊙f )dΩ
+        l(v) = l_Ω(v)
+
+        op = AffineFEOperator(a, l, U, V)
+        uh = solve(op)
+
+        e = u - uh
+        el2 = sqrt(sum( ∫(e*e)dΩ ))
+        eh_energy = sqrt(sum( ∫(∇(e)⊙∇(e) )*dΩ ))
+        eh1 = sqrt(sum( ∫( e⊙e + ∇(e)⊙∇(e) )*dΩ ))
+
+        u_inter = interpolate(u, V)
+        res = Results(  model=model, Ω=Ω, Γ=Γ, Λ=Λ, h=h,
+                        u=u_inter, uh=uh, e=e, el2=el2, eh1=eh1, eh_energy=eh_energy)
+        return res
+    end
+
+end # module
+
+
+
+
