@@ -5,6 +5,7 @@ biharmonic_results/
 biharmonic_julia_test_result/
 poission_results
 brenner_results
+BiharmonicCIP
 cahn_hilliard
 biharmonic_julia_test_results/
 
