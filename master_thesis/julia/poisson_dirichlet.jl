@@ -1,3 +1,4 @@
+include("results.jl")
 
 module PoissonDirichlet
     using Gridap
@@ -7,19 +8,6 @@ module PoissonDirichlet
     import GLMakie
     using Test
 
-    @with_kw struct SolverSettings
-
-        order::Int      # Order on elements
-
-        # Domain Specific
-        L::Real         # Square length
-        n::Int          # Number of partitions
-        use_quads::Bool = true
-
-        # Manufactured solution parameters
-        m::Int
-        r::Int
-    end
 
     @with_kw struct Results
         Ω
@@ -65,7 +53,7 @@ module PoissonDirichlet
     end
 
 
-    function run(set::SolverSettings)
+    function run(; order=order, n=n, L=L,  m=m, r=r, use_quads=false)
         # Some parameters
         # h = set.L/set.n
         # γ = 1.5*set.order*( set.order+1)
@@ -78,13 +66,12 @@ module PoissonDirichlet
         # end
 
         ##
-        n = set.n
 
         pmin = Point(0.,0.0)
-        pmax = Point(2π, 2π)
+        pmax = Point(L, L)
         partition = (n, n)
 
-        if !set.use_quads
+        if !use_quads
             model = CartesianDiscreteModel(pmin, pmax, partition) |> simplexify
         else
             model = CartesianDiscreteModel(pmin, pmax, partition)
@@ -107,13 +94,13 @@ module PoissonDirichlet
         ## Function spaces
         # order = 2
         # reffe = ReferenceFE(lagrangian, Float64, order)
-        reffe = ReferenceFE(lagrangian, Float64, set.order)
+        reffe = ReferenceFE(lagrangian, Float64, order)
 
         V = TestFESpace(Ω, reffe, conformity=:H1, dirichlet_tags="boundary")
         U = TrialFESpace(V,g)
 
         ## Define the weak form
-        degree = 2*set.order
+        degree = 2*order
         dΩ = Measure(Ω, degree)
 
         a_Ω(u,v) =∫( ∇(v)⋅∇(u) )dΩ
@@ -140,4 +127,59 @@ end # module
 
 
 
+
+
+
+
+function convergence_analysis(; L, m, r, orders, ns, dirname, optimize)
+    println("Run convergence",)
+
+    for order in orders
+
+        el2s = Float64[]
+        eh1s = Float64[]
+        ehs_energy = Float64[]
+        println("Run convergence tests: order = "*string(order))
+
+        for n in ns
+
+            res = PoissonDirichlet.run(order=order, n=n, L=L, m=m, r=r)
+
+            if !(optimize)
+                vtkdirname =dirname*"/order_"*string(order)*"_n_"*string(n)
+                mkpath(vtkdirname)
+                PoissonDirichlet.generate_vtk(res=res, dirname=vtkdirname)
+            end
+
+            push!(el2s, res.el2)
+            push!(eh1s, res.eh1)
+            push!(ehs_energy, res.eh_energy)
+        end
+        Results.generate_figures(ns=ns, el2s=el2s, eh1s=eh1s, ehs_energy=ehs_energy, order=order, dirname=dirname)
+    end
+
+end
+
+function main()
+    function makedir(dirname)
+        if (isdir(dirname))
+            rm(dirname, recursive=true)
+        end
+        mkdir(dirname)
+    end
+
+    resultdir= "figures/poisson_dirichlet/"*string(Dates.now())
+    mkpath(resultdir)
+
+    function run(;  L,m,r)
+        orders=[2,3,4]
+        ns = [2^2, 2^3, 2^4, 2^5]#, 2^6, 2^7]
+        dirname = resultdir*"/L_"*string(round(L,digits=2))*"_m_"*string(m)*"_r_"*string(r);
+        makedir(dirname)
+        convergence_analysis( L=L, m=m, r=r, orders=orders, ns=ns, dirname=dirname, optimize=true)
+    end
+    run(L=1,m=1,r=1)
+end
+
+@time main()
 
