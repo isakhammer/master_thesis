@@ -11,20 +11,6 @@ module BiharmonicCIP
         u(x) = cos(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
     end
 
-    @with_kw struct SolverSettings
-
-        order::Int      # Order on elements
-
-        # Domain Specific
-        L::Real         # Square length
-        n::Int          # Number of partitions
-        use_quads::Bool = false
-
-        # Manufactured solution parameters
-        m::Int
-        r::Int
-    end
-
     @with_kw struct Results
         Ω
         Γ
@@ -69,13 +55,13 @@ module BiharmonicCIP
     end
 
 
-    function run(set::SolverSettings)
+    function run(;order=order, n=n, L=L, m=m, r=r, use_quads=false)
         # Some parameters
-        h = set.L/set.n
-        γ = 1.5*set.order*( set.order+1)
-        domain2D = (0, set.L, 0, set.L)
-        partition2D = (set.n, set.n)
-        if !set.use_quads
+        h = L/n
+        γ = 1.5*order*( order+1)
+        domain2D = (0, L, 0, L)
+        partition2D = (n, n)
+        if !use_quads
             model = CartesianDiscreteModel(domain2D,partition2D) |> simplexify
         else
             model = CartesianDiscreteModel(domain2D,partition2D)
@@ -85,16 +71,16 @@ module BiharmonicCIP
         function man_sol(;L=1,m=1,r=1)
             u(x) = cos(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
         end
-        u = man_sol(L=set.L, m=set.m, r=set.r)
+        u = man_sol(L=L, m=m, r=r)
 
         # Spaces
-        V = TestFESpace(model, ReferenceFE(lagrangian,Float64, set.order), conformity=:H1)
+        V = TestFESpace(model, ReferenceFE(lagrangian,Float64, order), conformity=:H1)
         U = TrialFESpace(V)
         Ω = Triangulation(model)
         Λ = SkeletonTriangulation(model)
         Γ = BoundaryTriangulation(model)
 
-        degree = 2*set.order
+        degree = 2*order
         dΩ = Measure(Ω,degree)
         dΓ = Measure(Γ,degree)
         dΛ = Measure(Λ,degree)
@@ -165,8 +151,7 @@ function convergence_analysis(; L, m, r, orders, ns, dirname, optimize)
 
         for n in ns
 
-            settings = BiharmonicCIP.SolverSettings(order=order, L=L, n=n, m=m, r=r)
-            res = BiharmonicCIP.run(settings)
+            res = BiharmonicCIP.run(order=order, n=n, L=L, m=m, r=r)
 
             if !(optimize)
                 vtkdirname =dirname*"/order_"*string(order)*"_n_"*string(n)
