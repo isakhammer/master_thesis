@@ -49,17 +49,18 @@ function run_exp(n=8, k=2, use_quads=false)
 
     # Define mesh and stabilization parameters
     h = norm((pmax-pmin)./VectorValue(partition))
+
     # γ = 5.0*order*(order+1)  # Penalty parameter
     γ = 5  # Penalty parameter
     μ = γ/h
 
     a_Ω(u,v) =∫( ∇(v)⋅∇(u) )dΩ
     a_Γ(u,v) =∫( - ( ∇(u)⋅n_Γ )⊙v - u⊙( ∇(v)⋅n_Γ ) + μ*u⊙v )dΓ
+    a(u,v) = a_Ω(u,v) + a_Γ(u,v)
+
+    l(v) = l_Ω(v) + l_Γ(v)
     l_Ω(v) = ∫( v⊙f )dΩ
     l_Γ(v) = ∫( -(( ∇(v)⋅n_Γ )⊙g) + μ*(g⊙v) )dΓ
-
-    a(u,v) = a_Ω(u,v) + a_Γ(u,v)
-    l(v) = l_Ω(v) + l_Γ(v)
 
     ## Solve and postprocess
     op = AffineFEOperator(a, l, U, V)
