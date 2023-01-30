@@ -7,10 +7,11 @@ using LaTeXStrings
 using Latexify
 using PrettyTables
 
-function generate_figures(hs, hs_str, el2s, eh1s, ehs_energy, γ, order::Integer, dirname::String)
-    filename = dirname*"/conv_order_"*string(order)*"_gamma_"*string(round( γ,digits=2 ))
+function generate_figures(;ns, el2s, eh1s, ehs_energy, order::Integer, dirname::String)
+    filename = dirname*"/conv_order_"*string(order)
 
-    function generate_plot(hs, el2s, eh1s, ehs_energy)
+    function generate_plot(;ns, el2s, eh1s, ehs_energy)
+        hs = 1 .// ns
         fig = CairoMakie.Figure()
         ax = CairoMakie.Axis(fig[1, 1], yscale = log10, xscale= log2,
                              yminorticksvisible = true, yminorgridvisible = true, yminorticks = CairoMakie.IntervalsBetween(8),
@@ -32,7 +33,9 @@ function generate_figures(hs, hs_str, el2s, eh1s, ehs_energy, γ, order::Integer
         return eoc
     end
 
-    function generate_table(;hs_str, hs, el2s, eh1s, ehs_energy)
+    function generate_table(; ns, el2s, eh1s, ehs_energy)
+        hs = 1 .// ns
+        hs_str =  latexify.(hs)
         eoc_l2 = compute_eoc(hs, el2s)
         eoc_eh1 = compute_eoc(hs,eh1s)
         eoc_eh_energy = compute_eoc(hs,ehs_energy)
@@ -52,8 +55,8 @@ function generate_figures(hs, hs_str, el2s, eh1s, ehs_energy, γ, order::Integer
         end
     end
 
-    generate_plot(hs, el2s, eh1s, ehs_energy)
-    generate_table(hs_str=hs_str, hs=hs, el2s=el2s, eh1s=eh1s, ehs_energy=ehs_energy)
+    generate_plot(ns=ns, el2s=el2s, eh1s=eh1s, ehs_energy=ehs_energy)
+    generate_table(ns=ns, el2s=el2s, eh1s=eh1s, ehs_energy=ehs_energy)
 end
 
 
@@ -66,18 +69,11 @@ end
 
 
 
-function convergence_analysis(;figdir, L, u::Function, orders, γs , ns)
+function convergence_analysis(; L, m, r, orders, ns, dirname)
     println("Run convergence",)
-
-    hs = 1 .// ns # does not render nice in latex table if L=2π
-    hs_str =  latexify.(hs)
-
-    @test length( orders ) == length(γs)
-    @test length( ns ) == length(hs)
 
     for i in 1:length(orders)
         order = orders[i]
-        γ = γs[i]
 
         el2s = Float64[]
         eh1s = Float64[]
@@ -85,66 +81,32 @@ function convergence_analysis(;figdir, L, u::Function, orders, γs , ns)
         println("Run convergence tests: order = "*string(order))
 
         for n in ns
-            res = BiharmonicEquation.run_CP_method(n=n, L=L, γ=γ, order=order, u=u)
+            settings = BiharmonicEquation.SolverSettings(order=order, L=L, n=n, m=m, r=r)
+            res = BiharmonicEquation.run_CP_method(settings)
             push!(el2s, res.el2)
             push!(eh1s, res.eh1)
             push!(ehs_energy, res.eh_energy)
         end
-        generate_figures(hs, hs_str, el2s, eh1s, ehs_energy, γ, order, figdir)
+        generate_figures(ns=ns, el2s=el2s, eh1s=eh1s, ehs_energy=ehs_energy, order=order, dirname=dirname)
     end
 
 end
 
-# function run_gamma_analysis(;figdir, L, u::Function, orders, γs, ns)
-#     hs = 1 .// ns
-#     for order in orders
-#         println("Run gamma = ", order, " of ", orders)
-#         fig = CairoMakie.Figure()
-#         ax = CairoMakie.Axis(fig[1, 1], yscale = log10, xscale= log2,
-#                              yminorticksvisible = true, yminorgridvisible = true, yminorticks = CairoMakie.IntervalsBetween(8),
-#                              xlabel = L"h/{L}", ylabel = L"$L^2$ error" , title="Order: "*string(order))
-#         for i in 1:length(γs)
-#             γ = γs[i]
-#             el2s = Float64[]
-#             println("γ ", ": ", i, "/", length(γs))
-
-#             for n in ns
-#                 res = BiharmonicEquation.run_CP_method(n=n, L=L, γ=γ, order=order, u=u)
-#                 push!(el2s, res.el2)
-#             end
-
-#             CairoMakie.lines!(hs, el2s, label=string(γ), linewidth=2)
-#             CairoMakie.scatter!(hs, el2s)
-#         end
-
-#         CairoMakie.Legend(fig[1,2], ax,L"$\gamma$ values", framevisible = true)
-#         CairoMakie.save(figdir*"/gamma_analysis_order"*string(order)*".png",fig)
-#     end
-# end
-
-
 function main()
-    mainfigdir = "figures"
-    if !(isdir(mainfigdir))
-        mkdir(mainfigdir)
+    figdir = "figures"
+    if !(isdir(figdir))
+        mkdir(figdir)
     end
 
-    # makedir(mainfigdir)
-    mainfigdir= mainfigdir*"/"*string(Dates.now())
-    makedir(mainfigdir)
+    resultdir= figdir*"/"*string(Dates.now())
+    makedir(resultdir)
 
     function run(;  L,m,r)
         orders=[2,3,4]
-        # ns = [2^2,2^3,2^4,2^5,2^6,2^7,2^8]
-        γs_orders  = @. 1.5*orders*( orders+1)
-
-        ns = [2^2, 2^3, 2^4, 2^5]#, 2^6, 2^7]
-        γs = [2^0, 2^1, 2^2, 2^3, 2^4, 2^5,2^6]
-        figdir = mainfigdir*"/L_"*string(round(L,digits=2))*"_m_"*string(m)*"_r_"*string(r);
-        makedir(figdir)
-        u = BiharmonicEquation.man_sol(L=L,m=m,r=r)
-        convergence_analysis(figdir=figdir, L=L, u=u,  orders=orders, γs=γs_orders, ns=ns)
-        # run_gamma_analysis(figdir=figdir, L=L,u=u, orders=orders, γs=γs, ns=ns)
+        ns = [2^2, 2^3, 2^4]#, 2^5]#, 2^6, 2^7]
+        dirname = resultdir*"/L_"*string(round(L,digits=2))*"_m_"*string(m)*"_r_"*string(r);
+        makedir(dirname)
+        convergence_analysis( L=L, m=m, r=r, orders=orders, ns=ns, dirname=dirname)
     end
 
     run(L=1,m=1,r=1)

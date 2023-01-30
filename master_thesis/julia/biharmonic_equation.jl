@@ -7,20 +7,22 @@ module BiharmonicEquation
     import GLMakie
     using Test
 
+    function man_sol(;L=1,m=1,r=1)
+        u(x) = cos(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
+    end
 
     @with_kw struct SolverSettings
 
-        # Manufactured solution parameters
-        m::Int
-        r::Int
-
-        k::Int          # Order on elements
-        γ::Real         # Penalty parameter
+        order::Int      # Order on elements
 
         # Domain Specific
         L::Real         # Square length
         n::Int          # Number of partitions
-        simplex::Bool
+        simplex::Bool = false
+
+        # Manufactured solution parameters
+        m::Int
+        r::Int
     end
 
     @with_kw struct Results
@@ -30,9 +32,6 @@ module BiharmonicEquation
 
         model
         h::Real
-        γ::Real
-        order::Int
-        degree::Int
 
         u_inter
         uh
@@ -41,7 +40,6 @@ module BiharmonicEquation
         eh1
         eh_energy
     end
-
 
     function generate_vtk(; res::Results, dirname::String)
         println("Generating vtk's in ", dirname)
@@ -70,20 +68,28 @@ module BiharmonicEquation
     end
 
 
-    function run_CP_method(;n, L, γ, order,  u::Function, simplex=true)
-        h = L/n
-        domain2D = (0, L, 0, L)
-        partition2D = (n,n)
+    function run_CP_method(set::SolverSettings)
+        # Some parameters
+        h = set.L/set.n
+        γ = 1.5*set.order*( set.order+1)
+        domain2D = (0, set.L, 0, set.L)
+        partition2D = (set.n, set.n)
         model = CartesianDiscreteModel(domain2D,partition2D)
 
+        # Manufactured solution
+        function man_sol(;L=1,m=1,r=1)
+            u(x) = cos(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
+        end
+        u = man_sol(L=set.L, m=set.m, r=set.r)
+
         # Spaces
-        V = TestFESpace(model, ReferenceFE(lagrangian,Float64,order), conformity=:H1)
+        V = TestFESpace(model, ReferenceFE(lagrangian,Float64, set.order), conformity=:H1)
         U = TrialFESpace(V)
         Ω = Triangulation(model)
         Λ = SkeletonTriangulation(model)
         Γ = BoundaryTriangulation(model)
 
-        degree = 2*order
+        degree = 2*set.order
         dΩ = Measure(Ω,degree)
         dΓ = Measure(Γ,degree)
         dΛ = Measure(Λ,degree)
@@ -128,18 +134,13 @@ module BiharmonicEquation
         eh1 = sqrt(sum( ∫( e⊙e + ∇(e)⊙∇(e) )*dΩ ))
 
         u_inter = interpolate(u, V)
-        res = Results( model=model, Ω=Ω, Γ=Γ, Λ=Λ,
-                      h=h, γ=γ, order=order, degree=degree,
+        res = Results( model=model, Ω=Ω, Γ=Γ, Λ=Λ, h=h,
                       u_inter=u_inter, uh=uh, e=e, el2=el2, eh1=eh1, eh_energy=eh_energy)
-
 
         return res
     end
 
 
-    function man_sol(;L=1,m=1,r=1)
-        u(x) = cos(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
-    end
 
 end # module
 
