@@ -77,13 +77,16 @@ function run_exp(n=8, k=2, use_quads=false)
 
     l2(u) = sqrt(sum( ∫( u⊙u )*dΩ ))
     h1(u) = sqrt(sum( ∫( u⊙u + ∇(u)⊙∇(u) )*dΩ ))
+    energy(u) = sqrt(sum( ∫( u⊙u )*dΩ  + ∫( ( 1/h )*( u⊙u ) )*dΓ)) # Defined on eq 3.16 Sigmund project thesis
+
     el2 = l2(e)
     eh1 = h1(e)
+    eaₕ = energy(e)
 
     println("h = $h, L2 error = $el2")
     println("h = $h, H1 error = $eh1")
 
-    (h, el2, eh1)
+    (h, el2, eh1, eaₕ)
 end
 
 function conv_test(ns, k, use_quads)
@@ -91,20 +94,23 @@ function conv_test(ns, k, use_quads)
     hs = Float64[]
     el2s = Float64[]
     eh1s = Float64[]
+    eaₕs = Float64[]
 
     for n in ns
-        h, el2, eh1 = run_exp(n, k, use_quads)
+        h, el2, eh1, eaₕ = run_exp(n, k, use_quads)
         push!(hs, h)
         push!(el2s, el2)
         push!(eh1s, eh1)
+        push!(eaₕs, eaₕ)
     end
 
     println("Mesh sizes = $hs")
     println("L2 errors  = $el2s")
     println("H1 errors  = $eh1s")
+    println("Energy errors  = $eaₕs")
 
     # Compute eoc
-    (hs, el2s, eh1s)
+    (hs, el2s, eh1s, eaₕs)
 end
 
 function compute_eoc(hs, errs)
@@ -118,11 +124,13 @@ function main()
     for k in ks
         println("Running EOC test for k = $k")
         println("========================================")
-        hs, el2s, eh1s = conv_test(ns, k, use_quads)
+        hs, el2s, eh1s, eaₕs = conv_test(ns, k, use_quads)
         eoc_l2 = compute_eoc(hs, el2s)
         eoc_h1 = compute_eoc(hs, eh1s)
+        eoc_energy = compute_eoc(hs, eaₕs)
         println("L2 EOC = $eoc_l2")
         println("H1 EOC = $eoc_h1")
+        println("Energy EOC = $eoc_energy")
         println("========================================")
     end
 end
