@@ -1,5 +1,5 @@
 
-module BiharmonicEquation
+module BiharmonicCIP
     using Gridap
     using Parameters
     import GridapMakie
@@ -33,7 +33,7 @@ module BiharmonicEquation
         model
         h::Real
 
-        u_inter
+        u
         uh
         e
         el2
@@ -48,13 +48,13 @@ module BiharmonicEquation
         end
         mkdir(dirname)
 
-        # writevtk(res.model, dirname*"/model")
-        # writevtk(res.Λ, dirname*"/skeleton")
-        # writevtk(res.Γ, dirname*"/boundary")
-        # writevtk(res.Λ, dirname*"/jumps",cellfields=["jump_u"=>jump(res.uh)])
-        # writevtk(res.Ω, dirname*"/omega",cellfields=["uh"=>res.uh])
-        # writevtk(res.Ω, dirname*"/error",cellfields=["e"=>res.e])
-        # writevtk(res.Ω, dirname*"/manufatured",cellfields=["u"=>res.u])
+        writevtk(res.model, dirname*"/model")
+        writevtk(res.Λ, dirname*"/skeleton")
+        writevtk(res.Γ, dirname*"/boundary")
+        writevtk(res.Λ, dirname*"/jumps",cellfields=["jump_u"=>jump(res.uh)])
+        writevtk(res.Ω, dirname*"/omega",cellfields=["uh"=>res.uh])
+        writevtk(res.Ω, dirname*"/error",cellfields=["e"=>res.e])
+        writevtk(res.Ω, dirname*"/manufatured",cellfields=["u"=>res.u])
 
 
         fig = Makie.plot(res.Λ)
@@ -62,13 +62,14 @@ module BiharmonicEquation
         Makie.wireframe!(res.Γ, color=:black, linewidth=2)
         Makie.save(dirname*"/grid.png", fig)
 
-        fig, _ , plt = Makie.plot(res.Ω, res.u_inter)
-        Makie.Colorbar(fig[1,2], plt)
-        Makie.save(dirname*"/man_sol.png", fig)
+        # (Isak): Doesnt work :( Please fix
+        # fig, _ , plt = Makie.plot(res.Ω, res.uh)
+        # Makie.Colorbar(fig[1,2], plt)
+        # Makie.save(dirname*"/man_sol.png", fig)
     end
 
 
-    function run_CP_method(set::SolverSettings)
+    function run(set::SolverSettings)
         # Some parameters
         h = set.L/set.n
         γ = 1.5*set.order*( set.order+1)
@@ -134,13 +135,10 @@ module BiharmonicEquation
         eh1 = sqrt(sum( ∫( e⊙e + ∇(e)⊙∇(e) )*dΩ ))
 
         u_inter = interpolate(u, V)
-        res = Results( model=model, Ω=Ω, Γ=Γ, Λ=Λ, h=h,
-                      u_inter=u_inter, uh=uh, e=e, el2=el2, eh1=eh1, eh_energy=eh_energy)
-
+        res = Results(  model=model, Ω=Ω, Γ=Γ, Λ=Λ, h=h,
+                        u=u_inter, uh=uh, e=e, el2=el2, eh1=eh1, eh_energy=eh_energy)
         return res
     end
-
-
 
 end # module
 
