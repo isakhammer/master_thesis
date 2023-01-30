@@ -5,7 +5,7 @@ using Gridap
 u(x) = 100*cos(x[1])*cos(x[2])
 
 # -Δu = f
-f(x) = 4*u(x)
+f(x) = 2*u(x)
 g(x) = u(x)
 
 # ∂Δu/∂n
@@ -58,9 +58,9 @@ function run_exp(n=8, k=2, use_quads=false)
     a_Γ(u,v) =∫( - ( ∇(u)⋅n_Γ )⊙v - u⊙( ∇(v)⋅n_Γ ) + μ*u⊙v )dΓ
     a(u,v) = a_Ω(u,v) + a_Γ(u,v)
 
-    l(v) = l_Ω(v) + l_Γ(v)
     l_Ω(v) = ∫( v⊙f )dΩ
     l_Γ(v) = ∫( -(( ∇(v)⋅n_Γ )⊙g) + μ*(g⊙v) )dΓ
+    l(v) = l_Ω(v) + l_Γ(v)
 
     ## Solve and postprocess
     op = AffineFEOperator(a, l, U, V)
