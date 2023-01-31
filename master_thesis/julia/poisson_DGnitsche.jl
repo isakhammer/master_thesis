@@ -111,7 +111,7 @@ module PoissonNitsche
         h = norm((pmax-pmin)./VectorValue(partition))
 
         # γ = 5.0*order*(order+1)  # Penalty parameter
-        γ = 5  # Penalty parameter
+        γ = 2  # Penalty parameter
         μ = γ/h
 
         a_Ω(u,v) =∫( ∇(v)⋅∇(u) )dΩ
