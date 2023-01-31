@@ -1,7 +1,7 @@
 include("results.jl")
 using Dates
 
-module PoissonNitsche
+module PoissonDGNitsche
     using Gridap
     using Parameters
     import GridapMakie
@@ -54,19 +54,7 @@ module PoissonNitsche
     end
 
 
-    function run(; order=order, n=n, L=L,  m=m, r=r, use_quads=false)
-        # Some parameters
-        # h = set.L/set.n
-        # γ = 1.5*set.order*( set.order+1)
-        # domain2D = (0, set.L, 0, set.L)
-        # partition2D = (set.n, set.n)
-        # if !set.use_quads
-        #     model = CartesianDiscreteModel(domain2D,partition2D) |> simplexify
-        # else
-        #     model = CartesianDiscreteModel(domain2D,partition2D)
-        # end
-
-        ##
+    function run(; order=order, n=n, L=L,  m=m, r=r, use_quads=true)
 
         pmin = Point(0.,0.0)
         pmax = Point(L, L)
@@ -93,8 +81,6 @@ module PoissonNitsche
         Λ = SkeletonTriangulation(model)
 
         ## Function spaces
-        # order = 2
-        # reffe = ReferenceFE(lagrangian, Float64, order)
         reffe = ReferenceFE(lagrangian, Float64, order)
 
         V = TestFESpace(Ω, reffe, conformity=:H1)
@@ -104,18 +90,21 @@ module PoissonNitsche
         degree = 2*order
         dΩ = Measure(Ω, degree)
         dΓ= Measure(Γ, degree)
+        dΛ= Measure(Λ, degree)
 
         n_Γ  = get_normal_vector(Γ)
 
         # Define mesh and stabilization parameters
         h = norm((pmax-pmin)./VectorValue(partition))
 
-        # γ = 5.0*order*(order+1)  # Penalty parameter
-        γ = 2  # Penalty parameter
+        γ = 2.0*order*(order+1)  # Penalty parameter
+        # γ = 2  # Penalty parameter
         μ = γ/h
 
         a_Ω(u,v) =∫( ∇(v)⋅∇(u) )dΩ
         a_Γ(u,v) =∫( - ( ∇(u)⋅n_Γ )⊙v - u⊙( ∇(v)⋅n_Γ ) + μ*u⊙v )dΓ
+        a_Λ(u,v) =∫( - mean(∇(u)⋅n_Γ)⊙jump(v) - jump(w)⊙mean(∇(v)⋅n_Γ) + μ* jump(v)⊙jump(w)  )dΛ
+
         a(u,v) = a_Ω(u,v) + a_Γ(u,v)
 
         l_Ω(v) = ∫( v⊙f )dΩ
@@ -182,7 +171,7 @@ function main()
         mkdir(dirname)
     end
 
-    resultdir= "figures/poisson_nitsche/"*string(Dates.now())
+    resultdir= "figures/poisson_DGnitsche/"*string(Dates.now())
     mkpath(resultdir)
 
     function run(;  L,m,r)
