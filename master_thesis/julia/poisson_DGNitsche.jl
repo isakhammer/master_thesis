@@ -1,7 +1,7 @@
 include("results.jl")
 using Dates
 
-module PoissonDGNitsche
+module Solver
     using Gridap
     using Parameters
     import GridapMakie
@@ -132,8 +132,6 @@ end # module
 
 
 
-
-
 function convergence_analysis(; L, m, r, orders, ns, dirname, optimize)
     println("Run convergence",)
 
@@ -146,12 +144,12 @@ function convergence_analysis(; L, m, r, orders, ns, dirname, optimize)
 
         for n in ns
 
-            res = PoissonNitsche.run(order=order, n=n, L=L, m=m, r=r)
+            res = Solver.run(order=order, n=n, L=L, m=m, r=r)
 
             if !(optimize)
                 vtkdirname =dirname*"/order_"*string(order)*"_n_"*string(n)
                 mkpath(vtkdirname)
-                PoissonNitsche.generate_vtk(res=res, dirname=vtkdirname)
+                Solver.generate_vtk(res=res, dirname=vtkdirname)
             end
 
             push!(el2s, res.el2)
