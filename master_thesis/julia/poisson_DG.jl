@@ -121,8 +121,14 @@ module Solver
 
         e = u - uh
         el2 = sqrt(sum( ∫(e*e)dΩ ))
-        eh_energy = sqrt(sum( ∫(∇(e)⊙∇(e) )*dΩ ))
         eh1 = sqrt(sum( ∫( e⊙e + ∇(e)⊙∇(e) )*dΩ ))
+
+        # Defined at eq 2.18 GurkanMassing2019
+        eh_energy = sqrt(sum( ∫(∇(e)⊙∇(e) )*dΩ
+                             + ∫(h*jump( e )⊙jump( e ) )dΛ
+                             # + ∫(h*mean( ∇(e)⋅n_Λ )⊙mean( ∇(e)⋅n_Λ ) )dΛ # does not work :(
+                             + ∫(h*( ∇(e)⋅n_Γ )⊙( ∇(e)⋅n_Γ ) )dΓ
+                            ))
 
         u_inter = interpolate(u, V)
         res = Results(  model=model, Ω=Ω, Γ=Γ, Λ=Λ, h=h,
