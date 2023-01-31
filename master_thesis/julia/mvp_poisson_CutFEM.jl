@@ -62,11 +62,13 @@ n_Γ = get_normal_vector(Γ)
 n_Fg = get_normal_vector(Fg)
 
 # Write out models and computational domains for inspection
-writevtk(bgmodel, "bgmodel")
-writevtk(Ω, "Omega")
-writevtk(Ω_act, "Omega_act")
-writevtk(Γ, "Gamma")
-writevtk(Fg, "Fg")
+dirname = "figures/poission_cutfem"
+mkpath(dirname)
+writevtk(bgmodel, dirname*"/bgmodel")
+writevtk(Ω, dirname*"/Omega")
+writevtk(Ω_act, dirname*"/Omega_act")
+writevtk(Γ, dirname*"/Gamma")
+writevtk(Fg, dirname*"/Fg")
 
 # Define weak form
 # Nitsche parameter
@@ -94,7 +96,7 @@ op = AffineFEOperator(a,l,U,V)
 uh = solve(op)
 
 # Postprocess
-outputfile = "PoissonCutFEM"
+outputfile = dirname*"/PoissonCutFEM"
 if outputfile !== nothing
     writevtk(Ω,outputfile,cellfields=["uh"=>uh, "u_ex"=>u_ex])
 end
