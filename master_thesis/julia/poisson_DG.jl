@@ -145,8 +145,6 @@ end # module
 
 
 
-
-
 function convergence_analysis(; L, m, r, orders, ns, dirname, optimize)
     println("Run convergence",)
 

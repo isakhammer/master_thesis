@@ -2,6 +2,10 @@ include("results.jl")
 using Dates
 
 module Solver
+    function man_sol(;L=1,m=1,r=1)
+        u(x) = 100*cos(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
+    end
+
     using Gridap
     using Parameters
     import GridapMakie
@@ -55,18 +59,6 @@ module Solver
 
 
     function run(; order=order, n=n, L=L,  m=m, r=r, use_quads=false)
-        # Some parameters
-        # h = set.L/set.n
-        # γ = 1.5*set.order*( set.order+1)
-        # domain2D = (0, set.L, 0, set.L)
-        # partition2D = (set.n, set.n)
-        # if !set.use_quads
-        #     model = CartesianDiscreteModel(domain2D,partition2D) |> simplexify
-        # else
-        #     model = CartesianDiscreteModel(domain2D,partition2D)
-        # end
-
-        ##
 
         pmin = Point(0.,0.0)
         pmax = Point(L, L)
@@ -77,14 +69,16 @@ module Solver
         else
             model = CartesianDiscreteModel(pmin, pmax, partition)
         end
-        h = norm((pmax-pmin)./VectorValue(partition))
+        # h = norm((pmax-pmin)./VectorValue(partition))
+        h = L/n
         ##
 
         # u is the manufactured solution
         # -Δu = f in Ω, and u = g on Γ
-        # u = man_sol(L=set.L, m=set.m, r=set.r)
-        u(x) = 100*cos(x[1])*cos(x[2])
-        f(x) = 2*u(x)
+        u = man_sol(L=L, m=m, r=r)
+        # u(x) = 100*cos(x[1])*cos(x[2])
+        # f(x) = 2*u(x)
+        f(x) = -Δ(u)(x)
         g(x) = u(x)
 
         # Define triangulation
@@ -93,8 +87,6 @@ module Solver
         Λ = SkeletonTriangulation(model)
 
         ## Function spaces
-        # order = 2
-        # reffe = ReferenceFE(lagrangian, Float64, order)
         reffe = ReferenceFE(lagrangian, Float64, order)
 
         V = TestFESpace(Ω, reffe, conformity=:H1)
@@ -110,8 +102,8 @@ module Solver
         # Define mesh and stabilization parameters
         h = norm((pmax-pmin)./VectorValue(partition))
 
-        # γ = 5.0*order*(order+1)  # Penalty parameter
-        γ = 5  # Penalty parameter
+        γ = order*(order+1)  # Penalty parameter
+        # γ = 5  # Penalty parameter
         μ = γ/h
 
         a_Ω(u,v) =∫( ∇(v)⋅∇(u) )dΩ
@@ -187,7 +179,7 @@ function main()
 
     function run(;  L,m,r)
         orders=[2,3,4]
-        ns = [2^2, 2^3, 2^4, 2^5]#, 2^6, 2^7]
+        ns = [2^2, 2^3, 2^4, 2^5, 2^6, 2^7]
         dirname = resultdir*"/L_"*string(round(L,digits=2))*"_m_"*string(m)*"_r_"*string(r);
         makedir(dirname)
         convergence_analysis( L=L, m=m, r=r, orders=orders, ns=ns, dirname=dirname, optimize=true)
