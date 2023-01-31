@@ -120,6 +120,10 @@ module Solver
         uh = solve(op)
 
         e = u - uh
+        function mean_n(u,n)
+            return 0.5*( u.plus⋅n.plus + u.minus⋅n.minus )
+        end
+
         el2 = sqrt(sum( ∫(e*e)dΩ ))
         eh1 = sqrt(sum( ∫( e⊙e + ∇(e)⊙∇(e) )*dΩ ))
 
@@ -127,6 +131,7 @@ module Solver
         eh_energy = sqrt(sum( ∫(∇(e)⊙∇(e) )*dΩ
                              + ∫(h*jump( e )⊙jump( e ) )dΛ
                              # + ∫(h*mean( ∇(e)⋅n_Λ )⊙mean( ∇(e)⋅n_Λ ) )dΛ # does not work :(
+                             + ∫(h*mean_n( ∇(e),n_Λ )⊙mean_n( ∇(e),n_Λ ) )dΛ
                              + ∫(h*( ∇(e)⋅n_Γ )⊙( ∇(e)⋅n_Γ ) )dΓ
                             ))
 
