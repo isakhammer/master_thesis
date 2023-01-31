@@ -83,7 +83,7 @@ module Solver
         ## Function spaces
         reffe = ReferenceFE(lagrangian, Float64, order)
 
-        V = TestFESpace(Ω, reffe, conformity=:H1)
+        V = TestFESpace(Ω, reffe, conformity=:L2)
         U = TrialFESpace(V)
 
         ## Define the weak form
@@ -93,19 +93,23 @@ module Solver
         dΛ= Measure(Λ, degree)
 
         n_Γ  = get_normal_vector(Γ)
+        n_Λ  = get_normal_vector(Λ)
 
         # Define mesh and stabilization parameters
         h = norm((pmax-pmin)./VectorValue(partition))
 
-        γ = 2.0*order*(order+1)  # Penalty parameter
-        # γ = 2  # Penalty parameter
+        γ = order*(order+1)  # Penalty parameter
         μ = γ/h
+
+        # function mean_n(u,n)
+        #     return 0.5*( ∇(u).plus⋅ n.plus +  ∇(u).minus ⋅ n.minus )
+        # end
 
         a_Ω(u,v) =∫( ∇(v)⋅∇(u) )dΩ
         a_Γ(u,v) =∫( - ( ∇(u)⋅n_Γ )⊙v - u⊙( ∇(v)⋅n_Γ ) + μ*u⊙v )dΓ
-        a_Λ(u,v) =∫( - mean(∇(u)⋅n_Γ)⊙jump(v) - jump(w)⊙mean(∇(v)⋅n_Γ) + μ* jump(v)⊙jump(w)  )dΛ
+        a_Λ(u,v) =∫( - mean(∇(u))⊙jump(v⋅n_Λ) - jump(u⋅n_Λ)⊙mean(∇(v)) + μ* jump(u)⊙jump(v)  )dΛ
 
-        a(u,v) = a_Ω(u,v) + a_Γ(u,v)
+        a(u,v) = a_Ω(u,v) + a_Γ(u,v)+ a_Λ(u,v)
 
         l_Ω(v) = ∫( v⊙f )dΩ
         l_Γ(v) = ∫( -(( ∇(v)⋅n_Γ )⊙g) + μ*(g⊙v) )dΓ
