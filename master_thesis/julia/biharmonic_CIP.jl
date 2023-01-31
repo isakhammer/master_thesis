@@ -1,5 +1,7 @@
+include("results.jl")
+using Dates
 
-module BiharmonicCIP
+module Solver
     using Gridap
     using Parameters
     import GridapMakie
@@ -8,7 +10,7 @@ module BiharmonicCIP
     using Test
 
     function man_sol(;L=1,m=1,r=1)
-        u(x) = cos(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
+        u(x) = 100*cos(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
     end
 
     @with_kw struct Results
@@ -134,7 +136,6 @@ end # module
 
 
 
-include("results.jl")
 
 
 
@@ -151,12 +152,12 @@ function convergence_analysis(; L, m, r, orders, ns, dirname, optimize)
 
         for n in ns
 
-            res = BiharmonicCIP.run(order=order, n=n, L=L, m=m, r=r)
+            res = Solver.run(order=order, n=n, L=L, m=m, r=r)
 
             if !(optimize)
                 vtkdirname =dirname*"/order_"*string(order)*"_n_"*string(n)
                 mkpath(vtkdirname)
-                BiharmonicCIP.generate_vtk(res=res, dirname=vtkdirname)
+                Solver.generate_vtk(res=res, dirname=vtkdirname)
             end
 
             push!(el2s, res.el2)
@@ -181,10 +182,10 @@ function main()
 
     function run(;  L,m,r)
         orders=[2,3,4]
-        ns = [2^2, 2^3, 2^4]#, 2^5]#, 2^6, 2^7]
+        ns = [2^2, 2^3, 2^4, 2^5, 2^6]#, 2^7]
         dirname = resultdir*"/L_"*string(round(L,digits=2))*"_m_"*string(m)*"_r_"*string(r);
         makedir(dirname)
-        convergence_analysis( L=L, m=m, r=r, orders=orders, ns=ns, dirname=dirname, optimize=false)
+        convergence_analysis( L=L, m=m, r=r, orders=orders, ns=ns, dirname=dirname, optimize=true)
     end
 
     run(L=1,m=1,r=1)

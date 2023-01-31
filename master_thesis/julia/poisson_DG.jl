@@ -9,6 +9,10 @@ module Solver
     import GLMakie
     using Test
 
+    function man_sol(;L=1,m=1,r=1)
+        u(x) = 100*cos(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
+    end
+
 
     @with_kw struct Results
         Ω
@@ -54,7 +58,7 @@ module Solver
     end
 
 
-    function run(; order=order, n=n, L=L,  m=m, r=r, use_quads=true)
+    function run(; order=order, n=n, L=L,  m=m, r=r, use_quads=false)
 
         pmin = Point(0.,0.0)
         pmax = Point(L, L)
@@ -70,9 +74,10 @@ module Solver
 
         # u is the manufactured solution
         # -Δu = f in Ω, and u = g on Γ
-        # u = man_sol(L=set.L, m=set.m, r=set.r)
-        u(x) = 100*cos(x[1])*cos(x[2])
-        f(x) = 2*u(x)
+        # u(x) = 100*cos(x[1])*cos(x[2])
+        u = man_sol(L=L, m=m, r=r)
+        # u(x) = 3*x[1] + x[2]^2
+        f(x) = -Δ(u)(x)
         g(x) = u(x)
 
         # Define triangulation
@@ -101,20 +106,16 @@ module Solver
         γ = order*(order+1)  # Penalty parameter
         μ = γ/h
 
-        # function mean_n(u,n)
-        #     return 0.5*( ∇(u).plus⋅ n.plus +  ∇(u).minus ⋅ n.minus )
-        # end
-
         a_Ω(u,v) =∫( ∇(v)⋅∇(u) )dΩ
         a_Γ(u,v) =∫( - ( ∇(u)⋅n_Γ )⊙v - u⊙( ∇(v)⋅n_Γ ) + μ*u⊙v )dΓ
-        a_Λ(u,v) =∫( - mean(∇(u))⊙jump(v⋅n_Λ) - jump(u⋅n_Λ)⊙mean(∇(v)) + μ* jump(u)⊙jump(v)  )dΛ
 
+        # Comment: Seems like gridap does not like mean(∇(u)⋅n_Λ )
+        a_Λ(u,v) =∫( - mean(∇(u))⊙jump(v⋅n_Λ) - jump(u⋅n_Λ)⊙mean(∇(v)) + μ* jump(u)⊙jump(v)  )dΛ
         a(u,v) = a_Ω(u,v) + a_Γ(u,v)+ a_Λ(u,v)
 
         l_Ω(v) = ∫( v⊙f )dΩ
         l_Γ(v) = ∫( -(( ∇(v)⋅n_Γ )⊙g) + μ*(g⊙v) )dΓ
         l(v) = l_Ω(v) + l_Γ(v)
-
 
         op = AffineFEOperator(a, l, U, V)
         uh = solve(op)
@@ -178,11 +179,12 @@ function main()
 
     function run(;  L,m,r)
         orders=[2,3,4]
-        ns = [2^2, 2^3, 2^4, 2^5]#, 2^6, 2^7]
+        ns = [2^2, 2^3, 2^4, 2^5, 2^6, 2^7]
         dirname = resultdir*"/L_"*string(round(L,digits=2))*"_m_"*string(m)*"_r_"*string(r);
         makedir(dirname)
         convergence_analysis( L=L, m=m, r=r, orders=orders, ns=ns, dirname=dirname, optimize=true)
     end
+
     run(L=1,m=1,r=1)
 end
 
