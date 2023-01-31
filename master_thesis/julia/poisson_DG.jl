@@ -107,15 +107,17 @@ module Solver
         # μ = γ/h
 
         # a_Ω(u,v) =∫( ∇(v)⋅∇(u) )dΩ
+        # l_Ω(v) = ∫( v⊙f )dΩ
+
         # a_Γ(u,v) =∫( - ( ∇(u)⋅n_Γ )⊙v - u⊙( ∇(v)⋅n_Γ ) + μ*u⊙v )dΓ
+        # l_Γ(v) = ∫( -(( ∇(v)⋅n_Γ )⊙g) + μ*(g⊙v) )dΓ
 
         # # Comment: Seems like gridap does not like mean(∇(u)⋅n_Λ )
         # a_Λ(u,v) =∫( - mean(∇(u))⊙jump(v⋅n_Λ) - jump(u⋅n_Λ)⊙mean(∇(v)) + μ* jump(u)⊙jump(v)  )dΛ
-        # a(u,v) = a_Ω(u,v) + a_Γ(u,v)+ a_Λ(u,v)
 
-        # l_Ω(v) = ∫( v⊙f )dΩ
-        # l_Γ(v) = ∫( -(( ∇(v)⋅n_Γ )⊙g) + μ*(g⊙v) )dΓ
+
         # l(v) = l_Ω(v) + l_Γ(v)
+        # a(u,v) = a_Ω(u,v) + a_Γ(u,v)+ a_Λ(u,v)
 
         ####
 
