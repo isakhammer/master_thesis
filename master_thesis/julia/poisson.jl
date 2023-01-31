@@ -168,7 +168,7 @@ function main()
         mkdir(dirname)
     end
 
-    resultdir= "figures/poisson_dirichlet/"*string(Dates.now())
+    resultdir= "figures/poisson/"*string(Dates.now())
     mkpath(resultdir)
 
     function run(;  L,m,r)

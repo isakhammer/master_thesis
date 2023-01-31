@@ -169,7 +169,7 @@ function main()
         mkdir(dirname)
     end
 
-    resultdir= "figures/poisson_DGNitsche/"*string(Dates.now())
+    resultdir= "figures/poisson_DG/"*string(Dates.now())
     mkpath(resultdir)
 
     function run(;  L,m,r)
