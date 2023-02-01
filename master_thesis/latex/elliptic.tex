@@ -87,6 +87,13 @@ For convenience, we also entitle the notation,
 \[
 H^{m}_{0} \left( \Omega  \right) = \left\{ \text{completion of }C_{0}^{\infty}\left( \Omega  \right) \text{ w.r.t. } \| \cdot  \|_{H^{m}\left( \Omega  \right)   }^{  }  \right\}.
 \]
+In this work will we compute norms on discontinuous elements, thus, it will be necessarry to define so-called broken mesh. Let us define $\mathcal{P} _{h}$ as an collection of geometric entities s.t. the norm and the inner product is defined as,
+\[
+ \| \cdot \|_{\mathcal{P}_{h}}^{2} = \sum_{P \in \mathcal{P} _{h}}^{} \| \cdot  \|_{ P }^{2  }, \quad \text{ and } \quad
+ (\cdot ,\cdot )_{\mathcal{P}
+_{h}}^{} = \sum_{P \in \mathcal{P} _{h}}^{} (\cdot ,\cdot )_{ P }^{  } .
+\]
+
 \todo[inline]{ Write definitions considering $H^{\frac{1}{2}}( \Gamma ) $  }
 
 
@@ -103,6 +110,9 @@ H^{m}_{0} \left( \Omega  \right) = \left\{ \text{completion of }C_{0}^{\infty}\l
 
 \subsection{Computational Domains}%
 \label{sub:computational_domain}
+A key element in finite element methods is to be able to discretize the domain $\Omega \subset \mathbb{R} ^{d} $ properly. Even though there exists methods handling complex geometries will we still restrict ourself some key assumptions. First of all,
+if $\Omega $ has a smooth boundary, then it can be very difficult to fully discretize unless we are introducing nonlinear functions on the boundary, thus, a key assumption is that the set $\Omega $ is a polyhedra. This is useful since a polyhedra can
+be fully covered by a collection of polyhedra and, hence, motivating us to define a mesh \cite[Assumption 1.7]{pietro2012}.
 
 \begin{definition}[Mesh]
     We define a (general) mesh $\mathcal{T} $ of the domain $\Omega $ to be a collection of disjoint polyhedra $\left\{ T \right\}  $ forming a partition of $\Omega $ s.t.\[
@@ -122,6 +132,19 @@ We define the mesh size to is the maximum diameter $h $ of any polyhedra in the 
 .\end{equation}
 \end{definition}
 
+\begin{definition}[Conform mesh]
+Let $\mathcal{T}_{h} $ be a mesh of $\Omega $. We say a mesh is conform if $T_{1} \neq T_{2 }$  then $T_{1} \cap T_{2} \neq \emptyset  $ for all $T_{1}, T_{2} \in \mathcal{T}_{h}$. This means that each $T$ share either a vertex or a facet.
+\end{definition}
+
+\begin{definition}[Shape regular and quasi-uniform]
+Let $\mathcal{T}_{h} $ be a mesh of $\Omega $ .
+Let the chunkiness parameter $c_{T} := h_{T}/r_{T}$, where $r_{T}$  is the largest ball that be inscribed inside a element $T \in \mathcal{T}_{h} $.
+We say that a mesh is shape regular if $c_{T}\le  c$ is independent of $T$  and $h$. We also say that the mesh is quasi-uniform only if it is shape regular and $h_{max} \le  c h_{min}$.
+\end{definition}
+
+We will generally assume that a mesh $\mathcal{T}_{h} $ is conform, shape regular and quasi-uniform unless specified. The fact that the mesh is conform makes is a useful property since the interface between mesh elements has come into contact in the sense
+that it is either a vertex or a facet. This with the combination of shape regularity and quasi-uniformity has been a major key to prove important inequalities in broken Sobolev spaces \cite[Chapter 1.4.1]{pietro2012}. Hence, the assumptions are
+very handy when proving convergence.
 
 \begin{definition}[Facets]
 Let $\mathcal{T}_{h}  = \left\{ T \right\} $ be a mesh of $\Omega \subset  \mathbb{R} ^d $ consisting of polygons $T \in \mathbb{R} ^{d}$.
@@ -156,7 +179,7 @@ Keep in mind that in many that we often will simply use the notation $n = n \mid
 We define the mean as $\mean{ v} |_{F} = v    $ and the jump as $\jump{v}|_{F} = v$.
 
     \end{enumerate}
-    To simplify will we use the notation $\mean{ v } = \mean{ v } \mid _{F}    $ and similarly $\jump{ v } = \jump{ v } \mid _{F}    $ for all $F \in \mathcal{F} _{h}$.
+    To simplify will we use the notation $\mean{ v } = \mean{ v } \mid _{F}    $ and $\jump{ v } = \jump{ v } \mid _{F}    $ for all $F \in \mathcal{F} _{h}$.
 
 \end{definition}
 
@@ -195,19 +218,6 @@ We define the mean as $\mean{ v} |_{F} = v    $ and the jump as $\jump{v}|_{F} =
     \label{fig:normal}
 \end{figure}
 
-
-
- We will also assume mesh conform i.e., if $T_{1} \neq T_{2 }$  and $T \cap T_{2} \neq \emptyset  $ , then they share either a vertex or a facet.
-Let the chunkiness parameter $c_{T} := h_{T}/r_{T}$, where $r_{T}$  is the largest ball that be inscribed inside the element $T$.
-We can then assume that the mesh is shape regular, i.e., that $c_{T}\le  c$ independent of $T$  and $h$. We may also assuming that
-the mesh is quasi-uniform only if it holds that the mesh is shape regular and $h_{max} \le  c h_{min}$.
-
-In this work will we compute norms on discontinuous elements, thus, it will be necessarry to define so-called broken mesh. Let us define $\mathcal{P} _{h}$ as an collection of geometric entities s.t. the norm and the inner product is defined as,
-\[
- \| \cdot \|_{\mathcal{P}_{h}}^{2} = \sum_{P \in \mathcal{P} _{h}}^{} \| \cdot  \|_{ P }^{2  }, \quad \text{ and } \quad
- (\cdot ,\cdot )_{\mathcal{P}
-_{h}}^{} = \sum_{P \in \mathcal{P} _{h}}^{} (\cdot ,\cdot )_{ P }^{  } .
-\]
 
 \newpage
 \section{Unfitted cut discontinuous Galerkin method for the Poisson problem}%
