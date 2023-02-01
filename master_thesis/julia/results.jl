@@ -70,6 +70,6 @@ module Results
         generate_table(ns=ns, el2s=el2s, eh1s=eh1s, ehs_energy=ehs_energy, order=order, dirname=dirname)
     end
 
-end
+end # end module
 
 

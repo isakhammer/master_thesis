@@ -58,7 +58,7 @@ module Solver
     end
 
 
-    function run(; order=order, n=n, L=L,  m=m, r=r, dirname=nothing, use_quads=true)
+    function run(; order=order, n=n, L=L,  m=m, r=r, vtkdirname=nothing, use_quads=true)
 
         pmin = Point(0.,0.0)
         pmax = Point(L, L)
@@ -139,8 +139,8 @@ module Solver
 
         sol = Solution(  model=model, Ω=Ω, Γ=Γ, Λ=Λ, h=h,
                         u=u_inter, uh=uh, e=e, el2=el2, eh1=eh1, eh_energy=eh_energy)
-        if ( dirname!=nothing)
-            generate_vtk(sol, dirname)
+        if ( vtkdirname!=nothing)
+            generate_vtk(sol=sol, dirname=vtkdirname)
         end
         return sol
     end
@@ -149,7 +149,7 @@ end # module
 
 
 
-function convergence_analysis(; L, m, r, orders, ns, dirname, optimize=false)
+function convergence_analysis(; L, m, r, orders, ns, dirname, write_vtks=true)
     println("Run convergence",)
 
     for order in orders
@@ -163,10 +163,10 @@ function convergence_analysis(; L, m, r, orders, ns, dirname, optimize=false)
 
             res = Solver.run(order=order, n=n, L=L, m=m, r=r)
 
-            if !(optimize)
+            if (write_vtks)
                 vtkdirname =dirname*"/order_"*string(order)*"_n_"*string(n)
                 mkpath(vtkdirname)
-                res = Solver.run(order=order, n=n, L=L, m=m, r=r, dirname=vtkdirname)
+                res = Solver.run(order=order, n=n, L=L, m=m, r=r, vtkdirname=vtkdirname)
             else
                 res = Solver.run(order=order, n=n, L=L, m=m, r=r)
             end
@@ -196,7 +196,7 @@ function main()
         ns = [2^2, 2^3, 2^4, 2^5, 2^6, 2^7]
         dirname = resultdir*"/L_"*string(round(L,digits=2))*"_m_"*string(m)*"_r_"*string(r);
         makedir(dirname)
-        convergence_analysis( L=L, m=m, r=r, orders=orders, ns=ns, dirname=dirname, optimize=true)
+        convergence_analysis( L=L, m=m, r=r, orders=orders, ns=ns, dirname=dirname)
     end
 
     run(L=1,m=1,r=1)
