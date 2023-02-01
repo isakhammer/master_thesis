@@ -68,6 +68,7 @@ Finally, let $u \in  L^{1}_{loc}\left( \Omega  \right) $. We call the function $
 We are now able to construct the Sobolev space,
 
 \begin{definition}[Sobolev space]
+    \label{def:sobolev_spaces}
     Let $m\ge 0$ be an integer and let $1 \le  p \le  \infty$ be a real number. Then we define the Sobolev space
 \[
 H^{m}\left( \Omega  \right) = \left\{ u \in L^{2}\left( \Omega  \right)  \mid  \partial ^{\alpha } u \in L^{2}\left( \Omega  \right)  \forall \alpha : \left\lvert \alpha  \right\rvert  \le m \right\}.
@@ -86,12 +87,6 @@ where the seminorm is defined such that, \[
 For convenience, we also entitle the notation,
 \[
 H^{m}_{0} \left( \Omega  \right) = \left\{ \text{completion of }C_{0}^{\infty}\left( \Omega  \right) \text{ w.r.t. } \| \cdot  \|_{H^{m}\left( \Omega  \right)   }^{  }  \right\}.
-\]
-In this work will we compute norms on discontinuous elements, thus, it will be necessarry to define so-called broken mesh. Let us define $\mathcal{P} _{h}$ as an collection of geometric entities s.t. the norm and the inner product is defined as,
-\[
- \| \cdot \|_{\mathcal{P}_{h}}^{2} = \sum_{P \in \mathcal{P} _{h}}^{} \| \cdot  \|_{ P }^{2  }, \quad \text{ and } \quad
- (\cdot ,\cdot )_{\mathcal{P}
-_{h}}^{} = \sum_{P \in \mathcal{P} _{h}}^{} (\cdot ,\cdot )_{ P }^{  } .
 \]
 
 \todo[inline]{ Write definitions considering $H^{\frac{1}{2}}( \Gamma ) $  }
@@ -217,6 +212,38 @@ We define the mean as $\mean{ v} |_{F} = v    $ and the jump as $\jump{v}|_{F} =
 \caption{Facet $F \in \mathcal{F}_h $ shared by the triangles $T^{+}, T^{-} \in \mathcal{T}_{h} $ and the normal unit vector $n$.  }
     \label{fig:normal}
 \end{figure}
+
+
+\subsection{Broken Sobolev spaces}%
+\label{sub:broken_sobolev_spaces}
+
+In this work will we compute norms on discontinuous elements, thus, it will be necessary to define broken Sobolev spaces. What we know is that if $T$ is a polyhedra, then the definition of $H^{m}( T)$ is covered by definition
+\ref{def:sobolev_spaces}. We will now precisely define it for a collection of polyhedra $\mathcal{T}_{h}$.
+
+\begin{definition}[Broken Sobolev spaces]
+Let $\mathcal{T}_{h} $ be a mesh of some domain $\Omega  $ and some integer $m\le n$. Then we define the broken Sobolev space to be \[
+H^{m}( \mathcal{T}_{h} ) := \left\{ v \in L^2( \Omega )  \mid  \forall T \in  \mathcal{T}, \ v|_{T} \in H^{m}( T)     \right\}
+\]
+\end{definition}
+A very useful lemma when working on estimates on broken Sobolev spaces is that a if a function is continuous, then the jump between the mesh elements is zero.
+\begin{lemma}
+    A functional $ v \in  H^{1}( \mathcal{T}_{h} ) $ belongs to $ H^{1}( \Omega )  $ if and only if \[
+    \jump{ v }   = 0, \quad F \in \mathcal{F}^{int}_{h}
+    \]
+\end{lemma}
+\begin{proof}
+    See \cite[Lemma 1.23]{pietro2012}.
+\end{proof}
+
+Let us define $\mathcal{P} _{h}$ as an collection of geometric entities s.t. the norm and the inner product is defined as,
+\[
+ \| \cdot \|_{\mathcal{P}_{h}}^{2} = \sum_{P \in \mathcal{P} _{h}}^{} \| \cdot  \|_{ P }^{2  }, \quad \text{ and } \quad
+ (\cdot ,\cdot )_{\mathcal{P}
+_{h}}^{} = \sum_{P \in \mathcal{P} _{h}}^{} (\cdot ,\cdot )_{ P }^{  } .
+\]
+
+
+
 
 
 \newpage
