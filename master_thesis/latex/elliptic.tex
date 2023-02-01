@@ -1,16 +1,10 @@
 
 \newpage
-\section{Mathematical Background }%
+\section{Mathematical Background*}%
 \label{sec:background_}
 
-
-
 \subsection{Hilbert Spaces}%
-
 \label{ssub:hilbert_spaces}
-\begin{tcolorbox}
-    This subsection is copied from the project thesis
-\end{tcolorbox}
 
 We will in this report assume $\Omega $ to be a compact and open set in $\mathbb{R} ^{2}$. Now let the parameter $p \in \mathbb{R} $, $p\ge 1$. We then define the space $L^{p}\left( \Omega  \right) $ to be the set of all measurable functions $f: \Omega  \mapsto \mathbb{R} $ such that
 $\left\lvert f \right\rvert ^{p}$ is Lebesgue measurable, i.e,
@@ -85,11 +79,8 @@ H^{m}_{0} \left( \Omega  \right) = \left\{ \text{completion of }C_{0}^{\infty}\l
 \todo[inline]{ Write definitions considering $H^{\frac{1}{2}}( \Gamma ) $  }
 
 
-
-
 \subsection{Elementary Inequalities}%
 \label{sub:elementary_inequalities}
-
 \[
 \begin{split}
     \textbf{Cauchy-Schwarz inequality: } & \| ab \|_{  }^{  }  \le \| a \|_{  }^{  } \| b \|_{  }^{  }   \\
@@ -99,6 +90,74 @@ H^{m}_{0} \left( \Omega  \right) = \left\{ \text{completion of }C_{0}^{\infty}\l
 \]
 
 
+\subsection{Computational Domains}%
+\label{sub:computational_domain}
+
+Let $\mathcal{T}  = \left\{ T \right\} $ be a triangulation of $\Omega \subset   \mathbb{R} ^d $ consisting of triangles $T$. The set of all facets is defined as,
+\[
+\mathcal{F} _{h} = \left\{ F=T^{+}\cap T^{-}  \mid  T^{+}, T^{-} \in \mathcal{T}_{h}  \right\}
+\]
+
+However, we will distinguish between the
+set of external facets $\mathcal{F}^{ext} _{h}$, which is all facets along $\partial \Omega $, and the interior facets $\mathcal{F} ^{int}_{h}$.
+Let the facets be denotes as $F \in \mathcal{F } _{h}$, then the normal vector $n$ is across the facets from
+$T^{+}$ to $T^{-}$, illustrated in figure \ref{fig:normal}.
+
+\begin{figure}[!h]
+\centering
+\begin{tikzpicture}[scale=1]
+\coordinate (A) at (0,0);
+\coordinate (C) at (0,3);
+\coordinate (B) at (4,0);
+\coordinate (D) at (4,4);
+\coordinate (Tm) at (3.5,3.5);
+\coordinate (Tp) at (0.5, 0.5);
+\coordinate (e) at (1.5, 1.5);
+\coordinate (start) at (1.7, 1.7);
+\coordinate (end) at (2.25, 2.4);
+
+\draw (A) -- (B) -- (C) -- cycle;
+\fill[red, opacity=0.5] (A) -- (B) -- (C);
+\fill[blue, opacity=0.5] (B) -- (C) -- (D);
+\node[below left] at (Tm) {$T^{-} $ };
+\node[above right] at (Tp) {$T^{+}$ };
+\node[below right] at (e) {$F$ };
+
+\draw [|->, thick] (start) -- (end);
+% \node[above right] at (A) {A };
+% \node[below right] at (B) {B};
+% \node[above right] at (C) {C };
+% \node[below right] at (D) {D};
+\node[below right] at (end) {$n$};
+\end{tikzpicture}
+\caption{Facet $F \in \mathcal{F}_h $ shared by the triangles $T^{+}, T^{-} \in \mathcal{T}_{h} $ and the normal unit vector $n$.  }
+    \label{fig:normal}
+\end{figure}
+
+A parameter which is useful is the maximum diameter $h$ of the set of triangles $\left\{ T \right\} $, which we to be defined such that,
+
+\begin{equation}
+\begin{split}
+    h _{T} & = diam\left( T \right)   = \max_{x_1, x_{2} \in T} dist(x_{1}, x_{2}),  \\
+    h_{min} & = \min_{T \in \mathcal{T} } h_{T}, \\
+    h_{max} &= \max_{T \in \mathcal{T} }  h_{T} := h,
+\end{split}
+.\end{equation}
+
+
+
+
+where the $diam( T )$ is the largest facet for a triangle $T$. We will also assume mesh conform i.e., if $T_{1} \neq T_{2 }$  and $T \cap T_{2} \neq \emptyset  $ , then they share either a vertex or a facet.
+Let the chunkiness parameter $c_{T} := h_{T}/r_{T}$, where $r_{T}$  is the largest ball that be inscribed inside the element $T$.
+We can then assume that the mesh is shape regular, i.e., that $c_{T}\le  c$ independent of $T$  and $h$. We may also assuming that
+the mesh is quasi-uniform only if it holds that the mesh is shape regular and $h_{max} \le  c h_{min}$.
+
+In this work will we compute norms on discontinuous elements, thus, it will be necessarry to define so-called broken mesh. Let us define $\mathcal{P} _{h}$ as an collection of geometric entities s.t. the norm and the inner product is defined as,
+\[
+ \| \cdot \|_{\mathcal{P}_{h}}^{2} = \sum_{P \in \mathcal{P} _{h}}^{} \| \cdot  \|_{ P }^{2  }, \quad \text{ and } \quad
+ (\cdot ,\cdot )_{\mathcal{P}
+_{h}}^{} = \sum_{P \in \mathcal{P} _{h}}^{} (\cdot ,\cdot )_{ P }^{  } .
+\]
 
 \newpage
 \section{Unfitted cut discontinuous Galerkin method for the Poisson problem}%
@@ -118,9 +177,12 @@ a( u,v) = ( \nabla u, \nabla v) _{\Omega }, \quad l( v) = (f,v)_{\Omega }.
 We say the weak formulation is to find a $u \in V_{g}$ so this equation holds  \[
 a( u,v) = l( v), \quad  \forall v \in V
 \]
-\subsection{CutFEM}%
+\subsection{CutFEM }%
 \label{sub:cutfem}
 
+
+One of the key element to unfitted methods is that is relying on a background mesh. We denote the shape-regular and background mesh, $\widetilde{\mathcal{T}}_{h} $, to be a collection of $d$-dimensional simplices, $\left\{ T \right\} $, covering some closed domain
+$\overline{\Omega } \subset \mathbb{R} ^{d} $.
 
 
 
