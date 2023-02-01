@@ -72,7 +72,7 @@ We are now able to construct the Sobolev space,
 \[
 H^{m}\left( \Omega  \right) = \left\{ u \in L^{2}\left( \Omega  \right)  \mid  \partial ^{\alpha } u \in L^{2}\left( \Omega  \right)  \forall \alpha : \left\lvert \alpha  \right\rvert  \le m \right\}.
 \]
-Thus, $H^{m}( \Omega ) $ is spanned by functions with derivatives of order up to $m$ in $L^{p}( \Omega ) $.
+Thus, $H^{m}( \Omega ) $ is spanned by functions with derivatives of order up to $m$ in $L^{2}( \Omega ) $.
 \end{definition}
 Equipped with the inner product is $H^{m}\left( \Omega  \right) $  denoted as a Hilbert space, that is, for $u,v \in H^{m}\left( \Omega  \right) $, \[
     \left( u,v \right) _{H^{m}\left( \Omega   \right) } = \sum_{\left\lvert \alpha  \right\rvert  \le  m}^{}  \int_{\Omega }^{} \partial ^{\alpha } u \partial ^{\alpha } v dx.
@@ -149,6 +149,14 @@ Keep in mind that in many that we often will simply use the notation $n = n \mid
 \end{definition}
 
 \begin{definition}[Jump and average]
+    Let $v\in L^2( \Omega ) $ be a scalar function on $\Omega$ with a corresponding shape regular and quasi-uniform mesh $\mathcal{T}_{h} $. We will use the following definitions
+    \begin{enumerate}[label=\arabic*)]
+        \item Let $F \in \mathcal{F}^{int} _{h}$ and $v^{\pm}| _{F} = \lim_{t\to 0} v( x \pm tn)   $ for $x \in F$. We define the mean as $\mean{ v} |_{F} = \frac{1}{2} (v^{+}_{F} + v^{-}_{F})   $ and the jump as $\jump{v}|_{F} =  v^{+}_{F} - v^{-}_{F} $.
+        \item Let $F \in \mathcal{F}^{ext} _{h}$ and let $ v( x) =  v(x)|_{F} $ for  $x \in F$.
+We define the mean as $\mean{ v} |_{F} = v    $ and the jump as $\jump{v}|_{F} = v$.
+
+    \end{enumerate}
+    To simplify will we use the notation $\mean{ v } = \mean{ v } \mid _{F}    $ and similarly $\jump{ v } = \jump{ v } \mid _{F}    $ for all $F \in \mathcal{F} _{h}$.
 
 \end{definition}
 
