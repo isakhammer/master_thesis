@@ -11,7 +11,7 @@ module Solver
 
     # %% Manufactured solution
     # Provides a manufactured solution which is 0 on the unit circle
-    # u(x) = (x[1]^2 + x[2]^2  - 1)*sin(2π*x[1])*cos(2π*x[2])
+    # u_ex(x) = (x[1]^2 + x[2]^2  - 1)*sin(2π*x[1])*cos(2π*x[2])
     u_ex(x) = 1 - x[1]^2 - x[2]^2
     f(x) = 4
     ∇u_ex(x) = VectorValue(-2*x[1], -2*x[2])
@@ -24,7 +24,7 @@ module Solver
     # end
 
 
-    @with_kw struct Results
+    @with_kw struct Solution
         Ω
         Γ
         Ω_act
@@ -41,7 +41,7 @@ module Solver
         eh_energy
     end
 
-    function generate_vtk(; res::Results, dirname::String)
+    function generate_vtk(; res::Solution, dirname::String)
         println("Generating vtk's in ", dirname)
         if (isdir(dirname))
             rm(dirname, recursive=true)
@@ -58,12 +58,13 @@ module Solver
     end
 
 
-    function run(; order=order, n=n )
+    function run(; order=order, n=n, dirname=nothing )
 
         # Background model
-        domain = (-1.11, 1.11, -1.11, 1.11)
-        pmin = Point(-1.11, -1.11)
-        pmax = Point(1.11, 1.11)
+        L = 1.11
+        domain = (-L, L, -L, L)
+        pmin = Point(-L, -L)
+        pmax = Point(L, L)
         partition = (n,n)
         bgmodel = CartesianDiscreteModel(pmin, pmax, partition)
 
@@ -79,7 +80,6 @@ module Solver
         Ω_act = Triangulation(cutgeo, ACTIVE)
 
         # Construct function spaces
-        order = 1
         V = TestFESpace(Ω_act, ReferenceFE(lagrangian, Float64, order),conformity=:H1)
         U = TrialFESpace(V)
 
@@ -101,13 +101,14 @@ module Solver
 
         # Define weak form
         # Nitsche parameter
-        γd = 10.0
+        γd = order(order+1)
 
         # Ghost penalty parameter
         γg = 0.1
 
         # Mesh size
-        h = (pmax - pmin)[1]/partition[1]
+        # h = (pmax - pmin)[1]/partition[1]
+        h = L/n
 
         # Define bilinear form
         a(u,v) =
@@ -132,9 +133,14 @@ module Solver
         eh_energy = sqrt(sum( ∫(∇(e)⊙∇(e) )*dΩ ))
         u_inter = interpolate(u_ex, V)
 
-        res = Results(  bgmodel=bgmodel, Ω_act=Ω_act, Fg=Fg, Ω=Ω, Γ=Γ,  h=h,
+        sol = Solution(  bgmodel=bgmodel, Ω_act=Ω_act, Fg=Fg, Ω=Ω, Γ=Γ,  h=h,
                         u=u_inter, uh=uh, e=e, el2=el2, eh1=eh1, eh_energy=eh_energy)
-        return res
+
+        if ( dirname!=nothing)
+            generate_vtk(sol, dirname)
+        end
+
+        return sol
     end
 
 end # module
@@ -153,17 +159,18 @@ function convergence_analysis(; orders, ns, dirname, optimize=true)
 
         for n in ns
 
-            res = Solver.run(order=order, n=n)
-
+            sol = nothing
             if !(optimize)
                 vtkdirname =dirname*"/order_"*string(order)*"_n_"*string(n)
                 mkpath(vtkdirname)
-                Solver.generate_vtk(res=res, dirname=vtkdirname)
+                sol = Solver.run(order=order, n=n, dirname=vtkdirname)
+            else
+                sol = Solver.run(order=order, n=n)
             end
 
-            push!(el2s, res.el2)
-            push!(eh1s, res.eh1)
-            push!(ehs_energy, res.eh_energy)
+            push!(el2s, sol.el2)
+            push!(eh1s, sol.eh1)
+            push!(ehs_energy, sol.eh_energy)
         end
         Results.generate_figures(ns=ns, el2s=el2s, eh1s=eh1s, ehs_energy=ehs_energy, order=order, dirname=dirname)
     end
@@ -182,7 +189,7 @@ function main()
     mkpath(resultdir)
 
     function run()
-        orders=[2,3,4]
+        orders=[1,2,3,4]
         ns = [2^2, 2^3, 2^4, 2^5, 2^6, 2^7]
         dirname = resultdir
         makedir(dirname)
