@@ -9,17 +9,16 @@
 We will in this report assume $\Omega $ to be a compact and open set in $\mathbb{R} ^{d}$.
 
 \begin{definition}
-Now let the parameter $p \in \mathbb{R} $, $p\ge 1$. We define the space $L^{p}\left( \Omega  \right) $ to be the set of all measurable functions $f: \Omega  \mapsto \mathbb{R} $ such that
+Let $p \in \mathbb{R} $, $ 1 \le  p \le  \infty$. We define the space $L^{p}\left( \Omega  \right) $ to be the set of all measurable functions $f: \Omega  \mapsto \mathbb{R} $ such that
 $\left\lvert f \right\rvert ^{p}$ is Lebesgue measurable, i.e,
 
 \begin{equation*}
     L^{p}\left( \Omega  \right) = \left\{ f: \Omega \mapsto \mathbb{R}  \mid \int_{\Omega }^{} \left\lvert f \right\rvert ^{p} d \Omega  < \infty  \right\}
 .\end{equation*}
-
-A useful extension, which we will use later, are the set of locally integrable functions for any compact subset $K \subseteq \text{Interior}\left( \Omega  \right) $ \cite{brenner07math}, that is,
+The set of locally integrable functions for any compact subset $K \subseteq \text{Interior}\left( \Omega  \right) $ is defined as
 
 \begin{equation*}
-    L_{loc}^{1}\left( \Omega  \right)  = \left\{ f: f \in L^{1}\left( \Omega  \right)  \quad \forall K  \right\}.
+    L_{loc}^{1}\left( \Omega  \right)  = \left\{ f: f \in L^{1}\left( \Omega  \right)  \quad \forall K   \right\}.
 \end{equation*}
 \end{definition}
 
@@ -66,13 +65,19 @@ Finally, let $u \in  L^{1}_{loc}\left( \Omega  \right) $. We call the function $
 \int_{\Omega }^{} w \varphi  dx = \left( -1 \right) ^{\left\lvert \alpha  \right\rvert } \int_{\Omega }^{} u \cdot \partial ^{\alpha } \varphi dx, \quad \forall \varphi \in  C_{0}^{\infty}\left( \Omega  \right).
 \]
 
-We are now able to construct the Sobolev space \cite{manzoni2021optimal}, \[
-H^{m}\left( \Omega  \right) = \left\{ u \in L^{2}\left( \Omega  \right)  \mid  \partial ^{\alpha } u \in L^{2}\left( \Omega  \right)  \forall \alpha : \left\lvert \alpha  \right\rvert  \le m \right\} \text{ for } m>1
+We are now able to construct the Sobolev space,
+
+\begin{definition}[Sobolev space]
+    Let $m\ge 0$ be an integer and let $1 \le  p \le  \infty$ be a real number. Then we define the Sobolev space
+\[
+H^{m}\left( \Omega  \right) = \left\{ u \in L^{2}\left( \Omega  \right)  \mid  \partial ^{\alpha } u \in L^{2}\left( \Omega  \right)  \forall \alpha : \left\lvert \alpha  \right\rvert  \le m \right\}.
 \]
+Thus, $H^{m}( \Omega ) $ is spanned by functions with derivatives of order up to $m$ in $L^{p}( \Omega ) $.
+\end{definition}
 Equipped with the inner product is $H^{m}\left( \Omega  \right) $  denoted as a Hilbert space, that is, for $u,v \in H^{m}\left( \Omega  \right) $, \[
     \left( u,v \right) _{H^{m}\left( \Omega   \right) } = \sum_{\left\lvert \alpha  \right\rvert  \le  m}^{}  \int_{\Omega }^{} \partial ^{\alpha } u \partial ^{\alpha } v dx.
 \]
-Similarly, the integral norm is denoted as, \[
+Similarly, the norm is is denoted as, \[
 \| u \|_{ H^{m}\left( \Omega  \right)  }^{  }  = \left( \| u \|_{ L^{2}\left( \Omega  \right)    } + \sum_{k = 1}^{m}  \left\lvert u \right\rvert ^{2} _{  H^{k}\left( \Omega  \right) }\right) ^{\frac{1}{2}},
 \]
 where the seminorm is defined such that, \[
