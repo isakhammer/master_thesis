@@ -1,18 +1,10 @@
 include("results.jl")
 using Dates
 
+
 module Solver
     using Gridap
     using Parameters
-    import GridapMakie
-    import Makie
-    import GLMakie
-    using Test
-
-    function man_sol(;L=1,m=1,r=1)
-        u(x) = 100*cos(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
-    end
-
 
     @with_kw struct Solution
         Ω
@@ -30,37 +22,11 @@ module Solver
         eh_energy
     end
 
-    function generate_vtk(; sol::Solution, dirname::String)
-        println("Generating vtk's in ", dirname)
-        if (isdir(dirname))
-            rm(dirname, recursive=true)
-        end
-        mkdir(dirname)
 
-        writevtk(sol.model, dirname*"/model")
-        writevtk(sol.Λ, dirname*"/skeleton")
-        writevtk(sol.Γ, dirname*"/boundary")
-        writevtk(sol.Λ, dirname*"/jumps",cellfields=["jump_u"=>jump(sol.uh)])
-        writevtk(sol.Ω, dirname*"/omega",cellfields=["uh"=>sol.uh])
-        writevtk(sol.Ω, dirname*"/error",cellfields=["e"=>sol.e])
-        writevtk(sol.Ω, dirname*"/manufatured",cellfields=["u"=>sol.u])
+    function run(; order=order, n=n, use_quads=true)
 
-
-        fig = Makie.plot(sol.Λ)
-        Makie.wireframe!(sol.Λ, color=:black, linewidth=2)
-        Makie.wireframe!(sol.Γ, color=:black, linewidth=2)
-        Makie.save(dirname*"/grid.png", fig)
-
-        # (Isak): Doesnt work :( Please fix
-        # fig, _ , plt = Makie.plot(res.Ω, res.uh)
-        # Makie.Colorbar(fig[1,2], plt)
-        # Makie.save(dirname*"/man_sol.png", fig)
-    end
-
-
-    function run(; order=order, n=n, L=L,  m=m, r=r, vtkdirname=nothing, use_quads=true)
-
-        pmin = Point(0.,0.0)
+        L = 2π
+        pmin = Point(0.,0.)
         pmax = Point(L, L)
         partition = (n, n)
 
@@ -75,9 +41,7 @@ module Solver
 
         # u is the manufactured solution
         # -Δu = f in Ω, and u = g on Γ
-        # u(x) = 100*cos(x[1])*cos(x[2])
-        u = man_sol(L=L, m=m, r=r)
-        # u(x) = 3*x[1] + x[2]^2
+        u(x) = 100*cos(x[1])*cos(x[2])
         f(x) = -Δ(u)(x)
         g(x) = u(x)
 
@@ -120,6 +84,7 @@ module Solver
         uh = solve(op)
 
         e = u - uh
+
         function mean_n(u,n)
             return 0.5*( u.plus⋅n.plus + u.minus⋅n.minus )
         end
@@ -139,9 +104,6 @@ module Solver
 
         sol = Solution(  model=model, Ω=Ω, Γ=Γ, Λ=Λ, h=h,
                         u=u_inter, uh=uh, e=e, el2=el2, eh1=eh1, eh_energy=eh_energy)
-        if ( vtkdirname!=nothing)
-            generate_vtk(sol=sol, dirname=vtkdirname)
-        end
         return sol
     end
 
@@ -149,7 +111,7 @@ end # module
 
 
 
-function convergence_analysis(; L, m, r, orders, ns, dirname, write_vtks=true)
+function convergence_analysis(;orders, ns, dirname)
     println("Run convergence",)
 
     for order in orders
@@ -161,15 +123,7 @@ function convergence_analysis(; L, m, r, orders, ns, dirname, write_vtks=true)
 
         for n in ns
 
-            res = Solver.run(order=order, n=n, L=L, m=m, r=r)
-
-            if (write_vtks)
-                vtkdirname =dirname*"/order_"*string(order)*"_n_"*string(n)
-                mkpath(vtkdirname)
-                res = Solver.run(order=order, n=n, L=L, m=m, r=r, vtkdirname=vtkdirname)
-            else
-                res = Solver.run(order=order, n=n, L=L, m=m, r=r)
-            end
+            res = Solver.run(order=order, n=n)
 
             push!(el2s, res.el2)
             push!(eh1s, res.eh1)
@@ -181,25 +135,11 @@ function convergence_analysis(; L, m, r, orders, ns, dirname, write_vtks=true)
 end
 
 function main()
-    function makedir(dirname)
-        if (isdir(dirname))
-            rm(dirname, recursive=true)
-        end
-        mkdir(dirname)
-    end
-
-    resultdir= "figures/poisson_DG/"*string(Dates.now())
-    mkpath(resultdir)
-
-    function run(;  L,m,r)
-        orders=[2,3,4]
-        ns = [2^2, 2^3, 2^4, 2^5, 2^6, 2^7]
-        dirname = resultdir*"/L_"*string(round(L,digits=2))*"_m_"*string(m)*"_r_"*string(r);
-        makedir(dirname)
-        convergence_analysis( L=L, m=m, r=r, orders=orders, ns=ns, dirname=dirname)
-    end
-
-    run(L=1,m=1,r=1)
+    dirname = "figures/poisson_DG/"*string(Dates.now())
+    mkpath(dirname)
+    orders=[1,2,3,4]
+    ns = [2^2, 2^3, 2^4, 2^5, 2^6, 2^7]
+    convergence_analysis(orders=orders, ns=ns, dirname=dirname)
 end
 
 @time main()

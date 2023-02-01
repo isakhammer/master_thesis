@@ -1,8 +1,5 @@
 module Results
 
-    using Test
-    using Plots
-    import Dates
     import CairoMakie
     using LaTeXStrings
     using Latexify
@@ -71,5 +68,3 @@ module Results
     end
 
 end # end module
-
-
