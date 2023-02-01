@@ -41,24 +41,20 @@ module Solver
         eh_energy
     end
 
-    function generate_vtk(; res::Solution, dirname::String)
+    function generate_vtk(; sol::Solution, dirname::String)
         println("Generating vtk's in ", dirname)
-        if (isdir(dirname))
-            rm(dirname, recursive=true)
-        end
-        mkdir(dirname)
+        mkpath(dirname)
 
         # Write out models and computational domains for inspection
-        writevtk(res.bgmodel, dirname*"/bgmodel")
-        writevtk(res.Ω, dirname*"/Omega")
-        writevtk(res.Ω_act, dirname*"/Omega_act")
-        writevtk(res.Γ, dirname*"/Gamma")
-        writevtk(res.Fg, dirname*"/Fg")
-
+        writevtk(sol.bgmodel, dirname*"/bgmodel")
+        writevtk(sol.Ω, dirname*"/Omega")
+        writevtk(sol.Ω_act, dirname*"/Omega_act")
+        writevtk(sol.Γ, dirname*"/Gamma")
+        writevtk(sol.Fg, dirname*"/Fg")
     end
 
 
-    function run(; order=order, n=n, dirname=nothing )
+    function run(; order=order, n=n, vtkdirname=nothing )
 
         # Background model
         L = 1.11
@@ -101,7 +97,7 @@ module Solver
 
         # Define weak form
         # Nitsche parameter
-        γd = order(order+1)
+        γd = order*(order+1)
 
         # Ghost penalty parameter
         γg = 0.1
@@ -136,8 +132,8 @@ module Solver
         sol = Solution(  bgmodel=bgmodel, Ω_act=Ω_act, Fg=Fg, Ω=Ω, Γ=Γ,  h=h,
                         u=u_inter, uh=uh, e=e, el2=el2, eh1=eh1, eh_energy=eh_energy)
 
-        if ( dirname!=nothing)
-            generate_vtk(sol, dirname)
+        if ( vtkdirname!=nothing)
+            generate_vtk(sol=sol, dirname=vtkdirname)
         end
 
         return sol
@@ -146,8 +142,7 @@ module Solver
 end # module
 
 
-
-function convergence_analysis(; orders, ns, dirname, optimize=true)
+function convergence_analysis(; orders, ns, dirname, write_vtks=true)
     println("Run convergence",)
 
     for order in orders
@@ -159,11 +154,10 @@ function convergence_analysis(; orders, ns, dirname, optimize=true)
 
         for n in ns
 
-            sol = nothing
-            if !(optimize)
+            if (write_vtks)
                 vtkdirname =dirname*"/order_"*string(order)*"_n_"*string(n)
                 mkpath(vtkdirname)
-                sol = Solver.run(order=order, n=n, dirname=vtkdirname)
+                sol = Solver.run(order=order, n=n, vtkdirname=vtkdirname)
             else
                 sol = Solver.run(order=order, n=n)
             end
@@ -174,8 +168,8 @@ function convergence_analysis(; orders, ns, dirname, optimize=true)
         end
         Results.generate_figures(ns=ns, el2s=el2s, eh1s=eh1s, ehs_energy=ehs_energy, order=order, dirname=dirname)
     end
-
 end
+
 
 function main()
     function makedir(dirname)
@@ -188,15 +182,11 @@ function main()
     resultdir= "figures/poisson_CutFEM/"*string(Dates.now())
     mkpath(resultdir)
 
-    function run()
-        orders=[1,2,3,4]
-        ns = [2^2, 2^3, 2^4, 2^5, 2^6, 2^7]
-        dirname = resultdir
-        makedir(dirname)
-        convergence_analysis( orders=orders, ns=ns, dirname=dirname)
-    end
-
-    run()
+    orders=[1,2,3,4]
+    ns = [2^2, 2^3, 2^4, 2^5, 2^6, 2^7]
+    dirname = resultdir
+    makedir(dirname)
+    convergence_analysis( orders=orders, ns=ns, dirname=dirname)
 end
 
 @time main()

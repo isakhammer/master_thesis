@@ -14,7 +14,7 @@ module Solver
     end
 
 
-    @with_kw struct Results
+    @with_kw struct Solution
         Ω
         Γ
         Λ
@@ -30,25 +30,25 @@ module Solver
         eh_energy
     end
 
-    function generate_vtk(; res::Results, dirname::String)
+    function generate_vtk(; sol::Solution, dirname::String)
         println("Generating vtk's in ", dirname)
         if (isdir(dirname))
             rm(dirname, recursive=true)
         end
         mkdir(dirname)
 
-        writevtk(res.model, dirname*"/model")
-        writevtk(res.Λ, dirname*"/skeleton")
-        writevtk(res.Γ, dirname*"/boundary")
-        writevtk(res.Λ, dirname*"/jumps",cellfields=["jump_u"=>jump(res.uh)])
-        writevtk(res.Ω, dirname*"/omega",cellfields=["uh"=>res.uh])
-        writevtk(res.Ω, dirname*"/error",cellfields=["e"=>res.e])
-        writevtk(res.Ω, dirname*"/manufatured",cellfields=["u"=>res.u])
+        writevtk(sol.model, dirname*"/model")
+        writevtk(sol.Λ, dirname*"/skeleton")
+        writevtk(sol.Γ, dirname*"/boundary")
+        writevtk(sol.Λ, dirname*"/jumps",cellfields=["jump_u"=>jump(sol.uh)])
+        writevtk(sol.Ω, dirname*"/omega",cellfields=["uh"=>sol.uh])
+        writevtk(sol.Ω, dirname*"/error",cellfields=["e"=>sol.e])
+        writevtk(sol.Ω, dirname*"/manufatured",cellfields=["u"=>sol.u])
 
 
-        fig = Makie.plot(res.Λ)
-        Makie.wireframe!(res.Λ, color=:black, linewidth=2)
-        Makie.wireframe!(res.Γ, color=:black, linewidth=2)
+        fig = Makie.plot(sol.Λ)
+        Makie.wireframe!(sol.Λ, color=:black, linewidth=2)
+        Makie.wireframe!(sol.Γ, color=:black, linewidth=2)
         Makie.save(dirname*"/grid.png", fig)
 
         # (Isak): Doesnt work :( Please fix
@@ -58,7 +58,7 @@ module Solver
     end
 
 
-    function run(; order=order, n=n, L=L,  m=m, r=r, use_quads=true)
+    function run(; order=order, n=n, L=L,  m=m, r=r, dirname=nothing, use_quads=true)
 
         pmin = Point(0.,0.0)
         pmax = Point(L, L)
@@ -136,16 +136,20 @@ module Solver
                             ))
 
         u_inter = interpolate(u, V)
-        res = Results(  model=model, Ω=Ω, Γ=Γ, Λ=Λ, h=h,
+
+        sol = Solution(  model=model, Ω=Ω, Γ=Γ, Λ=Λ, h=h,
                         u=u_inter, uh=uh, e=e, el2=el2, eh1=eh1, eh_energy=eh_energy)
-        return res
+        if ( dirname!=nothing)
+            generate_vtk(sol, dirname)
+        end
+        return sol
     end
 
 end # module
 
 
 
-function convergence_analysis(; L, m, r, orders, ns, dirname, optimize)
+function convergence_analysis(; L, m, r, orders, ns, dirname, optimize=false)
     println("Run convergence",)
 
     for order in orders
@@ -162,7 +166,9 @@ function convergence_analysis(; L, m, r, orders, ns, dirname, optimize)
             if !(optimize)
                 vtkdirname =dirname*"/order_"*string(order)*"_n_"*string(n)
                 mkpath(vtkdirname)
-                Solver.generate_vtk(res=res, dirname=vtkdirname)
+                res = Solver.run(order=order, n=n, L=L, m=m, r=r, dirname=vtkdirname)
+            else
+                res = Solver.run(order=order, n=n, L=L, m=m, r=r)
             end
 
             push!(el2s, res.el2)
