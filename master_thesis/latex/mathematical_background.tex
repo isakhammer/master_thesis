@@ -116,10 +116,10 @@ First of all, if $\Omega $ has a smooth boundary, then it can be very difficult 
     We define a (general) mesh $\mathcal{T} $ of the domain $\Omega $ to be a collection of disjoint polyhedra $\left\{ T \right\}  $ forming a partition of $\Omega $ s.t.\[
     \overline{\Omega } = \bigcup _{T \in \mathcal{T} } T
     \]
-    We say that each $T \in  \mathcal{T} $ is a mesh element or simply as a element. We also denote $\mathcal{T} _{h}$ to be a mesh $\mathcal{T} $ with size $h$.
+    We say that each $T \in  \mathcal{T} $ is a mesh element or an element.
 \end{definition}
 
-\begin{definition}[Fitted Mesh]
+\begin{definition}[Fitted mesh]
    Assume that the set $\Omega \subset \mathbb{R} ^{d} $ is our physical domain.
    We say that the mesh is fitted if $\Omega $ can be fully covered using a general mesh.
 \end{definition}
@@ -133,6 +133,7 @@ We define the mesh size to is the maximum diameter $h $ of any polyhedra in the 
     h_{max} &= \max_{T \in \mathcal{T} }  h_{T} := h,
 \end{split}
 .\end{equation}
+We denote $\mathcal{T} _{h}$ to be a mesh $\mathcal{T} $ with size $h$.
 \end{definition}
 
 \begin{definition}[Conform mesh]
@@ -159,14 +160,14 @@ that it is either a vertex or a facet. This with the combination of shape regula
 very handy when proving convergence.
 
 Questions arise when we want to allow for complex geometries where some physical domain $\Omega $ has a smooth boundary $\Gamma $ and, thus, cannot be fully covered of a fitted mesh. This motivates us to define a so-called unfitted mesh. In this
-report is the idea to solve the problems on a unfitted mesh.
+report is  to solve the problems on a unfitted mesh.
 
 \begin{definition}[ Unfitted mesh]
  Let a background domain $\widetilde{\Omega } \subset \mathbb{R} ^{d} $ have a corresponding mesh $\widetilde{\mathcal{T} _{h}}$.
 Assume that the set $\Omega\subset   \widetilde{\Omega }  $ is a physical domain with a corresponding smooth boundary $\Gamma$. We define the unfitted mesh as the mesh that intersects the interior of $\Omega$, i.e., the intersection $\widetilde{\mathcal{T}_{h} } \cap
  \Omega^{\circ }     $ where $ \Omega ^{\circ } = \Omega \setminus \Gamma  $.
-
 \end{definition}
+
 \todo[inline]{ Maybe illustrate using figures. Check \cite[Fig 2.5]{pietro2012}  }
 
 \begin{definition}[Facets]
