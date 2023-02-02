@@ -33,7 +33,7 @@
 %----------------------------------------------------------------------------------------
 
 \begin{center}
-\textsc{\LARGE Master Plan - Isak Hammer - }\\
+\textsc{\LARGE Master Plan - Isak Hammer  }\\
 \textsc{\large Solving Cahn-Hilliard Equation using CutCIP}\\
 Version: \today
 
@@ -67,15 +67,23 @@ Version: \today
                 \begin{todolist}[noitemsep]
                 \item Poisson Nitsche
                     \begin{todolist}[noitemsep]
-                        \item $L^{2}$ convergence
-                        \item $H^{1}$ convergence
+                    \item[\done] $L^{2}$ convergence
+                    \item[\done] $H^{1}$ convergence
                     \end{todolist}
                 \item Poisson DG-Nitsche
                     \begin{todolist}[noitemsep]
+                        \item[\done] $L^{2}$ convergence
+                        \item[\done] $H^{1}$ convergence
+                    \end{todolist}
+                \item Poisson Cut
+                    \begin{todolist}[noitemsep]
                         \item $L^{2}$ convergence
                         \item $H^{1}$ convergence
+
                     \end{todolist}
-                \item Poisson CutFG
+                     \textbf{ Only convergence for $k=1$? }
+
+                \item Poisson CutDG
                     \begin{todolist}[noitemsep]
                         \item $L^{2}$ convergence
                         \item $H^{1}$ convergence
@@ -131,6 +139,12 @@ Version: \today
         % Report
         \begin{todolist}[leftmargin=3mm, noitemsep]
             \item Introduction
+            \item Mathematical background
+                \begin{todolist}[leftmargin=3mm, noitemsep]
+                \item[\done]  Computational domains
+                \item Broken Sobolev Spaces
+                \item Inverse estimates
+                \end{todolist}
             \item CutDG $- \Delta u =f$
                 \begin{todolist}[leftmargin=3mm, noitemsep]
                 \item  Construction of CutDG
@@ -208,7 +222,7 @@ group height=.3]{1}{24}
 \gantttitle{June}{4} \\
 %tasks
 \ganttbar[progress=100]{Introduction}{1}{3} \\
-\ganttbar[progress=33]{Phase 1}{4}{6} \\
+\ganttbar[progress=53]{Phase 1}{4}{6} \\
 \ganttbar[progress=0]{Phase 2}{7}{12} \\
 \ganttbar[progress=0]{Phase 3}{13}{15} \\
 \ganttbar[progress=0]{Phase 4}{16}{18} \\
