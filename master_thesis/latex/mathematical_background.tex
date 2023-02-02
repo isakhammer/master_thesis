@@ -273,7 +273,7 @@ And again, we often use the more compact notation $\| v \|_{\mathcal{F}_{h}} =  
 
 A very useful lemma when working on estimates on broken Sobolev spaces is that a if a function is continuous, then the jump between the mesh elements is zero.
 \begin{lemma}
-    A functional $ v \in  H^{1}( \mathcal{T}_{h} ) $ belongs to $ H^{1}( \Omega )  $ if and only if \[
+    A function $ v \in  H^{1}( \mathcal{T}_{h} ) $ belongs to $ H^{1}( \Omega )  $ if and only if \[
     \jump{ v }   = 0, \quad F \in \mathcal{F}^{int}_{h}
     \]
 \end{lemma}
@@ -344,7 +344,7 @@ Let $X$ be a Hilbert space. Furthermore, we define the dual space the be the spa
 X'  =
 \left.
 \begin{cases}
-F: X  \mapsto \mathbb{R} \text{ such that }\forall v,w \in \mathcal{X}, \forall a,b \in \mathbb{R} \text{ and } C> 0 \text{ is }   \\
+F: X  \mapsto \mathbb{R} \text{ s.t. }\forall v,w \in X, \forall a,b \in \mathbb{R} \text{ and } C> 0 \text{ is }   \\
   F\left( \lambda v + \mu w  \right) = \lambda F(v) + \mu F(w) \text{ and } \left\lvert F\left( v \right)  \right\rvert \le C \| v \|_{ X  }^{  }
 \end{cases}
   \right\}
@@ -366,7 +366,7 @@ F: X  \mapsto \mathbb{R} \text{ such that }\forall v,w \in \mathcal{X}, \forall 
     a( u,v)  = l(v ) := \left<f,v \right>_{X' , X}  \forall v \in X
     \]
     Where $a \in  \mathcal{L} ( X \times X,\mathbb{R} ) $ is a bounded linear form and $f \in X':= \mathcal{L} ( X,\mathbb{R} )  $ is a bounded linear form. Here we denote $\left<\cdot ,\cdot  \right>_{X' .X} $ as the duality pairing between $X' $
-    and $X' $.
+    and $X $.
 
 \end{definition}
 
