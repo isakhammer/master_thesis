@@ -144,14 +144,14 @@ Finally being able to control the estimates on cut elements can we start showing
     $A_{h}$ is coercive, i.e., satisfying the general definition \ref{def:coercivity}.
 \end{lemma}
 \begin{proof}
-    Assume that $v \in V_{h} $. Then is
+    Assume that $v \in V_{h} $. Then does in short this inequality hold,
 \[
     \begin{split}
 A_{h}( v, v)   =& a_{h}( v, v) + \left\lvert v \right\rvert _{g_{h}}^{2} \\
-=&  \| \nabla v \|_{  \Omega }^{ 2 } + \| v \|_{ g_{h} }^{ 2 } + \beta \| h^{-\frac{1}{2}} \jump{ v }   \|_{\mathcal{F} _{h} \cap \Omega   }^{  }   + \beta \| h^{-\frac{1}{2}}  v    \|_{ \Gamma}^{  }
+=&  \| \nabla v \|_{  \Omega }^{ 2 } + \left\lvert v \right\rvert _{ g_{h} }^{ 2 } + \beta \| h^{-\frac{1}{2}} \jump{ v }   \|_{\mathcal{F} _{h} \cap \Omega   }^{  }   + \beta \| h^{-\frac{1}{2}}  v    \|_{ \Gamma}^{  }
 \\ & - 2( \mean{ \partial _{n} v  },  \jump{ v })_{\mathcal{F} _{h} \cap \Omega }
 \\ & - 2 ( \partial _{n} v,v)_{\Gamma \cap \Omega }     \\
-\ge  &  \| \nabla v \|_{  \Omega }^{ 2 } + \| v \|_{ g_{h} }^{ 2 } + \beta \| h^{-\frac{1}{2}} \jump{ v }   \|_{\mathcal{F} _{h} \cap \Omega   }^{  }   + \beta \| h^{-\frac{1}{2}}  v    \|_{ \Gamma}^{  }
+\ge  &  \| \nabla v \|_{  \Omega }^{ 2 } + \left\lvert v \right\rvert_{ g_{h} }^{ 2 } + \beta \| h^{-\frac{1}{2}} \jump{ v }   \|_{\mathcal{F} _{h} \cap \Omega   }^{  }   + \beta \| h^{-\frac{1}{2}}  v    \|_{ \Gamma}^{  }
 \\ & - \varepsilon \| h^{\frac{1}{2}}  \mean{  \partial _{n} v}      \|_{ \mathcal{F} _{h} \cap \Omega  }^{2  } - \varepsilon ^{-1} \| h^{-\frac{1}{2}} \jump{ v }   \|_{\mathcal{F} _{h} \cap \Omega   }^{ 2 }
 \\ & - \varepsilon \| h^{\frac{1}{2}} \partial _{n} v \|_{ \Gamma \cap \Omega  }^{2  } -  \varepsilon ^{-1} \| h^{-\frac{1}{2}} v \|_{  \Gamma \cap  \Omega }^{ 2 } \\
 \ge & ( 1-\varepsilon C)  ( \| \nabla v \|_{\Omega   }^{2  } + \left\lvert v \right\rvert _{g_{h}}   ) + ( \beta - \varepsilon ^{-1} ) ( \| h^{-\frac{1}{2}} \jump{ v }   \|_{ \mathcal{F} _{h}\cap  \Omega  }^{ 2 } + \| h^{\frac{1}{2}} v \|_{\Gamma
@@ -172,11 +172,18 @@ Remark that we in the second step we expanded $ 1 =  h^{\frac{1}{2}} h^{-\frac{1
  \]
 
  On the third step we first rearranged the terms, that is,
-
-
-
-\todo[inline]{ Implement the second last stap }
-
+ \[
+     \begin{split}
+   \| \nabla v \|_{  \Omega }^{ 2 } & + \left\lvert v \right\rvert_{ g_{h} }^{ 2 } + \beta \| h^{-\frac{1}{2}} \jump{ v }   \|_{\mathcal{F} _{h} \cap \Omega   }^{  }   + \beta \| h^{-\frac{1}{2}}  v    \|_{ \Gamma}^{  }
+\\  &- \varepsilon \| h^{\frac{1}{2}}  \mean{  \partial _{n} v}      \|_{ \mathcal{F} _{h} \cap \Omega  }^{2  } - \varepsilon ^{-1} \| h^{-\frac{1}{2}} \jump{ v }   \|_{\mathcal{F} _{h} \cap \Omega   }^{ 2 }
+\\ &-  \varepsilon \| h^{\frac{1}{2}} \partial _{n} v \|_{ \Gamma \cap \Omega  }^{2  } -  \varepsilon ^{-1} \| h^{-\frac{1}{2}} v \|_{  \Gamma \cap  \Omega }^{ 2 } \\
+&=  \| \nabla v \|_{  \Omega }^{ 2 }  + \left\lvert v \right\rvert_{ g_{h} }^{ 2 } \\
+&\quad  + ( \beta \| h^{-\frac{1}{2}} v \|_{\Gamma   }^{  } - \varepsilon ^{ -1}\| h^{-\frac{1}{2}} v \|_{\Gamma \cap \Omega    }^{  } )  \\
+&\quad  -  \varepsilon ( \| h^{\frac{1}{2}} \mean{ \partial _{n} v }    \|_{  \mathcal{F}_{h} \cap \Omega  }^{  } + \| h^{\frac{1}{2}} \partial _{n} v \|_{ \Gamma \cap \Omega  }^{  }  ) \\
+&\quad  - \varepsilon ^{-1} ( \| h^{-\frac{1}{2}} \jump{ v }   \|_{ \mathcal{F}_{h} \cap \Omega   }^{2  } + \| h^{-\frac{1}{2}} v \|_{ \Gamma \cap \Omega   }^{  }  )
+     \end{split}
+ \]
+ \todo[inline]{ Need to work out this proof. }
 
 \end{proof}
 
