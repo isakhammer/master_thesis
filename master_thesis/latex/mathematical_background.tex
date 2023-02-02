@@ -242,6 +242,21 @@ We define the mean as $\mean{ v} |_{F} = v    $ and the jump as $\jump{v}|_{F} =
     \label{fig:normal}
 \end{figure}
 
+\begin{lemma}[Magic formula]
+    Let $u,v \in L^2( \mathcal{T}_{h} ) $ then this hold,
+    $  \jump{ uv }    = \jump{ u }   \mean{ v }    + \jump{ u }  \mean{ v }     $.
+\end{lemma}
+\begin{proof}
+    The proof is quite straight forward.
+    \[
+        \begin{split}
+    \jump{ uv }   & = u^{+}v^{+} - u^{-}v^{-} \\
+     & = \frac{1}{2}(u^{+} + u^{-})( v^{+} - v^{-})  + \frac{1}{2}(v^{+} + v^{-})( u^{+} - u^{-}) \\
+     & =  \jump{ u }   \mean{ v }    + \jump{ u }  \mean{ v }
+        \end{split}
+    \]
+\end{proof}
+
 
 \subsection{Broken Sobolev spaces}%
 \label{sub:broken_sobolev_spaces}
@@ -319,13 +334,13 @@ A very useful lemma when working on estimates on broken Sobolev spaces is that a
 
 
 \begin{lemma}[Lax-Milgram]
-    \label{def:Lax-milgram}
+    \label{def:lax-milgram}
     We say that the abstract linear problem \ref{def:abstract_linear_problem} is well-posed if $a$ is coercive. Moreover, the following a priori estimate holds true.\[
     \| v \|_{ X }^{  } \le \frac{1}{C} \| f \|_{ X'  }^{  }
     \]
 \end{lemma}
 \begin{proof}
-    See \cite[Lemma 1.4]{pietro2012}
+    The problem can easily be proved using a special case of the Banach–Nečas–Babuška theorem. See \cite[Lemma 1.4]{pietro2012}
 \end{proof}
 
 
