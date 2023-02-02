@@ -144,6 +144,30 @@ Finally being able to control the estimates on cut elements can we start showing
     $A_{h}$ is coercive, i.e., satisfying the general definition \ref{def:coercivity}.
 \end{lemma}
 \begin{proof}
+    Assume that $v \in V_{h} $. Then is
+\[
+    \begin{split}
+A_{h}( v, v)   =& a_{h}( v, v) + \left\lvert v \right\rvert _{g_{h}}^{2} \\
+=&  \| \nabla v \|_{  \Omega }^{ 2 } + \| v \|_{ g_{h} }^{ 2 } + \beta \| h^{-\frac{1}{2}} \jump{ v }   \|_{\mathcal{F} _{h} \cap \Omega   }^{  }   + \beta \| h^{-\frac{1}{2}}  v    \|_{ \Gamma}^{  }
+\\ & - 2( \mean{ \partial _{n} v  },  \jump{ v })_{\mathcal{F} _{h} \cap \Omega }  - 2 ( \partial _{n} v,v)_{\Gamma \cap \Omega }     \\
+\ge  &  \| \nabla v \|_{  \Omega }^{ 2 } + \| v \|_{ g_{h} }^{ 2 } + \beta \| h^{-\frac{1}{2}} \jump{ v }   \|_{\mathcal{F} _{h} \cap \Omega   }^{  }   + \beta \| h^{-\frac{1}{2}}  v    \|_{ \Gamma}^{  }
+\\ & - \varepsilon \| h^{\frac{1}{2}}  \mean{  \partial _{n} v}      \|_{ \mathcal{F} _{h} \cap \Omega  }^{2  } - \varepsilon ^{-1} \| h^{-\frac{1}{2}} \jump{ v }   \|_{\mathcal{F} _{h} \cap \Omega   }^{ 2 } \\ & - \varepsilon \| h^{\frac{1}{2}}
+\partial _{n} v \|_{ \Gamma \cap \Omega  }^{2  } -  \varepsilon ^{-1} \| h^{-\frac{1}{2}} v \|_{  \Gamma \cap  \Omega }^{ 2 } \\
+\ge & ( 1-\varepsilon C)  ( \| \nabla v \|_{\Omega   }^{2  } + \left\lvert v \right\rvert _{g_{h}}   ) + ( \beta - \varepsilon ^{-1} ) ( \| h^{-\frac{1}{2}} \jump{ v }   \|_{ \mathcal{F} _{h}\cap  \Omega  }^{ 2 } + \| h^{\frac{1}{2}} v \|_{\Gamma
+}^{  2}  )    \\
+\ge & \frac{1}{2} \| v \|_{ A_{h} }^{ 2 }
+    \end{split}
+\]
+
+ The Youngs $\varepsilon $-inequality \ref{lemma:youngs_epsilon} was applied s.t.
+ \[
+     \begin{split}
+\\ & - 2( \mean{ \partial _{n} v  },  \jump{ v })_{\mathcal{F} _{h} \cap \Omega }  - 2 ( \partial _{n} v,v)_{\Gamma \cap \Omega } \ge      \\
+     \end{split}
+ \]
+
+\todo[inline]{ Implement the second last stap }
+
 
 \end{proof}
 
