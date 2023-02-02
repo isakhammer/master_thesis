@@ -159,7 +159,7 @@ A_{h}( v, v)   =& a_{h}( v, v) + \left\lvert v \right\rvert _{g_{h}}^{2} \\
 \ge & \frac{1}{2} \| v \|_{ A_{h} }^{ 2 }
     \end{split}
 \]
-where we used $C= C^{g} ( C_{\Gamma } + C_{I}) $ and chose $\varepsilon = \frac{1}{2C}$ and $\beta  = 4C$.
+where we used $C= C_{g} ( C_{\Gamma } + C_{I}) $ and chose $\varepsilon = \frac{1}{2C}$ and $\beta  = 4C$.
 
 Remark that we in the second step we expanded $ 1 =  h^{\frac{1}{2}} h^{-\frac{1}{2}}$ and used the Youngs $\varepsilon $-inequality \ref{lemma:youngs_epsilon} s.t.,
  \[
@@ -187,5 +187,15 @@ Remark that we in the second step we expanded $ 1 =  h^{\frac{1}{2}} h^{-\frac{1
 
 \end{proof}
 
+
+Another important recipe before we can use Lax-Milgram is that the we need to show that $A_{h} $ is a bilinear bounded operator.
+
+\begin{lemma}
+    $A_{h}$ is bounded.
+\end{lemma}
+
+\begin{proof}
+    We want to show that $\left\lvert A_{h}( v,u) \right\rvert \lesssim \| v \|_{A_{h}  }^{  }     \| u \|_{A_{h}  }^{  } \quad  \forall v,u \in V_{h} $.
+\end{proof}
 
 
