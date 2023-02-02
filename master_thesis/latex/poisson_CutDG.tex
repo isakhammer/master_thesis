@@ -36,7 +36,7 @@ Let the submesh $\mathcal{T}_{\Gamma } \subset \mathcal{T}_{h}  $ consisting of 
 We denote the discrete to function space $V_{h}$ to be the broken polynomial space of order $k$, that is, $V_{h} := \mathcal{P}^{k}( \mathcal{T}_{h} )  $.
 
 
-Let the bilinear form $a_{h}: V_{h} \times V_{h} \to \mathbb{R} $  and the linear form $l_{h}: V_{h} \to \mathbb{R} $. We denote the symmetric interior penalty discontinuous Galerkin Poisson formulation to be
+Let the bilinear form $a_{h}: V_{h} \times V_{h} \to \mathbb{R} $  and the linear form $l_{h}: V_{h} \to \mathbb{R} $. We denote the symmetric interior penalty discontinuous Galerkin Poisson (DG Poisson)  formulation to be
 
 \begin{equation}
 \label{eq:poisson_DG}
@@ -46,8 +46,19 @@ Let the bilinear form $a_{h}: V_{h} \times V_{h} \to \mathbb{R} $  and the linea
     l_{h}( v)  &=  ( f,v) _{\mathcal{T} _{h} \cap \Omega } - ( \partial _{n} v,g) _{\Gamma } + \beta ( h^{-1} g,v)_{\Gamma }
 \end{split}
 \end{equation}
+For more information about the derivation, see \cite[Chapter 4.2]{pietro2012}. Remark that this formulation is defined on unfitted meshed and, thus, imposing Nitsche penalty to fulfill the boundary condition.
+\todo[inline]{ Need source of the derivation or maybe need to to it myself }
+However, to show well-posedness will we later see that it is necessary to add a stability term, that is, the symmetric interior penalty cut discontinuous Galerkin Poisson (CutDG Poisson) formulation,
+\[
+A_{h}( u, v) := a_{h}( u, v) + g_{h}( u_{h}, v)
+\]
+We denote the stability term $g_{h}$ as the so-called ghost penalty.
 
-For more information about the derivation, see \cite[Chapter 4.2]{pietro2012}. Keep in mind that \eqref{eq:poisson_DG} is generally defined on fitted meshed, i.e., meshes that fully
+\begin{definition}[CutDG Poisson problem]
+We denote the CutDG Poisson problem as follows; to find a unique $u_{h} \in V_{h}$ s.t.  \[
+A_{h}(u_{h}, v ) = l_{h}( v)  \quad \forall  v \in V_{h}.
+\]
+\end{definition}
 
 
 
