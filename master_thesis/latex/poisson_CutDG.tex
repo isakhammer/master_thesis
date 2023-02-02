@@ -36,16 +36,18 @@ Let the submesh $\mathcal{T}_{\Gamma } \subset \mathcal{T}_{h}  $ consisting of 
 We denote the discrete to function space $V_{h}$ to be the broken polynomial space of order $k$, that is, $V_{h} := \mathcal{P}^{k}( \mathcal{T}_{h} )  $.
 
 
-Let the bilinear form $a_{h}: V_{h} \times V_{h} \to \mathbb{R} $  and the linear form $l_{h}: V_{h} \to R$. For the discontinuous Galerkin Poisson formulation (Poisson DG) to be
+Let the bilinear form $a_{h}: V_{h} \times V_{h} \to \mathbb{R} $  and the linear form $l_{h}: V_{h} \to \mathbb{R} $. We denote the symmetric interior penalty discontinuous Galerkin Poisson formulation to be
 
 \begin{equation}
 \label{eq:poisson_DG}
 \begin{split}
     a_{h}( v,w)  = &( \nabla v, \nabla w)_{\mathcal{T} _{h} \cap \Omega } - ( \partial _{n} v,w)_{\Gamma } - ( v, \partial _{n} w)_{\Gamma } + \beta ( h^{-1} v,w)_{\Gamma } \\
     & - ( \mean{ \partial _{n} v }  , \jump{ w }  ) _{\mathcal{F} _{h} \cap \Omega } - ( \jump{ v }  , \mean{ \partial _{n} w }  )_{\mathcal{F} _{h}} + \beta ( h^{-1} \jump{ v }  , \jump{ w }  )_{\mathcal{F}_{h}\cap \Omega  } \\
-    l_{h}( v)  &=  ( f,v) _{\mathcal{T} _{h} \cap \Omega } - ( \partial _{n} v,g) _{\Gamma } + \beta ( h^{-1} g,v)
+    l_{h}( v)  &=  ( f,v) _{\mathcal{T} _{h} \cap \Omega } - ( \partial _{n} v,g) _{\Gamma } + \beta ( h^{-1} g,v)_{\Gamma }
 \end{split}
 \end{equation}
+
+For more information about the derivation, see \cite[Chapter 4.2]{pietro2012}. Keep in mind that \eqref{eq:poisson_DG} is generally defined on fitted meshed, i.e., meshes that fully
 
 
 
