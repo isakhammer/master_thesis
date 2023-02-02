@@ -223,15 +223,15 @@ We define the mean as $\mean{ v} |_{F} = v    $ and the jump as $\jump{v}|_{F} =
 \begin{lemma}[Magic formula]
     \label{lemma:magic_formula}
     Let $u,v \in L^2( \mathcal{T}_{h} ) $ then this hold,
-    $  \jump{ uv }    = \jump{ u }   \mean{ v }    + \jump{ u }  \mean{ v }     $.
+    $  \jump{ uv }    = \jump{ u }   \mean{ v }    + \mean{ u }  \jump{ v }     $.
 \end{lemma}
 \begin{proof}
     The proof is quite straight forward.
     \[
         \begin{split}
     \jump{ uv }   & = u^{+}v^{+} - u^{-}v^{-} \\
-     & = \frac{1}{2}(u^{+} + u^{-})( v^{+} - v^{-})  + \frac{1}{2}(v^{+} + v^{-})( u^{+} - u^{-}) \\
-     & =  \jump{ u }   \mean{ v }    + \jump{ u }  \mean{ v }
+     & =  \frac{1}{2}(v^{+} + v^{-})( u^{+} - u^{-})+ \frac{1}{2}(u^{+} + u^{-})( v^{+} - v^{-})   \\
+     & =  \jump{ u }   \mean{ v }    + \mean{ u }  \jump{ v }
         \end{split}
     \]
 \end{proof}
