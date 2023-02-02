@@ -32,18 +32,6 @@ product of two functions $u,v \in L^{2}\left( \Omega  \right) $ such that
 \left( u,v \right) _{\Omega } = \left( u,v \right) _{L^2\left( \Omega  \right) } = \int_{\Omega }^{} u  v dx.
 \]
 
-To generalize, we denote the notation $\mathcal{V} $ for a arbitrary Hilbert space. Furthermore, we define the dual space the be the space of linear and bounded functionals $F: \mathcal{V}  \mapsto \mathbb{R} $\cite{quartdiff}, i.e., \[
-\mathcal{V} ^{*} =
-\left.
-\begin{cases}
-F: \mathcal{V}  \mapsto \mathbb{R} \text{ such that }\forall v,w \in \mathcal{V}, \forall a,b \in \mathbb{R} \text{ and } C> 0 \text{ is }   \\
-  F\left( \lambda v + \mu w  \right) = \lambda F(v) + \mu F(w) \text{ and } \left\lvert F\left( v \right)  \right\rvert \le C \| v \|_{ \mathcal{V}  }^{  }
-\end{cases}
-  \right\}
-\]
-and we equip it with the functional norm,  \[
-    \| F \|_{ \mathcal{V} ^{*} }^{  } = \sup_{v \in \mathcal{V}   } \frac{\left\lvert F\left( v \right)  \right\rvert }{\| v \|_{ \mathcal{V}  }^{  } }.
-\]
 
 We will now establish a notion of the weak derivative, but first are we going to characterize some useful definitions of continuity. The space $C^{k}\left( \Omega  \right) $ for $k\ge 0$ denotes the set of functions whose derivatives, up to order of
 $k$ , is continuous in $\Omega $. Note that we often use the shorthand notation $ C^{0} = C\left( \Omega  \right)  = C^{0}\left( \Omega  \right) $.
@@ -303,6 +291,10 @@ A very useful lemma when working on estimates on broken Sobolev spaces is that a
     \]
 \end{definition}
 
+\subsection{Useful inverse estimates}%
+\label{sub:useful_inverse_estimates}
+
+
 \begin{lemma}[Local inverse estimate]
     \label{lemma:local_inverse_estimates}
     Let $v \in \mathcal{P}^{k} ( T)  $ for an element in $\mathcal{T}_{h} $ and let $F \in \mathcal{F}_{T} := \left\{ F_{h} \in \mathcal{F} _{h} : F \cap \partial T \right\}  $. Then is \[
@@ -348,12 +340,25 @@ A very useful lemma when working on estimates on broken Sobolev spaces is that a
 \subsection{Lax-Milgram lemma}%
 \label{sub:lax_milgram_lemma}
 
-\begin{definition}[Linear bounded function]
+
+\begin{definition}[Linear bounded functional]
     \label{def:linear_function}
-    Write definitions of a linear bounded operator
+Let $X$ be a Hilbert space. Furthermore, we define the dual space the be the space of linear and bounded functionals $F: X  \mapsto \mathbb{R} $, i.e., \[
+X'  =
+\left.
+\begin{cases}
+F: X  \mapsto \mathbb{R} \text{ such that }\forall v,w \in \mathcal{X}, \forall a,b \in \mathbb{R} \text{ and } C> 0 \text{ is }   \\
+  F\left( \lambda v + \mu w  \right) = \lambda F(v) + \mu F(w) \text{ and } \left\lvert F\left( v \right)  \right\rvert \le C \| v \|_{ X  }^{  }
+\end{cases}
+  \right\}
+\]
+% and we equip it with the functional norm,  \[
+%     \| F \|_{ \mathcal{V} ^{*} }^{  } = \sup_{v \in \mathcal{V}   } \frac{\left\lvert F\left( v \right)  \right\rvert }{\| v \|_{ \mathcal{V}  }^{  } }.
+% \]
+\todo[inline]{ Maybe write it in terms of $\mathcal{L} $ definition instead. Might need to do some dive into functional analysis books. Anyhow, I am not happy with this definitionin context with the rest of the subchapter.}
 \end{definition}
 
-\begin{definition}[Bilinear bounded function]
+\begin{definition}[Bilinear bounded functional]
     \label{def:bilinear_function}
     Write definitions of a bilinear bounded operator
 \end{definition}
