@@ -297,6 +297,37 @@ A very useful lemma when working on estimates on broken Sobolev spaces is that a
 
 
 
+\subsection{Lax-Milgram lemma}%
+\label{sub:lax_milgram_lemma}
+
+\begin{definition}[Abstract linear problem]
+    \label{def:abstract_linear_problem}
+    Assume $X$ and $Y$  to be two Hilbert spaces. Let the vector space $\mathcal{L}( X,Y)  $ be all linear bounded operators spanned from $X$ to $Y$. We define the abstract linear problem as follows; find $u \in X$ s.t. \[
+    a( u,v)  = l(v ) := \left<f,v \right>_{X' , X}  \forall v \in X
+    \]
+    Where $a \in  \mathcal{L} ( X \times X,\mathbb{R} ) $ is a bounded linear form and $f \in X':= \mathcal{L} ( X,\mathbb{R} )  $ is a bounded linear form. Here we denote $\left<\cdot ,\cdot  \right>_{X' .X} $ as the duality pairing between $X' $
+    and $X' $.
+
+\end{definition}
+
+
+\begin{definition}[Coercivity]
+    Let $X$ be a Hilbert space and let $a \in  \mathcal{L} ( X \times  X,\mathbb{R} )  $. We say that the bilinear form $a$ is coercive on $X$ if there exists an constant $C > 0 $ s.t. \[
+     a( v,v) \ge  C \| v \|_{ X }^{  } \quad  \forall v \in  X
+    \]
+\end{definition}
+
+
+\begin{lemma}[Lax-Milgram]
+    \label{def:Lax-milgram}
+    We say that the abstract linear problem \ref{def:abstract_linear_problem} is well-posed if $a$ is coercive. Moreover, the following a priori estimate holds true.\[
+    \| v \|_{ X }^{  } \le \frac{1}{C} \| f \|_{ X'  }^{  }
+    \]
+\end{lemma}
+\begin{proof}
+    See \cite[Lemma 1.4]{pietro2012}
+\end{proof}
+
 
 
 

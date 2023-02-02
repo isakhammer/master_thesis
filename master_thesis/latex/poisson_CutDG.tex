@@ -55,6 +55,8 @@ A_{h}( u, v) := a_{h}( u, v) + g_{h}( u_{h}, v) = l_{h}(v)
 We denote the stability term $g_{h}: V_{h} \times V_{h} \to \mathbb{R} $ as the so-called ghost penalty term.
 
 \begin{definition}[CutDG Poisson problem]
+    \label{def:cutdg_poisson_problem}
+
 We denote the CutDG Poisson problem as follows; to find a unique $u_{h} \in V_{h}$ s.t.  \[
 A_{h}(u_{h}, v ) = l_{h}( v)  \quad \forall  v \in V_{h}.
 \]
@@ -85,9 +87,26 @@ In most applications is $\Gamma $ represented with a level-set function, that is
 \end{assumption}
 
 
-
-\subsection{Norms}%
+\subsection{Bounded and coercive}%
 \label{sub:norms}
+
+Our goal is to show that the problem \ref{def:cutdg_poisson_problem} is well posed. We can do this by applying Lax-Milgram Theorem
+
+
+We may define the norms for $v \in V_{h}$ to be the following,
+\[
+\begin{split}
+    \| v \|_{ a_{h} }^{ 2 }  & = \| \nabla v \|_{ \mathcal{T} _{h} \cap \Omega  }^{ 2 } + \| h^{\frac{1}{2}} \jump{ v }   \|_{ \mathcal{F} _{h} }^{ \mathcal{F} _{h} \cap \Omega   } \\
+    \left\lvert v \right\rvert _{g_{h}}^{2} & = g_{h}( v,v)  \\
+    \| v \|_{ A_{h} }^{ 2 } &= \| v \|_{ a_{h} }^{ 2 } + \left\lvert v \right\rvert_{g_{h}}     \\
+\end{split}
+\]
+
+While for $v \in H^2( \mathcal{T} _{h}) + V_{h}$ we define the following norm,\[
+\| v \|_{ a_{h},* }^{ 2 } = \| v \|_{ a_{h} }^{ 2 } +   \| h^{\frac{1}{2}} \jump{ \partial _{n} v }    \|_{  \mathcal{F} _{h} \cap \Omega }^{  2} + \| h^{\frac{1}{2}} \partial _{n} v \|_{ \Gamma  }^{ 2 }
+\]
+
+
 
 
 
