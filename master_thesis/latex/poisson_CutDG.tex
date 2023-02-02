@@ -87,26 +87,65 @@ In most applications is $\Gamma $ represented with a level-set function, that is
 \end{assumption}
 
 
-\subsection{Bounded and coercive}%
-\label{sub:norms}
+\subsection{Well posedness}%
+\label{sub:well_posedness}
 
 Our goal is to show that the problem \ref{def:cutdg_poisson_problem} is well posed. We can do this by applying Lax-Milgram theorem \ref{def:lax-milgram} by showing that the bilinear form $A_{h}$ is bounded and coercive.
 
-First of all, to be able to prove boundedness we need to define norms.
-We may define the norms for $v \in V_{h}$ to be the following,
+First of all, to be able to prove well-posedness we need proper norms for $A_{h}$ .
+That is, let $v \in V_{h}$ we then define the following norms,
 \[
 \begin{split}
     \| v \|_{ a_{h} }^{ 2 }  & = \| \nabla v \|_{ \mathcal{T} _{h} \cap \Omega  }^{ 2 } + \| h^{\frac{1}{2}} \jump{ v }   \|_{ \mathcal{F} _{h} }^{ \mathcal{F} _{h} \cap \Omega   } \\
     \left\lvert v \right\rvert _{g_{h}}^{2} & = g_{h}( v,v)  \\
-    \| v \|_{ A_{h} }^{ 2 } &= \| v \|_{ a_{h} }^{ 2 } + \left\lvert v \right\rvert_{g_{h}}     \\
+    \| v \|_{ A_{h} }^{ 2 } &= \| v \|_{ a_{h} }^{ 2 } + \left\lvert v \right\rvert_{g_{h}}^{2}     \\
 \end{split}
 \]
-
 While for $v \in H^2( \mathcal{T} _{h}) + V_{h}$ we define the following norm,\[
-\| v \|_{ a_{h},* }^{ 2 } = \| v \|_{ a_{h} }^{ 2 } +   \| h^{\frac{1}{2}} \jump{ \partial _{n} v }    \|_{  \mathcal{F} _{h} \cap \Omega }^{  2} + \| h^{\frac{1}{2}} \partial _{n} v \|_{ \Gamma  }^{ 2 }
+\| v \|_{ a_{h},* }^{ 2 } = \| v \|_{ a_{h} }^{ 2 } +   \| h^{\frac{1}{2}} \jump{ \partial _{n} v }    \|_{  \mathcal{F} _{h} \cap \Omega }^{  2} + \| h^{\frac{1}{2}} \partial _{n} v \|_{ \Gamma  }^{ 2 }.
 \]
 
+Before we prove well-posedness will we first establish some important inequalities which will be used in the proof.
+Recall the much known local inverse estimate in \ref{lemma:local_inverse_estimates}. In the case of unfitted methods the corresponding inverse estimates are,
+\begin{equation}
+\label{eq:unfitted_localinv}
+\begin{split}
+    \| \partial _{n} v \|_{ F\cap \Omega  }^{  } & \le \| \partial _{n}  v \|_{F  }^{  } \le  C_{I} h_{T} ^{-\frac{1}{2}} \| \nabla v \|_{ T }^{  } \\
+    \| \partial _{n} v \|_{ T\cap \Gamma   }^{  } &  \le  C h_{T} ^{-\frac{1}{2}} \| \nabla v \|_{ T }^{  } \\
+\end{split}
+\end{equation}
+Again, the first inequality is a quite trivial extension of the original estimate. However, the second inequality may be cumbersome to prove. For a proof, see \cite{hansbo2003finite}. Remark that the $C_{\Gamma } $ is dependent on the curvature of $\Gamma $. \todo[inline]{ TODO: Look into\cite{hansbo2003finite} and actually
+find the proof.}
 
+To be able to apply the \eqref{eq:unfitted_localinv} globally can we make the following assumption for the ghost penalty term.
+
+\begin{assumption}[EP1]
+    \label{as:est_EP1}
+    Let $\Omega $ be the physical domain to the active mesh $\mathcal{T} _{h}$. Then for any $v \in V_{h}$, this holds \[
+    \| \nabla v \|_{ \mathcal{T}_{h}  }^{ 2 }  \le C_{g} ( \| \nabla v \|_{ \Omega  }^{ 2 }  + \left\lvert v  \right\rvert _{ g_{h} }^{ 2 } )
+    \]
+    Here the constant $C_{g}$ depends on the diameter $h$, the order $k $ and the dimension $d$.
+\end{assumption}
+
+
+\begin{corollary}
+    \label{cor:g_h_inverste_results}
+    Let $g_{h}$ satisfy the assumption \ref{as:est_EP1} and applying the ideas in \eqref{eq:unfitted_localinv}, then the following estimate holds true.
+    \[
+    \| h^{\frac{1}{2}} \partial _{n} v \|_{ \Gamma   }^{ 2 } \le  C_{g}( C_{\Gamma } + C_{I}) ( \| \nabla v  \|_{ \Omega   }^{2  }
+     + \left\lvert v \right\rvert _{g_{h}}^{2}) \le C \| v \|_{ A_{h} }^{ 2 }
+    \]
+    We can observe that $C$ depends on the diameter $h$, the order $k $ and the dimension $d$.
+\end{corollary}
+
+Finally being able to control the estimates on cut elements can we start showing well-posedness for the formulation.
+
+\begin{lemma}
+    $A_{h}$ is coercive, i.e., satisfying the general definition \ref{def:coercivity}.
+\end{lemma}
+\begin{proof}
+
+\end{proof}
 
 
 
