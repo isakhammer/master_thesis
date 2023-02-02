@@ -132,7 +132,7 @@ To be able to apply the \eqref{eq:unfitted_localinv} globally can we make the fo
     \label{cor:g_h_inverste_results}
     Let $g_{h}$ satisfy the assumption \ref{as:est_EP1} and applying the ideas in \eqref{eq:unfitted_localinv}, then the following estimate holds true.
     \[
-    \| h^{\frac{1}{2}} \partial _{n} v \|_{ \Gamma   }^{ 2 } \le  C_{g}( C_{\Gamma } + C_{I}) ( \| \nabla v  \|_{ \Omega   }^{2  }
+    \| h^{\frac{1}{2}} \partial _{n} v \|_{ \Gamma   }^{ 2 } + \| h^{\frac{1}{2}} \partial _{n} v \|_{ \mathcal{F} _{h} \cap \Omega  }^{ 2 }  \le  C_{g}( C_{\Gamma } + C_{I}) ( \| \nabla v  \|_{ \Omega   }^{2  }
      + \left\lvert v \right\rvert _{g_{h}}^{2}) \le C \| v \|_{ A_{h} }^{ 2 }
     \]
     We can observe that $C$ depends on the diameter $h$, the order $k $ and the dimension $d$.
@@ -149,22 +149,31 @@ Finally being able to control the estimates on cut elements can we start showing
     \begin{split}
 A_{h}( v, v)   =& a_{h}( v, v) + \left\lvert v \right\rvert _{g_{h}}^{2} \\
 =&  \| \nabla v \|_{  \Omega }^{ 2 } + \| v \|_{ g_{h} }^{ 2 } + \beta \| h^{-\frac{1}{2}} \jump{ v }   \|_{\mathcal{F} _{h} \cap \Omega   }^{  }   + \beta \| h^{-\frac{1}{2}}  v    \|_{ \Gamma}^{  }
-\\ & - 2( \mean{ \partial _{n} v  },  \jump{ v })_{\mathcal{F} _{h} \cap \Omega }  - 2 ( \partial _{n} v,v)_{\Gamma \cap \Omega }     \\
+\\ & - 2( \mean{ \partial _{n} v  },  \jump{ v })_{\mathcal{F} _{h} \cap \Omega }
+\\ & - 2 ( \partial _{n} v,v)_{\Gamma \cap \Omega }     \\
 \ge  &  \| \nabla v \|_{  \Omega }^{ 2 } + \| v \|_{ g_{h} }^{ 2 } + \beta \| h^{-\frac{1}{2}} \jump{ v }   \|_{\mathcal{F} _{h} \cap \Omega   }^{  }   + \beta \| h^{-\frac{1}{2}}  v    \|_{ \Gamma}^{  }
-\\ & - \varepsilon \| h^{\frac{1}{2}}  \mean{  \partial _{n} v}      \|_{ \mathcal{F} _{h} \cap \Omega  }^{2  } - \varepsilon ^{-1} \| h^{-\frac{1}{2}} \jump{ v }   \|_{\mathcal{F} _{h} \cap \Omega   }^{ 2 } \\ & - \varepsilon \| h^{\frac{1}{2}}
-\partial _{n} v \|_{ \Gamma \cap \Omega  }^{2  } -  \varepsilon ^{-1} \| h^{-\frac{1}{2}} v \|_{  \Gamma \cap  \Omega }^{ 2 } \\
+\\ & - \varepsilon \| h^{\frac{1}{2}}  \mean{  \partial _{n} v}      \|_{ \mathcal{F} _{h} \cap \Omega  }^{2  } - \varepsilon ^{-1} \| h^{-\frac{1}{2}} \jump{ v }   \|_{\mathcal{F} _{h} \cap \Omega   }^{ 2 }
+\\ & - \varepsilon \| h^{\frac{1}{2}} \partial _{n} v \|_{ \Gamma \cap \Omega  }^{2  } -  \varepsilon ^{-1} \| h^{-\frac{1}{2}} v \|_{  \Gamma \cap  \Omega }^{ 2 } \\
 \ge & ( 1-\varepsilon C)  ( \| \nabla v \|_{\Omega   }^{2  } + \left\lvert v \right\rvert _{g_{h}}   ) + ( \beta - \varepsilon ^{-1} ) ( \| h^{-\frac{1}{2}} \jump{ v }   \|_{ \mathcal{F} _{h}\cap  \Omega  }^{ 2 } + \| h^{\frac{1}{2}} v \|_{\Gamma
 }^{  2}  )    \\
 \ge & \frac{1}{2} \| v \|_{ A_{h} }^{ 2 }
     \end{split}
 \]
+where we used $C= C^{g} ( C_{\Gamma } + C_{I}) $ and chose $\varepsilon = \frac{1}{2C}$ and $\beta  = 4C$.
 
- The Youngs $\varepsilon $-inequality \ref{lemma:youngs_epsilon} was applied s.t.
+Remark that we in the second step we expanded $ 1 =  h^{\frac{1}{2}} h^{-\frac{1}{2}}$ and used the Youngs $\varepsilon $-inequality \ref{lemma:youngs_epsilon} s.t.,
  \[
      \begin{split}
-\\ & - 2( \mean{ \partial _{n} v  },  \jump{ v })_{\mathcal{F} _{h} \cap \Omega }  - 2 ( \partial _{n} v,v)_{\Gamma \cap \Omega } \ge      \\
+         - 2( \mean{ \partial _{n} v  },  \jump{ v })_{\mathcal{F} _{h} \cap \Omega } &\ge - \varepsilon \| h^{\frac{1}{2}}  \mean{  \partial _{n} v}      \|_{ \mathcal{F} _{h} \cap \Omega  }^{2  }
+  - \varepsilon ^{-1} \| h^{-\frac{1}{2}} \jump{ v }   \|_{\mathcal{F} _{h} \cap \Omega   }^{ 2 } \\
+- 2 ( \partial _{n} v,v)_{\Gamma \cap \Omega }   &\ge- \varepsilon \| h^{\frac{1}{2}} \partial _{n} v \|_{ \Gamma \cap \Omega  }^{2  }
+-  \varepsilon ^{-1} \| h^{-\frac{1}{2}} v \|_{  \Gamma \cap  \Omega }^{ 2 }
      \end{split}
  \]
+
+ On the third step we first rearranged the terms, that is,
+
+
 
 \todo[inline]{ Implement the second last stap }
 
