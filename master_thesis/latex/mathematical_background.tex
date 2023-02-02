@@ -113,13 +113,15 @@ be fully covered by a collection of polyhedra and, hence, motivating us to defin
 \begin{assumption}
    Assume that the set $\Omega \subset \mathbb{R} ^{d} $ is a polyhedra.
 \end{assumption}
+\todo[inline]{ This assumption may in fact not be correct since we assume in CutDG to have a $\Gamma $ in $C^2$.   }
 
 \begin{definition}[Mesh]
     We define a (general) mesh $\mathcal{T} $ of the domain $\Omega $ to be a collection of disjoint polyhedra $\left\{ T \right\}  $ forming a partition of $\Omega $ s.t.\[
     \overline{\Omega } = \bigcup _{T \in \mathcal{T} } T
     \]
-    We say that each $T \in  \mathcal{T} $ is a mesh element. We also denote $\mathcal{T} _{h}$ to be a mesh $\mathcal{T} $ with size $h$.
+    We say that each $T \in  \mathcal{T} $ is a mesh element or simply as a element. We also denote $\mathcal{T} _{h}$ to be a mesh $\mathcal{T} $ with size $h$.
 \end{definition}
+
 
 \begin{definition}[Mesh size]
 We define the mesh size to is the maximum diameter $h $ of any polyhedra in the mesh $\mathcal{T} = \left\{ T \right\}  $, that is,
@@ -269,8 +271,8 @@ A very useful lemma when working on estimates on broken Sobolev spaces is that a
 
 
 \begin{definition}[Broken polynomial spaces]
-    Let $\mathcal{T} $ be a mesh of $\Omega \in \mathbb{R} ^{d} $. Let $\mathcal{P}^{k}(T) $ be the space of all polynomials of degree $k$ in the mesh element $T$. We define the broken polynomial space as \[
-    \mathcal{P}^{k}_{d} ( \mathcal{T}_{h} ) := \left\{ v \in L^2( \Omega )  \mid  v|_{T} \in \mathcal{P}^2( T) \quad  \forall T \in  \mathcal{T}_{h}   \right\}.
+    Let $\mathcal{T}_{h} $ be a mesh of $\Omega \in \mathbb{R} ^{d} $. Let $\mathcal{P}^{k}(T) $ be the space of all polynomials of degree $k$ in the mesh element $T$. We define the broken polynomial space as \[
+    \mathcal{P}^{k} ( \mathcal{T}_{h} ) := \left\{ v \in L^2( \Omega )  \mid  v|_{T} \in \mathcal{P}^2( T) \quad  \forall T \in  \mathcal{T}_{h}   \right\}.
     \]
 \end{definition}
 

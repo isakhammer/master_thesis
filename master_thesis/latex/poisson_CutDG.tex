@@ -20,10 +20,32 @@ a( u,v) = l( v), \quad  \forall v \in V
 \subsection{CutFEM }%
 \label{sub:cutfem}
 
-One of the key element to unfitted methods is that is relying on a background mesh. We denote the shape regular and quasi-uniform background mesh as $\widetilde{\mathcal{T}}_{h} $ which is covering $\Omega $.
+One of the key element to unfitted methods is that is relying on a background mesh. Let $\widetilde{\Omega }$ as a background domain with a corresponding shape regular and quasi-uniform background mesh $\widetilde{\mathcal{T}}_{h} $. We will assume we
+have a physical domain $\Omega
+\subset \widetilde{\Omega }$ with a corresponding $\Gamma \in C^2 $ boundary. For $\mathcal{T}_{h} $ we define a the so-called active mesh
+$\mathcal{T} _{h} \subset \widetilde{\mathcal{T} }_{h}$ consisting of those elements that intersect with the interior of $\Omega^{\circ } = \Omega  \setminus \Gamma   $. That is,\[
+\mathcal{T }_{h} = \left\{ T \in  \mathcal{T}_{h}  \mid  T \cap \Omega \neq \emptyset   \right\}.
+\]
+The set of interior facets in $\mathcal{T}_{h} $ is defined as $\mathcal{F}_{h} $.
+Let the submesh $\mathcal{T}_{\Gamma } \subset \mathcal{T}_{h}  $ consisting of all cut elements, \[
+\mathcal{T} _{\Gamma  } = \left\{ T \in \mathcal{T} _{h}  \mid  T \cap  \Gamma  \neq \emptyset  \right\}.
+\]
+
+\todo[inline]{ Wrap the above definitions into definitions blocks.}
+
+We denote the discrete to function space $V_{h}$ to be the broken polynomial space of order $k$, that is, $V_{h} := \mathcal{P}^{k}( \mathcal{T}_{h} )  $.
 
 
+Let the bilinear form $a_{h}: V_{h} \times V_{h} \to \mathbb{R} $  and the linear form $l_{h}: V_{h} \to R$. For the discontinuous Galerkin Poisson formulation (Poisson DG) to be
 
+\begin{equation}
+\label{eq:poisson_DG}
+\begin{split}
+    a_{h}( v,w)  = &( \nabla v, \nabla w)_{\mathcal{T} _{h} \cap \Omega } - ( \partial _{n} v,w)_{\Gamma } - ( v, \partial _{n} w)_{\Gamma } + \beta ( h^{-1} v,w)_{\Gamma } \\
+    & - ( \mean{ \partial _{n} v }  , \jump{ w }  ) _{\mathcal{F} _{h} \cap \Omega } - ( \jump{ v }  , \mean{ \partial _{n} w }  )_{\mathcal{F} _{h}} + \beta ( h^{-1} \jump{ v }  , \jump{ w }  )_{\mathcal{F}_{h}\cap \Omega  } \\
+    l_{h}( v)  &=  ( f,v) _{\mathcal{T} _{h} \cap \Omega } - ( \partial _{n} v,g) _{\Gamma } + \beta ( h^{-1} g,v)
+\end{split}
+\end{equation}
 
 
 
