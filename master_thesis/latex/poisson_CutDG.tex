@@ -52,7 +52,7 @@ However, to show well-posedness will we later see that it is necessary to add a 
 \[
 A_{h}( u, v) := a_{h}( u, v) + g_{h}( u_{h}, v)
 \]
-We denote the stability term $g_{h}$ as the so-called ghost penalty.
+We denote the stability term $g_{h}$ as the so-called ghost penalty term.
 
 \begin{definition}[CutDG Poisson problem]
 We denote the CutDG Poisson problem as follows; to find a unique $u_{h} \in V_{h}$ s.t.  \[
@@ -60,8 +60,23 @@ A_{h}(u_{h}, v ) = l_{h}( v)  \quad \forall  v \in V_{h}.
 \]
 \end{definition}
 
+Our main goal is to determine the necessary stability criteria for the ghost penalty term for the CutDG Poisson problem to be well-posed. We can then apply these criteria to engineer a ghost penalty to handle this problem.
 
+To ease the theoretical foundations will we apply these methods
 
+\begin{assumption}[G1]
+    The boundary $\Gamma $ is $C^{2}$
+\end{assumption}
+
+\begin{assumption}[G1]
+    $\mathcal{T}_{h} $ is mesh conform, quasi-uniform and shape regular.
+\end{assumption}
+
+\begin{assumption}[G3]
+    For $T \in \mathcal{T} _{\Gamma   }$ there is a path $P$ of $diam(P) \lesssim h$ which contains $T$ and an element $T'$ with a "fat" interaction satisfying $\left\lvert T' \cap \Omega  \right\rvert \ge c_{s} \left\lvert T'  \right\rvert _{d}$
+    \todo[inline]{ Don't understand this definition}
+    \todo[inline]{ Define patch in mathematical background. }
+\end{assumption}
 
 
 
