@@ -65,8 +65,15 @@ Our main goal is to determine the necessary stability criteria for the ghost pen
 To ease the theoretical foundations will we apply these methods
 
 \begin{assumption}[G1]
-    The boundary $\Gamma $ is $C^{2}$
+    \label{as:G1}
+    The boundary $\Gamma $ is $C^{2}$.
 \end{assumption}
+
+\begin{remark}
+In most applications is $\Gamma $ represented with a level-set function, that is a sufficiently smooth function $\phi ( x)  = 0$. There exists several methods to discretize this properly s.t. it can we can compute the integral over the cut elements.
+    However, to simplify the analysis will we assume the numerical contributions of the cut elements consisting of $\mathcal{T}_{h} \cap \Gamma   $ and $\mathcal{F}_{h} \cap \Omega  $ to be exact.
+\end{remark}
+
 
 \begin{assumption}[G1]
     $\mathcal{T}_{h} $ is mesh conform, quasi-uniform and shape regular.
