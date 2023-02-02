@@ -137,7 +137,11 @@ Let the chunkiness parameter $c_{T} := h_{T}/r_{T}$, where $r_{T}$  is the large
 We say that a mesh is shape regular if $c_{T}\le  c$ is independent of $T$  and $h$. We also say that the mesh is quasi-uniform only if it is shape regular and $h_{max} \le  c h_{min}$.
 \end{definition}
 
-We will generally assume that a mesh $\mathcal{T}_{h} $ is conform, shape regular and quasi-uniform unless specified. The fact that the mesh is conform makes is a useful property since the interface between mesh elements has come into contact in the sense
+\begin{assumption}
+Assume that any mesh $\mathcal{T}_{h} $ is conform, shape regular and quasi-uniform.
+\end{assumption}
+We will generally assume that a mesh $\mathcal{T}_{h} $ is conform, shape regular and quasi-uniform unless specified.
+ The fact that the mesh is conform makes is a useful property since the interface between mesh elements has come into contact in the sense
 that it is either a vertex or a facet. This with the combination of shape regularity and quasi-uniformity has been a major key to prove important inequalities in broken Sobolev spaces \cite[Chapter 1.4.1]{pietro2012}. Hence, the assumptions are
 very handy when proving convergence.
 
@@ -231,6 +235,7 @@ and similarly for the facets $\mathcal{F}_{h} $, that is
         H^{m}( \mathcal{F}_{h} ) &:= \left\{ v \in L^2( \mathcal{F}_{h}  )  \mid   \ v|_{F} \in H^{m}( F)  \quad  \forall F \in  \mathcal{F}_{h}   \right\}
     \end{split}
 \]
+\todo[inline]{ I am not happy with $L^2( \mathcal{F} _{h}) $ definition. }
 \end{definition}
 This motivates us to define broken Sobolev norms and inner products using a summation over mesh elements. That is,
 \[
@@ -263,37 +268,6 @@ A very useful lemma when working on estimates on broken Sobolev spaces is that a
     \mathcal{P}^{k}_{d} ( \mathcal{T}_{h} ) := \left\{ v \in L^2( \Omega )  \mid  v|_{T} \in \mathcal{P}^2( T) \quad  \forall T \in  \mathcal{T}_{h}   \right\}.
     \]
 \end{definition}
-
-
-
-
-\newpage
-\section{Unfitted cut discontinuous Galerkin method for the Poisson problem}%
-\label{sec:elliptic}
-
-\subsection{Poisson problem}%
-\label{sub:possion_problem}
-We will first consider the continuous Poisson problem. Let $f \in H^1( \Omega ) $ and $g \in H^{\frac{1}{2}}( \Gamma ) $ and $\Omega  \in \mathbb{R} ^{d}$ . We then define the strong formulation of the Possion problem to be \[
-\begin{split}
-    -\Delta u &= f \quad  \text{in }\Omega  \\
-     u &= g  \quad \text{on } \Gamma    \\
-\end{split} .
-\]
-Let us define the Hilbert spaces $V=H^{1}( \Omega ) $,   $V_{g} = \left\{ v \in H^{1}( \Omega ): v \mid _{\Gamma } = g \right\} $, the bilinear form $a: V \times V  \to \mathbb{R}  $ and the linear form $l: V'\to \mathbb{R}  $ s.t. \[
-a( u,v) = ( \nabla u, \nabla v) _{\Omega }, \quad l( v) = (f,v)_{\Omega }.
-\]
-We say the weak formulation is to find a $u \in V_{g}$ so this equation holds  \[
-a( u,v) = l( v), \quad  \forall v \in V
-\]
-\subsection{CutFEM }%
-\label{sub:cutfem}
-
-One of the key element to unfitted methods is that is relying on a background mesh. We denote the shape regular and quasi-uniform background mesh as $\widetilde{\mathcal{T}}_{h} $ which is covering $\Omega $ .
-
-
-
-
-
 
 
 
