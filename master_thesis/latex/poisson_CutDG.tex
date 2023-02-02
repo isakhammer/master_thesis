@@ -48,11 +48,11 @@ Let the bilinear form $a_{h}: V_{h} \times V_{h} \to \mathbb{R} $  and the linea
 \end{equation}
 For more information about the derivation, see \cite[Chapter 4.2]{pietro2012}. Remark that this formulation is defined on unfitted meshed and, thus, imposing Nitsche penalty to fulfill the boundary condition.
 \todo[inline]{ Need source of the derivation or maybe need to to it myself }
-However, to show well-posedness will we later see that it is necessary to add a stability term, that is, the symmetric interior penalty cut discontinuous Galerkin Poisson (CutDG Poisson) formulation,
+However, to show well-posedness will we later see that it is necessary to add a stability term . Hence, the symmetric interior penalty cut discontinuous Galerkin Poisson (CutDG Poisson) formulation,
 \[
-A_{h}( u, v) := a_{h}( u, v) + g_{h}( u_{h}, v)
+A_{h}( u, v) := a_{h}( u, v) + g_{h}( u_{h}, v) = l_{h}(v)
 \]
-We denote the stability term $g_{h}$ as the so-called ghost penalty term.
+We denote the stability term $g_{h}: V_{h} \times V_{h} \to \mathbb{R} $ as the so-called ghost penalty term.
 
 \begin{definition}[CutDG Poisson problem]
 We denote the CutDG Poisson problem as follows; to find a unique $u_{h} \in V_{h}$ s.t.  \[
@@ -60,9 +60,8 @@ A_{h}(u_{h}, v ) = l_{h}( v)  \quad \forall  v \in V_{h}.
 \]
 \end{definition}
 
-Our main goal is to determine the necessary stability criteria for the ghost penalty term for the CutDG Poisson problem to be well-posed. We can then apply these criteria to engineer a ghost penalty to handle this problem.
+Our main goal is to determine the necessary stability criteria for the ghost penalty term for the CutDG Poisson problem to be well-posed. We can then apply these criteria to engineer a ghost penalty to handle this problem. For convenience will we make some assumptions on our problem.
 
-To ease the theoretical foundations will we apply these methods
 
 \begin{assumption}[G1]
     \label{as:G1}
@@ -84,6 +83,11 @@ In most applications is $\Gamma $ represented with a level-set function, that is
     \todo[inline]{ Don't understand this definition}
     \todo[inline]{ Define patch in mathematical background. }
 \end{assumption}
+
+
+
+\subsection{Norms}%
+\label{sub:norms}
 
 
 
