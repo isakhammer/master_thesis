@@ -96,7 +96,7 @@ First of all, to be able to prove well-posedness we need proper norms for $A_{h}
 That is, let $v \in V_{h}$ we then define the following norms,
 \[
 \begin{split}
-    \| v \|_{ a_{h} }^{ 2 }  & = \| \nabla v \|_{ \mathcal{T} _{h} \cap \Omega  }^{ 2 } + \| h^{\frac{1}{2}} \jump{ v }   \|_{ \mathcal{F} _{h} }^{ \mathcal{F} _{h} \cap \Omega   } \\
+    \| v \|_{ a_{h} }^{ 2 }  & = \| \nabla v \|_{ \mathcal{T} _{h} \cap \Omega  }^{ 2 } + \| h^{\frac{1}{2}} \jump{ v }   \|_{ \mathcal{F} _{h} \cap \Omega   }^2 \\
     \left\lvert v \right\rvert _{g_{h}}^{2} & = g_{h}( v,v)  \\
     \| v \|_{ A_{h} }^{ 2 } &= \| v \|_{ a_{h} }^{ 2 } + \left\lvert v \right\rvert_{g_{h}}^{2}     \\
 \end{split}
@@ -184,7 +184,7 @@ Remark that we in the second step we expanded $ 1 =  h^{\frac{1}{2}} h^{-\frac{1
 &\quad  - \varepsilon ^{-1} ( \| h^{-\frac{1}{2}} \jump{ v }   \|_{ \mathcal{F}_{h} \cap \Omega   }^{2  } + \| h^{-\frac{1}{2}} v \|_{ \Gamma \cap \Omega   }^{  }  )
      \end{split}
  \]
- \todo[inline]{ Need to work out this proof. }
+ \todo[inline]{ Need to finish this proof. }
 
 \end{proof}
 
@@ -192,11 +192,16 @@ Remark that we in the second step we expanded $ 1 =  h^{\frac{1}{2}} h^{-\frac{1
 Another important recipe before we can use Lax-Milgram is that the we need to show that $A_{h} $ is a bilinear bounded operator.
 
 \begin{lemma}
-    $A_{h}$ is bounded.
+    $A_{h}$ is bounded, i.e.,
+    $$ \left\lvert A_{h}( v,u) \right\rvert \lesssim \| v \|_{A_{h}  }^{  }     \| u \|_{A_{h}  }^{  } \quad  \forall v,u \in V _{h}, $$
+    whenever $\beta $ is large enough. Moreover, for $v \in  H^{2}( \mathcal{T}_{h} ) + V_{h} $
+    and $w \in V_{h}$ satisfies \[
+    a_{h}( v,w) \lesssim \| v \|_{ a_{h},* }^{ 2 }  \| w \|_{ a_{h},* }^{ 2 }
+    \]
 \end{lemma}
 
 \begin{proof}
-    We want to show that $\left\lvert A_{h}( v,u) \right\rvert \lesssim \| v \|_{A_{h}  }^{  }     \| u \|_{A_{h}  }^{  } \quad  \forall v,u \in V_{h} $.
+    We will start to show that $\left\lvert A_{h}( v,u) \right\rvert \lesssim \| v \|_{A_{h}  }^{  }     \| u \|_{A_{h}  }^{  } \quad  \forall v,u \in V_{h} $.
 \end{proof}
 
 
