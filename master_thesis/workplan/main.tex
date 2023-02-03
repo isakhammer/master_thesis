@@ -58,30 +58,12 @@ Version: \today
         % How to use todolist: https://tex.stackexchange.com/a/313337
         \begin{itemize}[leftmargin=3mm,noitemsep]
             \item Analysis \begin{todolist}[noitemsep]
-                \item[\done] Coercivity
-                \item[\done] Boundedness
+                \item Coercivity
+                \item Boundedness
                 \item Constructing $g_{h}$  based on assumptions.
-                \item Start writing my interpretation into the report.
                 \end{todolist}
             \item Implementation
                 \begin{todolist}[noitemsep]
-                \item Poisson Nitsche
-                    \begin{todolist}[noitemsep]
-                    \item[\done] $L^{2}$ convergence
-                    \item[\done] $H^{1}$ convergence
-                    \end{todolist}
-                \item Poisson DG-Nitsche
-                    \begin{todolist}[noitemsep]
-                        \item[\done] $L^{2}$ convergence
-                        \item[\done] $H^{1}$ convergence
-                    \end{todolist}
-                \item Poisson Cut
-                    \begin{todolist}[noitemsep]
-                        \item $L^{2}$ convergence
-                        \item $H^{1}$ convergence
-
-                    \end{todolist}
-                     \textbf{ Only convergence for $k=1$? }
 
                 \item Poisson CutDG
                     \begin{todolist}[noitemsep]
@@ -139,12 +121,6 @@ Version: \today
         % Report
         \begin{todolist}[leftmargin=3mm, noitemsep]
             \item Introduction
-            \item Mathematical background
-                \begin{todolist}[leftmargin=3mm, noitemsep]
-                \item[\done]  Computational domains
-                \item Broken Sobolev Spaces
-                \item Inverse estimates
-                \end{todolist}
             \item CutDG $- \Delta u =f$
                 \begin{todolist}[leftmargin=3mm, noitemsep]
                 \item  Construction of CutDG
@@ -250,7 +226,32 @@ group height=.3]{1}{24}
 \end{figure}
 
 \newpage
-\section{Other}%
+\section*{What have I done this week?}%
+\begin{itemize}
+    \item Kickstarted on the report. Got quite alot of mathematical background done.
+    \item Getting quite close to check out coercivity, boundedness
+    \item Implementation of Poisson for DG and CutDG.
+        \begin{itemize}
+            \item \textbf{ Only convergence for $k=1$ for CutPoisson? }
+        \end{itemize}
+\end{itemize}
+
+\section*{What am I planning to do next week?}%
+
+\begin{itemize}
+    \item Implementation of Poisson CutDG.
+    \item Check out all boxes in analysis.
+\end{itemize}
+
+
+\begin{itemize}
+\item Finish well-posedness proof
+\end{itemize}
+
+
+
+
+\section*{Other}%
 \label{sec:other}
 
 \begin{enumerate}[label=\arabic*)]
