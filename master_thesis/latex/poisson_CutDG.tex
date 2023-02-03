@@ -42,7 +42,7 @@ Let the bilinear form $a_{h}: V_{h} \times V_{h} \to \mathbb{R} $  and the linea
 \label{eq:poisson_DG}
 \begin{split}
     a_{h}( v,w)  = &( \nabla v, \nabla w)_{\mathcal{T} _{h} \cap \Omega } - ( \partial _{n} v,w)_{\Gamma } - ( v, \partial _{n} w)_{\Gamma } + \beta ( h^{-1} v,w)_{\Gamma } \\
-    & - ( \mean{ \partial _{n} v }  , \jump{ w }  ) _{\mathcal{F} _{h} \cap \Omega } - ( \jump{ v }  , \mean{ \partial _{n} w }  )_{\mathcal{F} _{h}} + \beta ( h^{-1} \jump{ v }  , \jump{ w }  )_{\mathcal{F}_{h}\cap \Omega  } \\
+    & - ( \mean{ \partial _{n} v }  , \jump{ w }  ) _{\mathcal{F} _{h} \cap \Omega } - ( \jump{ v }  , \mean{ \partial _{n} w }  )_{\mathcal{F} _{h}\cap \Omega } + \beta ( h^{-1} \jump{ v }  , \jump{ w }  )_{\mathcal{F}_{h}\cap \Omega  } \\
     l_{h}( v)  &=  ( f,v) _{\mathcal{T} _{h} \cap \Omega } - ( \partial _{n} v,g) _{\Gamma } + \beta ( h^{-1} g,v)_{\Gamma }
 \end{split}
 \end{equation}
@@ -87,7 +87,7 @@ In most applications is $\Gamma $ represented with a level-set function, that is
 \end{assumption}
 
 
-\subsection{Well posedness}%
+\subsection{Well-posedness}%
 \label{sub:well_posedness}
 
 Our goal is to show that the problem \ref{def:cutdg_poisson_problem} is well posed. We can do this by applying Lax-Milgram theorem \ref{def:lax-milgram} by showing that the bilinear form $A_{h}$ is bounded and coercive.
@@ -202,22 +202,44 @@ Another important recipe before we can use Lax-Milgram is that the we need to sh
 
 \begin{proof}
 We will first start to show that $\left\lvert A_{h}( v,u) \right\rvert \lesssim \| v \|_{A_{h}  }^{  }     \| u \|_{A_{h}  }^{  } \quad  \forall v,u \in V_{h} $. We will then show that
-$a_{h}( v,w) \lesssim \| v \|_{ a_{h},* }^{  }  \| w \|_{ a_{h},* }^{  }$
-for $ \forall v \in  H^{2}( \mathcal{T}_{h} ) + V_{h} $ and $ \forall w \in V_{h}$.
+$a_{h}( v,u) \lesssim \| v \|_{ a_{h},* }^{  }  \| u \|_{ a_{h},* }^{  }$
+for $ \forall v \in  H^{2}( \mathcal{T}_{h} ) + V_{h} $ and $ \forall u \in V_{h}$.
 
     \begin{enumerate}[label=\arabic*)]
         \item  Observe that \[
     \left\lvert A_{h}( v,u) \right\rvert \le  \left\lvert a_{h}( v,u)  \right\rvert  + \left\lvert g_{h}( v,u)  \right\rvert.
     \]
 
-    Using Cauchy-Schwarz inequality \ref{lemma:cauchy-schwarz} is easy to see that this must hold \[
+         Using Cauchy-Schwarz inequality \ref{lemma:cauchy-schwarz} is easy to see that this must hold \[
 \left\lvert g_{h}( v,u)  \right\rvert \le \left\lvert v \right\rvert _{g_{h}} \left\lvert u \right\rvert _{g_{h}} \le \| v \|_{ A_{h} }^{  } \| u \|_{ A_{h} }^{  }
     \]
     \todo[inline]{ How do I prove that $ \left\lvert g_{h}( u,v)  \right\rvert \le \left\lvert u \right\rvert _{g_{h}} \left\lvert v \right\rvert _{g_{h}}$ ? Do I need to make assumptions on $g_{h}$ or is it already covered in the norm $\left\lvert \cdot  \right\rvert _{g_{h}  }^{  } $ }
+
+    However, we must analyze all the terms in $a_{h}$ invidually.   \[
+        \begin{split}
+    \left\lvert a_{h}( v,u)  \right\rvert \le & \left\lvert( \nabla v, \nabla u)_{\mathcal{T} _{h} \cap \Omega }  \right\rvert +  \left\lvert  ( \partial _{n} v,u)_{\Gamma } \right\rvert   + \left\lvert ( v, \partial _{n} u)_{\Gamma } \right\rvert  +
+    \left\lvert\beta ( h^{-1} v,u)_{\Gamma }  \right\rvert  \\
+    & + \left\lvert( \mean{ \partial _{n} v }  , \jump{ u }  ) _{\mathcal{F} _{h} \cap \Omega }  \right\rvert  + \left\lvert ( \jump{ v }  , \mean{ \partial _{n} u }  )_{\mathcal{F} _{h}\cap \Omega } \right\rvert  + \left\lvert \beta ( h^{-1} \jump{ v }  ,
+    \jump{ u }  )_{\mathcal{F}_{h}\cap \Omega  } \right\rvert \\
+     \le & \| \nabla v \|_{ \mathcal{T} _{h} }^{  }\| \nabla u \|_{ \mathcal{T} _{h} }^{  }
+    + \| \partial _{n}v \|_{ \Gamma   }^{  } \| u \|_{ \Gamma  }^{  }
+    + \| v \|_{ \Gamma   }^{  } \| \partial _{n}u \|_{ \Gamma  }^{  } + \beta \|h^{-1} v  \|_{\Gamma   }^{  }  \| u  \|_{\Gamma   }^{  } \\
+    & + \| \mean{ \partial _{n}v }   \|_{\mathcal{F} _{h}\cap \Omega   }^{  } \| \jump{ u }   \|_{ \mathcal{F} _{h} \cap \Omega  }^{  } + \| \jump{ v }   \|_{ \mathcal{F_{h}}  }^{  }  \| \mean{ \partial _{n} u }    \|_{ \mathcal{F} _{h} \cap \Omega  }^{  } +
+    \beta \|h^{-1} \jump{ v }    \|_{\mathcal{F} _{h} \cap \Omega  }^{  }      \| \jump{ u } \|_{\mathcal{F} _{h} \cap \Omega   }^{  }
+        \end{split}
+    \]
+
 
     \end{enumerate}
 
 
 \end{proof}
+
+
+\subsection{Constructing ghost penalties}%
+\label{sub:constructing_ghost_penalties}
+
+
+
 
 
