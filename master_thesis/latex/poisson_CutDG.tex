@@ -161,6 +161,7 @@ A_{h}( v, v)   =& a_{h}( v, v) + \abs{ v }  _{g_{h}}^{2} \\
     \end{split}
 \]
 where we used $C= C_{g} ( C_{\Gamma } + C_{I}) $ and chose $\varepsilon = \frac{1}{2C}$ and $\beta  = 4C$.
+\todo[inline]{ Why use the notation $\Gamma \cap \Omega $ in the paper? It is equivalent with $\Gamma $.   }
 
 Remark that we in the second step we expanded $ 1 =  h^{\frac{1}{2}} h^{-\frac{1}{2}}$ and used the Youngs $\varepsilon $-inequality \ref{lemma:youngs_epsilon} s.t.,
  \[
@@ -230,7 +231,15 @@ for $ \forall v \in  H^{2}( \mathcal{T}_{h} ) + V_{h} $ and $ \forall u \in V_{h
         \end{split}
     \]
 
-    Looking at each terms individually can we observe that each terms is bounded
+    Looking at each terms individually can we observe that each terms is bounded, that is,
+    \[
+    \begin{split}
+        \| \nabla v \|_{ \mathcal{T} _{h}\cap \Omega  }^{  }\| \nabla u \|_{ \mathcal{T} _{h} \cap \Omega  }^{  } & \le \ldots \\
+         \| \partial _{n}v \|_{ \Gamma   }^{  } \| u \|_{ \Gamma  }^{  } & \le  \ldots \\
+         \| v \|_{ \Gamma   }^{  } \| \partial _{n}u \|_{ \Gamma  }^{  } & \le  \ldots. \\
+         \beta \|h^{-1} v  \|_{\Gamma   }^{  }  \| u  \|_{\Gamma   }^{  } &\le \ldots \\
+    \end{split}
+    \]
 
 
     \end{enumerate}
