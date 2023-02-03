@@ -149,10 +149,10 @@ We want to show that $  \| v \|_{A_{h}}^{2}   \lesssim A_{h}( v,v) \forall v \in
 \[
     \begin{split}
 A_{h}( v, v)   =& a_{h}( v, v) + \left\lvert v \right\rvert _{g_{h}}^{2} \\
-=&  \| \nabla v \|_{  \Omega }^{ 2 } + \left\lvert v \right\rvert _{ g_{h} }^{ 2 } + \beta \| h^{-\frac{1}{2}} \jump{ v }   \|_{\mathcal{F} _{h} \cap \Omega   }^{  }   + \beta \| h^{-\frac{1}{2}}  v    \|_{ \Gamma}^{  }
+=&  \| \nabla v \|_{  \mathcal{T}_{h} \cap \Omega }^{ 2 } + \left\lvert v \right\rvert _{ g_{h} }^{ 2 } + \beta \| h^{-\frac{1}{2}} \jump{ v }   \|_{\mathcal{F} _{h} \cap \Omega   }^{  }   + \beta \| h^{-\frac{1}{2}}  v    \|_{ \Gamma}^{  }
 \\ & - 2( \mean{ \partial _{n} v  },  \jump{ v })_{\mathcal{F} _{h} \cap \Omega }
 \\ & - 2 ( \partial _{n} v,v)_{\Gamma \cap \Omega }     \\
-\ge  &  \| \nabla v \|_{  \Omega }^{ 2 } + \left\lvert v \right\rvert_{ g_{h} }^{ 2 } + \beta \| h^{-\frac{1}{2}} \jump{ v }   \|_{\mathcal{F} _{h} \cap \Omega   }^{  }   + \beta \| h^{-\frac{1}{2}}  v    \|_{ \Gamma}^{  }
+\ge  &  \| \nabla v \|_{  \mathcal{T}_{h} \cap \Omega }^{ 2 } + \left\lvert v \right\rvert_{ g_{h} }^{ 2 } + \beta \| h^{-\frac{1}{2}} \jump{ v }   \|_{\mathcal{F} _{h} \cap \Omega   }^{  }   + \beta \| h^{-\frac{1}{2}}  v    \|_{ \Gamma}^{  }
 \\ & - \varepsilon \| h^{\frac{1}{2}}  \mean{  \partial _{n} v}      \|_{ \mathcal{F} _{h} \cap \Omega  }^{2  } - \varepsilon ^{-1} \| h^{-\frac{1}{2}} \jump{ v }   \|_{\mathcal{F} _{h} \cap \Omega   }^{ 2 }
 \\ & - \varepsilon \| h^{\frac{1}{2}} \partial _{n} v \|_{ \Gamma \cap \Omega  }^{2  } -  \varepsilon ^{-1} \| h^{-\frac{1}{2}} v \|_{  \Gamma \cap  \Omega }^{ 2 } \\
 \ge & ( 1-\varepsilon C)  ( \| \nabla v \|_{\Omega   }^{2  } + \left\lvert v \right\rvert _{g_{h}}   ) + ( \beta - \varepsilon ^{-1} ) ( \| h^{-\frac{1}{2}} \jump{ v }   \|_{ \mathcal{F} _{h}\cap  \Omega  }^{ 2 } + \| h^{\frac{1}{2}} v \|_{\Gamma
@@ -175,19 +175,20 @@ Remark that we in the second step we expanded $ 1 =  h^{\frac{1}{2}} h^{-\frac{1
  On the third step we first rearranged the terms, that is,
  \[
      \begin{split}
-   \| \nabla v \|_{  \Omega }^{ 2 } & + \left\lvert v \right\rvert_{ g_{h} }^{ 2 } + \beta \| h^{-\frac{1}{2}} \jump{ v }   \|_{\mathcal{F} _{h} \cap \Omega   }^{  }   + \beta \| h^{-\frac{1}{2}}  v    \|_{ \Gamma}^{  }
+   \| \nabla v \|_{ \mathcal{T}_{h} \cap  \Omega }^{ 2 } & + \left\lvert v \right\rvert_{ g_{h} }^{ 2 } + \beta \| h^{-\frac{1}{2}} \jump{ v }   \|_{\mathcal{F} _{h} \cap \Omega   }^{  }   + \beta \| h^{-\frac{1}{2}}  v    \|_{ \Gamma}^{  }
 \\  &- \varepsilon \| h^{\frac{1}{2}}  \mean{  \partial _{n} v}      \|_{ \mathcal{F} _{h} \cap \Omega  }^{2  } - \varepsilon ^{-1} \| h^{-\frac{1}{2}} \jump{ v }   \|_{\mathcal{F} _{h} \cap \Omega   }^{ 2 }
 \\ &-  \varepsilon \| h^{\frac{1}{2}} \partial _{n} v \|_{ \Gamma \cap \Omega  }^{2  } -  \varepsilon ^{-1} \| h^{-\frac{1}{2}} v \|_{  \Gamma \cap  \Omega }^{ 2 } \\
-&=  \| \nabla v \|_{  \Omega }^{ 2 }  + \left\lvert v \right\rvert_{ g_{h} }^{ 2 } \\
+&=  \| \nabla v \|_{ \mathcal{T}_{h} \cap  \Omega }^{ 2 }  + \left\lvert v \right\rvert_{ g_{h} }^{ 2 } \\
 &\quad  + ( \beta \| h^{-\frac{1}{2}} v \|_{\Gamma   }^{  } - \varepsilon ^{ -1}\| h^{-\frac{1}{2}} v \|_{\Gamma \cap \Omega    }^{  } )  \\
 &\quad  -  \varepsilon ( \| h^{\frac{1}{2}} \mean{ \partial _{n} v }    \|_{  \mathcal{F}_{h} \cap \Omega  }^{  } + \| h^{\frac{1}{2}} \partial _{n} v \|_{ \Gamma \cap \Omega  }^{  }  ) \\
 &\quad  - \varepsilon ^{-1} ( \| h^{-\frac{1}{2}} \jump{ v }   \|_{ \mathcal{F}_{h} \cap \Omega   }^{2  } + \| h^{-\frac{1}{2}} v \|_{ \Gamma \cap \Omega   }^{  }  )
      \end{split}
  \]
+ And then we $\ldots$.
+ \\
  \todo[inline]{ Need to finish this proof. }
 
 \end{proof}
-
 
 Another important recipe before we can use Lax-Milgram is that the we need to show that $A_{h} $ is a bilinear bounded operator.
 
@@ -221,10 +222,10 @@ for $ \forall v \in  H^{2}( \mathcal{T}_{h} ) + V_{h} $ and $ \forall u \in V_{h
     \left\lvert\beta ( h^{-1} v,u)_{\Gamma }  \right\rvert  \\
     & + \left\lvert( \mean{ \partial _{n} v }  , \jump{ u }  ) _{\mathcal{F} _{h} \cap \Omega }  \right\rvert  + \left\lvert ( \jump{ v }  , \mean{ \partial _{n} u }  )_{\mathcal{F} _{h}\cap \Omega } \right\rvert  + \left\lvert \beta ( h^{-1} \jump{ v }  ,
     \jump{ u }  )_{\mathcal{F}_{h}\cap \Omega  } \right\rvert \\
-     \le & \| \nabla v \|_{ \mathcal{T} _{h} }^{  }\| \nabla u \|_{ \mathcal{T} _{h} }^{  }
+     \le & \| \nabla v \|_{ \mathcal{T} _{h}\cap \Omega  }^{  }\| \nabla u \|_{ \mathcal{T} _{h} \cap \Omega  }^{  }
     + \| \partial _{n}v \|_{ \Gamma   }^{  } \| u \|_{ \Gamma  }^{  }
     + \| v \|_{ \Gamma   }^{  } \| \partial _{n}u \|_{ \Gamma  }^{  } + \beta \|h^{-1} v  \|_{\Gamma   }^{  }  \| u  \|_{\Gamma   }^{  } \\
-    & + \| \mean{ \partial _{n}v }   \|_{\mathcal{F} _{h}\cap \Omega   }^{  } \| \jump{ u }   \|_{ \mathcal{F} _{h} \cap \Omega  }^{  } + \| \jump{ v }   \|_{ \mathcal{F_{h}}  }^{  }  \| \mean{ \partial _{n} u }    \|_{ \mathcal{F} _{h} \cap \Omega  }^{  } +
+    & + \| \mean{ \partial _{n}v }   \|_{\mathcal{F} _{h}\cap \Omega   }^{  } \| \jump{ u }   \|_{ \mathcal{F} _{h} \cap \Omega  }^{  } + \| \jump{ v }   \|_{ \mathcal{F}_{h} \cap \Omega   }^{  }  \| \mean{ \partial _{n} u }    \|_{ \mathcal{F} _{h} \cap \Omega  }^{  } +
     \beta \|h^{-1} \jump{ v }    \|_{\mathcal{F} _{h} \cap \Omega  }^{  }      \| \jump{ u } \|_{\mathcal{F} _{h} \cap \Omega   }^{  }
         \end{split}
     \]
