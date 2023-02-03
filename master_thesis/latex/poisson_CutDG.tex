@@ -196,12 +196,28 @@ Another important recipe before we can use Lax-Milgram is that the we need to sh
     $$ \left\lvert A_{h}( v,u) \right\rvert \lesssim \| v \|_{A_{h}  }^{  }     \| u \|_{A_{h}  }^{  } \quad  \forall v,u \in V _{h}, $$
     whenever $\beta $ is large enough. Moreover, for $v \in  H^{2}( \mathcal{T}_{h} ) + V_{h} $
     and $w \in V_{h}$ satisfies \[
-    a_{h}( v,w) \lesssim \| v \|_{ a_{h},* }^{ 2 }  \| w \|_{ a_{h},* }^{ 2 }
+    \left\lvert a_{h}( v,w) \right\rvert  \lesssim \| v \|_{ a_{h},* }^{  }  \| w \|_{ a_{h},* }^{  }
     \]
 \end{lemma}
 
 \begin{proof}
-    We will start to show that $\left\lvert A_{h}( v,u) \right\rvert \lesssim \| v \|_{A_{h}  }^{  }     \| u \|_{A_{h}  }^{  } \quad  \forall v,u \in V_{h} $.
+We will first start to show that $\left\lvert A_{h}( v,u) \right\rvert \lesssim \| v \|_{A_{h}  }^{  }     \| u \|_{A_{h}  }^{  } \quad  \forall v,u \in V_{h} $. We will then show that
+$a_{h}( v,w) \lesssim \| v \|_{ a_{h},* }^{  }  \| w \|_{ a_{h},* }^{  }$
+for $ \forall v \in  H^{2}( \mathcal{T}_{h} ) + V_{h} $ and $ \forall w \in V_{h}$.
+
+    \begin{enumerate}[label=\arabic*)]
+        \item  Observe that \[
+    \left\lvert A_{h}( v,u) \right\rvert \le  \left\lvert a_{h}( v,u)  \right\rvert  + \left\lvert g_{h}( v,u)  \right\rvert.
+    \]
+
+    Using Cauchy-Schwarz inequality \ref{lemma:cauchy-schwarz} is easy to see that this must hold \[
+\left\lvert g_{h}( v,u)  \right\rvert \le \left\lvert v \right\rvert _{g_{h}} \left\lvert u \right\rvert _{g_{h}} \le \| v \|_{ A_{h} }^{  } \| u \|_{ A_{h} }^{  }
+    \]
+    \todo[inline]{ How do I prove that $ \left\lvert g_{h}( u,v)  \right\rvert \le \left\lvert u \right\rvert _{g_{h}} \left\lvert v \right\rvert _{g_{h}}$ ? Do I need to make assumptions on $g_{h}$ or is it already covered in the norm $\left\lvert \cdot  \right\rvert _{g_{h}  }^{  } $ }
+
+    \end{enumerate}
+
+
 \end{proof}
 
 
