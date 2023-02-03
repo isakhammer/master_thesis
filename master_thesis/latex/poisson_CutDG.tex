@@ -231,11 +231,23 @@ for $ \forall v \in  H^{2}( \mathcal{T}_{h} ) + V_{h} $ and $ \forall u \in V_{h
         \end{split}
     \]
 
-    Looking at each terms individually can we observe that each terms is bounded, that is,
+    Looking at each terms individually can we observe that each terms is bounded, as follows,
+    \begin{itemize}
+        \item By applying the assumption \ref{as:est_EP1} and \ref{cor:g_h_inverste_results} \[
+\begin{split}
+        \| \nabla v \|_{ \mathcal{T} _{h}\cap \Omega  }^{  }\| \nabla u \|_{ \mathcal{T} _{h} \cap \Omega  }^{  } & \le \| \nabla v \|_{ \mathcal{T} _{h}  }^{  }\| \nabla u \|_{ \mathcal{T} _{h}   }^{  } \\
+        & \lesssim   ( \| \nabla v \|_{ \Omega  }^{  } + \abs{ v } _{g_{h}} )( \| \nabla u \|_{ \Omega  }^{  } + \abs{ u } _{g_{h}} )\\
+        &  \lesssim  \| v \|_{ A_{h} }^{  } \|u  \|_{ A_{h} }^{  }
+            .
+\end{split}
+            \]
+        \item We can also observe that 
+            \[
+         \| \partial _{n}v \|_{ \Gamma   }^{  } \| u \|_{ \Gamma  }^{  } & \le  \ldots \\
+            \] 
+    \end{itemize}
     \[
     \begin{split}
-        \| \nabla v \|_{ \mathcal{T} _{h}\cap \Omega  }^{  }\| \nabla u \|_{ \mathcal{T} _{h} \cap \Omega  }^{  } & \le \ldots \\
-         \| \partial _{n}v \|_{ \Gamma   }^{  } \| u \|_{ \Gamma  }^{  } & \le  \ldots \\
          \| v \|_{ \Gamma   }^{  } \| \partial _{n}u \|_{ \Gamma  }^{  } & \le  \ldots. \\
          \beta \|h^{-1} v  \|_{\Gamma   }^{  }  \| u  \|_{\Gamma   }^{  } &\le \ldots \\
  \| \mean{ \partial _{n}v }   \|_{\mathcal{F} _{h}\cap \Omega   }^{  } \| \jump{ u }   \|_{ \mathcal{F} _{h} \cap \Omega  }^{  }&  \le \ldots\\
@@ -259,7 +271,7 @@ for $ \forall v \in  H^{2}( \mathcal{T}_{h} ) + V_{h} $ and $ \forall u \in V_{h
 To show well-posedness have we used the following assumptions of $g_{h}$
 
 \begin{assumption}[EP1]
-    \label{as:EP1}
+    \label{as:EP1_2}
     $H^{1}$ semi-norm extension property for $v \in  V_{h}$,  \[
     \| \nabla v \|_{ \mathcal{T} _{h} }^{  }  \lesssim \| \nabla v \|_{ \Omega  }^{  }  + \abs{ v } _{g_{h}}
     \]
@@ -287,11 +299,13 @@ To show well-posedness have we used the following assumptions of $g_{h}$
     \]
 \end{assumption}
 
+
 \todo[inline]{ I am not proving condition numbers in this report. Should I still use all the assumptions and refer to the paper? }
 \todo[inline]{TODO: Define norm $\| \cdot  \|_{ r,\Omega  }^{  } $ in mathematical background.  }
 
 \subsubsection{Face-based ghost penalties}%
 \label{ssub:face_based_ghost_penalties}
+hehe
 
 \subsubsection{Projection-based ghost penalties}%
 \label{ssub:projection_based_ghost_penalties}
