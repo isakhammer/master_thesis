@@ -148,11 +148,11 @@ We want to show that $  \| v \|_{A_{h}}^{2}   \lesssim A_{h}( v,v) \forall v \in
     Assume that $v \in V_{h} $. Then does in short this inequality hold,
 \[
     \begin{split}
-A_{h}( v, v)   =& a_{h}( v, v) + \left\lvert v \right\rvert _{g_{h}}^{2} \\
-=&  \| \nabla v \|_{  \mathcal{T}_{h} \cap \Omega }^{ 2 } + \left\lvert v \right\rvert _{ g_{h} }^{ 2 } + \beta \| h^{-\frac{1}{2}} \jump{ v }   \|_{\mathcal{F} _{h} \cap \Omega   }^{  }   + \beta \| h^{-\frac{1}{2}}  v    \|_{ \Gamma}^{  }
+A_{h}( v, v)   =& a_{h}( v, v) + \abs{ v }  _{g_{h}}^{2} \\
+=&  \| \nabla v \|_{  \mathcal{T}_{h} \cap \Omega }^{ 2 } + \abs{v  }  _{ g_{h} }^{ 2 } + \beta \| h^{-\frac{1}{2}} \jump{ v }   \|_{\mathcal{F} _{h} \cap \Omega   }^{  2}   + \beta \| h^{-\frac{1}{2}}  v    \|_{ \Gamma}^{  2}
 \\ & - 2( \mean{ \partial _{n} v  },  \jump{ v })_{\mathcal{F} _{h} \cap \Omega }
 \\ & - 2 ( \partial _{n} v,v)_{\Gamma \cap \Omega }     \\
-\ge  &  \| \nabla v \|_{  \mathcal{T}_{h} \cap \Omega }^{ 2 } + \left\lvert v \right\rvert_{ g_{h} }^{ 2 } + \beta \| h^{-\frac{1}{2}} \jump{ v }   \|_{\mathcal{F} _{h} \cap \Omega   }^{  }   + \beta \| h^{-\frac{1}{2}}  v    \|_{ \Gamma}^{  }
+\ge  &  \| \nabla v \|_{  \mathcal{T}_{h} \cap \Omega }^{ 2 } + \left\lvert v \right\rvert_{ g_{h} }^{ 2 } + \beta \| h^{-\frac{1}{2}} \jump{ v }   \|_{\mathcal{F} _{h} \cap \Omega   }^{2  }   + \beta \| h^{-\frac{1}{2}}  v    \|_{ \Gamma}^{  2}
 \\ & - \varepsilon \| h^{\frac{1}{2}}  \mean{  \partial _{n} v}      \|_{ \mathcal{F} _{h} \cap \Omega  }^{2  } - \varepsilon ^{-1} \| h^{-\frac{1}{2}} \jump{ v }   \|_{\mathcal{F} _{h} \cap \Omega   }^{ 2 }
 \\ & - \varepsilon \| h^{\frac{1}{2}} \partial _{n} v \|_{ \Gamma \cap \Omega  }^{2  } -  \varepsilon ^{-1} \| h^{-\frac{1}{2}} v \|_{  \Gamma \cap  \Omega }^{ 2 } \\
 \ge & ( 1-\varepsilon C)  ( \| \nabla v \|_{\Omega   }^{2  } + \left\lvert v \right\rvert _{g_{h}}   ) + ( \beta - \varepsilon ^{-1} ) ( \| h^{-\frac{1}{2}} \jump{ v }   \|_{ \mathcal{F} _{h}\cap  \Omega  }^{ 2 } + \| h^{\frac{1}{2}} v \|_{\Gamma
@@ -211,12 +211,12 @@ for $ \forall v \in  H^{2}( \mathcal{T}_{h} ) + V_{h} $ and $ \forall u \in V_{h
     \left\lvert A_{h}( v,u) \right\rvert \le  \left\lvert a_{h}( v,u)  \right\rvert  + \left\lvert g_{h}( v,u)  \right\rvert.
     \]
 
-         Using Cauchy-Schwarz inequality \ref{lemma:cauchy-schwarz} is easy to see that this must hold \[
+         Using Cauchy-Schwarz inequality \ref{lemma:cauchy-schwarz} is easy to see via assumption that this must hold \[
 \left\lvert g_{h}( v,u)  \right\rvert \le \left\lvert v \right\rvert _{g_{h}} \left\lvert u \right\rvert _{g_{h}} \le \| v \|_{ A_{h} }^{  } \| u \|_{ A_{h} }^{  }
     \]
     \todo[inline]{ How do I prove that $ \left\lvert g_{h}( u,v)  \right\rvert \le \left\lvert u \right\rvert _{g_{h}} \left\lvert v \right\rvert _{g_{h}}$ ? Do I need to make assumptions on $g_{h}$ or is it already covered in the norm $\left\lvert \cdot  \right\rvert _{g_{h}  }^{  } $ }
 
-    However, we must analyze all the terms in $a_{h}$ invidually.   \[
+    However, for     \[
         \begin{split}
     \left\lvert a_{h}( v,u)  \right\rvert \le & \left\lvert( \nabla v, \nabla u)_{\mathcal{T} _{h} \cap \Omega }  \right\rvert +  \left\lvert  ( \partial _{n} v,u)_{\Gamma } \right\rvert   + \left\lvert ( v, \partial _{n} u)_{\Gamma } \right\rvert  +
     \left\lvert\beta ( h^{-1} v,u)_{\Gamma }  \right\rvert  \\
@@ -229,6 +229,8 @@ for $ \forall v \in  H^{2}( \mathcal{T}_{h} ) + V_{h} $ and $ \forall u \in V_{h
     \beta \|h^{-1} \jump{ v }    \|_{\mathcal{F} _{h} \cap \Omega  }^{  }      \| \jump{ u } \|_{\mathcal{F} _{h} \cap \Omega   }^{  }
         \end{split}
     \]
+
+    Looking at each terms individually can we observe that each terms is bounded
 
 
     \end{enumerate}
