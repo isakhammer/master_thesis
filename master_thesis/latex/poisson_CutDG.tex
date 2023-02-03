@@ -77,13 +77,13 @@ In most applications is $\Gamma $ represented with a level-set function, that is
 
 
 \begin{assumption}[G1]
-    $\mathcal{T}_{h} $ is mesh conform, quasi-uniform and shape regular.
+   The active mesh $\mathcal{T}_{h} $ is mesh conform, quasi-uniform and shape regular.
 \end{assumption}
 
 \begin{assumption}[G3]
     For $T \in \mathcal{T} _{\Gamma   }$ there is a path $P$ of $diam(P) \lesssim h$ which contains $T$ and an element $T'$ with a "fat" interaction satisfying $\left\lvert T' \cap \Omega  \right\rvert \ge c_{s} \left\lvert T'  \right\rvert _{d}$
     \todo[inline]{ Don't understand this definition}
-    \todo[inline]{ Define patch in mathematical background. }
+    \todo[inline]{ TODO: Define patch in mathematical background. }
 \end{assumption}
 
 
@@ -114,18 +114,45 @@ Recall the much known local inverse estimate in \ref{lemma:local_inverse_estimat
     \| \partial _{n} v \|_{ T\cap \Gamma   }^{  } &  \le  C h_{T} ^{-\frac{1}{2}} \| \nabla v \|_{ T }^{  } \\
 \end{split}
 \end{equation}
-Again, the first inequality is a quite trivial extension of the original estimate. However, the second inequality may be cumbersome to prove. For a proof, see \cite{hansbo2003finite}. Remark that the $C_{\Gamma } $ is dependent on the curvature of $\Gamma $. \todo[inline]{ TODO: Look into\cite{hansbo2003finite} and actually
+
+
+Again, the first inequality is a quite trivial extension of the original estimate. However, the second inequality may be cumbersome to prove. For a proof, see \cite{hansbo2003finite}.
+An useful extension is to generalize this equality for the full mesh $\mathcal{T} _{h}$.
+\begin{corollary}[Unfitted inverse estimates]
+    \label{cor:unfitted_inverse_estimates}
+    Assume that $v \in V^{h} $ and let $\mathcal{T}_{h} $ be a active mesh, then does the following estimates hold.
+    \[
+\begin{split}
+    \| \partial _{n} v \|_{ \mathcal{F}_h \cap \Omega  }^{  } & \le \| \partial _{n}  v \|_{\mathcal{F}_{h}   }^{  } \le  C_{I} h ^{-\frac{1}{2}} \| \nabla v \|_{ \mathcal{T}_{h}  }^{  } \\
+    \| \partial _{n} v \|_{ \mathcal{T}_{h} \cap \Gamma   }^{  } &  \le  C h ^{-\frac{1}{2}} \| \nabla v \|_{ \mathcal{T} _{h} }^{  } \\
+\end{split}
+    \]
+    Or equivalently,
+    \[
+\begin{split}
+    h^{\frac{1}{2}}\| \partial _{n} v \|_{ \mathcal{F}_h \cap \Omega  }^{  } & \le \| \partial _{n}  v \|_{\mathcal{F}_{h}   }^{  } \le  C_{I}  \| \nabla v \|_{ \mathcal{T}_{h}  }^{  } \\
+    h^{\frac{1}{2}}\| \partial _{n} v \|_{ \mathcal{T}_{h} \cap \Gamma   }^{  } &  \le  C  \| \nabla v \|_{ \mathcal{T} _{h} }^{  } \\
+\end{split}
+    \]
+\end{corollary}
+
+Remark that the $C_{\Gamma } $ is dependent on the curvature of $\Gamma $. \todo[inline]{ TODO: Look into\cite{hansbo2003finite} and actually
 find the proof.}
 
 To be able to apply the \eqref{eq:unfitted_localinv} globally can we make the following assumption for the ghost penalty term.
 
 \begin{assumption}[EP1]
     \label{as:est_EP1}
-    Let $\Omega $ be the physical domain to the active mesh $\mathcal{T} _{h}$. Then for any $v \in V_{h}$, this holds \[
-    \| \nabla v \|_{ \mathcal{T}_{h}  }^{ 2 }  \le C_{g} ( \| \nabla v \|_{ \Omega  }^{ 2 }  + \left\lvert v  \right\rvert _{ g_{h} }^{ 2 } )
+    Let $\Omega $ be the physical domain to the active mesh $\mathcal{T} _{h}$. The ghost penalty is a symmetric, positive semi-definite bilinear form, and satisfies the following inequality  \[
+    \| \nabla v \|_{ \mathcal{T}_{h}  }^{ 2 }  \le C_{g} ( \| \nabla v \|_{ \Omega  }^{ 2 }  + \left\lvert v  \right\rvert _{ g_{h} }^{ 2 } ) \forall v \in  V_{h}
     \]
     Here the constant $C_{g}$ depends on the diameter $h$, the order $k $ and the dimension $d$.
 \end{assumption}
+\begin{remark}
+Note that since we assume the ghost penalty is to be a symmetric, positive semi-definite bilinear term, the Cauchy-Schwarz inequality holds, that is,\[
+g_{h}( v,u)  \le \abs{ v } _{g_{h}} \abs{ u }_{g_{h}} \forall v,u \in V_{h}.
+\]
+\end{remark}
 
 
 \begin{corollary}
@@ -137,6 +164,7 @@ To be able to apply the \eqref{eq:unfitted_localinv} globally can we make the fo
     \]
     We can observe that $C$ depends on the diameter $h$, the order $k $ and the dimension $d$.
 \end{corollary}
+
 
 Finally being able to control the estimates on cut elements can we start showing well-posedness for the formulation.
 
@@ -212,49 +240,76 @@ for $ \forall v \in  H^{2}( \mathcal{T}_{h} ) + V_{h} $ and $ \forall u \in V_{h
     \left\lvert A_{h}( v,u) \right\rvert \le  \left\lvert a_{h}( v,u)  \right\rvert  + \left\lvert g_{h}( v,u)  \right\rvert.
     \]
 
-         Using Cauchy-Schwarz inequality \ref{lemma:cauchy-schwarz} is easy to see via assumption that this must hold \[
+         First of all, by assumption does the ghost penalty satisfy the Cauchy-Schwartz inequality, that is,  \[
 \left\lvert g_{h}( v,u)  \right\rvert \le \left\lvert v \right\rvert _{g_{h}} \left\lvert u \right\rvert _{g_{h}} \le \| v \|_{ A_{h} }^{  } \| u \|_{ A_{h} }^{  }
     \]
-    \todo[inline]{ How do I prove that $ \left\lvert g_{h}( u,v)  \right\rvert \le \left\lvert u \right\rvert _{g_{h}} \left\lvert v \right\rvert _{g_{h}}$ ? Do I need to make assumptions on $g_{h}$ or is it already covered in the norm $\left\lvert \cdot  \right\rvert _{g_{h}  }^{  } $ }
 
-    However, for     \[
+    However, we need to check the terms individually for $a_{h}$. That is      \[
         \begin{split}
     \left\lvert a_{h}( v,u)  \right\rvert \le & \left\lvert( \nabla v, \nabla u)_{\mathcal{T} _{h} \cap \Omega }  \right\rvert +  \left\lvert  ( \partial _{n} v,u)_{\Gamma } \right\rvert   + \left\lvert ( v, \partial _{n} u)_{\Gamma } \right\rvert  +
     \left\lvert\beta ( h^{-1} v,u)_{\Gamma }  \right\rvert  \\
     & + \left\lvert( \mean{ \partial _{n} v }  , \jump{ u }  ) _{\mathcal{F} _{h} \cap \Omega }  \right\rvert  + \left\lvert ( \jump{ v }  , \mean{ \partial _{n} u }  )_{\mathcal{F} _{h}\cap \Omega } \right\rvert  + \left\lvert \beta ( h^{-1} \jump{ v }  ,
     \jump{ u }  )_{\mathcal{F}_{h}\cap \Omega  } \right\rvert \\
-     \le & \| \nabla v \|_{ \mathcal{T} _{h}\cap \Omega  }^{  }\| \nabla u \|_{ \mathcal{T} _{h} \cap \Omega  }^{  }
-    + \| \partial _{n}v \|_{ \Gamma   }^{  } \| u \|_{ \Gamma  }^{  }
-    + \| v \|_{ \Gamma   }^{  } \| \partial _{n}u \|_{ \Gamma  }^{  } + \beta \|h^{-1} v  \|_{\Gamma   }^{  }  \| u  \|_{\Gamma   }^{  } \\
-    & + \| \mean{ \partial _{n}v }   \|_{\mathcal{F} _{h}\cap \Omega   }^{  } \| \jump{ u }   \|_{ \mathcal{F} _{h} \cap \Omega  }^{  } + \| \jump{ v }   \|_{ \mathcal{F}_{h} \cap \Omega   }^{  }  \| \mean{ \partial _{n} u }    \|_{ \mathcal{F} _{h} \cap \Omega  }^{  } +
-    \beta \|h^{-1} \jump{ v }    \|_{\mathcal{F} _{h} \cap \Omega  }^{  }      \| \jump{ u } \|_{\mathcal{F} _{h} \cap \Omega   }^{  }
+     % \le & \| \nabla v \|_{ \mathcal{T} _{h}\cap \Omega  }^{  }\| \nabla u \|_{ \mathcal{T} _{h} \cap \Omega  }^{  }
+    % + \| \partial _{n}v \|_{ \Gamma   }^{  } \| u \|_{ \Gamma  }^{  }
+    % + \| v \|_{ \Gamma   }^{  } \| \partial _{n}u \|_{ \Gamma  }^{  } + \beta \|h^{-1} v  \|_{\Gamma   }^{  }  \| u  \|_{\Gamma   }^{  } \\
+    % & + \| \mean{ \partial _{n}v }   \|_{\mathcal{F} _{h}\cap \Omega   }^{  } \| \jump{ u }   \|_{ \mathcal{F} _{h} \cap \Omega  }^{  } + \| \jump{ v }   \|_{ \mathcal{F}_{h} \cap \Omega   }^{  }  \| \mean{ \partial _{n} u }    \|_{ \mathcal{F} _{h} \cap \Omega  }^{  } +
+    % \beta \|h^{-1} \jump{ v }    \|_{\mathcal{F} _{h} \cap \Omega  }^{  }      \| \jump{ u } \|_{\mathcal{F} _{h} \cap \Omega   }^{  }
         \end{split}
     \]
 
     Looking at each terms individually can we observe that each terms is bounded, as follows,
     \begin{itemize}
-        \item By applying the assumption \ref{as:est_EP1} and \ref{cor:g_h_inverste_results} \[
+        \item By applying the assumption \ref{as:est_EP1} and Corollary \ref{cor:g_h_inverste_results} we get \[
 \begin{split}
-        \| \nabla v \|_{ \mathcal{T} _{h}\cap \Omega  }^{  }\| \nabla u \|_{ \mathcal{T} _{h} \cap \Omega  }^{  } & \le \| \nabla v \|_{ \mathcal{T} _{h}  }^{  }\| \nabla u \|_{ \mathcal{T} _{h}   }^{  } \\
+\left\lvert( \nabla v, \nabla u)_{\mathcal{T} _{h} \cap \Omega }  \right\rvert & \le \| \nabla v \|_{ \mathcal{T} _{h}\cap \Omega  }^{  }\| \nabla u \|_{ \mathcal{T} _{h} \cap \Omega  }^{  } \\
+& \le \| \nabla v \|_{ \mathcal{T} _{h}  }^{  }\| \nabla u \|_{ \mathcal{T} _{h}   }^{  } \\
         & \lesssim   ( \| \nabla v \|_{ \Omega  }^{  } + \abs{ v } _{g_{h}} )( \| \nabla u \|_{ \Omega  }^{  } + \abs{ u } _{g_{h}} )\\
         &  \lesssim  \| v \|_{ A_{h} }^{  } \|u  \|_{ A_{h} }^{  }
-            .
 \end{split}
             \]
-        \item We can also observe that 
+
+        \item For the second and third terms along the boundary we get,
             \[
-         \| \partial _{n}v \|_{ \Gamma   }^{  } \| u \|_{ \Gamma  }^{  } & \le  \ldots \\
-            \] 
+                \begin{split}
+                 \left\lvert ( \partial _{n} v,  u)_{\Gamma } \right\rvert & \le \|h^{\frac{1}{2}} \partial _{n}v  \|_{ \Gamma   }^{  } \| h^{-\frac{1}{2}} u  \|_{ \Gamma  }^{  }  \\
+                 & \le \| \nabla v \|_{\mathcal{T}_{h}   }^{  } \|h^{-\frac{1}{2}} u \|_{ \Gamma    }^{  } \\
+ &  \le ( \| \nabla v \|_{ \Omega  }^{  } + \abs{ v } _{g_{h}} ) \|h^{-\frac{1}{2}} u \|_{ \Gamma    }^{  } \\
+                 & \le \| v \|_{A_{h}   }^{  } \| u \|_{ A_{h}    }^{  }
+                \end{split}
+            \]
+            \todo[inline]{ Wait, here we used the $ \| \cdot  \|_{ a_{h},* }^{  } $ instead of $\| \cdot  \|_{ A_{h} }^{  } $ ??     }
+            Here we used the Corollary \ref{cor:unfitted_inverse_estimates} in the first step and then applied the Assumption \ref{as:est_EP1}.
+
+        \item The boundary penalty term
+            \[
+                \begin{split}
+            \left\lvert\beta ( h^{-1} v,u)_{\Gamma }  \right\rvert  & \le \beta \| h^{-\frac{1}{2}} v \|_{\Gamma   }^{  } \| h^{-\frac{1}{2}} u \|_{\Gamma   }^{  }
+                \end{split}
+            \]
+
+        \item For the jump terms \[
+                \begin{split}
+        \left\lvert( \mean{ \partial _{n} v }  , \jump{ u }  ) _{\mathcal{F} _{h} \cap \Omega }  \right\rvert \le \ldots
+                \end{split}
+        \]
+    \item And for the DG penalty term
+        \[
+         \left\lvert \beta ( h^{-1} \jump{ v }  ,
+    \jump{ u }  )_{\mathcal{F}_{h}\cap \Omega  } \right\rvert \le  \ldots
+        \]
+
     \end{itemize}
-    \[
-    \begin{split}
-         \| v \|_{ \Gamma   }^{  } \| \partial _{n}u \|_{ \Gamma  }^{  } & \le  \ldots. \\
-         \beta \|h^{-1} v  \|_{\Gamma   }^{  }  \| u  \|_{\Gamma   }^{  } &\le \ldots \\
- \| \mean{ \partial _{n}v }   \|_{\mathcal{F} _{h}\cap \Omega   }^{  } \| \jump{ u }   \|_{ \mathcal{F} _{h} \cap \Omega  }^{  }&  \le \ldots\\
- \| \jump{ v }   \|_{ \mathcal{F}_{h} \cap \Omega   }^{  }  \| \mean{ \partial _{n} u }    \|_{ \mathcal{F} _{h} \cap \Omega  }^{  } & \le \ldots \\
-\beta \|h^{-1} \jump{ v }    \|_{\mathcal{F} _{h} \cap \Omega  }^{  }      \| \jump{ u } \|_{\mathcal{F} _{h} \cap \Omega   }^{  }& \le \ldots \\
-    \end{split}
-    \]
+    % Terms I
+    % \[
+    % \begin{split}
+    %      \| v \|_{ \Gamma   }^{  } \| \partial _{n}u \|_{ \Gamma  }^{  } & \le  \ldots. \\
+    %      \beta \|h^{-1} v  \|_{\Gamma   }^{  }  \| u  \|_{\Gamma   }^{  } &\le \ldots \\
+ % \| \mean{ \partial _{n}v }   \|_{\mathcal{F} _{h}\cap \Omega   }^{  } \| \jump{ u }   \|_{ \mathcal{F} _{h} \cap \Omega  }^{  }&  \le \ldots\\
+ % \| \jump{ v }   \|_{ \mathcal{F}_{h} \cap \Omega   }^{  }  \| \mean{ \partial _{n} u }    \|_{ \mathcal{F} _{h} \cap \Omega  }^{  } & \le \ldots \\
+% \beta \|h^{-1} \jump{ v }    \|_{\mathcal{F} _{h} \cap \Omega  }^{  }      \| \jump{ u } \|_{\mathcal{F} _{h} \cap \Omega   }^{  }& \le \ldots \\
+    % \end{split}
+    % \]
 
 
     \end{enumerate}
