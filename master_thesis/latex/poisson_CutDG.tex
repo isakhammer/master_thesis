@@ -241,5 +241,37 @@ for $ \forall v \in  H^{2}( \mathcal{T}_{h} ) + V_{h} $ and $ \forall u \in V_{h
 
 
 
+To show well-posedness have we used the following assumptions of $g_{h}$
 
+\begin{assumption}[EP1]
+    \label{as:EP1}
+    $H^{1}$ semi-norm extension property for $v \in  V_{h}$,  \[
+    \| \nabla v \|_{ \mathcal{T} _{h} }^{  }  \lesssim \| \nabla v \|_{ \Omega  }^{  }  + \abs{ v } _{g_{h}}
+    \]
+\end{assumption}
+
+\begin{assumption}[EP2]
+    \label{as:EP2}
+    Weak consistency for $v \in H^{s}( \Omega ) $ and $r = \min\{s, k+1\} $, \[
+    \abs{ \pi ^{e}_{h} v }_{g_{h}} \lesssim  h^{r-1} \| v \|_{ r,\Omega  }^{  }
+    \]
+\end{assumption}
+
+\begin{assumption}[EP3]
+    \label{as:EP3}
+    $L^{2}$ norm extension property for $v \in V_{h}$,\[
+    \| v \|_{ \mathcal{T} _{h} }^{  } \lesssim + \| v \|_{ g_{h} }^{  }
+    \]
+\end{assumption}
+
+\begin{assumption}[EP4]
+    \label{as:EP4}
+    Inverse inequality for $v \in  V_{h}$,
+    \[
+    \abs{ v } _{g_{h}} \lesssim h^{-1} \| v \|_{ \mathcal{T} _{h} }^{  } .
+    \]
+\end{assumption}
+
+\todo[inline]{   }
+\todo[inline]{TODO: Define norm $\| \cdot  \|_{ r,\Omega  }^{  } $ in mathematical background.  }
 
