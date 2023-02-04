@@ -137,6 +137,7 @@ We will now present a slightly generalized version.
 \end{split}
     \]
 Where $C_{I}$ depends on the dimension $d$, the degree $k$ and shape regularity of $T$. Compared to $C_{I}$ the constant $C_{\Gamma }$ also depends on the curvature of $\Gamma $.
+        \todo[inline]{ Find a way to argue the $\| \mean{ \partial _{n} v }  \|_{\mathcal{F} _{h} \cap \Omega   }^{  } $ inequality.}
 \end{corollary}
 
 
@@ -232,9 +233,7 @@ Another important recipe before we can use Lax-Milgram is that the we need to sh
 \end{lemma}
 
 \begin{proof}
- We will then show that
-$a_{h}( v,u) \lesssim \| v \|_{ a_{h},* }^{  }  \| u \|_{ a_{h},* }^{  }$
-for $ \forall v \in  H^{2}( \mathcal{T}_{h} ) + V_{h} $ and $ \forall u \in V_{h}$.
+    We will divide the proof in two steps.
 
     \begin{enumerate}[label=\arabic*)]
         \item
@@ -295,7 +294,6 @@ This is proved by showing that each term is bounded by applying the Cauchy-Schwa
 &\lesssim  \| u   \|_{ A_{h}    }^{  } \|  u    \|_{ A_{h}   }^{  }
                 \end{split}
         \]
-        \todo[inline]{ Find a way to argue  $\| \mean{ \partial _{n} v }  \|_{\mathcal{F} _{h} \cap \Omega   }^{  } $}
 
     \item And for the DG penalty term
         \[
@@ -308,9 +306,27 @@ This is proved by showing that each term is bounded by applying the Cauchy-Schwa
         Hence, the statement $\left\lvert A_{h}( v,u) \right\rvert \lesssim \| v \|_{A_{h}  }^{  }     \| u \|_{A_{h}  }^{  }  \forall v,u \in V_{h} $ holds.
     \end{itemize}
 
-\item We want to show $a_{h}( v,u) \lesssim \| v \|_{ a_{h},* }^{  }  \| u \|_{ a_{h},* }^{  }$
-for $ \forall v \in  H^{2}( \mathcal{T}_{h} ) + V_{h} $ and $ \forall u \in V_{h}$.
+\item We want to show $\abs{ a_{h}( v,u) }  \lesssim \| v \|_{ a_{h},* }^{  }  \| u \|_{ a_{h},* }^{  }$
+for $ \forall v \in  H^{2}( \mathcal{T}_{h} ) + V_{h} $ and $ \forall u \in V_{h}$,
+    that is,      \[
+        \begin{split}
+    \left\lvert a_{h}( v,u)  \right\rvert & \le  \left\lvert( \nabla v, \nabla u)_{\mathcal{T} _{h} \cap \Omega }  \right\rvert +  \left\lvert  ( \partial _{n} v,u)_{\Gamma } \right\rvert   + \left\lvert ( v, \partial _{n} u)_{\Gamma } \right\rvert  +
+    \left\lvert\beta ( h^{-1} v,u)_{\Gamma }  \right\rvert  \\
+    & \quad  + \left\lvert( \mean{ \partial _{n} v }  , \jump{ u }  ) _{\mathcal{F} _{h} \cap \Omega }  \right\rvert  + \left\lvert ( \jump{ v }  , \mean{ \partial _{n} u }  )_{\mathcal{F} _{h}\cap \Omega } \right\rvert  + \left\lvert \beta ( h^{-1} \jump{ v }  ,
+    \jump{ u }  )_{\mathcal{F}_{h}\cap \Omega  } \right\rvert \\
+     & \lesssim  \| v \|_{ a_{h},* }^{  }  \| u \|_{ a_{h},* }^{  }
+        \end{split}
+    \]
+    The proof follows exactly the same steps as the first part. However, the inverse estimates is not needed since it is define in the norm, \[
+        \begin{split}
+    \abs{ ( \partial _{n} v, u) _{\Gamma } } & \lesssim \| v \|_{ a_{h},* }^{  } \| u \|_{a_{h},*  }^{  } \\
+    \abs{ ( \mean{ \partial _{n} v  }  , \jump{ u }  ) _{\mathcal{F} _{h} \cap \Omega  } } & \lesssim \| v \|_{ a_{h},* }^{  } \| u \|_{a_{h},*  }^{  }
+        \end{split}
+    \]
+
     \end{enumerate}
+
+    Hence, the proof is complete.
 
 
 \end{proof}
