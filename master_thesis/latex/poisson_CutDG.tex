@@ -136,7 +136,6 @@ We will now present a slightly generalized version.
     h^{\frac{1}{2}}\| \partial _{n} v \|_{ \mathcal{T}_{h} \cap \Gamma   }^{  } &  \le  C_{\Gamma }  \| \nabla v \|_{ \mathcal{T} _{h} }^{  } \\
 \end{split}
     \]
-
 Where $C_{I}$ depends on the dimension $d$, the degree $k$ and shape regularity of $T$. Compared to $C_{I}$ the constant $C_{\Gamma }$ also depends on the curvature of $\Gamma $.
 \end{corollary}
 
@@ -233,34 +232,33 @@ Another important recipe before we can use Lax-Milgram is that the we need to sh
 \end{lemma}
 
 \begin{proof}
-We will first start to show that $\left\lvert A_{h}( v,u) \right\rvert \lesssim \| v \|_{A_{h}  }^{  }     \| u \|_{A_{h}  }^{  } \quad  \forall v,u \in V_{h} $. We will then show that
+ We will then show that
 $a_{h}( v,u) \lesssim \| v \|_{ a_{h},* }^{  }  \| u \|_{ a_{h},* }^{  }$
 for $ \forall v \in  H^{2}( \mathcal{T}_{h} ) + V_{h} $ and $ \forall u \in V_{h}$.
 
     \begin{enumerate}[label=\arabic*)]
-        \item  Observe that \[
-    \left\lvert A_{h}( v,u) \right\rvert \le  \left\lvert a_{h}( v,u)  \right\rvert  + \left\lvert g_{h}( v,u)  \right\rvert.
+        \item
+The goal is to show that $\left\lvert A_{h}( v,u) \right\rvert \lesssim \| v \|_{A_{h}  }^{  }     \| u \|_{A_{h}  }^{  }  \forall v,u \in V_{h} $.
+            By definition we know that \[
+    \left\lvert A_{h}( v,u) \right\rvert \le  \left\lvert a_{h}( v,u)  \right\rvert  + \left\lvert g_{h}( v,u)  \right\rvert,
     \]
+    thus, it is only necessary to show that each of those terms are bounded.
 
          First of all, by assumption does the ghost penalty satisfy the Cauchy-Schwartz inequality, that is,  \[
 \left\lvert g_{h}( v,u)  \right\rvert \le \left\lvert v \right\rvert _{g_{h}} \left\lvert u \right\rvert _{g_{h}} \le \| v \|_{ A_{h} }^{  } \| u \|_{ A_{h} }^{  }
     \]
 
-    However, we need to check the terms individually for $a_{h}$. That is      \[
+    Similarly, we can see that,      \[
         \begin{split}
-    \left\lvert a_{h}( v,u)  \right\rvert \le & \left\lvert( \nabla v, \nabla u)_{\mathcal{T} _{h} \cap \Omega }  \right\rvert +  \left\lvert  ( \partial _{n} v,u)_{\Gamma } \right\rvert   + \left\lvert ( v, \partial _{n} u)_{\Gamma } \right\rvert  +
+    \left\lvert a_{h}( v,u)  \right\rvert & \le  \left\lvert( \nabla v, \nabla u)_{\mathcal{T} _{h} \cap \Omega }  \right\rvert +  \left\lvert  ( \partial _{n} v,u)_{\Gamma } \right\rvert   + \left\lvert ( v, \partial _{n} u)_{\Gamma } \right\rvert  +
     \left\lvert\beta ( h^{-1} v,u)_{\Gamma }  \right\rvert  \\
-    & + \left\lvert( \mean{ \partial _{n} v }  , \jump{ u }  ) _{\mathcal{F} _{h} \cap \Omega }  \right\rvert  + \left\lvert ( \jump{ v }  , \mean{ \partial _{n} u }  )_{\mathcal{F} _{h}\cap \Omega } \right\rvert  + \left\lvert \beta ( h^{-1} \jump{ v }  ,
+    & \quad  + \left\lvert( \mean{ \partial _{n} v }  , \jump{ u }  ) _{\mathcal{F} _{h} \cap \Omega }  \right\rvert  + \left\lvert ( \jump{ v }  , \mean{ \partial _{n} u }  )_{\mathcal{F} _{h}\cap \Omega } \right\rvert  + \left\lvert \beta ( h^{-1} \jump{ v }  ,
     \jump{ u }  )_{\mathcal{F}_{h}\cap \Omega  } \right\rvert \\
-     % \le & \| \nabla v \|_{ \mathcal{T} _{h}\cap \Omega  }^{  }\| \nabla u \|_{ \mathcal{T} _{h} \cap \Omega  }^{  }
-    % + \| \partial _{n}v \|_{ \Gamma   }^{  } \| u \|_{ \Gamma  }^{  }
-    % + \| v \|_{ \Gamma   }^{  } \| \partial _{n}u \|_{ \Gamma  }^{  } + \beta \|h^{-1} v  \|_{\Gamma   }^{  }  \| u  \|_{\Gamma   }^{  } \\
-    % & + \| \mean{ \partial _{n}v }   \|_{\mathcal{F} _{h}\cap \Omega   }^{  } \| \jump{ u }   \|_{ \mathcal{F} _{h} \cap \Omega  }^{  } + \| \jump{ v }   \|_{ \mathcal{F}_{h} \cap \Omega   }^{  }  \| \mean{ \partial _{n} u }    \|_{ \mathcal{F} _{h} \cap \Omega  }^{  } +
-    % \beta \|h^{-1} \jump{ v }    \|_{\mathcal{F} _{h} \cap \Omega  }^{  }      \| \jump{ u } \|_{\mathcal{F} _{h} \cap \Omega   }^{  }
+     & \lesssim  \| u \|_{ A_{h} }^{  } \| v \|_{ A_{h} }^{  }
         \end{split}
     \]
 
-    Our method is to analyze at each terms individually will we prove that each of them is bounded by applying the Cauchy-Schwartz inequality, Assumption \ref{as:est_EP1} and Corollary \ref{cor:g_h_inverste_results} and \ref{cor:unfitted_inverse_estimates}. That is, here is some
+This is proved by showing that each term is bounded by applying the Cauchy-Schwartz inequality, Assumption \ref{as:est_EP1} and Corollary \ref{cor:g_h_inverste_results} and \ref{cor:unfitted_inverse_estimates}. That is, here is some
     detailed calculations,
     \begin{itemize}
         \item For the first terms we can see that \[
@@ -292,7 +290,7 @@ for $ \forall v \in  H^{2}( \mathcal{T}_{h} ) + V_{h} $ and $ \forall u \in V_{h
 
         \item For the jump terms \[
                 \begin{split}
-                    \left\lvert( \mean{ \partial _{n} v }  , \jump{ u }  ) _{\mathcal{F} _{h} \cap \Omega }  \right\rvert &\lesssim  \| \mean{ \partial _{n} v }   \|_{ \mathcal{F}_{h}\cap \Omega   }^{  } \| \jump{ u }   \|_{ \mathcal{F}_{h}\cap
+                    \left\lvert( \mean{ \partial _{n} v }  , \jump{ u }  ) _{\mathcal{F} _{h} \cap \Omega }  \right\rvert &\lesssim  \| h^{\frac{1}{2}} \mean{ \partial _{n} v }   \|_{ \mathcal{F}_{h}\cap \Omega   }^{  } \|h^{-\frac{1}{2}} \jump{ u }   \|_{ \mathcal{F}_{h}\cap
                     \Omega   }^{  } \\
 &\lesssim  \| u   \|_{ A_{h}    }^{  } \|  u    \|_{ A_{h}   }^{  }
                 \end{split}
@@ -307,10 +305,11 @@ for $ \forall v \in  H^{2}( \mathcal{T}_{h} ) + V_{h} $ and $ \forall u \in V_{h
     &\lesssim \| v \|_{A_{h}  }^{  } \| u \|_{A_{h}  }^{  }
             \end{split}
         \]
-
+        Hence, the statement $\left\lvert A_{h}( v,u) \right\rvert \lesssim \| v \|_{A_{h}  }^{  }     \| u \|_{A_{h}  }^{  }  \forall v,u \in V_{h} $ holds.
     \end{itemize}
 
-
+\item We want to show $a_{h}( v,u) \lesssim \| v \|_{ a_{h},* }^{  }  \| u \|_{ a_{h},* }^{  }$
+for $ \forall v \in  H^{2}( \mathcal{T}_{h} ) + V_{h} $ and $ \forall u \in V_{h}$.
     \end{enumerate}
 
 
