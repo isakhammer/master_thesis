@@ -96,7 +96,7 @@ First of all, to be able to prove well-posedness we need proper norms for $A_{h}
 That is, let $v \in V_{h}$ we then define the following norms,
 \[
 \begin{split}
-    \| v \|_{ a_{h} }^{ 2 }  & = \| \nabla v \|_{ \mathcal{T} _{h} \cap \Omega  }^{ 2 } + \| h^{\frac{1}{2}} \jump{ v }   \|_{ \mathcal{F} _{h} \cap \Omega   }^2 + \| h^{-\frac{1}{2} } v \|_{ \Gamma  }^{ 2 }   \\
+    \| v \|_{ a_{h} }^{ 2 }  & = \| \nabla v \|_{ \mathcal{T} _{h} \cap \Omega  }^{ 2 } + \| h^{-\frac{1}{2}} \jump{ v }   \|_{ \mathcal{F} _{h} \cap \Omega   }^2 + \| h^{-\frac{1}{2} } v \|_{ \Gamma  }^{ 2 }   \\
     \left\lvert v \right\rvert _{g_{h}}^{2} & = g_{h}( v,v)  \\
     \| v \|_{ A_{h} }^{ 2 } &= \| v \|_{ a_{h} }^{ 2 } + \left\lvert v \right\rvert_{g_{h}}^{2}     \\
 \end{split}
@@ -122,17 +122,17 @@ Remark that the $C_{\Gamma } $ is dependent on the local curvature of $\Gamma $.
 We will now present a slightly generalized version.
 \begin{corollary}[Unfitted inverse estimates]
     \label{cor:unfitted_inverse_estimates}
-    Assume that $v \in V^{h} $ and let $\mathcal{T}_{h} $ be a active mesh. Then the following estimates holds,
+    Assume that $v \in V_{h} $ and let $\mathcal{T}_{h} $ be a active mesh. Then the following estimates holds,
     \[
 \begin{split}
-    \| \partial _{n} v \|_{ \mathcal{F}_h \cap \Omega  }^{  } & \le   C_{I} h ^{-\frac{1}{2}} \| \nabla v \|_{ \mathcal{T}_{h}  }^{  } \\
+    \| \mean{ \partial _{n} v }   \|_{ \mathcal{F}_h \cap \Omega  }^{  } & \le   C_{I} h ^{-\frac{1}{2}} \| \nabla v \|_{ \mathcal{T}_{h}  }^{  } \\
     \| \partial _{n} v \|_{ \mathcal{T}_{h} \cap \Gamma   }^{  } &  \le  C_{\Gamma } h ^{-\frac{1}{2}} \| \nabla v \|_{ \mathcal{T} _{h} }^{  } \\
 \end{split}
     \]
     Or equivalently,
     \[
 \begin{split}
-    h^{\frac{1}{2}}\| \partial _{n} v \|_{ \mathcal{F}_h \cap \Omega  }^{  } & \le  C_{I}  \| \nabla v \|_{ \mathcal{T}_{h}  }^{  } \\
+    h^{\frac{1}{2}}\| \mean{ \partial _{n} v } \|_{ \mathcal{F}_h \cap \Omega  }^{  } & \le  C_{I}  \| \nabla v \|_{ \mathcal{T}_{h}  }^{  } \\
     h^{\frac{1}{2}}\| \partial _{n} v \|_{ \mathcal{T}_{h} \cap \Gamma   }^{  } &  \le  C_{\Gamma }  \| \nabla v \|_{ \mathcal{T} _{h} }^{  } \\
 \end{split}
     \]
@@ -260,7 +260,7 @@ for $ \forall v \in  H^{2}( \mathcal{T}_{h} ) + V_{h} $ and $ \forall u \in V_{h
         \end{split}
     \]
 
-    Our method is to analyze at each terms individually will we prove that each of them is bounded by applying the Assumption \ref{as:est_EP1} and Corollary \ref{cor:g_h_inverste_results} and \ref{cor:unfitted_inverse_estimates}. That is, here is some
+    Our method is to analyze at each terms individually will we prove that each of them is bounded by applying the Cauchy-Schwartz inequality, Assumption \ref{as:est_EP1} and Corollary \ref{cor:g_h_inverste_results} and \ref{cor:unfitted_inverse_estimates}. That is, here is some
     detailed calculations,
     \begin{itemize}
         \item For the first terms we can see that \[
@@ -281,26 +281,31 @@ for $ \forall v \in  H^{2}( \mathcal{T}_{h} ) + V_{h} $ and $ \forall u \in V_{h
                  & \lesssim   \| v \|_{A_{h}   }^{  } \| u \|_{ A_{h}    }^{  }
                 \end{split}
             \]
-            \todo[inline]{ Wait, here we used the $ \| \cdot  \|_{ a_{h},* }^{  } $ instead of $\| \cdot  \|_{ A_{h} }^{  } $ ??     }
-            Here we used the Corollary \ref{cor:unfitted_inverse_estimates} in the first step and then applied the Assumption \ref{as:est_EP1}.
 
         \item The boundary penalty term
             \[
                 \begin{split}
-            \left\lvert\beta ( h^{-1} v,u)_{\Gamma }  \right\rvert  & \le \beta \| h^{-\frac{1}{2}} v \|_{\Gamma   }^{  } \| h^{-\frac{1}{2}} u \|_{\Gamma   }^{  } \\
-                                                                    &\lesssim \| u \|_{\mathcal{A}_{h}   }^{  }\| v \|_{\mathcal{A}_{h}   }^{  }
+                    \left\lvert\beta ( h^{-1} v,u)_{\Gamma }  \right\rvert  & \le \beta \| h^{-\frac{1}{2}} v \|_{\Gamma   }^{  } \| h^{-\frac{1}{2}} u \|_{\Gamma   }^{  } \\
+                                                                            &\lesssim \| u \|_{\mathcal{A}_{h}   }^{  }\| v \|_{\mathcal{A}_{h}   }^{  }
                 \end{split}
             \]
 
         \item For the jump terms \[
                 \begin{split}
-        \left\lvert( \mean{ \partial _{n} v }  , \jump{ u }  ) _{\mathcal{F} _{h} \cap \Omega }  \right\rvert \le \ldots
+                    \left\lvert( \mean{ \partial _{n} v }  , \jump{ u }  ) _{\mathcal{F} _{h} \cap \Omega }  \right\rvert &\lesssim  \| \mean{ \partial _{n} v }   \|_{ \mathcal{F}_{h}\cap \Omega   }^{  } \| \jump{ u }   \|_{ \mathcal{F}_{h}\cap
+                    \Omega   }^{  } \\
+&\lesssim  \| u   \|_{ A_{h}    }^{  } \|  u    \|_{ A_{h}   }^{  }
                 \end{split}
         \]
+        \todo[inline]{ Find a way to argue  $\| \mean{ \partial _{n} v }  \|_{\mathcal{F} _{h} \cap \Omega   }^{  } $}
+
     \item And for the DG penalty term
         \[
+            \begin{split}
          \left\lvert \beta ( h^{-1} \jump{ v }  ,
-    \jump{ u }  )_{\mathcal{F}_{h}\cap \Omega  } \right\rvert \le  \ldots
+         \jump{ u }  )_{\mathcal{F}_{h}\cap \Omega  } \right\rvert &\le  \beta \| h^{-\frac{1}{2}    }\jump{ v } \|_{ \mathcal{F}_{h} \cap \Omega  }^{  }\| h^{-\frac{1}{2}    }\jump{ u } \|_{\mathcal{F}_{h} \cap \Omega   }^{  } \\
+    &\lesssim \| v \|_{A_{h}  }^{  } \| u \|_{A_{h}  }^{  }
+            \end{split}
         \]
 
     \end{itemize}
