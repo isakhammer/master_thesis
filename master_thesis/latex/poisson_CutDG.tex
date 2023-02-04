@@ -96,7 +96,7 @@ First of all, to be able to prove well-posedness we need proper norms for $A_{h}
 That is, let $v \in V_{h}$ we then define the following norms,
 \[
 \begin{split}
-    \| v \|_{ a_{h} }^{ 2 }  & = \| \nabla v \|_{ \mathcal{T} _{h} \cap \Omega  }^{ 2 } + \| h^{\frac{1}{2}} \jump{ v }   \|_{ \mathcal{F} _{h} \cap \Omega   }^2 \\
+    \| v \|_{ a_{h} }^{ 2 }  & = \| \nabla v \|_{ \mathcal{T} _{h} \cap \Omega  }^{ 2 } + \| h^{\frac{1}{2}} \jump{ v }   \|_{ \mathcal{F} _{h} \cap \Omega   }^2 + \| h^{-\frac{1}{2} } v \|_{ \Gamma  }^{ 2 }   \\
     \left\lvert v \right\rvert _{g_{h}}^{2} & = g_{h}( v,v)  \\
     \| v \|_{ A_{h} }^{ 2 } &= \| v \|_{ a_{h} }^{ 2 } + \left\lvert v \right\rvert_{g_{h}}^{2}     \\
 \end{split}
@@ -118,26 +118,28 @@ Recall the much known local inverse estimate in \ref{lemma:local_inverse_estimat
 
 Again, the first inequality is a quite trivial extension of the original estimate. However, the second inequality may be cumbersome to prove. For a proof, see \cite{hansbo2003finite}.
 An useful extension is to generalize this equality for the full mesh $\mathcal{T} _{h}$.
+Remark that the $C_{\Gamma } $ is dependent on the local curvature of $\Gamma $. \todo[inline]{ TODO: Look into\cite{hansbo2003finite} and actually find the proof.}
+We will now present a slightly generalized version.
 \begin{corollary}[Unfitted inverse estimates]
     \label{cor:unfitted_inverse_estimates}
-    Assume that $v \in V^{h} $ and let $\mathcal{T}_{h} $ be a active mesh, then does the following estimates hold.
+    Assume that $v \in V^{h} $ and let $\mathcal{T}_{h} $ be a active mesh. Then the following estimates holds,
     \[
 \begin{split}
-    \| \partial _{n} v \|_{ \mathcal{F}_h \cap \Omega  }^{  } & \le \| \partial _{n}  v \|_{\mathcal{F}_{h}   }^{  } \le  C_{I} h ^{-\frac{1}{2}} \| \nabla v \|_{ \mathcal{T}_{h}  }^{  } \\
-    \| \partial _{n} v \|_{ \mathcal{T}_{h} \cap \Gamma   }^{  } &  \le  C h ^{-\frac{1}{2}} \| \nabla v \|_{ \mathcal{T} _{h} }^{  } \\
+    \| \partial _{n} v \|_{ \mathcal{F}_h \cap \Omega  }^{  } & \le   C_{I} h ^{-\frac{1}{2}} \| \nabla v \|_{ \mathcal{T}_{h}  }^{  } \\
+    \| \partial _{n} v \|_{ \mathcal{T}_{h} \cap \Gamma   }^{  } &  \le  C_{\Gamma } h ^{-\frac{1}{2}} \| \nabla v \|_{ \mathcal{T} _{h} }^{  } \\
 \end{split}
     \]
     Or equivalently,
     \[
 \begin{split}
-    h^{\frac{1}{2}}\| \partial _{n} v \|_{ \mathcal{F}_h \cap \Omega  }^{  } & \le \| \partial _{n}  v \|_{\mathcal{F}_{h}   }^{  } \le  C_{I}  \| \nabla v \|_{ \mathcal{T}_{h}  }^{  } \\
-    h^{\frac{1}{2}}\| \partial _{n} v \|_{ \mathcal{T}_{h} \cap \Gamma   }^{  } &  \le  C  \| \nabla v \|_{ \mathcal{T} _{h} }^{  } \\
+    h^{\frac{1}{2}}\| \partial _{n} v \|_{ \mathcal{F}_h \cap \Omega  }^{  } & \le  C_{I}  \| \nabla v \|_{ \mathcal{T}_{h}  }^{  } \\
+    h^{\frac{1}{2}}\| \partial _{n} v \|_{ \mathcal{T}_{h} \cap \Gamma   }^{  } &  \le  C_{\Gamma }  \| \nabla v \|_{ \mathcal{T} _{h} }^{  } \\
 \end{split}
     \]
+
+Where $C_{I}$ depends on the dimension $d$, the degree $k$ and shape regularity of $T$. Compared to $C_{I}$ the constant $C_{\Gamma }$ also depends on the curvature of $\Gamma $.
 \end{corollary}
 
-Remark that the $C_{\Gamma } $ is dependent on the curvature of $\Gamma $. \todo[inline]{ TODO: Look into\cite{hansbo2003finite} and actually
-find the proof.}
 
 To be able to apply the \eqref{eq:unfitted_localinv} globally can we make the following assumption for the ghost penalty term.
 
@@ -360,7 +362,6 @@ To show well-posedness have we used the following assumptions of $g_{h}$
 
 \subsubsection{Face-based ghost penalties}%
 \label{ssub:face_based_ghost_penalties}
-hehe
 
 \subsubsection{Projection-based ghost penalties}%
 \label{ssub:projection_based_ghost_penalties}
