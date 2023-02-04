@@ -31,7 +31,6 @@ Let the submesh $\mathcal{T}_{\Gamma } \subset \mathcal{T}_{h}  $ consisting of 
 \mathcal{T} _{\Gamma  } = \left\{ T \in \mathcal{T} _{h}  \mid  T \cap  \Gamma  \neq \emptyset  \right\}.
 \]
 
-\todo[inline]{ Wrap the above definitions into definitions blocks.}
 
 We denote the discrete to function space $V_{h}$ to be the broken polynomial space of order $k$, that is, $V_{h} := \mathcal{P}^{k}( \mathcal{T}_{h} )  $.
 
@@ -191,9 +190,7 @@ A_{h}( v, v)   =& a_{h}( v, v) + \abs{ v }  _{g_{h}}^{2} \\
     \end{split}
 \]
 where we used $C= C_{g} ( C_{\Gamma } + C_{I}) $ and chose $\varepsilon = \frac{1}{2C}$ and $\beta  = 4C$.
-\todo[inline]{ Why use the notation $\Gamma \cap \Omega $ in the paper? It is equivalent with $\Gamma $.   }
-
-Remark that we in the second step we expanded $ 1 =  h^{\frac{1}{2}} h^{-\frac{1}{2}}$ and used the Youngs $\varepsilon $-inequality \ref{lemma:youngs_epsilon} s.t.,
+Remark that we in the second step we applied the Youngs $\varepsilon $-inequality \ref{lemma:youngs_epsilon} s.t.,
  \[
      \begin{split}
          - 2( \mean{ \partial _{n} v  },  \jump{ v })_{\mathcal{F} _{h} \cap \Omega } &\ge - \varepsilon \| h^{\frac{1}{2}}  \mean{  \partial _{n} v}      \|_{ \mathcal{F} _{h} \cap \Omega  }^{2  }
@@ -202,29 +199,16 @@ Remark that we in the second step we expanded $ 1 =  h^{\frac{1}{2}} h^{-\frac{1
 -  \varepsilon ^{-1} \| h^{-\frac{1}{2}} v \|_{  \Gamma \cap  \Omega }^{ 2 }
      \end{split}
  \]
- And then applied the Corollary \ref{cor:unfitted_inverse_estimates}\[
+ And then applied the Corollary \ref{cor:unfitted_inverse_estimates} and Assumption \ref{as:est_EP1} \[
      \begin{split}
-    - \varepsilon \| h^{\frac{1}{2}}  \mean{  \partial _{n} v}      \|_{ \mathcal{F} _{h} \cap \Omega  }^{2  } \ge   - \varepsilon C  \|\nabla v  \|_{ \mathcal{T}_{h}  }^{2  } \\
-    - \varepsilon \| h^{\frac{1}{2}}    \partial _{n} v      \|_{ \Gamma   }^{2  } \ge   -\varepsilon C  \|\nabla v  \|_{ \mathcal{T}_{h}  }^{2  } \\
+         - \varepsilon \| h^{\frac{1}{2}}  \mean{  \partial _{n} v}      \|_{ \mathcal{F} _{h} \cap \Omega  }^{2  } \ge   - \varepsilon C_{I }  \|\nabla v  \|_{ \mathcal{T}_{h}  }^{2  } \ge -\varepsilon \frac{C}{2} ( \|\nabla v  \|_{ \Omega}^{2} +  \abs{
+         v}  _{g_{h}  }^{  2}  )  \\
+    - \varepsilon \| h^{\frac{1}{2}}    \partial _{n} v      \|_{ \Gamma   }^{2  } \ge   - \varepsilon C_{I }  \|\nabla v  \|_{ \mathcal{T}_{h}  }^{2  } \ge -\varepsilon \frac{C}{2} ( \|\nabla v  \|_{ \Omega}^{2} +  \abs{ v }  _{g_{h}  }^{ 2 }  ) \\
      \end{split}
  \]
- That is,
+ We can also argue that $\| \nabla v \|_{ \mathcal{T} _{h}\cap \Omega  }^{  }  = \| \nabla v \|_{ \Omega  }^{  } $. Hence, the proof is complete
+\todo[inline]{ So why does the norm use $ \| \nabla v \|_{ \mathcal{T} _{h}\cap \Omega  }^{  }$ and not $\|  \nabla v \|_{ \Omega  }^{  } $? }
 
- % On the third step we first rearranged the terms, that is,
- % \[
- %     \begin{split}
- %   \| \nabla v \|_{ \mathcal{T}_{h} \cap  \Omega }^{ 2 } & + \left\lvert v \right\rvert_{ g_{h} }^{ 2 } + \beta \| h^{-\frac{1}{2}} \jump{ v }   \|_{\mathcal{F} _{h} \cap \Omega   }^{  }   + \beta \| h^{-\frac{1}{2}}  v    \|_{ \Gamma}^{  }
-% \\  &- \varepsilon \| h^{\frac{1}{2}}  \mean{  \partial _{n} v}      \|_{ \mathcal{F} _{h} \cap \Omega  }^{2  } - \varepsilon ^{-1} \| h^{-\frac{1}{2}} \jump{ v }   \|_{\mathcal{F} _{h} \cap \Omega   }^{ 2 }
-% \\ &-  \varepsilon \| h^{\frac{1}{2}} \partial _{n} v \|_{ \Gamma \cap \Omega  }^{2  } -  \varepsilon ^{-1} \| h^{-\frac{1}{2}} v \|_{  \Gamma \cap  \Omega }^{ 2 } \\
-% &=  \| \nabla v \|_{ \mathcal{T}_{h} \cap  \Omega }^{ 2 }  + \left\lvert v \right\rvert_{ g_{h} }^{ 2 } \\
-% &\quad  + ( \beta \| h^{-\frac{1}{2}} v \|_{\Gamma   }^{  } - \varepsilon ^{ -1}\| h^{-\frac{1}{2}} v \|_{\Gamma \cap \Omega    }^{  } )  \\
-% &\quad  -  \varepsilon ( \| h^{\frac{1}{2}} \mean{ \partial _{n} v }    \|_{  \mathcal{F}_{h} \cap \Omega  }^{  } + \| h^{\frac{1}{2}} \partial _{n} v \|_{ \Gamma \cap \Omega  }^{  }  ) \\
-% &\quad  - \varepsilon ^{-1} ( \| h^{-\frac{1}{2}} \jump{ v }   \|_{ \mathcal{F}_{h} \cap \Omega   }^{2  } + \| h^{-\frac{1}{2}} v \|_{ \Gamma \cap \Omega   }^{  }  )
- %     \end{split}
- % \]
- % And then  \[
- % .
- % \]
 
 
 \end{proof}
@@ -325,7 +309,7 @@ for $ \forall v \in  H^{2}( \mathcal{T}_{h} ) + V_{h} $ and $ \forall u \in V_{h
      & \lesssim  \| v \|_{ a_{h},* }^{  }  \| u \|_{ a_{h},* }^{  }
         \end{split}
     \]
-    The proof follows exactly the same steps as the first part. However, the inverse estimates is not needed since it is defined in the norm, \[
+    The proof follows exactly the same steps as the first part. However, the only difference is that the inverse estimates in the Corollary \ref{cor:unfitted_inverse_estimates} is not needed since the terms is included in the norm, thus, \[
         \begin{split}
     \abs{ ( \partial _{n} v, u) _{\Gamma } } & \lesssim \| v \|_{ a_{h},* }^{  } \| u \|_{a_{h},*  }^{  } \\
     \abs{ ( \mean{ \partial _{n} v  }  , \jump{ u }  ) _{\mathcal{F} _{h} \cap \Omega  } } & \lesssim \| v \|_{ a_{h},* }^{  } \| u \|_{a_{h},*  }^{  }
