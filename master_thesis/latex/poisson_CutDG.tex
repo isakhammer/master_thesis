@@ -350,15 +350,19 @@ A important results is the following a priori estimate.
 An important consideration is to see what happens with the condition number when the mesh has barely intersected cut mesh element. In this section will we do some assumptions on the ghost penalty and show that the condition number is bounded by $O( h^{-2}) $ irrespectively on how $\Gamma $ intersects the active mesh $\mathcal{T}_{h} $.
 
 Let $V_{h}$ be spanned by a polynomial basis  $\left\{ \phi _{i}  \right\}_{i=1}^{N} $ so that $v = \sum_{i=1}^{N} V_{i}\phi _{i}$ with coefficients $V= \left\{ V_{i} \right\} _{i=1}^{N}$. From basic finite element theory is the stiffness matrix
-$\mathcal{A} $ defined by the following relation,
+$\mathcal{A} $ defined s.t.,
 \[
-    \begin{split}
-\left[ \mathcal{A} \right] _{ji} := A_{h}( \phi _{i}, \phi_{j} ), \quad  \left[ f \right] _{j} :=  l_{h}(\phi _{j})  .
-    \end{split}
+    ( \mathcal{A} V, W)  = A_{h}( v,w), \quad \forall v,w \in V_{h}
 \]
-Since $A_{h}$ is well-posed is it well known that $\mathcal{A}: \mathbb{R} ^{N} \to \mathbb{R} ^{N} $ must be isomorphic \cite{ern2006evaluation}.  Thus, this linear system must holds $ \mathcal{A} V = f$. That is, we define the operator norm as \[
+where $ \left[ \mathcal{A} \right] _{ji} := A_{h}( \phi _{i}, \phi_{j} )$.
+Since $A_{h}$ is well-posed is it well known that $\mathcal{A}: \mathbb{R} ^{N} \to \mathbb{R} ^{N} $ must be isomorphic \cite{ern2006evaluation}.  Thus, this linear system must holds $ \mathcal{A} V = f$, where$\left[ f \right] _{j} := l_{h}(\phi_{j} )$. That is, we define the operator norm as
+
+
+\begin{equation}
+\label{eq:operator_norm}
  \| \mathcal{A}  \|_{ \mathbb{R} ^{N}  }^{  } = \sup_{V \in \mathbb{R} ^{n} \setminus 0 } \frac{\| \mathcal{A} V \|_{ \mathbb{R} ^{N} }^{  } }{\| V \|_{ \mathbb{R} ^{N} }^{  } }
- \]
+\end{equation}
+
  With a corresponding definition of condition number, \( \kappa ( \mathcal{A} )  = \| \mathcal{A}  \|_{ \mathbb{R} ^{N} }^{  } \| \mathcal{A}^{-1}  \|_{ \mathbb{R} ^{N} }^{  }    \).
  Here we denote $\| \cdot  \|_{ \mathbb{R} ^{N} }^{  } $  as the discrete $l^{2}$ norm.
 
@@ -367,11 +371,11 @@ Since $A_{h}$ is well-posed is it well known that $\mathcal{A}: \mathbb{R} ^{N} 
  assumptions on our ghost penalty. The idea is to first bound $l_{2}$-norm with the continuous $L^{2}$-norm, and similarly bound the $L^{2}$ -norm to the energy $A_{h}$-norm. Finally, since $A_{h}$ is consisting of the ghost penalty $g_{h}$ we add
  some assumptions to require that it can be inversely bounded to the $\mathcal{T} _{h}$-norm and, thus, makes to possible to close the gap between the $l^{2}$-norm and $\mathcal{T} _{h}$-norm.
 
- to be able to transform from the discrete $l^{2}$ to $L^{2} $ the following estimate is useful,
+ To be able to transform from the discrete $l^{2}$-norm to the continuous $L^{2} $-norm the following equivalence estimate is useful,
  \begin{proposition}
+ \label{prop:inverse_relation}
      Let $\mathcal{T}_{h} $ be a quasi-uniform mesh and $v \in V^{h}$. Then the following relation holds,
  \begin{equation}
- \label{eq:inverse_relation}
  h^{\frac{d}{2}} \| V \|_{ \mathbb{R} ^{N} }^{  }  \lesssim \| v \|_{ L^2( \mathcal{T} _{h})  }^{  } \lesssim h^{\frac{d}{2}} \| V \|_{\mathbb{R} ^{N}  }^{  }.
  \end{equation}
  \end{proposition}
@@ -421,12 +425,68 @@ Remark that these inverse estimates are closely related to the estimates discuss
 
 In fact, this brings us to the following corollary.
 \begin{corollary}[Inverse estimate for the energy norm ]
+    \label{cor:inverse_energy_norm}
     For $v \in V_{h}$, \[
     \| v \|_{ A_{h} }^{  } \lesssim  h^{-1}\| v \|_{ \mathcal{T} _{h} }^{  }
     \]
 \end{corollary}
 
-That is, we have finally arrived to close the gap between the $l^{2}$ norm and the norm over the active mesh. \todo[inline]{ The mesh norm?? I should find a name for it.}
+Hence, we have finally arrived to close the gap between the $l^{2}$ norm and the $\mathcal{T} _{h}$ norm. Using this result can we finally show that the condition number is conserved.
+
+\begin{theorem}[Condition number estimates]
+    Let $\mathcal{A} $ be the corresponding stiffness matrix to $A_{h}$, then the condition number satisfies \[
+    \kappa ( \mathcal{A} ) \lesssim O(h^{-2}).
+    \]
+
+\end{theorem}
+\begin{proof}
+    By definition is $\kappa ( \mathcal{A} ) = \| \mathcal{A}  \|_{ \mathbb{R} ^{N} }^{  } \| \mathcal{A}^{-1}  \|_{ \mathbb{R} ^{N} }^{  }$. The goal is to show that each term $\| A \|_{ \mathbb{R} ^{N} }^{  } $   and $\| A^{-1} \|_{\mathbb{R} ^{N}
+    }^{  } $ is bounded and, thus, dividing the proof into two parts.
+
+    First of all, we want to establish a interesting result. Applying the Corollary \ref{cor:inverse_energy_norm} and Proposition \ref{prop:inverse_relation} can we immediately observe that
+    \begin{equation}
+    \label{eq:inverse_equivalence_relation}
+    \|w \|_{ A_{h} }^{  } \lesssim h^{-1} \| w \|_{ \mathcal{T} _{h} }^{  } \lesssim h^{\frac{( d-2) }{2} }\| W \|_{\mathbb{R} ^{N}  }^{  }.
+    \end{equation}
+    \todo[inline]{ Maybe discuss a line before the theorem that $ h^{-1} \| w \|_{ \mathcal{T} _{h} }^{  } \lesssim h^{\frac{( d-2) }{2} }\| W \|_{\mathbb{R} ^{N}  }^{  }$ should hold. Is the quivalence "big" enough to also bound $h^{-1}\| w \|_{
+    \mathcal{T} _{h} }^{  } $? }
+
+
+    \begin{enumerate}[label=\arabic*)]
+        \item  The goal is to show that $\| \mathcal{A}  \|_{ \mathbb{R} ^{N} }^{  } $ is bounded. This can be done is the following manner.
+    \[
+        \begin{split}
+            \| \mathcal{A} V \|_{ \mathbb{R} ^{N} }^{  } &= \sup_{W \in \mathbb{R} ^{N} \setminus 0} \frac{( \mathcal{A} V, W) _{\mathbb{R} ^{N}}}{\| W \|_{ \mathbb{R} ^{N} }^{  } } = \sup_{w \in  V_{h} \setminus 0} \frac{A_{h} ( v,w) \| w \|_{ A_{h} }^{  } }{\| w \|_{ A_{h}  }^{  } \| W \|_{\mathbb{R} ^{N}  }^{  }  } \\
+                                                         &\lesssim \sup_{w \in  V_{h} \setminus 0} \frac{A_{h} ( v,w) }{\| w \|_{ A_{h}  }^{  }} h^{\frac{d-2}{2} }   \\
+    &\lesssim h^{\frac{( d-2) }{2}  } \| v \|_{ A_{h}  }^{  } \lesssim h^{d-2} \| V \|_{ \mathbb{R} ^{N} }^{  }
+        \end{split}
+    \]
+Here the first equality is served by the definition \eqref{eq:operator_norm}.
+\todo[inline]{ Which is disagree on. }
+The second equality is a result of the definition $( \mathcal{A} V,W) = A_{h}(w,v)$.
+\todo[inline]{ Which I also disagree on. Why are you allowed interchange the sup from $\mathbb{R} ^{N}$ to $V_{h}$ and still keep the equal sign.   }
+The first inequality is basically an application of the equivalence estimate \eqref{eq:inverse_equivalence_relation}.
+Using this result can we argue that \[
+    \| \mathcal{A} V \|_{ \mathbb{R} ^{N}} = \sup_{V \in \mathbb{R} ^{N} \setminus 0} \frac{\| \mathcal{A} V \|_{ \mathbb{R} ^{N} }^{  } }{\| V \|_{ \mathbb{R} ^{N} }^{  } } \lesssim h^{d-2}
+\]
+And completing the first part of the proof.
+\item The goal is to show that $\| \mathcal{A} ^{-1} \|_{ \mathbb{R} ^{N} }^{  } $  is bounded.
+    \[
+    \begin{split}
+          \| V \|_{ \mathbb{R} ^{N} }^{ 2 } & \lesssim h^{-d} \| v \|_{ \mathcal{T}_{h}  }^{  }  \\
+          & \lesssim  h^{-d} A_{h}( v,v) =   h^{-d} ( V, \mathcal{A} V)_{\mathbb{R} ^{N}} \\
+          &  \lesssim  h^{-d}  \| V \|_{ \mathbb{R} ^{N} }^{  } \| \mathcal{A} V \|_{ \mathbb{R} ^{N} }^{  }
+    \end{split}
+    \]
+    \todo[inline]{ Where does $h^{-d}$ come from??  }
+    \todo[inline]{ TODO: explain all steps.  }
+and hence $\| V \|_{\mathbb{R} ^{N}   }^{  } \lesssim h^{-d} \| AV \|_{\mathbb{R} ^{N}  }^{  }  $. And now setting $V= \mathcal{A} ^{-1} W$ we conclude that $\| \mathcal{A} ^{-1} \|_{ \mathbb{R} ^{N} }^{  } \lesssim h^{-d} $
+    \end{enumerate}
+
+    Thus, the original statement $\kappa ( \mathcal{A} )  = \| \mathcal{A}  \|_{ \mathbb{R} ^{N} }^{  } \| \mathcal{A}^{-1}  \|_{ \mathbb{R} ^{N} }^{  } \lesssim h^{d-2} h^{-d} = h^{-2}$ holds and the proof is complete.
+
+
+\end{proof}
 
 
 
