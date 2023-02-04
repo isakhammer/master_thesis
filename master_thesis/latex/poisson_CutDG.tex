@@ -14,9 +14,11 @@ We will first consider the continuous Poisson problem. Let $f \in H^1( \Omega ) 
 Let us define the Hilbert spaces $V=H^{1}( \Omega ) $,   $V_{g} = \left\{ v \in H^{1}( \Omega ): v \mid _{\Gamma } = g \right\} $, the bilinear form $a: V \times V  \to \mathbb{R}  $ and the linear form $l: V'\to \mathbb{R}  $ s.t. \[
 a( u,v) = ( \nabla u, \nabla v) _{\Omega }, \quad l( v) = (f,v)_{\Omega }.
 \]
-We say the weak formulation is to find a $u \in V_{g}$ so this equation holds  \[
-a( u,v) = l( v), \quad  \forall v \in V
-\]
+We say the weak formulation is to find a $u \in V_{g}$ so this equation holds
+\begin{equation}
+    \label{eq:possion_weak}
+a( u,v) = l( v)  , \quad  \forall v \in V
+\end{equation}
 \subsection{CutFEM }%
 \label{sub:cutfem}
 
@@ -62,6 +64,7 @@ A_{h}(u_{h}, v ) = l_{h}( v)  \quad \forall  v \in V_{h}.
 \end{definition}
 
 Our main goal is to determine the necessary stability criteria for the ghost penalty term for the CutDG Poisson problem to be well-posed. We can then apply these criteria to engineer a ghost penalty to handle this problem. For convenience will we make some assumptions on our problem.
+
 
 
 \begin{assumption}[G1]
@@ -321,7 +324,30 @@ for $ \forall v \in  H^{2}( \mathcal{T}_{h} ) + V_{h} $ and $ \forall u \in V_{h
     Hence, the proof is complete.
 
 
+
 \end{proof}
+
+
+A important results is the following a priori estimate.
+
+\begin{theorem}[A priori estimate]
+    Let $u \in H^{s}( \Omega ) $, $s\ge 2$ be the exact solution to the weak formulation \eqref{eq:possion_weak} and let $u_{h} \in \mathcal{P}( \mathcal{T} _{h})  $ be the solution the problem \ref{def:cutdg_poisson_problem}. Then for $r =
+    \min_{}{r, k+1} $ the error $e = u - u_{h}$ satisfies \[
+        \begin{split}
+    \| e \|_{ a_{h},* }^{  } \lesssim   h^{r-1} \| u \|_{ r,\Omega  }^{  }\\
+    \| e \|_{ \Omega  }^{  } \lesssim   h^{r} \| u \|_{ r,\Omega  }^{  }\\
+        \end{split}
+    \]
+\end{theorem}
+\begin{proof}
+    For a complete proof, see \cite{gurkan2019stabilized}.
+\end{proof}
+
+\subsection{Condition number estimates}%
+\label{sub:condition_number_estimates}
+
+
+
 
 
 \subsection{Constructing ghost penalties}%
@@ -367,7 +393,5 @@ To show well-posedness have we used the following assumptions of $g_{h}$
 \subsubsection{Face-based ghost penalties}%
 \label{ssub:face_based_ghost_penalties}
 
-\subsubsection{Projection-based ghost penalties}%
-\label{ssub:projection_based_ghost_penalties}
 
 
