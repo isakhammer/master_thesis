@@ -202,22 +202,30 @@ Remark that we in the second step we expanded $ 1 =  h^{\frac{1}{2}} h^{-\frac{1
 -  \varepsilon ^{-1} \| h^{-\frac{1}{2}} v \|_{  \Gamma \cap  \Omega }^{ 2 }
      \end{split}
  \]
-
- On the third step we first rearranged the terms, that is,
- \[
+ And then applied the Corollary \ref{cor:unfitted_inverse_estimates}\[
      \begin{split}
-   \| \nabla v \|_{ \mathcal{T}_{h} \cap  \Omega }^{ 2 } & + \left\lvert v \right\rvert_{ g_{h} }^{ 2 } + \beta \| h^{-\frac{1}{2}} \jump{ v }   \|_{\mathcal{F} _{h} \cap \Omega   }^{  }   + \beta \| h^{-\frac{1}{2}}  v    \|_{ \Gamma}^{  }
-\\  &- \varepsilon \| h^{\frac{1}{2}}  \mean{  \partial _{n} v}      \|_{ \mathcal{F} _{h} \cap \Omega  }^{2  } - \varepsilon ^{-1} \| h^{-\frac{1}{2}} \jump{ v }   \|_{\mathcal{F} _{h} \cap \Omega   }^{ 2 }
-\\ &-  \varepsilon \| h^{\frac{1}{2}} \partial _{n} v \|_{ \Gamma \cap \Omega  }^{2  } -  \varepsilon ^{-1} \| h^{-\frac{1}{2}} v \|_{  \Gamma \cap  \Omega }^{ 2 } \\
-&=  \| \nabla v \|_{ \mathcal{T}_{h} \cap  \Omega }^{ 2 }  + \left\lvert v \right\rvert_{ g_{h} }^{ 2 } \\
-&\quad  + ( \beta \| h^{-\frac{1}{2}} v \|_{\Gamma   }^{  } - \varepsilon ^{ -1}\| h^{-\frac{1}{2}} v \|_{\Gamma \cap \Omega    }^{  } )  \\
-&\quad  -  \varepsilon ( \| h^{\frac{1}{2}} \mean{ \partial _{n} v }    \|_{  \mathcal{F}_{h} \cap \Omega  }^{  } + \| h^{\frac{1}{2}} \partial _{n} v \|_{ \Gamma \cap \Omega  }^{  }  ) \\
-&\quad  - \varepsilon ^{-1} ( \| h^{-\frac{1}{2}} \jump{ v }   \|_{ \mathcal{F}_{h} \cap \Omega   }^{2  } + \| h^{-\frac{1}{2}} v \|_{ \Gamma \cap \Omega   }^{  }  )
+    - \varepsilon \| h^{\frac{1}{2}}  \mean{  \partial _{n} v}      \|_{ \mathcal{F} _{h} \cap \Omega  }^{2  } \ge   - \varepsilon C  \|\nabla v  \|_{ \mathcal{T}_{h}  }^{2  } \\
+    - \varepsilon \| h^{\frac{1}{2}}    \partial _{n} v      \|_{ \Gamma   }^{2  } \ge   -\varepsilon C  \|\nabla v  \|_{ \mathcal{T}_{h}  }^{2  } \\
      \end{split}
  \]
- And then we $\ldots$.
- \\
- \todo[inline]{ Need to finish this proof. }
+ That is,
+
+ % On the third step we first rearranged the terms, that is,
+ % \[
+ %     \begin{split}
+ %   \| \nabla v \|_{ \mathcal{T}_{h} \cap  \Omega }^{ 2 } & + \left\lvert v \right\rvert_{ g_{h} }^{ 2 } + \beta \| h^{-\frac{1}{2}} \jump{ v }   \|_{\mathcal{F} _{h} \cap \Omega   }^{  }   + \beta \| h^{-\frac{1}{2}}  v    \|_{ \Gamma}^{  }
+% \\  &- \varepsilon \| h^{\frac{1}{2}}  \mean{  \partial _{n} v}      \|_{ \mathcal{F} _{h} \cap \Omega  }^{2  } - \varepsilon ^{-1} \| h^{-\frac{1}{2}} \jump{ v }   \|_{\mathcal{F} _{h} \cap \Omega   }^{ 2 }
+% \\ &-  \varepsilon \| h^{\frac{1}{2}} \partial _{n} v \|_{ \Gamma \cap \Omega  }^{2  } -  \varepsilon ^{-1} \| h^{-\frac{1}{2}} v \|_{  \Gamma \cap  \Omega }^{ 2 } \\
+% &=  \| \nabla v \|_{ \mathcal{T}_{h} \cap  \Omega }^{ 2 }  + \left\lvert v \right\rvert_{ g_{h} }^{ 2 } \\
+% &\quad  + ( \beta \| h^{-\frac{1}{2}} v \|_{\Gamma   }^{  } - \varepsilon ^{ -1}\| h^{-\frac{1}{2}} v \|_{\Gamma \cap \Omega    }^{  } )  \\
+% &\quad  -  \varepsilon ( \| h^{\frac{1}{2}} \mean{ \partial _{n} v }    \|_{  \mathcal{F}_{h} \cap \Omega  }^{  } + \| h^{\frac{1}{2}} \partial _{n} v \|_{ \Gamma \cap \Omega  }^{  }  ) \\
+% &\quad  - \varepsilon ^{-1} ( \| h^{-\frac{1}{2}} \jump{ v }   \|_{ \mathcal{F}_{h} \cap \Omega   }^{2  } + \| h^{-\frac{1}{2}} v \|_{ \Gamma \cap \Omega   }^{  }  )
+ %     \end{split}
+ % \]
+ % And then  \[
+ % .
+ % \]
+
 
 \end{proof}
 
