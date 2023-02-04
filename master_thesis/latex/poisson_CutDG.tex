@@ -260,9 +260,10 @@ for $ \forall v \in  H^{2}( \mathcal{T}_{h} ) + V_{h} $ and $ \forall u \in V_{h
         \end{split}
     \]
 
-    Looking at each terms individually can we observe that each terms is bounded, as follows,
+    Our method is to analyze at each terms individually will we prove that each of them is bounded by applying the Assumption \ref{as:est_EP1} and Corollary \ref{cor:g_h_inverste_results} and \ref{cor:unfitted_inverse_estimates}. That is, here is some
+    detailed calculations,
     \begin{itemize}
-        \item By applying the assumption \ref{as:est_EP1} and Corollary \ref{cor:g_h_inverste_results} we get \[
+        \item For the first terms we can see that \[
 \begin{split}
 \left\lvert( \nabla v, \nabla u)_{\mathcal{T} _{h} \cap \Omega }  \right\rvert & \le \| \nabla v \|_{ \mathcal{T} _{h}\cap \Omega  }^{  }\| \nabla u \|_{ \mathcal{T} _{h} \cap \Omega  }^{  } \\
 & \le \| \nabla v \|_{ \mathcal{T} _{h}  }^{  }\| \nabla u \|_{ \mathcal{T} _{h}   }^{  } \\
@@ -277,7 +278,7 @@ for $ \forall v \in  H^{2}( \mathcal{T}_{h} ) + V_{h} $ and $ \forall u \in V_{h
                  \left\lvert ( \partial _{n} v,  u)_{\Gamma } \right\rvert & \le \|h^{\frac{1}{2}} \partial _{n}v  \|_{ \Gamma   }^{  } \| h^{-\frac{1}{2}} u  \|_{ \Gamma  }^{  }  \\
                  & \le \| \nabla v \|_{\mathcal{T}_{h}   }^{  } \|h^{-\frac{1}{2}} u \|_{ \Gamma    }^{  } \\
  &  \le ( \| \nabla v \|_{ \Omega  }^{  } + \abs{ v } _{g_{h}} ) \|h^{-\frac{1}{2}} u \|_{ \Gamma    }^{  } \\
-                 & \le \| v \|_{A_{h}   }^{  } \| u \|_{ A_{h}    }^{  }
+                 & \lesssim   \| v \|_{A_{h}   }^{  } \| u \|_{ A_{h}    }^{  }
                 \end{split}
             \]
             \todo[inline]{ Wait, here we used the $ \| \cdot  \|_{ a_{h},* }^{  } $ instead of $\| \cdot  \|_{ A_{h} }^{  } $ ??     }
@@ -286,7 +287,8 @@ for $ \forall v \in  H^{2}( \mathcal{T}_{h} ) + V_{h} $ and $ \forall u \in V_{h
         \item The boundary penalty term
             \[
                 \begin{split}
-            \left\lvert\beta ( h^{-1} v,u)_{\Gamma }  \right\rvert  & \le \beta \| h^{-\frac{1}{2}} v \|_{\Gamma   }^{  } \| h^{-\frac{1}{2}} u \|_{\Gamma   }^{  }
+            \left\lvert\beta ( h^{-1} v,u)_{\Gamma }  \right\rvert  & \le \beta \| h^{-\frac{1}{2}} v \|_{\Gamma   }^{  } \| h^{-\frac{1}{2}} u \|_{\Gamma   }^{  } \\
+                                                                    &\lesssim \| u \|_{\mathcal{A}_{h}   }^{  }\| v \|_{\mathcal{A}_{h}   }^{  }
                 \end{split}
             \]
 
@@ -302,16 +304,6 @@ for $ \forall v \in  H^{2}( \mathcal{T}_{h} ) + V_{h} $ and $ \forall u \in V_{h
         \]
 
     \end{itemize}
-    % Terms I
-    % \[
-    % \begin{split}
-    %      \| v \|_{ \Gamma   }^{  } \| \partial _{n}u \|_{ \Gamma  }^{  } & \le  \ldots. \\
-    %      \beta \|h^{-1} v  \|_{\Gamma   }^{  }  \| u  \|_{\Gamma   }^{  } &\le \ldots \\
- % \| \mean{ \partial _{n}v }   \|_{\mathcal{F} _{h}\cap \Omega   }^{  } \| \jump{ u }   \|_{ \mathcal{F} _{h} \cap \Omega  }^{  }&  \le \ldots\\
- % \| \jump{ v }   \|_{ \mathcal{F}_{h} \cap \Omega   }^{  }  \| \mean{ \partial _{n} u }    \|_{ \mathcal{F} _{h} \cap \Omega  }^{  } & \le \ldots \\
-% \beta \|h^{-1} \jump{ v }    \|_{\mathcal{F} _{h} \cap \Omega  }^{  }      \| \jump{ u } \|_{\mathcal{F} _{h} \cap \Omega   }^{  }& \le \ldots \\
-    % \end{split}
-    % \]
 
 
     \end{enumerate}
