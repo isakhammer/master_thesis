@@ -347,6 +347,86 @@ A important results is the following a priori estimate.
 \label{sub:condition_number_estimates}
 
 
+An important consideration is to see what happens with the condition number when the mesh has barely intersected cut mesh element. In this section will we do some assumptions on the ghost penalty and show that the condition number is bounded by $O( h^{-2}) $ irrespectively on how $\Gamma $ intersects the active mesh $\mathcal{T}_{h} $.
+
+Let $V_{h}$ be spanned by a polynomial basis  $\left\{ \phi _{i}  \right\}_{i=1}^{N} $ so that $v = \sum_{i=1}^{N} V_{i}\phi _{i}$ with coefficients $V= \left\{ V_{i} \right\} _{i=1}^{N}$. From basic finite element theory is the stiffness matrix
+$\mathcal{A} $ defined by the following relation,
+\[
+    \begin{split}
+\left[ \mathcal{A} \right] _{ji} := A_{h}( \phi _{i}, \phi_{j} ), \quad  \left[ f \right] _{j} :=  l_{h}(\phi _{j})  .
+    \end{split}
+\]
+Since $A_{h}$ is well-posed is it well known that $\mathcal{A}: \mathbb{R} ^{N} \to \mathbb{R} ^{N} $ must be isomorphic \cite{ern2006evaluation}.  Thus, this linear system must holds $ \mathcal{A} V = f$. That is, we define the operator norm as \[
+ \| \mathcal{A}  \|_{ \mathbb{R} ^{N}  }^{  } = \sup_{V \in \mathbb{R} ^{n} \setminus 0 } \frac{\| \mathcal{A} V \|_{ \mathbb{R} ^{N} }^{  } }{\| V \|_{ \mathbb{R} ^{N} }^{  } }
+ \]
+ With a corresponding definition of condition number, \( \kappa ( \mathcal{A} )  = \| \mathcal{A}  \|_{ \mathbb{R} ^{N} }^{  } \| \mathcal{A}^{-1}  \|_{ \mathbb{R} ^{N} }^{  }    \).
+ Here we denote $\| \cdot  \|_{ \mathbb{R} ^{N} }^{  } $  as the discrete $l^{2}$ norm.
+
+ Following \cite{gurkan2019stabilized}, we need the following estimates to show that the condition number is conserved, that is, bounded by $O( h^{-2}) $. First of all, we need to find estimates which can bound the discrete $l^{2}$ norm to the active
+ mesh norm  $\mathcal{T} _{h}$-norm \footnote{Here we denote the $\mathcal{T} _{h}$-norm as $\| \cdot  \|_{\mathcal{T} _{h}  }^{  } $, where $\mathcal{T} _{h}$ is the active mesh.}. This is not straight forward does, in fact, introduce some new
+ assumptions on our ghost penalty. The idea is to first bound $l_{2}$-norm with the continuous $L^{2}$-norm, and similarly bound the $L^{2}$ -norm to the energy $A_{h}$-norm. Finally, since $A_{h}$ is consisting of the ghost penalty $g_{h}$ we add
+ some assumptions to require that it can be inversely bounded to the $\mathcal{T} _{h}$-norm and, thus, makes to possible to close the gap between the $l^{2}$-norm and $\mathcal{T} _{h}$-norm.
+
+ to be able to transform from the discrete $l^{2}$ to $L^{2} $ the following estimate is useful,
+ \begin{proposition}
+     Let $\mathcal{T}_{h} $ be a quasi-uniform mesh and $v \in V^{h}$. Then the following relation holds,
+ \begin{equation}
+ \label{eq:inverse_relation}
+ h^{\frac{d}{2}} \| V \|_{ \mathbb{R} ^{N} }^{  }  \lesssim \| v \|_{ L^2( \mathcal{T} _{h})  }^{  } \lesssim h^{\frac{d}{2}} \| V \|_{\mathbb{R} ^{N}  }^{  }.
+ \end{equation}
+ \end{proposition}
+ \begin{proof}
+    \todo[inline]{ TODO: Need to find source. Maybe in \cite{ern2006evaluation}. }
+ \end{proof}
+
+ Since we can now transfer information from the discrete $l^{2} $-norm to $L^{2}$-norm. We now want to connect the discrete norm to the energy norm, $A_{h}$. This can be fulfilled using an extension on the ghost penalty, that is,
+
+ \begin{assumption}[EP3]
+     \label{as:est_EP3}
+ \[
+ \| v \|_{ \mathcal{T}_{h}  }^{  } \le  C \| v \|_{ \Omega  }^{  }  + \abs{ v } _{g_{h}}
+ \]
+ Where the constant only depends on the shape-regularity, the dimension $d$ and the order $k$.
+ \end{assumption}
+
+
+ \begin{proposition}[Discrete Poincare inequality]
+     Let $\mathcal{T}_{h} $ be shape-regular and quasi uniform and assume \ref{as:est_EP3}. Then for $v \in V_{h}$, it holds that \[
+     \| v \|_{ \mathcal{T} _{h} }^{  } \lesssim \| v \|_{ A_{h} }^{  }
+     \]
+
+ \end{proposition}
+\begin{proof}
+    See \cite{gurkan2019stabilized}.
+\end{proof}
+
+
+
+We have now showed that bounded the discrete $l^{2}$- norm with the energy $A_{h}$ norm. The final recipe is to find the relation between the $l^{2}$-norm and the $L^{2}$-norm over the active mesh, which can be obtained by accepting these
+inequalities;
+\begin{equation}
+\label{eq:zero_order_inverse_est}
+    \| \nabla v \|_{ T\cap \Omega  }^{  }  \lesssim \| h^{-1} v \|_{  }^{  },\quad
+    \|  v \|_{ \Gamma \cap \Omega  }^{  }  \lesssim \| h^{-\frac{1}{2}} v \|_{  }^{  } \text{  and  }
+    \|  v \|_{ F \cap \Omega  }^{  }  \lesssim \| h^{-\frac{1}{2}} v \|_{  }^{  }.
+\end{equation}
+\todo[inline]{ TODO: proof }
+Remark that these inverse estimates are closely related to the estimates discussed in \eqref{eq:unfitted_localinv}. One final assumption is to make sure the ghost penalty has a similar inverse estimate to the active mesh.
+\begin{assumption}[EP4]
+    \label{as:est_EP4}
+    For $v \in V_{h}$, then \[
+    \abs{ v } _{g_{h}} \lesssim h^{-1} \| v \|_{ \mathcal{T} _{h} }^{  }
+    \]
+\end{assumption}
+
+In fact, this brings us to the following corollary.
+\begin{corollary}[Inverse estimate for the energy norm ]
+    For $v \in V_{h}$, \[
+    \| v \|_{ A_{h} }^{  } \lesssim  h^{-1}\| v \|_{ \mathcal{T} _{h} }^{  }
+    \]
+\end{corollary}
+
+That is, we have finally arrived to close the gap between the $l^{2}$ norm and the norm over the active mesh. \todo[inline]{ The mesh norm?? I should find a name for it.}
 
 
 
@@ -386,8 +466,6 @@ To show well-posedness have we used the following assumptions of $g_{h}$
     \]
 \end{assumption}
 
-
-\todo[inline]{ I am not proving condition numbers in this report. Should I still use all the assumptions and refer to the paper? }
 \todo[inline]{TODO: Define norm $\| \cdot  \|_{ r,\Omega  }^{  } $ in mathematical background.  }
 
 \subsubsection{Face-based ghost penalties}%
