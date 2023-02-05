@@ -175,6 +175,7 @@ Finally being able to control the estimates on cut elements can we start showing
 \begin{lemma}
     $A_{h}$ is coercive, i.e., satisfying the general definition \ref{def:coercivity}.
 \end{lemma}
+    Here we include a detailed proof based the ideas presented in \cite{gurkan2019stabilized}.
 \begin{proof}
 We want to show that $  \| v \|_{A_{h}}^{2}   \lesssim A_{h}( v,v) \forall v \in V_{h} $.
     Assume that $v \in V_{h} $. Then does in short this inequality hold,
@@ -227,8 +228,9 @@ Another important recipe before we can use Lax-Milgram is that the we need to sh
     \]
 \end{lemma}
 
+Again, here  slightly more detailed proof based on \cite{gurkan2019stabilized}.
 \begin{proof}
-    We will divide the proof in two steps.
+We will divide the proof in two steps.
 
     \begin{enumerate}[label=\arabic*)]
         \item
@@ -523,8 +525,36 @@ Here is a complete list of the assumptions we have done on $g_{h}$.
 
 \todo[inline]{TODO: Define norm $\| \cdot  \|_{ r,\Omega  }^{  } $ in mathematical background.  }
 
-\subsubsection{Face-based ghost penalties}%
-\label{ssub:face_based_ghost_penalties}
+The goal in this chapter is to engineer an ghost penalty which fulfills these assumptions.
+Let us introduce the notation \[
+\partial _{n}^{j} v = \sum_{\abs{ \alpha  } =1 }^{} \frac{D^{\alpha }v( x) n^{\alpha }}{\alpha !}, \quad \abs{ \alpha  } = \sum_{j}^{d} \alpha_{i}
+\]
+where we denote the multi-index $\alpha  = ( \alpha _{1}, \ldots, \alpha _{d})  $  and $n^{\alpha } = n_{1}^{\alpha _{1}} \ldots n_{d}^{\alpha _{d}}$. An useful result that may help us design ghost penalty is the following estimate.
+\begin{lemma}
+    Let $T_{1}, T_{2} \in  \mathcal{T} _{h} $. Then for $v_{h} \in  V_{h}$  does this hold \[
+    \| v \|_{ T_{2} }^{  }  + \sum_{j=0}^{k}  h^{2j +1} ( \jump{ \partial _{n}^{j} v}, \jump{ \partial _{n}^{j} }    )
+    \]
+\end{lemma}
+
+\begin{proof}
+    For a detailed proof, see \cite{gurkan2019stabilized}.
+\end{proof}
+
+We will now introduce the so-called ghost penalty faces, that is, \[
+\mathcal{F} ^{g}_{h} = \left\{ F\in \mathcal{F} _{h} : T^{+}\cap \Gamma \neq \emptyset  \vee T^{-}\cap \Gamma \neq \emptyset  \right\}.
+\]
+\todo[inline]{
+    This definition seems not precise. Do do you mean this?
+
+    \[
+\mathcal{F} ^{g}_{h} = \left\{ F\in \mathcal{F} _{h} : T^{+}\cap \Gamma \neq \emptyset  \text{ and } T^{-}\cap \Gamma \neq \emptyset    \text{ for } T^{+}, T^{-} \in \mathcal{T} _{h} \right\}.
+\] and does also not consist with the drawing \cite[Fig 2.1]{gurkan2019stabilized}.
+  }
+This set is simply all facets that belong to all elements of the active mesh $\mathcal{T} _{h}$  intersected with $\Gamma $.
+
+\begin{lemma}[]
+
+\end{lemma}
 
 
 
