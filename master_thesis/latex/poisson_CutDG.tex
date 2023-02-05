@@ -269,7 +269,7 @@ This is proved by showing that each term is bounded by applying the Cauchy-Schwa
                 \begin{split}
                  \left\lvert ( \partial _{n} v,  u)_{\Gamma } \right\rvert & \le \|h^{\frac{1}{2}} \partial _{n}v  \|_{ \Gamma   }^{  } \| h^{-\frac{1}{2}} u  \|_{ \Gamma  }^{  }  \\
                  & \le \| \nabla v \|_{\mathcal{T}_{h}   }^{  } \|h^{-\frac{1}{2}} u \|_{ \Gamma    }^{  } \\
- &  \le ( \| \nabla v \|_{ \Omega  }^{  } + \abs{ v } _{g_{h}} ) \|h^{-\frac{1}{2}} u \|_{ \Gamma    }^{  } \\
+ % &  \le ( \| \nabla v \|_{ \Omega  }^{  } + \abs{ v } _{g_{h}} ) \|h^{-\frac{1}{2}} u \|_{ \Gamma    }^{  } \\
                  & \lesssim   \| v \|_{A_{h}   }^{  } \| u \|_{ A_{h}    }^{  }
                 \end{split}
             \]
@@ -343,6 +343,10 @@ A important results is the following a priori estimate.
     For a complete proof, see \cite{gurkan2019stabilized}.
 \end{proof}
 
+\begin{remark}
+    Keep in mind that no further assumptions where made to compute the a priori estimate. In comparison will the estimates for the condition number require an extra assumptions, which we will go into in the next subsection.
+\end{remark}
+
 \subsection{Condition number estimates}%
 \label{sub:condition_number_estimates}
 
@@ -362,6 +366,7 @@ Since $A_{h}$ is well-posed is it well known that $\mathcal{A}: \mathbb{R} ^{N} 
 \label{eq:operator_norm}
  \| \mathcal{A}  \|_{ \mathbb{R} ^{N}  }^{  } = \sup_{V \in \mathbb{R} ^{n} \setminus 0 } \frac{\| \mathcal{A} V \|_{ \mathbb{R} ^{N} }^{  } }{\| V \|_{ \mathbb{R} ^{N} }^{  } }
 \end{equation}
+\todo[inline]{ What is an $\| \cdot  \|_{ \mathbb{R} ^{N} }^{  } $  norm?? }
 
  With a corresponding definition of condition number, \( \kappa ( \mathcal{A} )  = \| \mathcal{A}  \|_{ \mathbb{R} ^{N} }^{  } \| \mathcal{A}^{-1}  \|_{ \mathbb{R} ^{N} }^{  }    \).
  Here we denote $\| \cdot  \|_{ \mathbb{R} ^{N} }^{  } $  as the discrete $l^{2}$ norm.
@@ -493,38 +498,28 @@ and hence $\| V \|_{\mathbb{R} ^{N}   }^{  } \lesssim h^{-d} \| AV \|_{\mathbb{R
 \subsection{Constructing ghost penalties}%
 \label{sub:constructing_ghost_penalties}
 
+Here is a complete list of the assumptions we have done on $g_{h}$.
 
-
-To show well-posedness have we used the following assumptions of $g_{h}$
-
-\begin{assumption}[EP1]
-    \label{as:EP1_2}
+\begin{enumerate}[label=(\roman*)]
+\item \textbf{EP1}.
     $H^{1}$ semi-norm extension property for $v \in  V_{h}$,  \[
     \| \nabla v \|_{ \mathcal{T} _{h} }^{  }  \lesssim \| \nabla v \|_{ \Omega  }^{  }  + \abs{ v } _{g_{h}}
     \]
-\end{assumption}
-
-\begin{assumption}[EP2]
-    \label{as:EP2}
+\item \textbf{EP2}.
     Weak consistency for $v \in H^{s}( \Omega ) $ and $r = \min\{s, k+1\} $, \[
     \abs{ \pi ^{e}_{h} v }_{g_{h}} \lesssim  h^{r-1} \| v \|_{ r,\Omega  }^{  }
     \]
-\end{assumption}
 
-\begin{assumption}[EP3]
-    \label{as:EP3}
+\item \textbf{EP3}.
     $L^{2}$ norm extension property for $v \in V_{h}$,\[
     \| v \|_{ \mathcal{T} _{h} }^{  } \lesssim \| v  \|_{H_{h}  }^{  }   + \abs{ v } _{g_{h}}
     \]
-\end{assumption}
-
-\begin{assumption}[EP4]
-    \label{as:EP4}
+    \item\textbf{EP4}.
     Inverse inequality for $v \in  V_{h}$,
     \[
     \abs{ v } _{g_{h}} \lesssim h^{-1} \| v \|_{ \mathcal{T} _{h} }^{  } .
     \]
-\end{assumption}
+\end{enumerate}
 
 \todo[inline]{TODO: Define norm $\| \cdot  \|_{ r,\Omega  }^{  } $ in mathematical background.  }
 
