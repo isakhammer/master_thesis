@@ -506,23 +506,31 @@ Here is a complete list of the assumptions we have done on $g_{h}$.
 
 \begin{enumerate}[label=(\roman*)]
 \item \textbf{EP1}.
-    $H^{1}$ semi-norm extension property for $v \in  V_{h}$,  \[
+    $H^{1}$ semi-norm extension property for $v \in  V_{h}$,
+    \begin{equation}
+        \label{eq:EP1}
     \| \nabla v \|_{ \mathcal{T} _{h} }^{  }  \lesssim \| \nabla v \|_{ \Omega  }^{  }  + \abs{ v } _{g_{h}}
-    \]
+    \end{equation}
 \item \textbf{EP2}.
-    Weak consistency for $v \in H^{s}( \Omega ) $ and $r = \min\{s, k+1\} $, \[
+    Weak consistency for $v \in H^{s}( \Omega ) $ and $r = \min\{s, k+1\} $,
+    \begin{equation}
+        \label{eq:EP2}
     \abs{ \pi ^{e}_{h} v }_{g_{h}} \lesssim  h^{r-1} \| v \|_{ r,\Omega  }^{  }
-    \]
+    \end{equation}
 
 \item \textbf{EP3}.
-    $L^{2}$ norm extension property for $v \in V_{h}$,\[
-    \| v \|_{ \mathcal{T} _{h} }^{  } \lesssim \| v  \|_{H_{h}  }^{  }   + \abs{ v } _{g_{h}}
-    \]
+    $L^{2}$ norm extension property for $v \in V_{h}$,
+    \begin{equation}
+    \label{eq:EP3}
+    \| v \|_{ \mathcal{T} _{h} }^{  } \lesssim \| v  \|_{\Omega   }^{  }   + \abs{ v } _{g_{h}}
+    \end{equation}
     \item\textbf{EP4}.
     Inverse inequality for $v \in  V_{h}$,
-    \[
+    \begin{equation}
+    \label{eq:EP4}
     \abs{ v } _{g_{h}} \lesssim h^{-1} \| v \|_{ \mathcal{T} _{h} }^{  } .
-    \]
+    \end{equation}
+
 \end{enumerate}
 
 \todo[inline]{TODO: Define norm $\| \cdot  \|_{ r,\Omega  }^{  } $ in mathematical background.  }
@@ -556,7 +564,8 @@ We will now introduce the so-called ghost penalty faces, that is, \[
 \todo[inline]{ Is $\mathcal{F} _{h}^{g}$  equivalent with all facets inside $\mathcal{T}_{\Gamma }? $ }
 This set is simply all facets that belong to all elements of the active mesh $\mathcal{T} _{h}$  intersected with $\Gamma $.
 
-\begin{lemma}[]
+\begin{lemma}
+    \label{lemma:inv_gh_lemma}
     Assume \ref{as:G2} and \ref{as:G3}.
     For $v \in  V_{h}$ it holds that
         \begin{align}
@@ -632,12 +641,39 @@ This set is simply all facets that belong to all elements of the active mesh $\m
 
 Finally, we now have the tools we need to construct an candidate for the ghost penalty for which satisfies all assumptions.
 
-\begin{theorem}[Face-based ghost penalty]
+\begin{proposition}[Face-based ghost penalty]
     For any set of positive parameters $\left\{ \gamma _{j} \right\} _{j=0}^{k}$, the ghost penalty defined as \[
     g^{1}_{h}( v,w)  := \sum_{j=0}^{k} \sum_{F \in \mathcal{F} _{h}^{g}}^{} \gamma _{j} h^{2j-1}_{F} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n} w }  ) _{F} \text{ for any } v,w \in V_{h},
     \]
-    satisfies the assumptions \textbf{EP1}-\textbf{EP4}.
+    satisfies the assumptions described in the equations \eqref{eq:EP1}, \eqref{eq:EP2}, \eqref{eq:EP3} and \eqref{eq:EP4}.
+\end{proposition}
 
-\end{theorem}
+
+\begin{proof}
+    Using Lemma \ref{lemma:inv_gh_lemma} can we see that \eqref{eq:EP1} and \eqref{eq:EP3} is satisfied, that is \[
+    \begin{split}
+        \| \nabla v \|_{ \mathcal{T} _{h} }^{  } & \lesssim \| \nabla v \|_{ \Omega  }^{  }  + \abs{ v } _{g_{h}^{1}} \\
+        \|  v \|_{ \mathcal{T} _{h} }^{  } & \lesssim \|  v \|_{ \Omega  }^{  }  + \abs{ v } _{g_{h}^{1}}
+    \end{split}
+    \]
+    Thus, it now only reminds to show that $g_{h}^{1}$  satisfies \eqref{eq:EP2} and \eqref{eq:EP4} starting with the first on. As described in the assumption, let $v \in H^{s}( \Omega ) $ and $r = \min \{s, k+1\} $. Then it is easy to see that \[
+        \begin{split}
+        \abs{ \pi ^{e}_{h} v }_{g_{h}^{l}}^{2} & = \sum_{j=0}^{k} h^{2j-1} \| \jump{ \partial ^{j}_{n}\pi ^{e}_{h} v  }  \|_{\mathcal{F} _{h}^{g}  }^{2  } \\
+        &= \sum_{j=0}^{r-1} h^{2j -1} \| \jump{ \partial ^{j}_{n} ( \pi _{h}^{e} v - v^{e}) }    \|_{\mathcal{F} _{h}^{g}  }^{  } +  \sum_{j=r}^{k} h^{2j-1} \| \jump{ \partial ^{j}_{n} \pi ^{e}_{h} v }   \|_{\mathcal{F} _{h}^{g}  }^{ 2 }    \\
+        & \lesssim h^{2r- 2}\| v \|_{ r,\Omega  }^{ 2 } + h^{2j-2}\| D^{r} \pi ^{e}_{h} v \|_{ \mathcal{T} _{h} }^{ 2 }   \\
+        & \lesssim h^{2r -2 } \| v \|_{ r,\Omega  }^{  }
+        \end{split}
+    \]
+    Remark that we on the first sum in the second equality combined the fact that $\jump{ \partial _{n}^{j} v^{e} }| _{F} = 0 $ for $0\lesssim j \lesssim r-1$ and the approximation \[
+    \| v-\pi _{h}^{e} v \|_{ \mathcal{F} _{h},r  }^{  } \lesssim h^{s-r -\frac{1}{2}} \| v \|_{ s,\Omega  }^{  }, \quad 0 \le r \le  s-\frac{1}{2}
+\]. The proof of the approximation can be found in \cite[Chapter 2.41]{gurkan2019stabilized}.
+\todo[inline]{ Show approximation in detail. Maybe do a longer recap of a priori results.}
+
+The second sum was carried by the following inverse estimate \[
+\| \partial ^{j}_{n}v \|_{ F }^{  }  \lesssim h^{r - j - \frac{1}{2}} \| D^{r} v \|_{ T }^{  }, \quad  \forall v \in V^{h}.
+\]
+
+and the stability of the projection operator $\pi _{h}$ and the Sobolev extension in the $H^{r}$ norm for $r=0$.
+\end{proof}
 
 
