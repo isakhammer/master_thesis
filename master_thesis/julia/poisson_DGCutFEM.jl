@@ -79,7 +79,7 @@ module Solver
         Ω_act = Triangulation(cutgeo, ACTIVE)
 
         # Construct function spaces
-        V = TestFESpace(Ω_act, ReferenceFE(lagrangian, Float64, order),conformity=:H1)
+        V = TestFESpace(Ω_act, ReferenceFE(lagrangian, Float64, order), conformity=:L2)
         U = TrialFESpace(V)
 
         # Set up integration meshes, measures and normals
@@ -97,18 +97,8 @@ module Solver
 
         # Set up normal vectors
         n_Γ = get_normal_vector(Γ)
+        n_Λ = get_normal_vector(Λ)
         n_Fg = get_normal_vector(Fg)
-
-
-        # if vtkdirname!== nothing
-        #     # Write out models and computational domains for inspection
-        #     writevtk(bgmodel, vtkdirname*"/bgmodel")
-        #     writevtk(Ω, vtkdirname*"/Omega")
-        #     writevtk(Ω_act, vtkdirname*"/Omega_act")
-        #     writevtk(Γ, vtkdirname*"/Gamma")
-        #     writevtk(Λ, vtkdirname*"/Lambda")
-        #     writevtk(Fg, vtkdirname*"/Fg")
-        # end
 
         # Define weak form
         # Nitsche parameter
@@ -124,7 +114,8 @@ module Solver
         # Define bilinear form
         a(u,v) =
             ∫( ∇(u)⋅∇(v) ) * dΩ  +
-            ∫( (γd/h)*u*v  - u*(n_Γ⋅∇(v)) - (n_Γ⋅∇(u))*v ) * dΓ
+            ∫( - jump(n_Λ⋅u)⋅mean(∇(v)) - mean(∇(u))⋅jump(n_Λ⋅v) + (γd/h)*jump(u)⋅jump(v) ) * dΛ +
+            ∫( - u*(n_Γ⋅∇(v)) - (n_Γ⋅∇(u))*v + (γd/h)*u*v ) * dΓ
 
         g(u,v)= ∫( (γg*h)*jump(n_Fg⋅∇(u))*jump(n_Fg⋅∇(v)) ) * dFg
 
@@ -139,9 +130,7 @@ module Solver
         op = AffineFEOperator(A,l,U,V)
         uh = solve(op)
 
-
         e = u_ex - uh
-
         el2 = sqrt(sum( ∫(e*e)dΩ ))
         eh1 = sqrt(sum( ∫( e⊙e + ∇(e)⊙∇(e) )*dΩ ))
         eh_energy = sqrt(sum( ∫(∇(e)⊙∇(e) )*dΩ ))
