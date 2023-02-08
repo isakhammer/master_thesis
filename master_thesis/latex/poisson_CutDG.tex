@@ -83,12 +83,17 @@ In most applications is $\Gamma $ represented with a level-set function, that is
    The active mesh $\mathcal{T}_{h} $ is mesh conform, quasi-uniform and shape regular.
 \end{assumption}
 
+
 \begin{assumption}[G3]
     \label{as:G3}
     For $T \in \mathcal{T} _{\Gamma   }$ there is a path $P$ of $diam(P) \lesssim h$ which contains $T$ and an element $T'$ with a "fat" interaction satisfying $\left\lvert T' \cap \Omega  \right\rvert \ge c_{s} \left\lvert T'  \right\rvert _{d}$
-    \todo[inline]{ Don't understand this definition}
-    \todo[inline]{ TODO: Define patch in mathematical background. }
 \end{assumption}
+
+
+An issue that will often arise on when using unfitted methods is that it can easily appear elements so-called "bad" cuts, i.e., elements where $\Gamma $ barely intersect the element. Thanks to the Assumption \ref{as:G3} can this problem be handled by
+iterating through the neighbouring elements until an element with a "good" cut is found since the number of facets to cross is bounded.
+
+
 
 
 \subsection{Well-posedness}%
@@ -213,12 +218,10 @@ Remark that we in the second step we applied the Youngs $\varepsilon $-inequalit
      \end{split}
  \]
  Remark that this holds $\| \nabla v \|_{ \mathcal{T} _{h}\cap \Omega  }^{  }  = \| \nabla v \|_{ \Omega  }^{  } $. Hence, the proof is complete
-% \todo[inline]{ So why does the norm use $ \| \nabla v \|_{ \mathcal{T} _{h}\cap \Omega  }^{  }$ and not $\|  \nabla v \|_{ \Omega  }^{  } $? }
 
 
 
 \end{proof}
-
 Another important recipe before we can use Lax-Milgram is that the we need to show that $A_{h} $ is a bilinear bounded operator.
 
 \begin{lemma}
@@ -380,6 +383,7 @@ $\mathcal{A} $ defined s.t.,
 \[
     ( \mathcal{A} V, W)  = A_{h}( v,w), \quad \forall v,w \in V_{h}
 \]
+\todo[inline]{ Explain this definition.  }
 where $ \left[ \mathcal{A} \right] _{ji} := A_{h}( \phi _{i}, \phi_{j} )$.
 Since $A_{h}$ is well-posed is it well known that $\mathcal{A}: \mathbb{R} ^{N} \to \mathbb{R} ^{N} $ must be isomorphic \cite{ern2006evaluation}.  Thus, this linear system must holds $ \mathcal{A} V = f$, where$\left[ f \right] _{j} := l_{h}(\phi_{j} )$. That is, we define the operator norm as
 
@@ -388,17 +392,15 @@ Since $A_{h}$ is well-posed is it well known that $\mathcal{A}: \mathbb{R} ^{N} 
 \label{eq:operator_norm}
  \| \mathcal{A}  \|_{ \mathbb{R} ^{N}  }^{  } = \sup_{V \in \mathbb{R} ^{n} \setminus 0 } \frac{\| \mathcal{A} V \|_{ \mathbb{R} ^{N} }^{  } }{\| V \|_{ \mathbb{R} ^{N} }^{  } }
 \end{equation}
-\todo[inline]{ What is the definition of an $\| \cdot  \|_{ \mathbb{R} ^{N} }^{  } $  norm?  Is it what we know as $\| \cdot  \|_{ 2 }^{  } $?    }
-
  With a corresponding definition of condition number, \( \kappa ( \mathcal{A} )  = \| \mathcal{A}  \|_{ \mathbb{R} ^{N} }^{  } \| \mathcal{A}^{-1}  \|_{ \mathbb{R} ^{N} }^{  }    \).
  Here we denote $\| \cdot  \|_{ \mathbb{R} ^{N} }^{  } $  as the discrete $l^{2}$ norm.
 
  Following \cite{gurkan2019stabilized}, we need the following estimates to show that the condition number is conserved, that is, bounded by $O( h^{-2}) $. First of all, we need to find estimates which can bound the discrete $l^{2}$ norm to the active
- mesh norm  $\mathcal{T} _{h}$-norm \footnote{Here we denote the $\mathcal{T} _{h}$-norm as $\| \cdot  \|_{\mathcal{T} _{h}  }^{  } $, where $\mathcal{T} _{h}$ is the active mesh.}. This is not straight forward does, in fact, introduce some new
- assumptions on our ghost penalty. The idea is to first bound $l_{2}$-norm with the continuous $L^{2}$-norm, and similarly bound the $L^{2}$ -norm to the energy $A_{h}$-norm. Finally, since $A_{h}$ is consisting of the ghost penalty $g_{h}$ we add
+ mesh norm  $\mathcal{T} _{h}$-norm \footnote{Here we denote the $\mathcal{T} _{h}$-norm as $\| \cdot  \|_{\mathcal{T} _{h}  }^{  } $, where $\mathcal{T} _{h}$ is the active mesh.}. This is not straight forward and may require some extra
+ assumptions on the ghost penalty term. The overall idea is to first bound $l_{2}$-norm with the continuous $L^{2}$-norm, and similarly bound the $L^{2}$ -norm to the energy $A_{h}$-norm. Finally, since $A_{h}$ is consisting of the ghost penalty $g_{h}$ we add
  some assumptions to require that it can be inversely bounded to the $\mathcal{T} _{h}$-norm and, thus, makes to possible to close the gap between the $l^{2}$-norm and $\mathcal{T} _{h}$-norm.
 
- To be able to transform from the discrete $l^{2}$-norm to the continuous $L^{2} $-norm the following equivalence estimate is useful,
+ First of all, the following equivalence estimate can be used to connect the discrete $l^{2}$-norm to the continuous $L^{2} $-norm.
  \begin{proposition}
  \label{prop:inverse_relation}
      Let $\mathcal{T}_{h} $ be a quasi-uniform mesh and $v \in V^{h}$. Then the following relation holds,
@@ -409,11 +411,12 @@ Since $A_{h}$ is well-posed is it well known that $\mathcal{A}: \mathbb{R} ^{N} 
  \begin{proof}
      For proof, see \cite[Lemma A.1]{ern2006evaluation}.
  \end{proof}
-
- Hence, there is a equivalent the discrete $l^{2} $-norm to $L^{2}$-norm. We now want to connect the discrete norm to the energy norm, $A_{h}$. This can be fulfilled using an extension on the ghost penalty, that is,
+ Hence, there is a equivalent relationship between the $l^{2} $-norm and $L^{2}$-norm. We now want to connect the discrete norm to the energy norm $A_{h}$. One way to do this is to utilize a discrete Poincare inequality, but this will require a corresponding
+ assumption on the ghost penalty.
 
  \begin{assumption}[EP3]
      \label{as:est_EP3}
+$L^2$-norm extension property for $ v \in  V_h$,
  \[
  \| v \|_{ \mathcal{T}_{h}  }^{  } \le  C \| v \|_{ \Omega  }^{  }  + \abs{ v } _{g_{h}}
  \]
@@ -551,7 +554,6 @@ Here is a complete list of the assumptions we have done on $g_{h}$.
 
 \end{enumerate}
 
-\todo[inline]{TODO: Define norm $\| \cdot  \|_{ r,\Omega  }^{  } $ in mathematical background.  }
 
 The goal in this chapter is to engineer an ghost penalty which fulfills these assumptions.
 Let us introduce the notation \[
@@ -598,12 +600,7 @@ This set is simply all facets that belong to all elements of the active mesh $\m
 \begin{proof}
     We will dive the proof in two parts where we first prove \eqref{eq:inv_gh_1} and then in the second part prove \eqref{eq:inv_gh_2}.
     \begin{enumerate}[label=\arabic*)]
-        \item We want to show that
-            \[
-        \| v \|_{ \mathcal{T} _{h} }^{ 2 }   \lesssim  \| v \|_{ \Omega  }^{ 2 }  + \sum_{j=0}^{k} h^{2j+1} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n} }  v  )_{\mathcal{F}_{h}^{g}}.
-            \]
-
-
+        \item
             Let us define the following norm \[
             g_{F_{i}}^{L^{2}}( v,v)  = \sum_{j=1}^{k} h^{2j+1}( \jump{ \partial ^{j}_{n}v }, \jump{ \partial ^{j}_{n}v }    )_{F_{i} }
             \]
@@ -619,7 +616,7 @@ This set is simply all facets that belong to all elements of the active mesh $\m
               & \lesssim    \| v \|_{ T_{k} \cap \Omega  }^{ 2 }  + \sum_{l=1}^{k-1} g_{F_{l}}^{L^{2}}( v,v)
                 \end{split}
             \]
-            Where the last steps arise from the fact that $\| \nabla v \|_{ T_{k} }^{ 2 } \le \| \nabla v \|_{ T_{k} \cap \Omega  }^{  }  $ which is a consequence of the Assumption \ref{as:G3}.
+            Where the last steps arise from the fact that $\| \nabla v \|_{ T_{k} }^{  } \le \| \nabla v \|_{ T_{k} \cap \Omega  }^{  }  $ which is a consequence of the Assumption \ref{as:G3}.
             \todo[inline]{ Okay, this inequality does not make sense. } Now doing a summation over the active mesh $\mathcal{T} _{h}$ we see that \[
                 \begin{split}
                     \| v \|_{ \mathcal{T} _{h} }^{2  } &\lesssim \| v \|_{ \mathcal{T} _{h}\cap \Omega  }^{2  }+ \sum_{l=1}^{k-1} g_{F_{l}}^{L^{2}}( v,v) \\
@@ -683,10 +680,9 @@ Finally, we now have the tools we need to construct an candidate for the ghost p
 \]. The proof of the approximation can be found in \cite[Chapter 2.41]{gurkan2019stabilized}.
 \todo[inline]{ Show approximation in detail. Maybe do a longer recap of a priori results.}
 
-The second sum was carried by the following inverse estimate \[
-\| \partial ^{j}_{n}v \|_{ F }^{  }  \lesssim h^{r - j - \frac{1}{2}} \| D^{r} v \|_{ T }^{  }, \quad  \forall v \in V^{h}.
+The second sum was carried by the following inverse estimate, \[
+\| \partial ^{j}_{n}v \|_{ F }^{  }  \lesssim h^{r - j - \frac{1}{2}} \| D^{r} v \|_{ T }^{  } \quad  \forall v \in V^{h},
 \]
-
 and the stability of the projection operator $\pi _{h}$ and the Sobolev extension in the $H^{r}$ norm for $r=0$.
 \end{proof}
 
