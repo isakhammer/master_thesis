@@ -105,16 +105,22 @@ module Solver
         γd = order*(order+1)
 
         # Ghost penalty parameter
-        γg = 0.1
+        # γg = 0.1
+        γg = 5
 
         # Mesh size
         # h = (pmax - pmin)[1]/partition[1]
         h = L/n
 
+        function mean_n(u,n)
+            return 0.5*( u.plus⋅n.plus + u.minus⋅n.minus )
+        end
         # Define bilinear form
         a(u,v) =
             ∫( ∇(u)⋅∇(v) ) * dΩ  +
-            ∫( - jump(n_Λ⋅u)⋅mean(∇(v)) - mean(∇(u))⋅jump(n_Λ⋅v) + (γd/h)*jump(u)⋅jump(v) ) * dΛ +
+            # ∫( - jump(u)⋅mean_n(∇(v), n_Λ) - mean_n(∇(u), n_Λ)⋅jump(v) + (γd/h)*jump(u)⋅jump(v) ) * dΛ +  # version 1
+            ∫( - jump(u ⋅ n_Λ)⋅mean(∇(v)) - mean(∇(u))⋅jump(v⋅n_Λ) + (γd/h)*jump(u)⋅jump(v) ) * dΛ +      # version 2
+            # ∫( - n_Λ⋅jump(u)⋅mean(∇(v)) - n_Λ⋅mean(∇(u))⋅jump(v) + (γd/h)*jump(u)⋅jump(v) ) * dΛ +        # version 3
             ∫( - u*(n_Γ⋅∇(v)) - (n_Γ⋅∇(u))*v + (γd/h)*u*v ) * dΓ
 
         g(u,v)= ∫( (γg*h)*jump(n_Fg⋅∇(u))*jump(n_Fg⋅∇(v)) ) * dFg
@@ -186,11 +192,11 @@ function main()
         mkdir(dirname)
     end
 
-    resultdir= "figures/poisson_CutFEM/"*string(Dates.now())
+    resultdir= "figures/poisson_DGCutFEM/"*string(Dates.now())
     mkpath(resultdir)
 
     orders=[1,2,3,4]
-    ns = [2^2, 2^3, 2^4, 2^5, 2^6, 2^7]
+    ns = [2^2, 2^3, 2^4, 2^5, 2^6]#, 2^7]
     dirname = resultdir
     makedir(dirname)
     convergence_analysis( orders=orders, ns=ns, dirname=dirname)
