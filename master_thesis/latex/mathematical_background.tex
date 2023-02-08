@@ -419,15 +419,17 @@ U_{i}\right\} _{i=1}^{N}$ and the stiffness matrix $\left[ \mathcal{A}  \right] 
 \]
 \todo[inline]{ Write something about coercivity and boundedness. }
 
-Hence, we now have a good motivation to quickly define the discrete $l^{p}$ norm, i.e.,\[
+We may recall the basic the discrete $l^{p}$ norm, i.e.,\[
     \| U  \|_{ p }^{  } = \sum_{i=1}^{N}  \abs{ U_{i}  } \text{ for } U \in \mathbb{R} ^{N}
 ,
 \]
-where $1\le p < \infty$ and $\| U \|_{ \infty }^{  }  = \max_{i}  \abs{ U_i } $. We then define the matrix norm as \[
-\| \mathcal{A}  \|_{ p }^{  }  = \max_{U \in \mathbb{R} ^{N} \setminus 0} \frac{\| AU \|_{ p }^{  } }{\| U \|_{ p }^{  } } \text{ for } \mathcal{A} \in \mathbb{R} ^{N\times N}.
+where $1\le p < \infty$ and $\| U \|_{ \infty }^{  }  = \max_{i}  \abs{ U_i } $.
+For clarity and to not confuse the norm with Sobolev spaces will we generally denote the notation $\| \cdot  \|_{ \mathbb{R} ^{N} }^{  } := \| \cdot  \|_{ 2 }^{  }   $ for the discrete $l^2$-norm.
+From basic theory is the matrix norm defined as \[
+\| \mathcal{A}  \|_{ \mathbb{R} ^{N} }^{  }  = \max_{U \in \mathbb{R} ^{N} \setminus 0} \frac{\| AU \|_{ \mathbb{R} ^{N} }^{  } }{\| U \|_{\mathbb{R} ^{N}  }^{  } } \text{ for } \mathcal{A} \in \mathbb{R} ^{N\times N}.
 \]
-Assume that $\mathcal{A} $ is isomorphic, i.e. invertible, then we denote the condition number as \[
-\kappa_{p} ( \mathcal{A} ) = \| \mathcal{A}  \|_{ p }^{  } \| \mathcal{A} ^{-1} \|_{ p }  .
+Assume that $\mathcal{A} $ is invertible, then we define the condition number s.t., \[
+\kappa ( \mathcal{A} ) = \| \mathcal{A}  \|_{ \mathbb{R} ^{N} }^{  } \| \mathcal{A} ^{-1} \|_{ \mathbb{R} ^{N} }  .
 \]
 
 
