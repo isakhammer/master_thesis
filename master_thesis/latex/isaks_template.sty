@@ -42,6 +42,7 @@
 
 % \newmdtheoremenv{definition}{Definition}[section]
 \newtheorem{definition}{Definition}[section]
+\newtheorem{problem}{Problem}[section]
 \newtheorem{assumption}{Assumption}[section]
 \newtheorem{corollary}{Corollary}[section]
 \newmdtheoremenv{proposition}{Proposition}[section]
@@ -59,6 +60,10 @@
     {
     \vskip 0.4cm
     }
+
+\newcommand\Item[1][]{%
+  \ifx\relax#1\relax  \item \else \item[#1] \fi
+  \abovedisplayskip=0pt\abovedisplayshortskip=0pt~\vspace*{-\baselineskip}}
 
 \newcommand{\mean}[1]{\left\{\!\!\left\{#1\right\}\!\!\right\}}
 \newcommand{\jump}[1]{\left[\!\!\left[ #1 \right]\!\!\right]}

@@ -208,12 +208,12 @@ Remark that we in the second step we applied the Youngs $\varepsilon $-inequalit
  And then applied the Corollary \ref{cor:unfitted_inverse_estimates} and Assumption \ref{as:est_EP1} \[
      \begin{split}
          - \varepsilon \| h^{\frac{1}{2}}  \mean{  \partial _{n} v}      \|_{ \mathcal{F} _{h} \cap \Omega  }^{2  } \ge   - \varepsilon C_{I }  \|\nabla v  \|_{ \mathcal{T}_{h}  }^{2  } \ge -\varepsilon \frac{C}{2} ( \|\nabla v  \|_{ \Omega}^{2} +  \abs{
-         v}  _{g_{h}  }^{  2}  )  \\
-    - \varepsilon \| h^{\frac{1}{2}}    \partial _{n} v      \|_{ \Gamma   }^{2  } \ge   - \varepsilon C_{I }  \|\nabla v  \|_{ \mathcal{T}_{h}  }^{2  } \ge -\varepsilon \frac{C}{2} ( \|\nabla v  \|_{ \Omega}^{2} +  \abs{ v }  _{g_{h}  }^{ 2 }  ) \\
+         v}  _{g_{h}  }^{  2}  ),  \\
+    - \varepsilon \| h^{\frac{1}{2}}    \partial _{n} v      \|_{ \Gamma   }^{2  } \ge   - \varepsilon C_{I }  \|\nabla v  \|_{ \mathcal{T}_{h}  }^{2  } \ge -\varepsilon \frac{C}{2} ( \|\nabla v  \|_{ \Omega}^{2} +  \abs{ v }  _{g_{h}  }^{ 2 }  ). \\
      \end{split}
  \]
- We can also argue that $\| \nabla v \|_{ \mathcal{T} _{h}\cap \Omega  }^{  }  = \| \nabla v \|_{ \Omega  }^{  } $. Hence, the proof is complete
-\todo[inline]{ So why does the norm use $ \| \nabla v \|_{ \mathcal{T} _{h}\cap \Omega  }^{  }$ and not $\|  \nabla v \|_{ \Omega  }^{  } $? }
+ Remark that this holds $\| \nabla v \|_{ \mathcal{T} _{h}\cap \Omega  }^{  }  = \| \nabla v \|_{ \Omega  }^{  } $. Hence, the proof is complete
+% \todo[inline]{ So why does the norm use $ \| \nabla v \|_{ \mathcal{T} _{h}\cap \Omega  }^{  }$ and not $\|  \nabla v \|_{ \Omega  }^{  } $? }
 
 
 
@@ -242,11 +242,11 @@ The goal is to show that $\left\lvert A_{h}( v,u) \right\rvert \lesssim \| v \|_
     \]
     thus, it is only necessary to show that each of those terms are bounded.
 
-         First of all, by assumption does the ghost penalty satisfy the Cauchy-Schwartz inequality, that is,  \[
-\left\lvert g_{h}( v,u)  \right\rvert \le \left\lvert v \right\rvert _{g_{h}} \left\lvert u \right\rvert _{g_{h}} \le \| v \|_{ A_{h} }^{  } \| u \|_{ A_{h} }^{  }
+         First of all, by assumption does the ghost penalty satisfy the Cauchy-Schwarz inequality, that is,  \[
+\left\lvert g_{h}( v,u)  \right\rvert \le \left\lvert v \right\rvert _{g_{h}} \left\lvert u \right\rvert _{g_{h}} \le \| v \|_{ A_{h} }^{  } \| u \|_{ A_{h} }^{  }.
     \]
 
-    Similarly, we can see that,      \[
+    Similarly, we can prove that,      \[
         \begin{split}
     \left\lvert a_{h}( v,u)  \right\rvert & \le  \left\lvert( \nabla v, \nabla u)_{\mathcal{T} _{h} \cap \Omega }  \right\rvert +  \left\lvert  ( \partial _{n} v,u)_{\Gamma } \right\rvert   + \left\lvert ( v, \partial _{n} u)_{\Gamma } \right\rvert  +
     \left\lvert\beta ( h^{-1} v,u)_{\Gamma }  \right\rvert  \\
@@ -258,52 +258,52 @@ The goal is to show that $\left\lvert A_{h}( v,u) \right\rvert \lesssim \| v \|_
 
 This is proved by showing that each term is bounded by applying the Cauchy-Schwartz inequality, Assumption \ref{as:est_EP1} and Corollary \ref{cor:g_h_inverste_results} and \ref{cor:unfitted_inverse_estimates}. That is, here is some
     detailed calculations,
-    \begin{itemize}
-        \item For the first terms we can see that \[
+    \begin{enumerate}
+        \item The first term, \[
 \begin{split}
 \left\lvert( \nabla v, \nabla u)_{\mathcal{T} _{h} \cap \Omega }  \right\rvert & \le \| \nabla v \|_{ \mathcal{T} _{h}\cap \Omega  }^{  }\| \nabla u \|_{ \mathcal{T} _{h} \cap \Omega  }^{  } \\
 & \le \| \nabla v \|_{ \mathcal{T} _{h}  }^{  }\| \nabla u \|_{ \mathcal{T} _{h}   }^{  } \\
         & \lesssim   ( \| \nabla v \|_{ \Omega  }^{  } + \abs{ v } _{g_{h}} )( \| \nabla u \|_{ \Omega  }^{  } + \abs{ u } _{g_{h}} )\\
-        &  \lesssim  \| v \|_{ A_{h} }^{  } \|u  \|_{ A_{h} }^{  }
+        &  \lesssim  \| v \|_{ A_{h} }^{  } \|u  \|_{ A_{h} }^{  }.
 \end{split}
             \]
 
-        \item For the second and third terms along the boundary we get,
+        \item For the second and third term,
             \[
                 \begin{split}
                  \left\lvert ( \partial _{n} v,  u)_{\Gamma } \right\rvert & \le \|h^{\frac{1}{2}} \partial _{n}v  \|_{ \Gamma   }^{  } \| h^{-\frac{1}{2}} u  \|_{ \Gamma  }^{  }  \\
                  & \le \| \nabla v \|_{\mathcal{T}_{h}   }^{  } \|h^{-\frac{1}{2}} u \|_{ \Gamma    }^{  } \\
  % &  \le ( \| \nabla v \|_{ \Omega  }^{  } + \abs{ v } _{g_{h}} ) \|h^{-\frac{1}{2}} u \|_{ \Gamma    }^{  } \\
-                 & \lesssim   \| v \|_{A_{h}   }^{  } \| u \|_{ A_{h}    }^{  }
+                 & \lesssim   \| v \|_{A_{h}   }^{  } \| u \|_{ A_{h}    }^{  }.
                 \end{split}
             \]
 
-        \item The boundary penalty term
+        \item The boundary penalty term,
             \[
                 \begin{split}
                     \left\lvert\beta ( h^{-1} v,u)_{\Gamma }  \right\rvert  & \le \beta \| h^{-\frac{1}{2}} v \|_{\Gamma   }^{  } \| h^{-\frac{1}{2}} u \|_{\Gamma   }^{  } \\
-                                                                            &\lesssim \| u \|_{\mathcal{A}_{h}   }^{  }\| v \|_{\mathcal{A}_{h}   }^{  }
+                                                                            &\lesssim \| u \|_{\mathcal{A}_{h}   }^{  }\| v \|_{\mathcal{A}_{h}   }^{  }.
                 \end{split}
             \]
 
-        \item For the jump terms \[
+        \item For the jump terms, \[
                 \begin{split}
                     \left\lvert( \mean{ \partial _{n} v }  , \jump{ u }  ) _{\mathcal{F} _{h} \cap \Omega }  \right\rvert &\lesssim  \| h^{\frac{1}{2}} \mean{ \partial _{n} v }   \|_{ \mathcal{F}_{h}\cap \Omega   }^{  } \|h^{-\frac{1}{2}} \jump{ u }   \|_{ \mathcal{F}_{h}\cap
                     \Omega   }^{  } \\
-&\lesssim  \| u   \|_{ A_{h}    }^{  } \|  u    \|_{ A_{h}   }^{  }
+&\lesssim  \| u   \|_{ A_{h}    }^{  } \|  u    \|_{ A_{h}   }^{  }.
                 \end{split}
         \]
 
-    \item And for the DG penalty term
+    \item And for the jump penalty term,
         \[
             \begin{split}
          \left\lvert \beta ( h^{-1} \jump{ v }  ,
          \jump{ u }  )_{\mathcal{F}_{h}\cap \Omega  } \right\rvert &\le  \beta \| h^{-\frac{1}{2}    }\jump{ v } \|_{ \mathcal{F}_{h} \cap \Omega  }^{  }\| h^{-\frac{1}{2}    }\jump{ u } \|_{\mathcal{F}_{h} \cap \Omega   }^{  } \\
-    &\lesssim \| v \|_{A_{h}  }^{  } \| u \|_{A_{h}  }^{  }
+    &\lesssim \| v \|_{A_{h}  }^{  } \| u \|_{A_{h}  }^{  }.
             \end{split}
         \]
-        Hence, the statement $\left\lvert A_{h}( v,u) \right\rvert \lesssim \| v \|_{A_{h}  }^{  }     \| u \|_{A_{h}  }^{  }  \forall v,u \in V_{h} $ holds.
-    \end{itemize}
+        Hence, the statement $\left\lvert A_{h}( v,u) \right\rvert \lesssim \| v \|_{A_{h}  }^{  }     \| u \|_{A_{h}  }^{  }  $ holds $ \forall v,u \in V_{h} $.
+    \end{enumerate}
 
 \item We want to show $\abs{ a_{h}( v,u) }  \lesssim \| v \|_{ a_{h},* }^{  }  \| u \|_{ a_{h},* }^{  }$
 for $ \forall v \in  H^{2}( \mathcal{T}_{h} ) + V_{h} $ and $ \forall u \in V_{h}$,
@@ -336,7 +336,7 @@ A important results is the following a priori estimate.
 
 \begin{theorem}[A priori estimate]
     Let $u \in H^{s}( \Omega ) $, $s\ge 2$ be the exact solution to the weak formulation \eqref{eq:possion_weak} and let $u_{h} \in \mathcal{P}^{k}( \mathcal{T} _{h})  $ be the solution the problem \ref{def:cutdg_poisson_problem}. Then for $r =
-    \min_{}{r, k+1} $ the error $e = u - u_{h}$ satisfies \[
+    \min_{}\{r, k+1\} $ the error $e = u - u_{h}$ satisfies \[
         \begin{split}
     \| e \|_{ a_{h},* }^{  } \lesssim   h^{r-1} \| u \|_{ r,\Omega  }^{  }\\
     \| e \|_{ \Omega  }^{  } \lesssim   h^{r} \| u \|_{ r,\Omega  }^{  }\\
