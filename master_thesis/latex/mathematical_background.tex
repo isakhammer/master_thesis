@@ -284,11 +284,6 @@ A very useful lemma when working on estimates on broken Sobolev spaces is that a
 \end{proof}
 
 
-\begin{definition}[Broken polynomial spaces]
-    Let $\mathcal{T}_{h} $ be a mesh of $\Omega \in \mathbb{R} ^{d} $. Let $\mathcal{P}^{k}(T) $ be the space of all polynomials of degree $k$ in the mesh element $T$. We define the broken polynomial space as \[
-    \mathcal{P}^{k} ( \mathcal{T}_{h} ) := \left\{ v \in L^2( \Omega )  \mid  v|_{T} \in \mathcal{P}^2( T) \quad  \forall T \in  \mathcal{T}_{h}   \right\}.
-    \]
-\end{definition}
 
 \subsection{Useful inverse estimates}%
 \label{sub:useful_inverse_estimates}
@@ -363,7 +358,7 @@ F: X  \mapsto \mathbb{R} \text{ s.t. }\forall v,w \in X, \forall a,b \in \mathbb
     Write definitions of a bilinear bounded operator
 \end{definition}
 
-\begin{definition}[Abstract linear problem]
+\begin{problem}[Abstract linear problem]
     \label{def:abstract_linear_problem}
     Assume $X$ and $Y$  to be two Hilbert spaces. Let the vector space $\mathcal{L}( X,Y)  $ be all linear bounded operators spanned from $X$ to $Y$. We define the abstract linear problem as follows; find $u \in X$ s.t. \[
     a( u,v)  = l(v ) := \left<f,v \right>_{X' , X}  \forall v \in X
@@ -371,7 +366,7 @@ F: X  \mapsto \mathbb{R} \text{ s.t. }\forall v,w \in X, \forall a,b \in \mathbb
     Where $a \in  \mathcal{L} ( X \times X,\mathbb{R} ) $ is a bounded linear form and $f \in X':= \mathcal{L} ( X,\mathbb{R} )  $ is a bounded linear form. Here we denote $\left<\cdot ,\cdot  \right>_{X' .X} $ as the duality pairing between $X' $
     and $X $.
 
-\end{definition}
+\end{problem}
 
 
 \begin{definition}[Coercivity]
@@ -391,6 +386,52 @@ F: X  \mapsto \mathbb{R} \text{ s.t. }\forall v,w \in X, \forall a,b \in \mathbb
 \begin{proof}
     The problem can easily be proved using a special case of the Banach–Nečas–Babuška theorem. See \cite[Lemma 1.4]{pietro2012}
 \end{proof}
+
+
+
+\subsection{Finite element method}%
+\label{sub:finite_element_method}
+
+
+The finite element method (FEM) is a numerical method to solve partial differential equation by finding an approximation of the Problem \ref{def:abstract_linear_problem}.  Let $X_{h}$ be a finite-dimensional (polynomial) approximation space on the mesh
+$\mathcal{T} _{h}$. We say that a method is conform if $X_{h}\subset X $ and non-conform if $X _{h} \not\subset X$. We define the approximate problem as follows.
+\begin{problem}[The approximate problem]
+    \label{def:approx_problem}
+    Find  $u \in X_{h}$ s.t. \[
+    a_{h}(u,v ) = \left<f,v \right>   \forall v \in X_{h}
+    \]
+\end{problem}
+
+We denote the functional $a_{h}: X_{h} \times X_{h} \to \mathbb{R} $ as an consistent approximation of $a: X \times X \to \mathbb{R} $, and similarly for the right-hand side.
+
+
+\begin{definition}[Broken polynomial spaces]
+    Let $\mathcal{T}_{h} $ be a mesh of $\Omega \in \mathbb{R} ^{d} $. Let $\mathcal{P}^{k}(T) $ be the space of all polynomials of degree $k$ in the mesh element $T$. We define the broken polynomial space as \[
+    \mathcal{P}^{k} ( \mathcal{T}_{h} ) := \left\{ v \in L^2( \Omega )  \mid  v|_{T} \in \mathcal{P}^k( T) \quad  \forall T \in  \mathcal{T}_{h}   \right\}.
+    \]
+\end{definition}
+
+
+Assume that $V_{h} = \mathcal{P} ^{k}( \mathcal{T} _{h}) $ is spanned by the polynomial basis $\left\{ \phi _{1}, \ldots, \phi _{N}  \right\} $ s.t. $dim(V_{h}) = N$. We can then define $u = \sum_{i=1}^{N}  U_{i} \phi_{i} $ with coefficients $\left\{
+U_{i}\right\} _{i=1}^{N}$ and the stiffness matrix $\left[ \mathcal{A}  \right] _{ji} = a_{h}( \phi _{i}, \phi _{j}) $ and vector $\left[ f \right] _{j} = l_{h}( \phi_{j} ) $. Thus we have the following equivalent discrete system of the Problem
+\ref{def:approx_problem}. The goal is to find $U \in \mathbb{R} ^{N}$ s.t.  \[
+\mathcal{A} U =F.
+\]
+\todo[inline]{ Write something about coercivity and boundedness. }
+
+Hence, we now have a good motivation to quickly define the discrete $l^{p}$ norm, i.e.,\[
+    \| U  \|_{ p }^{  } = \sum_{i=1}^{N}  \abs{ U_{i}  } \text{ for } U \in \mathbb{R} ^{N}
+,
+\]
+where $1\le p < \infty$ and $\| U \|_{ \infty }^{  }  = \max_{i}  \abs{ U_i } $. We then define the matrix norm as \[
+\| \mathcal{A}  \|_{ p }^{  }  = \max_{U \in \mathbb{R} ^{N} \setminus 0} \frac{\| AU \|_{ p }^{  } }{\| U \|_{ p }^{  } } \text{ for } \mathcal{A} \in \mathbb{R} ^{N\times N}.
+\]
+Assume that $\mathcal{A} $ is isomorphic, i.e. invertible, then we denote the condition number as \[
+\kappa_{p} ( \mathcal{A} ) = \| \mathcal{A}  \|_{ p }^{  } \| \mathcal{A} ^{-1} \|_{ p }  .
+\]
+
+
+
 
 
 
