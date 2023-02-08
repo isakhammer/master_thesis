@@ -120,7 +120,6 @@ module Solver
             ∫( ∇(u)⋅∇(v) ) * dΩ  +
             # ∫( - jump(u)⋅mean_n(∇(v), n_Λ) - mean_n(∇(u), n_Λ)⋅jump(v) + (γd/h)*jump(u)⋅jump(v) ) * dΛ +  # version 1
             ∫( - jump(u ⋅ n_Λ)⋅mean(∇(v)) - mean(∇(u))⋅jump(v⋅n_Λ) + (γd/h)*jump(u)⋅jump(v) ) * dΛ +      # version 2
-            # ∫( - n_Λ⋅jump(u)⋅mean(∇(v)) - n_Λ⋅mean(∇(u))⋅jump(v) + (γd/h)*jump(u)⋅jump(v) ) * dΛ +        # version 3
             ∫( - u*(n_Γ⋅∇(v)) - (n_Γ⋅∇(u))*v + (γd/h)*u*v ) * dΓ
 
         g(u,v)= ∫( (γg*h)*jump(n_Fg⋅∇(u))*jump(n_Fg⋅∇(v)) ) * dFg
