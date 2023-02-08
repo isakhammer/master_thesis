@@ -331,12 +331,33 @@ for $ \forall v \in  H^{2}( \mathcal{T}_{h} ) + V_{h} $ and $ \forall u \in V_{h
 
 \end{proof}
 
+\subsection{A priori estimate}%
+\label{sub:a_priori_estimate}
 
-A important results is the following a priori estimate.
+In this section will we do only a brief overview of the important assumptions and definitions required to prove optimal convergence.
+
+Let us denote the $L^2$-orthogonal projection $\pi _{h}: L^2( \mathcal{T} _{h}) \to V_{h}$. A key idea is to distinguish between the physical space $\Omega $ and the polyhedra $\Omega ^{e}_{h} = \cup _{T\in \mathcal{T} _{h} } T$. Thus, to do an
+a priori estimate we find it necessary to define an bounded extension operator satisfying, \[
+( \cdot ) ^{e}: W^{m,q}( \Omega )  \to W^{m,q} ( \Omega ^{e}), \quad \| v^{e} \|_{ m,q,\Omega ^{e}  }^{  } \lesssim \| v \|_{ m,q, \Omega  }^{  }.
+\]
+where $0< m \le \infty$ and $1 \le q \le \infty$. For more information, see \cite{gurkan2019stabilized}.
+
+Now assume that $\Omega _{h,e} \subset  \Omega_{e} $ for some $\Omega^{e}  $. We define an unfitted $L^2$-projection $\pi _{h}^{e}: H^{r}( \Omega ^{e}_{h}) \to V_{h}$ s.t.  $\pi ^{e} _{h} v := \pi _{h} v^{e}$.
+\todo[inline]{ As Andre about the difference between $\Omega _{e}$, $\Omega ^{e}$  and $\Omega _{e,h}$. }
+That is, we will do the following assumption before presenting the a priori estimate,
+\begin{assumption}[Weak consistency estiamte]
+    \label{as:weak_consistency_estimate}
+    Let $v \in H^{s}( \Omega )  $  and $r = \min_{} \{ s, k+1 \}$.  Then we assume that \[
+    \abs{ \pi ^{e}_{h} v } _{g_{h}} \lesssim  h^{r-1}\| v \|_{ r,\Omega  }^{  }
+    \]
+
+\end{assumption}
+
+Finally, we have the notation we need to present the following estimate.
 
 \begin{theorem}[A priori estimate]
-    Let $u \in H^{s}( \Omega ) $, $s\ge 2$ be the exact solution to the weak formulation \eqref{eq:possion_weak} and let $u_{h} \in \mathcal{P}^{k}( \mathcal{T} _{h})  $ be the solution the problem \ref{def:cutdg_poisson_problem}. Then for $r =
-    \min_{}\{r, k+1\} $ the error $e = u - u_{h}$ satisfies \[
+    Let the Assumption \ref{as:weak_consistency_estimate} hold. If we let $u \in H^{s}( \Omega ) $, $s\ge 2$ be the exact solution to the weak formulation \eqref{eq:possion_weak} and let $u_{h} \in \mathcal{P}^{k}( \mathcal{T} _{h})  $ be the solution the problem \ref{def:cutdg_poisson_problem}. Then for $r =
+    \min_{}\{s, k+1\} $ the error $e = u - u_{h}$ satisfies \[
         \begin{split}
     \| e \|_{ a_{h},* }^{  } \lesssim   h^{r-1} \| u \|_{ r,\Omega  }^{  }\\
     \| e \|_{ \Omega  }^{  } \lesssim   h^{r} \| u \|_{ r,\Omega  }^{  }\\
@@ -347,9 +368,6 @@ A important results is the following a priori estimate.
     For a complete proof, see \cite{gurkan2019stabilized}.
 \end{proof}
 
-\begin{remark}
-    Keep in mind that no further assumptions where made to compute the a priori estimate. In comparison will the estimates for the condition number require an extra assumptions, which we will go into in the next subsection.
-\end{remark}
 
 \subsection{Condition number estimates}%
 \label{sub:condition_number_estimates}
@@ -370,7 +388,7 @@ Since $A_{h}$ is well-posed is it well known that $\mathcal{A}: \mathbb{R} ^{N} 
 \label{eq:operator_norm}
  \| \mathcal{A}  \|_{ \mathbb{R} ^{N}  }^{  } = \sup_{V \in \mathbb{R} ^{n} \setminus 0 } \frac{\| \mathcal{A} V \|_{ \mathbb{R} ^{N} }^{  } }{\| V \|_{ \mathbb{R} ^{N} }^{  } }
 \end{equation}
-\todo[inline]{ What is an $\| \cdot  \|_{ \mathbb{R} ^{N} }^{  } $  norm?? }
+\todo[inline]{ What is the definition of an $\| \cdot  \|_{ \mathbb{R} ^{N} }^{  } $  norm?  Is it what we know as $\| \cdot  \|_{ 2 }^{  } $?    }
 
  With a corresponding definition of condition number, \( \kappa ( \mathcal{A} )  = \| \mathcal{A}  \|_{ \mathbb{R} ^{N} }^{  } \| \mathcal{A}^{-1}  \|_{ \mathbb{R} ^{N} }^{  }    \).
  Here we denote $\| \cdot  \|_{ \mathbb{R} ^{N} }^{  } $  as the discrete $l^{2}$ norm.
