@@ -563,7 +563,7 @@ where we denote the multi-index $\alpha  = ( \alpha _{1}, \ldots, \alpha _{d})  
 \begin{lemma}
     \label{lemma:local_facet_estimate}
     Let $T_{1}, T_{2} \in  \mathcal{T} _{h} $ share a common facet $F \in \mathcal{F}_{h} $. Then for $v_{h} \in  V_{h}$  does this hold \[
-    \| v \|_{ T_{1} }^{  }  \lesssim  \| v \|_{ T_{2} }^{  }  + \sum_{j=0}^{k}  h^{2j +1} ( \jump{ \partial _{n}^{j} v}, \jump{ \partial _{n}^{j} v}    )_{F}
+    \| v \|_{ T_{1} }^{  2}  \lesssim  \| v \|_{ T_{2} }^{2  }  + \sum_{j=0}^{k}  h^{2j +1} ( \jump{ \partial _{n}^{j} v}, \jump{ \partial _{n}^{j} v}    )_{F}
     \]
 \end{lemma}
 
@@ -590,9 +590,9 @@ This set is simply all facets that belong to all elements of the active mesh $\m
     For $v \in  V_{h}$ it holds that
         \begin{align}
             \label{eq:inv_gh_1}
-        \| v \|_{ \mathcal{T} _{h} }^{ 2 }  & \lesssim  \| v \|_{ \Omega  }^{ 2 }  + \sum_{j=0}^{k} h^{2j+1} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n} }  v  )_{\mathcal{F}_{h}^{g}}\\
+        \| v \|_{ \mathcal{T} _{h} }^{ 2 }  & \lesssim  \| v \|_{ \Omega  }^{ 2 }  + \sum_{j=0}^{k} h^{2j+1} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n} v}    )_{\mathcal{F}_{h}^{g}}\\
             \label{eq:inv_gh_2}
-        \| \nabla v \|_{ \mathcal{T} _{h} }^{ 2 }  & \lesssim  \| \nabla v \|_{ \Omega  }^{ 2 }  + \sum_{j=0}^{k} h^{2j-1} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n} }  v  )_{\mathcal{F}_{h}^{g}}
+        \| \nabla v \|_{ \mathcal{T} _{h} }^{ 2 }  & \lesssim  \| \nabla v \|_{ \Omega  }^{ 2 }  + \sum_{j=0}^{k} h^{2j-1} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n}v }    )_{\mathcal{F}_{h}^{g}}
         \end{align}
 
 \end{lemma}
