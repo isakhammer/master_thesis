@@ -12,16 +12,17 @@ module Solver
     # %% Manufactured solution
     # Provides a manufactured solution which is 0 on the unit circle
     # u_ex(x) = (x[1]^2 + x[2]^2  - 1)*sin(2π*x[1])*cos(2π*x[2])
-    u_ex(x) = 1 - x[1]^2 - x[2]^2
-    f(x) = 4
-    ∇u_ex(x) = VectorValue(-2*x[1], -2*x[2])
+    u_ex(x) = 1 - x[1]^2 - x[2]^2 -x[1]^3*x[2]
+    ∇u_ex(x) = ∇(u_ex)(x)
+    f(x) = - Δ(u_ex)(x)
 
-    ∇(::typeof(u_ex)) = ∇u_ex
-    ∇(u_ex) === ∇u_ex
+    # First version
+    # u_ex(x) = 1 - x[1]^2 - x[2]^2
+    # ∇u_ex(x) = VectorValue(-2*x[1], -2*x[2])
+    # f(x) = 4
+    # ∇(::typeof(u_ex)) = ∇u_ex
+    # ∇(u_ex) === ∇u_ex
 
-    # function man_sol(;L=1,m=1,r=1)
-    #     u(x) = 100*cos(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
-    # end
 
 
     @with_kw struct Solution
@@ -102,11 +103,15 @@ module Solver
 
         # Define weak form
         # Nitsche parameter
-        γd = order*(order+1)
+        # β = order*(order+1)
+         β = 50
+
 
         # Ghost penalty parameter
         # γg = 0.1
-        γg = 5
+        γg0 = β
+        γg1 = 50
+        γg2 = 0.1
 
         # Mesh size
         # h = (pmax - pmin)[1]/partition[1]
@@ -115,21 +120,37 @@ module Solver
         function mean_n(u,n)
             return 0.5*( u.plus⋅n.plus + u.minus⋅n.minus )
         end
+        function jump_nn(u,n)
+            return ( n.plus⋅ ∇∇(u).plus⋅ n.plus - n.minus ⋅ ∇∇(u).minus ⋅ n.minus )
+            # return jump( n⋅ ∇∇(u)⋅ n)
+
+        end
         # Define bilinear form
         a(u,v) =
             ∫( ∇(u)⋅∇(v) ) * dΩ  +
             # ∫( - jump(u)⋅mean_n(∇(v), n_Λ) - mean_n(∇(u), n_Λ)⋅jump(v) + (γd/h)*jump(u)⋅jump(v) ) * dΛ +  # version 1
-            ∫( - jump(u ⋅ n_Λ)⋅mean(∇(v)) - mean(∇(u))⋅jump(v⋅n_Λ) + (γd/h)*jump(u)⋅jump(v) ) * dΛ +      # version 2
-            ∫( - u*(n_Γ⋅∇(v)) - (n_Γ⋅∇(u))*v + (γd/h)*u*v ) * dΓ
+            ∫( - jump(u ⋅ n_Λ)⋅mean(∇(v)) - mean(∇(u))⋅jump(v⋅n_Λ) + (β/h)*jump(u)⋅jump(v) ) * dΛ +      # version 2
+            ∫( - u*(n_Γ⋅∇(v)) - (n_Γ⋅∇(u))*v + (β/h)*u*v ) * dΓ
 
-        g(u,v)= ∫( (γg*h)*jump(n_Fg⋅∇(u))*jump(n_Fg⋅∇(v)) ) * dFg
+
+
+        g(u,v) = ∫( (γg0/h)*jump(u)*jump(v)) * dFg +∫( (γg1*h)*jump(n_Fg⋅∇(u))*jump(n_Fg⋅∇(v)) ) * dFg
+
+        if order == 2
+            g(u,v) = ∫( (γg0/h)*jump(u)*jump(v)) * dFg +∫( (γg1*h)*jump(n_Fg⋅∇(u))*jump(n_Fg⋅∇(v)) ) * dFg +
+                     ∫( (γg2*h^3)*jump_nn(u,n_Fg)*jump_nn(v,n_Fg) ) * dFg
+        elseif order > 2
+            println("Not supported order:", order)
+        end
+
+            # g(u,v)=  ∫( (γg1*h)*jump(n_Fg⋅∇(u))*jump(n_Fg⋅∇(v)) ) * dFg
 
         A(u,v) = a(u,v) + g(u,v)
 
         # Define linear form
         l(v) =
             ∫( f*v ) * dΩ +
-            ∫( u_ex*( (γg/h)*v - (n_Γ⋅∇(v)) )  ) * dΓ
+            ∫( u_ex*(  - (n_Γ⋅∇(v))  + (β/h)*v  )) * dΓ
 
         # FE problem
         op = AffineFEOperator(A,l,U,V)
@@ -194,7 +215,7 @@ function main()
     resultdir= "figures/poisson_DGCutFEM/"*string(Dates.now())
     mkpath(resultdir)
 
-    orders=[1,2,3,4]
+    orders = [1,2]
     ns = [2^2, 2^3, 2^4, 2^5, 2^6]#, 2^7]
     dirname = resultdir
     makedir(dirname)
@@ -202,4 +223,3 @@ function main()
 end
 
 @time main()
-
