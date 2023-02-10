@@ -13,9 +13,9 @@ module Results
                              yminorticksvisible = true, yminorgridvisible = true, yminorticks = CairoMakie.IntervalsBetween(8),
                              xlabel = L"h/{L}", ylabel = "error norms")
 
-        CairoMakie.lines!(hs, el2s, label= L"$L^2$ norm", linewidth=2)
-        CairoMakie.lines!(hs, eh1s, label= L"$H^1$ norm", linewidth=2)
-        CairoMakie.lines!(hs, ehs_energy, label= L"$energy$  norm ", linewidth=2)
+        CairoMakie.lines!(hs, el2s, label= L"\Vert e \Vert_{L^2}", linewidth=2)
+        CairoMakie.lines!(hs, eh1s, label= L"\Vert e \Vert_{ H^1 }^{  }  ", linewidth=2)
+        CairoMakie.lines!(hs, ehs_energy, label= L"\Vert e  \Vert_{ a_h,* }  ", linewidth=2)
         CairoMakie.scatter!(hs, el2s)
         CairoMakie.scatter!(hs, eh1s)
         CairoMakie.scatter!(hs, ehs_energy)

@@ -54,6 +54,10 @@ module Solver
         writevtk(sol.Λ,         vtkdirname*"/Lambda")
         writevtk(sol.Γ,         vtkdirname*"/Gamma")
         writevtk(sol.Fg,        vtkdirname*"/Fg")
+        writevtk(sol.Λ,         vtkdirname*"/jumps",        cellfields=["jump_u"=>jump(sol.uh)])
+        writevtk(sol.Ω,         vtkdirname*"/omega",        cellfields=["uh"=>sol.uh])
+        writevtk(sol.Ω,         vtkdirname*"/error",        cellfields=["e"=>sol.e])
+        writevtk(sol.Ω,         vtkdirname*"/manufatured",  cellfields=["u"=>sol.u])
     end
 
 
@@ -159,7 +163,9 @@ module Solver
         e = u_ex - uh
         el2 = sqrt(sum( ∫(e*e)dΩ ))
         eh1 = sqrt(sum( ∫( e⊙e + ∇(e)⊙∇(e) )*dΩ ))
-        eh_energy = sqrt(sum( ∫(∇(e)⊙∇(e) )*dΩ ))
+        eh_energy = sqrt(sum( ∫(∇(e)⋅∇(e) )*dΩ + ∫(h^(-1)*jump(e)⋅jump(e))*dΛ + ∫(h^(-1)*e⋅e)*dΓ
+                             + ∫(h*mean(∇(e))⋅mean(∇(e)))*dΛ + ∫(h*∇(e)⋅∇(e))*dΓ
+                                ))
         u_inter = interpolate(u_ex, V)
 
         sol = Solution(  bgmodel=bgmodel, Ω_act=Ω_act, Fg=Fg, Ω=Ω, Γ=Γ, Λ=Λ, h=h,
