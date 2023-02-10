@@ -15,7 +15,7 @@ module Results
 
         CairoMakie.lines!(hs, el2s, label= L"\Vert e \Vert_{L^2}", linewidth=2)
         CairoMakie.lines!(hs, eh1s, label= L"\Vert e \Vert_{ H^1 }^{  }  ", linewidth=2)
-        CairoMakie.lines!(hs, ehs_energy, label= L"\Vert e  \Vert_{ a_h,* }  ", linewidth=2)
+        CairoMakie.lines!(hs, ehs_energy, label= L"\Vert e  \Vert_{ a_h,* }", linewidth=2)
         CairoMakie.scatter!(hs, el2s)
         CairoMakie.scatter!(hs, eh1s)
         CairoMakie.scatter!(hs, ehs_energy)
@@ -51,7 +51,7 @@ module Results
         eoc_eh1 =  [nothing; eoc_eh1]
         eoc_eh_energy =  [nothing; eoc_eh_energy]
         data = hcat(hs_str, el2s,  eoc_l2, eh1s, eoc_eh1, ehs_energy, eoc_eh_energy)
-        header = [L"h/{L} ", L"$L^2$ norm", "EOC", L"$H_1$ norm", "EOC", "energy norm", "EOC"]
+        header = [L"$h/{L}$", L"$\Vert e \Vert_{L^2}$", "EOC", L"$ \Vert e \Vert_{H^1}$", "EOC", L"$\Vert e \Vert_{ a_h,* }$", "EOC"]
 
         open(filename*".tex", "w") do io
             pretty_table(io, data, header=header, backend=Val(:latex ), formatters = ( ft_printf("%.3E"), ft_nonothing ))

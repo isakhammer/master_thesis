@@ -112,9 +112,8 @@ module Solver
 
 
         # Ghost penalty parameter
-        # γg = 0.1
         γg0 = β
-        γg1 = 50
+        γg1 = 0.1
         γg2 = 0.1
 
         # Mesh size
