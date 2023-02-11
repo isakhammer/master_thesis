@@ -11,8 +11,8 @@ module Solver
 
     # %% Manufactured solution
     # Provides a manufactured solution which is 0 on the unit circle
-    # u_ex(x) = (x[1]^2 + x[2]^2  - 1)*sin(2π*x[1])*cos(2π*x[2])
-    u_ex(x) = 1 - x[1]^2 - x[2]^2
+    u_ex(x) = (x[1]^2 + x[2]^2  - 1)*sin(2π*x[1])*cos(2π*x[2])
+    # u_ex(x) = 1 - x[1]^2 - x[2]^2
     f(x) = 4
     ∇u_ex(x) = VectorValue(-2*x[1], -2*x[2])
 
@@ -183,7 +183,7 @@ function main()
     mkpath(resultdir)
 
     orders=[1,2,3,4]
-    ns = [2^2, 2^3, 2^4, 2^5, 2^6, 2^7]
+    ns = [2^2, 2^3, 2^4, 2^5, 2^6, 2^7, 2^8]
     dirname = resultdir
     makedir(dirname)
     convergence_analysis( orders=orders, ns=ns, dirname=dirname)
