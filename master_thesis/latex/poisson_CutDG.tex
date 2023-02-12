@@ -180,6 +180,7 @@ g_{h}( v,u)  \le \abs{ v } _{g_{h}} \abs{ u }_{g_{h}} \forall v,u \in V_{h}.
 Finally being able to control the estimates on cut elements can we start showing well-posedness for the formulation.
 
 \begin{lemma}
+    \label{lemma:Ah_coercive}
     $A_{h}$ is coercive, i.e., satisfying the general definition \ref{def:coercivity}.
 \end{lemma}
     Here we include a detailed proof based the ideas presented in \cite{gurkan2019stabilized}.
@@ -225,6 +226,7 @@ Remark that we in the second step we applied the Youngs $\varepsilon $-inequalit
 Another important recipe before we can use Lax-Milgram is that the we need to show that $A_{h} $ is a bilinear bounded operator.
 
 \begin{lemma}
+    \label{lemma:Ah_bounded}
     $A_{h}$ is bounded, i.e.,
     $$ \left\lvert A_{h}( v,u) \right\rvert \lesssim \| v \|_{A_{h}  }^{  }     \| u \|_{A_{h}  }^{  } \quad  \forall v,u \in V _{h}, $$
     whenever $\beta $ is large enough. Moreover, for $v \in  H^{2}( \mathcal{T}_{h} ) + V_{h} $
@@ -379,6 +381,7 @@ We can immediately observe that the projection $\pi _{h}^{e}$ satisfies the glob
 Naturally can we see this is the tools we need to construct an estimate for the energy norm.
 
 \begin{corollary}
+    \label{cor:projection_error_estimate}
     Let $u \in H^{s}( \Omega ) $ and $V_{h} = \mathcal{P} ^{k}( \mathcal{T} _{h})  $. Denote the projection $\pi ^{e}_{h}: H^{r}( \Omega ^{e} _{h}) \to V_{h}$. Assuming that $r = \min_{} \{ s, k+1\} $, then the following estimate holds. \[
     \| u - \pi ^{e}_{h}u \|_{a_{h},*}^{  } \lesssim h^{r-1} \| u \|_{ r, \Omega  }^{  }
     \]
@@ -409,6 +412,12 @@ Naturally can we see this is the tools we need to construct an estimate for the 
     \todo[inline]{ Need to finish this proof.}
 \end{proof}
 
+Naturally, a key element to compute an priori estimate is to use an equivalent form of Galerkin orthogonality. However, because of the penalty term we have a slightly weaker formulation. Hence, for $u \in H^{2}( \Omega ) $ and $u_{h} \in V_{h}$
+this holds, \[
+a_{h}( u - u_{h}, v) = g_{h}( u_{h},v), \quad  \forall v \in  V_{h}.
+\]
+
+
 
 That is, we will do the following assumption before presenting the a priori estimate,
 \begin{assumption}[EP2]
@@ -430,7 +439,30 @@ Finally, we have the notation we need to present the following estimate.
     \]
 \end{theorem}
 \begin{proof}
-    For a complete proof, see \cite{gurkan2019stabilized}.
+    Let $e = u - u_{h}$ consist of $e = e_{h} + e_{\pi }$, where the discrete error has the form $e_{h} = \pi _{h}^{e} u - u_{h}$ and the projection error $e_{\pi } = u - \pi _{u} ^{e}u$. We can then observe that \[
+    \| u - u_{h} \|_{ a_{h} }^{  }  \le \| e_{\pi } \|_{a_{h},*}^{  } + \| e_{h} \|_{A_{h}  }^{  }
+    \]
+Using Corollary \ref{cor:projection_error_estimate} can we see that $\| e_{\pi } \|_{a_{h},*}^{  } \lesssim h^{r-1} \| u \|_{ u,\Omega  }^{  }  $ is already fulfilled. So it remains to check the discrete part. Hence, using Lemma
+\ref{lemma:Ah_coercive} and
+the weak orthogonality, $ a_{h}( u - u_{h}, e_{h}) = g_{h}( u_{h}, e_{h})$, is it natural to see that \[
+    \begin{split}
+\| e_{h} \|_{ A_{h} }^{ 2 } & \lesssim a_{h}( \pi _{h}^{e} u - u_{h}, e_{h}) + g_{h}( \pi _{h}^{e}u - u_{h}, e_{h}) \\
+ & = a_{h}( \pi _{h}^{e} u - u, e_{h}) + a_{h}( u - u_{h}, e_{h}) + g_{h}( \pi _{h}^{e}u - u_{h}, e_{h}) \\
+ & = a_{h}( \pi _{h}^{e} u - u, e_{h}) + g_{h}( \pi _{h}^{e}u, e_{h}) \\
+ & \lesssim  ( \| \pi _{h}^{e} u - u \|_{a_{h},*  }^{  } + \abs{ \pi ^{e}_{h} u }_{g_{h}}  ) (\| e_{h} \|_{a_{h,*}  }^{  } + \abs{ e_{h} }_{g_{h}} ) \\
+ & \lesssim h^{r-1} \| u \|_{ r, \Omega  }^{  } \| e_{h} \|_{ A_{h} }^{  }.
+    \end{split}
+\]
+On the last three lines was first Lemma \ref{lemma:Ah_bounded} first applied and Assumption \ref{as:weak_consistency_estimate}, that is, \[
+    \begin{split}
+        a_{h}( \pi _{h}^{e} u - u, e_{h}) + g_{h}( \pi _{h}^{e}u, e_{h}) &\lesssim \| \pi _{h}^{e} u - u \|_{a_{h},*  }^{  } \| e_{h} \|_{a_{h},*  }^{  } + \abs{ \pi _{h}^{e}u }_{g_{h}} \abs{e_{h}  }_{g_{h}} \\
+         &\lesssim \| \pi _{h}^{e} u - u \|_{a_{h},*  }^{  } \| e_{h} \|_{a_{h},*  }^{  } + h^{r-1} \| e_{h} \|_{r, \Omega   }^{2  }   \\
+    \end{split}
+\]
+
+
+
+
 \end{proof}
 
 

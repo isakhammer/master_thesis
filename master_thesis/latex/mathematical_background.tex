@@ -26,6 +26,9 @@ The set of locally integrable functions for any compact subset $K \subseteq \tex
 Let $u \in L^{p}\left( \Omega  \right) $. We define the integral norm of order $p$ to be \[
 \| u \|_{ L^{p}\left( \Omega  \right)  }^{  }  = \left( \int_{\Omega }^{} \left\lvert u \right\rvert ^{p} dx  \right) ^{\frac{1}{p}}.
 \]
+
+
+
 Since $p=2$ is frequently used in this report, we also define for convenience a compact notation $\| u \|_{ \Omega  }^{  }  = \| u \|_{ L^{2}\left( \Omega  \right)  }^{  } $ .  We say that $L^{2}\left( \Omega  \right) $ is a Hilbert space if it is equipped with a inner
 product of two functions $u,v \in L^{2}\left( \Omega  \right) $ such that
 \[
@@ -58,15 +61,14 @@ We are now able to construct the Sobolev space,
 \begin{definition}[Sobolev space]
     \label{def:sobolev_spaces}
 
-\todo[inline]{TODO: Define norm $\| \cdot  \|_{ r,\Omega  }^{  } $ in mathematical background.  }
-    Let $m\ge 0$ be an integer and let $1 \le  p \le  \infty$ be a real number. Then we define the Sobolev space
+  Let $m\ge 0$ be an integer and let $1 \le  p \le  \infty$ be a real number. Then we define the Sobolev space
 \[
 H^{m}\left( \Omega  \right) = \left\{ u \in L^{2}\left( \Omega  \right)  \mid  \partial ^{\alpha } u \in L^{2}\left( \Omega  \right)  \forall \alpha : \left\lvert \alpha  \right\rvert  \le m \right\}.
 \]
+
 Thus, $H^{m}( \Omega ) $ is spanned by functions with derivatives of order up to $m$ in $L^{2}( \Omega ) $.
 \end{definition}
 
-\todo[inline]{ Need to define $\| \cdot  \|_{ r, \Omega  }^{  } $   }
 Equipped with the inner product is $H^{m}\left( \Omega  \right) $  denoted as a Hilbert space, that is, for $u,v \in H^{m}\left( \Omega  \right) $, \[
     \left( u,v \right) _{H^{m}\left( \Omega   \right) } = \sum_{\left\lvert \alpha  \right\rvert  \le  m}^{}  \int_{\Omega }^{} \partial ^{\alpha } u \partial ^{\alpha } v dx.
 \]
@@ -76,7 +78,9 @@ Similarly, the norm is is denoted as, \[
 where the seminorm is defined such that, \[
 \left\lvert u \right\rvert _{H^{k}\left( \Omega  \right) } = \left( \sum_{\left\lvert \alpha  \right\rvert  = k}^{} \| \partial ^{\alpha }u \|_{ \Omega  }^{ 2 }  \right).
 \]
-For convenience, we also entitle the notation,
+We will often denote the shorthand notation $ \| u \|_{ k, \Omega  }^{  } = \| u \|_{ H^{k}( \Omega)  }^{  } $ and $ \abs{ u }_{ k, \Omega  }^{  }  = \abs{ u }_{ H^{k}( \Omega)  }^{  }$.
+
+For convenience, we also entitle the notation for compact support, that is,
 \[
 H^{m}_{0} \left( \Omega  \right) = \left\{ \text{completion of }C_{0}^{\infty}\left( \Omega  \right) \text{ w.r.t. } \| \cdot  \|_{H^{m}\left( \Omega  \right)   }^{  }  \right\}.
 \]
