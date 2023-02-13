@@ -431,13 +431,15 @@ Finally, we have the notation we need to present the following estimate.
 
 \begin{theorem}[A priori estimate]
     Let the Assumption \ref{as:EP2} hold. If we let $u \in H^{s}( \Omega ) $, $s\ge 2$ be the exact solution to the weak formulation \eqref{eq:possion_weak} and let $u_{h} \in \mathcal{P}^{k}( \mathcal{T} _{h})  $ be the solution the problem \ref{def:cutdg_poisson_problem}. Then for $r =
-    \min_{}\{s, k+1\} $ the error $e = u - u_{h}$ satisfies \[
-        \begin{split}
+    \min_{}\{s, k+1\} $ the error $e = u - u_{h}$ satisfies
+    \begin{align}
+        \label{eq:apriori_1}
             \| e \|_{ a_{h},* }^{  } &\lesssim   h^{r-1} \| u \|_{ r,\Omega  }^{  }\\
+        \label{eq:apriori_2}
             \| e \|_{ \Omega  }^{  } &\lesssim   h^{r} \| u \|_{ r,\Omega  }^{  }
-        \end{split}
-    \]
+    \end{align}
 \end{theorem}
+
 \begin{proof}
     We will divide the proof into two steps.
     \begin{enumerate}[label=\arabic*)]
@@ -497,11 +499,19 @@ Hence, the first part of the proof is complete.
                                           &\lesssim \| e \|_{ a_{h},*  }^{  } \| \phi - \pi _{h} \phi   \|_{a_{h},*  }^{  }   +
      \abs{\pi _{h}^{e} u - u_{h} }_{ g_{h}}^{  } \abs{ \pi _{h} \phi  }_{g_{h}}+ \abs{ \pi^{e} _{h} u } _{g_{h}} \abs{ \pi _{h} \phi  }_{g_{h}} \\
 .
-                                          &\lesssim \| e \|_{ a_{h},*  }^{  } \| \phi - \pi _{h} \phi   \|_{a_{h},*  }^{  }   +
-     \abs{\pi _{h}^{e} u - u_{h} }_{ g_{h}}^{  } \abs{ \pi _{h} \phi  }_{g_{h}}+ h^{r-1}\| u \|_{2,\Omega   }^{  } \abs{ \pi _{h} \phi  }_{g_{h}}
     \end{split}
 \]
-\todo[inline]{ TODO: Finish proof. }
+
+Using the result from the first part \eqref{eq:apriori_1}, Assumption \ref{as:EP2}.
+\[
+    \begin{split}
+        \| e \|_{ a_{h},*  }^{  } &\lesssim h^{r-1} \| u \|_{ r, \Omega  }^{  } \\
+        \abs{ \pi^{e} _{h} u } _{g_{h}} &\lesssim h^{r-1}\| u \|_{2,\Omega   }^{  } \\
+        \abs{ \pi^{e} _{h} u - u_{h} } _{g_{h}} &\lesssim \|  \pi^{e} _{h} u - u_{h} \|_{ A_{h}  }^{  }  \\
+        \abs{ \pi^{e} _{h} \phi  } _{g_{h}} &\lesssim  \ldots \\
+        \|\phi - \pi _{h} \phi  \|_{a_{h},*  }^{  }  &\lesssim  \ldots
+    \end{split}
+\]
 
     \end{enumerate}
 
@@ -829,5 +839,11 @@ The second sum was carried by the following inverse estimate, \[
 \]
 and the stability of the projection operator $\pi _{h}$ and the Sobolev extension in the $H^{r}$ norm for $r=0$.
 \end{proof}
+
+
+\subsection{Numerical experiments}%
+\label{sub:numerical_experiments}
+
+
 
 
