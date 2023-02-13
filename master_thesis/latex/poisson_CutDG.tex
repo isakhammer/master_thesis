@@ -433,12 +433,15 @@ Finally, we have the notation we need to present the following estimate.
     Let the Assumption \ref{as:weak_consistency_estimate} hold. If we let $u \in H^{s}( \Omega ) $, $s\ge 2$ be the exact solution to the weak formulation \eqref{eq:possion_weak} and let $u_{h} \in \mathcal{P}^{k}( \mathcal{T} _{h})  $ be the solution the problem \ref{def:cutdg_poisson_problem}. Then for $r =
     \min_{}\{s, k+1\} $ the error $e = u - u_{h}$ satisfies \[
         \begin{split}
-    \| e \|_{ a_{h},* }^{  } \lesssim   h^{r-1} \| u \|_{ r,\Omega  }^{  }\\
-    \| e \|_{ \Omega  }^{  } \lesssim   h^{r} \| u \|_{ r,\Omega  }^{  }\\
+            \| e \|_{ a_{h},* }^{  } &\lesssim   h^{r-1} \| u \|_{ r,\Omega  }^{  }\\
+            \| e \|_{ \Omega  }^{  } &\lesssim   h^{r} \| u \|_{ r,\Omega  }^{  }
         \end{split}
     \]
 \end{theorem}
 \begin{proof}
+    We will divide the proof into two steps.
+    \begin{enumerate}[label=\arabic*)]
+        \item We want to prove that $\| e \|_{ a_{h},* }^{  } \lesssim   h^{r-1} \| u \|_{ r,\Omega  }^{  }$.
     Let $e = u - u_{h}$ consist of $e = e_{h} + e_{\pi }$, where the discrete error has the form $e_{h} = \pi _{h}^{e} u - u_{h}$ and the projection error $e_{\pi } = u - \pi _{u} ^{e}u$. We can then observe that \[
     \| u - u_{h} \|_{ a_{h} }^{  }  \le \| e_{\pi } \|_{a_{h},*}^{  } + \| e_{h} \|_{A_{h}  }^{  }
     \]
@@ -449,17 +452,47 @@ the weak orthogonality, $ a_{h}( u - u_{h}, e_{h}) = g_{h}( u_{h}, e_{h})$, is i
 \| e_{h} \|_{ A_{h} }^{ 2 } & \lesssim a_{h}( \pi _{h}^{e} u - u_{h}, e_{h}) + g_{h}( \pi _{h}^{e}u - u_{h}, e_{h}) \\
  & = a_{h}( \pi _{h}^{e} u - u, e_{h}) + a_{h}( u - u_{h}, e_{h}) + g_{h}( \pi _{h}^{e}u - u_{h}, e_{h}) \\
  & = a_{h}( \pi _{h}^{e} u - u, e_{h}) + g_{h}( \pi _{h}^{e}u, e_{h}) \\
- & \lesssim  ( \| \pi _{h}^{e} u - u \|_{a_{h},*  }^{  } + \abs{ \pi ^{e}_{h} u }_{g_{h}}  ) (\| e_{h} \|_{a_{h,*}  }^{  } + \abs{ e_{h} }_{g_{h}} ) \\
  & \lesssim h^{r-1} \| u \|_{ r, \Omega  }^{  } \| e_{h} \|_{ A_{h} }^{  }.
     \end{split}
 \]
-On the last three lines was first Lemma \ref{lemma:Ah_bounded} first applied and Assumption \ref{as:weak_consistency_estimate}, that is, \[
+On the last two lines we first applied Lemma \ref{lemma:Ah_bounded} and Assumption \ref{as:weak_consistency_estimate}, that is, \[
     \begin{split}
-        a_{h}( \pi _{h}^{e} u - u, e_{h}) + g_{h}( \pi _{h}^{e}u, e_{h}) &\lesssim \| \pi _{h}^{e} u - u \|_{a_{h},*  }^{  } \| e_{h} \|_{a_{h},*  }^{  } + \abs{ \pi _{h}^{e}u }_{g_{h}} \abs{e_{h}  }_{g_{h}} \\
-         &\lesssim \| \pi _{h}^{e} u - u \|_{a_{h},*  }^{  } \| e_{h} \|_{a_{h},*  }^{  } + h^{r-1} \| e_{h} \|_{r, \Omega   }^{2  }   \\
+        a_{h}( \pi _{h}^{e} u - u, e_{h}) + g_{h}( \pi _{h}^{e}u, e_{h}) &\lesssim \| \pi _{h}^{e} u - u \|_{a_{h},*  }^{  } \| e_{h} \|_{a_{h},*  }^{  }
+        + \abs{ \pi _{h}^{e}u }_{g_{h}} \abs{e_{h}  }_{g_{h}} \\
+         &\lesssim \| \pi _{h}^{e} u - u \|_{a_{h},*  }^{  } \| e_{h} \|_{a_{h},*  }^{  } + h^{r-1} \| e_{h} \|_{r, \Omega   }^{  }\abs{e_{h}  }_{g_{h}} \\
+         &\lesssim (\| \pi _{h}^{e} u - u \|_{a_{h},*  }^{  } + h^{r-1} \| e_{h} \|_{r, \Omega   }^{  }) \|e_{h}\|_{A_{h}} \\
+         &\lesssim  h^{r-1} \| u \|_{r, \Omega   }^{  } \|e_{h}\|_{A_{h}}.
     \end{split}
 \]
+Here we noticed that $\| e_{h} \|_{a_{h},*  }^{  } + \abs{e_{h}  }_{g_{h}} \lesssim \| e_{h} \|_{ A_{h} }^{  }  $. We also argued that $\| \pi _{h}^{e} u - u \|_{a_{h},*  }^{  } \lesssim h^{r-1}\| u \|_{ r,\Omega  }^{  }  $ from Corollary \ref{cor:projection_error_estimate}.
+\todo[inline]{ TODO: Need to show $ \| e_{h} \|_{a_{h},*  }^{  } + |e_{h}  |_{g_{h}} \le  \| e_{h} \|_{ A_{h} }^{  }  $ }
+Hence, the first part of the proof is complete.
 
+\item We want to show that $ \| e \|_{ \Omega  }^{  } \lesssim   h^{r} \| u \|_{ r,\Omega  }^{  }$. The idea is to apply the so-called Aubin-Nitsche duality trick by being aware of the ghost penalty $g_{h}$. Let us denote the following observation.
+    Because of the Assumption \ref{as:G1} is there a function $\phi \in H^2( \Omega ) \cap H^{1}_{0}( \Omega ) $ and a $\psi \in L^2( \Omega )  $ s.t.
+    $$-\Delta \phi = \psi  \text{ and }  \| \phi  \|_{ 2, \Omega  }^{  } \lesssim \| \psi  \|_{ \Omega  }^{  }.$$
+
+    Because of the regularity $\phi $ can we write $ (e, \psi  )_{\Omega } = (e, -\Delta \phi )_{\Omega } = a_{h}(e, \phi )  $. Naturally, we can now seek to bound this operator. That is,
+    \[
+    \begin{split}
+        (e, \psi  )_{\Omega } &= a_{h}( e, \phi ) \\
+        &= a_{h}(e, \phi -  \pi_{h} \phi   ) + g_{h}(u_{h} - \pi^{e} _{h} u,   \pi^{e}_{h} \phi   )  +g_{h}(\pi _{h} u, \pi_{h} \phi   ) \\
+        & \lesssim h^{r} \| u \|_{ r, \Omega  }^{  } \| \psi  \|_{ \Omega  }^{  }
+    \end{split}
+    \]
+
+    In the first line we used the weak orthogonality, i.e.,
+    \[
+        \begin{split}
+    a_{h}( e, \phi ) & = a_{h}( e, \phi  - \pi _{h} \phi ) + a_{h}( u - u_{h}, \pi _{h} \phi ) \\
+     & = a_{h}( e, \phi  - \pi _{h} \phi ) + g_{h}(  u_{h}, \pi _{h} \phi ) \\
+     & = a_{h}( e, \phi  - \pi _{h} \phi ) + g_{h}(  u_{h} - \pi ^{e}_{h}u, \pi _{h} \phi )+ g_{h}( \pi ^{e}_{h}u, \pi _{h} \phi ) \\
+        \end{split}
+    \]
+
+    \end{enumerate}
+
+    The last inequality a
 
 
 
