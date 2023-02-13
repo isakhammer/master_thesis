@@ -228,21 +228,13 @@ end
 
 
 function main()
-    function makedir(dirname)
-        if (isdir(dirname))
-            rm(dirname, recursive=true)
-        end
-        mkdir(dirname)
-    end
 
     resultdir= "figures/mvp_poisson_DGCutFEM/"*string(Dates.now())
     mkpath(resultdir)
 
     orders = [1,2]
     ns = [2^2, 2^3, 2^4, 2^5, 2^6, 2^7]
-    dirname = resultdir
-    makedir(dirname)
-    convergence_analysis( orders=orders, ns=ns, dirname=dirname)
+    convergence_analysis( orders=orders, ns=ns, dirname=resultdir)
 end
 
 @time main()
