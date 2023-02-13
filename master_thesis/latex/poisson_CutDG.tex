@@ -421,7 +421,7 @@ a_{h}( u - u_{h}, v) = g_{h}( u_{h},v), \quad  \forall v \in  V_{h}.
 
 That is, we will do the following assumption before presenting the a priori estimate,
 \begin{assumption}[EP2]
-    \label{as:weak_consistency_estimate}
+    \label{as:EP2}
     Let $v \in H^{s}( \Omega )  $  and $r = \min_{} \{ s, k+1 \}$.  Then we assume the following weak consistency estimate, \[
     \abs{ \pi ^{e}_{h} v } _{g_{h}} \lesssim  h^{r-1}\| v \|_{ r,\Omega  }^{  }.
     \]
@@ -430,7 +430,7 @@ That is, we will do the following assumption before presenting the a priori esti
 Finally, we have the notation we need to present the following estimate.
 
 \begin{theorem}[A priori estimate]
-    Let the Assumption \ref{as:weak_consistency_estimate} hold. If we let $u \in H^{s}( \Omega ) $, $s\ge 2$ be the exact solution to the weak formulation \eqref{eq:possion_weak} and let $u_{h} \in \mathcal{P}^{k}( \mathcal{T} _{h})  $ be the solution the problem \ref{def:cutdg_poisson_problem}. Then for $r =
+    Let the Assumption \ref{as:EP2} hold. If we let $u \in H^{s}( \Omega ) $, $s\ge 2$ be the exact solution to the weak formulation \eqref{eq:possion_weak} and let $u_{h} \in \mathcal{P}^{k}( \mathcal{T} _{h})  $ be the solution the problem \ref{def:cutdg_poisson_problem}. Then for $r =
     \min_{}\{s, k+1\} $ the error $e = u - u_{h}$ satisfies \[
         \begin{split}
             \| e \|_{ a_{h},* }^{  } &\lesssim   h^{r-1} \| u \|_{ r,\Omega  }^{  }\\
@@ -455,7 +455,7 @@ the weak orthogonality, $ a_{h}( u - u_{h}, e_{h}) = g_{h}( u_{h}, e_{h})$, is i
  & \lesssim h^{r-1} \| u \|_{ r, \Omega  }^{  } \| e_{h} \|_{ A_{h} }^{  }.
     \end{split}
 \]
-On the last two lines we first applied Lemma \ref{lemma:Ah_bounded} and Assumption \ref{as:weak_consistency_estimate}, that is, \[
+On the last two lines we first applied Lemma \ref{lemma:Ah_bounded} and Assumption \ref{as:EP2}, that is, \[
     \begin{split}
         a_{h}( \pi _{h}^{e} u - u, e_{h}) + g_{h}( \pi _{h}^{e}u, e_{h}) &\lesssim \| \pi _{h}^{e} u - u \|_{a_{h},*  }^{  } \| e_{h} \|_{a_{h},*  }^{  }
         + \abs{ \pi _{h}^{e}u }_{g_{h}} \abs{e_{h}  }_{g_{h}} \\
@@ -486,14 +486,24 @@ Hence, the first part of the proof is complete.
         \begin{split}
     a_{h}( e, \phi ) & = a_{h}( e, \phi  - \pi _{h} \phi ) + a_{h}( u - u_{h}, \pi _{h} \phi ) \\
      & = a_{h}( e, \phi  - \pi _{h} \phi ) + g_{h}(  u_{h}, \pi _{h} \phi ) \\
-     & = a_{h}( e, \phi  - \pi _{h} \phi ) + g_{h}(  u_{h} - \pi ^{e}_{h}u, \pi _{h} \phi )+ g_{h}( \pi ^{e}_{h}u, \pi _{h} \phi ) \\
+     & = a_{h}( e, \phi  - \pi _{h} \phi ) + g_{h}(  u_{h} - \pi ^{e}_{h}u, \pi _{h} \phi )+ g_{h}( \pi ^{e}_{h}u, \pi _{h} \phi ).
         \end{split}
     \]
 
+    The last inequality appears after applying Cauchy-Schwartz and Assumption \ref{as:EP2}.
+\[
+    \begin{split}
+        a_{h}( e, \phi  - \pi _{h} \phi ) &+ g_{h}(  u_{h} - \pi ^{e}_{h}u, \pi _{h} \phi )+ g_{h}( \pi ^{e}_{h}u, \pi _{h} \phi ) \\
+                                          &\lesssim \| e \|_{ a_{h},*  }^{  } \| \phi - \pi _{h} \phi   \|_{a_{h},*  }^{  }   +
+     \abs{\pi _{h}^{e} u - u_{h} }_{ g_{h}}^{  } \abs{ \pi _{h} \phi  }_{g_{h}}+ \abs{ \pi^{e} _{h} u } _{g_{h}} \abs{ \pi _{h} \phi  }_{g_{h}} \\
+.
+                                          &\lesssim \| e \|_{ a_{h},*  }^{  } \| \phi - \pi _{h} \phi   \|_{a_{h},*  }^{  }   +
+     \abs{\pi _{h}^{e} u - u_{h} }_{ g_{h}}^{  } \abs{ \pi _{h} \phi  }_{g_{h}}+ h^{r-1}\| u \|_{2,\Omega   }^{  } \abs{ \pi _{h} \phi  }_{g_{h}}
+    \end{split}
+\]
+\todo[inline]{ TODO: Finish proof. }
+
     \end{enumerate}
-
-    The last inequality a
-
 
 
 \end{proof}
