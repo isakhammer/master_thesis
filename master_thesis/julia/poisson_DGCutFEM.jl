@@ -146,8 +146,6 @@ module Solver
             println("Not supported order:", order)
         end
 
-            # g(u,v)=  ∫( (γg1*h)*jump(n_Fg⋅∇(u))*jump(n_Fg⋅∇(v)) ) * dFg
-
         A(u,v) = a(u,v) + g(u,v)
 
         # Define linear form
