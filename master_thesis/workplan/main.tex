@@ -187,10 +187,13 @@ Version: \today
 % Documentation of pgfgantt:
 % http://bay.uchicago.edu/CTAN/graphics/pgf/contrib/pgfgantt/pgfgantt.pdf
 \begin{figure}[tbph!]
+
 \begin{center}
+\resizebox{3.0\totalheight}{!}{ % Scaling: https://tex.stackexchange.com/a/98142
+
 % https://tex.stackexchange.com/questions/587422/draw-gantt-chart-latex-with-pgfgantt
 \begin{ganttchart}[y unit title=0.4cm,
-y unit chart=0.5cm,
+y unit chart=0.6cm,
 vgrid,hgrid,
 title label anchor/.style={below=-1.6ex},
 title left shift=.05,
@@ -218,7 +221,7 @@ group height=.3]{1}{24}
 \ganttbar[progress=0]{Final }{19}{24}
 
 \ganttvrule{0 \%}{3}
-\ganttvrule{100 \%}{24}
+\ganttvrule{100 \%}{23}
 \ganttvrule{50 \% }{13.5}
 \ganttvrule{25 \%}{8.25}
 \ganttvrule{75 \%}{18.75}
@@ -234,6 +237,7 @@ group height=.3]{1}{24}
 % \ganttlink{elem3}{elem6}
 % \ganttlink{elem5}{elem7}
 \end{ganttchart}
+} % resizebox
 \end{center}
 
 \end{figure}
