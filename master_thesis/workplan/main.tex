@@ -42,7 +42,7 @@ Version: \today
 \begin{table}[htpb]
     \centering
     \footnotesize
-    \begin{tabular}{|p{0.15\textwidth}|p{0.15\textwidth}|p{0.15\textwidth}|p{0.15\textwidth}|p{0.15\textwidth}|p{0.15\textwidth}|}
+    \begin{tabular}{|p{0.075\textwidth}|p{0.17\textwidth}|p{0.17\textwidth}|p{0.15\textwidth}|p{0.17\textwidth}|p{0.20\textwidth}|}
     \hline & \textbf{ Phase 1}       & \textbf{Phase 2} & \textbf{Phase 3}& \textbf{Phase 4} & \textbf{Report}  \\
     \hline Estimated time & 2-3 Weeks & 4-5 Weeks & 2 Weeks & 3 Weeks &  \\
     \hline &&&&& \\[-1em] % Alignmenttrick https://tex.stackexchange.com/a/316016
@@ -82,8 +82,9 @@ Version: \today
         % How to use todolist: https://tex.stackexchange.com/a/313337
         \begin{itemize}[leftmargin=3mm]
             \item Analysis \begin{todolist}[noitemsep]
-                    \item Coercivity
-                    \item Boundedness
+                    \item \textcolor{red}{Initial problem setup}
+                    \item \textcolor{red}{Coercivity}
+                    \item \textcolor{red}{Boundedness}
                     \item A priori estimates
                     \item Condition number $\dagger $
                 \end{todolist}
@@ -129,9 +130,9 @@ Version: \today
             \item CutDG $- \Delta u =f$
                 \begin{todolist}[leftmargin=3mm, noitemsep]
                 \item[\done] Bounded and coercive
-                \item A priori estimates
-                \item  Condition number
-                \item Constructing $g_{h}$
+                \item \textcolor{red}{A priori estimates}
+                \item  \textcolor{red}{Condition number}
+                \item \textcolor{red}{Constructing $g_{h}$}
                 \item Numerical experiments
                 \end{todolist}
             \item CutCIP for $ \Delta ^2 u = f$
@@ -164,11 +165,16 @@ Version: \today
         $\dagger $ Not prioritized
         & % Phase 3 Comments
         &  % Phase 4 Comments
-        & Marked done \textbf{only} if it is $95\%$ done.  % Report comment
+        & % Report
+        \begin{itemize}
+            \item Marked done \textbf{only} if it is $95\%$ done.
+    \item Page counter:  $21$
+        \end{itemize}
+
 
         \\  \hline Digression &
-                              & 2nd order mixed formulation
-                              & 2nd order mixed formulation
+                              & Aggregated FEM \parencite{badia2018aggregated} for $\mathcal{P}^{k} $, $k = 1,2,3$
+                              &
                               & Solve $ \partial _{t}u + \kappa(u)\Delta ^2 u  = g$
                               & \\
         \hline
