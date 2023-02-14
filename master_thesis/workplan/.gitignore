@@ -13,6 +13,7 @@ main.out
 main.dvi
 main.synctex(busy)
 
+*.aux
 bibliography.aux
 bibliography.fdb_latexmk
 bibliography.fls
