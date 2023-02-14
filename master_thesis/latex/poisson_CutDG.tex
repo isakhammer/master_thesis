@@ -393,23 +393,16 @@ Naturally can we see this is the tools we need to construct an estimate for the 
     +   \|h^{-\frac{1}{2}} \mean{ e }    \|_{ \mathcal{F} _{h} \cap \Omega   }^{  2} + \| h^{\frac{1}{2}} \partial _{n} e \|_{ \Gamma   }^{2  }
     \]
 
-    Observe that each terms can be estimated,
-    \begin{enumerate}[label=\arabic*)]
-        \item Using \eqref{eq:projection_estimates_1} \[
-    \| \nabla e \|_{\mathcal{T}_{h} \cap \Omega } \lesssim \| \nabla  e \|_{r, \mathcal{T} _{h} }^{  }  \lesssim h^{s-r} \| \nabla  u \|_{ s, \Omega  }^{  } \lesssim h^{s-r} \|  u \|_{ s, \Omega  }^{  } , \quad 0\le r\le s \\
-        \]
-        \item Using \eqref{eq:projection_estimates_2} \[
-                \begin{split}
-\| h^{-\frac{1}{2}}  \jump{ e }   \|_{ \mathcal{F}_{h} \cap  \Omega   }^{  } \lesssim  h^{-\frac{1}{2}} \| e \|_{ r, \mathcal{F} _{h} }^{  }  \lesssim h^{s-r-1} \| u \|_{ s, \Omega  }^{  }, \quad 0  \le  r \le   s- \frac{1}{2} \\
-\| h^{\frac{1}{2}}  \mean{ e }   \|_{ \mathcal{F}_{h} \cap  \Omega   }^{  } \lesssim  h^{\frac{1}{2}} \| e \|_{ r, \mathcal{F} _{h} }^{  }  \lesssim h^{s-r} \| u \|_{ s, \Omega  }^{  }, \quad 0  \le  r \le   s- \frac{1}{2} \\
-                \end{split}
-        \]
-        \item Using \eqref{eq:projection_estimates_3} \[
-\| h^{\frac{1}{2}} \partial _{n}e \|_{ r, \Gamma }^{  }  \lesssim h^{s-r} \| e \|_{ s, \Omega  }^{  }, \quad 0  \le  r \le   s- \frac{1}{2}
-        \]
-    \end{enumerate}
+    Observe that each terms can be estimated using \eqref{eq:projection_estimates_1}, \eqref{eq:projection_estimates_2} and \eqref{eq:projection_estimates_3}. That is,
+                \begin{align}
+                    \| \nabla e \|_{\mathcal{T}_{h} \cap \Omega } &\lesssim \| \nabla  e \|_{r, \mathcal{T} _{h} }^{  }  \lesssim h^{s-r} \| \nabla  u \|_{ s, \Omega  }^{  } \lesssim h^{s-r} \|  u \|_{ s, \Omega  }^{  },  \\
+                    \| h^{-\frac{1}{2}}  \jump{ e }   \|_{ \mathcal{F}_{h} \cap  \Omega   }^{  } &\lesssim  h^{-\frac{1}{2}} \| e \|_{ r, \mathcal{F} _{h} }^{  }  \lesssim h^{s-r-1} \| u \|_{ s, \Omega  }^{  } \\
+                    \| h^{\frac{1}{2}}  \mean{ e }   \|_{ \mathcal{F}_{h} \cap  \Omega   }^{  } &\lesssim  h^{\frac{1}{2}} \| e \|_{ r, \mathcal{F} _{h} }^{  }  \lesssim h^{s-r} \| u \|_{ s, \Omega  }^{  } \\
+                    \| h^{\frac{1}{2}} \partial _{n}e \|_{ r, \Gamma }^{  }  &\lesssim h^{s-r} \| v \|_{ s, \Omega  }^{  }
+                \end{align}
+                for $ 0  \le  r \le   s- \frac{1}{2}$.
+                \todo[inline]{ Remains to convert from $s$ to $r$ is the estimate above. }
 
-    \todo[inline]{ Need to finish this proof.}
 \end{proof}
 
 Naturally, a key element to compute an priori estimate is to use an equivalent form of Galerkin orthogonality. However, because of the penalty term we have a slightly weaker formulation. Hence, for $u \in H^{2}( \Omega ) $ and $u_{h} \in V_{h}$
