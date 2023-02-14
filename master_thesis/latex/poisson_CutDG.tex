@@ -342,15 +342,15 @@ for $ \forall v \in  H^{2}( \mathcal{T}_{h} ) + V_{h} $ and $ \forall u \in V_{h
 In this section will we do only a brief overview of the important assumptions and definitions required to prove optimal convergence.
 Recall that for $v \in H^{1}( \mathcal{T } _{h}) $ these inequalities holds $\forall T \in \mathcal{T} _{h}$ s.t. \[
 \begin{split}
-    \| v \|_{ \partial T }^{  } &\lesssim h^{-\frac{1}{2}}_{T}\| \nabla v \|_{ T }^{  }+ h^{\frac{1}{2}} \| \nabla v \|_{T  }^{   }  , \\
+    \| v \|_{ \partial T }^{  } &\lesssim h^{-\frac{1}{2}}_{T}\|  v \|_{ T }^{  }+ h^{\frac{1}{2}} \| \nabla v \|_{T  }^{   }  , \\
     \| v \|_{ \Gamma \cap T }^{  } &\lesssim  h^{-\frac{1}{2}} \| v \|_{T  }^{  }   + h^{\frac{1}{2}}_{T} \| \nabla v \|_{ T }^{  }.
 \end{split}
 \]
 For more information, see \cite{gurkan2019stabilized}. Let us define the $L^2$-orthogonal projection $\pi _{h}: L^2( \mathcal{T} _{h}) \to V_{h}$ s.t. for $T \in \mathcal{T} _{h}$ and $F \in \mathcal{F} _{h}$,
 \[
     \begin{split}
-\abs{ v - \pi _{h} v } _{T,l} & \lesssim h^{s-l}_{T} \abs{ v } _{s,T}, \quad 0\le l \le s, \\
-\abs{ v - \pi _{h}v } _{F,l} & \lesssim  h^{s-l-\frac{1}{2}}, \quad 0\le l \le s -\frac{1}{2},
+\abs{ v - \pi _{h} v } _{l,T} & \lesssim h^{s-l}_{T} \abs{ v } _{s,T}, \quad 0\le l \le s, \\
+\abs{ v - \pi _{h}v } _{l,F} & \lesssim  h^{s-l-\frac{1}{2}} \abs{ v }_{s,T} , \quad 0\le l \le s -\frac{1}{2},
     \end{split}
 \]
 \todo{Proof?}
