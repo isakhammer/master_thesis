@@ -19,13 +19,13 @@ Let $\Omega \subseteq    \mathbb{R} ^2$ be a bounded polygonal domain and $\part
 \end{equation}
 Here is $\Delta ^2 = \Delta  \left( \Delta  \right) $ the biharmonic operator, also known as the bilaplacian. We will assume for the strong form that $u \in H^{4}\left( \Omega  \right) $, $\alpha  \in  \mathbb{R} $ and $f \in L^{2}\left( \Omega  \right)
 $. We may consider the functions $g( x ) $ as a time independent boundary conditions. Such problems as \eqref{eq:bi_problem} are often associated with the Cahn-Hilliard model
-\cite{cahnhilliard1957} for phase separation.
+for phase separation \cite{cahnhilliard1957} .
 
 \subsection{  Weak form biharmonic equation in $H^{4}\left( \Omega  \right) $}%
 \label{sub:continious_weak_form_of_biharmonic_equation}
 
 
-We want to introduce the full weak formulation of \eqref{eq:bi_problem}. Now, let the solution space be on the form,
+The goal is to find a useful full weak formulation of \eqref{eq:bi_problem}. Now, let the solution space be on the form,
 \begin{equation*}
 V = \left\{ v \in H^2\left( \Omega  \right) : \partial _{n} v = 0  \text{ on }
 \partial \Omega  \right\}.
@@ -82,8 +82,6 @@ F\left( v \right)_{\Omega } & = \left( f,v \right)_{\Omega } - \left(g,v \right)
 \end{equation}
 
 Thus, we have now the necessary definitions to define the biharmonic problem.
-\begin{definition}[Biharmonic problem]
-    \label{def:biharmonics_problem}
 
 We define the biharmonic problem to solve for $u \in V  $ s.t.
 \begin{equation}
@@ -94,9 +92,7 @@ V,
 where $ V = \left\{ v \in H^2\left( \Omega  \right) : \partial _{n} v = 0  \text{ on }
 \partial \Omega  \right\}$.
 
-\end{definition}
-
- In fact, the solution is unique for $\alpha  > 0$. However, for $\alpha  = 0$ must we assume the solvability condition,
+A problem that appear in this formulation is that the solution is only unique for $\alpha  > 0$. However, for $\alpha  = 0$ is it necessary to apply the solvability condition,
 \begin{equation*}
  \int_{\Omega }^{} f dx = \int_{\partial \Omega }^{} g ds
 .\end{equation*}
@@ -110,9 +106,20 @@ Thus, the unique solution in $v \in V^{*}$ belongs to $H^{3 }\left( \Omega  \rig
 elliptic regularity estimate \cite{gu2012c0},
 \begin{equation*}
 \label{eq:bi_harmonic_ellitpic_regularity}
-\left| u \right| _{H^{3 }\left( \Omega  \right) }  \le C_{\Omega } \left( \| f \|_{  L_{2}( \Omega ) }^{  } + ( 1 + \alpha  ^{\frac{1}{2}}
+\left| u \right| _{H^{3 }\left( \Omega  \right) }  \le C_{\Omega } \left( \| f \|_{  L^{2}( \Omega ) }^{  } + ( 1 + \alpha  ^{\frac{1}{2}}
 ) \cdot \| w  \|_{ H^{4}\left( \Omega  \right)  }^{  }    \right), \quad w\in H^{4}\left( \Omega  \right).
 \end{equation*}
 
+Finally, we can define the weak formulation of the biharmonic problem.
 
+\begin{definition}[Biharmonic problem]
+    \label{def:biharmonics_problem}
+
+We define the biharmonic problem to find $u \in V^*  $ s.t.
+\begin{equation}
+a\left( u,v \right) = F(v)\quad \forall v \in
+V^* .
+\end{equation}
+
+\end{definition}
 
