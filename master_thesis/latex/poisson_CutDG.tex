@@ -522,15 +522,14 @@ $\mathcal{A} $ defined s.t.,
 \[
     ( \mathcal{A} V, W)  = A_{h}( v,w), \quad \forall v,w \in V_{h}
 \]
-\todo[inline]{ Explain this definition.  }
-where $ \left[ \mathcal{A} \right] _{ji} := A_{h}( \phi _{i}, \phi_{j} )$.
+where we have define $ \left[ \mathcal{A} \right] _{ji} := A_{h}( \phi _{i}, \phi_{j} )$ and the discrete inner product, that is, $( \mathcal{A}V, W ) = ( \mathcal{A} V)^T W   $.
 Since $A_{h}$ is well-posed is it well known that $\mathcal{A}: \mathbb{R} ^{N} \to \mathbb{R} ^{N} $ must be isomorphic \cite{ern2006evaluation}.  Thus, this linear system must holds $ \mathcal{A} V = f$, where$\left[ f \right] _{j} := l_{h}(\phi_{j} )$. That is, we define the operator norm as
-
 
 \begin{equation}
 \label{eq:operator_norm}
  \| \mathcal{A}  \|_{ \mathbb{R} ^{N}  }^{  } = \sup_{V \in \mathbb{R} ^{n} \setminus 0 } \frac{\| \mathcal{A} V \|_{ \mathbb{R} ^{N} }^{  } }{\| V \|_{ \mathbb{R} ^{N} }^{  } }
 \end{equation}
+
  With a corresponding definition of condition number, \( \kappa ( \mathcal{A} )  = \| \mathcal{A}  \|_{ \mathbb{R} ^{N} }^{  } \| \mathcal{A}^{-1}  \|_{ \mathbb{R} ^{N} }^{  }    \).
  Here we denote $\| \cdot  \|_{ \mathbb{R} ^{N} }^{  } $  as the discrete $l^{2}$ norm.
 
@@ -579,9 +578,9 @@ We have now showed that bounded the discrete $l^{2}$- norm with the energy $A_{h
 inequalities;
 \begin{equation}
 \label{eq:zero_order_inverse_est}
-    \| \nabla v \|_{ T\cap \Omega  }^{  }  \lesssim \| h^{-1} v \|_{  }^{  },\quad
-    \|  v \|_{ \Gamma \cap \Omega  }^{  }  \lesssim \| h^{-\frac{1}{2}} v \|_{  }^{  } \text{  and  }
-    \|  v \|_{ F \cap \Omega  }^{  }  \lesssim \| h^{-\frac{1}{2}} v \|_{  }^{  }.
+    \| \nabla v \|_{ T\cap \Omega  }^{  }  \lesssim \| h^{-1} v \|_{T  }^{  },\quad
+    \|  v \|_{ \Gamma \cap \Omega  }^{  }  \lesssim \| h^{-\frac{1}{2}} v \|_{ T }^{  } \text{  and  }
+    \|  v \|_{ F \cap \Omega  }^{  }  \lesssim \| h^{-\frac{1}{2}} v \|_{F  }^{  }.
 \end{equation}
 \todo[inline]{ TODO: proof }
 Remark that these inverse estimates are closely related to the estimates discussed in \eqref{eq:unfitted_localinv}. One final assumption is to make sure the ghost penalty has a similar inverse estimate to the active mesh.
@@ -617,8 +616,6 @@ Hence, we have finally arrived to close the gap between the $l^{2}$ norm and the
     \label{eq:inverse_equivalence_relation}
     \|w \|_{ A_{h} }^{  } \lesssim h^{-1} \| w \|_{ \mathcal{T} _{h} }^{  } \lesssim h^{\frac{( d-2) }{2} }\| W \|_{\mathbb{R} ^{N}  }^{  }.
     \end{equation}
-    \todo[inline]{ Maybe discuss a line before the theorem that $ h^{-1} \| w \|_{ \mathcal{T} _{h} }^{  } \lesssim h^{\frac{( d-2) }{2} }\| W \|_{\mathbb{R} ^{N}  }^{  }$ should hold. Is the quivalence "big" enough to also bound $h^{-1}\| w \|_{
-    \mathcal{T} _{h} }^{  } $? }
 
 
     \begin{enumerate}[label=\arabic*)]
@@ -631,28 +628,25 @@ Hence, we have finally arrived to close the gap between the $l^{2}$ norm and the
         \end{split}
     \]
 Here the first equality is served by the definition \eqref{eq:operator_norm}.
-\todo[inline]{ Which is disagree on. }
 The second equality is a result of the definition $( \mathcal{A} V,W) = A_{h}(w,v)$.
-\todo[inline]{ Which I also disagree on. Why are you allowed interchange the sup from $\mathbb{R} ^{N}$ to $V_{h}$ and still keep the equal sign.   }
 The first inequality is basically an application of the equivalence estimate \eqref{eq:inverse_equivalence_relation}.
 Using this result can we argue that \[
     \| \mathcal{A} V \|_{ \mathbb{R} ^{N}} = \sup_{V \in \mathbb{R} ^{N} \setminus 0} \frac{\| \mathcal{A} V \|_{ \mathbb{R} ^{N} }^{  } }{\| V \|_{ \mathbb{R} ^{N} }^{  } } \lesssim h^{d-2}
 \]
 And completing the first part of the proof.
 \item The goal is to show that $\| \mathcal{A} ^{-1} \|_{ \mathbb{R} ^{N} }^{  } $  is bounded.
+    We start by applying the Proposition \ref{prop:inverse_relation}, that is, $ h^{\frac{d}{2}} \| v \|_{\mathcal{T} _{h}   }^{  }   \lesssim  \| V \|_{\mathbb{R} ^{N}  }^{  }  $.
     \[
     \begin{split}
-          \| V \|_{ \mathbb{R} ^{N} }^{ 2 } & \lesssim h^{-d} \| v \|_{ \mathcal{T}_{h}  }^{  }  \\
+          \| V \|_{ \mathbb{R} ^{N} }^{ 2 } & \lesssim h^{-d} \| v \|_{ \mathcal{T}_{h}  }^{ 2}  \\
           & \lesssim  h^{-d} A_{h}( v,v) =   h^{-d} ( V, \mathcal{A} V)_{\mathbb{R} ^{N}} \\
           &  \lesssim  h^{-d}  \| V \|_{ \mathbb{R} ^{N} }^{  } \| \mathcal{A} V \|_{ \mathbb{R} ^{N} }^{  }
     \end{split}
     \]
-    \todo[inline]{ Where does $h^{-d}$ come from??  }
-    \todo[inline]{ TODO: explain all steps.  }
-and hence $\| V \|_{\mathbb{R} ^{N}   }^{  } \lesssim h^{-d} \| AV \|_{\mathbb{R} ^{N}  }^{  }  $. And now setting $V= \mathcal{A} ^{-1} W$ we conclude that $\| \mathcal{A} ^{-1} \|_{ \mathbb{R} ^{N} }^{  } \lesssim h^{-d} $
+By dividing $\| V \|_{ \mathbb{R} ^{N} }^{  }  $ on both sides makes it it easy to see that $\| V \|_{\mathbb{R} ^{N}   }^{  } \lesssim h^{-d} \| AV \|_{\mathbb{R} ^{N}  }^{  }  $. And now setting $V= \mathcal{A} ^{-1} W$ we conclude that $\| \mathcal{A} ^{-1} \|_{ \mathbb{R} ^{N} }^{  } \lesssim h^{-d} $.
     \end{enumerate}
 
-    Thus, the original statement $\kappa ( \mathcal{A} )  = \| \mathcal{A}  \|_{ \mathbb{R} ^{N} }^{  } \| \mathcal{A}^{-1}  \|_{ \mathbb{R} ^{N} }^{  } \lesssim h^{d-2} h^{-d} = h^{-2}$ holds and the proof is complete.
+    Thus, the statement $\kappa ( \mathcal{A} )  = \| \mathcal{A}  \|_{ \mathbb{R} ^{N} }^{  } \| \mathcal{A}^{-1}  \|_{ \mathbb{R} ^{N} }^{  } \lesssim h^{d-2} h^{-d} = h^{-2}$ holds and the proof is complete.
 
 
 \end{proof}
@@ -714,14 +708,15 @@ where we denote the multi-index $\alpha  = ( \alpha _{1}, \ldots, \alpha _{d})  
 We will now introduce the so-called ghost penalty faces, that is, \[
 \mathcal{F} ^{g}_{h} = \left\{ F\in \mathcal{F} _{h} : T^{+}\cap \Gamma \neq \emptyset  \vee T^{-}\cap \Gamma \neq \emptyset  \right\}.
 \]
-\todo[inline]{
-    This definition seems not precise. Do do you mean this?
+% \todo[inline]{
+%     This definition seems not precise. Do do you mean this?
 
-    \[
-\mathcal{F} ^{g}_{h} = \left\{ F\in \mathcal{F} _{h} : T^{+}\cap \Gamma \neq \emptyset  \text{ and } T^{-}\cap \Gamma \neq \emptyset    \text{ for } T^{+}, T^{-} \in \mathcal{T} _{h} \right\}.
-\] and does also not consist with the drawing \cite[Fig 2.1]{gurkan2019stabilized}.
-  }
-\todo[inline]{ Is $\mathcal{F} _{h}^{g}$  equivalent with all facets inside $\mathcal{T}_{\Gamma }? $ }
+%     \[
+% \mathcal{F} ^{g}_{h} = \left\{ F\in \mathcal{F} _{h} : T^{+}\cap \Gamma \neq \emptyset  \text{ and } T^{-}\cap \Gamma \neq \emptyset    \text{ for } T^{+}, T^{-} \in \mathcal{T} _{h} \right\}.
+% \] and does also not consist with the drawing \cite[Fig 2.1]{gurkan2019stabilized}.
+%   }
+% \todo[inline]{ Is $\mathcal{F} _{h}^{g}$  equivalent with all facets inside $\mathcal{T}_{\Gamma }? $ }
+
 This set is simply all facets that belong to all elements of the active mesh $\mathcal{T} _{h}$  intersected with $\Gamma $.
 
 \begin{lemma}
