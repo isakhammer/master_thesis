@@ -1,553 +1,61 @@
 
 \newpage
-\section{Unfitted cut continuous interior penalty method for the biharmonic problem }%
-\label{sec:biharmonic_problem}
+\section{CutCIP Biharmonic problem}%
+\label{sec:cutcip_biharmonic_problem}
+
+\subsection{Weak formulation}%
+\label{sub:weak_formulation}
 
 
-\subsection{Strong form of the biharmonic problem}%
-\label{sub:strong_form_of_the_biharmonic_equation}
-
-Let $\Omega \subseteq    \mathbb{R} ^2$ be a bounded polygonal domain and $\partial \Omega $ be its corresponding boundary. Let the inhomogeneous fourth order biharmonic equation have the form,
+Let $\Omega \subseteq    \mathbb{R} ^d$ be a physical mesh with and $\Gamma  $ be a $C^2$ boundary. We define the strong biharmonic problem to be on the form
 
 \begin{equation}
-\label{eq:bi_problem}
 \begin{split}
     \Delta^2  u  + \alpha  u  & = f( x)  \quad \text{in } \Omega,   \\
-    \partial _{n} u & = 0  \quad \text{on } \partial \Omega,  \\
-    \partial _{n} \Delta  u & = g(x)  \quad \text{on } \partial \Omega .  \\
+    \partial _{n} u & = 0  \quad \text{on } \Gamma ,  \\
+    \partial _{n} \Delta  u & = g(x)  \quad \text{on } \Gamma  .  \\
 \end{split}
 \end{equation}
-Here is $\Delta ^2 = \Delta  \left( \Delta  \right) $ the biharmonic operator, also known as the bilaplacian. We will assume for the strong form that $u \in H^{4}\left( \Omega  \right) $, $\alpha  \in  \mathbb{R} $ and $f \in L^{2}\left( \Omega  \right)
-$. We may consider the functions $g( x ) $ as a time independent boundary conditions. Such problems as \eqref{eq:bi_problem} are often associated with the Cahn-Hilliard model
-for phase separation \cite{cahnhilliard1957} .
+We want to write the problem on the weak form.
+Let $u \in H^{4}( \Omega ) $ be a solution of the strong problem and $v \in H^{2}( \Omega ) $ be a test function. We argue that this holds,
+    \[
+        \begin{split}
+(\Delta ^2u,v )_{\Omega } & = ( \partial _{n} \Delta u, v)_{\Gamma } - ( \nabla ( \Delta u) , \nabla v) _{\Gamma } \\
+&= ( D^2u, D^2v)_{\Omega } + ( \partial _{n} \Delta u ,v)_{\Gamma } - ( \partial _{nn} u, \partial _{n}v)_{\Gamma } - ( \partial _{tn} u, \partial _{t} v)_{\Gamma }.        \\
+        \end{split}
+    \]
+    Define the space $V_{0} = \left\{ u \in H^{2}( \Omega ) :  \partial _{n}u  \mid _{\Gamma } = 0 \right \} $ and $V = H^2( \Omega ) $ .
+    By applying the boundary conditions can we see that $( \partial _{n} \Delta u, v)_\Gamma   = ( g,v)_{\Gamma }$ which occurs naturally. However, the neumann boundary condition can be imposed by assuming $u \in V_{0}$.
+    A consequence of this choice is that we force $ ( \partial _{nn} u, \partial _{n}v)_{\Gamma }
+    = 0$ and $( \partial _{tn} u, \partial _{t}v)_{\Gamma } = 0$ since $\partial _{n} v = 0$ and that $\partial _{t} (\partial _{n}u) = 0 $. The latter is a consequence of that the Neumann boundary condition is homogeneous.
+    \todo[inline]{ But what if the Neumann conditions is not homogeneous? And why is it necessary to include it in the function space when it comes in "naturally"?  }
 
-\subsection{  Weak form biharmonic equation in $H^{4}\left( \Omega  \right) $}%
-\label{sub:continious_weak_form_of_biharmonic_equation}
+    Finally, if we $u,v \in V_{0}$ then is it natural to define an general bilinear form $ a: V_{0} \times  V_{0} \to   \mathbb{R} $ as \[
+    a( u,v) = \alpha ( u,v)_{\Omega } + ( D^2u, D^2v)_{\Omega }
+    \]
+    where $\alpha >0$ and a corresponding linear form $F: V \to \mathbb{R} $,
+    \[
+    F( v) = ( \partial _{n} \Delta u ,v)_{\Gamma }.
+    \]
 
-
-The goal is to find a useful full weak formulation of \eqref{eq:bi_problem}. Now, let the solution space be on the form,
-\begin{equation*}
-V = \left\{ v \in H^2\left( \Omega  \right) : \partial _{n} v = 0  \text{ on }
-\partial \Omega  \right\}.
-\end{equation*}
-
-Let $u,v \in  V$, then the derivation of the general weak form is,
-\[
-\begin{split}
-\left( \Delta ^2 u,v \right) _{\Omega }  &  = \left( \partial _{n} \Delta u, v \right) _{\partial \Omega } - \left( \nabla \left( \Delta  u \right) , \nabla v \right) _{\Omega }  \\
-\end{split}
-\]
-In fact, the simplest formulation has the form,
-\[
-  \left( \nabla \left( \Delta u \right) , \nabla v \right) _{\Omega } =   \left( \Delta u, \partial _{n} v \right) _{\partial \Omega } - \left( \Delta u, \Delta v \right)_{\Omega },
-\]
-A major issue with this formulation is that we do not have boundary condition for $\Delta u$. Instead, we can expand the term in the following fashion.
-
-\begin{equation*}
-    \begin{split}
-\left( \nabla \left( \Delta u \right) , \nabla v \right) _{\Omega } & = \sum_{i = 1}^{ d}  \left( \Delta  \partial _{x_{i}} u, \partial _{x_{i}}v \right) _{\Omega }  \\
-&= \sum_{i = 1}^{d}  \left( \nabla \cdot \left( \nabla \partial _{x_{i}} u \right) , \partial _{x_{i}} v \right)_{\Omega }  \\
-&= \sum_{i = 1}^{d}  \left( \partial_n  \partial _{x_{i}} u, \nabla  \partial _{x_{i}} v \right) _{\partial \Omega} -   \left( \nabla \partial _{x_{i}} u, \nabla \partial _{x_{i}} v \right)_{\Omega }  \\
-&= \left(  \partial_n\nabla u, \nabla v \right) _{\partial \Omega } - \left( D^2 u, D^2v \right) _{\Omega } \\
-&= \left( \partial _{nn} u, \partial _{n} v  \right)_{\partial \Omega }   + \left( \partial _{nt} u, \partial _{t} v \right) _{\partial \Omega } - \left( D^2u, D^2v \right) _{\Omega } .
-    \end{split}
-.\end{equation*}
-Hence, the boundary condition of $\Delta u$ is integrated into the formulation.  It can be denoted that $D^2$ is the Hessian matrix operator such that
-$$( D^2u, D^2v )_{\Omega } = \int_{\Omega }^{} D^{2}u : D^2v  dx,$$
-where $D^2u:D^2v$ is the inner product and similarly for $\partial _{nn} u = n\cdot D^2 u \cdot n$. Thus, we now have a weak form identity,
-\begin{equation}
-\label{eq:weak_form_identity}
-\left( \Delta ^2 u, v \right) _{ \Omega } = \left( D^2u, D^2v \right) _{\Omega} +   \left( \partial _{n} \Delta u, v  \right) _{\partial \Omega }  - (\partial _{nn} u, \partial _{n} v )_{\partial \Omega } - \left( \partial _{nt} u, \partial _{t}v
-\right) _{\partial \Omega }
-.\end{equation}
-
-Using weak form identity \eqref{eq:weak_form_identity} and the boundary conditions stated in the strong form \eqref{eq:bi_problem} can we write
-
-\begin{equation}
-\begin{split}
-\left( \Delta ^2 u, v \right) _{ \Omega } & = \left( D^2u, D^2v \right) _{\Omega} +   \underbrace{\left( \partial _{n} \Delta u, v  \right) _{\partial \Omega }}_{ = \left( g,v \right) _{\partial \Omega }}   - \underbrace{(\partial _{nn} u, \partial
-    _{n} v )_{\partial \Omega }}_{ = 0}  - \underbrace{\left( \partial _{nt} u, \partial _{t}v \right) _{\partial \Omega }}_{ = 0} \\
-    &= \left( D^2u, D^2v \right) _{\Omega } + \left( g,v \right) _{\partial \Omega }  \\
-\end{split}
-.\end{equation}
-\todo[inline]{ Is it a way to prove $\partial _{nn} u = 0$ and $\partial _{nt} u = 0$ on $\partial \Omega $? Does this differ from plate problem vs cahn hilliard?}
-
-Finally, we can define the following bilinear functional $a:V\times V \to  \mathbb{R} $ and the linear functional $F: V \to \mathbb{R} $ s.t.
-\begin{equation}
-\label{eq:weak_formulation}
-\begin{split}
-a\left( u,v \right)_{\Omega } & =    \left( D ^2 u , D ^2 v\right)_{\Omega }  +
-\alpha \left( u, v \right)_{\Omega }   , \\
-F\left( v \right)_{\Omega } & = \left( f,v \right)_{\Omega } - \left(g,v \right)_{\partial \Omega }.
-\end{split}
-\end{equation}
-
-Thus, we have now the necessary definitions to define the biharmonic problem.
-
-We define the biharmonic problem to solve for $u \in V  $ s.t.
-\begin{equation}
-    \label{eq:bi_weak1}
-a\left( u,v \right) = F(v)\quad \forall v \in
-V,
-\end{equation}
-where $ V = \left\{ v \in H^2\left( \Omega  \right) : \partial _{n} v = 0  \text{ on }
-\partial \Omega  \right\}$.
-
-A problem that appear in this formulation is that the solution is only unique for $\alpha  > 0$. However, for $\alpha  = 0$ is it necessary to apply the solvability condition,
-\begin{equation*}
- \int_{\Omega }^{} f dx = \int_{\partial \Omega }^{} g ds
-.\end{equation*}
-This condition easily arise when using the substitution $v=1$ in \eqref{eq:bi_weak1}. To handle this, can we extended the solution space \[
-V^{*} = \begin{cases}
-    V \quad & \alpha  > 0 \\
-    \left\{ v \in V: \int_{\Omega }^{} v dx  = 0\right\} \quad & \alpha  = 0,
-\end{cases}
-\]
-Thus, the unique solution in $v \in V^{*}$ belongs to $H^{3 }(\Omega ) $ and we get the following
-elliptic regularity estimate \cite{gu2012c0},
-\begin{equation*}
-\label{eq:bi_harmonic_ellitpic_regularity}
-\left| u \right| _{H^{3 }\left( \Omega  \right) }  \le C_{\Omega } \left( \| f \|_{  L^{2}( \Omega ) }^{  } + ( 1 + \alpha  ^{\frac{1}{2}}
-) \cdot \| w  \|_{ H^{4}\left( \Omega  \right)  }^{  }    \right) \quad w\in H^{4}\left( \Omega  \right).
-\end{equation*}
-
-Finally, we can define the weak formulation of the biharmonic problem.
-
-\begin{definition}[Biharmonic problem]
-    \label{def:biharmonics_problem}
-
-We define the biharmonic problem to find $u \in V^*  $ s.t.
-\begin{equation}
-a\left( u,v \right) = F(v)\quad \forall v \in
-V^* .
-\end{equation}
-
-\end{definition}
-
-\subsection{Constructing Continuous Interior Penalty Method}%
-\label{sub:constructing_continious_interior_penalty_method}
-
- Let us assume that $u,v \in
-H^{4}\left( T  \right) $. Using that the weak form identity \eqref{eq:weak_form_identity} also holds for a triangle $T$ can we write
-\begin{equation}
-\label{eq:bi_basic_dg}
-\left( \Delta  ^{2} u,v \right) _{T} =  \left( D^2u,D^2v \right) _{T } - \left(\partial _{nt} u, \partial _{t}v
-\right)_{\partial T} - \left(\partial _{nn} u, \partial _{n}v \right)_{\partial T} + \left(\partial _{n} \Delta  u,v
-\right)_{\partial T}
-.\end{equation}
-For global continuity, let  $v \in V =  \left\{ v \in H^{1}\left( \Omega  \right): v_{T} \in  H^{4}\left( T \right), \ \forall T \in
-\mathcal{T}_{h}    \right\} $ and $u \in  H^{4}\left( \Omega  \right) $ such that,
-
-\begin{equation}
-\label{eq:bi_basic_dg2}
-\left( \Delta  ^{2} u,v \right) _{\Omega } = \sum_{T \in  \mathcal{T} _{h}}^{}  \left( D^2u,D^2v \right) _{T } - \left(\partial _{nt} u, \partial _{t}v
-\right)_{\partial T} - \left(\partial _{nn} u, \partial _{n}v \right)_{\partial T} + \left(\partial _{n} \Delta  u,v
-\right)_{\partial T}.
-\end{equation}
-However, this expression can be written to distinguish integrating over triangles $\mathcal{T} _{h}$ , integrating over exterior facets $\mathcal{F} _{h}^{ext}$ and then integrate interior facets $\mathcal{F} _{h}^{int}$.
-
-\begin{equation}
-\label{eq:bi_basic_dg_full_1}
-\begin{split}
-\left( \Delta  ^{2} u, v \right) _{\Omega } =& \sum_{T \in  \mathcal{T} _{h}}^{} \left( D^2u, D^2v \right)_{T}    \\
-& + \sum_{F \in \mathcal{F}_{h}^{ext}}  \left(\partial _{n} \Delta u, v  \right) _{F} - \left(\partial _{nt} u, \partial _{t} v \right) _{F}-
-\left( \partial _{nn} u, \partial _{n} v \right)_{F}  \\
-& + \sum_{F \in \mathcal{F}_{h}  ^{int}}^{} \left(\partial _{nn} u , \jump{ \partial _{n} v }
-\right)_{F} \\
-& = \sum_{T \in  \mathcal{T} _{h}}^{} \left( D^2u, D^2v \right)_{T} + \sum_{F \in
-\mathcal{F} ^{ext}_{h}}^{} \left(g, v  \right) _{F}
-  + \sum_{F \in \mathcal{F}_{h}  ^{int}}^{} \left( \partial _{nn} u , \jump{ \partial_{n} v } \right)_{F}
-\end{split}
-\end{equation}
-Keep in mind that any jump over a interior facet $F \subset \mathcal{F} _{h}^{int}   $, visualized in figure \ref{fig:normal}, is defined as $\jump{ a } =    a^{+} - a^{-} $
-and likewise for the mean, $\mean{ a  } = \frac{1}{2}(   a^{+}
-+ a^{-})$.    The equivalence of \eqref{eq:bi_basic_dg2} and \eqref{eq:bi_basic_dg_full_1} comes from the following argumentation.
-
-\begin{equation*}
-    \begin{split}
- \left( \Delta  ^{2} u,v \right) _{\Omega } & =\sum_{T\in \mathcal{T} _{h}}^{} \left( D^2u,D^2v \right) _{T } - \left(\partial _{nt} u, \partial _{t}v
-\right)_{\partial T} - \left(\partial _{nn} u, \partial _{n}v \right)_{\partial T} + \left(\partial _{n} \Delta  u,v
-\right)_{\partial T} \\
-&= \sum_{T\in \mathcal{T} _{h}}^{} \left( D^2u,D^2v \right) _{T } \\
-&  \quad + \sum_{F \in \mathcal{F}_{h}^{ext} }^{} \underbrace{\left( \partial _{n} \Delta  u, v  \right)_{F}}_{= \left( g,v \right)_{F} }  -  \left(
-\partial _{nt} u, \partial _{t} v \right) _{F}  - \underbrace{\left( \partial _{nn} u, \partial _{n} v \right)_{F}}_{ = 0}    \\
-& \quad  + \sum_{F \in \mathcal{F} _{h}^{int}}^{} \underbrace{\left( \left(\partial _{n^{+}} \Delta  u^{+}
-        ,v^{+}\right)_{F}
-+ \left(\partial _{n^{-}} \Delta  u^{+} ,v^{-}\right)_{F}  \right)}_{(I)} \\
- & \quad \quad \quad  \quad +
-\underbrace{\left( \left(\partial _{n^{+}t} u^{+}, \partial_{t} v^{+} \right)_{F} +  \left(\partial _{n^{-}t} u^{-},
-        \partial_{t} v^{-}
-\right)_{F}  \right) }_{(II)} \\
- & \quad \quad \quad  \quad  +
-\underbrace{\left( \left(\partial _{n^{+}n^{+}} u^{+}, v^{+} \right) _{F} + \left(\partial _{n^{-}n^{-}} u^{-}, v^{-}
-\right) _{F} \right) }_{(III)}
-    \end{split}
-.\end{equation*}
-
-Where integration over all interior facets $ \forall F \in \mathcal{F}_{h}^{int}$ is computed in this way.
-\begin{equation*}
-    \begin{split}
-        (I) &  =    \left(\partial _{n^{+}} \Delta  u^{+} ,v^{+}\right)_{F} +
-        \left(\partial _{n^{-}} \Delta  u^{-} ,v^{-}\right)_{F}  \\
-        & =   \int_{F}^{}
-        \jump{ \partial _{n} \Delta  u \cdot v } =
-         \int_{F}^{}
-         \mean{ \partial _{n} \Delta  u } \underbrace{\jump{ v }}_{= 0}    + \underbrace{\jump{ \partial _{n} \Delta  u
-         }}_{= 0}    \mean{ v } = 0 \\
-        (II) &  =     \left(\partial _{n^{+}t} u^{+}, \partial_{t} v^{+}
-        \right)_{F} +  \left(\partial _{n^{-}t} u^{-}, \partial_{t} v^{-}
-\right)_{F}   \\
-&  =   \int_{F}^{}
-        \jump{ \partial _{nt} u \cdot  \partial_{t} v } =
-         \int_{F}^{}
-         \mean{ \partial _{nt} u    } \underbrace{\jump{ \partial_{t} v }  }_{= 0}    + \underbrace{\jump{ \partial
-                 _{nt}  u
-         }}_{= 0}    \mean{ \partial _{t}v }  = 0\\
-        (III) &  =     \left(\partial _{n^{+}n^{+}} u^{+}, \partial_{n^{+}} v^{+} \right)_{F} +  \left(\partial _{n^{-}n^{-}} u^{-}, \partial_{n^{-}} v^{-} \right)_{F}    =    \int_{F}^{} \jump{ \partial _{nn} u \cdot  \partial_{n} v }  \\
-        & = \int_{F}^{}
-        \mean{ \partial _{nn} u    } \underbrace{\jump{ \partial_{n} v }  }_{\neq 0}    + \underbrace{\jump{ \partial
-                 _{nn}  u
-         }}_{= 0}    \mean{ \partial _{n}v }   =  \left( \partial _{nn} u, \jump{ \partial_{n} v } \right)_{F}   \end{split}
-.\end{equation*}
-Observe that the cancellations in the term $(I)$ appears of the continuity of $v\in V $ and $u\in H^{4}\left( \Omega  \right) $ which makes the jumps zero. For the second term $(II)$ does the terms become zero cancelled because the tangential
-derivative at the facet has no jump. However, The third term $(III)$  is fairly interesting since the discontinuity in
-normal vector for $v \in V$ is a jump, while the second term is still continuous. It can also be raised that $\mean{
-\partial _{nn} u } = \partial _{nn} u  $ holds by the continuity of $H^{4}\left( \Omega  \right) $. Hence,
-\eqref{eq:bi_basic_dg2} and \eqref{eq:bi_basic_dg_full_1} is equivalent.
-
-\subsection{Formulation of the Continious Interior Penalty Method}%
-\label{sub:formulation_of_continious_interior_penalty_method}
+    We define the weak problem is to find a $u \in  V_{0}$ s.t. \[
+    a( u,v) = F(v) \forall v \in V_{0}
+    \]
 
 
-We can finally start defining the fully discrete formulation. Let the basis be a $\mathcal{P}_{2} $ Lagrange finite element space so,
+
+
+\subsection{Initial discrete formulation}%
+\label{sub:initial_discrete_formulation}
+
+
+
+We want to make a cutFEM version of the CIP problem. That is, using the conventions of
+
 \[
 V_{h} = \left\{ v \in C^{0}\left( \Omega  \right): v_{T} = v | _{T} \in \mathcal{P} _{2}\left( T \right), \forall T \in
 \mathcal{T}_{h}    \right\}
 \]
-and
-\[
-V_{h}^{*} = \begin{cases}
-    V_{h} & \text{ if } \alpha  > 0 \\
-    \left\{ v \in V_{h}: \int_{\Omega }^{} v dx   = 0   \right\} &  \text{ if } \alpha   = 0
-\end{cases}
-\]
-Now, if we choose $u \in V_{h}$, then we must take account that the jump is discrete.
- Finally, the CIP formulation can be stated as follows.
-The discretized numerical problem is to solve $w_{h} \in V_{h}^{*}$ such that
-\begin{equation}
-\label{eq:CP_A_F}
-\mathcal{A}\left( w_{h}, v_{h} \right)   = F\left( v_{h} \right), \quad \forall v_{h} \in V_{h}^{*}  .
-\end{equation}
-where
-\begin{equation}
-\label{eq:CP_A_h_1}
-\begin{split}
-\mathcal{A} \left( w_{h}, v_{h} \right)   =&
-  \quad  \left( \alpha  w_{h}, v_{h} \right) _{\Omega }\\
-&  + \sum_{T \in \mathcal{T} _{h}}^{} \left( D^2 w_{h}, D^2v_{h} \right) _{T} \\
- & +
-  \sum_{F \in \mathcal{F}_{h}^{int} }^{}
-  \left( \mean{  \partial _{n n} w_{h} }, \jump{ \partial _{n }v_{h}} \right)_{F}  +
- \left( \mean{ \partial _{n n} v_{h} }, \jump{ \partial _{n}w }      \right)_{F} \\
-& \quad \quad \quad \quad  + \frac{\gamma}{h}  \left( \jump{ \partial _{n} w_{h}}, \jump{ \partial _{n} v_{h}   }   \right)_{F}
-\end{split}
-\end{equation}
-and
-\begin{equation}
-\label{eq:CP_F_h}
-F\left( v_{h} \right)  = \left( f, v_{h} \right) _{\Omega } +  \sum_ {F \in \mathcal{F}_{h} ^{ext}}^{} - \left(g, v_{h}  \right) _{F}.
-\end{equation}
-Notice that the regulation term determined by respectively a global tuning parameter $\gamma >0 $. Another key component to the formulation
-in \eqref{eq:CP_A_h_1} after introduction of $ w_{h}, v_{h} \in V^{*}_{h}$  is that we expanded $\left( \partial _{nn}w, \jump{ \partial _{n} v }  \right)_{F} \to \left( \mean{ \partial _{nn}w_{h} }  , \jump{ \partial _{n} v_{h} }  \right)_{F} $ since we can longer not guarantee a
-continuous jump. For symmetric purposes we also added $ \left( \mean{ \partial _{nn} v_{h}}  , \jump{ \partial _{n} w_{h} }  \right)_{F} $. For convenience will we introduce the compact notation of \eqref{eq:CP_A_h_1},
-
-\begin{equation}
-\label{eq:CP_A_h}
-\begin{split}
-\mathcal{A} \left( w_{h}, v_{h} \right)   =&
-  \quad  \left( \alpha  w_{h}, v_{h} \right) _{\Omega }\\
-&  +  \left( D^2 w_{h}, D^2v_{h} \right) _{\mathcal{T} _{h}} \\
- & +
-  \left( \mean{  \partial _{n n} w_{h} }, \jump{ \partial _{n }v_{h}} \right)_{\mathcal{F}_{h}}  +
- \left( \mean{ \partial _{n n} v_{h} }, \jump{ \partial _{n}w }      \right)_{\mathcal{F}_{h}}
- \\
- & + \frac{\gamma }{h}  \left( \jump{ \partial _{n} w_{h}}, \jump{ \partial _{n} v_{h}   }   \right)_{\mathcal{F}_{h}} \\
-\end{split}
-.
-\end{equation}
-
-\todo[inline]{ I think I need to work on how $ \mathcal{A}$ incorporates the $\partial _{n} v \mid _{\partial \Omega } = 0$ boundary condition.   }
 
 
-\subsection{Constructing Continuous Interior Penalty Method}%
-\label{sub:constructing_continious_interior_penalty_method}
-
- Let us assume that $u,v \in
-H^{4}\left( T  \right) $. Using that the weak form identity \eqref{eq:weak_form_identity} also holds for a triangle $T$ can we write
-\begin{equation}
-\label{eq:bi_basic_dg}
-\left( \Delta  ^{2} u,v \right) _{T} =  \left( D^2u,D^2v \right) _{T } - \left(\partial _{nt} u, \partial _{t}v
-\right)_{\partial T} - \left(\partial _{nn} u, \partial _{n}v \right)_{\partial T} + \left(\partial _{n} \Delta  u,v
-\right)_{\partial T}
-.\end{equation}
-For global continuity, let  $v \in V =  \left\{ v \in H^{1}\left( \Omega  \right): v_{T} \in  H^{4}\left( T \right), \ \forall T \in
-\mathcal{T}_{h}    \right\} $ and $u \in  H^{4}\left( \Omega  \right) $ such that,
-
-\begin{equation}
-\label{eq:bi_basic_dg2}
-\left( \Delta  ^{2} u,v \right) _{\Omega } = \sum_{T \in  \mathcal{T} _{h}}^{}  \left( D^2u,D^2v \right) _{T } - \left(\partial _{nt} u, \partial _{t}v
-\right)_{\partial T} - \left(\partial _{nn} u, \partial _{n}v \right)_{\partial T} + \left(\partial _{n} \Delta  u,v
-\right)_{\partial T}.
-\end{equation}
-However, this expression can be written to distinguish integrating over triangles $\mathcal{T} _{h}$ , integrating over exterior facets $\mathcal{F} _{h}^{ext}$ and then integrate interior facets $\mathcal{F} _{h}^{int}$.
-
-\begin{equation}
-\label{eq:bi_basic_dg_full_1}
-\begin{split}
-\left( \Delta  ^{2} u, v \right) _{\Omega } =& \sum_{T \in  \mathcal{T} _{h}}^{} \left( D^2u, D^2v \right)_{T}    \\
-& + \sum_{F \in \mathcal{F}_{h}^{ext}}  \left(\partial _{n} \Delta u, v  \right) _{F} - \left(\partial _{nt} u, \partial _{t} v \right) _{F}-
-\left( \partial _{nn} u, \partial _{n} v \right)_{F}  \\
-& + \sum_{F \in \mathcal{F}_{h}  ^{int}}^{} \left(\partial _{nn} u , \jump{ \partial _{n} v }
-\right)_{F} \\
-& = \sum_{T \in  \mathcal{T} _{h}}^{} \left( D^2u, D^2v \right)_{T} + \sum_{F \in
-\mathcal{F} ^{ext}_{h}}^{} \left(g, v  \right) _{F}
-  + \sum_{F \in \mathcal{F}_{h}  ^{int}}^{} \left( \partial _{nn} u , \jump{ \partial_{n} v } \right)_{F}
-\end{split}
-\end{equation}
-Keep in mind that any jump over a interior facet $F \subset \mathcal{F} _{h}^{int}   $, visualized in figure \ref{fig:normal}, is defined as $\jump{ a } =    a^{+} - a^{-} $
-and likewise for the mean, $\mean{ a  } = \frac{1}{2}(   a^{+}
-+ a^{-})$.    The equivalence of \eqref{eq:bi_basic_dg2} and \eqref{eq:bi_basic_dg_full_1} comes from the following argumentation.
-
-\begin{equation*}
-    \begin{split}
- \left( \Delta  ^{2} u,v \right) _{\Omega } & =\sum_{T\in \mathcal{T} _{h}}^{} \left( D^2u,D^2v \right) _{T } - \left(\partial _{nt} u, \partial _{t}v
-\right)_{\partial T} - \left(\partial _{nn} u, \partial _{n}v \right)_{\partial T} + \left(\partial _{n} \Delta  u,v
-\right)_{\partial T} \\
-&= \sum_{T\in \mathcal{T} _{h}}^{} \left( D^2u,D^2v \right) _{T } \\
-&  \quad + \sum_{F \in \mathcal{F}_{h}^{ext} }^{} \underbrace{\left( \partial _{n} \Delta  u, v  \right)_{F}}_{= \left( g,v \right)_{F} }  -  \left(
-\partial _{nt} u, \partial _{t} v \right) _{F}  - \underbrace{\left( \partial _{nn} u, \partial _{n} v \right)_{F}}_{ = 0}    \\
-& \quad  + \sum_{F \in \mathcal{F} _{h}^{int}}^{} \underbrace{\left( \left(\partial _{n^{+}} \Delta  u^{+}
-        ,v^{+}\right)_{F}
-+ \left(\partial _{n^{-}} \Delta  u^{+} ,v^{-}\right)_{F}  \right)}_{(I)} \\
- & \quad \quad \quad  \quad +
-\underbrace{\left( \left(\partial _{n^{+}t} u^{+}, \partial_{t} v^{+} \right)_{F} +  \left(\partial _{n^{-}t} u^{-},
-        \partial_{t} v^{-}
-\right)_{F}  \right) }_{(II)} \\
- & \quad \quad \quad  \quad  +
-\underbrace{\left( \left(\partial _{n^{+}n^{+}} u^{+}, v^{+} \right) _{F} + \left(\partial _{n^{-}n^{-}} u^{-}, v^{-}
-\right) _{F} \right) }_{(III)}
-    \end{split}
-.\end{equation*}
-
-Where integration over all interior facets $ \forall F \in \mathcal{F}_{h}^{int}$ is computed in this way.
-\begin{equation*}
-    \begin{split}
-        (I) &  =    \left(\partial _{n^{+}} \Delta  u^{+} ,v^{+}\right)_{F} +
-        \left(\partial _{n^{-}} \Delta  u^{-} ,v^{-}\right)_{F}  \\
-        & =   \int_{F}^{}
-        \jump{ \partial _{n} \Delta  u \cdot v } =
-         \int_{F}^{}
-         \mean{ \partial _{n} \Delta  u } \underbrace{\jump{ v }}_{= 0}    + \underbrace{\jump{ \partial _{n} \Delta  u
-         }}_{= 0}    \mean{ v } = 0 \\
-        (II) &  =     \left(\partial _{n^{+}t} u^{+}, \partial_{t} v^{+}
-        \right)_{F} +  \left(\partial _{n^{-}t} u^{-}, \partial_{t} v^{-}
-\right)_{F}   \\
-&  =   \int_{F}^{}
-        \jump{ \partial _{nt} u \cdot  \partial_{t} v } =
-         \int_{F}^{}
-         \mean{ \partial _{nt} u    } \underbrace{\jump{ \partial_{t} v }  }_{= 0}    + \underbrace{\jump{ \partial
-                 _{nt}  u
-         }}_{= 0}    \mean{ \partial _{t}v }  = 0\\
-        (III) &  =     \left(\partial _{n^{+}n^{+}} u^{+}, \partial_{n^{+}} v^{+} \right)_{F} +  \left(\partial _{n^{-}n^{-}} u^{-}, \partial_{n^{-}} v^{-} \right)_{F}    =    \int_{F}^{} \jump{ \partial _{nn} u \cdot  \partial_{n} v }  \\
-        & = \int_{F}^{}
-        \mean{ \partial _{nn} u    } \underbrace{\jump{ \partial_{n} v }  }_{\neq 0}    + \underbrace{\jump{ \partial
-                 _{nn}  u
-         }}_{= 0}    \mean{ \partial _{n}v }   =  \left( \partial _{nn} u, \jump{ \partial_{n} v } \right)_{F}   \end{split}
-.\end{equation*}
-Observe that the cancellations in the term $(I)$ appears of the continuity of $v\in V $ and $u\in H^{4}\left( \Omega  \right) $ which makes the jumps zero. For the second term $(II)$ does the terms become zero cancelled because the tangential
-derivative at the facet has no jump. However, The third term $(III)$  is fairly interesting since the discontinuity in
-normal vector for $v \in V$ is a jump, while the second term is still continuous. It can also be raised that $\mean{
-\partial _{nn} u } = \partial _{nn} u  $ holds by the continuity of $H^{4}\left( \Omega  \right) $. Hence,
-\eqref{eq:bi_basic_dg2} and \eqref{eq:bi_basic_dg_full_1} is equivalent.
-
-\subsection{Formulation of the Continious Interior Penalty Method}%
-\label{sub:formulation_of_continious_interior_penalty_method}
-
-
-We can finally start defining the fully discrete formulation. Let the basis be a $\mathcal{P}_{2} $ Lagrange finite element space so,
-\[
-V_{h} = \left\{ v \in C^{0}\left( \Omega  \right): v_{T} = v | _{T} \in \mathcal{P} _{2}\left( T \right), \forall T \in
-\mathcal{T}_{h}    \right\}
-\]
-and
-\[
-V_{h}^{*} = \begin{cases}
-    V_{h} & \text{ if } \alpha  > 0 \\
-    \left\{ v \in V_{h}: \int_{\Omega }^{} v dx   = 0   \right\} &  \text{ if } \alpha   = 0
-\end{cases}
-\]
-Now, if we choose $u \in V_{h}$, then we must take account that the jump is discrete.
- Finally, the CIP formulation can be stated as follows.
-The discretized numerical problem is to solve $w_{h} \in V_{h}^{*}$ such that
-\begin{equation}
-\label{eq:CP_A_F}
-\mathcal{A}\left( w_{h}, v_{h} \right)   = F\left( v_{h} \right), \quad \forall v_{h} \in V_{h}^{*}  .
-\end{equation}
-where
-\begin{equation}
-\label{eq:CP_A_h_1}
-\begin{split}
-\mathcal{A} \left( w_{h}, v_{h} \right)   =&
-  \quad  \left( \alpha  w_{h}, v_{h} \right) _{\Omega }\\
-&  + \sum_{T \in \mathcal{T} _{h}}^{} \left( D^2 w_{h}, D^2v_{h} \right) _{T} \\
- & +
-  \sum_{F \in \mathcal{F}_{h}^{int} }^{}
-  \left( \mean{  \partial _{n n} w_{h} }, \jump{ \partial _{n }v_{h}} \right)_{F}  +
- \left( \mean{ \partial _{n n} v_{h} }, \jump{ \partial _{n}w }      \right)_{F} \\
-& \quad \quad \quad \quad  + \frac{\gamma}{h}  \left( \jump{ \partial _{n} w_{h}}, \jump{ \partial _{n} v_{h}   }   \right)_{F}
-\end{split}
-\end{equation}
-and
-\begin{equation}
-\label{eq:CP_F_h}
-F\left( v_{h} \right)  = \left( f, v_{h} \right) _{\Omega } +  \sum_ {F \in \mathcal{F}_{h} ^{ext}}^{} - \left(g, v_{h}  \right) _{F}.
-\end{equation}
-Notice that the regulation term determined by respectively a global tuning parameter $\gamma >0 $. Another key component to the formulation
-in \eqref{eq:CP_A_h_1} after introduction of $ w_{h}, v_{h} \in V^{*}_{h}$  is that we expanded $\left( \partial _{nn}w, \jump{ \partial _{n} v }  \right)_{F} \to \left( \mean{ \partial _{nn}w_{h} }  , \jump{ \partial _{n} v_{h} }  \right)_{F} $ since we can longer not guarantee a
-continuous jump. For symmetric purposes we also added $ \left( \mean{ \partial _{nn} v_{h}}  , \jump{ \partial _{n} w_{h} }  \right)_{F} $. For convenience will we introduce the compact notation of \eqref{eq:CP_A_h_1},
-
-\begin{equation}
-\label{eq:CP_A_h}
-\begin{split}
-\mathcal{A} \left( w_{h}, v_{h} \right)   =&
-  \quad  \left( \alpha  w_{h}, v_{h} \right) _{\Omega }\\
-&  +  \left( D^2 w_{h}, D^2v_{h} \right) _{\mathcal{T} _{h}} \\
- & +
-  \left( \mean{  \partial _{n n} w_{h} }, \jump{ \partial _{n }v_{h}} \right)_{\mathcal{F}_{h}}  +
- \left( \mean{ \partial _{n n} v_{h} }, \jump{ \partial _{n}w }      \right)_{\mathcal{F}_{h}}
- \\
- & + \frac{\gamma }{h}  \left( \jump{ \partial _{n} w_{h}}, \jump{ \partial _{n} v_{h}   }   \right)_{\mathcal{F}_{h}} \\
-\end{split}
-.
-\end{equation}
-
-\subsection{ Stability Results}%
-\label{sub:error_and_stability_analysis_of_c0ip}
-
-To guarantee convergence and stability we may want to check coercivity and boundedness of the method.
-
-First of all, let us now establish some important inequalities.
-\[
-\begin{split}
-    \textbf{Cauchy-Schwarz inequality: } & \| ab \|_{  }^{  }  \le \| a \|_{  }^{  } \| b \|_{  }^{  }   \\
-    \textbf{Inverse inequality: } & \frac{1}{h}\| \partial _{nn}  v_{h} \|_{\mathcal{F}_{h}   }^{2  }  \le C_{j} \| D ^2 v_{h} \|_{ \mathcal{T} _{h} }^{ 2 }   \\
-    \textbf{Youngs epsilon inequality: } & 2ab =   2\sqrt{\varepsilon }a\cdot    \frac{b}{\sqrt{\varepsilon } } \le \varepsilon a^2+ b^2 \frac{1}{\varepsilon }
-\end{split}
-\]
-
-Let the energy norm be on the form,
-\begin{equation}
-\label{eq:A_energy_norm}
-    \begin{split}
-\| v_{h} \|_{ h }^{2  } & = \| v_{h} \|_{ a_{h} }^{ 2 } =  \| v_{h} \|_{ \Omega  }^{2  }  +  \| D ^2 v_{h} \|_{ \mathcal{T} _{h}  }^{ 2 }  + \|  h^{-\frac{1}{2}} \jump{ \partial _{n} v_{h}    }\|_{  \mathcal{F} _{h} }^{2  }, \\
-\| v \|_{ h }^{ 2 }  &= \| v \|_{ a_{h},* }^{ 2 } = \| v \|_{ a_{h} }^{ 2 }  + \| h^{\frac{1}{2}} \left\{ \partial _{nn } v\right\}  \|_{ \mathcal{F}_{h}   }^{  2}, \quad  v\in V \oplus V_{h}.
-    \end{split}
-\end{equation}
-The method is said to be coercive if $\mathcal{A} _{h}\left( v_{h}, v_{h} \right) \ge  C \| v_{h} \|_{ a_{h} }^{  } $. Similarly, it is bounded if $ \mathcal{A} _{h} \left( v_{h}, u_{h} \right) \le  C \| u_{h} \|_{  a_{h}}^{ 2 }  \| v_{h} \|_{ a_{h}
-}^{ 2 } $ and then, according to Lax Milgram the problem is said to be well posed.
-
-\subsubsection{Coercivity}%
-\label{ssub:coercitivity}
-
-
-Suppose we have the CIP problem described in \eqref{eq:CP_A_F}. Then is the coercivity be computed such that,
-\[
-    \begin{split}
-\mathcal{A} \left( v_{h}, v_{h} \right)  =& \quad  \alpha \|  v_{h}  v_{h} \|_{ \Omega  }^{  } +  \| D^2v_{h} \|_{ \mathcal{T} _{h} }^{2  }   \\
-& \quad + 2 \left(  \mean{ \partial _{nn} v_{h} }    ,  \jump{ \partial _{n}v_{h} }     \right) _{\mathcal{F} _{h}} +  \frac{\gamma}{h} \|  \jump{ \partial _{n} v_{h} }
-  \|_{ \mathcal{F} _{h} }^{ 2 } \\
-\quad \textit{Cauchy-Schwarz inequality} \quad
- \ge& \quad  \alpha \| v_{h}  \|_{\Omega   }^{  } \| v_{h} \|_{\Omega   }^{  } +   \| D ^2 v_{h} \|_{ \mathcal{T} _{h} }^{2  } \\
-& \quad -2 \| h^{\frac{1}{2}} \mean{ \partial _{nn}v_{h} }    \|_{  \mathcal{F} _{h}}^{  } \| h^{-\frac{1}{2}} \jump{ \partial _{n}v_{h} }    \|_{  \mathcal{F} _{h}}^{  } + \gamma \| h^{-\frac{1}{2}}  \jump{ \partial _{n}v_{h} }   \|_{ \mathcal{F} _{h}  }^{ 2 } \\
-\quad \textit{Inverse inequality} \quad
-   \ge & \quad  \alpha \| v_{h}  \|_{\Omega   }^{  } \| v_{h} \|_{\Omega   }^{  } + \| D ^2 v_{h}  \|_{ \mathcal{T} _{h}  }^{ 2  }  \\
- &  \quad - 2 C^{\frac{1}{2}}_{j} \|   D ^2 v_{h}    \|_{ \mathcal{T} _{h}  }^{  } \| h^{-\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{ \mathcal{F} _{h} }^{  }  + \gamma \| h^{ -\frac{1}{2}} \jump{
- \partial _{n } v_{h}}   \|_{ \mathcal{F}_{h}}^{2}  \\
-\quad \textit{ Youngs epsilon inequality} \quad
-    \ge  &  \quad  \alpha \| v_{h}  \|_{\Omega   }^{  } \| v_{h} \|_{\Omega   }^{  } +  \| D ^2 v_{h} \|_{ \mathcal{T}_{h}  }^{2  } - \varepsilon C_{j} \| D ^2 v_{h} \|_{ \mathcal{T} _{h} }^{2  } \\
-  & \quad  - \frac{1}{\varepsilon } \| h^{\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{ \mathcal{F} _{h} }^{2  }  + \gamma \|
-  h^{-\frac{1}{2}} \jump{ \partial _{n} v_{h}}   \|_{ \mathcal{F} _{h} }^{2  }  \\
-   =&  \quad  \alpha \| v_{h}  \|_{\Omega   }^{  } \| v_{h} \|_{\Omega   }^{  } +\left( 1 - \varepsilon C_{j} \right) \| D ^2 v_{h} \|_{\mathcal{T} _{h}  }^{ 2 }  \\
-  & \quad + \left( \gamma  - \frac{1}{\varepsilon } \right) \| h^{-\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{ \mathcal{T} _{h} }^{ 2 } \\
-  (\varepsilon  = \frac{1}{2 C_{j} })  \implies  \quad \quad =& \quad  \alpha \| v_{h}  \|_{\Omega   }^{  } \| v_{h} \|_{\Omega   }^{  } +\frac{1}{2} \| D ^2 v_{h} \|_{ \mathcal{T} _{h} }^{ 2 }  + \underbrace{\left( \gamma -2 C_{j} \right)}_{ \ge  \frac{1}{2}}  \| h^{\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{
-  \mathcal{F} _{h} }^{2  } \\
-   \ge & \quad  C \| v_{h} \|_{ a_{h} }^{  2}
-    \end{split}
-\]
-This holds if $C=\min\left\{  \alpha , 1 /2\right\}$.
-Observe that for the first inequality is the standard \textbf{Cauchy-Schwarz inequality} such that $$\left( \mean{ \partial_{nn} v_{h} }  , \jump{ \partial _{n} v_{h} }   \right) _{\mathcal{F} _{h}} \ge - \| h^{-\frac{1}{2}} \mean{ \partial _{nn}
-v_{h} }    \|_{\mathcal{F}_{h}   }^{  } \| \mean{ \partial _{n}v_{h} }   \|_{ \mathcal{F}_{h}   }^{  } .  $$ On the second inequality the \textbf{Inverse inequality} was applied,
-\[
-- \| h^{\frac{1}{2}} \mean{ \partial _{nn}v }   \|_{ \mathcal{F} _{h}  }^{  }\ge - C_{j}^{\frac{1}{2}} \| D ^2 v_{h} \|_{ \mathcal{T} _{h} }^{  }
-\]
-The next step is then to use the \textbf{Youngs epsilon inequality} to separate the facets and triangulation norms, \[
- - 2 C^{\frac{1}{2}}_{j} \|  D ^2 v_{h}    \|_{ \mathcal{T} _{h}  }^{  } \| h^{\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{ \mathcal{F} _{h} }^{  } \ge- \varepsilon C_{j} \| D ^2 v_{h} \|_{ \mathcal{T} _{h} }^{2  } -
- \frac{1}{\varepsilon } \| h^{\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{ \mathcal{F} _{h} }^{2  }
-.\]
-The last step was to choose a $\varepsilon $ and $\gamma $ as some positive constant so that the second term is restricted to be multiplied with something bigger than $\frac{1}{2}$. Thus, the term fulfils coercivity of the \eqref{eq:A_energy_norm}.
-Hence, the CIP method is coercive.
-
-\subsubsection{Boundedness}%
-\label{ssub:bounded}
-We want the CIP method to be bounded.
-
-
-\begin{equation*}
-    \begin{split}
-\mathcal{A} \left( w_{h}, v_{h} \right)   =& \quad \left( \alpha w_{h}, v_{h} \right) _{\Omega } +
-    \left( D ^2 w_{h}, D ^2v_{h} \right) _{\mathcal{T} _{h}}
-   \\
-    &\quad  +
-  \left( \mean{  \partial _{n n} w_{h} }, \jump{ \partial _{n }v_{h}} \right)_{\mathcal{F}_{h}}  +
- \left( \mean{ \partial _{n n} v_{h} }, \jump{ \partial _{n}w }      \right)_{\mathcal{F}_{h}} \\
- & \quad + \frac{\gamma }{h}  \left( \jump{ \partial _{n} w_{h}}, \jump{ \partial _{n} v_{h}   }   \right)_{\mathcal{F}_{h}} \\
-\quad \textit{Cauchy-Schwarz inequality }\quad  \le& \quad  \alpha  \|  w_{h} \|_{\Omega   }^{  } \| v_{h} \|_{ \Omega  }^{  }     +
-\| D ^2w_{h} \|_{\mathcal{T} _{h}   }^{  }  \| D ^2v_{h} \|_{\mathcal{T} _{h}   }^{  } \\
-& \quad  + \| h^{\frac{1}{2}}\mean{ \partial _{nn} w_{h} } \|_{ \mathcal{F}_{h}  }^{  } \| h^{-\frac{1}{2}}\jump{ \partial _{n} v_{h} } \|_{ \mathcal{F}_{h}  }^{  }    \\
-& \quad  + \| h^{\frac{1}{2}}\mean{ \partial _{nn} v_{h} }
-\|_{ \mathcal{F}_{h}  }^{  } \| h^{-\frac{1}{2}}\jump{ \partial _{n} w_{h} } \|_{ \mathcal{F}_{h}  }^{  }  \\
-& \quad + \gamma \| h^{-1} \jump{ \partial _{n} v_{h}}   \|_{ \mathcal{F} _{h} }^{  }   \|  \jump{ \partial _{n} w_{h}}   \|_{ \mathcal{F} _{h} }^{  } \\
-\quad \textit{Inverse inequality }\quad  \le & \quad   \alpha  \|  w_{h} \|_{\Omega   }^{  } \| v_{h} \|_{ \Omega  }^{  }  +
-\| D ^2w_{h} \|_{\mathcal{T} _{h}   }^{  }  \| D ^2v_{h} \|_{\mathcal{T} _{h}   }^{  } \\
-& \quad + C_{j}^{\frac{1}{2}} \| D ^2 w_{h} \|_{\mathcal{T} _{h}  }^{  }  \| h^{-\frac{1}{2}}\jump{ \partial _{n} v_{h} } \|_{ \mathcal{F}_{h}  }^{  }
- \\
-& \quad +  C_{j}^{\frac{1}{2}} \| D ^2 w_{h} \|_{\mathcal{T} _{h}  }^{  }
- \| h^{-\frac{1}{2}}\jump{ \partial _{n} w_{h} } \|_{ \mathcal{F}_{h}  }^{  }\\
- & \quad  + \gamma \| h^{-1} \jump{ \partial _{n} v_{h}}   \|_{ \mathcal{F} _{h} }^{  }   \|  \jump{ \partial _{n} w_{h}}   \|_{ \mathcal{F} _{h} }^{  } \\
-\textit{ Using \eqref{eq:bounded_ineq}}  \quad  \le & \quad \alpha  \|  w_{h} \|_{a_{h}   }^{  } \| v_{h} \|_{ a_{h}   }^{  } + \| w_{h} \|_{ a_{h} }^{  } \| v_{h} \|_{ a_{h} }^{  }  + 2C_{j}^{\frac{1}{2}} \| w_{h} \|_{ a_{h} }^{  } \| v_{h} \|_{
-a_{h} }^{  }  \\
- & \quad + \gamma \| v_{h} \|_{ a_{h} }^{  } \| w_{h} \|_{ a_{h} }^{  } \\
- \le& \quad   \left( \alpha + 1 + 2C_{j}^{\frac{1}{2}} + \gamma  \right)  \| v_{h} \|_{a_{h}  }^{  }  \| w_{h} \|_{ a_{h} }^{  }  \le  K  \| v_{h} \|_{a_{h}  }^{  }  \| w_{h} \|_{ a_{h} }^{  }
-\end{split}
-\end{equation*}
-
-Thus, the CIP method is shown to be bounded.
-Again, the first step was to apply the \textbf{Cauchy-Schwarz inequality} for every term. On the second inequality the \textbf{Inverse inequality} was applied so that
-\[
-\| h^{\frac{1}{2}} \mean{ \partial _{nn}v_{h} }   \|_{ \mathcal{F} _{h}  }^{  }\le   C_{j}^{\frac{1}{2}} \| D ^2 v_{h} \|_{ \mathcal{T} _{h} }^{  } \quad \text{and} \quad   \| h^{\frac{1}{2}} \mean{ \partial _{nn}w_{h} }   \|_{ \mathcal{F} _{h}
-}^{  }\le   C_{j}^{\frac{1}{2}} \| D ^2 w_{h} \|_{ \mathcal{T} _{h} }^{  }.
-\]
-The second step can we luckily observe that all terms invidually is less than the norm, that is,
-
-\begin{equation}
-\label{eq:bounded_ineq}
-\begin{split}
-\| w_{h} \|_{\Omega    }^{  }  \| v_{h} \|_{ \Omega    }^{  } & \le \| w_{h} \|_{ a_{h} }^{  } \| v_{h} \|_{ a_{h} }^{  }, \\
-\| D ^2w_{h} \|_{\mathcal{T}_{h}   }^{  }  \| D ^2v_{h} \|_{\mathcal{T}_{h}   }^{  } & \le \| w_{h} \|_{ a_{h} }^{  } \| v_{h} \|_{ a_{h} }^{  }, \\
-\|  D ^2 w_{h} \|_{ \mathcal{T} _{h} }^{ } \| h^{-\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{ \mathcal{F} _{h} }^{  }  & \le  \| w_{h} \|_{ a_{h} }^{  } \| v_{h} \|_{ a_{h} }^{  }, \\
-   \|  D ^2 v_{h} \|_{ \mathcal{T} _{h} }^{ } \| h^{-\frac{1}{2}} \jump{ \partial _{n} w_{h} }   \|_{ \mathcal{F} _{h} }^{  }   & \le \| w_{h} \|_{ a_{h} }^{  } \| v_{h} \|_{ a_{h} }^{  }, \\
- \gamma \| h^{-1 } \jump{ \partial _{n} v_{h} }    \|_{ \mathcal{F} _{h}  }^{  }  \| \jump{ \partial _{n} w_{h} }    \|_{\mathcal{F}_{h}   }^{  }   & \le \gamma \| w_{h} \|_{ a_{h} }^{  }  \| v_{h} \|_{ a_{h} }^{  }.
-\end{split}
-\end{equation}
-Hence, the CIP method is does fulfills the Lax Milgram criteria because it is both bounded and unique.
 
