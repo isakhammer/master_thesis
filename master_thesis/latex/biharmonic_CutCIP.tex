@@ -79,15 +79,21 @@ l_{h}( v) =  ( f,v)_{\mathcal{T} _{h} \cap \Omega } - ( h, v) _{\Gamma }  .
 To make sure the problem is stabilized will we add a ghost-penalty. That is, we define the discrete problem to find a $u_{h} \in V_{h}$ s.t. \[
 A_{h}( u_{h} ,v ) := a_{h}( u_{h}, v)  + g_{h}( u_{h},v) = l_{h} ( v) \quad  \forall v \in  V_{h}.
 \]
-We define the underlying norms for $ v \in V_{h} $ as \[
-    \begin{split}
+We define the underlying norms for $ v \in V_{h} $ as
+    \begin{align}
+        \label{eq:bi_ah_norm}
  \| v \|_{ a_{h} }^{ 2 } & =  \| v \|_{ \mathcal{T} _{h} \cap \Omega  }^{ 2}  + \| D^2 v \|_{\mathcal{T} _{h} \cap \Omega   }^{ 2 } + \| h^{-\frac{1}{2}} \mean{ \partial _{n} v }   \|_{ \mathcal{F}_{h}\cap \Omega    }^{ 2 },    \\
-\abs{ v } _{g_{h}}^{2} & = g( v,v).
-    \end{split}
-\]
+        \label{eq:bi_gh_norm}
+\abs{ v } _{g_{h}}^{2} & = g( v,v) \\
+        \label{eq:bi_Ah_norm}
+\| v \|_{A_{h}  }^{  2}  & = \| v \|_{ a_{h} }^{ 2 } + \abs{ v } _{g_{h}}^{2}
+    \end{align}
 and for $v \in V + V_{h}$ we get, \[
 \| v \|_{ a_{h}, * }^{  2} =\| v \|_{ a_{h} }^{ 2 } +\abs{ v } _{g_{h}}^{2} +  \| h^{\frac{1}{2}} \mean{ \partial _{nn} v }   \|_{\mathcal{F} _{h} \cap \Omega   }^{  2}  .
 \]
+\begin{remark}
+Note that $\mathcal{T} _{h} \cap  \Omega   = \Omega  $ and $\mathcal{T} _{h} \cap  \Gamma  = \Gamma $, however, what notation we use depends on the context.
+\end{remark}
 
 \subsection{Stability estimate}%
 \label{sub:stability_estimate}
@@ -117,24 +123,40 @@ A useful variant is the following inequality that is,
 Summation the inverse inequalities over $\mathcal{F}_{h} $ and $\mathcal{T}_{h} $ implies that
 \begin{align}
 \label{eq:bi_cut_inverse_1}
-\| \partial _{nn} v \|_{ \Gamma \cap \mathcal{T} _{h} }^{  } &\lesssim h^{-\frac{1}{2}} \| D^2 v \|_{ \mathcal{T}_h }^{  }, \\
+\| \partial _{nn} v \|_{ \mathcal{T} _{h} \cap \Gamma  }^{  } &\lesssim h^{-\frac{1}{2}} \| D^2 v \|_{ \mathcal{T}_h }^{  }, \\
 \label{eq:bi_cut_inverse_2}
 \| \partial _{nn}  v \|_{ \mathcal{F}_h \cap \Omega    }^{  }  &  \lesssim   h^{-\frac{1}{2}} \| D^2 v \|_{ \mathcal{T}_h  }^{  }.
 \end{align}
-
-
+In fact, combining the inequalities we get the identity,
+\begin{equation}
+\label{eq:bi_identity}
+h\| \partial _{nn}  v \|_{ \mathcal{F}_h \cap \Omega    }^{2 } + h\| \partial _{nn} v \|_{ \mathcal{T} _{h} \cap \Gamma  }^{2  } \lesssim \| D^2 v \|_{ \mathcal{T} _{h}  }^{2  }.
+\end{equation}
 
 We may introduce our first assumption on the ghost penalty.
-
 \begin{assumption}[EP1]
     \label{as:bi_EP1}
     The ghost penalty $g_{h}$ extends the $H^{1}$ norm s.t. \[
-    \| \nabla v \|_{ \mathcal{T} _{h} }^{ 2 } \lesssim  \| \nabla v \|_{ \Omega  }^{ 2 } + \abs{ v } _{g_{h}}^{2}.
+    \| D^2 v \|_{ \mathcal{T} _{h} }^{ 2 } \lesssim  \| D^2 v \|_{ \Omega  }^{ 2 } + \abs{ v } _{g_{h}}^{2}.
     \]
 \end{assumption}
 
 
-Combining the
+Combing the results we get the following convenient corollary.
+
+
+\begin{corollary}
+    Let $g_{h}$ satisfy Assumption \ref{as:bi_EP1} then
+    \[
+        \begin{split}
+            h\| \partial _{nn}  v \|_{ \mathcal{F}_h \cap \Omega    }^{2 } + h\| \partial _{nn} v \|_{ \mathcal{T} _{h} \cap \Gamma  }^{2  } &  \lesssim  \| D^2 v \|_{ \Omega  }^{ 2 } + \abs{ v } _{g_{h}}^{2} \\
+            &  \lesssim \| v \|_{ A_{h} }^{  2}
+        \end{split}
+    \]
+\end{corollary}
+\begin{proof}
+    The first inequality is a direct result of \eqref{eq:bi_identity} and Assumption \ref{as:bi_EP1}. The second inequality is simply a results of the definition \eqref{eq:bi_Ah_norm}.
+\end{proof}
 
 
 
