@@ -61,7 +61,7 @@ V_{h} = \left\{ v \in C^{0}\left( \Omega  \right): v_{T} = v | _{T} \in \mathcal
 From the previous chapter can we write the CIP method. The bilinear form $a_{h}:  V_{h}\times  V_{h} \to \mathbb{R} $ is defined as
 
 \begin{equation}
-\label{eq:CP_A_h}
+\label{eq:Bi_a_h}
 \begin{split}
 a_{h} \left( u, v \right)   =&   \left( \alpha  u, v \right) _{\mathcal{T} _{h} \cap \Omega }   +  \left( D^2 u, D^2v \right) _{\mathcal{T} _{h} \cap \Omega} \\
  & +
@@ -85,8 +85,56 @@ We define the underlying norms for $ v \in V_{h} $ as \[
 \abs{ v } _{g_{h}}^{2} & = g( v,v).
     \end{split}
 \]
-and for $v \in V + V_{h}$ we get \[
+and for $v \in V + V_{h}$ we get, \[
 \| v \|_{ a_{h}, * }^{  2} =\| v \|_{ a_{h} }^{ 2 } +\abs{ v } _{g_{h}}^{2} +  \| h^{\frac{1}{2}} \mean{ \partial _{nn} v }   \|_{\mathcal{F} _{h} \cap \Omega   }^{  2}  .
 \]
+
+\subsection{Stability estimate}%
+\label{sub:stability_estimate}
+
+Similarly for the Poisson problem will we have the following assumptions for the computational mesh;
+
+\begin{enumerate}[label=\textbf{S.\arabic*}]
+    \item\label{as:s1} Boundary $\Gamma $ is of $C^2$
+    \item\label{as:s2} The mesh $\mathcal{T} _{h}$ is quasi-uniform.
+    \item \label{as:s3}For a $T \in \mathcal{T} _{\Gamma }$ there exists a path $P$ of $diam(P) \lesssim h$ which contains $T$ and an element $T'$ with a so-called fat intersection $
+    \abs{ T' \cap \Omega  } _{d} \ge \abs{ T' } _{d}$.
+\end{enumerate}
+
+
+From basic theory we have the following inverse estimate for $ v \in \mathcal{P}^{k}( T)$ s.t. \[
+     \| \partial _{nn}  v \|_{F   }^{ }  \lesssim  \| h_{T}^{-\frac{1}{2}} D ^2 v \|_{ T }^{  },
+\]
+where the hidden constant depend on dimension $d$, order $k$ and the shape regularity. Similarly for cut elements is it easy to see that this must hold,
+\begin{equation*}
+     \| \partial _{nn}  v \|_{F \cap \Omega    }^{  }  \lesssim\| \partial _{nn}  v \|_{F }^{  }  \lesssim   \| h_{T}^{-\frac{1}{2}} D ^2 v \|_{ T }^{  }.
+\end{equation*}
+A useful variant is the following inequality that is,
+\begin{equation*}
+\| \partial _{nn} v \|_{ \Gamma \cap T  }^{  } \lesssim h^{-\frac{1}{2}} \| D^2 v \|_{ T }^{  }.
+\end{equation*}
+\todo[inline]{I Hope this one is correct?}
+Summation the inverse inequalities over $\mathcal{F}_{h} $ and $\mathcal{T}_{h} $ implies that
+\begin{align}
+\label{eq:bi_cut_inverse_1}
+\| \partial _{nn} v \|_{ \Gamma \cap \mathcal{T} _{h} }^{  } &\lesssim h^{-\frac{1}{2}} \| D^2 v \|_{ \mathcal{T}_h }^{  }, \\
+\label{eq:bi_cut_inverse_2}
+\| \partial _{nn}  v \|_{ \mathcal{F}_h \cap \Omega    }^{  }  &  \lesssim   h^{-\frac{1}{2}} \| D^2 v \|_{ \mathcal{T}_h  }^{  }.
+\end{align}
+
+
+
+We may introduce our first assumption on the ghost penalty.
+
+\begin{assumption}[EP1]
+    \label{as:bi_EP1}
+    The ghost penalty $g_{h}$ extends the $H^{1}$ norm s.t. \[
+    \| \nabla v \|_{ \mathcal{T} _{h} }^{ 2 } \lesssim  \| \nabla v \|_{ \Omega  }^{ 2 } + \abs{ v } _{g_{h}}^{2}.
+    \]
+\end{assumption}
+
+
+Combining the
+
 
 
