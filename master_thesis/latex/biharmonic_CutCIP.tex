@@ -13,7 +13,7 @@ Let $\Omega \subseteq    \mathbb{R} ^d$ be a physical mesh, $\Gamma  $ be a $C^2
 \begin{split}
     \Delta^2  u  + \alpha  u  & = f( x)  \quad \text{in } \Omega,   \\
     \partial _{n} u & = 0  \quad \text{on } \Gamma ,  \\
-    \partial _{n} \Delta  u & = g(x)  \quad \text{on } \Gamma  .  \\
+    \partial _{n} \Delta  u & = h(x)  \quad \text{on } \Gamma  .  \\
 \end{split}
 \end{equation}
 The goal is to write the problem on a weak form.
@@ -33,23 +33,60 @@ Let $u \in H^{4}( \Omega ) $ be a solution of the strong problem and $v \in H^{2
     Finally, if we let $u,v \in V_{0}$ then is it natural to define an general bilinear form $ a: V_{0} \times  V_{0} \to   \mathbb{R} $ as \[
     a( u,v) = \alpha ( u,v)_{\Omega } + ( D^2u, D^2v)_{\Omega }
     \]
-    where $\alpha >0$ and a corresponding linear form $F: V \to \mathbb{R} $,
+    where $\alpha >0$ and a corresponding linear form $l: V \to \mathbb{R} $,
     \[
-    F( v) = ( f ,v)_{\Gamma } +  ( g,v)_{\Gamma } .
+    l( v) = ( f ,v)_{\Gamma } +  ( h,v)_{\Gamma } .
     \]
     We define the weak problem is to find a $u \in  V_{0}$ s.t. \[
-    a( u,v) = F(v) \quad  \forall v \in V_{0}
+    a( u,v) = l(v) \quad  \forall v \in V_{0}
     \]
 
 \subsection{Initial discrete formulation}%
 \label{sub:initial_discrete_formulation}
 
-We want to make a cutFEM version of the CIP problem. That is, using the conventions of
-
+We want to make a cutFEM version of the CIP problem. Let $\widetilde{\mathcal{T}_{h} } $ be a shape-regular and quasi-uniform background mesh. Let us denote the active set $\mathcal{T} _{h} \subseteq \widetilde{\mathcal{T}_{h}}$ which intersects the interior of the active domain $\Omega $, that is  \[
+\mathcal{T} _{h} = \left\{ T \in \widetilde{\mathcal{T} _{h}}  \mid  T \cap (\Omega \setminus \Gamma ) \neq \emptyset    \right\} .
+\]
+With a corresponding set of interior facets, \[
+    \mathcal{F} _{h} = \left\{ F = T^{+} \cap T^{-}  \mid  T^{+}, T^{-} \in \mathcal{T} _{h} \right\},
+\]
+and a set of cut elements \[
+\mathcal{T} _{\Gamma } = \left\{ T \in \mathcal{T} _{h}   \mid  T \cap \Gamma \neq \Omega \right\}.
+\]
+We denote the $C^{0}$ polynomial space of order $k$ as
 \[
-V_{h} = \left\{ v \in C^{0}\left( \Omega  \right): v_{T} = v | _{T} \in \mathcal{P} ^{2}\left( T \right), \forall T \in
+V_{h} = \left\{ v \in C^{0}\left( \Omega  \right): v_{T} = v | _{T} \in \mathcal{P} ^{k}\left( T \right), \forall T \in
 \mathcal{T}_{h}    \right\}
 \]
+From the previous chapter can we write the CIP method. The bilinear form $a_{h}:  V_{h}\times  V_{h} \to \mathbb{R} $ is defined as
 
+\begin{equation}
+\label{eq:CP_A_h}
+\begin{split}
+a_{h} \left( u, v \right)   =&   \left( \alpha  u, v \right) _{\mathcal{T} _{h} \cap \Omega }   +  \left( D^2 u, D^2v \right) _{\mathcal{T} _{h} \cap \Omega} \\
+ & +
+  \left( \mean{  \partial _{n n} u }, \jump{ \partial _{n }v} \right)_{\mathcal{F}_{h} \cap \Omega}  +
+ \left( \mean{ \partial _{n n} u }, \jump{ \partial _{n}v }      \right)_{\mathcal{F}_{h} \cap \Omega}
+ \\
+ & + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v_{h}   }   \right)_{\mathcal{F}_{h} \cap \Omega} \\
+\end{split}
+.
+\end{equation}
+Similarly the linear form $l_{h}:  V_{h} \to \mathbb{R} $ is defined as
+ \[
+l_{h}( v) =  ( f,v)_{\mathcal{T} _{h} \cap \Omega } - ( h, v) _{\Gamma }  .
+\]
+To make sure the problem is stabilized will we add a ghost-penalty. That is, we define the discrete problem to find a $u_{h} \in V_{h}$ s.t. \[
+A_{h}( u_{h} ,v ) := a_{h}( u_{h}, v)  + g_{h}( u_{h},v) = l_{h} ( v) \quad  \forall v \in  V_{h}.
+\]
+We define the underlying norms for $ v \in V_{h} $ as \[
+    \begin{split}
+ \| v \|_{ a_{h} }^{ 2 } & =  \| v \|_{ \mathcal{T} _{h} \cap \Omega  }^{ 2}  + \| D^2 v \|_{\mathcal{T} _{h} \cap \Omega   }^{ 2 } + \| h^{-\frac{1}{2}} \mean{ \partial _{n} v }   \|_{ \mathcal{F}_{h}\cap \Omega    }^{ 2 },    \\
+\abs{ v } _{g_{h}}^{2} & = g( v,v).
+    \end{split}
+\]
+and for $v \in V + V_{h}$ we get \[
+\| v \|_{ a_{h}, * }^{  2} =\| v \|_{ a_{h} }^{ 2 } +\abs{ v } _{g_{h}}^{2} +  \| h^{\frac{1}{2}} \mean{ \partial _{nn} v }   \|_{\mathcal{F} _{h} \cap \Omega   }^{  2}  .
+\]
 
 
