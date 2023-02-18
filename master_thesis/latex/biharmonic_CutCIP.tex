@@ -7,7 +7,7 @@
 \label{sub:weak_formulation}
 
 
-Let $\Omega \subseteq    \mathbb{R} ^d$ be a physical mesh with and $\Gamma  $ be a $C^2$ boundary. We define the strong biharmonic problem to be on the form
+Let $\Omega \subseteq    \mathbb{R} ^d$ be a physical mesh, $\Gamma  $ be a $C^2$ boundary and the constant $\alpha >0$. We define the strong biharmonic problem to be on the form
 
 \begin{equation}
 \begin{split}
@@ -16,7 +16,7 @@ Let $\Omega \subseteq    \mathbb{R} ^d$ be a physical mesh with and $\Gamma  $ b
     \partial _{n} \Delta  u & = g(x)  \quad \text{on } \Gamma  .  \\
 \end{split}
 \end{equation}
-We want to write the problem on the weak form.
+The goal is to write the problem on a weak form.
 Let $u \in H^{4}( \Omega ) $ be a solution of the strong problem and $v \in H^{2}( \Omega ) $ be a test function. We argue that this holds,
     \[
         \begin{split}
@@ -25,35 +25,29 @@ Let $u \in H^{4}( \Omega ) $ be a solution of the strong problem and $v \in H^{2
         \end{split}
     \]
     Define the space $V_{0} = \left\{ u \in H^{2}( \Omega ) :  \partial _{n}u  \mid _{\Gamma } = 0 \right \} $ and $V = H^2( \Omega ) $ .
-    By applying the boundary conditions can we see that $( \partial _{n} \Delta u, v)_\Gamma   = ( g,v)_{\Gamma }$ which occurs naturally. However, the neumann boundary condition can be imposed by assuming $u \in V_{0}$.
-    A consequence of this choice is that we force $ ( \partial _{nn} u, \partial _{n}v)_{\Gamma }
-    = 0$ and $( \partial _{tn} u, \partial _{t}v)_{\Gamma } = 0$ since $\partial _{n} v = 0$ and that $\partial _{t} (\partial _{n}u) = 0 $. The latter is a consequence of that the Neumann boundary condition is homogeneous.
+    By applying the boundary conditions can we see that $( \partial _{n} \Delta u, v)_\Gamma   = ( g,v)_{\Gamma }$ which occurs naturally. However, the Neumann boundary condition can be imposed by assuming $u \in V_{0}$ and
+     as a consequence is the following terms $ ( \partial _{nn} u, \partial _{n}v)_{\Gamma }
+    = 0$   and $( \partial _{tn} u, \partial _{t}v)_{\Gamma } = 0$. This follows from the fact that that the Neumann boundary condition is homogeneous s.t. $\partial _{n} v = 0$ and $\partial _{t} (\partial _{n}u) = 0 $.
     \todo[inline]{ But what if the Neumann conditions is not homogeneous? And why is it necessary to include it in the function space when it comes in "naturally"?  }
 
-    Finally, if we $u,v \in V_{0}$ then is it natural to define an general bilinear form $ a: V_{0} \times  V_{0} \to   \mathbb{R} $ as \[
+    Finally, if we let $u,v \in V_{0}$ then is it natural to define an general bilinear form $ a: V_{0} \times  V_{0} \to   \mathbb{R} $ as \[
     a( u,v) = \alpha ( u,v)_{\Omega } + ( D^2u, D^2v)_{\Omega }
     \]
     where $\alpha >0$ and a corresponding linear form $F: V \to \mathbb{R} $,
     \[
-    F( v) = ( \partial _{n} \Delta u ,v)_{\Gamma }.
+    F( v) = ( f ,v)_{\Gamma } +  ( g,v)_{\Gamma } .
     \]
-
     We define the weak problem is to find a $u \in  V_{0}$ s.t. \[
-    a( u,v) = F(v) \forall v \in V_{0}
+    a( u,v) = F(v) \quad  \forall v \in V_{0}
     \]
-
-
-
 
 \subsection{Initial discrete formulation}%
 \label{sub:initial_discrete_formulation}
 
-
-
 We want to make a cutFEM version of the CIP problem. That is, using the conventions of
 
 \[
-V_{h} = \left\{ v \in C^{0}\left( \Omega  \right): v_{T} = v | _{T} \in \mathcal{P} _{2}\left( T \right), \forall T \in
+V_{h} = \left\{ v \in C^{0}\left( \Omega  \right): v_{T} = v | _{T} \in \mathcal{P} ^{2}\left( T \right), \forall T \in
 \mathcal{T}_{h}    \right\}
 \]
 
