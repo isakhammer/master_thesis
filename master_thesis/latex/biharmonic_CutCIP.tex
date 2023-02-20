@@ -146,6 +146,7 @@ Combing the results we get the following convenient corollary.
 
 
 \begin{corollary}
+    \label{cor:bi_inverse_thm}
     Let $g_{h}$ satisfy Assumption \ref{as:bi_EP1} then
     \[
         \begin{split}
@@ -183,7 +184,6 @@ Combing the results we get the following convenient corollary.
 \end{lemma}
 
 \begin{proof}
-    \todo[inline]{ TODO }
     We will divide the proof in two steps.
     \begin{enumerate}[label=\arabic*)]
         \item The goal is to prove the inequality \eqref{eq:bi_A_h_bounded}. \[
@@ -194,14 +194,33 @@ Combing the results we get the following convenient corollary.
                 Hence, by definition is $\abs{ g_{h}(v,w ) } \lesssim \| v \|_{ A_{h} }^{  } \| w \|_{ A_{h} }^{  } $. Now it remains to show that the bilinear term $ a_{h}$ is bounded.
                 \begin{equation}
                     \begin{split}
-                        a_{h} \left( v, w \right)   =&   \left( \alpha  v, w \right) _{\mathcal{T} _{h} \cap \Omega }   +  \left( D^2 v, D^2w \right) _{\mathcal{T} _{h} \cap \Omega} \\
+                        \abs{ a_{h} \left( v, w \right) }   \le  &   \abs{\left( \alpha  v, w \right) _{\mathcal{T} _{h} \cap \Omega }  }    +  \abs{\left( D^2 v, D^2w \right) _{\mathcal{T} _{h} \cap \Omega}  }  \\
                                                      & +
-                                                     \left( \mean{  \partial _{n n} v }, \jump{ \partial _{n }w} \right)_{\mathcal{F}_{h} \cap \Omega}  +
-                                                     \left( \mean{ \partial _{n n} v }, \jump{ \partial _{n}w }      \right)_{\mathcal{F}_{h} \cap \Omega}
+                                                     \abs{\left( \mean{  \partial _{n n} v }, \jump{ \partial _{n }w} \right)_{\mathcal{F}_{h} \cap \Omega}  }   +
+                                                     \abs{\left( \mean{ \partial _{n n} v }, \jump{ \partial _{n}w }      \right)_{\mathcal{F}_{h} \cap \Omega}  }
                                                      \\
-                                                     & + \frac{\gamma }{h}  \left( \jump{ \partial _{n} v}, \jump{ \partial _{n} w   }   \right)_{\mathcal{F}_{h} \cap \Omega} \\
+                                                     & + \frac{\gamma }{h} \abs{ \left( \jump{ \partial _{n} v}, \jump{ \partial _{n} w   }   \right)_{\mathcal{F}_{h} \cap \Omega}  }  \\
                     \end{split}
                 \end{equation}
+                The strategy is to bound each term individually using Cauchy-Schwartz. We can easily see that $\abs{\left( \alpha  v, w \right) _{\mathcal{T} _{h} \cap \Omega }  }   \lesssim \| v \|_{a_{h}  }^{  } \| w \|_{ a_{h} }^{  } $ and that
+                $\abs{\left( D^2 v, D^2w \right) _{\mathcal{T} _{h} \cap \Omega}  } \lesssim \| v \|_{a_{h}  }^{  } \| w \|_{ a_{h} }^{  } $ using Cauchy Schwartz. For the symmetric terms we also apply the inverse inequality
+                \eqref{eq:bi_cut_inverse_2}.
+                \[
+                    \begin{split}
+                    \abs{\left( \mean{ \partial _{n n} v }, \jump{ \partial _{n}w }      \right)_{\mathcal{F}_{h} \cap \Omega}  } & \lesssim  \|\mean{ \partial _{n n} v }  \|_{ \mathcal{F}_{h} \cap \Omega}^{  }\|\jump{ \partial _{n} w }  \|_{
+                    \mathcal{F}_{h} \cap \Omega}^{  } \\
+                    & \lesssim  \|h^{\frac{1}{2}} \partial _{n n} v  \|_{ \mathcal{F}_{h} \cap \Omega}^{  }\| h^{-\frac{1}{2}} \jump{ \partial _{n} w }     \|_{\mathcal{F}_{h} \cap \Omega}^{  } \\
+                    & \lesssim  \| v \|_{A_{h}  }^{  } \|w    \|_{ a_{h}}^{  }
+                    \end{split}
+                \]
+                Here we used the Corollary \ref{cor:bi_inverse_thm} s.t.  $\|h^{\frac{1}{2}} \partial _{n n}  v \|_{\mathcal{F}_{h} \cap \Omega} \lesssim \| v \|_{ A_{h}  }^{  }  $.
+              Finally, the penalty term \[
+             \frac{\gamma }{h} \abs{ \left( \jump{ \partial _{n} v}, \jump{ \partial _{n} w   }   \right)_{\mathcal{F}_{h} \cap \Omega}  }  \lesssim  \|h^{-\frac{1}{2}} \jump{ \partial _{n} v}  \|_{ \mathcal{F}_{h} \cap \Omega }^{  }
+             \|h^{-\frac{1}{2}} \jump{ \partial _{n} w}  \|_{ \mathcal{F}_{h} \cap \Omega }^{  }  \lesssim  \| v  \|_{ a_{h} }^{  }
+             \| w  \|_{ a_{h} }^{  }
+             \]
+             Obviously is $\| v \|_{a_{h}  }^{  } \lesssim \| v \|_{A_{h}  }^{  }$. Hence, $a_{h}$ is bounded in the $\|\cdot   \|_{A_{h}  }^{  } $ norm.
     \end{enumerate}
+    \todo[inline]{ Finish proof. }
 \end{proof}
 
