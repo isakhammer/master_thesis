@@ -170,15 +170,38 @@ Combing the results we get the following convenient corollary.
 \end{proof}
 
 \begin{lemma}
-    The discrete form $A_{h}$ is bounded, that is, \[
+    The discrete form $A_{h}$ is bounded, that is,
+    \begin{equation}
+    \label{eq:bi_A_h_bounded}
      A_{h}( v,w) \lesssim \| v \|_{A_{h}  }^{  }\| v \|_{A_{h}  }^{  }  \forall w \in V_{h}
-    \]
-    Moreover, for $v \in V_{h} + V_{0}$  and $w \in V_{h}$ the discrete form $a_{h}$ satisfies   \[
-    a_{h} ( v,w) \lesssim \| v \|_{ a_{h},* }^{  } \| w \|_{ A_{h} }^{  }
-    \]
+    \end{equation}
+    Moreover, for $v \in V_{h} + V_{0}$  and $w \in V_{h}$ the discrete form $a_{h}$ satisfies
+    \begin{equation}
+        \label{eq:bi_a_h_bounded}
+        a_{h} ( v,w) \lesssim \| v \|_{ a_{h},* }^{  } \| w \|_{ A_{h} }^{  }
+    \end{equation}
 \end{lemma}
 
 \begin{proof}
     \todo[inline]{ TODO }
+    We will divide the proof in two steps.
+    \begin{enumerate}[label=\arabic*)]
+        \item The goal is to prove the inequality \eqref{eq:bi_A_h_bounded}. \[
+                \abs{ A_{h}( v ,w ) } \lesssim   \abs{a_{h}( v, w) }   + \abs{g_{h}( v,w)  }          \]
+                By assumption is the ghost penalty $g_{h}$ positive semi-definite, thus, it fulfills the Cauchy-Schwartz inequality \[
+                \abs{ g_{h}(v,w ) } \lesssim \abs{ v } _{g_{h}}\abs{ w }_{g_{h}}
+                \]
+                Hence, by definition is $\abs{ g_{h}(v,w ) } \lesssim \| v \|_{ A_{h} }^{  } \| w \|_{ A_{h} }^{  } $. Now it remains to show that the bilinear term $ a_{h}$ is bounded.
+                \begin{equation}
+                    \begin{split}
+                        a_{h} \left( v, w \right)   =&   \left( \alpha  v, w \right) _{\mathcal{T} _{h} \cap \Omega }   +  \left( D^2 v, D^2w \right) _{\mathcal{T} _{h} \cap \Omega} \\
+                                                     & +
+                                                     \left( \mean{  \partial _{n n} v }, \jump{ \partial _{n }w} \right)_{\mathcal{F}_{h} \cap \Omega}  +
+                                                     \left( \mean{ \partial _{n n} v }, \jump{ \partial _{n}w }      \right)_{\mathcal{F}_{h} \cap \Omega}
+                                                     \\
+                                                     & + \frac{\gamma }{h}  \left( \jump{ \partial _{n} v}, \jump{ \partial _{n} w   }   \right)_{\mathcal{F}_{h} \cap \Omega} \\
+                    \end{split}
+                \end{equation}
+    \end{enumerate}
 \end{proof}
 
