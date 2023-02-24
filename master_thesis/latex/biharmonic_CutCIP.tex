@@ -12,8 +12,8 @@ Let $\Omega \subseteq    \mathbb{R} ^d$ be a physical mesh, $\Gamma  $ be a $C^2
 \begin{equation}
 \begin{split}
     \Delta^2  u  + \alpha  u  & = f( x)  \quad \text{in } \Omega,   \\
-    \partial _{n} u & = 0  \quad \text{on } \Gamma ,  \\
-    \partial _{n} \Delta  u & = h(x)  \quad \text{on } \Gamma  .  \\
+    \partial _{n} u & = g_{1}(x)   \quad \text{on } \Gamma ,  \\
+    \partial _{n} \Delta  u & = g_2(x)  \quad \text{on } \Gamma  .  \\
 \end{split}
 \end{equation}
 The goal is to write the problem on a weak form.
@@ -24,20 +24,19 @@ Let $u \in H^{4}( \Omega ) $ be a solution of the strong problem and $v \in H^{2
 &= ( D^2u, D^2v)_{\Omega } + ( \partial _{n} \Delta u ,v)_{\Gamma } - ( \partial _{nn} u, \partial _{n}v)_{\Gamma } - ( \partial _{tn} u, \partial _{t} v)_{\Gamma }.        \\
         \end{split}
     \]
-    Define the space $V_{0} = \left\{ u \in H^{2}( \Omega ) :  \partial _{n}u  \mid _{\Gamma } = 0 \right \} $ and $V = H^2( \Omega ) $ .
-    By applying the boundary conditions can we see that $( \partial _{n} \Delta u, v)_\Gamma   = ( g,v)_{\Gamma }$ which occurs naturally. However, the Neumann boundary condition can be imposed by assuming $u \in V_{0}$ and
-     as a consequence is the following terms $ ( \partial _{nn} u, \partial _{n}v)_{\Gamma }
-    = 0$   and $( \partial _{tn} u, \partial _{t}v)_{\Gamma } = 0$. This follows from the fact that that the Neumann boundary condition is homogeneous s.t. $\partial _{n} v = 0$ and $\partial _{t} (\partial _{n}u) = 0 $.
-    \todo[inline]{ But what if the Neumann conditions is not homogeneous? And why is it necessary to include it in the function space when it comes in "naturally"?  }
-
-    Finally, if we let $u,v \in V_{0}$ then is it natural to define an general bilinear form $ a: V_{0} \times  V_{0} \to   \mathbb{R} $ as \[
-    a( u,v) = \alpha ( u,v)_{\Omega } + ( D^2u, D^2v)_{\Omega }
+    Define the space $V_{g} = \left\{ u \in H^{2}( \Omega ) :  \partial _{n}u  \mid _{\Gamma } = g_1(x )  \right \} $ and $V = H^2( \Omega ) $.
+    % By applying the boundary conditions can we see that $( \partial _{n} \Delta u, v)_\Gamma   = ( g,v)_{\Gamma }$ which occurs naturally. However, the Neumann boundary condition can be imposed by assuming $u \in V_{0}$ and
+    %  as a consequence is the following terms $ ( \partial _{nn} u, \partial _{n}v)_{\Gamma }
+    % = 0$   and $( \partial _{tn} u, \partial _{t}v)_{\Gamma } = 0$. This follows from the fact that that the Neumann boundary condition is homogeneous s.t. $\partial _{n} v = 0$ and $\partial _{t} (\partial _{n}u) = 0 $.
+    % \todo[inline]{ But what if the Neumann conditions is not homogeneous? And why is it necessary to include it in the function space when it comes in "naturally"?  }
+    Let $u,v \in V$ then is it natural to define an general bilinear form  \[
+    a( u,v) = ( D^2u, D^2v)_{\Omega } + ( \partial _{n} \Delta u ,v)_{\Gamma } - ( \partial _{nn} u, \partial _{n}v)_{\Gamma } - ( \partial _{tn} u, \partial _{t} v)_{\Gamma }.
     \]
     where $\alpha >0$ and a corresponding linear form $l: V \to \mathbb{R} $,
     \[
-    l( v) = ( f ,v)_{\Gamma } +  ( h,v)_{\Gamma } .
+    l( v) = ( f ,v)_{\Gamma } +  ( h_{2},v)_{\Gamma } .
     \]
-    We define the weak problem is to find a $u \in  V_{0}$ s.t. \[
+    We define the weak problem is to find a $u \in  V_{g}$ s.t. \[
     a( u,v) = l(v) \quad  \forall v \in V_{0}
     \]
 
@@ -143,7 +142,6 @@ We may introduce our first assumption on the ghost penalty.
 
 
 Combing the results we get the following convenient corollary.
-
 
 \begin{corollary}
     \label{cor:bi_inverse_thm}
