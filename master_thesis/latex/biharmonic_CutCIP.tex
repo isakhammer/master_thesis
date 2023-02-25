@@ -199,7 +199,8 @@ Combing the results we get the following convenient corollary.
                                                      & + \abs{\left(  \partial _{n n} v ,  \partial _{n }w \right)_{\Gamma }}     +
                                                      \abs{\left(  \partial _{n n} v ,  \partial _{n}w       \right)_{\Gamma }  }
                                                      \\
-                                                     & + \frac{\gamma }{h} \abs{ \left( \jump{ \partial _{n} v}, \jump{ \partial _{n} w   }   \right)_{\mathcal{F}_{h} \cap \Omega}  }  \\
+                                                     & + \frac{\gamma }{h} \abs{ \left( \jump{ \partial _{n} v}, \jump{ \partial _{n} w   }   \right)_{\mathcal{F}_{h} \cap \Omega}  } + \frac{\gamma }{h} \abs{ \left(  \partial _{n} v,  \partial _{n} w
+                                                     \right)_{\Gamma }  }
                     \end{split}
                 \end{equation}
                 The strategy is to bound each term individually using Cauchy-Schwartz. We can easily see that $\abs{\left( \alpha  v, w \right) _{\mathcal{T} _{h} \cap \Omega }  }   \lesssim \| v \|_{a_{h}  }^{  } \| w \|_{ a_{h} }^{  } $ and that
@@ -214,20 +215,25 @@ Combing the results we get the following convenient corollary.
                     \end{split}
                 \]
                 Here we used the Corollary \ref{cor:bi_inverse_thm} s.t.  $\|h^{\frac{1}{2}} \partial _{n n}  v \|_{\mathcal{F}_{h} \cap \Omega} \lesssim \| v \|_{ A_{h}  }^{  }  $.
-              Finally, the penalty term \[
+              The boundedness interior penalty  inequality is showed in this manner, \[
              \frac{\gamma }{h} \abs{ \left( \jump{ \partial _{n} v}, \jump{ \partial _{n} w   }   \right)_{\mathcal{F}_{h} \cap \Omega}  }  \lesssim  \|h^{-\frac{1}{2}} \jump{ \partial _{n} v}  \|_{ \mathcal{F}_{h} \cap \Omega }^{  }
              \|h^{-\frac{1}{2}} \jump{ \partial _{n} w}  \|_{ \mathcal{F}_{h} \cap \Omega }^{  }  \lesssim  \| v  \|_{ a_{h} }^{  }
-             \| w  \|_{ a_{h} }^{  }
+             \| w  \|_{ a_{h} }^{  }.
              \]
-             Obviously is $\| v \|_{a_{h}  }^{  } \lesssim \| v \|_{A_{h}  }^{  }$. Now it remains to handle boundary terms. \[
-                 \begin{split}
-                \abs{ ( \partial _{n} v, \partial _{n} w)_{\Gamma } } & \lesssim \| h^{\frac{1}{2}}\partial _{n} v \|_{\Gamma   }^{  } \| h^{-\frac{1}{2}} \partial _{n}w \|_{\Gamma   }^{  } \\
-                & \lesssim \| h^{\frac{1}{2}}\partial _{n} v \|_{\Gamma   }^{  } \| w \|_{ A_{h}   }^{  }
-                 \end{split}
+              Now it remains to handle boundary terms. \[
+                \abs{ ( \partial _{nn} v, \partial _{n} w)_{\Gamma } }  \lesssim \| h^{\frac{1}{2}}\partial _{nn} v \|_{\Gamma   }^{  } \| h^{-\frac{1}{2}} \partial _{n}w \|_{\Gamma   }^{  }  \lesssim \| h^{\frac{1}{2}}\partial _{n} v \|_{A_{h}  }^{  } \| w \|_{ A_{h}   }^{  }
+             \]
+             Again, here we used the Corollary \ref{cor:bi_inverse_thm}.
+
+             % \todo[inline]{ Here we have a problem since the inequality cannot be solved using $h^{\frac{1}{2}} \| \partial _{n} v \|_{ \Gamma  }^{  } \lesssim \| \nabla  v \|_{ T  }^{  } $. This is because $\| \nabla v \|_{\Omega   }^{  } $ is not
+             % part of the norm.}
+             And finally, using the definition of the norm is it easily to see that,
+             \[
+\frac{\gamma }{h} \abs{ \left(  \partial _{n} v,  \partial _{n} w \right)_{\Gamma }  } \lesssim \gamma  \| h^{-\frac{1}{2}} \partial _{n} v \|_{  \Gamma }^{  } \| h^{-\frac{1}{2}} \partial _{n} w \|_{\Gamma   }^{  } \lesssim \| v \|_{ a_{h} }^{  }
+\| w \|_{ a_{h} }^{  } .
              \]
 
-
-             Hence, $a_{h}$ is bounded in the $\|\cdot   \|_{A_{h}  }^{  } $ norm.
+             Obviously is $\| v \|_{a_{h}  }^{  } \lesssim \| v \|_{A_{h}  }^{  }$. Hence, $a_{h}$ is bounded in the $\|\cdot   \|_{A_{h}  }^{  } $ norm.
     \end{enumerate}
     \todo[inline]{ Finish proof. }
 \end{proof}
