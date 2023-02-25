@@ -66,7 +66,7 @@ a_{h} \left( u, v \right)   =&   \left( \alpha  u, v \right) _{\mathcal{T} _{h} 
  & +
   \left( \mean{  \partial _{n n} u }, \jump{ \partial _{n }v} \right)_{\mathcal{F}_{h}^{int} \cap \Omega}  +
  \left( \mean{ \partial _{n n} v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}^{int} \cap \Omega} \\
- & + ( \partial _{nn} u, \partial _{n} v)_{\Gamma } + ( \partial _{n} v, \partial _{nn} u)_{\Gamma }
+ & + ( \partial _{nn} u, \partial _{n} v)_{\Gamma } + ( \partial _{nn} v, \partial _{n} u)_{\Gamma }
  \\
  & + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v_{}   }   \right)_{\mathcal{F}_{h}^{int} \cap \Omega} +  \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v_{}      \right)_{\Gamma } \\
 \end{split}
@@ -82,14 +82,15 @@ A_{h}( u_{h} ,v ) := a_{h}( u_{h}, v)  + g_{h}( u_{h},v) = l_{h} ( v) \quad  \fo
 We define the underlying norms for $ v \in V_{h} $ as
     \begin{align}
         \label{eq:bi_ah_norm}
- \| v \|_{ a_{h} }^{ 2 } & =  \alpha  \| v \|_{ \mathcal{T} _{h} \cap \Omega  }^{ 2}  + \| D^2 v \|_{\mathcal{T} _{h} \cap \Omega   }^{ 2 } + \gamma \| h^{-\frac{1}{2}} \jump{ \partial _{n} v }   \|_{ \mathcal{F}_{h}\cap \Omega    }^{ 2 },    \\
+        \| v \|_{ a_{h} }^{ 2 } & =  \alpha  \| v \|_{ \mathcal{T} _{h} \cap \Omega  }^{ 2}  + \| D^2 v \|_{\mathcal{T} _{h} \cap \Omega   }^{ 2 } + \gamma \| h^{-\frac{1}{2}} \jump{ \partial _{n} v }   \|_{ \mathcal{F}_{h}^{int}\cap \Omega    }^{ 2
+        } + \gamma \| h^{-\frac{1}{2}}  \partial _{n} v    \|_{ \Gamma   }^{ 2 },    \\
         \label{eq:bi_gh_norm}
 \abs{ v } _{g_{h}}^{2} & = g( v,v) \\
         \label{eq:bi_Ah_norm}
 \| v \|_{A_{h}  }^{  2}  & = \| v \|_{ a_{h} }^{ 2 } + \abs{ v } _{g_{h}}^{2}
     \end{align}
 and for $v \in V + V_{h}$ we get, \[
-\| v \|_{ a_{h}, * }^{  2} =\| v \|_{ a_{h} }^{ 2 } +\abs{ v } _{g_{h}}^{2} +  \| h^{\frac{1}{2}} \mean{ \partial _{nn} v }   \|_{\mathcal{F} _{h} \cap \Omega   }^{  2}  .
+\| v \|_{ a_{h}, * }^{  2} =\| v \|_{ a_{h} }^{ 2 } +\abs{ v } _{g_{h}}^{2} +  \| h^{\frac{1}{2}} \mean{ \partial _{nn} v }   \|_{\mathcal{F} _{h}^{int} \cap \Omega   }^{  2}  .
 \]
 \begin{remark}
 Note that it holds that $\mathcal{T} _{h} \cap  \Omega   = \Omega  $ and $\mathcal{T} _{h} \cap  \Gamma  = \Gamma $. Depending on context, we choose either notation.
@@ -193,9 +194,10 @@ Combing the results we get the following convenient corollary.
                 \begin{equation}
                     \begin{split}
                         \abs{ a_{h} \left( v, w \right) }   \le  &   \abs{\left( \alpha  v, w \right) _{\mathcal{T} _{h} \cap \Omega }  }    +  \abs{\left( D^2 v, D^2w \right) _{\mathcal{T} _{h} \cap \Omega}  }  \\
-                                                     & +
-                                                     \abs{\left( \mean{  \partial _{n n} v }, \jump{ \partial _{n }w} \right)_{\mathcal{F}_{h} \cap \Omega}  }   +
-                                                     \abs{\left( \mean{ \partial _{n n} v }, \jump{ \partial _{n}w }      \right)_{\mathcal{F}_{h} \cap \Omega}  }
+                                                     & + \abs{\left( \mean{  \partial _{n n} v }, \jump{ \partial _{n }w} \right)_{\mathcal{F}_{h} \cap \Omega}  }   +
+                                                     \abs{\left( \mean{ \partial _{n n} v }, \jump{ \partial _{n}w }      \right)_{\mathcal{F}_{h} \cap \Omega}  } \\
+                                                     & + \abs{\left(  \partial _{n n} v ,  \partial _{n }w \right)_{\Gamma }}     +
+                                                     \abs{\left(  \partial _{n n} v ,  \partial _{n}w       \right)_{\Gamma }  }
                                                      \\
                                                      & + \frac{\gamma }{h} \abs{ \left( \jump{ \partial _{n} v}, \jump{ \partial _{n} w   }   \right)_{\mathcal{F}_{h} \cap \Omega}  }  \\
                     \end{split}
@@ -217,7 +219,9 @@ Combing the results we get the following convenient corollary.
              \|h^{-\frac{1}{2}} \jump{ \partial _{n} w}  \|_{ \mathcal{F}_{h} \cap \Omega }^{  }  \lesssim  \| v  \|_{ a_{h} }^{  }
              \| w  \|_{ a_{h} }^{  }
              \]
-             Obviously is $\| v \|_{a_{h}  }^{  } \lesssim \| v \|_{A_{h}  }^{  }$. Hence, $a_{h}$ is bounded in the $\|\cdot   \|_{A_{h}  }^{  } $ norm.
+             Obviously is $\| v \|_{a_{h}  }^{  } \lesssim \| v \|_{A_{h}  }^{  }$. Now it remains to handle boundary terms.
+
+             Hence, $a_{h}$ is bounded in the $\|\cdot   \|_{A_{h}  }^{  } $ norm.
     \end{enumerate}
     \todo[inline]{ Finish proof. }
 \end{proof}
