@@ -221,20 +221,19 @@ Combing the results we get the following convenient corollary.
              \| w  \|_{ a_{h} }^{  }.
              \]
               Now it remains to handle boundary terms. \[
-                \abs{ ( \partial _{nn} v, \partial _{n} w)_{\Gamma } }  \lesssim \| h^{\frac{1}{2}}\partial _{nn} v \|_{\Gamma   }^{  } \| h^{-\frac{1}{2}} \partial _{n}w \|_{\Gamma   }^{  }  \lesssim \| h^{\frac{1}{2}}\partial _{n} v \|_{A_{h}  }^{  } \| w \|_{ A_{h}   }^{  }
+                \abs{ ( \partial _{nn} v, \partial _{n} w)_{\Gamma } }  \lesssim \| h^{\frac{1}{2}}\partial _{nn} v \|_{\Gamma   }^{  } \| h^{-\frac{1}{2}} \partial _{n}w \|_{\Gamma   }^{  }  \lesssim \|  v \|_{A_{h}  }^{  } \| w \|_{ a_{h}   }^{  }
              \]
              Again, here we used the Corollary \ref{cor:bi_inverse_thm}.
-
              % \todo[inline]{ Here we have a problem since the inequality cannot be solved using $h^{\frac{1}{2}} \| \partial _{n} v \|_{ \Gamma  }^{  } \lesssim \| \nabla  v \|_{ T  }^{  } $. This is because $\| \nabla v \|_{\Omega   }^{  } $ is not
              % part of the norm.}
-             And finally, using the definition of the norm is it easily to see that,
+             Finally, using the definition of the norm is it easily to see that,
              \[
 \frac{\gamma }{h} \abs{ \left(  \partial _{n} v,  \partial _{n} w \right)_{\Gamma }  } \lesssim \gamma  \| h^{-\frac{1}{2}} \partial _{n} v \|_{  \Gamma }^{  } \| h^{-\frac{1}{2}} \partial _{n} w \|_{\Gamma   }^{  } \lesssim \| v \|_{ a_{h} }^{  }
 \| w \|_{ a_{h} }^{  } .
              \]
 
-             Obviously is $\| v \|_{a_{h}  }^{  } \lesssim \| v \|_{A_{h}  }^{  }$. Hence, $a_{h}$ is bounded in the $\|\cdot   \|_{A_{h}  }^{  } $ norm.
+             Obviously is $\| v \|_{a_{h}  }^{  } \lesssim \| v \|_{A_{h}  }^{  }$. Hence, we have showed that all terms in $a_{h}$ is bounded in the $\|\cdot   \|_{A_{h}  }^{  } $ norm.
     \end{enumerate}
-    \todo[inline]{ Finish proof. }
+    \todo[inline]{ Finish proof. Need to do $\| \cdot  \|_{ a_{h},* }^{  } $   }
 \end{proof}
 
