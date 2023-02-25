@@ -93,7 +93,7 @@ and for $v \in V + V_{h}$ we get, \[
 \| v \|_{ a_{h}, * }^{  2} =\| v \|_{ a_{h} }^{ 2 } +\abs{ v } _{g_{h}}^{2} +  \| h^{\frac{1}{2}} \mean{ \partial _{nn} v }   \|_{\mathcal{F} _{h}^{int} \cap \Omega   }^{  2} +  \| h^{\frac{1}{2}} \partial _{nn} v    \|_{ \Gamma }^{  2} .
 \]
 \begin{remark}
-Note that it holds that $\mathcal{T} _{h} \cap  \Omega   = \Omega  $ and $\mathcal{T} _{h} \cap  \Gamma  = \Gamma $. Depending on context, we choose either notation.
+Note that it holds that $\mathcal{T} _{h} \cap  \Omega   = \Omega  $ and $\mathcal{T} _{h} \cap  \Gamma  = \Gamma $. Depending on context, we choose the best suitable notation.
 \end{remark}
 
 \subsection{Stability estimate}%
@@ -175,7 +175,7 @@ Combing the results we get the following convenient corollary.
     \label{eq:bi_A_h_bounded}
      A_{h}( v,w) \lesssim \| v \|_{A_{h}  }^{  }\| v \|_{A_{h}  }^{  }  \forall w \in V_{h}
     \end{equation}
-    Moreover, for $v \in V_{h} + V_{0}$  and $w \in V_{h}$ the discrete form $a_{h}$ satisfies
+    Moreover, for $v \in V_{h} + V$  and $w \in V_{h}$ the discrete form $a_{h}$ satisfies
     \begin{equation}
         \label{eq:bi_a_h_bounded}
         a_{h} ( v,w) \lesssim \| v \|_{ a_{h},* }^{  } \| w \|_{ A_{h} }^{  }
@@ -219,7 +219,13 @@ Combing the results we get the following convenient corollary.
              \|h^{-\frac{1}{2}} \jump{ \partial _{n} w}  \|_{ \mathcal{F}_{h} \cap \Omega }^{  }  \lesssim  \| v  \|_{ a_{h} }^{  }
              \| w  \|_{ a_{h} }^{  }
              \]
-             Obviously is $\| v \|_{a_{h}  }^{  } \lesssim \| v \|_{A_{h}  }^{  }$. Now it remains to handle boundary terms.
+             Obviously is $\| v \|_{a_{h}  }^{  } \lesssim \| v \|_{A_{h}  }^{  }$. Now it remains to handle boundary terms. \[
+                 \begin{split}
+                \abs{ ( \partial _{n} v, \partial _{n} w)_{\Gamma } } & \lesssim \| h^{\frac{1}{2}}\partial _{n} v \|_{\Gamma   }^{  } \| h^{-\frac{1}{2}} \partial _{n}w \|_{\Gamma   }^{  } \\
+                & \lesssim \| h^{\frac{1}{2}}\partial _{n} v \|_{\Gamma   }^{  } \| w \|_{ A_{h}   }^{  }
+                 \end{split}
+             \]
+
 
              Hence, $a_{h}$ is bounded in the $\|\cdot   \|_{A_{h}  }^{  } $ norm.
     \end{enumerate}
