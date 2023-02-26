@@ -170,7 +170,7 @@ Combing the results we get the following convenient corollary.
     Thus, since the second term already is part of the $\| \cdot  \|_{ A_{h} }^{  } $ norm is a good start to focus on the $a_{h}$ term, that is,
     \[
     \begin{split}
-       a_{h}( v,v) &=   \|\alpha v  \|_{ \mathcal{T}_{h}\cap  \Omega   }^{2} + \| D^2v \|_{ \mathcal{T}_{h}\cap  \Omega  }^{2  } + 2 ( \mean{ \partial _{nn} v }, \jump{ \partial _{n} v }    )_{\mathcal{F} ^{int}_{h} \cap \Omega }  + 2 (  \partial _{nn} v ,
+       a_{h}( v,v) &=   \|\alpha^{\frac{1}{2}} v  \|_{ \mathcal{T}_{h}\cap  \Omega   }^{2} + \| D^2v \|_{ \mathcal{T}_{h}\cap  \Omega  }^{2  } + 2 ( \mean{ \partial _{nn} v }, \jump{ \partial _{n} v }    )_{\mathcal{F} ^{int}_{h} \cap \Omega }  + 2 (  \partial _{nn} v ,
        \partial _{n} v  )_{\Gamma } \\
                    & \quad+ \frac{\gamma }{h}  \|  \jump{ \partial _{n} v }\|_{\mathcal{F} _{h}^{int}  }^{ 2 } + \frac{\gamma }{h}  \| \partial _{n} v \|_{ \Gamma  }^{ 2 }
     \end{split}
@@ -193,7 +193,7 @@ Combing the results we get the following convenient corollary.
         \begin{split}
 - C_{1}^{\frac{1}{2}} \| D^2 v    \|_{ \mathcal{T} _{h}   }^{  }  \|h^{-\frac{1}{2}} \jump{ \partial _{n} v }   \|_{ \mathcal{F}^{int}_{h}\cap \Omega   }^{  }
 & \ge - \frac{1}{\varepsilon } C  (\| D^2 v \|_{ \mathcal{T} _{h} }^{ 2 }  + \abs{ v } _{ g_{h} }^{2  } ) -  \varepsilon \|h^{-\frac{1}{2}} \jump{ \partial _{n} v }   \|_{ \mathcal{F}^{int}_{h}\cap \Omega   }^{2  } \\
-- C_{2}^{\frac{1}{2}}  \| D^2 v \|_{ \mathcal{T} _{h} }^{  } h^{-\frac{1}{2}}  \partial _{n} v    \|_{ \Gamma    }^{  }
+- C_{2}^{\frac{1}{2}}  \| D^2 v \|_{ \mathcal{T} _{h} }^{  } \| h^{-\frac{1}{2}}  \partial _{n} v    \|_{ \Gamma    }^{  }
 & \ge - \frac{1}{\varepsilon } C  (\| D^2 v \|_{ \mathcal{T} _{h} }^{ 2 }  + \abs{ v } _{ g_{h} }^{2  } ) -  \varepsilon \|h^{-\frac{1}{2}}  \partial _{n} v    \|_{ \Gamma    }^{2  } \\
         \end{split}
     \]
@@ -204,13 +204,14 @@ Combing the results we get the following convenient corollary.
                        & + (\gamma - 2\varepsilon  )\left( \|h^{-\frac{1}{2}}  \jump{ \partial _{n} v }\|_{\mathcal{F} _{h}^{int}  }^{ 2 } + \| h^{-\frac{1}{2}} \partial _{n} v \|_{ \Gamma  }^{ 2} \right)        .
     \end{split}
     \]
-    Hence, setting $\varepsilon = 8C$ and $\gamma = \frac{33}{2} C$ we simplify the problem to \[
+    Setting $\varepsilon = 8C$ and $\gamma = \frac{33}{2} C$ we simplify the problem to \[
         \begin{split}
-           a_{h}( v,v)  \ge&    \|\alpha v  \|_{ \mathcal{T}_{h}\cap  \Omega   }^{2} + \frac{1}{2}  (\| D^2 v \|_{ \mathcal{T} _{h} }^{ 2 }  + \abs{ v } _{ g_{h} }^{2  } )  \\
-                       & + \frac{C}{2}\left( \|h^{-\frac{1}{2}}  \jump{ \partial _{n} v }\|_{\mathcal{F} _{h}^{int}  }^{ 2 } + \| h^{-\frac{1}{2}} \partial _{n} v \|_{ \Gamma  }^{ 2} \right)
+           a_{h}( v,v)  \ge&    \|\alpha^{\frac{1}{2}} v  \|_{ \mathcal{T}_{h}\cap  \Omega   }^{2} + \frac{1}{2}  (\| D^2 v \|_{ \mathcal{T} _{h} }^{ 2 }  + \abs{ v } _{ g_{h} }^{2  } )  \\
+                       & + \frac{C}{2}\left( \|h^{-\frac{1}{2}}  \jump{ \partial _{n} v }\|_{\mathcal{F} _{h}^{int}  }^{ 2 } + \| h^{-\frac{1}{2}} \partial _{n} v \|_{ \Gamma  }^{ 2} \right) \\
+                       \ge& \| v \|_{ A_{h} }^{2  }
         \end{split}
     \]
-
+    Hence, proof is complete.
     \todo[inline]{TODO}
 \end{proof}
 
