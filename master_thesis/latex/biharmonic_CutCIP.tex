@@ -163,8 +163,47 @@ Combing the results we get the following convenient corollary.
 \end{lemma}
 
 \begin{proof}
+    Let $v \in V^{h}$.
+    Observe that \[
+    A_{h}( v,v) = a_{h}( v,v)  + \abs{ v }_{g_{h}}^{2}
+    \]
+    Thus, since the second term already is part of the $\| \cdot  \|_{ A_{h} }^{  } $ norm is a good start to focus on the $a_{h}$ term, that is,
+    \[
+    \begin{split}
+       a_{h}( v,v) &=   \|\alpha v  \|_{\Omega   }^{2} + \| D^2v \|_{ \mathcal{F} ^{int}_{h} \cap \Omega  }^{2  } + 2 ( \mean{ \partial _{nn} v }, \jump{ \partial _{n} v }    )_{\mathcal{F} ^{int}_{h} \cap \Omega }  + 2 (  \partial _{nn} v ,
+       \partial _{n} v  )_{\Gamma } \\
+                   & \quad+ \frac{\gamma }{h}  \|  \jump{ \partial _{n} v }\|_{\mathcal{F} _{h}^{int}  }^{ 2 } + \frac{\gamma }{h}  \| \partial _{n} v \|_{ \Gamma  }^{ 2 }
+    \end{split}
+    \]
+    We will first focus on the symmetry terms.
+    Using Cauchy-Schwarz and the inequality can we observe that \[
+        \begin{split}
+    ( \mean{ \partial _{nn} v }  , \jump{ \partial _{n} v }  )_{\mathcal{F}^{int}_{h}\cap \Omega  } & \ge - \| h^{\frac{1}{2}}\mean{ \partial _{nn} v }   \|_{ \mathcal{F}^{int}_{h}\cap \Omega   }^{  }  \|h^{-\frac{1}{2}} \jump{ \partial _{n} v }   \|_{
+    \mathcal{F}^{int}_{h}\cap \Omega   }^{  } \\
+    (  \partial _{nn} v   ,  \partial _{n} v   )_{\Gamma   } & \ge - \| h^{\frac{1}{2}} \partial _{nn} v    \|_{ \Gamma    }^{  }  \|h^{-\frac{1}{2}}  \partial _{n} v    \|_{ \Gamma    }^{  }
+        \end{split}
+    \]
+    Using inverse-inequalities \eqref{eq:bi_cut_inverse_1} and \eqref{eq:bi_cut_inverse_2} and the Corollary \ref{cor:bi_inverse_thm} can we easily observe that \[
+        \begin{split}
+     \| \mean{ \partial _{nn}v } \|_{ \mathcal{T}_{h} \cap \Omega    }^{  2} & \le C_{I} \| D^2 v \|_{ \mathcal{T}_{h}   }^{2  } \le  C  (\| D^2 v \|_{ \mathcal{T} _{h} }^{ 2 }  + \| v \|_{ g_{h} }^{2  } )  \\
+     \|  \partial _{nn}v  \|_{ \Gamma     }^{ 2 } & \le C_{I} \| D^2 v \|_{ \mathcal{T} _{h}  }^{2  } \le C  (\| D^2 v \|_{ \mathcal{T} _{h} }^{ 2 }  + \| v \|_{ g_{h} }^{2  } )
+        \end{split}
+    \]
+    Thus, by applying Youngs $\varepsilon $-inequality, $2ab \le  \varepsilon^{-1} a^{2} + \varepsilon b^{2} $, is it natural to see that,
+    \[
+        \begin{split}
+- C_{I}^{\frac{1}{2}} \| D^2 v    \|_{ \mathcal{F}^{int}_{h}\cap \Omega   }^{  }  \|h^{-\frac{1}{2}} \jump{ \partial _{n} v }   \|_{ \mathcal{F}^{int}_{h}\cap \Omega   }^{  }
+& \ge - \frac{1}{\varepsilon } C_{1}\|  D^2 v  \|_{ \mathcal{T} _{h}   }^{2  } -  \varepsilon \|h^{-\frac{1}{2}} \jump{ \partial _{n} v }   \|_{ \mathcal{F}^{int}_{h}\cap \Omega   }^{2  } \\
+- C_{I}^{\frac{1}{2}} \| D^2 v    \|_{ \mathcal{F}^{int}_{h}\cap \Omega   }^{  }  \|h^{-\frac{1}{2}} \jump{ \partial _{n} v }   \|_{ \mathcal{F}^{int}_{h}\cap \Omega   }^{  }
+& \ge - \frac{1}{\varepsilon } C_{I}\|  D^2 v  \|_{ \mathcal{T} _{h}   }^{2  } -  \varepsilon \|h^{-\frac{1}{2}} \jump{ \partial _{n} v }   \|_{ \mathcal{F}^{int}_{h}\cap \Omega   }^{2  } \\
+        \end{split}
+    \]
+
+
+
     \todo[inline]{ TODO }
 \end{proof}
+
 
 \begin{lemma}
     The discrete form $A_{h}$ is bounded, that is,
