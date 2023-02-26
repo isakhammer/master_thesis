@@ -231,7 +231,7 @@ Another important recipe before we can use Lax-Milgram is that the we need to sh
     $$ \left\lvert A_{h}( v,u) \right\rvert \lesssim \| v \|_{A_{h}  }^{  }     \| u \|_{A_{h}  }^{  } \quad  \forall v,u \in V _{h}, $$
     whenever $\beta $ is large enough. Moreover, for $v \in  H^{2}( \mathcal{T}_{h} ) + V_{h} $
     and $w \in V_{h}$ satisfies \[
-    \left\lvert a_{h}( v,w) \right\rvert  \lesssim \| v \|_{ a_{h},* }^{  }  \| w \|_{ a_{h},* }^{  }
+    \left\lvert a_{h}( v,w) \right\rvert  \lesssim \| v \|_{ a_{h},* }^{  }  \| w \|_{ A_{h} }^{  }
     \]
 \end{lemma}
 
@@ -310,7 +310,7 @@ This is proved by showing that each term is bounded by applying the Cauchy-Schwa
         Hence, the statement $\left\lvert A_{h}( v,u) \right\rvert \lesssim \| v \|_{A_{h}  }^{  }     \| u \|_{A_{h}  }^{  }  $ holds $ \forall v,u \in V_{h} $.
     \end{enumerate}
 
-\item We want to show $\abs{ a_{h}( v,u) }  \lesssim \| v \|_{ a_{h},* }^{  }  \| u \|_{ a_{h},* }^{  }$
+\item We want to show $\abs{ a_{h}( v,u) }  \lesssim \| v \|_{ a_{h},* }^{  }  \| u \|_{A_{h} }^{  }$
 for $ \forall v \in  H^{2}( \mathcal{T}_{h} ) + V_{h} $ and $ \forall u \in V_{h}$,
     that is,      \[
         \begin{split}
