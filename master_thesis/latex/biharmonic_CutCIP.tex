@@ -175,8 +175,7 @@ Combing the results we get the following convenient corollary.
                    & \quad+ \frac{\gamma }{h}  \|  \jump{ \partial _{n} v }\|_{\mathcal{F} _{h}^{int}  }^{ 2 } + \frac{\gamma }{h}  \| \partial _{n} v \|_{ \Gamma  }^{ 2 }
     \end{split}
     \]
-    We will first focus on the symmetry terms.
-    Using Cauchy-Schwarz and the inequality can we observe that \[
+    We will first focus on the symmetry terms. Using Cauchy-Schwarz we observe that \[
         \begin{split}
     ( \mean{ \partial _{nn} v }  , \jump{ \partial _{n} v }  )_{\mathcal{F}^{int}_{h}\cap \Omega  } & \ge - \| h^{\frac{1}{2}}\mean{ \partial _{nn} v }   \|_{ \mathcal{F}^{int}_{h}\cap \Omega   }^{  }  \|h^{-\frac{1}{2}} \jump{ \partial _{n} v }   \|_{
     \mathcal{F}^{int}_{h}\cap \Omega   }^{  } \\
@@ -198,17 +197,16 @@ Combing the results we get the following convenient corollary.
 & \ge - \frac{1}{\varepsilon } C  (\| D^2 v \|_{ \mathcal{T} _{h} }^{ 2 }  + \abs{ v } _{ g_{h} }^{2  } ) -  \varepsilon \|h^{-\frac{1}{2}}  \partial _{n} v    \|_{ \Gamma    }^{2  } \\
         \end{split}
     \]
-    It is now easy to see that
-
+    Combining these ideas do we end up with the following inequality,
     \[
     \begin{split}
-       a_{h}( v,v)  \ge&    \|\alpha v  \|_{ \mathcal{T}_{h}\cap  \Omega   }^{2} + \| D^2v \|_{ \mathcal{T}_{h}\cap  \Omega  }^{2  }  - \frac{1}{\varepsilon } 4C  (\| D^2 v \|_{ \mathcal{T} _{h} }^{ 2 }  + \abs{ v } _{ g_{h} }^{2  } )  \\
-                   & + (\gamma - 2\varepsilon  )    \|h^{-\frac{1}{2}}  \jump{ \partial _{n} v }\|_{\mathcal{F} _{h}^{int}  }^{ 2 } + (\gamma - 2\varepsilon  ) \| h^{-\frac{1}{2}} \partial _{n} v \|_{ \Gamma  }^{ 2 }
+       a_{h}( v,v)  \ge&    \|\alpha v  \|_{ \mathcal{T}_{h}\cap  \Omega   }^{2} + (1  - \frac{1}{\varepsilon } 4C)  (\| D^2 v \|_{ \mathcal{T} _{h} }^{ 2 }  + \abs{ v } _{ g_{h} }^{2  } )  \\
+                       & + (\gamma - 2\varepsilon  )\left( \|h^{-\frac{1}{2}}  \jump{ \partial _{n} v }\|_{\mathcal{F} _{h}^{int}  }^{ 2 } + \| h^{-\frac{1}{2}} \partial _{n} v \|_{ \Gamma  }^{ 2} \right)        .
     \end{split}
     \]
+    Hence
 
-
-    \todo[inline]{ TODO fix $\| \cdot  \|_{ g_{h} }^{  } $   }
+    \todo[inline]{TODO}
 \end{proof}
 
 
@@ -300,7 +298,7 @@ Combing the results we get the following convenient corollary.
         \end{split}
     \]
     \todo[inline]{ Why is not $\| \mean{ \partial _{nn} v}   \|_{\mathcal{F}_h^{int}  }^{  } \lesssim \|  \partial _{nn} v   \|_{ \mathcal{F}^{int} }^{  }  $ interesting for $v \in V + V_h$, but is often used for $v \in V$?  Ex. the mean is conserved in the $\|
-    \|_{a_h,*}$ norm.}
+    \cdot \|_{a_h,*}$ norm}
     Remark that for $\| h^{\frac{1}{2}} \mean{ \partial _{nn} v }   \|_{\mathcal{F}^{int} _{h} \cap \Omega   }^{  } $ is the norm incorporated in the definition of $\| \cdot  \|_{ a_{h},* }^{  } $, but for $\| h^{\frac{1}{2}} \mean{ \partial _{nn} w }   \|_{
     \mathcal{F}_{h}^{int}\cap \Omega   }^{  } $ was the Corollary \ref{cor:bi_inverse_thm} applied. The jump terms $\|h^{-\frac{1}{2}} \jump{\partial _{n} v  }   \|_{\mathcal{F}^{int}_{h}\cap \Omega    }^{  } $
 is incorporated in the $\| \cdot  \|_{ a_{h} }^{  } $ norm, thus, this also holds, \[
