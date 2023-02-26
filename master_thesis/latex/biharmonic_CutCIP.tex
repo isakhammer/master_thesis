@@ -195,7 +195,7 @@ Combing the results we get the following convenient corollary.
                     \begin{split}
                         \abs{ a_{h} \left( v, w \right) }   \le  &   \abs{\left( \alpha  v, w \right) _{\mathcal{T} _{h} \cap \Omega }  }    +  \abs{\left( D^2 v, D^2w \right) _{\mathcal{T} _{h} \cap \Omega}  }  \\
                                                      & + \abs{\left( \mean{  \partial _{n n} v }, \jump{ \partial _{n }w} \right)_{\mathcal{F}_{h} \cap \Omega}  }   +
-                                                     \abs{\left( \mean{ \partial _{n n} v }, \jump{ \partial _{n}w }      \right)_{\mathcal{F}_{h} \cap \Omega}  } \\
+                                                     \abs{\left( \mean{ \partial _{nn } v }, \jump{ \partial _{n}w }      \right)_{\mathcal{F}_{h} \cap \Omega}  } \\
                                                      & + \abs{\left(  \partial _{n n} v ,  \partial _{n }w \right)_{\Gamma }}     +
                                                      \abs{\left(  \partial _{n n} v ,  \partial _{n}w       \right)_{\Gamma }  }
                                                      \\
@@ -224,8 +224,6 @@ Combing the results we get the following convenient corollary.
                 \abs{ ( \partial _{nn} v, \partial _{n} w)_{\Gamma } }  \lesssim \| h^{\frac{1}{2}}\partial _{nn} v \|_{\Gamma   }^{  } \| h^{-\frac{1}{2}} \partial _{n}w \|_{\Gamma   }^{  }  \lesssim \|  v \|_{A_{h}  }^{  } \| w \|_{ a_{h}   }^{  }
              \]
              Again, here we used the Corollary \ref{cor:bi_inverse_thm}.
-             % \todo[inline]{ Here we have a problem since the inequality cannot be solved using $h^{\frac{1}{2}} \| \partial _{n} v \|_{ \Gamma  }^{  } \lesssim \| \nabla  v \|_{ T  }^{  } $. This is because $\| \nabla v \|_{\Omega   }^{  } $ is not
-             % part of the norm.}
              Finally, using the definition of the norm is it easily to see that,
              \[
 \frac{\gamma }{h} \abs{ \left(  \partial _{n} v,  \partial _{n} w \right)_{\Gamma }  } \lesssim \gamma  \| h^{-\frac{1}{2}} \partial _{n} v \|_{  \Gamma }^{  } \| h^{-\frac{1}{2}} \partial _{n} w \|_{\Gamma   }^{  } \lesssim \| v \|_{ a_{h} }^{  }
@@ -233,8 +231,41 @@ Combing the results we get the following convenient corollary.
              \]
 
              Obviously is $\| v \|_{a_{h}  }^{  } \lesssim \| v \|_{A_{h}  }^{  }$. Hence, we have showed that all terms in $a_{h}$ is bounded in the $\|\cdot   \|_{A_{h}  }^{  } $ norm.
-         \item The goal is to prove \eqref{eq:bi_a_h_bounded}.
+         \item The goal is to prove \eqref{eq:bi_a_h_bounded} using the same method as in the first part. Let $v \in V_{h} +V $ and $v \in V_{h}$.
+             \[
+                \abs{ A_{h}( v ,w ) } \lesssim   \abs{a_{h}( v, w) }   + \abs{g_{h}( v,w)  }
+             \]
+             Similar to the first part of the proof is the ghost penalty $g_{h}$ bounded, hence, $\abs{ g_{h}(v,w ) } \lesssim \| v \|_{ a_{h},* }^{  } \| w \|_{ A_{h} }^{  } $. Next step is to show that the bilinear term $ a_{h}$ is bounded.
+                \begin{equation}
+                    \begin{split}
+                        \abs{ a_{h} \left( v, w \right) }   \le  &   \abs{\left( \alpha  v, w \right) _{\mathcal{T} _{h} \cap \Omega }  }    +  \abs{\left( D^2 v, D^2w \right) _{\mathcal{T} _{h} \cap \Omega}  }  \\
+                                                     & + \abs{\left( \mean{  \partial _{n n} v }, \jump{ \partial _{n }w} \right)_{\mathcal{F}_{h} \cap \Omega}  }   + \abs{\left( \mean{ \partial _{nn } w }, \jump{ \partial _{n}v }      \right)_{\mathcal{F}_{h} \cap \Omega}  } \\
+                                                     & + \abs{\left(  \partial _{n n} v ,  \partial _{n }w \right)_{\Gamma }}     +
+                                                     \abs{\left(  \partial _{n n} v ,  \partial _{n}w       \right)_{\Gamma }  }
+                                                     \\
+                                                     & + \frac{\gamma }{h} \abs{ \left( \jump{ \partial _{n} v}, \jump{ \partial _{n} w   }   \right)_{\mathcal{F}_{h} \cap \Omega}  } + \frac{\gamma }{h} \abs{ \left(  \partial _{n} v,  \partial _{n} w
+                                                     \right)_{\Gamma }  }
+                    \end{split}
+                \end{equation}
+                     We can easily observe from the first part that this holds, \[
+    \abs{\left( \alpha  v, w \right) _{\mathcal{T} _{h} \cap \Omega }  }    +  \abs{\left( D^2 v, D^2w \right) _{\mathcal{T} _{h} \cap \Omega}  } \lesssim \| v \|_{ a_{h},* }^{  } \| w \|_{A_{h}  }^{  }.
+    \]
+    Using the definition \[
+    \abs{\left( \mean{  \partial _{n n} v }, \jump{ \partial _{n }w} \right)_{\mathcal{F}_{h} \cap \Omega}  } \lesssim \| h^{\frac{1}{2}}\mean{ \partial _{nn}v }   \|_{ \mathcal{F}_{h} \cap \Omega  }^{  } \| h^{-\frac{1}{2}}\jump{ \partial _{n }w}
+    \|_{\mathcal{F}_{h} \cap \Omega  }^{  } \lesssim \| v  \|_{ a_{h},*  }^{  }\|  w \|_{A_{h}  }^{  }
+    \]
+    And for the symmetric interior terms
+    \[
+        \begin{split}
+            \abs{\left( \mean{  \partial _{n n} v }, \jump{ \partial _{n }w} \right)_{\mathcal{F}_{h} \cap \Omega}  } &\lesssim \| h^{\frac{1}{2}}\mean{ \partial _{nn}v }   \|_{ \mathcal{F}_{h} \cap \Omega  }^{  } \| h^{-\frac{1}{2}}\jump{ \partial _{n }w}
+    \|_{\mathcal{F}_{h}^{int} \cap \Omega  }^{  } \lesssim \| v  \|_{ a_{h},*  }^{  }\|  w \|_{A_{h}  }^{  } \\
+            \abs{\left( \mean{  \partial _{n n} w }, \jump{ \partial _{n }v} \right)_{\mathcal{F}_{h} \cap \Omega}  } &\lesssim \| h^{\frac{1}{2}}\mean{ \partial _{nn}w }   \|_{ \mathcal{F}_{h} \cap \Omega  }^{  } \| h^{-\frac{1}{2}}\jump{ \partial _{n }v}
+    \|_{\mathcal{F}_{h}^{int} \cap \Omega  }^{  } \lesssim \| w  \|_{A_{h}  }^{  }\|  v \|_{ a_{h},*  }^{  } \\
+        \end{split}
+    \]
+
+    \todo[inline]{ Fix $\mathcal{F} ^{int}_{h} $    }
+
     \end{enumerate}
-    \todo[inline]{ Finish proof. Need to do $\| \cdot  \|_{ a_{h},* }^{  } $   }
 \end{proof}
 
