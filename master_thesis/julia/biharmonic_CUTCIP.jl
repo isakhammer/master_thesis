@@ -11,19 +11,13 @@ module Solver
 
     # %% Manufactured solution
     # Provides a manufactured solution which is 0 on the unit circle
-    # u_ex(x) = (x[1]^2 + x[2]^2  - 1)*sin(2π*x[1])*cos(2π*x[2])
-    u_ex(x) = 1 - x[1]^2 - x[2]^2 -x[1]^3*x[2]
+    u_ex(x) = (x[1]^2 + x[2]^2  - 1)*sin(2π*x[1])*cos(2π*x[2])
+    # u_ex(x) = 1 - x[1]^2 - x[2]^2 -x[1]^3*x[2]
     ∇u_ex(x) = ∇(u_ex)(x)
-    f(x) = - Δ(u_ex)(x)
+    ∇Δu_ex(x) = ∇(Δ(u_ex))(x)
+    α = 1
 
-    # First version
-    # u_ex(x) = 1 - x[1]^2 - x[2]^2
-    # ∇u_ex(x) = VectorValue(-2*x[1], -2*x[2])
-    # f(x) = 4
-    # ∇(::typeof(u_ex)) = ∇u_ex
-    # ∇(u_ex) === ∇u_ex
-
-
+    f(x) = Δ(Δ(u_ex))(x)+ α*u_ex(x)
 
     @with_kw struct Solution
         Ω
@@ -84,7 +78,7 @@ module Solver
         Ω_act = Triangulation(cutgeo, ACTIVE)
 
         # Construct function spaces
-        V = TestFESpace(Ω_act, ReferenceFE(lagrangian, Float64, order), conformity=:L2)
+        V = TestFESpace(Ω_act, ReferenceFE(lagrangian, Float64, order), conformity=:H1)
         U = TrialFESpace(V)
 
         # Set up integration meshes, measures and normals
@@ -108,12 +102,12 @@ module Solver
         # Define weak form
         # Nitsche parameter
         # β = order*(order+1)
-        γ = 50
+        γ = 1.5*order*( order+1)
 
         # Ghost penalty parameter
         γg0 = γ
-        γg1 = 0.1
-        γg2 = 0.1
+        γg1 = 1
+        γg2 = 1
 
         # Mesh size
         # h = (pmax - pmin)[1]/partition[1]
@@ -122,13 +116,17 @@ module Solver
         function mean_n(u,n)
             return 0.5*( u.plus⋅n.plus + u.minus⋅n.minus )
         end
+
+        function mean_nn(u,n)
+            return 0.5*( n.plus⋅ ∇∇(u).plus⋅ n.plus + n.minus ⋅ ∇∇(u).minus ⋅ n.minus )
+        end
+
         function jump_nn(u,n)
             return ( n.plus⋅ ∇∇(u).plus⋅ n.plus - n.minus ⋅ ∇∇(u).minus ⋅ n.minus )
             # return jump( n⋅ ∇∇(u)⋅ n)
 
         end
         # Define bilinear form
-        α = 1
         a(u,v) =( ∫( ∇∇(v)⊙∇∇(u) + α⋅(v⊙u) )dΩ
                  + ∫(mean_nn(v,n_Λ)⊙jump(∇(u)⋅n_Λ) + mean_nn(u,n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ
                  + ∫(( n_Γ ⋅ ∇∇(v)⋅ n_Γ )⊙∇(u)⋅n_Γ + ( n_Γ ⋅ ∇∇(u)⋅ n_Γ )⊙∇(v)⋅n_Γ)dΓ
@@ -148,9 +146,9 @@ module Solver
         A(u,v) = a(u,v) + g(u,v)
 
         # Define linear form
-        l(v) =
-            ∫( f*v ) * dΩ +
-            ∫( u_ex*(  - (n_Γ⋅∇(v))  + (β/h)*v  )) * dΓ
+        # Notation: g_1 = ∇u_ex⋅n_Γ, g_2 = ∇Δu_ex⋅n_Γ
+        l(v) = (∫( f*v ) * dΩ + ∫(-(∇Δu_ex⋅n_Γ⋅v))dΓ +
+                ∫(∇u_ex⋅n_Γ*(-(n_Γ⋅∇∇(v)⋅n_Γ) + (γ/h)*∇(v)⋅n_Γ)) * dΓ)
 
         # FE problem
         op = AffineFEOperator(A,l,U,V)
@@ -212,10 +210,10 @@ function main()
         mkdir(dirname)
     end
 
-    resultdir= "figures/poisson_DGCutFEM/"*string(Dates.now())
+    resultdir= "figures/biharmonic_CutCIP/"*string(Dates.now())
     mkpath(resultdir)
 
-    orders = [1,2]
+    orders = [2]
     ns = [2^2, 2^3, 2^4, 2^5, 2^6]#, 2^7]
     dirname = resultdir
     makedir(dirname)
