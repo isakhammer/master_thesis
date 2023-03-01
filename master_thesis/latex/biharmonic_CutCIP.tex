@@ -7,7 +7,7 @@
 \label{sub:weak_formulation}
 
 
-Let $\Omega \subseteq    \mathbb{R} ^d$ be a physical mesh, $\Gamma  $ be a $C^2$ boundary and the constant $\alpha >0$. We define the strong biharmonic problem to be on the form
+Let $\Omega \subseteq    \mathbb{R} ^d$ be a physical mesh, $\Gamma  $ be a $C^2$ boundary and the function $\alpha: \Omega \to \mathbb{R}  $. We define the strong biharmonic problem to be on the form
 
 \begin{equation}
 \begin{split}
@@ -82,7 +82,7 @@ A_{h}( u_{h} ,v ) := a_{h}( u_{h}, v)  + g_{h}( u_{h},v) = l_{h} ( v) \quad  \fo
 We define the underlying norms for $ v \in V_{h} $ as
     \begin{align}
         \label{eq:bi_ah_norm}
-        \| v \|_{ a_{h} }^{ 2 } & =  \alpha  \| v \|_{ \mathcal{T} _{h} \cap \Omega  }^{ 2}  + \| D^2 v \|_{\mathcal{T} _{h} \cap \Omega   }^{ 2 } + \gamma \| h^{-\frac{1}{2}} \jump{ \partial _{n} v }   \|_{ \mathcal{F}_{h}^{int}\cap \Omega    }^{ 2
+        \| v \|_{ a_{h} }^{ 2 } & =    \| |\alpha |^{\frac{1}{2}}  v \|_{ \mathcal{T} _{h} \cap \Omega  }^{ 2}  + \| D^2 v \|_{\mathcal{T} _{h} \cap \Omega   }^{ 2 } + \gamma \| h^{-\frac{1}{2}} \jump{ \partial _{n} v }   \|_{ \mathcal{F}_{h}^{int}\cap \Omega    }^{ 2
         } + \gamma \| h^{-\frac{1}{2}}  \partial _{n} v    \|_{ \Gamma   }^{ 2 },    \\
         \label{eq:bi_gh_norm}
 \abs{ v } _{g_{h}}^{2} & = g( v,v) \\
@@ -119,7 +119,6 @@ A useful variant is the following inequality that is,
 \begin{equation*}
 \| \partial _{nn} v \|_{ \Gamma \cap T  }^{  } \lesssim h^{-\frac{1}{2}} \| D^2 v \|_{ T }^{  }.
 \end{equation*}
-\todo[inline]{I Hope this one is correct?}
 Summation the inverse inequalities over $\mathcal{F}_{h} $ and $\mathcal{T}_{h} $ implies that
 \begin{align}
 \label{eq:bi_cut_inverse_1}
@@ -170,7 +169,7 @@ Combing the results we get the following convenient corollary.
     Thus, since the second term already is part of the $\| \cdot  \|_{ A_{h} }^{  } $ norm is a good start to focus on the $a_{h}$ term, that is,
     \[
     \begin{split}
-       a_{h}( v,v) &=   \|\alpha^{\frac{1}{2}} v  \|_{   \Omega   }^{2} + \| D^2v \|_{   \Omega  }^{2  } + 2 ( \mean{ \partial _{nn} v }, \jump{ \partial _{n} v }    )_{\mathcal{F} ^{int}_{h} \cap \Omega }  + 2 (  \partial _{nn} v ,
+       a_{h}( v,v) &=   \|\ |\alpha|^{\frac{1}{2}} \cdot v  \|_{   \Omega   }^{2} + \| D^2v \|_{   \Omega  }^{2  } + 2 ( \mean{ \partial _{nn} v }, \jump{ \partial _{n} v }    )_{\mathcal{F} ^{int}_{h} \cap \Omega }  + 2 (  \partial _{nn} v ,
        \partial _{n} v  )_{\Gamma } \\
                    & \quad+ \frac{\gamma }{h}  \|  \jump{ \partial _{n} v }\|_{\mathcal{F} _{h}^{int}  }^{ 2 } + \frac{\gamma }{h}  \| \partial _{n} v \|_{ \Gamma  }^{ 2 }
     \end{split}
@@ -200,15 +199,22 @@ Combing the results we get the following convenient corollary.
     Combining these ideas do we end up with the following inequality,
     \[
     \begin{split}
-       a_{h}( v,v)  \ge& \    \alpha \| v  \|_{   \Omega   }^{2} +\| D^2v  \|_{   \Omega   }^{2} -  \frac{1}{\varepsilon } 4C  (\| D^2 v \|_{ \Omega  }^{ 2 }  + \abs{ v } _{ g_{h} }^{2  } )  \\
+       a_{h}( v,v)  \ge& \     \|\ |\alpha|^{\frac{1}{2}} \  v  \|_{   \Omega   }^{2} +\| D^2v  \|_{   \Omega   }^{2} -  \frac{1}{\varepsilon } 4C  (\| D^2 v \|_{ \Omega  }^{ 2 }  + \abs{ v } _{ g_{h} }^{2  } )  \\
                        & + (\gamma - 2\varepsilon  )\left( \|h^{-\frac{1}{2}}  \jump{ \partial _{n} v }\|_{\mathcal{F} _{h}^{int}  }^{ 2 } + \| h^{-\frac{1}{2}} \partial _{n} v \|_{ \Gamma  }^{ 2} \right)        \\
-         \ge&  \  \alpha \| v  \|_{   \Omega   }^{2} + (1  - \frac{1}{\varepsilon } 4C)  (\| D^2 v \|_{ \Omega  }^{ 2 }  + \abs{ v } _{ g_{h} }^{2  } )  \\
-                       & + (\gamma - 2\varepsilon  )\left( \|h^{-\frac{1}{2}}  \jump{ \partial _{n} v }\|_{\mathcal{F} _{h}^{int}  }^{ 2 } + \| h^{-\frac{1}{2}} \partial _{n} v \|_{ \Gamma  }^{ 2} \right)        .
     \end{split}
+    \]
+    This inequality is useful, since if we apply it on the $\| \cdot  \|_{ A_{h} }^{  } $ we have a extra ghost penalty term s.t.,
+
+    \[
+        \begin{split}
+     A_{h}( v,v) & = a( v,v) + \abs{ v }_{g_{h}}^{2} \\
+     &\ge  \   \| \ |\alpha|^{\frac{1}{2}} \  v  \|_{   \Omega   }^{2} + (1  - \frac{1}{\varepsilon } 4C)  (\| D^2 v \|_{ \Omega  }^{ 2 }  + \abs{ v } _{ g_{h} }^{2  } )  \\
+                       & + (\gamma - 2\varepsilon  )\left( \|h^{-\frac{1}{2}}  \jump{ \partial _{n} v }\|_{\mathcal{F} _{h}^{int}  }^{ 2 } + \| h^{-\frac{1}{2}} \partial _{n} v \|_{ \Gamma  }^{ 2} \right)        .
+        \end{split}
     \]
     Setting $\varepsilon = 8C$ and $\gamma = \frac{33}{2} C$ we simplify the problem to \[
         \begin{split}
-           a_{h}( v,v)  \ge& \  \alpha \| v  \|_{ \mathcal{T}_{h}\cap  \Omega   }^{2} + \frac{1}{2}  (\| D^2 v \|_{ \mathcal{T} _{h} }^{ 2 }  + \abs{ v } _{ g_{h} }^{2  } )  \\
+           A_{h}( v,v)  \ge& \   \| \ |\alpha|^{\frac{1}{2}} \    v  \|_{  \Omega   }^{2} + \frac{1}{2}  (\| D^2 v \|_{ \Omega  }^{ 2 }  + \abs{ v } _{ g_{h} }^{2  } )  \\
                        & + \frac{C}{2}\left( \|h^{-\frac{1}{2}}  \jump{ \partial _{n} v }\|_{\mathcal{F} _{h}^{int}  }^{ 2 } + \| h^{-\frac{1}{2}} \partial _{n} v \|_{ \Gamma  }^{ 2} \right) \\
                        \ge& \| v \|_{ A_{h} }^{2  }
         \end{split}
