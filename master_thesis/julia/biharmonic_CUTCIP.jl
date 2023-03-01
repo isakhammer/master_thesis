@@ -100,14 +100,12 @@ module Solver
         n_Fg = get_normal_vector(Fg)
 
         # Define weak form
-        # Nitsche parameter
-        # β = order*(order+1)
-        γ = 1.5*order*( order+1)
+        γ = 25*order*( order+1)
 
         # Ghost penalty parameter
         γg0 = γ
-        γg1 = 1
-        γg2 = 1
+        γg1 = 0.1
+        γg2 = 0.1
 
         # Mesh size
         # h = (pmax - pmin)[1]/partition[1]
