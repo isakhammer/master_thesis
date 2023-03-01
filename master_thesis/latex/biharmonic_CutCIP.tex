@@ -336,3 +336,37 @@ where we just applied the definition of the norms $\| \cdot  \|_{a_{h}  }^{  } $
 
     \todo[inline]{ Why is not $\| \mean{ \partial _{nn} v}   \|_{\mathcal{F}_h^{int}  }^{  } \lesssim \|  \partial _{nn} v   \|_{ \mathcal{F}^{int} }^{  }  $ interesting for $v \in V + V_h$, but is often used for $v \in V$?  Ex. the mean is conserved in the $\|
     \cdot \|_{a_h,*}$ norm}
+
+\newpage
+\section{A priori estimates}%
+\label{sec:a_priori_estimates}
+
+\newpage
+\section{Condition number}%
+\label{sec:condition_number}
+
+
+\newpage
+\section{Constructing Ghost Penalties}%
+\label{sec:constructing_ghost_penalties}
+
+We have the following assumptions for the ghost penalty.
+\begin{enumerate}[label=\textbf{EP\arabic*}]
+    \item\label{as:EP1} The ghost penalty $g_{h}$ extends the $H^{1}$ norm s.t. \[
+    \| D^2v \|_{ \mathcal{T} _{h} }^{ 2 }  \lesssim \| D^2 v \|_{ \Omega  }^{  2} + \abs{ v } _{g_{h}}^2
+    \]
+\end{enumerate}
+
+
+We will construct face-based ghost penalties.
+
+\begin{lemma}
+    Let $T_{1},T_{2 } \in  \mathcal{T} _{h}$ be two elements sharing a common face $F$. Then for $v \in V_{h}$  we have \[
+    \| v \|_{ T_{1} }^{  }  \lesssim \| v \|_{ T_{2} }^{  } \sum_{0\le j\le k}  {h^{2j +1}}^{} ( \jump{ \partial _{n}^{j} v }, \jump{ \partial ^{j}_{n} v }    )_{F}
+    \]
+
+\end{lemma}
+\begin{proof}
+    See \cite[Lemma 2.19]{gurkan2019stabilized}.
+\end{proof}
+
