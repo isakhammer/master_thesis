@@ -75,7 +75,7 @@ a_{h} \left( u, v \right)   =&   \left( \alpha  u, v \right) _{\mathcal{T} _{h} 
 \todo[inline]{TODO: Remove $\mathcal{F} ^{int}_{h}$ and use $\mathcal{F} _{h}$ instead.   }
 Similarly the linear form is defined as
  \[
-l_{h}( v) =  ( f,v)_{\mathcal{T} _{h} \cap \Omega } - ( g_{1}, \partial _{nn}v) _{\Gamma } + \frac{\gamma }{h}  ( g_{1}, \partial _{n} v)   .
+l_{h}( v) =  ( f,v)_{\mathcal{T} _{h} \cap \Omega } - (g_{2},v) - ( g_{1}, \partial _{nn}v) _{\Gamma } + \frac{\gamma }{h}  ( g_{1}, \partial _{n} v)   .
 \]
 To make sure the problem is stabilized will we add a ghost-penalty. That is, we define the discrete problem to find a $u_{h} \in V_{h}$ s.t. \[
 A_{h}( u_{h} ,v ) := a_{h}( u_{h}, v)  + g_{h}( u_{h},v) = l_{h} ( v) \quad  \forall v \in  V_{h}.
