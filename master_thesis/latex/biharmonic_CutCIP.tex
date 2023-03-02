@@ -436,7 +436,7 @@ This set is simply all facets that belong to all elements of the active mesh $\m
               & \lesssim    \| v \|_{ T_{l} \cap \Omega  }^{ 2 }  + \sum_{i=1}^{l-1} g_{F_{i}}^{L^{2}}( v,v)
                 \end{split}
             \]
-            Here the last steps arise from the fact that $\|  v \|_{ T_{l} }^{  } \lesssim  \|  v \|_{ T_{l} \cap \Omega  }^{  }  $, which is a consequence of the Assumption \ref{as:G3}.
+            Here the last steps arise from the fact that $\|  v \|_{ T_{l} }^{  } \lesssim  \|  v \|_{ T_{l} \cap \Omega  }^{  }  $, which is a consequence of the Assumption \ref{as:s3}.
             Now doing a summation over the active mesh $\mathcal{T} _{h}$ we see that
             \todo[inline]{ Summation over the active mesh $\mathcal{T} _{h}$ or the $\mathcal{T}_{\Gamma } $?.}
             \[
@@ -447,11 +447,11 @@ This set is simply all facets that belong to all elements of the active mesh $\m
         \]
         Hence, the first part of the proof is complete.
 
-    \item We will simply start by replacing $v$  by $\nabla v$, that it,
+    \item We will simply start by replacing $v$  by $D^2 v$, that it,
         \[
-                    \| \nabla v \|_{ \mathcal{T} _{h} }^{2  } \lesssim \| \nabla v \|_{ \Omega  }^{ 2 }  + \sum_{j=0}^{k} h^{2j+1} ( \jump{ \nabla  \partial ^{j}_{n} v }, \jump{ \nabla  \partial ^{j}_{n} v}    )_{\mathcal{F}_{h}^{g}}
+                    \| D^2 v \|_{ \mathcal{T} _{h} }^{2  } \lesssim \| D^2 v \|_{ \Omega  }^{ 2 }  + \sum_{j=0}^{k} h^{2j+1} ( \jump{ D^2  \partial ^{j}_{n} v }, \jump{ D^2  \partial ^{j}_{n} v}    )_{\mathcal{F}_{h}^{g}}
         \]
-        Remark that $\|  \nabla v \|_{ T_{l} }^{  } \lesssim  \|  \nabla v \|_{ T_{l} \cap \Omega  }^{  }  $ also holds based on Assumption \ref{as:G3}.
+        Remark that $\|  D^2 v \|_{ T_{l} }^{  } \lesssim  \|  D^2 v \|_{ T_{l} \cap \Omega  }^{  }  $ also holds based on Assumption \ref{as:s3}.
         Let us denote the tangential operator $P_{F} := I - n_{F} \oplus n_{F} $. This can be applied to decompose the gradient operator s.t. \[
         \nabla v = ( \partial _{n}v)n_{F} + P_{F} \nabla v.
         \]
