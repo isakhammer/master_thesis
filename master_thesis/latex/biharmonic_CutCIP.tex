@@ -201,7 +201,7 @@ Combing the results we get the following convenient corollary.
     \[
     \begin{split}
        a_{h}( v,v)  \ge& \     \|\ |\alpha|^{\frac{1}{2}} \  v  \|_{   \Omega   }^{2} +\| D^2v  \|_{   \Omega   }^{2} -  \frac{1}{\varepsilon } 4C  (\| D^2 v \|_{ \Omega  }^{ 2 }  + \abs{ v } _{ g_{h} }^{2  } )  \\
-                       & + (\gamma - 2\varepsilon  )\left( \|h^{-\frac{1}{2}}  \jump{ \partial _{n} v }\|_{\mathcal{F} _{h}^{int}  }^{ 2 } + \| h^{-\frac{1}{2}} \partial _{n} v \|_{ \Gamma  }^{ 2} \right)        \\
+                       & + (\gamma - 2\varepsilon  )\left( \|h^{-\frac{1}{2}}  \jump{ \partial _{n} v }\|_{\mathcal{F} _{h}^{int} \cap \Omega   }^{ 2 } + \| h^{-\frac{1}{2}} \partial _{n} v \|_{ \Gamma  }^{ 2} \right)        \\
     \end{split}
     \]
     This inequality is useful, since if we apply it on the $\| \cdot  \|_{ A_{h} }^{  } $ we have a extra ghost penalty term s.t.,
@@ -210,13 +210,13 @@ Combing the results we get the following convenient corollary.
         \begin{split}
      A_{h}( v,v) & = a( v,v) + \abs{ v }_{g_{h}}^{2} \\
      &\ge  \   \| \ |\alpha|^{\frac{1}{2}} \  v  \|_{   \Omega   }^{2} + (1  - \frac{1}{\varepsilon } 4C)  (\| D^2 v \|_{ \Omega  }^{ 2 }  + \abs{ v } _{ g_{h} }^{2  } )  \\
-                       & + (\gamma - 2\varepsilon  )\left( \|h^{-\frac{1}{2}}  \jump{ \partial _{n} v }\|_{\mathcal{F} _{h}^{int}  }^{ 2 } + \| h^{-\frac{1}{2}} \partial _{n} v \|_{ \Gamma  }^{ 2} \right)        .
+                       & + (\gamma - 2\varepsilon  )\left( \|h^{-\frac{1}{2}}  \jump{ \partial _{n} v }\|_{\mathcal{F} _{h}^{int}\cap \Omega   }^{ 2 } + \| h^{-\frac{1}{2}} \partial _{n} v \|_{ \Gamma  }^{ 2} \right)        .
         \end{split}
     \]
     Setting $\varepsilon = 8C$, $\gamma = \frac{33}{2} C$ and $C=1$  we simplify the problem to \[
         \begin{split}
            A_{h}( v,v)  \ge& \   \| \ |\alpha|^{\frac{1}{2}} \    v  \|_{  \Omega   }^{2} + \frac{1}{2}  (\| D^2 v \|_{ \Omega  }^{ 2 }  + \abs{ v } _{ g_{h} }^{2  } )  \\
-                       & + \frac{1}{2}\left( \|h^{-\frac{1}{2}}  \jump{ \partial _{n} v }\|_{\mathcal{F} _{h}^{int}  }^{ 2 } + \| h^{-\frac{1}{2}} \partial _{n} v \|_{ \Gamma  }^{ 2} \right) \\
+                       & + \frac{1}{2}\left( \|h^{-\frac{1}{2}}  \jump{ \partial _{n} v }\|_{\mathcal{F} _{h}^{int}\cap \Omega   }^{ 2 } + \| h^{-\frac{1}{2}} \partial _{n} v \|_{ \Gamma  }^{ 2} \right) \\
                        \ge& \frac{1}{2}\| v \|_{ A_{h} }^{2  }
         \end{split}
     \]
@@ -371,10 +371,14 @@ We will construct face-based ghost penalties.
     See \cite[Lemma 2.19]{gurkan2019stabilized}.
 \end{proof}
 The goal in this chapter is to engineer an ghost penalty which fulfills these assumptions.
-Let us introduce the notation \[
-\partial _{n}^{j} v = \sum_{\abs{ \alpha  } =1 }^{} \frac{D^{\alpha }v( x) n^{\alpha }}{\alpha !}, \quad \abs{ \alpha  } = \sum_{j}^{d} \alpha_{i}
+We denote the multi-index $\alpha  = ( \alpha _{1}, \ldots, \alpha _{d})  $ of order $\abs{ \alpha  } = \sum_{i}^{}  \alpha _{i} = k $   and the normal vectors $n^{\alpha } = n_{1}^{\alpha _{1}} \ldots n_{d}^{\alpha _{d}}$.
+Recall the notation for the derivates, \[
+\partial ^{\alpha} v = \frac{\partial ^{ \alpha_{1}  }  } {\partial^{} x_{1}^{\alpha _{1}}  } \ldots \frac{\partial ^{ \alpha_{d}  }  } {\partial^{} x_{d}^{\alpha _{d}}  } v
 \]
-where we denote the multi-index $\alpha  = ( \alpha _{1}, \ldots, \alpha _{d})  $  and $n^{\alpha } = n_{1}^{\alpha _{1}} \ldots n_{d}^{\alpha _{d}}$. An useful result that may help us design ghost penalty is the following estimate.
+Let us introduce the notation \[
+\partial _{n}^{j} v = \sum_{\abs{ \alpha  } =1 }^{} \frac{\partial ^{\alpha }v( x) n^{\alpha }}{\alpha !}, \quad \abs{ \alpha  } = \sum_{j}^{d} \alpha_{i}
+\]
+An useful result that may help us design ghost penalty is the following estimate.
 \begin{lemma}
     \label{lemma:local_facet_estimate}
     Let $T_{1}, T_{2} \in  \mathcal{T} _{h} $ share a common facet $F \in \mathcal{F}_{h} $. Then for $v_{h} \in  V_{h}$  does this hold \[
@@ -453,18 +457,18 @@ This set is simply all facets that belong to all elements of the active mesh $\m
         \]
         Remark that $\|  D^2 v \|_{ T_{l} }^{  } \lesssim  \|  D^2 v \|_{ T_{l} \cap \Omega  }^{  }  $ also holds based on Assumption \ref{as:s3}.
         Let us denote the tangential operator $P_{F} := I - n_{F} \oplus n_{F} $. This can be applied to decompose the gradient operator s.t. \[
-        \nabla v = ( \partial _{n}v)n_{F} + P_{F} \nabla v.
+        D^2 v = ( \partial _{nn}v)n_{F} + P_{F} D^2 v.
         \]
         That is, applying the decomposition we get the following estimates \[
         \| \jump{ P_{F}   \nabla \partial _{n}^{j} v }\|_{ F }^{ 2 } = \| P_{F} \nabla \jump{ \partial _{n}^{j} v }   \|_{ F  }^{ 2} \lesssim h^{-2} \|  \jump{ \partial ^{j}_{n} v }   \|_{ F }^{  2}
         \]
-        \todo[inline]{ $ \partial _{n}$ or $ \partial _{n_{F}}$ ?}
-        \todo[inline]{ Need to establish what inverse estimate that were applied. }
+        % \todo[inline]{ $ \partial _{n}$ or $ \partial _{n_{F}}$ ?}
+        % \todo[inline]{ Need to establish what inverse estimate that were applied. }
         and \[
             h^{2j +1} \| \jump{\partial ^{j}_{n} \nabla v}  \|_{ F }^{  } \lesssim h^{2j +1 } \| \jump{ \partial ^{j+1}_{n} v }   \|_{F  }^{ 2 } + \| \jump{ \partial ^{j}_{n}v }   \|_{ F }^{ 2 }
         \]
         Thus, fulfilling \eqref{eq:inv_gh_2}.
-        \todo[inline]{ Finish this proof. }
+        % \todo[inline]{ Finish this proof. }
 
     \end{enumerate}
 
