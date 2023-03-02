@@ -409,7 +409,7 @@ This set is simply all facets that belong to all elements of the active mesh $\m
             \label{eq:inv_gh_1}
         \| v \|_{ \mathcal{T} _{h} }^{ 2 }  & \lesssim  \| v \|_{ \Omega  }^{ 2 }  + \sum_{j=0}^{k} h^{2j+1} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n} v}    )_{\mathcal{F}_{h}^{g}}\\
             \label{eq:inv_gh_2}
-        \| D ^2 v \|_{ \mathcal{T} _{h} }^{ 2 }  & \lesssim  \| D^2 v \|_{ \Omega  }^{ 2 }  + \sum_{j=0}^{k} h^{2j-1} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n}v }    )_{\mathcal{F}_{h}^{g}}
+        \| D ^2 v \|_{ \mathcal{T} _{h} }^{ 2 }  & \lesssim  \| D^2 v \|_{ \Omega  }^{ 2 }  + h^{-2}\sum_{j=0}^{k} h^{2j-1} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n}v }    )_{\mathcal{F}_{h}^{g}}
         \end{align}
         Here is $k$ the polynomial degree.
 \end{lemma}
