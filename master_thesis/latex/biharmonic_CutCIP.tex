@@ -372,16 +372,17 @@ We will construct face-based ghost penalties.
 \end{proof}
 The goal in this chapter is to engineer an ghost penalty which fulfills these assumptions.
 We denote the multi-index $\alpha  = ( \alpha _{1}, \ldots, \alpha _{d})  $ of order $\abs{ \alpha  } = \sum_{i}^{}  \alpha _{i} = k $   and the normal vectors $n^{\alpha } = n_{1}^{\alpha _{1}} \ldots n_{d}^{\alpha _{d}}$.
-Recall the notation for the derivates, \[
-\partial ^{\alpha} v = \frac{\partial ^{ \alpha_{1}  }  } {\partial^{} x_{1}^{\alpha _{1}}  } \ldots \frac{\partial ^{ \alpha_{d}  }  } {\partial^{} x_{d}^{\alpha _{d}}  } v
+Recall the notation for the derivates $D^{\alpha } v$ , that is \[
+D ^{0} v  = v, \quad   D ^{1}v  = \nabla v \text{ and }  D ^{2} v  = J(\nabla v) = Hess(v).
 \]
+where $J$ is the Jacobian operator.
 Let us introduce the notation \[
-\partial _{n}^{j} v = \sum_{\abs{ \alpha  } =1 }^{} \frac{\partial ^{\alpha }v( x) n^{\alpha }}{\alpha !}, \quad \abs{ \alpha  } = \sum_{j}^{d} \alpha_{i}
+\partial _{n}^{j} v = \sum_{\abs{ \alpha  } =1 }^{} \frac{D ^{\alpha }v( x) n^{\alpha }}{\alpha !}, \quad \abs{ \alpha  } = \sum_{j}^{d} \alpha_{i}
 \]
 An useful result that may help us design ghost penalty is the following estimate.
 \begin{lemma}
     \label{lemma:local_facet_estimate}
-    Let $T_{1}, T_{2} \in  \mathcal{T} _{h} $ share a common facet $F \in \mathcal{F}_{h} $. Then for $v_{h} \in  V_{h}$  does this hold \[
+    Let $T_{1}, T_{2} \in  \mathcal{T} _{h} $ share a common facet $F \in \mathcal{F}_{h} $. Then for $v_{} \in  V_{h}$  does this hold \[
     \| v \|_{ T_{1} }^{  2}  \lesssim  \| v \|_{ T_{2} }^{2  }  + \sum_{j=0}^{k}  h^{2j +1} ( \jump{ \partial _{n}^{j} v}, \jump{ \partial _{n}^{j} v}    )_{F}
     \]
         Here is $k$ the polynomial degree.
