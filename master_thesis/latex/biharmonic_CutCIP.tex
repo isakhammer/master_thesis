@@ -339,16 +339,16 @@ where we just applied the definition of the norms $\| \cdot  \|_{a_{h}  }^{  } $
     \cdot \|_{a_h,*}$ norm}
 
 \newpage
-\section{A priori estimates}%
+\subsection{A priori estimates}%
 \label{sec:a_priori_estimates}
 
 \newpage
-\section{Condition number}%
+\subsection{Condition number}%
 \label{sec:condition_number}
 
 
 \newpage
-\section{Constructing Ghost Penalties}%
+\subsection{Constructing Ghost Penalties}%
 \label{sec:constructing_ghost_penalties}
 
 We have the following assumptions for the ghost penalty.
@@ -482,6 +482,10 @@ Summation over the intersected triangles $\mathcal{T} _{\Gamma }$ implies,
             \end{split}
         \]
         Remark that $\|  D^2 v \|_{ T_{l} }^{  } \lesssim  \|  D^2 v \|_{ T_{l} \cap \Omega  }^{  }  $ also holds based on Assumption \ref{as:s3}.
+        Thus, it remains to show that \[
+        \sum_{j=0}^{k} h^{2j+1} ( \jump{   D^2 \partial ^{j}_{n}  v }, \jump{  D^2 \partial ^{j}_{n}  v}    )_{\mathcal{F}_{h}^{g}} \lesssim h^{-p} \sum_{j=0}^{k} h^{2j+1} ( \jump{    \partial ^{j}_{n}  v }, \jump{  \partial ^{j}_{n}  v}    )_{\mathcal{F}_{h}^{g}}
+        \]
+        where $p \ge  0 $ is an undecided parameter.
         Let us denote the tangential operator $P_{F} := I - n_{F} \oplus n_{F} $. We apply this so we can to decompose the Hessian s.t. \[
         D^2 v = ( \partial _{nn}v)n_{F} + P_{F} D^2 v.
         \]
@@ -498,9 +502,6 @@ Summation over the intersected triangles $\mathcal{T} _{\Gamma }$ implies,
 
     \end{enumerate}
 
-
-
-
 \end{proof}
 
 
@@ -514,8 +515,8 @@ Finally, we now have the tools we need to construct an candidate for the ghost p
     satisfies the assumptions described in the equations \eqref{eq:EP1}, \eqref{eq:EP2}, \eqref{eq:EP3} and \eqref{eq:EP4}.
 \end{proposition}
 
-
 \begin{proof}
+    \todo[inline]{ TODO: Adapt proof to new man. }
     Using Lemma \ref{lemma:inv_gh_lemma} can we see that \eqref{eq:EP1} and \eqref{eq:EP3} is satisfied, that is \[
     \begin{split}
         \| \nabla v \|_{ \mathcal{T} _{h} }^{  } & \lesssim \| \nabla v \|_{ \Omega  }^{  }  + \abs{ v } _{g_{h}^{1}} \\
