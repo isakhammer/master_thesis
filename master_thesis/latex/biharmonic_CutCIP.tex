@@ -375,11 +375,15 @@ We denote the multi-index $\alpha  = ( \alpha _{1}, \ldots, \alpha _{d})  $ of o
 Recall the notation for the derivates $D^{\alpha } v$ , that is \[
 D ^{0} v  = v, \quad   D ^{1}v  = \nabla v \text{ and }  D ^{2} v  = J(\nabla v) = Hess(v).
 \]
-where $J$ is the Jacobian operator.
+\todo[inline]{ But $\alpha = ( \alpha _{1}, \ldots, \alpha _{d}) $ cannot be a scalar? Ex. How can $D^{\alpha } = D^{1}$ be a consistent notation.  }
+where $J$ is the Jacobian operator. Remark that equivalent element-wise is the following, \[
+\left[ \nabla v \right] _{i} = \partial_{x_{i}} v, \quad  \left[ D^2 v \right] _{i,j} = \partial_{x_{i}x_{j}} v,
+\]
 Let us introduce the notation \[
-\partial _{n}^{j} v = \sum_{\abs{ \alpha  } =1 }^{} \frac{D ^{\alpha }v( x) n^{\alpha }}{\alpha !}, \quad \abs{ \alpha  } = \sum_{j}^{d} \alpha_{i}
+\partial _{n}^{j} v = \sum_{\abs{ \alpha  } =j }^{k} \frac{D ^{\alpha }v( x) n^{\alpha }}{\alpha !}, \quad \abs{ \alpha  } = \sum_{j}^{d} \alpha_{i}
 \]
 An useful result that may help us design ghost penalty is the following estimate.
+
 \begin{lemma}
     \label{lemma:local_facet_estimate}
     Let $T_{1}, T_{2} \in  \mathcal{T} _{h} $ share a common facet $F \in \mathcal{F}_{h} $. Then for $v_{} \in  V_{h}$  does this hold \[
@@ -395,14 +399,31 @@ An useful result that may help us design ghost penalty is the following estimate
 We will now introduce the so-called ghost penalty faces, that is, \[
 \mathcal{F} ^{g}_{h} = \left\{ F\in \mathcal{F} _{h} : T^{+}\cap \Gamma \neq \emptyset  \vee T^{-}\cap \Gamma \neq \emptyset  \right\}.
 \]
-% \todo[inline]{
-%     This definition seems not precise. Do do you mean this?
 
-%     \[
-% \mathcal{F} ^{g}_{h} = \left\{ F\in \mathcal{F} _{h} : T^{+}\cap \Gamma \neq \emptyset  \text{ and } T^{-}\cap \Gamma \neq \emptyset    \text{ for } T^{+}, T^{-} \in \mathcal{T} _{h} \right\}.
-% \] and does also not consist with the drawing \cite[Fig 2.1]{gurkan2019stabilized}.
-%   }
-% \todo[inline]{ Is $\mathcal{F} _{h}^{g}$  equivalent with all facets inside $\mathcal{T}_{\Gamma }? $ }
+\begin{proposition}
+    The following identity holds for $j=0,1,2$.
+    $$\partial ^{j}_{n} (D^2v) = D^2 ( \partial ^{j}_{n} v)  $$
+\end{proposition}
+
+\begin{proof}
+        Recall that $\left[ D^2 v \right]_{i,j} = \partial _{x_{i}x_{j}} v $. We will compute each index individually.
+    \begin{enumerate}[label=\arabic*)]
+        \item $j = 0$ is trivially true.
+        \item Let $j=1$. We can then easily see that, \[
+        \partial ^{}_{n} ( \partial _{x_{i} x_{j}} v)  = \nabla  ( \partial _{x_{i} x_{j}} v)  \cdot n = \partial _{x_{i} x_{j}} (\nabla  v)  \cdot n =\partial _{x_{i} x_{j}} (\partial _{n} v)
+        \]
+        Hence, $\partial _{n} (D^2v) = D^2( \partial _{n}v)$.
+        \item Let $j=2$. Then is, \[
+                \begin{split}
+                \partial^{2} _{n} (\partial _{x_{i} x_{j}} v) & = n^{T}  D^2(\partial _{x_{i} x_{j}} v) n = n^{T}  J( \nabla (\partial _{x_{i} x_{j}}v) ) n \\
+                & =  n^{T}  J(\partial _{x_{i} x_{j}}(\nabla v) ) n = \partial _{x_{i} x_{j}} n^{T} J(\nabla v) n
+                \end{split}
+            \]
+            Hence, $\partial^{2} _{n} (D^2v) = D^2( \partial^{2} _{n}v)$.
+    \end{enumerate}
+    Proof is complete.
+
+\end{proof}
 
 This set is simply all facets that belong to all elements of the active mesh $\mathcal{T} _{h}$  intersected with $\Gamma $.
 
