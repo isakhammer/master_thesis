@@ -342,6 +342,45 @@ where we just applied the definition of the norms $\| \cdot  \|_{a_{h}  }^{  } $
 \subsection{A priori estimates}%
 \label{sec:a_priori_estimates}
 
+In this section will we do only a brief overview of the important assumptions and definitions required to prove optimal convergence.
+Recall that for $v \in H^{1}( \mathcal{T } _{h}) $ these inequalities holds $\forall T \in \mathcal{T} _{h}$ s.t. \[
+\begin{split}
+    \| v \|_{ \partial T }^{  } &\lesssim h^{-\frac{1}{2}}_{T}\|  v \|_{ T }^{  }+ h^{\frac{1}{2}} \| \nabla v \|_{T  }^{   }  , \\
+    \| v \|_{ \Gamma \cap T }^{  } &\lesssim  h^{-\frac{1}{2}} \| v \|_{T  }^{  }   + h^{\frac{1}{2}}_{T} \| \nabla v \|_{ T }^{  }.
+\end{split}
+\]
+For proof, see \cite[Lemma 4.2]{hansbo2003finite}. Let us define the $L^2$-orthogonal projection $\pi _{h}: L^2( \mathcal{T} _{h}) \to V_{h}$ s.t. for $T \in \mathcal{T} _{h}$ and $F \in \mathcal{F} _{h}$,
+\[
+    \begin{split}
+\abs{ v - \pi _{h} v } _{l,T} & \lesssim h^{s-l}_{T} \abs{ v } _{s,T}, \quad 0\le l \le s, \\
+\abs{ v - \pi _{h}v } _{l,F} & \lesssim  h_{T}^{s-l-\frac{1}{2}} \abs{ v }_{s,T} , \quad 0\le l \le s -\frac{1}{2},
+    \end{split}
+\]
+\todo{Proof?}
+for all $v \in H^{s}( \mathcal{T} _{h}) $.
+A key idea is to distinguish between the physical space $\Omega $ and the polyhedra $\Omega ^{e}_{h} = \cup _{T\in \mathcal{T} _{h} } T$. Thus, to do an
+a priori estimate we find it necessary to define an bounded extension operator satisfying, \[
+( \cdot ) ^{e}: W^{m,q}( \Omega )  \to W^{m,q} ( \Omega ^{e}), \quad \| v^{e} \|_{ m,q,\Omega ^{e}  }^{  } \lesssim \| v \|_{ m,q, \Omega  }^{  }.
+\]
+where $0< m \le \infty$ and $1 \le q \le \infty$.
+
+Now assume that $\Omega _{h}^{e} \subset  \Omega^{e} $ for some $\Omega^{e}  $. We define an unfitted $L^2$-projection $\pi _{h}^{e}: H^{r}( \Omega ^{e}_{h}) \to V_{h}$
+s.t.  $\pi ^{e} _{h} v := \pi _{h} v^{e} $.
+
+
+We can immediately observe that the projection $\pi _{h}^{e}$ satisfies the global error estimates, that is,
+\begin{align}
+    \label{eq:projection_estimates_1}
+    \| v - \pi _{h}^{e} v \|_{  r, \mathcal{T} _{h} }^{  } & \lesssim h^{s-r} \| v \|_{ s, \Omega }^{  }, \quad 0\le r\le s \\
+    \label{eq:projection_estimates_2}
+\| v - \pi ^{e}_{h}v \|_{ r,\mathcal{F} _{h} }^{  } & \lesssim h^{s-r-\frac{1}{2}} \| v \|_{ s, \Omega  }^{  }, \quad 0  \le  r \le   s- \frac{1}{2} \\
+    \label{eq:projection_estimates_3}
+\| v - \pi ^{e}_{h}v \|_{ r, \Gamma }^{  } & \lesssim h^{s-r-\frac{1}{2}} \| v \|_{ s, \Omega  }^{  }, \quad 0  \le  r \le   s- \frac{1}{2}
+\end{align}
+
+\todo{ Proof? }
+
+Naturally can we see this is the tools we need to construct an estimate for the energy norm.
 
 
 \newpage
