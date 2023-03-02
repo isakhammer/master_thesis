@@ -401,6 +401,7 @@ We will now introduce the so-called ghost penalty faces, that is, \[
 \]
 
 \begin{proposition}
+    \label{prop:hessian_change}
     The following identity holds for $j=0,1,2$.
     $$\partial ^{j}_{n} (D^2v) = D^2 ( \partial ^{j}_{n} v)  $$
 \end{proposition}
@@ -473,9 +474,12 @@ This set is simply all facets that belong to all elements of the active mesh $\m
         \]
         Hence, the first part of the proof is complete.
 
-    \item We will simply start by replacing $v$  by $D^2 v$, that it,
+    \item We will simply start by replacing $v$  by $D^2 v$ and use the Proposition \ref{prop:hessian_change}, that is,
         \[
-                    \| D^2 v \|_{ \mathcal{T} _{h} }^{2  } \lesssim \| D^2 v \|_{ \Omega  }^{ 2 }  + \sum_{j=0}^{k} h^{2j+1} ( \jump{ D^2  \partial ^{j}_{n} v }, \jump{ D^2  \partial ^{j}_{n} v}    )_{\mathcal{F}_{h}^{g}}
+            \begin{split}
+                    \| D^2 v \|_{ \mathcal{T} _{h} }^{2  }&  \lesssim \| D^2 v \|_{ \Omega  }^{ 2 }  + \sum_{j=0}^{k} h^{2j+1} ( \jump{   \partial ^{j}_{n} D^2 v }, \jump{  \partial ^{j}_{n} D^2 v}    )_{\mathcal{F}_{h}^{g}} \\
+                    &=  \| D^2 v \|_{ \Omega  }^{ 2 }  + \sum_{j=0}^{k} h^{2j+1} ( \jump{   D^2 \partial ^{j}_{n}  v }, \jump{  D^2 \partial ^{j}_{n}  v}    )_{\mathcal{F}_{h}^{g}}
+            \end{split}
         \]
         Remark that $\|  D^2 v \|_{ T_{l} }^{  } \lesssim  \|  D^2 v \|_{ T_{l} \cap \Omega  }^{  }  $ also holds based on Assumption \ref{as:s3}.
         Let us denote the tangential operator $P_{F} := I - n_{F} \oplus n_{F} $. This can be applied to decompose the gradient operator s.t. \[
@@ -484,8 +488,6 @@ This set is simply all facets that belong to all elements of the active mesh $\m
         That is, applying the decomposition we get the following estimates \[
         \| \jump{ P_{F}   \nabla \partial _{n}^{j} v }\|_{ F }^{ 2 } = \| P_{F} \nabla \jump{ \partial _{n}^{j} v }   \|_{ F  }^{ 2} \lesssim h^{-2} \|  \jump{ \partial ^{j}_{n} v }   \|_{ F }^{  2}
         \]
-        % \todo[inline]{ $ \partial _{n}$ or $ \partial _{n_{F}}$ ?}
-        % \todo[inline]{ Need to establish what inverse estimate that were applied. }
         and \[
             h^{2j +1} \| \jump{\partial ^{j}_{n} \nabla v}  \|_{ F }^{  } \lesssim h^{2j +1 } \| \jump{ \partial ^{j+1}_{n} v }   \|_{F  }^{ 2 } + \| \jump{ \partial ^{j}_{n}v }   \|_{ F }^{ 2 }
         \]
