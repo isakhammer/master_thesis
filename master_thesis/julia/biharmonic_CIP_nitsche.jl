@@ -11,9 +11,9 @@ module Solver
 
     # %% Manufactured solution
     # Provides a manufactured solution which is 0 on the unit circle
-    # u_ex(x) = (x[1]^2 + x[2]^2  - 1)*sin(2π*x[1])*cos(2π*x[2])
 
     L, m, r = (1, 1, 1)
+    # u_ex(x) = (x[1]^2 + x[2]^2  - 1)*sin(2π*x[1])*cos(2π*x[2])
     u_ex(x) = 100*cos(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
 
     # u_ex(x) = 1 - x[1]^2 - x[2]^2 -x[1]^3*x[2]
@@ -102,13 +102,12 @@ module Solver
                 )
 
         g_1 = ∇u_ex⋅n_Γ
-        # g_2 = ∇Δu_ex⋅n_Γ
+        g_2 = ∇Δu_ex⋅n_Γ
 
         l(v) = (∫( f*v ) * dΩ
                 +  ∫(-(g_2⋅v))dΓ
-                # + ∫(g_1⊙(-(n_Γ⋅∇∇(v)⋅n_Γ) + (γ/h)*∇(v)⋅n_Γ)) * dΓ
+                + ∫(g_1⊙(-(n_Γ⋅∇∇(v)⋅n_Γ) + (γ/h)*∇(v)⋅n_Γ)) * dΓ
                )
-
 
         op = AffineFEOperator(a, l, U, V)
         uh = solve(op)
