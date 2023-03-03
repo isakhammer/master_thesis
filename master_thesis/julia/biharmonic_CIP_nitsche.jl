@@ -10,24 +10,19 @@ module Solver
 
 
     # %% Manufactured solution
-    # Provides a manufactured solution which is 0 on the unit circle
-
     L, m, r = (1, 1, 1)
     # u_ex(x) = (x[1]^2 + x[2]^2  - 1)*sin(2π*x[1])*cos(2π*x[2])
+    # u_ex(x) = 100*sin(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
     u_ex(x) = 100*cos(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
-
-    # u_ex(x) = 1 - x[1]^2 - x[2]^2 -x[1]^3*x[2]
     ∇u_ex(x) = ∇(u_ex)(x)
     ∇Δu_ex(x) = ∇(Δ(u_ex))(x)
 
-    α = 1
-    f(x) = Δ(Δ(u_ex))(x)+ α*u_ex(x)
+    α(x) = x[1]^2 + x[2]^2
+    f(x) = Δ(Δ(u_ex))(x)+ α(x)⋅u_ex(x)
 
     @with_kw struct Solution
         Ω
         Γ
-        # Ω_act
-        # Fg
         Λ
 
         model
@@ -111,7 +106,9 @@ module Solver
 
         e = u_ex - uh
         el2 = sqrt(sum( ∫(e*e)dΩ ))
-        eh_energy = sqrt(sum( ∫( ∇∇(e)⊙∇∇(e) )*dΩ
+
+        # TODO: Add α into ∫(e⊙e)*dΩ
+        eh_energy = sqrt(sum( ∫(e⊙e)*dΩ + ∫( ∇∇(e)⊙∇∇(e) )*dΩ
                       + ( γ/h ) * ∫(jump(∇(e)⋅n_Λ) ⊙ jump(∇(e)⋅n_Λ))dΛ
                       + ( h/γ ) * ∫(mean_nn(e,n_Λ) ⊙ mean_nn(e,n_Λ))dΛ
                       + ( γ/h ) * ∫((∇(e)⋅n_Γ) ⊙ (∇(e)⋅n_Γ))dΓ
