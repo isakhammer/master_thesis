@@ -9,9 +9,13 @@ module Solver
     import GLMakie
     using Test
 
-    function man_sol(;L=1,m=1,r=1)
-        u(x) = 100*cos(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
-    end
+    L, m, r = 1, 1, 1
+    u_ex(x) = 100*cos(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
+
+    α = 1
+    f(x) = Δ(Δ(u_ex))(x)+ α*u_ex(x)
+    # f(x) = ( 4 + α )*u(x)
+    g(x) = 0
 
     @with_kw struct Results
         Ω
@@ -57,7 +61,7 @@ module Solver
     end
 
 
-    function run(;order=order, n=n, L=L, m=m, r=r, use_quads=false)
+    function run(;order=order, n=n, use_quads=false)
         # Some parameters
         h = L/n
         γ = 1.5*order*( order+1)
@@ -68,12 +72,6 @@ module Solver
         else
             model = CartesianDiscreteModel(domain2D,partition2D)
         end
-
-        # Manufactured solution
-        function man_sol(;L=1,m=1,r=1)
-            u(x) = cos(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
-        end
-        u = man_sol(L=L, m=m, r=r)
 
         # Spaces
         V = TestFESpace(model, ReferenceFE(lagrangian,Float64, order), conformity=:H1)
@@ -92,16 +90,11 @@ module Solver
 
         # manufactured solution
         # g(x) = ( ∇( Δ(u))⊙n_Γ)(x) #this does not compile since u is a ordinary function inner product with normal field vector
-        α = 1
-        f(x) = Δ(Δ(u))(x)+ α*u(x)
-        # f(x) = ( 4 + α )*u(x)
-        g(x) = 0
 
         function mean_nn(u,n)
             return 0.5*( n.plus⋅ ∇∇(u).plus⋅ n.plus + n.minus ⋅ ∇∇(u).minus ⋅ n.minus )
         end
 
-        ⋅
         # Inner facets
         a(u,v) =( ∫( ∇∇(v)⊙∇∇(u) + α⋅(v⊙u) )dΩ
                  + ∫(-mean_nn(v,n_Λ)⊙jump(∇(u)⋅n_Λ) - mean_nn(u,n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ
@@ -114,7 +107,7 @@ module Solver
         op = AffineFEOperator(a, l, U, V)
         uh = solve(op)
 
-        e = u - uh
+        e = u_ex - uh
         el2 = sqrt(sum( ∫(e*e)dΩ ))
         eh_energy = sqrt(sum( ∫( ∇∇(e)⊙∇∇(e) )*dΩ
                       + ( γ/h ) * ∫(jump(∇(e)⋅n_Λ) ⊙ jump(∇(e)⋅n_Λ))dΛ
@@ -125,7 +118,7 @@ module Solver
 
         eh1 = sqrt(sum( ∫( e⊙e + ∇(e)⊙∇(e) )*dΩ ))
 
-        u_inter = interpolate(u, V)
+        u_inter = interpolate(u_ex, V)
         res = Results(  model=model, Ω=Ω, Γ=Γ, Λ=Λ, h=h,
                         u=u_inter, uh=uh, e=e, el2=el2, eh1=eh1, eh_energy=eh_energy)
         return res
@@ -139,7 +132,7 @@ end # module
 
 
 
-function convergence_analysis(; L, m, r, orders, ns, dirname, optimize)
+function convergence_analysis(; orders, ns, dirname, optimize)
     println("Run convergence",)
 
     for order in orders
@@ -151,7 +144,7 @@ function convergence_analysis(; L, m, r, orders, ns, dirname, optimize)
 
         for n in ns
 
-            res = Solver.run(order=order, n=n, L=L, m=m, r=r)
+            res = Solver.run(order=order, n=n)
 
             if !(optimize)
                 vtkdirname =dirname*"/order_"*string(order)*"_n_"*string(n)
@@ -177,17 +170,14 @@ function main()
     end
 
     resultdir= "figures/biharmonic_CIP/"*string(Dates.now())
+    println(resultdir)
     mkpath(resultdir)
 
-    function run(;  L,m,r)
-        orders=[2,3,4]
-        ns = [2^2, 2^3, 2^4, 2^5, 2^6]#, 2^7]
-        dirname = resultdir*"/L_"*string(round(L,digits=2))*"_m_"*string(m)*"_r_"*string(r);
-        makedir(dirname)
-        convergence_analysis( L=L, m=m, r=r, orders=orders, ns=ns, dirname=dirname, optimize=true)
-    end
-
-    run(L=1,m=1,r=1)
+    orders=[2,3,4]
+    ns = [2^2, 2^3, 2^4, 2^5, 2^6]#, 2^7]
+    dirname = resultdir
+    makedir(dirname)
+    convergence_analysis( orders=orders, ns=ns, dirname=dirname, optimize=true)
 end
 
 @time main()
