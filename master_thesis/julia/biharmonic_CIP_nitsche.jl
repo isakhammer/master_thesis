@@ -101,11 +101,9 @@ module Solver
                  + ∫((γ/h)⋅jump(∇(u)⋅n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ + ∫((γ/h)⋅ ∇(u)⊙n_Γ⋅∇(v)⊙n_Γ )dΓ
                 )
 
-        # Notation: g_1 = ∇u_ex⋅n_Γ, g_2 = ∇Δu_ex⋅n_Γ
-        g_2 = ∇u_ex⋅n_Γ
-        g_2 = 0
-        #g_2 = ∇Δu_ex⋅n_Γ
-        # l(v) = ∫( v ⋅ f )dΩ + ∫(- (g_1⋅v))dΓ
+        g_1 = ∇u_ex⋅n_Γ
+        # g_2 = ∇Δu_ex⋅n_Γ
+
         l(v) = (∫( f*v ) * dΩ
                 +  ∫(-(g_2⋅v))dΓ
                 # + ∫(g_1⊙(-(n_Γ⋅∇∇(v)⋅n_Γ) + (γ/h)*∇(v)⋅n_Γ)) * dΓ
