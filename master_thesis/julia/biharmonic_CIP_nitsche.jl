@@ -30,7 +30,7 @@ module Solver
         # Fg
         Λ
 
-        # bgmodel
+        model
         h::Real
 
         u
@@ -46,7 +46,7 @@ module Solver
         mkpath(vtkdirname)
 
         # Write out models and computational domains for inspection
-        # writevtk(sol.bgmodel,   vtkdirname*"/bgmodel")
+        writevtk(sol.model,   vtkdirname*"/model")
         writevtk(sol.Ω,         vtkdirname*"/Omega")
         # writevtk(sol.Ω_act,     vtkdirname*"/Omega_act")
         writevtk(sol.Λ,         vtkdirname*"/Lambda")
@@ -99,7 +99,7 @@ module Solver
         γ = 1.5*order*( order+1)
 
         # Mesh size
-        # h = (pmax - pmin)[1]/partition[1]
+        # h = (pmax - pain)[1]/partition[1]
         h = L/n
 
         function mean_n(u,n)
@@ -136,7 +136,7 @@ module Solver
         eh_energy = sqrt(sum( ∫(∇(e)⋅∇(e) )*dΩ ))
         u_inter = interpolate(u_ex, V)
 
-        sol = Solution( Ω=Ω, Γ=Γ, Λ=Λ, h=h,
+        sol = Solution( model=model, Ω=Ω, Γ=Γ, Λ=Λ, h=h,
                         u=u_inter, uh=uh, e=e, el2=el2, eh1=eh1, eh_energy=eh_energy)
 
         if ( vtkdirname!=nothing)
