@@ -17,7 +17,7 @@ module Solver
     # f(x) = ( 4 + α )*u(x)
     g(x) = 0
 
-    @with_kw struct Results
+    @with_kw struct Solution
         Ω
         Γ
         Λ
@@ -33,40 +33,32 @@ module Solver
         eh_energy
     end
 
-    function generate_vtk(; res::Results, dirname::String)
-        println("Generating vtk's in ", dirname)
-        if (isdir(dirname))
-            rm(dirname, recursive=true)
-        end
-        mkdir(dirname)
-
-        writevtk(res.model, dirname*"/model")
-        writevtk(res.Λ, dirname*"/skeleton")
-        writevtk(res.Γ, dirname*"/boundary")
-        writevtk(res.Λ, dirname*"/jumps",cellfields=["jump_u"=>jump(res.uh)])
-        writevtk(res.Ω, dirname*"/omega",cellfields=["uh"=>res.uh])
-        writevtk(res.Ω, dirname*"/error",cellfields=["e"=>res.e])
-        writevtk(res.Ω, dirname*"/manufatured",cellfields=["u"=>res.u])
+    function generate_vtk(; sol::Solution, vtkdirname::String)
+        println("Generating vtk's in ", vtkdirname)
+        mkpath(vtkdirname)
 
 
-        fig = Makie.plot(res.Λ)
-        Makie.wireframe!(res.Λ, color=:black, linewidth=2)
-        Makie.wireframe!(res.Γ, color=:black, linewidth=2)
-        Makie.save(dirname*"/grid.png", fig)
-
-        # (Isak): Doesnt work :( Please fix
-        # fig, _ , plt = Makie.plot(res.Ω, res.uh)
-        # Makie.Colorbar(fig[1,2], plt)
-        # Makie.save(dirname*"/man_sol.png", fig)
+        # writevtk(sol.bgmodel,   vtkdirname*"/bgmodel")
+        writevtk(sol.model,   vtkdirname*"/model")
+        writevtk(sol.Ω,         vtkdirname*"/Omega")
+        # writevtk(sol.Ω_act,     vtkdirname*"/Omega_act")
+        writevtk(sol.Λ,         vtkdirname*"/Lambda")
+        writevtk(sol.Γ,         vtkdirname*"/Gamma")
+        # writevtk(sol.Fg,        vtkdirname*"/Fg")
+        writevtk(sol.Λ,         vtkdirname*"/jumps",        cellfields=["jump_u"=>jump(sol.uh)])
+        writevtk(sol.Ω,         vtkdirname*"/omega",        cellfields=["uh"=>sol.uh])
+        writevtk(sol.Ω,         vtkdirname*"/error",        cellfields=["e"=>sol.e])
+        writevtk(sol.Ω,         vtkdirname*"/manufatured",  cellfields=["u"=>sol.u])
     end
 
 
-    function run(;order=order, n=n, use_quads=false)
+    function run(;order=order, n=n, vtkdirname=nothing)
         # Some parameters
         h = L/n
         γ = 1.5*order*( order+1)
         domain2D = (0, L, 0, L)
         partition2D = (n, n)
+        use_quads=false
         if !use_quads
             model = CartesianDiscreteModel(domain2D,partition2D) |> simplexify
         else
@@ -119,9 +111,14 @@ module Solver
         eh1 = sqrt(sum( ∫( e⊙e + ∇(e)⊙∇(e) )*dΩ ))
 
         u_inter = interpolate(u_ex, V)
-        res = Results(  model=model, Ω=Ω, Γ=Γ, Λ=Λ, h=h,
+        sol = Solution(  model=model, Ω=Ω, Γ=Γ, Λ=Λ, h=h,
                         u=u_inter, uh=uh, e=e, el2=el2, eh1=eh1, eh_energy=eh_energy)
-        return res
+
+        if ( vtkdirname!=nothing)
+            generate_vtk(sol=sol, vtkdirname=vtkdirname)
+        end
+
+        return sol
     end
 
 end # module
@@ -129,10 +126,7 @@ end # module
 
 
 
-
-
-
-function convergence_analysis(; orders, ns, dirname, optimize)
+function convergence_analysis(; orders, ns, dirname, write_vtks=true)
     println("Run convergence",)
 
     for order in orders
@@ -144,22 +138,22 @@ function convergence_analysis(; orders, ns, dirname, optimize)
 
         for n in ns
 
-            res = Solver.run(order=order, n=n)
-
-            if !(optimize)
+            if (write_vtks)
                 vtkdirname =dirname*"/order_"*string(order)*"_n_"*string(n)
                 mkpath(vtkdirname)
-                Solver.generate_vtk(res=res, dirname=vtkdirname)
+                sol = Solver.run(order=order, n=n, vtkdirname=vtkdirname)
+            else
+                sol = Solver.run(order=order, n=n)
             end
 
-            push!(el2s, res.el2)
-            push!(eh1s, res.eh1)
-            push!(ehs_energy, res.eh_energy)
+            push!(el2s, sol.el2)
+            push!(eh1s, sol.eh1)
+            push!(ehs_energy, sol.eh_energy)
         end
         Results.generate_figures(ns=ns, el2s=el2s, eh1s=eh1s, ehs_energy=ehs_energy, order=order, dirname=dirname)
     end
-
 end
+
 
 function main()
     function makedir(dirname)
@@ -173,12 +167,11 @@ function main()
     println(resultdir)
     mkpath(resultdir)
 
-    orders=[2,3,4]
+    orders = [2,3,4]
     ns = [2^2, 2^3, 2^4, 2^5, 2^6]#, 2^7]
     dirname = resultdir
     makedir(dirname)
-    convergence_analysis( orders=orders, ns=ns, dirname=dirname, optimize=true)
+    convergence_analysis( orders=orders, ns=ns, dirname=dirname)
 end
 
 @time main()
-
