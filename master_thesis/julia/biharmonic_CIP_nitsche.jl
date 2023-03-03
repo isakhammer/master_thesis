@@ -131,9 +131,11 @@ module Solver
                 )
 
         # Define linear form
-        # Notation: g_1 = ∇u_ex⋅n_Γ, g_2 = ∇Δu_ex⋅n_Γ
-        l(v) = (∫( f*v ) * dΩ + ∫(-(∇Δu_ex⋅n_Γ⋅v))dΓ +
-                ∫(∇u_ex⋅n_Γ*(-(n_Γ⋅∇∇(v)⋅n_Γ) + (γ/h)*∇(v)⋅n_Γ)) * dΓ)
+        g_1 = ∇u_ex⋅n_Γ
+        g_2 = ∇Δu_ex⋅n_Γ
+
+        l(v) = (∫( f*v ) * dΩ + ∫(-(g_2⋅v))dΓ +
+                ∫(g_1⊙(-(n_Γ⋅∇∇(v)⋅n_Γ) + (γ/h)*∇(v)⋅n_Γ)) * dΓ)
 
         # FE problem
         op = AffineFEOperator(A,l,U,V)
