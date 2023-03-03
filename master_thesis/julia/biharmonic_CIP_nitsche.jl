@@ -59,26 +59,22 @@ module Solver
     end
 
 
-    function run(; order=order, n=n, vtkdirname=nothing )
-
-        # Background model
-        use_quads=true
-
-        domain = (-L, L, -L, L)
-        pmin = Point(-L, -L)
-        pmax = Point(L, L)
-        partition = (n,n)
-
+    function run(;order=order, n=n, vtkdirname=nothing)
+        # Some parameters
+        h = L/n
+        γ = 1.5*order*( order+1)
         domain2D = (0, L, 0, L)
         partition2D = (n, n)
+        use_quads=false
         if !use_quads
             model = CartesianDiscreteModel(domain2D,partition2D) |> simplexify
         else
             model = CartesianDiscreteModel(domain2D,partition2D)
         end
 
-        # Implicit geometry
-        # TODO: Define own level set function via AnalyticalGeometry
+        # Spaces
+        V = TestFESpace(model, ReferenceFE(lagrangian,Float64, order), conformity=:H1)
+        U = TrialFESpace(V)
         Ω = Triangulation(model)
         Λ = SkeletonTriangulation(model)
         Γ = BoundaryTriangulation(model)
@@ -91,52 +87,47 @@ module Solver
         n_Λ = get_normal_vector(Λ)
         n_Γ = get_normal_vector(Γ)
 
-        # Construct function spaces
-        V = TestFESpace(Ω, ReferenceFE(lagrangian, Float64, order), conformity=:H1)
-        U = TrialFESpace(V)
-
-        # Define weak form
-        γ = 1.5*order*( order+1)
-
-        # Mesh size
-        # h = (pmax - pain)[1]/partition[1]
-        h = L/n
-
-        function mean_n(u,n)
-            return 0.5*( u.plus⋅n.plus + u.minus⋅n.minus )
-        end
+        # manufactured solution
+        # g(x) = ( ∇( Δ(u))⊙n_Γ)(x) #this does not compile since u is a ordinary function inner product with normal field vector
 
         function mean_nn(u,n)
             return 0.5*( n.plus⋅ ∇∇(u).plus⋅ n.plus + n.minus ⋅ ∇∇(u).minus ⋅ n.minus )
         end
 
-        # Define bilinear form
-        A(u,v) =( ∫( ∇∇(v)⊙∇∇(u) + α⋅(v⊙u) )dΩ
-                 + ∫(mean_nn(v,n_Λ)⊙jump(∇(u)⋅n_Λ) + mean_nn(u,n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ
-                 + ∫(( n_Γ ⋅ ∇∇(v)⋅ n_Γ )⊙∇(u)⋅n_Γ + ( n_Γ ⋅ ∇∇(u)⋅ n_Γ )⊙∇(v)⋅n_Γ)dΓ
+        # Inner facets
+        a(u,v) =( ∫( ∇∇(v)⊙∇∇(u) + α⋅(v⊙u) )dΩ
+                 + ∫(-mean_nn(v,n_Λ)⊙jump(∇(u)⋅n_Λ) - mean_nn(u,n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ
+                 + ∫(-( n_Γ ⋅ ∇∇(v)⋅ n_Γ )⊙∇(u)⋅n_Γ - ( n_Γ ⋅ ∇∇(u)⋅ n_Γ )⊙∇(v)⋅n_Γ)dΓ
                  + ∫((γ/h)⋅jump(∇(u)⋅n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ + ∫((γ/h)⋅ ∇(u)⊙n_Γ⋅∇(v)⊙n_Γ )dΓ
                 )
 
-        # Define linear form
-        g_1 = ∇u_ex⋅n_Γ
-        g_2 = ∇Δu_ex⋅n_Γ
-
+        # Notation: g_1 = ∇u_ex⋅n_Γ, g_2 = ∇Δu_ex⋅n_Γ
+        g_2 = ∇u_ex⋅n_Γ
+        g_2 = 0
+        #g_2 = ∇Δu_ex⋅n_Γ
+        # l(v) = ∫( v ⋅ f )dΩ + ∫(- (g_1⋅v))dΓ
         l(v) = (∫( f*v ) * dΩ
                 +  ∫(-(g_2⋅v))dΓ
-                + ∫(g_1⊙(-(n_Γ⋅∇∇(v)⋅n_Γ) + (γ/h)*∇(v)⋅n_Γ)) * dΓ
+                # + ∫(g_1⊙(-(n_Γ⋅∇∇(v)⋅n_Γ) + (γ/h)*∇(v)⋅n_Γ)) * dΓ
                )
 
-        # FE problem
-        op = AffineFEOperator(A,l,U,V)
+
+        op = AffineFEOperator(a, l, U, V)
         uh = solve(op)
 
         e = u_ex - uh
         el2 = sqrt(sum( ∫(e*e)dΩ ))
-        eh1 = sqrt(sum( ∫( e⊙e + ∇(e)⊙∇(e) )*dΩ ))
-        eh_energy = sqrt(sum( ∫(∇(e)⋅∇(e) )*dΩ ))
-        u_inter = interpolate(u_ex, V)
+        eh_energy = sqrt(sum( ∫( ∇∇(e)⊙∇∇(e) )*dΩ
+                      + ( γ/h ) * ∫(jump(∇(e)⋅n_Λ) ⊙ jump(∇(e)⋅n_Λ))dΛ
+                      + ( h/γ ) * ∫(mean_nn(e,n_Λ) ⊙ mean_nn(e,n_Λ))dΛ
+                      + ( γ/h ) * ∫((∇(e)⋅n_Γ) ⊙ (∇(e)⋅n_Γ))dΓ
+                      + ( h/γ ) * ∫(( n_Γ ⋅ ∇∇(e)⋅ n_Γ ) ⊙ ( n_Γ ⋅ ∇∇(e)⋅ n_Γ ))dΓ
+                     ))
 
-        sol = Solution( model=model, Ω=Ω, Γ=Γ, Λ=Λ, h=h,
+        eh1 = sqrt(sum( ∫( e⊙e + ∇(e)⊙∇(e) )*dΩ ))
+
+        u_inter = interpolate(u_ex, V)
+        sol = Solution(  model=model, Ω=Ω, Γ=Γ, Λ=Λ, h=h,
                         u=u_inter, uh=uh, e=e, el2=el2, eh1=eh1, eh_energy=eh_energy)
 
         if ( vtkdirname!=nothing)
