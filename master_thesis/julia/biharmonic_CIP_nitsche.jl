@@ -87,9 +87,6 @@ module Solver
         n_Λ = get_normal_vector(Λ)
         n_Γ = get_normal_vector(Γ)
 
-        # manufactured solution
-        # g(x) = ( ∇( Δ(u))⊙n_Γ)(x) #this does not compile since u is a ordinary function inner product with normal field vector
-
         function mean_nn(u,n)
             return 0.5*( n.plus⋅ ∇∇(u).plus⋅ n.plus + n.minus ⋅ ∇∇(u).minus ⋅ n.minus )
         end
