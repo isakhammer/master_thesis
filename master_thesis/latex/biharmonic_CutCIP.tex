@@ -351,22 +351,23 @@ Recall that for $v \in H^{1}( \mathcal{T } _{h}) $ these inequalities holds $\fo
 \]
 For proof, see \cite[Lemma 4.2]{hansbo2003finite}.
 
-\subsubsection{Interpolation estimates}%
+\subsubsection{Cléments interpolation}%
 \label{ssub:clement_operator}
 
 We want to compute the expected convergence rate of the energy norm \eqref{eq:A_energy_norm}. An important tool in the process is the Cléments interpolation operator, $C_{h}$.
 It is used for interpolation on non smooth functions by applying an regularization on so-called macroelements. Let us denote the $\mathcal{P}_{c}^{k}( \Omega )  $ to be an $H^{1}$ conformal polynomial space. We denote $\left\{ a_{1}, \ldots, a_{N}
 \right\} $ to be the Lagrange nodes. Associated with each node $a_{i}$ we denote the macroelement $A_{i}$ to consist of all simplices containing $a_{i}$. Let $n_{cf}$ be the number of configurations for the macroelement, then we define the index $j:
-\left\{ 1,\ldots,N \right\} \to \left\{ 1, \ldots, n_{cf} \right\}  $ s.t. $j( i) $ is the index associated with the reference configuration $\hat{A}_{j(i) }$ for corresponding macroelement $A_{i}$. Let us define a $C^{0}$-diffeomorphism $G_{A_{i}}$
-from $\hat{A}_{j( i) }$ to $A_{i}$ s.t. for all $\hat{T} \in \hat{A}_{j( i) } $ is the restriction $G_{A_{i}  \mid \hat{T}}$ affine. The Cléments interpolation operator $C_{h}$ is defined as an $L^2$-projection onto the macroelements. That is, given
-a reference macroelement $\hat{A}_{j( i) }$ and a function $\hat{v} \in L^{1}( \hat{A}_{j( i) })  $, then $\hat{C}_{j( i) } \hat{v}$  is the unique polynomial in $\mathcal{P}^{k} ( \hat{A}_{j( i) })  $ s.t. \[
-\int_{  \hat{A}_{j( i) }}^{} ( \hat{C}_{j( i) } \hat{v} - \hat{v}) p \ dx  = 0 \quad  \forall p \in \mathcal{P}^{k} ( \hat{A}_{j( i) })
+\left\{ 1,\ldots,N \right\} \to \left\{ 1, \ldots, n_{cf} \right\}  $ s.t. $j( i) $ is the index associated with the reference configuration $\widehat{A}_{j(i) }$ for corresponding macroelement $A_{i}$. Let us define a $C^{0}$-diffeomorphism $G_{A_{i}}:
+\widehat{A}_{j( i) } \to A_{i}$ s.t. for all $\widehat{T} \in \widehat{A}_{j( i) } $ is the restriction $G_{A_{i}  \mid \widehat{T}}$ affine. The Cléments interpolation operator $C_{h}$ is defined as a $L^2$-projection onto the macroelements. That is, given
+a reference macroelement $\widehat{A}_{j( i) }$ and a function $\hat{v} \in L^{1}( \widehat{A}_{j( i) })  $, then $\widehat{C}_{j( i) } \hat{v}$  is the unique polynomial in $\mathcal{P}^{k} ( \widehat{A}_{j( i) })  $ s.t. \[
+\int_{  \widehat{A}_{j( i) }}^{} ( \widehat{C}_{j( i) } \hat{v} - \hat{v}) p \ dx  = 0 \quad  \forall p \in \mathcal{P}^{k} ( \widehat{A}_{j( i) })
 \]
 Finally, we define the Cléments interpolator $C_{h} : L^{1}( \Omega )  \to \mathcal{P} ^{k}_{c}(\Omega  ) $ s.t.
 \[
-C_{h} v = \sum_{i=1}^{N} \hat{C}_{j( i) } ( v (G_{A_{i}}) (G^{-1}_{A_{i}}(a_{i})) )\phi _{i},
+C_{h} v = \sum_{i=1}^{N} \widehat{C}_{j( i) } ( v (G_{A_{i}}) (G^{-1}_{A_{i}}(a_{i})) )\phi _{i},
 \]
 where $\phi _{i}$ is the corresponding polynomial basis at node $a_{i}$.
+
 Recall the integral norm notation,
 \[
 \| u \|_{ m,2,T }^{  } = \left( \sum_{ \left\lvert \alpha  \right\rvert \le m}^{} \int_{T}^{}  \left\lvert  \partial ^{\alpha } u \right\rvert^{2} dx   \right)^{\frac{1}{2}}
@@ -375,13 +376,14 @@ We denote a patch, $\omega \left( T \right) $, as the set of elements in $\mathc
 sharing at least one vertex with $F \in  \mathcal{F} _{h}$. Finally, we have the following lemma
 
 \begin{lemma}
+    \label{lemma:clements}
 
 We define the Clement interpolation as the projection
 $C_{h}: H^{m} \left( \Omega  \right) \mapsto V_{h}$. Then does the following estimates hold
 \[
  \| C_{h} v \|_{H^{m}\left( \Omega  \right)   }^{  } \lesssim \| v \|_{ H^{m}\left( \Omega  \right)  }^{  } \quad \forall v \in H^{m}\left( \Omega  \right),
 \]
-and if the following conditions for $m,l$ and $k$ is satisfied, it exists error estimates such that,
+and if the following conditions for $m,l$ and $k$ is satisfied, it exists error estimates s.t.,
 \[
     \begin{split}
       m\le l \le k+1  \implies \| v - C_{h} v \|_{ m,2,T   }^{  }  &  \lesssim h^{l-m}_{T} \| v \|_{l,2,\omega \left( T \right)  }^{  } \quad  \forall T \in \mathcal{T} _{h}, \forall v \in H^{l}\left( \omega \left( T \right)
@@ -397,8 +399,21 @@ and if the following conditions for $m,l$ and $k$ is satisfied, it exists error 
     $C_{h}: H^{m} \to \mathcal{P} ^{k}$?
 }
 
+\begin{corollary}
+    \label{cor:celement_apriori}
+    Let $0 \le l \le k+1$ and let $0\le m \le \min_{} ( 1,l )$.
+    Given Lemma \ref{lemma:clements}  then there exists an $C > 0$ s.t.
+    \[
+    \inf_{v_{h} \in \mathcal{P} ^{k}_{c}( \Omega ) } \| v - v_{h} \|_{  m,p,\Omega }^{  } \le C h^{l-m}  \| v \|_{ l,p,\Omega  }^{  }    \forall v \in W_{l,p}( \Omega ).
+    \]
+\end{corollary}
+
+
+This result is very useful since it makes it possible
+
+
 For further detailed information, please investigate \cite[Lemma 1.127]{ern04}.
-We will use these estimates to compute convergence rate.
+We will use these estimates to compute convergence rate given that Ceas' Lemma holds.
 
 
 \subsubsection{Extension}%
@@ -416,11 +431,11 @@ s.t.  $\pi ^{e} _{h} v := \pi _{h} v^{e} $.
 
 We can immediately observe that the projection $\pi _{h}^{e}$ satisfies the global error estimates, that is,
 \begin{align}
-    \label{eq:projection_estimates_1}
+    \label{eq:bi_projection_estimates_1}
     \| v - \pi _{h}^{e} v \|_{  r, \mathcal{T} _{h} }^{  } & \lesssim h^{s-r} \| v \|_{ s, \Omega }^{  }, \quad 0\le r\le s \\
-    \label{eq:projection_estimates_2}
+    \label{eq:bi_projection_estimates_2}
 \| v - \pi ^{e}_{h}v \|_{ r,\mathcal{F} _{h} }^{  } & \lesssim h^{s-r-\frac{1}{2}} \| v \|_{ s, \Omega  }^{  }, \quad 0  \le  r \le   s- \frac{1}{2} \\
-    \label{eq:projection_estimates_3}
+    \label{eq:bi_projection_estimates_3}
 \| v - \pi ^{e}_{h}v \|_{ r, \Gamma }^{  } & \lesssim h^{s-r-\frac{1}{2}} \| v \|_{ s, \Omega  }^{  }, \quad 0  \le  r \le   s- \frac{1}{2}
 \end{align}
 
@@ -472,7 +487,7 @@ Let us introduce the notation \[
 An useful result that may help us design ghost penalty is the following estimate.
 
 \begin{lemma}
-    \label{lemma:local_facet_estimate}
+    \label{lemma:bi_local_facet_estimate}
     Let $T_{1}, T_{2} \in  \mathcal{T} _{h} $ share a common facet $F \in \mathcal{F}_{h} $. Then for $v_{} \in  V_{h}$  does this hold \[
     \| v \|_{ T_{1} }^{  2}  \lesssim  \| v \|_{ T_{2} }^{2  }  + \sum_{j=0}^{k}  h^{2j +1} ( \jump{ \partial _{n}^{j} v}, \jump{ \partial _{n}^{j} v}    )_{F}
     \]
@@ -516,20 +531,20 @@ We will now introduce the so-called ghost penalty faces, that is, \[
 This set is simply all facets that belong to all elements of the active mesh $\mathcal{T} _{h}$  intersected with $\Gamma $.
 
 \begin{lemma}
-    \label{lemma:inv_gh_lemma}
+    \label{lemma:bi_inv_gh_lemma}
     Assume \ref{as:s2} and \ref{as:s3}.
     For $v \in  V_{h}$ it holds that
         \begin{align}
-            \label{eq:inv_gh_1}
+            \label{eq:bi_inv_gh_1}
         \| v \|_{ \mathcal{T} _{h} }^{ 2 }  & \lesssim  \| v \|_{ \Omega  }^{ 2 }  + \sum_{j=0}^{k} h^{2j+1} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n} v}    )_{\mathcal{F}_{h}^{g}}\\
-            \label{eq:inv_gh_2}
+            \label{eq:bi_inv_gh_2}
         \| D ^2 v \|_{ \mathcal{T} _{h} }^{ 2 }  & \lesssim  \| D^2 v \|_{ \Omega  }^{ 2 }  + h^{-2}\sum_{j=0}^{k} h^{2j-1} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n}v }    )_{\mathcal{F}_{h}^{g}}
         \end{align}
         Here is $k$ the polynomial degree.
 \end{lemma}
 
 \begin{proof}
-    We will dive the proof in two parts where we first prove \eqref{eq:inv_gh_1} and then in the second part prove \eqref{eq:inv_gh_2}.
+    We will dive the proof in two parts where we first prove \eqref{eq:bi_inv_gh_1} and then in the second part prove \eqref{eq:bi_inv_gh_2}.
     \begin{enumerate}[label=\arabic*)]
         \item
             First of all, notice that there is a patch $P(T) $ consisting of $\left\{ T_{i} \right\}_{i=1}^{l} $ mesh elements s.t. each pair $ \left\{ T_{i}, T_{i+1} \right\} $ share a facet $F_{i}$ and the last element $T_{l}$ has a so-called "fat"
@@ -538,7 +553,7 @@ This set is simply all facets that belong to all elements of the active mesh $\m
             Let us define the following norm \[
             g_{F_{i}}^{L^{2}}( v,v)  = \sum_{j=0}^{k} h^{2j+1}( \jump{ \partial ^{j}_{n}v }, \jump{ \partial ^{j}_{n}v }    )_{F_{i} }
             \]
-            where $F_{i} \in  \mathcal{F} ^{g}_{h}$ and polynomial degree $ k$. Using Lemma \ref{lemma:local_facet_estimate} can we see that \[
+            where $F_{i} \in  \mathcal{F} ^{g}_{h}$ and polynomial degree $ k$. Using Lemma \ref{lemma:bi_local_facet_estimate} can we see that \[
             \| v \|_{ T_{i} }^{  } \lesssim \| v \|_{ T_{i+1} }^{ 2 } + g_{F_{i}}^{L^{2}}( v,v).
             \]
     Consequently, using induction over each pair $\left\{ T_{i}, T_{i+1} \right\} $ with a corresponding $F_{i}$, we obtain
