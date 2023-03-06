@@ -349,15 +349,61 @@ Recall that for $v \in H^{1}( \mathcal{T } _{h}) $ these inequalities holds $\fo
     \| v \|_{ \Gamma \cap T }^{  } &\lesssim  h^{-\frac{1}{2}} \| v \|_{T  }^{  }   + h^{\frac{1}{2}}_{T} \| \nabla v \|_{ T }^{  }.
 \end{split}
 \]
-For proof, see \cite[Lemma 4.2]{hansbo2003finite}. Let us define the $L^2$-orthogonal projection $\pi _{h}: L^2( \mathcal{T} _{h}) \to V_{h}$ s.t. for $T \in \mathcal{T} _{h}$ and $F \in \mathcal{F} _{h}$,
+For proof, see \cite[Lemma 4.2]{hansbo2003finite}.
+
+\subsubsection{Interpolation estimates}%
+\label{ssub:clement_operator}
+
+We want to compute the expected convergence rate of the energy norm \eqref{eq:A_energy_norm}. An important tool in the process is the Cléments interpolation operator, $C_{h}$.
+It is used for interpolation on non smooth functions by applying an regularization on so-called macroelements. Let us denote the $\mathcal{P}_{c}^{k}( \Omega )  $ to be an $H^{1}$ conformal polynomial space. We denote $\left\{ a_{1}, \ldots, a_{N}
+\right\} $ to be the Lagrange nodes. Associated with each node $a_{i}$ we denote the macroelement $A_{i}$ to consist of all simplices containing $a_{i}$. Let $n_{cf}$ be the number of configurations for the macroelement, then we define the index $j:
+\left\{ 1,\ldots,N \right\} \to \left\{ 1, \ldots, n_{cf} \right\}  $ s.t. $j( i) $ is the index associated with the reference configuration $\hat{A}_{j(i) }$ for corresponding macroelement $A_{i}$. Let us define a $C^{0}$-diffeomorphism $G_{A_{i}}$
+from $\hat{A}_{j( i) }$ to $A_{i}$ s.t. for all $\hat{T} \in \hat{A}_{j( i) } $ is the restriction $G_{A_{i}  \mid \hat{T}}$ affine. The Cléments interpolation operator $C_{h}$ is defined as an $L^2$-projection onto the macroelements. That is, given
+a reference macroelement $\hat{A}_{j( i) }$ and a function $\hat{v} \in L^{1}( \hat{A}_{j( i) })  $, then $\hat{C}_{j( i) } \hat{v}$  is the unique polynomial in $\mathcal{P}^{k} ( \hat{A}_{j( i) })  $ s.t. \[
+\int_{  \hat{A}_{j( i) }}^{} ( \hat{C}_{j( i) } \hat{v} - \hat{v}) p \ dx  = 0 \quad  \forall p \in \mathcal{P}^{k} ( \hat{A}_{j( i) })
+\]
+Finally, we define the Cléments interpolator $C_{h} : L^{1}( \Omega )  \to \mathcal{P} ^{k}_{c}(\Omega  ) $ s.t.
+\[
+C_{h} v = \sum_{i=1}^{N} \hat{C}_{j( i) } ( v (G_{A_{i}}) (G^{-1}_{A_{i}}(a_{i})) )\phi _{i},
+\]
+where $\phi _{i}$ is the corresponding polynomial basis at node $a_{i}$.
+Recall the integral norm notation,
+\[
+\| u \|_{ m,2,T }^{  } = \left( \sum_{ \left\lvert \alpha  \right\rvert \le m}^{} \int_{T}^{}  \left\lvert  \partial ^{\alpha } u \right\rvert^{2} dx   \right)^{\frac{1}{2}}
+\]
+We denote a patch, $\omega \left( T \right) $, as the set of elements in $\mathcal{T} _{h}$  sharing at least one vertex with $T \in \mathcal{T} _{h}$ . And similarly we denote a another patch, $\omega \left( F \right) $, as the set of all elements in $\mathcal{T}_{h} $
+sharing at least one vertex with $F \in  \mathcal{F} _{h}$. Finally, we have the following lemma
+
+\begin{lemma}
+
+We define the Clement interpolation as the projection
+$C_{h}: H^{m} \left( \Omega  \right) \mapsto V_{h}$. Then does the following estimates hold
+\[
+ \| C_{h} v \|_{H^{m}\left( \Omega  \right)   }^{  } \lesssim \| v \|_{ H^{m}\left( \Omega  \right)  }^{  } \quad \forall v \in H^{m}\left( \Omega  \right),
+\]
+and if the following conditions for $m,l$ and $k$ is satisfied, it exists error estimates such that,
 \[
     \begin{split}
-\abs{ v - \pi _{h} v } _{l,T} & \lesssim h^{s-l}_{T} \abs{ v } _{s,T}, \quad 0\le l \le s, \\
-\abs{ v - \pi _{h}v } _{l,F} & \lesssim  h_{T}^{s-l-\frac{1}{2}} \abs{ v }_{s,T} , \quad 0\le l \le s -\frac{1}{2},
+      m\le l \le k+1  \implies \| v - C_{h} v \|_{ m,2,T   }^{  }  &  \lesssim h^{l-m}_{T} \| v \|_{l,2,\omega \left( T \right)  }^{  } \quad  \forall T \in \mathcal{T} _{h}, \forall v \in H^{l}\left( \omega \left( T \right)
+      \right), \\
+      m +\frac{1}{2}\le l \le k+1  \implies \| v - C_{h} v \|_{ m,2,F }^{  } & \lesssim h^{l-m- \frac{1}{2}}_{T} \| v \|_{l,2,\omega \left( F \right)  }^{  } \quad  \forall \partial T \in \mathcal{T} _{h}, \forall v \in H^{l}\left( \omega \left( F
+      \right)  \right).
     \end{split}
 \]
-\todo{Proof?}
-for all $v \in H^{s}( \mathcal{T} _{h}) $.
+
+\end{lemma}
+
+\todo[inline]{ Why first $C_{h}: L^{1} \to \mathcal{P} ^{k}$ and now
+    $C_{h}: H^{m} \to \mathcal{P} ^{k}$?
+}
+
+For further detailed information, please investigate \cite[Lemma 1.127]{ern04}.
+We will use these estimates to compute convergence rate.
+
+
+\subsubsection{Extension}%
+\label{ssub:extension}
+
 A key idea is to distinguish between the physical space $\Omega $ and the polyhedra $\Omega ^{e}_{h} = \cup _{T\in \mathcal{T} _{h} } T$. Thus, to do an
 a priori estimate we find it necessary to define an bounded extension operator satisfying, \[
 ( \cdot ) ^{e}: W^{m,q}( \Omega )  \to W^{m,q} ( \Omega ^{e}), \quad \| v^{e} \|_{ m,q,\Omega ^{e}  }^{  } \lesssim \| v \|_{ m,q, \Omega  }^{  }.
