@@ -11,11 +11,12 @@ Let $\Omega \subseteq    \mathbb{R} ^d$ be a physical mesh, $\Gamma  $ be a $C^2
 
 \begin{equation}
 \begin{split}
-    \Delta^2  u  + \alpha  u  & = f( x)  \quad \text{in } \Omega,   \\
-    \partial _{n} u & = g_{1}(x)   \quad \text{on } \Gamma ,  \\
-    \partial _{n} \Delta  u & = g_2(x)  \quad \text{on } \Gamma  .  \\
+    \delta^2  u  + \alpha  u  & = f( x)  \quad \text{in } \omega,   \\
+    \partial _{n} u & = g_{1}(x)   \quad \text{on } \gamma ,  \\
+    \partial _{n} \delta  u & = g_2(x)  \quad \text{on } \gamma  .  \\
 \end{split}
 \end{equation}
+
 The goal is to write the problem on a weak form.
 Let $u \in H^{4}( \Omega ) $ be a solution of the strong problem and $v \in H^{2}( \Omega ) $ be a test function. We argue that this holds,
     \[
@@ -370,7 +371,7 @@ where $\phi _{i}$ is the corresponding polynomial basis at node $a_{i}$.
 
 Recall the integral norm notation,
 \[
-\| u \|_{ m,2,T }^{  } = \left( \sum_{ \left\lvert \alpha  \right\rvert \le m}^{} \int_{T}^{}  \left\lvert  \partial ^{\alpha } u \right\rvert^{2} dx   \right)^{\frac{1}{2}}
+\| u \|_{ m,p,T }^{  } = \left( \sum_{ \left\lvert \alpha  \right\rvert \le m}^{} \int_{T}^{}  \left\lvert  \partial ^{\alpha } u \right\rvert^{p} dx   \right)^{\frac{1}{2}}
 \]
 We denote a patch, $\omega \left( T \right) $, as the set of elements in $\mathcal{T} _{h}$  sharing at least one vertex with $T \in \mathcal{T} _{h}$ . And similarly we denote a another patch, $\omega \left( F \right) $, as the set of all elements in $\mathcal{T}_{h} $
 sharing at least one vertex with $F \in  \mathcal{F} _{h}$. Finally, we have the following lemma
@@ -386,9 +387,9 @@ $C_{h}: H^{m} \left( \Omega  \right) \mapsto V_{h}$. Then does the following est
 and if the following conditions for $m,l$ and $k$ is satisfied, it exists error estimates s.t.,
 \[
     \begin{split}
-      m\le l \le k+1  \implies \| v - C_{h} v \|_{ m,2,T   }^{  }  &  \lesssim h^{l-m}_{T} \| v \|_{l,2,\omega \left( T \right)  }^{  } \quad  \forall T \in \mathcal{T} _{h}, \forall v \in H^{l}\left( \omega \left( T \right)
+      m\le l \le k+1  \implies \| v - C_{h} v \|_{ m,p,T   }^{  }  &  \lesssim h^{l-m}_{T} \| v \|_{l,p,\omega \left( T \right)  }^{  } \quad  \forall T \in \mathcal{T} _{h}, \forall v \in H^{l}\left( \omega \left( T \right)
       \right), \\
-      m +\frac{1}{2}\le l \le k+1  \implies \| v - C_{h} v \|_{ m,2,F }^{  } & \lesssim h^{l-m- \frac{1}{2}}_{T} \| v \|_{l,2,\omega \left( F \right)  }^{  } \quad  \forall \partial T \in \mathcal{T} _{h}, \forall v \in H^{l}\left( \omega \left( F
+      m +\frac{1}{2}\le l \le k+1  \implies \| v - C_{h} v \|_{ m,p,F }^{  } & \lesssim h^{l-m- \frac{1}{2}}_{T} \| v \|_{l,p,\omega \left( F \right)  }^{  } \quad  \forall \partial T \in \mathcal{T} _{h}, \forall v \in H^{l}\left( \omega \left( F
       \right)  \right).
     \end{split}
 \]
@@ -404,12 +405,12 @@ and if the following conditions for $m,l$ and $k$ is satisfied, it exists error 
     Let $0 \le l \le k+1$ and let $0\le m \le \min_{} ( 1,l )$.
     Given Lemma \ref{lemma:clements}  then there exists an $C > 0$ s.t.
     \[
-    \inf_{v_{h} \in \mathcal{P} ^{k}_{c}( \Omega ) } \| v - v_{h} \|_{  m,2,\Omega }^{  } \le C h^{l-m}  \| v \|_{ l,2,\Omega  }^{  }    \forall v \in W_{l,2}( \Omega ).
+    \inf_{v_{h} \in \mathcal{P} ^{k}_{c}( \Omega ) } \| v - v_{h} \|_{  m,p,\Omega }^{  } \le C h^{l-m}  \| v \|_{ l,p,\Omega  }^{  }    \forall v \in W_{l,p}( \Omega ).
     \]
 \end{corollary}
 
 
-This result is very useful since it is sufficient to show that a priori estimates holds given to prove convergence rate.
+This result is very useful since it is now sufficient to show that a priori estimates holds given to prove convergence rate.
 
 For further detailed information, please investigate \cite[Chapter 1.6]{ern04}.
 We will use these estimates to compute convergence rate given that Ceas' Lemma holds.
