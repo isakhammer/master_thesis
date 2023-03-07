@@ -424,22 +424,24 @@ a priori estimate we find it necessary to define an bounded extension operator s
 ( \cdot ) ^{e}: W^{m,q}( \Omega )  \to W^{m,q} ( \Omega ^{e}), \quad \| v^{e} \|_{ m,q,\Omega ^{e}  }^{  } \lesssim \| v \|_{ m,q, \Omega  }^{  }.
 \]
 where $0< m \le \infty$ and $1 \le q \le \infty$.
+\todo[inline]{ The physical space $\Omega $ is a subset of $\Omega _{e}$, so I do not understand why $\| v^{e} \|_{ m,q,\Omega ^{e}  }^{  } \lesssim \| v \|_{ m,q, \Omega  }^{  } $ should hold.}
 
-Now assume that $\Omega _{h}^{e} \subset  \Omega^{e} $ for some $\Omega^{e}  $. We define an unfitted $L^2$-projection $\pi _{h}^{e}: H^{r}( \Omega ^{e}_{h}) \to V_{h}$
+Now assume that $\Omega _{h}^{e} \subset  \Omega^{e} $ for some $\Omega^{e}  $. We define an unfitted Cléments interpolator $C_{h}^{e}: H^{r}( \Omega ^{e}_{h}) \to V_{h}$
 s.t.  $\pi ^{e} _{h} v := \pi _{h} v^{e} $.
 
 
-We can immediately observe that the projection $\pi _{h}^{e}$ satisfies the global error estimates, that is,
+We can immediately observe that the interpolation $C _{h}^{e}$ satisfies the global error estimates, that is,
 \begin{align}
     \label{eq:bi_projection_estimates_1}
-    \| v - \pi _{h}^{e} v \|_{  r, \mathcal{T} _{h} }^{  } & \lesssim h^{s-r} \| v \|_{ s, \Omega }^{  }, \quad 0\le r\le s \\
+    \| v - C _{h}^{e} v \|_{  r, \mathcal{T} _{h} }^{  } & \lesssim h^{s-r} \| v \|_{ s, \Omega }^{  }, \quad 0\le r\le s \\
     \label{eq:bi_projection_estimates_2}
-\| v - \pi ^{e}_{h}v \|_{ r,\mathcal{F} _{h} }^{  } & \lesssim h^{s-r-\frac{1}{2}} \| v \|_{ s, \Omega  }^{  }, \quad 0  \le  r \le   s- \frac{1}{2} \\
+\| v - C ^{e}_{h}v \|_{ r,\mathcal{F} _{h} }^{  } & \lesssim h^{s-r-\frac{1}{2}} \| v \|_{ s, \Omega  }^{  }, \quad 0  \le  r \le   s- \frac{1}{2} \\
     \label{eq:bi_projection_estimates_3}
-\| v - \pi ^{e}_{h}v \|_{ r, \Gamma }^{  } & \lesssim h^{s-r-\frac{1}{2}} \| v \|_{ s, \Omega  }^{  }, \quad 0  \le  r \le   s- \frac{1}{2}
+\| v - C ^{e}_{h}v \|_{ r, \Gamma }^{  } & \lesssim h^{s-r-\frac{1}{2}}  \| v \|_{ s, \Omega  }^{  }, \quad 0  \le  r \le   s- \frac{1}{2}
 \end{align}
 
-\todo{ Proof? }
+\todo[inline]{ KOK FRA PROSJEKTRAPPORT }
+\todo[inline]{ Provide justification of how to apply the patches $\omega ( F) $, $\omega ( T) $   }
 
 Naturally can we see this is the tools we need to construct an estimate for the energy norm.
 
