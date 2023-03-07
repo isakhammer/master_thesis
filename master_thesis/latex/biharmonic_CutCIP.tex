@@ -373,6 +373,8 @@ Recall the integral norm notation,
 \[
 \| u \|_{ m,p,T }^{  } = \left( \sum_{ \left\lvert \alpha  \right\rvert \le m}^{} \int_{T}^{}  \left\lvert  \partial ^{\alpha } u \right\rvert^{p} dx   \right)^{\frac{1}{2}}
 \]
+where we use that $\| u \|_{ T  }^{  } = \| u \|_{ m,0,T  }^{  } $ and similarly $\| u \|_{ 2,T  }^{  } = \| u \|_{ m,2,T  }^{  }  $.
+
 We denote a patch, $\omega \left( T \right) $, as the set of elements in $\mathcal{T} _{h}$  sharing at least one vertex with $T \in \mathcal{T} _{h}$ . And similarly we denote a another patch, $\omega \left( F \right) $, as the set of all elements in $\mathcal{T}_{h} $
 sharing at least one vertex with $F \in  \mathcal{F} _{h}$. Finally, we have the following lemma
 
@@ -416,7 +418,7 @@ For further detailed information, please investigate \cite[Chapter 1.6]{ern04}.
 We will use these estimates to compute convergence rate given that Ceas' Lemma holds.
 
 
-\subsubsection{Extension}%
+\subsubsection{$\| \cdot  \|_{ a_{h},* }^{  } $ a priori estimates.  }%
 \label{ssub:extension}
 
 A key idea is to distinguish between the physical space $\Omega $ and the polyhedra consisting of the active mesh $\Omega ^{e}_{h} = \mathcal{T}_{h}$. Thus, to do an
@@ -462,16 +464,26 @@ Naturally can we see this is the tools we need to construct an estimate for the 
     The strategy is to bound each term individually by applying the estimates \eqref{eq:bi_projection_estimates_1}, \eqref{eq:bi_projection_estimates_2} and \eqref{eq:bi_projection_estimates_2}.
     Starting with the first term we get
     \[
-            \| |\alpha |^{\frac{1}{2}} ( u - C_{h}^{e}u) \|_{ \mathcal{T} _{h} \cap \Omega  }^{ 2}  \le  \| \alpha  \|_{L^\infty ( \Omega )    }^{2  }   \|  ( u - C_{h}^{e}u) \|_{ \mathcal{T} _{h}  }^{ 2} \lesssim  h^{2(s-r)} \sum_{T \in \mathcal{T}
-            _{h}}^{}   \| v \|_{2,w( T)  }^{  2}
+            \| |\alpha |^{\frac{1}{2}} ( u - C_{h}^{e}u) \|_{ \mathcal{T} _{h} \cap \Omega  }^{ 2}  \le  \| \alpha  \|_{L^\infty ( \Omega )    }^{2  }   \|  ( u - C_{h}^{e}u) \|_{0,\mathcal{T} _{h}  }^{ 2} \lesssim  h^{2s} \sum_{T \in \mathcal{T}
+            _{h}}^{}   \| v \|_{s,w( T)  }^{  2}
     \]
     Here we simply used \eqref{eq:bi_projection_estimates_1}.
     Similarly for the second term \[
-    \| D^2 ( u - C_{h}^{e}u ) \|_{\mathcal{T} _{h} \cap \Omega   }^{ 2 } \le \| D^2 ( u - C_{h}^{e}u ) \|_{\mathcal{T} _{h} \cap \Omega   }^{ 2 } \lesssim h^{-1} \|  \|_{  }^{  }
+    \| D^2 ( u - C_{h}^{e}u ) \|_{\mathcal{T} _{h} \cap \Omega   }^{ 2 } \lesssim  \|  u - C_{h}^{e}u  \|_{2,\mathcal{T} _{h}   }^{ 2 } \lesssim \sum_{T \in \mathcal{T} _{h}}^{} h^{2(s-2)} \| u \|_{ s, \omega ( T)  }^{ 2 }.
     \]
+    Recall $\| \jump{ u }   \|_{ \mathcal{F} _{h} }^{  }  \lesssim  \| u \|_{ \partial\mathcal{T }_{h}  }^{2  }  $ and that $\| \partial _{n} u \|_{ F  }^{} \lesssim h^{-\frac{1}{2}} \| \nabla u \|_{ \partial T }^{  }  $ , hence, \[
+        \begin{split}
+    \| h^{-\frac{1}{2}} \jump{ \partial _{n} ( u - C_{h}^{e}u ) }   \|_{ \mathcal{F}_{h} \cap \Omega   }^{  2}   &\lesssim \| h^{-\frac{1}{2}}  \partial _{n} ( u - C_{h}^{e}u )    \|_{ \mathcal{F}_{h} }^{2  }     \\
+                                                                                                                 &
+                                                                                                                 \lesssim \sum_{F \in \mathcal{F}_{h} }^{}
+                                                                                                                 h^{ 2(l - m - \frac{1}{2}) } \| u      \|_{ s, \omega ( F)  }^{  2}
+        \end{split}
+    \]
+    \todo[inline]{ Not able to get rid of $\partial _{n}$, but still be able to integrate over $\mathcal{F}_{h}$.  }
 
 \end{proof}
 
+\todo[inline]{TODO: Cleanup of consistency when using parameters $k,q,r,p,l,s$. My head is exploding of what is what.}
 
 \newpage
 \subsection{Condition number}%
