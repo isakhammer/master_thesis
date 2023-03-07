@@ -11,9 +11,9 @@ Let $\Omega \subseteq    \mathbb{R} ^d$ be a physical mesh, $\Gamma  $ be a $C^2
 
 \begin{equation}
 \begin{split}
-    \delta^2  u  + \alpha  u  & = f( x)  \quad \text{in } \omega,   \\
+    \Delta^2  u  + \alpha  u  & = f( x)  \quad \text{in } \Omega,   \\
     \partial _{n} u & = g_{1}(x)   \quad \text{on } \gamma ,  \\
-    \partial _{n} \delta  u & = g_2(x)  \quad \text{on } \gamma  .  \\
+    \partial _{n} \Delta  u & = g_2(x)  \quad \text{on } \gamma  .  \\
 \end{split}
 \end{equation}
 
@@ -380,17 +380,17 @@ sharing at least one vertex with $F \in  \mathcal{F} _{h}$. Finally, we have the
     \label{lemma:clements}
 
 We define the Clement interpolation as the projection
-$C_{h}: H^{m} \left( \Omega  \right) \mapsto V_{h}$. Then does the following estimates hold
+$C_{h}: H^{m} \left( \Omega  \right) \mapsto V_{h}$, where $V_{h}$ has the order $k$. Then does the following stability estimate hold,
 \[
  \| C_{h} v \|_{H^{m}\left( \Omega  \right)   }^{  } \lesssim \| v \|_{ H^{m}\left( \Omega  \right)  }^{  } \quad \forall v \in H^{m}\left( \Omega  \right),
 \]
-and if the following conditions for $m,l$ and $k$ is satisfied, it exists error estimates s.t.,
+and if the following conditions for an parameter $l$ is satisfied, it exists error estimates s.t.,
 \[
     \begin{split}
-      m\le l \le k+1  \implies \| v - C_{h} v \|_{ m,p,T   }^{  }  &  \lesssim h^{l-m}_{T} \| v \|_{l,p,\omega \left( T \right)  }^{  } \quad  \forall T \in \mathcal{T} _{h}, \forall v \in H^{l}\left( \omega \left( T \right)
-      \right), \\
-      m +\frac{1}{2}\le l \le k+1  \implies \| v - C_{h} v \|_{ m,p,F }^{  } & \lesssim h^{l-m- \frac{1}{2}}_{T} \| v \|_{l,p,\omega \left( F \right)  }^{  } \quad  \forall \partial T \in \mathcal{T} _{h}, \forall v \in H^{l}\left( \omega \left( F
-      \right)  \right).
+      m\le l \le k+1  \implies \| v - C_{h} v \|_{ m,p,T   }^{  }  &  \lesssim h^{l-m}_{T} \| v \|_{l,p,\omega \left( T \right)  }^{  } \quad  \forall T \in \mathcal{T} _{h}, \forall v \in H^{l}( \omega \left( T \right)
+      ), \\
+      m +\frac{1}{2}\le l \le k+1  \implies \| v - C_{h} v \|_{ m,p,F }^{  } & \lesssim h^{l-m- \frac{1}{2}}_{T} \| v \|_{l,p,\omega \left( F \right)  }^{  } \quad  \forall \partial T \in \mathcal{T} _{h}, \forall v \in H^{l}( \omega \left( F
+      \right)).
     \end{split}
 \]
 
@@ -427,23 +427,50 @@ where $0< m \le \infty$ and $1 \le q \le \infty$.
 \todo[inline]{ The physical space $\Omega $ is a subset of $\Omega _{e}$, so I do not understand why $\| v^{e} \|_{ m,q,\Omega ^{e}  }^{  } \lesssim \| v \|_{ m,q, \Omega  }^{  } $ should hold.}
 
 Now assume that $\Omega _{h}^{e} \subset  \Omega^{e} $ for some $\Omega^{e}  $. We define an unfitted Cléments interpolator $C_{h}^{e}: H^{r}( \Omega ^{e}_{h}) \to V_{h}$
-s.t.  $\pi ^{e} _{h} v := \pi _{h} v^{e} $.
-
-
-We can immediately observe that the interpolation $C _{h}^{e}$ satisfies the global error estimates, that is,
+s.t.  $C ^{e} _{h} v := C _{h} v^{e} $.
+We can immediately observe that the interpolation satisfies the global error estimates, that is,
 \begin{align}
     \label{eq:bi_projection_estimates_1}
-    \| v - C _{h}^{e} v \|_{  r, \mathcal{T} _{h} }^{  } & \lesssim h^{s-r} \| v \|_{ s, \Omega }^{  }, \quad 0\le r\le s \\
+    \| v - C _{h}^{e} v \|_{  r, \mathcal{T} _{h} }^{  } & \lesssim h^{s-r}\sum_{T \in \mathcal{T}_h} \| v \|_{ s, \omega(T) }^{  }, \quad 0\le r\le s \\
     \label{eq:bi_projection_estimates_2}
-\| v - C ^{e}_{h}v \|_{ r,\mathcal{F} _{h} }^{  } & \lesssim h^{s-r-\frac{1}{2}} \| v \|_{ s, \Omega  }^{  }, \quad 0  \le  r \le   s- \frac{1}{2} \\
+\| v - C ^{e}_{h}v \|_{ r,\mathcal{F} _{h} }^{  } & \lesssim h^{s-r-\frac{1}{2}}\sum_{T \in \mathcal{T}_h} \| v \|_{ s, \omega(F)  }^{  }, \quad 0  \le  r \le   s- \frac{1}{2} \\
     \label{eq:bi_projection_estimates_3}
-\| v - C ^{e}_{h}v \|_{ r, \Gamma }^{  } & \lesssim h^{s-r-\frac{1}{2}}  \| v \|_{ s, \Omega  }^{  }, \quad 0  \le  r \le   s- \frac{1}{2}
+\| v - C ^{e}_{h}v \|_{ r, \Gamma }^{  } & \lesssim h^{s-r-\frac{1}{2}} \sum_{T \in \mathcal{T}_h}  \| v \|_{ s,  \omega(T)  }^{  }, \quad 0  \le  r \le   s- \frac{1}{2}
 \end{align}
 
-\todo[inline]{ KOK FRA PROSJEKTRAPPORT }
-\todo[inline]{ Provide justification of how to apply the patches $\omega ( F) $, $\omega ( T) $   }
+\todo[inline]{ Seems like \eqref{eq:bi_projection_estimates_3} might be wrong.  }
 
 Naturally can we see this is the tools we need to construct an estimate for the energy norm.
+
+\begin{lemma}
+    Let $u \in H^{l}( \Omega ) $. Then we have  \[
+    \|  u - C_{h}u \|_{ a_{h},*  }^{  } \lesssim h^{l(l-2)} \| u \|_{ H^{l}( \Omega )  }^{  }
+    \]
+
+\end{lemma}
+\begin{proof}
+    By definition is
+    \[
+        \begin{split}
+            \| u - C_{h}^{e}u \|_{ a_{h}, * }^{  2}  =& \ \| |\alpha |^{\frac{1}{2}} ( u - C_{h}^{e}u) \|_{ \mathcal{T} _{h} \cap \Omega  }^{ 2}  + \| D^2 ( u - C_{h}^{e}u ) \|_{\mathcal{T} _{h} \cap \Omega   }^{ 2 } \\  &  + \gamma \| h^{-\frac{1}{2}} \jump{ \partial _{n} (u -
+        C_{h}^{e} u) }   \|_{ \mathcal{F}_{h}^{int}\cap \Omega    }^{ 2
+        } + \gamma \| h^{-\frac{1}{2}}  \partial _{n} (u - C_{h}^{e}u)    \|_{ \Gamma   }^{ 2 } \\
+          & + \| h^{\frac{1}{2}} \mean{ \partial _{nn} (u - C_{h}^{e}u) }   \|_{\mathcal{F} _{h}^{int} \cap \Omega   }^{  2} +  \| h^{\frac{1}{2}} \partial _{nn}(u - C_{h}^{e}u)     \|_{ \Gamma }^{  2}.
+        \end{split}
+    \]
+
+    The strategy is to bound each term individually by applying the estimates \eqref{eq:bi_projection_estimates_1}, \eqref{eq:bi_projection_estimates_2} and \eqref{eq:bi_projection_estimates_2}.
+    Starting with the first term we get
+    \[
+            \| |\alpha |^{\frac{1}{2}} ( u - C_{h}^{e}u) \|_{ \mathcal{T} _{h} \cap \Omega  }^{ 2}  \le  \| \alpha  \|_{L^\infty ( \Omega )    }^{2  }   \|  ( u - C_{h}^{e}u) \|_{ \mathcal{T} _{h}  }^{ 2} \lesssim  h^{2(s-r)} \sum_{T \in \mathcal{T}
+            _{h}}^{}   \| v \|_{2,w( T)  }^{  2}
+    \]
+    Here we simply used \eqref{eq:bi_projection_estimates_1}.
+    Similarly for the second term \[
+    \| D^2 ( u - C_{h}^{e}u ) \|_{\mathcal{T} _{h} \cap \Omega   }^{ 2 } \le \| D^2 ( u - C_{h}^{e}u ) \|_{\mathcal{T} _{h} \cap \Omega   }^{ 2 } \lesssim h^{-1} \|  \|_{  }^{  }
+    \]
+
+\end{proof}
 
 
 \newpage
