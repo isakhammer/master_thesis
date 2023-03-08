@@ -462,30 +462,36 @@ Naturally can we see this is the tools we need to construct an estimate for the 
     \]
 
     The strategy is to bound each term individually by applying the estimates \eqref{eq:bi_projection_estimates_1}, \eqref{eq:bi_projection_estimates_2} and \eqref{eq:bi_projection_estimates_2}.
-    Starting with the first term we get
+    \begin{enumerate}[label=\arabic*)]
+        \item     Starting with the first term we get
     \[
             \| |\alpha |^{\frac{1}{2}} ( u - C_{h}^{e}u) \|_{ \mathcal{T} _{h} \cap \Omega  }^{ 2}  \le  \| \alpha  \|_{L^\infty ( \Omega )    }^{2  }   \|  ( u - C_{h}^{e}u) \|_{0,\mathcal{T} _{h}  }^{ 2} \lesssim  h^{2s} \sum_{T \in \mathcal{T}
             _{h}}^{}   \| v \|_{s,w( T)  }^{  2}
     \]
     Here we simply used \eqref{eq:bi_projection_estimates_1}.
+\item
     Similarly for the second term \[
     \| D^2 ( u - C_{h}^{e}u ) \|_{\mathcal{T} _{h} \cap \Omega   }^{ 2 } \lesssim  \|  u - C_{h}^{e}u  \|_{2,\mathcal{T} _{h}   }^{ 2 } \lesssim \sum_{T \in \mathcal{T} _{h}}^{} h^{2(s-2)} \| u \|_{ s, \omega ( T)  }^{ 2 }.
     \]
-        Recall $\| \jump{ u }   \|_{ \mathcal{F} _{h} }^{  }  \lesssim  \| u \|_{ \partial\mathcal{T }_{h}  }^{2  }  $ and the $\| \partial _{n} u \|_{ F  }^{} \lesssim h^{-\frac{1}{2}} \| \nabla u \|_{ T }^{  }  $.
+\item
+        Recall $\| \jump{ u }   \|_{ \mathcal{F} _{h} }^{  }  \lesssim  \| u \|_{ \partial\mathcal{T }_{h}  }^{2  }  $ and the inverse estimate $\| \partial _{n} u \|_{ F  }^{} \lesssim h^{-\frac{1}{2}} \| \nabla u \|_{ T }^{  }  $.
      Hence, \[
         \begin{split}
-            \gamma \| h^{-\frac{1}{2}} \jump{ \partial _{n} ( u - C_{h}^{e}u ) }   \|_{ \mathcal{F}_{h} \cap \Omega   }^{  2}   &\lesssim \| h^{-\frac{1}{2}}  \partial _{n} ( u - C_{h}^{e}u )    \|_{ \mathcal{T} _{h} }^{2  }
+            \gamma \| h^{-\frac{1}{2}} \jump{ \partial _{n} ( u - C_{h}^{e}u ) }   \|_{ \mathcal{F}_{h} \cap \Omega   }^{  2}   &\lesssim \| h^{-\frac{1}{2}}  \partial _{n} ( u - C_{h}^{e}u )    \|_{  \mathcal{F} _{h} }^{2  }
        \lesssim h^{-2} \|   \nabla  ( u - C_{h}^{e}u )    \|_{ \mathcal{F}_{h} }^{2  }     \\
                                                                                                                  &\lesssim h^{-2} \|      u - C_{h}^{e}u     \|_{1, \mathcal{F}_{h} }^{2  }
                                                                                                                  \lesssim \sum_{F \in \mathcal{F}_{h} }^{}
                                                                                                                  h^{ 2(l - m - \frac{1}{2}) } \| u      \|_{ s, \omega (  F)  }^{  2}
         \end{split}
     \]
+\item
     And for the boundary term, \[
         \begin{split}
             \gamma \| h^{-\frac{1}{2}}  \partial _{n} ( u - C_{h}^{e}u ) \|_{ \Gamma    }^{  2} \lesssim h^{-2} \|   \nabla  ( u - C_{h}^{e}u )    \|_{ \mathcal{T}_{h} }^{2  } \lesssim  h^{-2} \|    u - C_{h}^{e}u     \|_{1, \mathcal{T}_{h} }^{2  }
         \end{split}
     \]
+\item
+
             We also know that $\| \mean{ u }   \|_{ \mathcal{F} _{h} }^{  }  \lesssim  \| u \|_{ \partial\mathcal{T }_{h}  }^{2  }  $ and the $\| \partial _{nn} u \|_{ F  }^{} \lesssim h^{-\frac{1}{2}} \| D^2 u \|_{ T }^{  }  $. It is clear
             by using \eqref{eq:bi_projection_estimates_2} that this must holds
             \[
@@ -494,10 +500,13 @@ Naturally can we see this is the tools we need to construct an estimate for the 
                                                                                                                 &  = \|   u - C_{h}^{e}u    \|_{ 2, \mathcal{T} _{h}   }^{  2} \lesssim h^{2s} \sum_{T \in \mathcal{T}_h}^{} \| u \|_{s, \omega ( T)   }^{  }
                 \end{split}
             \]
-            Then as well using \eqref{eq:bi_projection_estimates_3} we get,  \[
+            \item
+                Then as well using \eqref{eq:bi_projection_estimates_3} we get,  \[
               \| h^{\frac{1}{2}} \partial _{nn}(u - C_{h}^{e}u)     \|_{ \Gamma }^{  2} \lesssim   \|  D^2(u - C_{h}^{e}u)     \|_{ \Gamma  }^{  2}
             \]
             \todo[inline]{ Not sure if inverse inequality holds on $\Gamma $  }
+
+    \end{enumerate}
 \end{proof}
 
 
