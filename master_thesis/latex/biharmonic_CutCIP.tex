@@ -44,7 +44,7 @@ Let $u \in H^{4}( \Omega ) $ be a solution of the strong problem and $v \in H^{2
 \subsection{Initial discrete formulation}%
 \label{sub:initial_discrete_formulation}
 
-We want to make a cutFEM version of the CIP problem. Let $\widetilde{\mathcal{T}_{h} } $ be a shape-regular and quasi-uniform background mesh. Let us denote the active set $\mathcal{T} _{h} \subseteq \widetilde{\mathcal{T}_{h}}$ which intersects the interior of the active domain $\Omega $, that is  \[
+We want to make a CutFEM version of the CIP problem. Let $\widetilde{\mathcal{T}_{h} } $ be a shape-regular and quasi-uniform background mesh. Let us denote the active set $\mathcal{T} _{h} \subseteq \widetilde{\mathcal{T}_{h}}$ which intersects the interior of the active domain $\Omega $, that is  \[
 \mathcal{T} _{h} = \left\{ T \in \widetilde{\mathcal{T} _{h}}  \mid  T \cap (\Omega \setminus \Gamma ) \neq \emptyset    \right\} .
 \]
 With a corresponding set of interior facets, \[
@@ -440,7 +440,7 @@ We can immediately observe that the interpolation satisfies the global error est
 \| v - C ^{e}_{h}v \|_{ r, \Gamma }^{  } & \lesssim h^{s-r-\frac{1}{2}} \sum_{T \in \mathcal{T}_h}  \| v \|_{ s,  \omega(T)  }^{  }, \quad 0  \le  r \le   s- \frac{1}{2}
 \end{align}
 
-\todo[inline]{ Not sure if \eqref{eq:bi_projection_estimates_3} holds. And why is \eqref{eq:bi_projection_estimates_2} summing over $ T \in \mathcal{T} _{h}$ and not $ F \in  \mathcal{F} _{h}$.      }
+\todo[inline]{ Not sure if \eqref{eq:bi_projection_estimates_3} holds for smooth boundaries, $\Gamma \in  C^2 $ . And why is \eqref{eq:bi_projection_estimates_2} summing over $ T \in \mathcal{T} _{h}$ and not $ F \in  \mathcal{F} _{h}$.      }
 
 Naturally can we see this is the tools we need to construct an estimate for the energy norm.
 
@@ -471,23 +471,33 @@ Naturally can we see this is the tools we need to construct an estimate for the 
     Similarly for the second term \[
     \| D^2 ( u - C_{h}^{e}u ) \|_{\mathcal{T} _{h} \cap \Omega   }^{ 2 } \lesssim  \|  u - C_{h}^{e}u  \|_{2,\mathcal{T} _{h}   }^{ 2 } \lesssim \sum_{T \in \mathcal{T} _{h}}^{} h^{2(s-2)} \| u \|_{ s, \omega ( T)  }^{ 2 }.
     \]
-    Recall $\| \jump{ u }   \|_{ \mathcal{F} _{h} }^{  }  \lesssim  \| u \|_{ \partial\mathcal{T }_{h}  }^{2  }  $ and that $\| \partial _{n} u \|_{ F  }^{} \lesssim h^{-\frac{1}{2}} \| \nabla u \|_{ T }^{  }  $. Hence, \[
+        Recall $\| \jump{ u }   \|_{ \mathcal{F} _{h} }^{  }  \lesssim  \| u \|_{ \partial\mathcal{T }_{h}  }^{2  }  $ and the $\| \partial _{n} u \|_{ F  }^{} \lesssim h^{-\frac{1}{2}} \| \nabla u \|_{ T }^{  }  $.
+     Hence, \[
         \begin{split}
-    \gamma \| h^{-\frac{1}{2}} \jump{ \partial _{n} ( u - C_{h}^{e}u ) }   \|_{ \mathcal{F}_{h} \cap \Omega   }^{  2}   &\lesssim \| h^{-\frac{1}{2}}  \partial _{n} ( u - C_{h}^{e}u )    \|_{ \mathcal{F}_{h} }^{2  }     \\
-       &\lesssim h^{-2} \|   \nabla  ( u - C_{h}^{e}u )    \|_{ \mathcal{F}_{h} }^{2  }     \\
-                                                                                                                 &
+            \gamma \| h^{-\frac{1}{2}} \jump{ \partial _{n} ( u - C_{h}^{e}u ) }   \|_{ \mathcal{F}_{h} \cap \Omega   }^{  2}   &\lesssim \| h^{-\frac{1}{2}}  \partial _{n} ( u - C_{h}^{e}u )    \|_{ \mathcal{T} _{h} }^{2  }
+       \lesssim h^{-2} \|   \nabla  ( u - C_{h}^{e}u )    \|_{ \mathcal{F}_{h} }^{2  }     \\
+                                                                                                                 &\lesssim h^{-2} \|      u - C_{h}^{e}u     \|_{1, \mathcal{F}_{h} }^{2  }
                                                                                                                  \lesssim \sum_{F \in \mathcal{F}_{h} }^{}
                                                                                                                  h^{ 2(l - m - \frac{1}{2}) } \| u      \|_{ s, \omega (  F)  }^{  2}
         \end{split}
     \]
     And for the boundary term, \[
         \begin{split}
-            \gamma \| h^{-\frac{1}{2}}  \partial _{n} ( u - C_{h}^{e}u ) \|_{ \Gamma    }^{  2} \lesssim h^{-2} \|   \nabla  ( u - C_{h}^{e}u )    \|_{ \mathcal{F}_{h} }^{2  }
+            \gamma \| h^{-\frac{1}{2}}  \partial _{n} ( u - C_{h}^{e}u ) \|_{ \Gamma    }^{  2} \lesssim h^{-2} \|   \nabla  ( u - C_{h}^{e}u )    \|_{ \mathcal{T}_{h} }^{2  } \lesssim  h^{-2} \|    u - C_{h}^{e}u     \|_{1, \mathcal{T}_{h} }^{2  }
         \end{split}
     \]
-    \todo[inline]{ Not able to get rid of $\partial _{n}$, but still be able to integrate over $\mathcal{F}_{h}$.  }
-    We know that $\| \mean{ u }   \|_{ \mathcal{F} _{h} }^{  }  \lesssim  \| u \|_{ \partial\mathcal{T }_{h}  }^{2  }  $ and that $\| \partial _{n} u \|_{ F  }^{} \lesssim h^{-\frac{1}{2}} \| \nabla u \|_{ \partial T }^{  }  $.
-
+            We also know that $\| \mean{ u }   \|_{ \mathcal{F} _{h} }^{  }  \lesssim  \| u \|_{ \partial\mathcal{T }_{h}  }^{2  }  $ and the $\| \partial _{nn} u \|_{ F  }^{} \lesssim h^{-\frac{1}{2}} \| D^2 u \|_{ T }^{  }  $. It is clear
+            by using \eqref{eq:bi_projection_estimates_2} that this must holds
+            \[
+                \begin{split}
+ \| h^{\frac{1}{2}} \mean{ \partial _{nn} (u - C_{h}^{e}u) }   \|_{\mathcal{F} _{h}^{int} \cap \Omega   }^{  2} &  \lesssim h^{} \|   \partial _{nn} (u - C_{h}^{e}u)    \|_{\partial \mathcal{T} _{h}   }^{  2}  \lesssim  \|   D^2 (u - C_{h}^{e}u)    \|_{ \mathcal{T} _{h}   }^{  2} \\
+                                                                                                                &  = \|   u - C_{h}^{e}u    \|_{ 2, \mathcal{T} _{h}   }^{  2} \lesssim h^{2s} \sum_{T \in \mathcal{T}_h}^{} \| u \|_{s, \omega ( T)   }^{  }
+                \end{split}
+            \]
+            Then as well using \eqref{eq:bi_projection_estimates_3} we get,  \[
+              \| h^{\frac{1}{2}} \partial _{nn}(u - C_{h}^{e}u)     \|_{ \Gamma }^{  2} \lesssim   \|  D^2(u - C_{h}^{e}u)     \|_{ \Gamma  }^{  2}
+            \]
+            \todo[inline]{ Not sure if inverse inequality holds on $\Gamma $  }
 \end{proof}
 
 
