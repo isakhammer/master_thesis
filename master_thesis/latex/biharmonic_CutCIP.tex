@@ -656,7 +656,7 @@ Summation over the intersected triangles $\mathcal{T} _{\Gamma }$ implies,
         And as a trivial extension this now also holds for the active mesh $\mathcal{T} _{h}$ , that is, \[
                     \| v \|_{ \mathcal{T} _{h } }^{2  } \lesssim  \| v \|_{ \mathcal{T}_{h } \cap \Omega   }^{ 2 }  + \sum_{j=0}^{k} h^{2j+1} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n}v }    )_{\mathcal{F}_{h}^{g}}.
         \]
-        Hence, \eqref{eq:inv_gh_1} holds and the first part of the proof is complete.
+        Hence, \eqref{eq:bi_inv_gh_1} holds and the first part of the proof is complete.
 
     \item We will simply start by replacing $v$  by $D^2 v$ and use the Proposition \ref{prop:hessian_change}.
         \[
@@ -681,7 +681,7 @@ Summation over the intersected triangles $\mathcal{T} _{\Gamma }$ implies,
         and \[
             h^{2j +1} \| \jump{\partial ^{j}_{n} \nabla v}  \|_{ F }^{  } \lesssim h^{2j +1 } \| \jump{ \partial ^{j+1}_{n} v }   \|_{F  }^{ 2 } + \| \jump{ \partial ^{j}_{n}v }   \|_{ F }^{ 2 }
         \]
-        Thus, fulfilling \eqref{eq:inv_gh_2}.
+        Thus, fulfilling \eqref{eq:bi_inv_gh_2}.
         % \todo[inline]{ Finish this proof. }
 
     \end{enumerate}
@@ -696,7 +696,7 @@ Finally, we now have the tools we need to construct an candidate for the ghost p
     For any set of positive parameters $\left\{ \gamma _{j} \right\} _{j=0}^{k}$, the ghost penalty defined as \[
     g^{1}_{h}( v,w)  := \sum_{j=0}^{k} \sum_{F \in \mathcal{F} _{h}^{g}}^{} \gamma _{j} h^{2j-1}_{F} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n} w }  ) _{F} \text{ for any } v,w \in V_{h},
     \]
-    satisfies the assumptions described in the equations \eqref{eq:EP1}, \eqref{eq:EP2}, \eqref{eq:EP3} and \eqref{eq:EP4}.
+    satisfies the Assumption \ref{as:bi_EP1}
 \end{proposition}
 
 \begin{proof}
