@@ -470,29 +470,39 @@ Naturally can we see this is the tools we need to construct an estimate for the 
     \]
     Here we simply used \eqref{eq:bi_projection_estimates_1}.
 \item
-    Similarly for the second term \[
+    Similarly can we use  for the second term, \[
     \| D^2 ( u - C_{h}^{e}u ) \|_{\mathcal{T} _{h} \cap \Omega   }^{ 2 } \lesssim  \|  u - C_{h}^{e}u  \|_{2,\mathcal{T} _{h}   }^{ 2 } \lesssim \sum_{T \in \mathcal{T} _{h}}^{} h^{2(s-2)} \| u \|_{ s, \omega ( T)  }^{ 2 }.
     \]
+    Again, this is via the estimate \eqref{eq:bi_projection_estimates_1}.
 \item
-        Recall $\| \jump{ u }   \|_{ \mathcal{F} _{h} }^{  }  \lesssim  \| u \|_{ \partial\mathcal{T }_{h}  }^{2  }  $ and the inverse estimate $\| \partial _{n} u \|_{ F  }^{} \lesssim h^{-\frac{1}{2}} \| \nabla u \|_{ T }^{  }  $.
-     Hence, \[
+        Recall $\| \jump{ u }   \|_{ \mathcal{F} _{h} }^{  } \le \| v^{+}   \|_{ \mathcal{F} _{h} }^{  } +   \| v^{-}   \|_{ \mathcal{F} _{h} }^{  } \lesssim  \| u \|_{ \partial\mathcal{T }_{h}  }^{2  }  $ and the inverse estimate $\| \partial _{n} u \|_{ F  }^{} \lesssim h^{-\frac{1}{2}} \| \nabla u \|_{ T }^{  }  $.
+     Hence, by \eqref{eq:bi_projection_estimates_2}  \[
         \begin{split}
-            \gamma \| h^{-\frac{1}{2}} \jump{ \partial _{n} ( u - C_{h}^{e}u ) }   \|_{ \mathcal{F}_{h} \cap \Omega   }^{  2}   &\lesssim \| h^{-\frac{1}{2}}  \partial _{n} ( u - C_{h}^{e}u )    \|_{  \mathcal{F} _{h} }^{2  }
-       \lesssim h^{-2} \|   \nabla  ( u - C_{h}^{e}u )    \|_{ \mathcal{F}_{h} }^{2  }     \\
-                                                                                                                 &\lesssim h^{-2} \|      u - C_{h}^{e}u     \|_{1, \mathcal{F}_{h} }^{2  }
-                                                                                                                 \lesssim \sum_{F \in \mathcal{F}_{h} }^{}
-                                                                                                                 h^{ 2(l - m - \frac{1}{2}) } \| u      \|_{ s, \omega (  F)  }^{  2}
+            \gamma \| h^{-\frac{1}{2}} \jump{ \partial _{n} ( u - C_{h}^{e}u ) }   \|_{ \mathcal{F}_{h} \cap \Omega   }^{  2}   &\lesssim \| h^{-\frac{1}{2}}  \partial _{n} ( u - C_{h}^{e}u )    \|_{  \partial \mathcal{T} _{h} }^{2  }
+       \lesssim h^{-2} \|   \nabla  ( u - C_{h}^{e}u )    \|_{ \partial \mathcal{T} _{h} }^{2  }     \\
+                                                                                                                 &\lesssim h^{-2} \|      u - C_{h}^{e}u     \|_{1, \partial \mathcal{T}_{h} }^{2  }
+                                                                                                                 \lesssim h^{ 2(s - r - \frac{1}{2}) -2 } \sum_{T \in \mathcal{T}_{h} }^{}
+                                                                                                                  \| u      \|_{ s, \omega (  F)  }^{  2}
         \end{split}
     \]
+    \todo[inline]{
+        Not sure if \eqref{eq:bi_projection_estimates_2} holds here!
+        \[
+     \|      u - C_{h}^{e}u     \|_{1, \partial \mathcal{T}_{h} }^{2  }
+                                                                                                                 \lesssim \sum_{T \in \mathcal{T}_{h} }^{}
+                                                                                                                 h^{ 2(l - m - \frac{1}{2})  } \| u      \|_{ s, \omega (  F)  }^{  2}
+    \]  }
 \item
-    And for the boundary term, \[
+    And for the boundary term we simply apply \eqref{eq:bi_projection_estimates_3}, \[
         \begin{split}
-            \gamma \| h^{-\frac{1}{2}}  \partial _{n} ( u - C_{h}^{e}u ) \|_{ \Gamma    }^{  2} \lesssim h^{-2} \|   \nabla  ( u - C_{h}^{e}u )    \|_{ \mathcal{T}_{h} }^{2  } \lesssim  h^{-2} \|    u - C_{h}^{e}u     \|_{1, \mathcal{T}_{h} }^{2  }
+            \gamma \| h^{-\frac{1}{2}}  \partial _{n} ( u - C_{h}^{e}u ) \|_{ \Gamma    }^{  2} \lesssim h^{-2} \|   \nabla  ( u - C_{h}^{e}u )    \|_{ \Gamma  }^{2  } \lesssim  h^{-2} \|    u - C_{h}^{e}u     \|_{1, \Gamma  }^{2  }\lesssim h^{2(s- r-
+            \frac{1}{2}) -2}
+              \sum_{T \in \mathcal{T} _{h}}^{}  \| u \|_{s,T  }^{  2}
         \end{split}
     \]
 \item
 
-            We also know that $\| \mean{ u }   \|_{ \mathcal{F} _{h} }^{  }  \lesssim  \| u \|_{ \partial\mathcal{T }_{h}  }^{2  }  $ and the $\| \partial _{nn} u \|_{ F  }^{} \lesssim h^{-\frac{1}{2}} \| D^2 u \|_{ T }^{  }  $. It is clear
+            We also know that $\| \mean{ u }   \|_{ \mathcal{F} _{h} }^{  } \le \| u^{+} \|_{ \mathcal{F} _{h}  }^{  } + \| u^{-} \|_{ \mathcal{F} _{h}  }^{  }   \lesssim  \| u \|_{ \partial\mathcal{T }_{h}  }^{2  }  $ and the $\| \partial _{nn} u \|_{ F  }^{} \lesssim h^{-\frac{1}{2}} \| D^2 u \|_{ T }^{  }  $. It is clear
             by using \eqref{eq:bi_projection_estimates_2} that this must holds
             \[
                 \begin{split}
@@ -501,41 +511,23 @@ Naturally can we see this is the tools we need to construct an estimate for the 
                 \end{split}
             \]
             \item
-                Then as well using \eqref{eq:bi_projection_estimates_3} we get,  \[
-              \| h^{\frac{1}{2}} \partial _{nn}(u - C_{h}^{e}u)     \|_{ \Gamma }^{  2} \lesssim   \|  D^2(u - C_{h}^{e}u)     \|_{ \Gamma  }^{  2}
+                Similarly we can easily see by using \eqref{eq:bi_projection_estimates_3} that this must hold,
+                \[
+              \| h^{\frac{1}{2}} \partial _{nn}(u - C_{h}^{e}u)     \|_{ \Gamma }^{  2} \lesssim   \|  D^2(u - C_{h}^{e}u)     \|_{ \Gamma  }^{  2} \lesssim \|  u - C_{h}^{e}u \|_{ 2, \Gamma}^{2  } \lesssim h^{2(s-r -\frac{1}{2})} \sum_{T \in
+              \mathcal{T}_h }^{} \| u \|_{ s, \omega ( T)  }^{2  }
             \]
-            \todo[inline]{ Not sure if inverse inequality holds on $\Gamma $  }
-
     \end{enumerate}
+
+    Finally, combining all the estimates we have
+    \[
+                \| u - C_{h}^{e}u \|_{ a_{h}, * }^{  2} = (h^{2s} + h^{2(s -r- \frac{1}{2}) -2} + h^{2(s-2)} + h^{2(s -r- \frac{1}{2}) -2} + h^{2s} + h^{2(s -r- \frac{1}{2})} )
+    \]
 \end{proof}
+
 
 
 \todo[inline]{TODO: Cleanup of consistency when using parameters $k,q,r,p,l,s$. My head is exploding of what is what.}
 
-
-\todo[inline]{
-\begin{equation*}
-    \begin{split}
-% (I) & \le  \| D^2\left( u - C_{h}u \right)  \|_{ \mathcal{T} _{h} }^{ 2 } = \sum_{T \in \mathcal{T} _{h}}^{} \| D^2 \left( u - C_{h}u \right)  \|_{ T }^{ 2 } \\
-%  & \lesssim \sum_{T \in \mathcal{T} _{h}}^{}  \| \left( u - C_{h}u \right)  \|_{2,T  }^{  2} \lesssim  \sum_{T \in \mathcal{T} _{h}}^{}  h_{T}^{2\left( l-2 \right) } \| u \|_{l, \omega \left( T \right)   }^{2  }, \\
-    (II) & \le  \sum_{T \in \mathcal{T} _{h}}^{}  h^{-1} \| \partial _{n} \left( u - C_{h} \right)  \|_{ \partial T  }^{  } \le  \sum_{T \in \mathcal{T} _{h}}^{}  h^{-1} \left( h^{l -1 -\frac{1}{2}} \| u \|_{ l, \omega \left( T \right)  }^{  }
-    \right)^{2},  \\
-    & \lesssim \sum_{T \in \mathcal{T} _{h}}^{}  h^{2(l-2)} \| u \|_{ l, \omega \left( F \right)  }^{ 2 } \\
- % (III)  &\le   \alpha^2  \sum_{T \in \mathcal{T} _{h}}^{}  \| u - C_{h} \|_{ T }^{ 2 } \lesssim   \sum_{T \in \mathcal{T} _{h}}^{} h^{2l} \| u \|_{ \omega \left( T \right)  }^{ 2 }, \\
-(IV) & \le \sum_{T \in \mathcal{T} _{h}}^{}  h \| \partial _{nn} \left( u - C_{h} \right)  \|_{\partial T  }^{2  } \lesssim  \sum_{T \in  \mathcal{T} _{h}}^{} h \left( h^{l -2 -\frac{1}{2}} \| u \|_{ l, \omega \left( F \right)  }^{  }  \right)^{2}
-\lesssim
-\sum_{T  \in  \mathcal{T} _{h}}^{} h^{2(l-2)}  \| u \|_{ l, \omega \left( F \right)  }^{ 2 }.
- \end{split}
-\end{equation*}
- The result then follows easily,
-\[
-    \begin{split}
-        (I) + (II) + (III) +  (IV)  &  \lesssim  \sum_{T \in \mathcal{T} _{h}}^{}  h_{T}^{2\left( l-2 \right) } \| u \|_{l, \omega \left( T \right)   }^{  } +   2\cdot h^{2(l-2)}  \| u \|_{ l, \omega \left( F \right)  }^{ 2 } + h_{T}^{2l} \| u \|_{l, \omega \left( T \right)}
-        \\
-        &  \lesssim  h^{2\left( l-2 \right) } \| u \|_{ H^{l}\left( \Omega  \right)  }^{2  }.
-    \end{split}
-\]
-}
 \newpage
 \subsection{Condition number}%
 \label{sec:condition_number}
