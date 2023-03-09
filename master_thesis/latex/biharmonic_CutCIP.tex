@@ -440,8 +440,6 @@ We can immediately observe that the interpolation satisfies the global error est
 \| v - C ^{e}_{h}v \|_{ r, \Gamma }^{  } & \lesssim h^{s-r-\frac{1}{2}} \sum_{T \in \mathcal{T}_h}  \| v \|_{ s,  \omega(T)  }^{  }, \quad 0  \le  r \le   s- \frac{1}{2}
 \end{align}
 
-\todo[inline]{ Not sure if \eqref{eq:bi_projection_estimates_3} holds for smooth boundaries, $\Gamma \in  C^2 $ . And why is \eqref{eq:bi_projection_estimates_2} summing over $ T \in \mathcal{T} _{h}$ and not $ F \in  \mathcal{F} _{h}$.      }
-
 Naturally can we see this is the tools we need to construct an estimate for the energy norm.
 
 \begin{lemma}
@@ -479,16 +477,15 @@ Naturally can we see this is the tools we need to construct an estimate for the 
      Hence, by \eqref{eq:bi_projection_estimates_2}  \[
         \begin{split}
             \gamma \| h^{-\frac{1}{2}} \jump{ \partial _{n} ( u - C_{h}^{e}u ) }   \|_{ \mathcal{F}_{h} \cap \Omega   }^{  2}   &\lesssim \| h^{-\frac{1}{2}}  \partial _{n} ( u - C_{h}^{e}u )    \|_{  \partial \mathcal{T} _{h} }^{2  }
-       \lesssim h^{-2} \|   \nabla  ( u - C_{h}^{e}u )    \|_{ \partial \mathcal{T} _{h} }^{2  }     \\
-                                                                                                                 &\lesssim h^{-2} \|      u - C_{h}^{e}u     \|_{1, \partial \mathcal{T}_{h} }^{2  }
-                                                                                                                 \lesssim h^{ 2(s - r - \frac{1}{2}) -2 } \sum_{T \in \mathcal{T}_{h} }^{}
-                                                                                                                  \| u      \|_{ s, \omega (  F)  }^{  2}
+       \lesssim h^{-2} \|   \nabla  ( u - C_{h}^{e}u )    \|_{  \mathcal{T} _{h} }^{2  }     \\
+                                                                                                                 &\lesssim h^{-2} \|      u - C_{h}^{e}u     \|_{1,  \mathcal{T}_{h} }^{2  }
+                                                                                                                 \lesssim \sum_{T \in \mathcal{T} _{h}}^{} h^{2(s-1)} \| u \|_{ \mathcal{T} _{h}  }^{ 2}
         \end{split}
     \]
     \todo[inline]{
         Not sure if \eqref{eq:bi_projection_estimates_2} holds here!
         \[
-     \|      u - C_{h}^{e}u     \|_{1, \partial \mathcal{T}_{h} }^{2  }
+     \| \partial _{n}(u - C_{h}^{e}u)     \|_{1, \partial \mathcal{T}_{h} }^{2  }
                                                                                                                  \lesssim \sum_{T \in \mathcal{T}_{h} }^{}
                                                                                                                  h^{ 2(l - m - \frac{1}{2})  } \| u      \|_{ s, \omega (  F)  }^{  2}
     \]  }
@@ -500,6 +497,7 @@ Naturally can we see this is the tools we need to construct an estimate for the 
               \sum_{T \in \mathcal{T} _{h}}^{}  \| u \|_{s,T  }^{  2}
         \end{split}
     \]
+    \todo[inline]{ Does it makes sense to integrate $\| \nabla u \|_{ \Gamma  }^{  } $, i.e. no normal vectors? I guess not. Hence, \eqref{eq:bi_projection_estimates_3} is kinda strange.}
 \item
 
             We also know that $\| \mean{ u }   \|_{ \mathcal{F} _{h} }^{  } \le \| u^{+} \|_{ \mathcal{F} _{h}  }^{  } + \| u^{-} \|_{ \mathcal{F} _{h}  }^{  }   \lesssim  \| u \|_{ \partial\mathcal{T }_{h}  }^{2  }  $ and the $\| \partial _{nn} u \|_{ F  }^{} \lesssim h^{-\frac{1}{2}} \| D^2 u \|_{ T }^{  }  $. It is clear
