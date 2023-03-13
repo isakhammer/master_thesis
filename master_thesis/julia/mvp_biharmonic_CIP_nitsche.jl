@@ -46,10 +46,10 @@ module Solver
         writevtk(sol.Λ,         vtkdirname*"/Lambda")
         writevtk(sol.Γ,         vtkdirname*"/Gamma")
         # writevtk(sol.Fg,        vtkdirname*"/Fg")
-        writevtk(sol.Λ,         vtkdirname*"/jumps",        cellfields=["jump_u"=>jump(sol.uh)])
-        writevtk(sol.Ω,         vtkdirname*"/omega",        cellfields=["uh"=>sol.uh])
-        writevtk(sol.Ω,         vtkdirname*"/error",        cellfields=["e"=>sol.e])
-        writevtk(sol.Ω,         vtkdirname*"/manufatured",  cellfields=["u"=>sol.u])
+        writevtk(sol.Λ,         vtkdirname*"/u_jumps",        cellfields=["jump_u"=>jump(sol.uh)])
+        writevtk(sol.Ω,         vtkdirname*"/u_omega",        cellfields=["uh"=>sol.uh])
+        writevtk(sol.Ω,         vtkdirname*"/u_error",        cellfields=["e"=>sol.e])
+        writevtk(sol.Ω,         vtkdirname*"/u_manufatured",  cellfields=["u"=>sol.u])
     end
 
 
@@ -141,30 +141,27 @@ function print_results(;ns, el2s, eh1s, ehs_energy, order)
     eoc_eh1 = compute_eoc(hs,eh1s)
     eoc_eh_energy = compute_eoc(hs,ehs_energy)
 
-    println("==============")
-    println("Order = $order")
-    println("Mesh sizes = $hs")
+    println("\n==============")
+    println("SUMMARY")
+    println("Order = $order  Mesh sizes = $hs")
     println("L2 errors  = $el2s")
     println("H1 errors  = $eh1s")
     println("Energy errors  = $eh1s")
     println("EOC L2 = $eoc_l2")
     println("EOC H1 = $eoc_eh1")
     println("EOC Energy = $eoc_eh_energy")
+    println("==============\n")
 end
 
 
 function convergence_analysis(; orders, ns, dirname, write_vtks=true)
-    println("Run convergence",)
 
     for order in orders
-
+        println("Run convergence")
         el2s = Float64[]
         eh1s = Float64[]
         ehs_energy = Float64[]
-        println("Run convergence tests: order = "*string(order))
-
         for n in ns
-
             if (write_vtks)
                 vtkdirname =dirname*"/order_"*string(order)*"_n_"*string(n)
                 mkpath(vtkdirname)
