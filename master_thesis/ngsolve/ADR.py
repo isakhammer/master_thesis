@@ -70,6 +70,7 @@ def ADRSolver(epsilon, b, c, eta, u_D, f, u_ex, errors, order_u=1,
     Vh_ex = H1(mesh, order=order_ex)
     u_ex_h = GridFunction(Vh_ex)
     u_ex_h.Set(u_ex)
+
     u_h_inter = GridFunction(Vh_ex)
     u_h_inter.Set(u_h)
     de = u_h_inter.Deriv() - u_ex_h.Deriv()
