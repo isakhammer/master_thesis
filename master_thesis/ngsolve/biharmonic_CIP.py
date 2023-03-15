@@ -90,31 +90,22 @@ def run(order, n_grid, vtk_dirname=None):  # Mesh related parameters
     u_h = GridFunction(V)
     u_h.vec.data = a.mat.Inverse() * l.vec
 
-    def interpolate(u_ex, u_h):
-        order_ex = order + 2
-        Vh_ex = H1(mesh, order=order_ex)
-        u_ex_inter = GridFunction(Vh_ex)
-        u_ex_inter.Set(u_ex)
-
-        u_h_inter = GridFunction(Vh_ex)
-        u_h_inter.Set(u_h)
-        return u_ex_inter, u_h_inter
-
-    u_ex_inter, u_h_inter = interpolate(u_ex, u_h)
-    e = u_h_inter - u_ex_inter
-    de = u_h_inter.Deriv() - u_ex_inter.Deriv()
-
+    e = u_h - u_ex
+    de = grad(u_h) - grad_u_ex
     el2 = sqrt(Integrate(e*e, mesh))
     eh1 = sqrt(Integrate(e*e + de*de, mesh))
-    eh_energy = sqrt(Integrate( de*de*dx, mesh) \
-            + Integrate( ( h*de*n*de*n +h**(-1)*e*e )*ds(skeleton=True), mesh)
+    eh_energy = sqrt(0)
+
+    eh_energy = sqrt(Integrate( ( de*de )*dx, mesh) \
+            + Integrate( ( ( h/gamma )*( de*n )*( de*n ) + gamma*h**(-1)*e*e )*ds(skeleton=True), mesh)
             # + Integrate( ( h*mean_n(e)*mean_n(e) +h**(-1)*jump(e)*jump(e) )*dx(skeleton=True), mesh) \
             )
 
     if vtk_dirname != None:
         filename=vtk_dirname+"/order_"+str(order)+"_n_"+str(n)
         vtk = VTKOutput(mesh,
-                        coefs=[u_ex, u_h, e, de],
+                        # coefs=[u_ex, u_h, e, de],
+                        coefs=[u_ex, u_h, e],
                         names=["u_ex", "u_h", "e", "de"],
                         filename=filename,
                         subdivision=3)
