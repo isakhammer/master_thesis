@@ -1,6 +1,5 @@
 from ngsolve import *
 from ngsolve.meshes import MakeStructured2DMesh
-
 from netgen.geom2d import SplineGeometry
 import numpy as np
 import pandas as pd
@@ -142,7 +141,7 @@ def convergence_analysis(orders, ns, dirname):
 
 if __name__ == "__main__":
 
-    dirname = "figures/"+datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
+    dirname = "figures/poisson_nitsche/"+datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
     print("figures in ", dirname)
     os.makedirs(dirname, exist_ok=True)
     orders = [1, 2, 3, 4]
