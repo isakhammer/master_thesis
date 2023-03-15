@@ -76,9 +76,6 @@ def run(order, n_grid, vtk_dirname=None):  # Mesh related parameters
     a = BilinearForm(V, symmetric=True)
     a += (InnerProduct(hesse(u), hesse(v)) + alpha*(u*v))*dx
 
-    # print("ERROR HERE")
-    # a += (mean_nn(u))*dx(skeleton=True)
-    # exit()
     a += (-mean_nn(u)*jump_n(v) - mean_nn(v)*jump_n(v) )*dx(skeleton=True)
     a += (-hesse_nn(v)*grad_n(u) - hesse_nn(u)*grad_n(v) )*ds(skeleton=True)
     a += (gamma/h)*( jump_n(u)*jump_n(v) )*dx(skeleton=True)
@@ -169,7 +166,6 @@ def convergence_analysis(orders, ns, dirname):
             ehs_energy.append(eh_energy)
         print_results(ns, el2s, eh1s, ehs_energy, order)
 
-    return 0
 
 
 
