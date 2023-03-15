@@ -1,11 +1,8 @@
 from ngsolve import *
 from ngsolve.meshes import MakeStructured2DMesh
-from netgen.geom2d import SplineGeometry
-import numpy as np
-import pandas as pd
 import os
 from datetime import datetime
-from matplotlib import pyplot as plt
+import numpy as np
 import sympy as sy
 
 
