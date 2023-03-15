@@ -34,8 +34,6 @@ x_sy, y_sy = sy.symbols('x y')
 alpha = 1
 (L,m,r) = (1,1,1)
 u_sy = 100*sy.cos(x_sy * 2*sy.pi/L)*sy.sin(y_sy * 2*sy.pi/L)
-# u_sy = sy.cos(x_sy)*sy.cos(y_sy)
-# u_sy = x_sy**2 + y_sy**2
 
 # Transform to manufactured solution
 u_ex, f, grad_u_ex, grad_Delta_u_ex = man_sol(u_sy, x_sy, y_sy)
@@ -47,7 +45,7 @@ def run(order, n_grid, vtk_dirname=None):  # Mesh related parameters
 
     mesh = MakeStructured2DMesh(quads=True, nx=n_grid,ny=n_grid)
 
-    V = L2(mesh, order=order, dgjumps=True)
+    V = H1(mesh, order=order, dgjumps=True)
 
     u = V.TrialFunction()
     v = V.TestFunction()
@@ -63,7 +61,7 @@ def run(order, n_grid, vtk_dirname=None):  # Mesh related parameters
 
     mean        = lambda u: 0.5*(u + u.Other())
     mean_n      = lambda u: 0.5*(grad(u) + grad(u.Other()))*n
-    mean_nn     = lambda u: InnerProduct(n, 0.5*( hesse(u) + hesse(u.Other) )*n)
+    mean_nn     = lambda u: InnerProduct(n, 0.5*( hesse(u) )*n )+InnerProduct(n, 0.5*( hesse(u.Other()) )*n )
 
     jump        = lambda u: u - u.Other()
     jump_n      = lambda u: (grad(u) - grad(u.Other()))*n
@@ -77,6 +75,10 @@ def run(order, n_grid, vtk_dirname=None):  # Mesh related parameters
 
     a = BilinearForm(V, symmetric=True)
     a += (InnerProduct(hesse(u), hesse(v)) + alpha*(u*v))*dx
+
+    # print("ERROR HERE")
+    # a += (mean_nn(u))*dx(skeleton=True)
+    # exit()
     a += (-mean_nn(u)*jump_n(v) - mean_nn(v)*jump_n(v) )*dx(skeleton=True)
     a += (-hesse_nn(v)*grad_n(u) - hesse_nn(u)*grad_n(v) )*ds(skeleton=True)
     a += (gamma/h)*( jump_n(u)*jump_n(v) )*dx(skeleton=True)
