@@ -17,8 +17,8 @@ def man_sol(u_sy, x_sy, y_sy):
     Delta_u = sy.diff(u_sy, x_sy,x_sy) + sy.diff(u_sy, y_sy, y_sy)
     Delta2_u = sy.diff(Delta_u, x_sy,x_sy) + sy.diff(Delta_u, y_sy, y_sy)
     f_sy =  Delta2_u + alpha*u_sy
-    grad_u_sy = [sy.diff(u_sy, x_sy), sy.diff(u_sy, y_sy)]
-    grad_Delta_u_sy = [sy.diff(Delta_u, x_sy), sy.diff(Delta_u, y_sy)]
+    grad_u_sy = (sy.diff(u_sy, x_sy), sy.diff(u_sy, y_sy))
+    grad_Delta_u_sy = (sy.diff(Delta_u, x_sy), sy.diff(Delta_u, y_sy))
 
     # Convert problem to ngsolve coefficients
     u_ex = CoefficientFunction(eval(str(u_sy)))
@@ -33,7 +33,7 @@ x_sy, y_sy = sy.symbols('x y')
 
 alpha = 1
 (L,m,r) = (1,1,1)
-u_sy = 100*sy.cos(x_sy * 2*sy.pi/L)*sy.sin(y_sy * 2*sy.pi/L)
+u_sy = 100*sy.cos(x_sy * 2*sy.pi/L)*sy.cos(y_sy * 2*sy.pi/L)
 
 # Transform to manufactured solution
 u_ex, f, grad_u_ex, grad_Delta_u_ex = man_sol(u_sy, x_sy, y_sy)
@@ -178,7 +178,7 @@ if __name__ == "__main__":
     dirname = "figures/biharmonic_CIP/"+datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
     print("figures in ", dirname)
     os.makedirs(dirname, exist_ok=True)
-    orders = [1, 2, 3]
+    orders = [2, 3]
     ns = [2**2, 2**3, 2**4, 2**5, 2**6, 2**7]
 
     convergence_analysis(orders, ns, dirname)
