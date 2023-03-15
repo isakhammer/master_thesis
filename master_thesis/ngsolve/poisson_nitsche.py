@@ -1,5 +1,6 @@
 from ngsolve import *
-from ngsolve.webgui import Draw
+from ngsolve.meshes import MakeStructured2DMesh
+
 from netgen.geom2d import SplineGeometry
 import numpy as np
 import pandas as pd
@@ -27,8 +28,8 @@ def man_sol(u_sy, x_sy, y_sy):
 x_sy, y_sy = sy.symbols('x y')
 (L,m,r) = (1,1,1)
 u_sy = 100*sy.cos(x_sy * 2*sy.pi/L)*sy.sin(y_sy * 2*sy.pi/L)
-u_sy = sy.cos(x_sy)*sy.cos(y_sy)
-u_sy = x_sy**2 + y_sy**2
+# u_sy = sy.cos(x_sy)*sy.cos(y_sy)
+# u_sy = x_sy**2 + y_sy**2
 
 # Transform to manufactured solution
 u_ex, f, g = man_sol(u_sy, x_sy, y_sy)
@@ -37,7 +38,8 @@ u_ex, f, g = man_sol(u_sy, x_sy, y_sy)
 
 
 def run(order, n, vtk_dirname=None):  # Mesh related parameters
-    mesh = Mesh(unit_square.GenerateMesh(maxh=(1/n)))
+
+    mesh = MakeStructured2DMesh(quads=True, nx=n,ny=n)
 
     V = H1(mesh, order=order)
     u = V.TrialFunction()
@@ -45,7 +47,8 @@ def run(order, n, vtk_dirname=None):  # Mesh related parameters
 
     n_Gamma = specialcf.normal(2)
     h = specialcf.mesh_size
-    gamma = 5
+    gamma = order*(order+1)
+
 
     a = BilinearForm(V, symmetric=True)
     a += grad(u)*grad(v)*dx
@@ -95,7 +98,7 @@ def print_results(ns, el2s, eh1s, ehs_energy, order):
 
     ns = np.array(ns)
     hs = 1/ns
-    el2s = np.array(eh1s)
+    el2s = np.array(el2s)
     eh1s = np.array(eh1s)
     ehs_energy = np.array(ehs_energy)
 
@@ -139,11 +142,11 @@ def convergence_analysis(orders, ns, dirname):
 
 if __name__ == "__main__":
 
-    dirname = "figures/"+datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")
+    dirname = "figures/"+datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
     print("figures in ", dirname)
     os.makedirs(dirname, exist_ok=True)
-    orders = [2, 3, 4]
-    ns = [2**2, 2**3, 2**4, 2**5, 2**6]
+    orders = [1, 2, 3, 4]
+    ns = [2**2, 2**3, 2**4, 2**5, 2**6, 2**7]
 
     convergence_analysis(orders, ns, dirname)
 
