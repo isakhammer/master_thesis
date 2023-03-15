@@ -36,27 +36,34 @@ u_ex, f, g = man_sol(u_sy, x_sy, y_sy)
 
 
 
-def run(order, n, vtk_dirname=None):  # Mesh related parameters
+def run(order, n_grid, vtk_dirname=None):  # Mesh related parameters
 
-    mesh = MakeStructured2DMesh(quads=True, nx=n,ny=n)
+    mesh = MakeStructured2DMesh(quads=True, nx=n_grid,ny=n_grid)
 
-    V = H1(mesh, order=order)
+    V = L2(mesh, order=order, dgjumps=True)
+
     u = V.TrialFunction()
     v = V.TestFunction()
 
-    n_Gamma = specialcf.normal(2)
+    n = specialcf.normal(2)
     h = specialcf.mesh_size
     gamma = order*(order+1)
 
 
+    jump = lambda u: u - u.Other()
+    mean = lambda u: 0.5*(grad(u) + grad(u.Other()))
+    mean_n = lambda u: 0.5*n*(grad(u) + grad(u.Other()))
+
+
     a = BilinearForm(V, symmetric=True)
     a += grad(u)*grad(v)*dx
-    a += (-n_Gamma*grad(u)*v - n_Gamma*grad(v)*u + (gamma/h)*u*v)*ds(skeleton=True)
+    a += (-mean_n(u)*jump(v) - mean_n(v)*jump(u) + (gamma/h)*jump(u)*jump(v))*dx(skeleton=True)
+    a += (-n*grad(u)*v - n*grad(v)*u + (gamma/h)*u*v)*ds(skeleton=True)
     a.Assemble()
 
     l = LinearForm(V)
     l += f * v * dx
-    l += ( -n_Gamma*grad(v)*g + (gamma/h)*g*v)*ds(skeleton=True)
+    l += ( -n*grad(v)*g + (gamma/h)*g*v)*ds(skeleton=True)
     l.Assemble()
 
     u_h = GridFunction(V)
@@ -78,7 +85,10 @@ def run(order, n, vtk_dirname=None):  # Mesh related parameters
 
     el2 = sqrt(Integrate(e*e, mesh))
     eh1 = sqrt(Integrate(e*e + de*de, mesh))
-    eh_energy = sqrt(Integrate( de*de, mesh))
+    eh_energy = sqrt(Integrate( de*de*dx, mesh) \
+            + Integrate( ( h*de*n*de*n +h**(-1)*e*e )*ds(skeleton=True), mesh)
+            # + Integrate( ( h*mean_n(e)*mean_n(e) +h**(-1)*jump(e)*jump(e) )*dx(skeleton=True), mesh) \
+            )
 
     if vtk_dirname != None:
         filename=vtk_dirname+"/order_"+str(order)+"_n_"+str(n)
@@ -141,10 +151,10 @@ def convergence_analysis(orders, ns, dirname):
 
 if __name__ == "__main__":
 
-    dirname = "figures/poisson_nitsche/"+datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
+    dirname = "figures/poisson_DG/"+datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
     print("figures in ", dirname)
     os.makedirs(dirname, exist_ok=True)
-    orders = [1, 2, 3, 4]
+    orders = [1, 2, 3]
     ns = [2**2, 2**3, 2**4, 2**5, 2**6, 2**7]
 
     convergence_analysis(orders, ns, dirname)
