@@ -6,19 +6,32 @@ import pandas as pd
 import os
 from datetime import datetime
 from matplotlib import pyplot as plt
+import sympy as sy
+
 
 # -Δu = f in Ω, and u = g on Γ
+def man_sol(u_sy, x_sy, y_sy):
 
-# Example 1
-L, m, r = (1,1,1)
-u_ex = CoefficientFunction(100*cos(m*( 2*np.pi/L )*x)*cos(r*( 2*np.pi/L )*y))
-f = 2*u_ex
-g = u_ex
+    # Symbolic differentiation
+    Delta_u = sy.diff(u_sy, x_sy,x_sy) + sy.diff(u_sy, y_sy, y_sy)
+    f_sy = - Delta_u
 
-# Example 2
-u_ex = CoefficientFunction(x**2*y**2)
-f = -2*(y**2 + x**2)
-g = u_ex
+    # Convert problem to ngsolve coefficients
+    u_ex = CoefficientFunction(eval(str(u_sy)))
+    f = CoefficientFunction(eval(str(f_sy)))
+    g = u_ex
+    return u_ex, f, g
+
+x_sy, y_sy = sy.symbols('x y')
+
+# Define Manufactured solution
+# u_sy = x_sy**2 + y_sy**2
+u_sy = sy.cos(x_sy)*sy.sin(x_sy)
+
+u_ex, f, g = man_sol(u_sy, x_sy, y_sy)
+
+
+
 
 def run(order, n, vtk_dirname=None):  # Mesh related parameters
     mesh = Mesh(unit_square.GenerateMesh(maxh=(1/n)))
@@ -45,7 +58,7 @@ def run(order, n, vtk_dirname=None):  # Mesh related parameters
     u_h.vec.data = a.mat.Inverse() * l.vec
 
     def interpolate(u_ex, u_h):
-        order_ex = order
+        order_ex = order + 2
         Vh_ex = H1(mesh, order=order_ex)
         u_ex_inter = GridFunction(Vh_ex)
         u_ex_inter.Set(u_ex)
@@ -64,7 +77,6 @@ def run(order, n, vtk_dirname=None):  # Mesh related parameters
 
     if vtk_dirname != None:
         filename=vtk_dirname+"/order_"+str(order)+"_n_"+str(n)
-        print("vtk in ", filename)
         vtk = VTKOutput(mesh,
                         coefs=[u_ex, u_h, e, de],
                         names=["u_ex", "u_h", "e", "de"],
