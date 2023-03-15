@@ -1,0 +1,166 @@
+from ngsolve import *
+from ngsolve.meshes import MakeStructured2DMesh
+from netgen.geom2d import SplineGeometry
+import numpy as np
+import pandas as pd
+import os
+from datetime import datetime
+from matplotlib import pyplot as plt
+import sympy as sy
+
+
+# -Δ^2*u + alpha*u = f in Ω,
+# grad_u*n = g_1 and grad_Delta_u*n = g_2 on Γ
+def man_sol(u_sy, x_sy, y_sy):
+
+    alpha = 1
+    # Symbolic differentiation
+    Delta_u = sy.diff(u_sy, x_sy,x_sy) + sy.diff(u_sy, y_sy, y_sy)
+    Delta2_u = sy.diff(Delta_u, x_sy,x_sy) + sy.diff(Delta_u, y_sy, y_sy)
+    f_sy =  Delta2_u + alpha*u_sy
+    grad_u_sy = [sy.diff(u_sy, x_sy), sy.diff(u_sy, y_sy)]
+    grad_Delta_u_sy = [sy.diff(Delta_u, x_sy), sy.diff(Delta_u, y_sy)]
+
+    # Convert problem to ngsolve coefficients
+    u_ex = CoefficientFunction(eval(str(u_sy)))
+    f = CoefficientFunction(eval(str(f_sy)))
+    grad_u = CoefficientFunction(eval(str(grad_u_sy)))
+    grad_Delta_u = CoefficientFunction(eval(str(grad_Delta_u_sy)))
+    return u_ex, f, grad_u, grad_Delta_u
+
+
+# Define Manufactured solution
+x_sy, y_sy = sy.symbols('x y')
+(L,m,r) = (1,1,1)
+u_sy = 100*sy.cos(x_sy * 2*sy.pi/L)*sy.sin(y_sy * 2*sy.pi/L)
+# u_sy = sy.cos(x_sy)*sy.cos(y_sy)
+# u_sy = x_sy**2 + y_sy**2
+
+# Transform to manufactured solution
+u_ex, f, grad_u, grad_Delta_u = man_sol(u_sy, x_sy, y_sy)
+
+
+
+
+def run(order, n_grid, vtk_dirname=None):  # Mesh related parameters
+
+    mesh = MakeStructured2DMesh(quads=True, nx=n_grid,ny=n_grid)
+
+    V = L2(mesh, order=order, dgjumps=True)
+
+    u = V.TrialFunction()
+    v = V.TestFunction()
+
+    n = specialcf.normal(2)
+    h = specialcf.mesh_size
+    gamma = order*(order+1)
+
+    jump = lambda u: u - u.Other()
+    mean = lambda u: 0.5*(grad(u) + grad(u.Other()))
+    mean_n = lambda u: 0.5*n*(grad(u) + grad(u.Other()))
+
+
+    a = BilinearForm(V, symmetric=True)
+    a += grad(u)*grad(v)*dx
+    a += (-mean_n(u)*jump(v) - mean_n(v)*jump(u) + (gamma/h)*jump(u)*jump(v))*dx(skeleton=True)
+    a += (-n*grad(u)*v - n*grad(v)*u + (gamma/h)*u*v)*ds(skeleton=True)
+    a.Assemble()
+
+    l = LinearForm(V)
+    l += f * v * dx
+    l += ( -n*grad(v)*g + (gamma/h)*g*v)*ds(skeleton=True)
+    l.Assemble()
+
+    u_h = GridFunction(V)
+    u_h.vec.data = a.mat.Inverse() * l.vec
+
+    def interpolate(u_ex, u_h):
+        order_ex = order + 2
+        Vh_ex = H1(mesh, order=order_ex)
+        u_ex_inter = GridFunction(Vh_ex)
+        u_ex_inter.Set(u_ex)
+
+        u_h_inter = GridFunction(Vh_ex)
+        u_h_inter.Set(u_h)
+        return u_ex_inter, u_h_inter
+
+    u_ex_inter, u_h_inter = interpolate(u_ex, u_h)
+    e = u_h_inter - u_ex_inter
+    de = u_h_inter.Deriv() - u_ex_inter.Deriv()
+
+    el2 = sqrt(Integrate(e*e, mesh))
+    eh1 = sqrt(Integrate(e*e + de*de, mesh))
+    eh_energy = sqrt(Integrate( de*de*dx, mesh) \
+            + Integrate( ( h*de*n*de*n +h**(-1)*e*e )*ds(skeleton=True), mesh)
+            # + Integrate( ( h*mean_n(e)*mean_n(e) +h**(-1)*jump(e)*jump(e) )*dx(skeleton=True), mesh) \
+            )
+
+    if vtk_dirname != None:
+        filename=vtk_dirname+"/order_"+str(order)+"_n_"+str(n)
+        vtk = VTKOutput(mesh,
+                        coefs=[u_ex, u_h, e, de],
+                        names=["u_ex", "u_h", "e", "de"],
+                        filename=filename,
+                        subdivision=3)
+        vtk.Do()
+
+    return el2, eh1, eh_energy
+
+
+def print_results(ns, el2s, eh1s, ehs_energy, order):
+    # Compute convergence rates
+
+    ns = np.array(ns)
+    hs = 1/ns
+    el2s = np.array(el2s)
+    eh1s = np.array(eh1s)
+    ehs_energy = np.array(ehs_energy)
+
+    def compute_eoc(hs, errs):
+        eoc = np.log(errs[:-1]/errs[1:])/np.log(hs[:-1]/hs[1:])
+        return eoc
+
+    eoc_el2 = compute_eoc(hs, el2s)
+    eoc_eh1 = compute_eoc(hs, eh1s)
+    eoc_eh_energy = compute_eoc(hs, eh1s)
+
+    print("\n==============")
+    print("SUMMARY")
+    print("Order =", order," Mesh sizes = ", hs)
+    print("L2 errors = ", el2s)
+    print("H1 errors = ", eh1s)
+    print("Energy errors  = ", eh1s)
+    print("EOC L2 = ", eoc_el2)
+    print("EOC H1 = ", eoc_eh1)
+    print("EOC Energy = ", eoc_eh_energy)
+    print("==============\n")
+
+
+
+def convergence_analysis(orders, ns, dirname):
+
+    for order in orders:
+        el2s = []
+        eh1s = []
+        ehs_energy = []
+        for n in ns:
+            (el2, eh1, eh_energy) = run(order, n, vtk_dirname=dirname)
+            el2s.append(el2)
+            eh1s.append(eh1)
+            ehs_energy.append(eh_energy)
+        print_results(ns, el2s, eh1s, ehs_energy, order)
+
+    return 0
+
+
+
+if __name__ == "__main__":
+
+    dirname = "figures/biharmonic_CIP/"+datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
+    print("figures in ", dirname)
+    os.makedirs(dirname, exist_ok=True)
+    orders = [1, 2, 3]
+    ns = [2**2, 2**3, 2**4, 2**5, 2**6, 2**7]
+
+    convergence_analysis(orders, ns, dirname)
+
