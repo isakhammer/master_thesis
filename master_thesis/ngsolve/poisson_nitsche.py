@@ -7,37 +7,45 @@ import os
 from datetime import datetime
 from matplotlib import pyplot as plt
 
+# -Δu = f in Ω, and u = g on Γ
+
+# Example 1
 L, m, r = (1,1,1)
 u_ex = CoefficientFunction(100*cos(m*( 2*np.pi/L )*x)*cos(r*( 2*np.pi/L )*y))
+f = 2*u_ex
+g = u_ex
 
+# Example 2
+u_ex = CoefficientFunction(x**2*y**2)
+f = -2*(y**2 + x**2)
+g = u_ex
 
-def run(order, n):  # Mesh related parameters
+def run(order, n, vtk_dirname=None):  # Mesh related parameters
     mesh = Mesh(unit_square.GenerateMesh(maxh=(1/n)))
 
     V = H1(mesh, order=order)
     u = V.TrialFunction()
     v = V.TestFunction()
 
-    n = specialcf.normal(2)
+    n_Gamma = specialcf.normal(2)
     h = specialcf.mesh_size
-    penalty = 3*order**2
-
+    gamma = 5
 
     a = BilinearForm(V, symmetric=True)
     a += grad(u)*grad(v)*dx
-    a += (-n*grad(u)*v - n*grad(v)*u + penalty/h*u*v)*ds(skeleton=True)
+    a += (-n_Gamma*grad(u)*v - n_Gamma*grad(v)*u + (gamma/h)*u*v)*ds(skeleton=True)
     a.Assemble()
 
-    f = LinearForm(V)
-    f += 1 * v * dx
-    f += ( -n*grad(v)*u_ex + penalty/h*u_ex*v)*ds(skeleton=True)
-    f.Assemble()
+    l = LinearForm(V)
+    l += f * v * dx
+    l += ( -n_Gamma*grad(v)*g + (gamma/h)*g*v)*ds(skeleton=True)
+    l.Assemble()
 
     u_h = GridFunction(V)
-    u_h.vec.data = a.mat.Inverse() * f.vec
+    u_h.vec.data = a.mat.Inverse() * l.vec
 
-    def interpolate(u_h, u_ex):
-        order_ex = 4
+    def interpolate(u_ex, u_h):
+        order_ex = order
         Vh_ex = H1(mesh, order=order_ex)
         u_ex_inter = GridFunction(Vh_ex)
         u_ex_inter.Set(u_ex)
@@ -46,13 +54,24 @@ def run(order, n):  # Mesh related parameters
         u_h_inter.Set(u_h)
         return u_ex_inter, u_h_inter
 
-    u_ex_inter, u_h_inter = interpolate(u_h, u_ex)
+    u_ex_inter, u_h_inter = interpolate(u_ex, u_h)
     e = u_h_inter - u_ex_inter
     de = u_h_inter.Deriv() - u_ex_inter.Deriv()
 
     el2 = sqrt(Integrate(e*e, mesh))
     eh1 = sqrt(Integrate(de*de, mesh))
     eh_energy = sqrt(Integrate(e*e + de*de, mesh))
+
+    if vtk_dirname != None:
+        filename=vtk_dirname+"/order_"+str(order)+"_n_"+str(n)
+        print("vtk in ", filename)
+        vtk = VTKOutput(mesh,
+                        coefs=[u_ex, u_h, e, de],
+                        names=["u_ex", "u_h", "e", "de"],
+                        filename=filename,
+                        subdivision=3)
+        vtk.Do()
+
     return el2, eh1, eh_energy
 
 
@@ -93,7 +112,7 @@ def convergence_analysis(orders, ns, dirname):
         eh1s = []
         ehs_energy = []
         for n in ns:
-            (el2, eh1, eh_energy) = run(order, n)
+            (el2, eh1, eh_energy) = run(order, n, vtk_dirname=dirname)
             el2s.append(el2)
             eh1s.append(eh1)
             ehs_energy.append(eh_energy)
