@@ -22,12 +22,15 @@ def man_sol(u_sy, x_sy, y_sy):
     g = u_ex
     return u_ex, f, g
 
-x_sy, y_sy = sy.symbols('x y')
 
 # Define Manufactured solution
-# u_sy = x_sy**2 + y_sy**2
-u_sy = sy.cos(x_sy)*sy.sin(x_sy)
+x_sy, y_sy = sy.symbols('x y')
+(L,m,r) = (1,1,1)
+u_sy = 100*sy.cos(x_sy * 2*sy.pi/L)*sy.sin(y_sy * 2*sy.pi/L)
+u_sy = sy.cos(x_sy)*sy.cos(y_sy)
+u_sy = x_sy**2 + y_sy**2
 
+# Transform to manufactured solution
 u_ex, f, g = man_sol(u_sy, x_sy, y_sy)
 
 
