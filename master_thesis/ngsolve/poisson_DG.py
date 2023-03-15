@@ -51,7 +51,6 @@ def run(order, n_grid, vtk_dirname=None):  # Mesh related parameters
 
 
     jump = lambda u: u - u.Other()
-    mean = lambda u: 0.5*(grad(u) + grad(u.Other()))
     mean_n = lambda u: 0.5*n*(grad(u) + grad(u.Other()))
 
 
