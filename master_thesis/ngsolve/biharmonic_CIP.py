@@ -116,7 +116,7 @@ def run(order, n_grid, vtk_dirname=None):  # Mesh related parameters
     eh_energy = sqrt(Integrate( ( e*e )*dx, mesh))
     eh_energy += sqrt(Integrate( ( InnerProduct( dde,dde ) )*dx, mesh))
     eh_energy += sqrt(Integrate( ( ( gamma/h )*( de_n )*( de_n ) )*ds(skeleton=True), mesh))
-    eh_energy += sqrt(Integrate( ( ( h/gamma )*( dde_nn(u_h,u_ex_h) )*( dde_nn(u_h, u_ex_h) )*ds(skeleton=True), mesh)))
+    # eh_energy += sqrt(Integrate( ( ( h/gamma )*( dde_nn(u_h,u_ex_h) )*( dde_nn(u_h, u_ex_h) )*ds(skeleton=True), mesh)))
 
     if vtk_dirname != None:
         filename=vtk_dirname+"/order_"+str(order)+"_n_"+str(n_grid)
