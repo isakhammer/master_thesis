@@ -58,7 +58,7 @@ def run(order, n_grid, vtk_dirname=None):  # Mesh related parameters
 
     mean        = lambda u: 0.5*(u + u.Other())
     mean_n      = lambda u: 0.5*(grad(u) + grad(u.Other()))*n
-    mean_nn     = lambda u: InnerProduct(n, 0.5*( hesse(u) )*n )+InnerProduct(n, 0.5*( hesse(u.Other()) )*n )
+    mean_nn     = lambda u: InnerProduct(n, 0.5*( hesse(u) )*n ) + InnerProduct(n, 0.5*( hesse(u.Other()) )*n )
 
     jump        = lambda u: u - u.Other()
     jump_n      = lambda u: (grad(u) - grad(u.Other()))*n
@@ -84,15 +84,16 @@ def run(order, n_grid, vtk_dirname=None):  # Mesh related parameters
     l += ( -g_2*v + g_1*( -hesse_nn(v) + (gamma/h)*grad_n(v) ) )*ds(skeleton=True)
     l.Assemble()
 
+    u_ex_h = GridFunction(H1(mesh, order=order+2))
+    u_ex_h.Set(u_ex)
+
     u_h = GridFunction(V)
     u_h.vec.data = a.mat.Inverse() * l.vec
 
     e = u_h - u_ex
-    de = grad(u_h) - grad_u_ex
+    de = grad(u_h) - grad(u_ex_h)
     el2 = sqrt(Integrate(e*e, mesh))
     eh1 = sqrt(Integrate(e*e + de*de, mesh))
-    eh_energy = sqrt(0)
-
     eh_energy = sqrt(Integrate( ( de*de )*dx, mesh) \
             + Integrate( ( ( h/gamma )*( de*n )*( de*n ) + gamma*h**(-1)*e*e )*ds(skeleton=True), mesh)
             # + Integrate( ( h*mean_n(e)*mean_n(e) +h**(-1)*jump(e)*jump(e) )*dx(skeleton=True), mesh) \
@@ -101,8 +102,8 @@ def run(order, n_grid, vtk_dirname=None):  # Mesh related parameters
     if vtk_dirname != None:
         filename=vtk_dirname+"/order_"+str(order)+"_n_"+str(n)
         vtk = VTKOutput(mesh,
-                        # coefs=[u_ex, u_h, e, de],
-                        coefs=[u_ex, u_h, e],
+                        coefs=[u_ex, u_h, e, de],
+                        # coefs=[u_ex, u_h, e],
                         names=["u_ex", "u_h", "e", "de"],
                         filename=filename,
                         subdivision=3)
@@ -155,15 +156,13 @@ def convergence_analysis(orders, ns, dirname):
         print_results(ns, el2s, eh1s, ehs_energy, order)
 
 
-
-
 if __name__ == "__main__":
 
     dirname = "figures/biharmonic_CIP/"+datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
     print("figures in ", dirname)
     os.makedirs(dirname, exist_ok=True)
-    orders = [2, 3]
+    orders = [2, 3, 4]
     ns = [2**2, 2**3, 2**4, 2**5, 2**6, 2**7]
 
-    convergence_analysis(orders, ns, dirname)
+    convergence_analysis(orders, ns, dirname=None)
 
