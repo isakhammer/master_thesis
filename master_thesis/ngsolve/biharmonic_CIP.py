@@ -103,7 +103,6 @@ def run(order, n_grid, vtk_dirname=None):  # Mesh related parameters
         filename=vtk_dirname+"/order_"+str(order)+"_n_"+str(n)
         vtk = VTKOutput(mesh,
                         coefs=[u_ex, u_h, e, de],
-                        # coefs=[u_ex, u_h, e],
                         names=["u_ex", "u_h", "e", "de"],
                         filename=filename,
                         subdivision=3)
