@@ -164,5 +164,5 @@ if __name__ == "__main__":
     orders = [2, 3, 4]
     ns = [2**2, 2**3, 2**4, 2**5, 2**6, 2**7]
 
-    convergence_analysis(orders, ns, dirname=None)
+    convergence_analysis(orders, ns, dirname=dirname)
 
