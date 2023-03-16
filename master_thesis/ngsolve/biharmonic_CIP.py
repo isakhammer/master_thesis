@@ -96,6 +96,7 @@ def run(order, n_grid, vtk_dirname=None):  # Mesh related parameters
     l += ( -g_2*v + g_1*( -hesse_nn(v) + (gamma/h)*grad_n(v) ) )*ds(skeleton=True)
     l.Assemble()
 
+    # Interpolation
     V_ex = H1(mesh, order=order+2, dgjumps=True)
     u_ex_h = GridFunction(V_ex)
     u_ex_h.Set(u_ex)
@@ -103,6 +104,7 @@ def run(order, n_grid, vtk_dirname=None):  # Mesh related parameters
     u_h = GridFunction(V)
     u_h.vec.data = a.mat.Inverse() * l.vec
 
+    # Computing error gradients
     e = u_h - u_ex_h
     de = grad(u_h) - grad(u_ex_h)
     de_n = grad_n(u_h) - grad_n(u_ex_h)
