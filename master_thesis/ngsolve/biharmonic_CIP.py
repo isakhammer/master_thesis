@@ -37,13 +37,14 @@ x_sy, y_sy = sy.symbols('x y')
 alpha = 1
 (L,m,r) = (1,1,1)
 u_sy = 100*sy.cos(x_sy * 2*sy.pi/L)*sy.cos(y_sy * 2*sy.pi/L)
+# u_sy = 100*sy.cos(x_sy * 2*sy.pi/L)*sy.sin(y_sy * 2*sy.pi/L)
 # u_sy = 100*(x_sy**4 + y_sy**4 - 1)*sy.exp(x_sy**2)
 
 # Transform to manufactured solution
 u_ex, f, grad_u_ex, grad_Delta_u_ex = man_sol(u_sy, x_sy, y_sy)
 
 
-def run(order, n_grid, vtk_dirname=None, compute_cond=False):  # Mesh related parameters
+def run(order, n_grid, vtk_dirname=None, cond_max_dof=10**3):  # Mesh related parameters
 
     circle = False
     if circle==True:
@@ -98,10 +99,6 @@ def run(order, n_grid, vtk_dirname=None, compute_cond=False):  # Mesh related pa
     l += ( -g_2*v + g_1*( -hesse_nn(v) + (gamma/h)*grad_n(v) ) )*ds(skeleton=True)
     l.Assemble()
 
-    # Interpolation
-    V_ex = H1(mesh, order=order+2, dgjumps=True)
-    u_ex_h = GridFunction(V_ex)
-    u_ex_h.Set(u_ex)
 
     u_h = GridFunction(V)
     u_h.vec.data = a.mat.Inverse() * l.vec
@@ -109,7 +106,7 @@ def run(order, n_grid, vtk_dirname=None, compute_cond=False):  # Mesh related pa
     # Computing condition number
     cond_number = None
 
-    if compute_cond == True:
+    if len(u_h.vec.data) < cond_max_dof:
         rows,cols,vals = a.mat.COO()
         A = sp.sparse.csr_matrix((vals,(rows,cols)))
 
@@ -117,6 +114,11 @@ def run(order, n_grid, vtk_dirname=None, compute_cond=False):  # Mesh related pa
 
         Ainv_csc = lg.inv(A_csc)
         cond_number = lg.norm(A_csc)*lg.norm(Ainv_csc)
+
+    # Interpolation
+    V_ex = H1(mesh, order=order+2, dgjumps=True)
+    u_ex_h = GridFunction(V_ex)
+    u_ex_h.Set(u_ex)
 
     # Computing error gradients
     e = u_h - u_ex_h
@@ -181,7 +183,7 @@ def print_results(ns, el2s, eh1s, ehs_energy, cond_numbers, order):
     print("==============\n")
 
 
-def convergence_analysis(orders, ns, cond_tol, dirname):
+def convergence_analysis(orders, ns, cond_max_dof, dirname):
 
     for order in orders:
         el2s = []
@@ -191,12 +193,7 @@ def convergence_analysis(orders, ns, cond_tol, dirname):
         cond_number = 0.
 
         for n in ns:
-            if cond_number is not None:
-                compute_cond = cond_number < cond_tol
-            else:
-                compute_cond = False
-
-            (el2, eh1, eh_energy, cond_number) = run(order, n, compute_cond=compute_cond, vtk_dirname=dirname)
+            (el2, eh1, eh_energy, cond_number) = run(order, n, cond_max_dof=cond_max_dof, vtk_dirname=dirname)
             el2s.append(el2)
             eh1s.append(eh1)
             ehs_energy.append(eh_energy)
@@ -209,11 +206,16 @@ if __name__ == "__main__":
     dirname = "figures/biharmonic_CIP/"+datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
 
     os.makedirs(dirname, exist_ok=True)
-    orders = [2, 3]
+    orders = [2, 3, 4]
     ns = [2**2, 2**3, 2**4, 2**5, 2**6, 2**7]
-    cond_tol = 10**7
+    # cond_max_dof = 9000 # takes 3 times the computational time
+    cond_max_dof = 4000 # takes approx 1.2 times the computational time
 
-    print("FIGURES IN ", dirname)
-    print("CONDITION NUMBER TOLERANCE: ","{:.1e}".format(cond_tol) , "\n")
-    convergence_analysis(orders, ns, cond_tol=cond_tol, dirname=dirname)
+    print("\nFIGURES IN ", dirname)
+    print("Condition number max dof: n =", cond_max_dof, "\n")
+    import time
+    t0 = time.time()
+    convergence_analysis(orders, ns, cond_max_dof=cond_max_dof, dirname=dirname)
+    t1 = time.time()
+    print( "total time: ", t1- t0)
 
