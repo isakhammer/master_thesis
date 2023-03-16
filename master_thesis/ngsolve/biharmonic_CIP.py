@@ -4,6 +4,8 @@ from netgen.geom2d import SplineGeometry
 import os
 from datetime import datetime
 import numpy as np
+import scipy as sp
+import scipy.sparse.linalg as lg
 import sympy as sy
 
 
@@ -41,7 +43,7 @@ u_sy = 100*sy.cos(x_sy * 2*sy.pi/L)*sy.cos(y_sy * 2*sy.pi/L)
 u_ex, f, grad_u_ex, grad_Delta_u_ex = man_sol(u_sy, x_sy, y_sy)
 
 
-def run(order, n_grid, vtk_dirname=None):  # Mesh related parameters
+def run(order, n_grid, vtk_dirname=None, compute_cond=False):  # Mesh related parameters
 
     circle = False
     if circle==True:
@@ -104,6 +106,18 @@ def run(order, n_grid, vtk_dirname=None):  # Mesh related parameters
     u_h = GridFunction(V)
     u_h.vec.data = a.mat.Inverse() * l.vec
 
+    # Computing condition number
+    cond_number = None
+
+    if compute_cond == True:
+        rows,cols,vals = a.mat.COO()
+        A = sp.sparse.csr_matrix((vals,(rows,cols)))
+
+        A_csc = A.tocsc()
+
+        Ainv_csc = lg.inv(A_csc)
+        cond_number = lg.norm(A_csc)*lg.norm(Ainv_csc)
+
     # Computing error gradients
     e = u_h - u_ex_h
     de = grad(u_h) - grad(u_ex_h)
@@ -130,10 +144,10 @@ def run(order, n_grid, vtk_dirname=None):  # Mesh related parameters
                         subdivision=3)
         vtk.Do()
 
-    return el2, eh1, eh_energy
+    return el2, eh1, eh_energy, cond_number
 
 
-def print_results(ns, el2s, eh1s, ehs_energy, order):
+def print_results(ns, el2s, eh1s, ehs_energy, cond_numbers, order):
     # Compute convergence rates
 
     ns = np.array(ns)
@@ -141,6 +155,7 @@ def print_results(ns, el2s, eh1s, ehs_energy, order):
     el2s = np.array(el2s)
     eh1s = np.array(eh1s)
     ehs_energy = np.array(ehs_energy)
+    cond_numbers = np.array(cond_numbers)
 
     def compute_eoc(hs, errs):
         eoc = np.log(errs[:-1]/errs[1:])/np.log(hs[:-1]/hs[1:])
@@ -150,39 +165,55 @@ def print_results(ns, el2s, eh1s, ehs_energy, order):
     eoc_eh1 = compute_eoc(hs, eh1s)
     eoc_eh_energy = compute_eoc(hs, ehs_energy)
 
+    # Write condition number in exp format
+    cond_numbers_str = [f"{num:.1e}" if num is not None else None for num in cond_numbers]
+
     print("\n==============")
     print("SUMMARY")
     print("Order =", order," Mesh sizes = ", hs)
     print("L2 errors = ", el2s)
     print("H1 errors = ", eh1s)
     print("Energy errors  = ", eh1s)
+    print("Condition number = ", cond_numbers_str)
     print("EOC L2 = ", eoc_el2)
     print("EOC H1 = ", eoc_eh1)
     print("EOC Energy = ", eoc_eh_energy)
     print("==============\n")
 
 
-def convergence_analysis(orders, ns, dirname):
+def convergence_analysis(orders, ns, cond_tol, dirname):
 
     for order in orders:
         el2s = []
         eh1s = []
         ehs_energy = []
+        cond_numbers = []
+        cond_number = 0.
+
         for n in ns:
-            (el2, eh1, eh_energy) = run(order, n, vtk_dirname=dirname)
+            if cond_number is not None:
+                compute_cond = cond_number < cond_tol
+            else:
+                compute_cond = False
+
+            (el2, eh1, eh_energy, cond_number) = run(order, n, compute_cond=compute_cond, vtk_dirname=dirname)
             el2s.append(el2)
             eh1s.append(eh1)
             ehs_energy.append(eh_energy)
-        print_results(ns, el2s, eh1s, ehs_energy, order)
+            cond_numbers.append(cond_number)
+        print_results(ns, el2s, eh1s, ehs_energy, cond_numbers, order)
 
 
 if __name__ == "__main__":
 
     dirname = "figures/biharmonic_CIP/"+datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
-    print("figures in ", dirname)
+
     os.makedirs(dirname, exist_ok=True)
     orders = [2, 3]
     ns = [2**2, 2**3, 2**4, 2**5, 2**6, 2**7]
+    cond_tol = 10**7
 
-    convergence_analysis(orders, ns, dirname=dirname)
+    print("FIGURES IN ", dirname)
+    print("CONDITION NUMBER TOLERANCE: ","{:.1e}".format(cond_tol) , "\n")
+    convergence_analysis(orders, ns, cond_tol=cond_tol, dirname=dirname)
 
