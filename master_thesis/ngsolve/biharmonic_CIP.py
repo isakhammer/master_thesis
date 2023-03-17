@@ -36,21 +36,22 @@ x_sy, y_sy = sy.symbols('x y')
 
 alpha = 1
 (L,m,r) = (1,1,1)
-u_sy = 100*sy.cos(x_sy * 2*sy.pi/L)*sy.cos(y_sy * 2*sy.pi/L)
-# u_sy = 100*sy.cos(x_sy * 2*sy.pi/L)*sy.sin(y_sy * 2*sy.pi/L)
+# u_sy = 100*sy.cos(x_sy * 2*sy.pi/L)*sy.cos(y_sy * 2*sy.pi/L)
+u_sy = 100*sy.cos(x_sy * 2*sy.pi/L)*sy.sin(y_sy * 2*sy.pi/L)
 # u_sy = 100*(x_sy**4 + y_sy**4 - 1)*sy.exp(x_sy**2)
 
 # Transform to manufactured solution
 u_ex, f, grad_u_ex, grad_Delta_u_ex = man_sol(u_sy, x_sy, y_sy)
 
 
-def run(order, n_grid, vtk_dirname=None, cond_max_dof=10**3):  # Mesh related parameters
+def run(order, n_grid, vtk_dirname=None, cond_max_ndof=10**3):  # Mesh related parameters
 
-    circle = False
+    circle = True
     if circle==True:
         geo = SplineGeometry()
         geo.AddCircle(c=(0,0),r=1)
         mesh = Mesh(geo.GenerateMesh(maxh=1/n_grid))
+        mesh.Curve(5)
     else:
         mesh = MakeStructured2DMesh(quads=True, nx=n_grid,ny=n_grid)
 
@@ -106,12 +107,10 @@ def run(order, n_grid, vtk_dirname=None, cond_max_dof=10**3):  # Mesh related pa
     # Computing condition number
     cond_number = None
 
-    if len(u_h.vec.data) < cond_max_dof:
+    if len(u_h.vec.data) < cond_max_ndof:
         rows,cols,vals = a.mat.COO()
         A = sp.sparse.csr_matrix((vals,(rows,cols)))
-
         A_csc = A.tocsc()
-
         Ainv_csc = lg.inv(A_csc)
         cond_number = lg.norm(A_csc)*lg.norm(Ainv_csc)
 
@@ -183,7 +182,7 @@ def print_results(ns, el2s, eh1s, ehs_energy, cond_numbers, order):
     print("==============\n")
 
 
-def convergence_analysis(orders, ns, cond_max_dof, dirname):
+def convergence_analysis(orders, ns, cond_max_ndof, dirname):
 
     for order in orders:
         el2s = []
@@ -193,7 +192,7 @@ def convergence_analysis(orders, ns, cond_max_dof, dirname):
         cond_number = 0.
 
         for n in ns:
-            (el2, eh1, eh_energy, cond_number) = run(order, n, cond_max_dof=cond_max_dof, vtk_dirname=dirname)
+            (el2, eh1, eh_energy, cond_number) = run(order, n, cond_max_ndof=cond_max_ndof, vtk_dirname=dirname)
             el2s.append(el2)
             eh1s.append(eh1)
             ehs_energy.append(eh_energy)
@@ -208,14 +207,14 @@ if __name__ == "__main__":
     os.makedirs(dirname, exist_ok=True)
     orders = [2, 3, 4]
     ns = [2**2, 2**3, 2**4, 2**5, 2**6, 2**7]
-    # cond_max_dof = 9000 # takes 3 times the computational time
-    cond_max_dof = 4000 # takes approx 1.2 times the computational time
+    # cond_max_ndof = 9000 # takes 3 times the computational time
+    cond_max_ndof = 4000 # takes approx 1.2 times the computational time
 
     print("\nFIGURES IN ", dirname)
-    print("Condition number max dof: n =", cond_max_dof, "\n")
+    print("Condition number max ndof: n =", cond_max_ndof, "\n")
     import time
     t0 = time.time()
-    convergence_analysis(orders, ns, cond_max_dof=cond_max_dof, dirname=dirname)
+    convergence_analysis(orders, ns, cond_max_ndof=cond_max_ndof, dirname=dirname)
     t1 = time.time()
     print( "total time: ", t1- t0)
 
