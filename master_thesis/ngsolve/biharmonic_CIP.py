@@ -36,9 +36,10 @@ x_sy, y_sy = sy.symbols('x y')
 
 alpha = 1
 (L,m,r) = (1,1,1)
-# u_sy = 100*sy.cos(x_sy * 2*sy.pi/L)*sy.cos(y_sy * 2*sy.pi/L)
-u_sy = 100*sy.cos(x_sy * 2*sy.pi/L)*sy.sin(y_sy * 2*sy.pi/L)
+u_sy = 100*sy.cos(x_sy * 2*sy.pi/L)*sy.cos(y_sy * 2*sy.pi/L)
+# u_sy = 100*sy.cos(x_sy * 2*sy.pi/L)*sy.sin(y_sy * 2*sy.pi/L)
 # u_sy = 100*(x_sy**4 + y_sy**4 - 1)*sy.exp(x_sy**2)
+# u_sy = 100*(x_sy**4 + y_sy**4 - 1)
 
 # Transform to manufactured solution
 u_ex, f, grad_u_ex, grad_Delta_u_ex = man_sol(u_sy, x_sy, y_sy)
@@ -46,7 +47,7 @@ u_ex, f, grad_u_ex, grad_Delta_u_ex = man_sol(u_sy, x_sy, y_sy)
 
 def run(order, n_grid, vtk_dirname=None, cond_max_ndof=10**3):  # Mesh related parameters
 
-    circle = True
+    circle = False
     if circle==True:
         geo = SplineGeometry()
         geo.AddCircle(c=(0,0),r=1)
@@ -110,9 +111,22 @@ def run(order, n_grid, vtk_dirname=None, cond_max_ndof=10**3):  # Mesh related p
     if len(u_h.vec.data) < cond_max_ndof:
         rows,cols,vals = a.mat.COO()
         A = sp.sparse.csr_matrix((vals,(rows,cols)))
+
+        # Method 1 (very unstable)
+        # _, S_max, _ = lg.svds(A, k=1, which="LM")
+        # _, S_min, _ = lg.svds(A, k=1, which="SM")
+        # cond_number = np.max(S_max) / np.min(S_min)
+
+        # Method 2 (Inf when eigenvalue is 0)
+        # _, S, _ = lg.svds(A, k = min(A.shape) - 1)
+        # cond_number = np.max(S) / np.min(S)
+
+        # Method 3 (Works good, but is costly)
         A_csc = A.tocsc()
         Ainv_csc = lg.inv(A_csc)
-        cond_number = lg.norm(A_csc)*lg.norm(Ainv_csc)
+        cond_number = lg.norm(A_csc)*lg.norm(lg.inv(A_csc))
+
+
 
     # Interpolation
     V_ex = H1(mesh, order=order+2, dgjumps=True)
@@ -158,24 +172,33 @@ def print_results(ns, el2s, eh1s, ehs_energy, cond_numbers, order):
     ehs_energy = np.array(ehs_energy)
     cond_numbers = np.array(cond_numbers)
 
+    # Computing the condition number constant
+    cond_const = np.array(cond_numbers)
+    for i in range(len(cond_const)):
+        if cond_const[i] != None:
+            cond_const[i]*=hs[i]**4
+
     def compute_eoc(hs, errs):
         eoc = np.log(errs[:-1]/errs[1:])/np.log(hs[:-1]/hs[1:])
         return eoc
 
+    # EOC
     eoc_el2 = compute_eoc(hs, el2s)
     eoc_eh1 = compute_eoc(hs, eh1s)
     eoc_eh_energy = compute_eoc(hs, ehs_energy)
 
     # Write condition number in exp format
     cond_numbers_str = [f"{num:.1e}" if num is not None else None for num in cond_numbers]
+    cond_const_str = [f"{num:.1e}" if num is not None else None for num in cond_const]
 
     print("\n==============")
     print("SUMMARY")
-    print("Order =", order," Mesh sizes = ", hs)
+    print("Order =", order," Mesh sizes = ", ns)
     print("L2 errors = ", el2s)
     print("H1 errors = ", eh1s)
     print("Energy errors  = ", eh1s)
     print("Condition number = ", cond_numbers_str)
+    print("Condition constant = ", cond_const_str)
     print("EOC L2 = ", eoc_el2)
     print("EOC H1 = ", eoc_eh1)
     print("EOC Energy = ", eoc_eh_energy)
