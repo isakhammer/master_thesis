@@ -2,7 +2,7 @@
 
 julia_version = "1.8.5"
 manifest_format = "2.0"
-project_hash = "76dfa5f5a59864a03e7779a67187a736bd412c79"
+project_hash = "e1cfd234c46ed4bfedfc5a1605cd989f329f914a"
 
 [[deps.AbstractAlgebra]]
 deps = ["GroupsCore", "InteractiveUtils", "LinearAlgebra", "MacroTools", "Markdown", "Random", "RandomExtensions", "SparseArrays", "Test"]
@@ -1076,9 +1076,9 @@ version = "0.1.7"
 
 [[deps.MPItrampoline_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "JLLWrappers", "LazyArtifacts", "Libdl", "MPIPreferences", "TOML"]
-git-tree-sha1 = "e537a80351fe06f71299037781f3da7b648ecc47"
+git-tree-sha1 = "14fb978c5c64f11243c9de06ba6c20ec2f8a156d"
 uuid = "f1f71cc9-e9ae-5b93-9b94-4fe0e1ad3748"
-version = "5.2.1+0"
+version = "5.2.1+1"
 
 [[deps.MacroTools]]
 deps = ["Markdown", "Random"]
@@ -1462,6 +1462,12 @@ deps = ["Conda", "Dates", "Libdl", "LinearAlgebra", "MacroTools", "Serialization
 git-tree-sha1 = "62f417f6ad727987c755549e9cd88c46578da562"
 uuid = "438e738f-606a-5dbb-bf0a-cddfbfd45ab0"
 version = "1.95.1"
+
+[[deps.PyPlot]]
+deps = ["Colors", "LaTeXStrings", "PyCall", "Sockets", "Test", "VersionParsing"]
+git-tree-sha1 = "92e7ca803b579b8b817f004e74b205a706d9a974"
+uuid = "d330b81b-6aea-500a-939a-2ce795aea3ee"
+version = "2.11.1"
 
 [[deps.QOI]]
 deps = ["ColorTypes", "FileIO", "FixedPointNumbers"]
