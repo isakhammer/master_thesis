@@ -42,10 +42,9 @@ module Results
 
     function compute_eoc(hs, errs)
         eoc = log.(errs[1:end-1]./errs[2:end])./log.(hs[1:end-1]./hs[2:end])
-        return eoc
     end
 
-    function generate_table(; ns, el2s, eh1s, ehs_energy, order=order, dirname=dirname)
+    function generate_table(; ns, el2s, eh1s, ehs_energy, cond_numbers=nothing, order=order, dirname=dirname)
         filename = dirname*"/conv_order_"*string(order)
         hs = 1 .// ns
         hs_str =  latexify.(hs)
