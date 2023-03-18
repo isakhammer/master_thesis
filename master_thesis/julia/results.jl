@@ -1,27 +1,43 @@
 module Results
 
     import CairoMakie
+    import Plots
+    Plots.pyplot()
     using LaTeXStrings
     using Latexify
     using PrettyTables
 
-    function generate_plot(;ns, el2s, eh1s, ehs_energy, order=order, dirname=dirname)
+    function generate_plot(;ns, el2s, eh1s, ehs_energy, order=order, dirname=dirname, plotter="Plots")
         filename = dirname*"/conv_order_"*string(order)
         hs = 1 .// ns
-        fig = CairoMakie.Figure()
-        ax = CairoMakie.Axis(fig[1, 1], yscale = log10, xscale= log2,
-                             yminorticksvisible = true, yminorgridvisible = true, yminorticks = CairoMakie.IntervalsBetween(8),
-                             xlabel = L"h/{L}", ylabel = "error norms")
+        if plotter == "CairoMakie"
+            fig = CairoMakie.Figure()
+            ax = CairoMakie.Axis(fig[1, 1], yscale = log10, xscale= log2,
+                                 yminorticksvisible = true, yminorgridvisible = true, yminorticks = CairoMakie.IntervalsBetween(8),
+                                 xlabel = L"h/{L}", ylabel = "error norms")
 
-        CairoMakie.lines!(hs, el2s, label= L"\Vert e \Vert_{L^2}", linewidth=2)
-        CairoMakie.lines!(hs, eh1s, label= L"\Vert e \Vert_{ H^1 }^{  }  ", linewidth=2)
-        CairoMakie.lines!(hs, ehs_energy, label= L"\Vert e  \Vert_{ a_h,* }", linewidth=2)
-        CairoMakie.scatter!(hs, el2s)
-        CairoMakie.scatter!(hs, eh1s)
-        CairoMakie.scatter!(hs, ehs_energy)
-        file = filename*".png"
-        CairoMakie.Legend(fig[1,2], ax, framevisible = true)
-        CairoMakie.save(file,fig)
+            CairoMakie.lines!(hs, el2s, label= L"\Vert e \Vert_{L^2}", linewidth=2)
+            CairoMakie.lines!(hs, eh1s, label= L"\Vert e \Vert_{ H^1 }^{  }  ", linewidth=2)
+            CairoMakie.lines!(hs, ehs_energy, label= L"\Vert e  \Vert_{ a_h,* }", linewidth=2)
+            CairoMakie.scatter!(hs, el2s)
+            CairoMakie.scatter!(hs, eh1s)
+            CairoMakie.scatter!(hs, ehs_energy)
+            file = filename*".png"
+            CairoMakie.Legend(fig[1,2], ax, framevisible = true)
+            CairoMakie.save(file,fig)
+        elseif plotter == "Plots"
+            # Plots.plot(hs, (el2s, eh1s, ehs_energy), label=(L"\\Vert e \\Vert_{L^2}", L"\\Vert e \\Vert_{ H^1 }^{  } ", L"\\Vert e  \\Vert_{ a_h,* }"))
+            Plots.plot(hs, [el2s, eh1s, ehs_energy], label=[L" | e |_{L^2}", L"| e |_{ H^1 }^{  } ", L"| e  |_{ a_h,* }"])
+            Plots.plot(hs, el2s, label=L" | e |_{L^2}")
+            Plots.plot!(hs, eh1s, label=L"| e |_{ H^1 }^{  } ")
+            Plots.plot!(hs, ehs_energy, label=L"| e  |_{ a_h,* }")
+
+            Plots.plot!(xscale=:log2, yscale=:log2, minorgrid=true)
+            Plots.scatter!(hs, [el2s, eh1s, ehs_energy],primary=false)
+            Plots.xlabel!("h")
+            Plots.savefig(filename*".png")
+        end
+
     end
 
     function compute_eoc(hs, errs)

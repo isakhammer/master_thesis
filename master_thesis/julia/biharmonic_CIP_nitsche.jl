@@ -1,4 +1,3 @@
-
 include("results.jl")
 using Dates
 
@@ -172,7 +171,7 @@ function main()
     println(resultdir)
     mkpath(resultdir)
 
-    orders = [2,3,4]
+    orders = [2,3]
     ns = [2^2, 2^3, 2^4, 2^5, 2^6]#, 2^7]
     dirname = resultdir
     makedir(dirname)
