@@ -14,7 +14,7 @@ module Solver
     using Parameters
     import Gridap: ∇
 
-    function compute_condition_number(A, ndof; method="inf")
+    function compute_condition_number(A, ndof; method="p-inf")
 
         if method == "svd"
             tolin = 10^-8
@@ -23,10 +23,10 @@ module Solver
             # Take the smallest singular value which isn't 0
             s_min = isapprox(s_min[2], 0.0, atol=10^-10) ? s_min[1] : s_min[2]
             return s_max[1] / s_min
-        elseif method == "inf"
+        elseif method == "p-inf"
             # https://github.com/mfasi/julia/blob/4ceb4ea9ee46ea92d406cfced308451a112d16f9/base/sparse/linalg.jl#L505
             return ( 1/sqrt(ndof) )*cond(A,Inf)
-        else method == "1"
+        else method == "p-1"
             return cond(A,p=1)
         end
 
