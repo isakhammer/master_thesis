@@ -1,6 +1,7 @@
 using Dates
 import Plots
 Plots.pyplot()
+
 using LaTeXStrings
 using Latexify
 using PrettyTables
@@ -8,24 +9,34 @@ using PrettyTables
 module Solver
     using Gridap
     using LinearAlgebra
+    using PROPACK
     using GridapEmbedded
     using Parameters
     import Gridap: ∇
 
-    function compute_condition_number(A)
-        try
+    function compute_condition_number(A; method="inf")
+
+        if method == "svd"
             tolin = 10^-8
             s_max, _ = tsvdvals(A, k = 1, tolin = tolin)
             s_min, _ = tsvdvals_irl(A, k = 2, tolin = tolin)
             # Take the smallest singular value which isn't 0
             s_min = isapprox(s_min[2], 0.0, atol=10^-10) ? s_min[1] : s_min[2]
-            condition_number = s_max[1] / s_min
-            return condition_number
-        catch e
-            # Use more expansive full svd if PROPACK throw "Invariant Subspace" error
-            svd_values = svdvals(Matrix(A))
-            return svd_values[1]/svd_values[end]
+            return s_max[1] / s_min
+        elseif method == "inf"
+            # https://github.com/mfasi/julia/blob/4ceb4ea9ee46ea92d406cfced308451a112d16f9/base/sparse/linalg.jl#L505
+            ndofs = size(A)[1]
+            println( "ndofs = ", ndofs)
+            return ( 1/sqrt(ndofs) )*cond(A,Inf)
+        else method == "1"
+            return cond(A,p=1)
         end
+
+        # catch e
+        #     # Use more expansive full svd if PROPACK throw "Invariant Subspace" error
+        #     svd_values = svdvals(Matrix(A))
+        #     return svd_values[1]/svd_values[end]
+        # end
     end
 
 
@@ -126,7 +137,7 @@ module Solver
         op = AffineFEOperator(a, l, U, V)
         uh = solve(op)
         A =  get_matrix(op)
-        cond_number = cond(A,Inf)
+        cond_number = compute_condition_number(A)
 
         e = u_ex - uh
         el2 = sqrt(sum( ∫(e*e)dΩ ))
@@ -160,8 +171,9 @@ end # module
 
 function generate_figures(;ns, el2s, eh1s, ehs_energy, cond_numbers, order::Integer, dirname::String)
     filename = dirname*"/conv_order_"*string(order)
+
     hs = 1 .// ns
-    hs_str =  latexify.(hs)
+    # hs_str =  latexify.(hs)
 
     compute_eoc(hs, errs) = log.(errs[1:end-1]./errs[2:end])./log.(hs[1:end-1]./hs[2:end])
     eoc_l2 = compute_eoc(hs, el2s)
@@ -171,16 +183,16 @@ function generate_figures(;ns, el2s, eh1s, ehs_energy, cond_numbers, order::Inte
     eoc_l2 =  [nothing; eoc_l2]
     eoc_eh1 =  [nothing; eoc_eh1]
     eoc_eh_energy =  [nothing; eoc_eh_energy]
-    data = hcat(hs_str, el2s,  eoc_l2, eh1s, eoc_eh1, ehs_energy, eoc_eh_energy, cond_numbers)
-    header = [L"$h/{L}$", L"$\Vert e \Vert_{L^2}$", "EOC", L"$ \Vert e \Vert_{H^1}$", "EOC", L"$\Vert e \Vert_{ a_h,* }$", "EOC", "Cond number"]
+    data = hcat(ns, el2s,  eoc_l2, eh1s, eoc_eh1, ehs_energy, eoc_eh_energy, cond_numbers)
+    header = [L"$n$", L"$\Vert e \Vert_{L^2}$", "EOC", L"$ \Vert e \Vert_{H^1}$", "EOC", L"$\Vert e \Vert_{ a_h,* }$", "EOC", "Cond number"]
 
     open(filename*".tex", "w") do io
         pretty_table(io, data, header=header, backend=Val(:latex ), formatters = ( ft_printf("%.3E"), ft_nonothing ))
     end
 
-    minimal_header = ["h", "L2", "EOC", "H1", "EOC", "a_h", "EOC", "cond"]
-    data = hcat(hs, el2s,  eoc_l2, eh1s, eoc_eh1, ehs_energy, eoc_eh_energy, cond_numbers)
-    pretty_table(data, header=minimal_header, formatters = ( ft_printf("%.1E",[2,4,6,8]), ft_nonothing ))
+    minimal_header = ["n", "L2", "EOC", "H1", "EOC", "a_h", "EOC", "cond", "const"]
+    data = hcat(ns, el2s,  eoc_l2, eh1s, eoc_eh1, ehs_energy, eoc_eh_energy, cond_numbers*hs^4)
+    pretty_table(data, header=minimal_header, formatters = ( ft_printf("%.1E",[2,4,6,8,9]), ft_nonothing ))
     # open(filename*".txt", "w") do io
     #     pretty_table(io, data, header=minimal_header, formatters = ( ft_printf("%.3E"), ft_nonothing ))
     # end
