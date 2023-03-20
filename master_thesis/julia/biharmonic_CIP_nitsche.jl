@@ -14,6 +14,9 @@ module Solver
     using Parameters
     import Gridap: ∇
 
+    # α(x) = x[1]^2 + x[2]^2
+    α(x) = 1
+
     function compute_condition_number(A, ndof; method="p-inf")
 
         if method == "svd"
@@ -38,17 +41,16 @@ module Solver
     end
 
 
+    function man_sol(u_ex)
+        ∇u_ex(x) = ∇(u_ex)(x)
+        ∇Δu_ex(x) = ∇(Δ(u_ex))(x)
+        f(x) = Δ(Δ(u_ex))(x)+ α(x)⋅u_ex(x)
+        return u_ex, f, ∇u_ex, ∇Δu_ex
+    end
 
-    # %% Manufactured solution
-    L, m, r = (1, 1, 1)
-    # u_ex(x) = (x[1]^2 + x[2]^2  - 1)*sin(2π*x[1])*cos(2π*x[2])
-    # u_ex(x) = 100*sin(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
-    u_ex(x) = 100*cos(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
-    ∇u_ex(x) = ∇(u_ex)(x)
-    ∇Δu_ex(x) = ∇(Δ(u_ex))(x)
-
-    α(x) = x[1]^2 + x[2]^2
-    f(x) = Δ(Δ(u_ex))(x)+ α(x)⋅u_ex(x)
+    @with_kw struct Config
+        exact_sol
+    end
 
     @with_kw struct Solution
         Ω
@@ -69,8 +71,9 @@ module Solver
     end
 
     function generate_vtk(; sol::Solution, vtkdirname::String)
-        println("Generating vtk's in ", vtkdirname)
+        vtkdirname =dirname*"/order_"*string(order)*"_n_"*string(n)
         mkpath(vtkdirname)
+        println("Generating vtk's in ", vtkdirname)
 
         # Write out models and computational domains for inspection
         writevtk(sol.model,   vtkdirname*"/model")
@@ -86,8 +89,11 @@ module Solver
     end
 
 
-    function run(;order=order, n=n, vtkdirname=nothing)
+    function run(;order, n, solver_config, vtkdirname=nothing)
+
+        u_ex, f, ∇u_ex, ∇Δu_ex = solver_config.exact_sol
         # Some parameters
+        L=1
         h = L/n
         γ = 1.5*order*( order+1)
         domain2D = (0, L, 0, L)
@@ -206,7 +212,7 @@ function generate_figures(;ns, el2s, eh1s, ehs_energy, cond_numbers, ndofs, orde
     Plots.savefig(filename*".png")
 end
 
-function convergence_analysis(; orders, ns, dirname, write_vtks=true)
+function convergence_analysis(; orders, ns, dirname, solver_config, write_vtks=true)
     println("Run convergence",)
 
     for order in orders
@@ -221,11 +227,9 @@ function convergence_analysis(; orders, ns, dirname, write_vtks=true)
         for n in ns
 
             if (write_vtks)
-                vtkdirname =dirname*"/order_"*string(order)*"_n_"*string(n)
-                mkpath(vtkdirname)
-                sol = Solver.run(order=order, n=n, vtkdirname=vtkdirname)
+                sol = Solver.run(order=order, n=n, solver_config=solver_config, vtkdirname=dirname)
             else
-                sol = Solver.run(order=order, n=n)
+                sol = Solver.run(order=order, solver_config, n=n)
             end
 
             push!(el2s, sol.el2)
@@ -241,12 +245,14 @@ end
 
 
 function main()
-    function makedir(dirname)
-        if (isdir(dirname))
-            rm(dirname, recursive=true)
-        end
-        mkdir(dirname)
-    end
+
+    # %% Manufactured solution
+    L, m, r = (1, 1, 1)
+    # u_ex(x) = (x[1]^2 + x[2]^2  - 1)*sin(2π*x[1])*cos(2π*x[2])
+    # u_ex(x) = 100*sin(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
+    u_ex(x) = 100*cos(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
+    exact_sol = Solver.man_sol(u_ex)
+    solver_config = Solver.Config(exact_sol)
 
     resultdir= "figures/biharmonic_CIP_nitsche/"*string(Dates.now())
     println(resultdir)
@@ -255,8 +261,8 @@ function main()
     orders = [2,3,4]
     ns = [2^2, 2^3, 2^4, 2^5, 2^6, 2^7]
     dirname = resultdir
-    makedir(dirname)
-    convergence_analysis( orders=orders, ns=ns, dirname=dirname)
+    mkpath(dirname)
+    convergence_analysis( orders=orders, ns=ns, solver_config=solver_config, dirname=dirname)
 end
 
 @time main()
