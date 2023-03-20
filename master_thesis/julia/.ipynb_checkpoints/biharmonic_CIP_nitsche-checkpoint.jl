@@ -70,19 +70,22 @@ module Solver
         ndof
     end
 
-    function generate_vtk(; sol::Solution, dirname::String)
+    function generate_vtk(; sol::Solution, vtkdirname::String)
+        vtkdirname =dirname*"/order_"*string(order)*"_n_"*string(n)
+        mkpath(vtkdirname)
+        println("Generating vtk's in ", vtkdirname)
 
         # Write out models and computational domains for inspection
-        writevtk(sol.model,   dirname*"/model")
-        writevtk(sol.Ω,         dirname*"/Omega")
-        # writevtk(sol.Ω_act,   dirname*"/Omega_act")
-        writevtk(sol.Λ,         dirname*"/Lambda")
-        writevtk(sol.Γ,         dirname*"/Gamma")
-        # writevtk(sol.Fg,        dirname*"/Fg")
-        writevtk(sol.Λ,         dirname*"/jumps",        cellfields=["jump_u"=>jump(sol.uh)])
-        writevtk(sol.Ω,         dirname*"/omega",        cellfields=["uh"=>sol.uh])
-        writevtk(sol.Ω,         dirname*"/error",        cellfields=["e"=>sol.e])
-        writevtk(sol.Ω,         dirname*"/manufatured",  cellfields=["u"=>sol.u])
+        writevtk(sol.model,   vtkdirname*"/model")
+        writevtk(sol.Ω,         vtkdirname*"/Omega")
+        # writevtk(sol.Ω_act,     vtkdirname*"/Omega_act")
+        writevtk(sol.Λ,         vtkdirname*"/Lambda")
+        writevtk(sol.Γ,         vtkdirname*"/Gamma")
+        # writevtk(sol.Fg,        vtkdirname*"/Fg")
+        writevtk(sol.Λ,         vtkdirname*"/jumps",        cellfields=["jump_u"=>jump(sol.uh)])
+        writevtk(sol.Ω,         vtkdirname*"/omega",        cellfields=["uh"=>sol.uh])
+        writevtk(sol.Ω,         vtkdirname*"/error",        cellfields=["e"=>sol.e])
+        writevtk(sol.Ω,         vtkdirname*"/manufatured",  cellfields=["u"=>sol.u])
     end
 
 
@@ -163,11 +166,7 @@ module Solver
                         cond_number=cond_number, ndof=ndof)
 
         if ( vtkdirname!=nothing)
-            dirname =vtkdirname*"/order_"*string(order)*"_n_"*string(n)
-            mkpath(dirname)
-            println("Generating vtk's in ", dirname)
-
-            generate_vtk(sol=sol, dirname=dirname)
+            generate_vtk(sol=sol, vtkdirname=vtkdirname)
         end
 
         return sol
@@ -266,7 +265,4 @@ function main()
     convergence_analysis( orders=orders, ns=ns, solver_config=solver_config, dirname=dirname)
 end
 
-
-if abspath(PROGRAM_FILE) == @__FILE__
-    @time main()
-end
+@time main()
