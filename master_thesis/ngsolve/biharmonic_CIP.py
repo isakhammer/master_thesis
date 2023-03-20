@@ -1,11 +1,12 @@
 from ngsolve import *
 from ngsolve.meshes import MakeStructured2DMesh
 from netgen.geom2d import SplineGeometry
-import os
-from datetime import datetime
-import numpy as np
 import scipy as sp
 import scipy.sparse.linalg as lg
+import numpy as np
+
+import os
+from datetime import datetime
 import sympy as sy
 
 
@@ -14,9 +15,11 @@ import sympy as sy
     -Δ^2*u + alpha*u = f in Ω,
     grad_u*n = g_1 and grad_Delta_u*n = g_2 on Γ
 """
+alpha = 1
 def man_sol(u_sy, x_sy, y_sy):
 
     # Symbolic differentiation
+
     Delta_u = sy.diff(u_sy, x_sy,x_sy) + sy.diff(u_sy, y_sy, y_sy)
     Delta2_u = sy.diff(Delta_u, x_sy,x_sy) + sy.diff(Delta_u, y_sy, y_sy)
     f_sy =  Delta2_u + alpha*u_sy
@@ -220,7 +223,6 @@ if __name__ == "__main__":
 
 
     x_sy, y_sy = sy.symbols('x y')
-    alpha = 1
     (L,m,r) = (1,1,1)
     u_sy = 100*sy.cos(x_sy * 2*sy.pi/L)*sy.cos(y_sy * 2*sy.pi/L)
     # u_sy = 100*sy.cos(x_sy * 2*sy.pi/L)*sy.sin(y_sy * 2*sy.pi/L)
