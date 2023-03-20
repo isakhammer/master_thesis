@@ -31,24 +31,11 @@ def man_sol(u_sy, x_sy, y_sy):
     return u_ex, f, grad_u_ex, grad_Delta_u_ex
 
 
-# Define Manufactured solution
-x_sy, y_sy = sy.symbols('x y')
-
-alpha = 1
-(L,m,r) = (1,1,1)
-u_sy = 100*sy.cos(x_sy * 2*sy.pi/L)*sy.cos(y_sy * 2*sy.pi/L)
-# u_sy = 100*sy.cos(x_sy * 2*sy.pi/L)*sy.sin(y_sy * 2*sy.pi/L)
-# u_sy = 100*(x_sy**4 + y_sy**4 - 1)*sy.exp(x_sy**2)
-# u_sy = 100*(x_sy**4 + y_sy**4 - 1)
-
-# Transform to manufactured solution
-u_ex, f, grad_u_ex, grad_Delta_u_ex = man_sol(u_sy, x_sy, y_sy)
 
 
-def run(order, n_grid, vtk_dirname=None, cond_max_ndof=10**3):  # Mesh related parameters
+def run(order, n_grid, solver_config, vtk_dirname=None):  # Mesh related parameters
 
-    circle = False
-    if circle==True:
+    if solver_config["circle"]==True:
         geo = SplineGeometry()
         geo.AddCircle(c=(0,0),r=1)
         mesh = Mesh(geo.GenerateMesh(maxh=1/n_grid))
@@ -56,6 +43,7 @@ def run(order, n_grid, vtk_dirname=None, cond_max_ndof=10**3):  # Mesh related p
     else:
         mesh = MakeStructured2DMesh(quads=True, nx=n_grid,ny=n_grid)
 
+    u_ex, f, grad_u_ex, grad_Delta_u_ex = solver_config["exact_sol"]
 
     V = H1(mesh, order=order, dgjumps=True)
 
@@ -108,7 +96,7 @@ def run(order, n_grid, vtk_dirname=None, cond_max_ndof=10**3):  # Mesh related p
     # Computing condition number
     cond_number = None
 
-    if len(u_h.vec.data) < cond_max_ndof:
+    if len(u_h.vec.data) < solver_config["cond_max_ndof"]:
         rows,cols,vals = a.mat.COO()
         A = sp.sparse.csr_matrix((vals,(rows,cols)))
 
@@ -205,17 +193,16 @@ def print_results(ns, el2s, eh1s, ehs_energy, cond_numbers, order):
     print("==============\n")
 
 
-def convergence_analysis(orders, ns, cond_max_ndof, dirname):
+def convergence_analysis(orders, ns, solver_config, dirname):
 
     for order in orders:
         el2s = []
         eh1s = []
         ehs_energy = []
         cond_numbers = []
-        cond_number = 0.
 
         for n in ns:
-            (el2, eh1, eh_energy, cond_number) = run(order, n, cond_max_ndof=cond_max_ndof, vtk_dirname=dirname)
+            (el2, eh1, eh_energy, cond_number) = run(order, n, solver_config=solver_config, vtk_dirname=dirname)
             el2s.append(el2)
             eh1s.append(eh1)
             ehs_energy.append(eh_energy)
@@ -230,14 +217,27 @@ if __name__ == "__main__":
     os.makedirs(dirname, exist_ok=True)
     orders = [2, 3, 4]
     ns = [2**2, 2**3, 2**4, 2**5, 2**6, 2**7]
+
+
+    x_sy, y_sy = sy.symbols('x y')
+    alpha = 1
+    (L,m,r) = (1,1,1)
+    u_sy = 100*sy.cos(x_sy * 2*sy.pi/L)*sy.cos(y_sy * 2*sy.pi/L)
+    # u_sy = 100*sy.cos(x_sy * 2*sy.pi/L)*sy.sin(y_sy * 2*sy.pi/L)
+    # u_sy = 100*(x_sy**4 + y_sy**4 - 1)*sy.exp(x_sy**2)
+    # u_sy = 100*(x_sy**4 + y_sy**4 - 1)
+
+    solver_config = {}
     # cond_max_ndof = 9000 # takes 3 times the computational time
-    cond_max_ndof = 4000 # takes approx 1.2 times the computational time
+    solver_config["exact_sol"] = man_sol(u_sy, x_sy, y_sy)
+    solver_config["cond_max_ndof"] = 4000 # takes approx 1.2 times the computational time
+    solver_config["circle"] = False
 
     print("\nFIGURES IN ", dirname)
-    print("Condition number max ndof: n =", cond_max_ndof, "\n")
+    print("Condition number max ndof: n =", solver_config["cond_max_ndof"], "\n")
     import time
     t0 = time.time()
-    convergence_analysis(orders, ns, cond_max_ndof=cond_max_ndof, dirname=dirname)
+    convergence_analysis(orders, ns, solver_config, dirname=dirname)
     t1 = time.time()
     print( "total time: ", t1- t0)
 
