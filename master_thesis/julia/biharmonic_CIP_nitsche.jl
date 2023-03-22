@@ -150,6 +150,7 @@ module Solver
         uh = solve(op)
         A =  get_matrix(op)
         ndof = size(A)[1]
+        h = 1/sqrt(ndof)
         cond_number = compute_condition_number(A, ndof)
 
         e = u_ex - uh
