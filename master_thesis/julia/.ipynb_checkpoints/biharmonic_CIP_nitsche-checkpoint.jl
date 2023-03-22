@@ -11,6 +11,7 @@ module Solver
     using LinearAlgebra
     using PROPACK
     using GridapEmbedded
+    using GridapGmsh
     using Parameters
     import Gridap: ∇
 
@@ -50,6 +51,7 @@ module Solver
 
     @with_kw struct Config
         exact_sol
+        circle
     end
 
     @with_kw struct Solution
@@ -70,40 +72,45 @@ module Solver
         ndof
     end
 
-    function generate_vtk(; sol::Solution, vtkdirname::String)
-        vtkdirname =dirname*"/order_"*string(order)*"_n_"*string(n)
-        mkpath(vtkdirname)
-        println("Generating vtk's in ", vtkdirname)
+    function generate_vtk(; sol::Solution, dirname::String)
 
         # Write out models and computational domains for inspection
-        writevtk(sol.model,   vtkdirname*"/model")
-        writevtk(sol.Ω,         vtkdirname*"/Omega")
-        # writevtk(sol.Ω_act,     vtkdirname*"/Omega_act")
-        writevtk(sol.Λ,         vtkdirname*"/Lambda")
-        writevtk(sol.Γ,         vtkdirname*"/Gamma")
-        # writevtk(sol.Fg,        vtkdirname*"/Fg")
-        writevtk(sol.Λ,         vtkdirname*"/jumps",        cellfields=["jump_u"=>jump(sol.uh)])
-        writevtk(sol.Ω,         vtkdirname*"/omega",        cellfields=["uh"=>sol.uh])
-        writevtk(sol.Ω,         vtkdirname*"/error",        cellfields=["e"=>sol.e])
-        writevtk(sol.Ω,         vtkdirname*"/manufatured",  cellfields=["u"=>sol.u])
+        writevtk(sol.model,   dirname*"/model")
+        writevtk(sol.Ω,         dirname*"/Omega")
+        # writevtk(sol.Ω_act,   dirname*"/Omega_act")
+        writevtk(sol.Λ,         dirname*"/Lambda")
+        writevtk(sol.Γ,         dirname*"/Gamma")
+        # writevtk(sol.Fg,        dirname*"/Fg")
+        writevtk(sol.Λ,         dirname*"/jumps",        cellfields=["jump_u"=>jump(sol.uh)])
+        writevtk(sol.Ω,         dirname*"/omega",        cellfields=["uh"=>sol.uh])
+        writevtk(sol.Ω,         dirname*"/error",        cellfields=["e"=>sol.e])
+        writevtk(sol.Ω,         dirname*"/manufatured",  cellfields=["u"=>sol.u])
     end
 
 
     function run(;order, n, solver_config, vtkdirname=nothing)
 
         u_ex, f, ∇u_ex, ∇Δu_ex = solver_config.exact_sol
-        # Some parameters
-        L=1
-        h = L/n
-        γ = 1.5*order*( order+1)
-        domain2D = (0, L, 0, L)
-        partition2D = (n, n)
-        use_quads=false
-        if !use_quads
-            model = CartesianDiscreteModel(domain2D,partition2D) |> simplexify
+        if solver_config.circle==true
+            refinement = Integer(log2(n)) - 1
+            if ( refinement < 1 || refinement > 6 )
+                println("Refinement out of range.")
+            end
+            mesh_file = "circle/circle_"*string(refinement)*".msh"
+            model = GmshDiscreteModel(mesh_file)
+            h = 2/n
+
         else
+            # Some parameters
+            L=1
+            h = L/n
+            domain2D = (0, L, 0, L)
+            partition2D = (n, n)
             model = CartesianDiscreteModel(domain2D,partition2D)
+            # model = CartesianDiscreteModel(domain2D,partition2D) |> simplexify
         end
+
+        γ = 1.5*order*( order+1)
 
         # Spaces
         V = TestFESpace(model, ReferenceFE(lagrangian,Float64, order), conformity=:H1)
@@ -166,7 +173,11 @@ module Solver
                         cond_number=cond_number, ndof=ndof)
 
         if ( vtkdirname!=nothing)
-            generate_vtk(sol=sol, vtkdirname=vtkdirname)
+            dirname =vtkdirname*"/order_"*string(order)*"_n_"*string(n)
+            mkpath(dirname)
+            println("Generating vtk's in ", dirname)
+
+            generate_vtk(sol=sol, dirname=dirname)
         end
 
         return sol
@@ -196,7 +207,7 @@ function generate_figures(;ns, el2s, eh1s, ehs_energy, cond_numbers, ndofs, orde
         pretty_table(io, data, header=header, backend=Val(:latex ), formatters = ( ft_printf("%.3E"), ft_nonothing ))
     end
 
-    minimal_header = ["n", "L2", "EOC", "H1", "EOC", "a_h", "EOC", "cond", "const","ndofs"]
+    minimal_header = ["n", "L2", "EOC", "H1", "EOC", "a_h", "EOC", "cond", "const", "ndofs"]
     data = hcat(ns, el2s,  eoc_l2, eh1s, eoc_eh1, ehs_energy, eoc_eh_energy, cond_numbers, cond_numbers.*hs.^4, ndofs)
     pretty_table(data, header=minimal_header, formatters = ( ft_printf("%.0f",[1,10]), ft_printf("%.2f",[3,5,7]), ft_printf("%.1E",[2,4,6,8,9]), ft_nonothing ))
 
@@ -248,21 +259,25 @@ function main()
 
     # %% Manufactured solution
     L, m, r = (1, 1, 1)
-    # u_ex(x) = (x[1]^2 + x[2]^2  - 1)*sin(2π*x[1])*cos(2π*x[2])
+    u_ex(x) = (x[1]^2 + x[2]^2  - 1)^2*sin(2π*x[1])*cos(2π*x[2])
     # u_ex(x) = 100*sin(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
-    u_ex(x) = 100*cos(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
+    # u_ex(x) = 100*cos(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
     exact_sol = Solver.man_sol(u_ex)
-    solver_config = Solver.Config(exact_sol)
+    circle = true
+    solver_config = Solver.Config(exact_sol, circle)
 
     resultdir= "figures/biharmonic_CIP_nitsche/"*string(Dates.now())
     println(resultdir)
     mkpath(resultdir)
 
     orders = [2,3,4]
+    # ns = [2^2, 2^3, 2^4, 2^5]
     ns = [2^2, 2^3, 2^4, 2^5, 2^6, 2^7]
     dirname = resultdir
     mkpath(dirname)
-    convergence_analysis( orders=orders, ns=ns, solver_config=solver_config, dirname=dirname)
+    @time convergence_analysis( orders=orders, ns=ns, solver_config=solver_config, dirname=dirname)
 end
 
-@time main()
+
+# main()
+
