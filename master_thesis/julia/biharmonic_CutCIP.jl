@@ -11,7 +11,7 @@ module Solver
 
     # %% Manufactured solution
     # Provides a manufactured solution which is 0 on the unit circle
-    u_ex(x) = (x[1]^2 + x[2]^2  - 1)*sin(2π*x[1])*cos(2π*x[2])
+    u_ex(x) = (x[1]^2 + x[2]^2  - 1)^2*sin(2π*x[1])*cos(2π*x[2])
     # u_ex(x) = 1 - x[1]^2 - x[2]^2 -x[1]^3*x[2]
     ∇u_ex(x) = ∇(u_ex)(x)
     ∇Δu_ex(x) = ∇(Δ(u_ex))(x)
@@ -124,12 +124,21 @@ module Solver
             # return jump( n⋅ ∇∇(u)⋅ n)
 
         end
-        # Define bilinear form
+        # Inner facets
         a(u,v) =( ∫( ∇∇(v)⊙∇∇(u) + α⋅(v⊙u) )dΩ
-                 + ∫(mean_nn(v,n_Λ)⊙jump(∇(u)⋅n_Λ) + mean_nn(u,n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ
-                 + ∫(( n_Γ ⋅ ∇∇(v)⋅ n_Γ )⊙∇(u)⋅n_Γ + ( n_Γ ⋅ ∇∇(u)⋅ n_Γ )⊙∇(v)⋅n_Γ)dΓ
+                 + ∫(-mean_nn(v,n_Λ)⊙jump(∇(u)⋅n_Λ) - mean_nn(u,n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ
+                 + ∫(-( n_Γ ⋅ ∇∇(v)⋅ n_Γ )⊙∇(u)⋅n_Γ - ( n_Γ ⋅ ∇∇(u)⋅ n_Γ )⊙∇(v)⋅n_Γ)dΓ
                  + ∫((γ/h)⋅jump(∇(u)⋅n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ + ∫((γ/h)⋅ ∇(u)⊙n_Γ⋅∇(v)⊙n_Γ )dΓ
                 )
+
+        # Define linear form
+        # Notation: g_1 = ∇u_ex⋅n_Γ, g_2 = ∇Δu_ex⋅n_Γ
+        g_1 = ∇u_ex⋅n_Γ
+        g_2 = ∇Δu_ex⋅n_Γ
+        l(v) = (∫( f*v ) * dΩ
+                +  ∫(-(g_2⋅v))dΓ
+                + ∫(g_1⊙(-(n_Γ⋅∇∇(v)⋅n_Γ) + (γ/h)*∇(v)⋅n_Γ)) * dΓ
+               )
 
         g(u,v) = h^(-2)*(∫( (γg0/h)*jump(u)*jump(v)) * dFg +∫( (γg1*h)*jump(n_Fg⋅∇(u))*jump(n_Fg⋅∇(v)) ) * dFg)
 
@@ -143,10 +152,6 @@ module Solver
 
         A(u,v) = a(u,v) + g(u,v)
 
-        # Define linear form
-        # Notation: g_1 = ∇u_ex⋅n_Γ, g_2 = ∇Δu_ex⋅n_Γ
-        l(v) = (∫( f*v ) * dΩ + ∫(-(∇Δu_ex⋅n_Γ⋅v))dΓ +
-                ∫(∇u_ex⋅n_Γ*(-(n_Γ⋅∇∇(v)⋅n_Γ) + (γ/h)*∇(v)⋅n_Γ)) * dΓ)
 
         # FE problem
         op = AffineFEOperator(A,l,U,V)
@@ -212,7 +217,7 @@ function main()
     mkpath(resultdir)
 
     orders = [2]
-    ns = [2^2, 2^3, 2^4, 2^5, 2^6]#, 2^7]
+    ns = [2^2, 2^3, 2^4, 2^5, 2^6, 2^7, 2^8]
     dirname = resultdir
     makedir(dirname)
     convergence_analysis( orders=orders, ns=ns, dirname=dirname)
