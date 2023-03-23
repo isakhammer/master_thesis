@@ -568,8 +568,11 @@ Here is a nice article \cite{li07}
 
 We have the following assumptions for the ghost penalty.
 \begin{enumerate}[label=\textbf{EP\arabic*}]
-    \item\label{as:EP1} The ghost penalty $g_{h}$ extends the $H^{1}$ norm s.t. \[
+    \item \label{as:EP1} The ghost penalty $g_{h}$ extends the $H^{1}$ norm s.t. \[
     \| D^2v \|_{ \mathcal{T} _{h} }^{ 2 }  \lesssim \| D^2 v \|_{ \Omega  }^{  2} + \abs{ v } _{g_{h}}^2
+    \]
+\item \label{as:EP2} For $v \in H^{s}( \Omega ) $ and $r = \min \{s,k+1 \} $, the semi-norm $\abs{ \cdot  }_{g_{h}} $ satisfies the following estimate, \[
+    \abs{ \pi _{h}^{e} v } _{g_{h}} \lesssim  h^{r-1} \| v \|_{ r,\Omega  }^{  }.
     \]
 \end{enumerate}
 
@@ -651,7 +654,7 @@ This set is simply all facets that belong to all elements of the active mesh $\m
             \label{eq:bi_inv_gh_1}
         \| v \|_{ \mathcal{T} _{h} }^{ 2 }  & \lesssim  \| v \|_{ \Omega  }^{ 2 }  + \sum_{j=0}^{k} h^{2j+1} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n} v}    )_{\mathcal{F}_{h}^{g}}\\
             \label{eq:bi_inv_gh_2}
-        \| D ^2 v \|_{ \mathcal{T} _{h} }^{ 2 }  & \lesssim  \| D^2 v \|_{ \Omega  }^{ 2 }  + h^{-2}\sum_{j=0}^{k} h^{2j-1} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n}v }    )_{\mathcal{F}_{h}^{g}}
+        \| D ^2 v \|_{ \mathcal{T} _{h} }^{ 2 }  & \lesssim  \| D^2 v \|_{ \Omega  }^{ 2 }  + \sum_{j=0}^{k} h^{2j-3} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n}v }    )_{\mathcal{F}_{h}^{g}}
         \end{align}
         Here is $k$ the polynomial degree.
 \end{lemma}
@@ -736,13 +739,21 @@ Finally, we now have the tools we need to construct an candidate for the ghost p
 
 \begin{proposition}[Face-based ghost penalty]
     For any set of positive parameters $\left\{ \gamma _{j} \right\} _{j=0}^{k}$, the ghost penalty defined as \[
-    g^{}_{h}( v,w)  := \sum_{j=0}^{k} \sum_{F \in \mathcal{F} _{h}^{g}}^{} \gamma _{j} h^{2j-1}_{F} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n} w }  ) _{F} \text{ for any } v,w \in V_{h},
+    g^{}_{h}( v,w)  := \sum_{j=0}^{k} \sum_{F \in \mathcal{F} _{h}^{g}}^{} \gamma _{j} h^{2j-3}_{F} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n} w }  ) _{F} \text{ for any } v,w \in V_{h},
     \]
-    satisfies the Assumption \ref{as:bi_EP1}
+    satisfies the Assumption \ref{as:EP1} and \ref{as:EP2}.
 \end{proposition}
 
 \begin{proof}
-\todo[inline]{ TODO: Finish proof and update proposition }
+    First of all, from it is clear that \[
+        \begin{split}
+    % \| v \|_{ \mathcal{T} _{h} }^{  } & \lesssim \|  v \|_{ \Omega   }^{  } + \abs{ v } _{g_{h}} \\
+    \| D^2v \|_{ \mathcal{T} _{h} }^{  } & \lesssim \| D^2 v \|_{ \Omega   }^{  } + \abs{ v } _{g_{h}}
+        \end{split}
+    \]
+    Thus, the Assumption \ref{as:EP1} is satisfied.
+
+    For \ref{as:EP2} we.
 \end{proof}
 
 
