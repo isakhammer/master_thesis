@@ -342,6 +342,7 @@ where we just applied the definition of the norms $\| \cdot  \|_{a_{h}  }^{  } $
 \subsection{A priori estimates}%
 \label{sec:a_priori_estimates}
 
+
 In this section will we do only a brief overview of the important assumptions and definitions required to prove optimal convergence.
 Recall that for $v \in H^{1}( \mathcal{T } _{h}) $ these inequalities holds $\forall T \in \mathcal{T} _{h}$ s.t. \[
 \begin{split}
@@ -517,13 +518,26 @@ Naturally can we see this is the tools we need to construct an estimate for the 
 
     Finally, combining all the estimates we have
     \[
-                \| u - C_{h}^{e}u \|_{ a_{h}, * }^{  2} = (h^{2s} + h^{2(s -r- \frac{1}{2}) -2} + h^{2(s-2)} + h^{2(s -r- \frac{1}{2}) -2} + h^{2s} + h^{2(s -r- \frac{1}{2})} )
+            \| u - C_{h}^{e}u \|_{ a_{h}, * }^{  2} \lesssim  (h^{2s} + h^{2(s -r- \frac{1}{2}) -2} + h^{2(s-2)} + h^{2(s -r- \frac{1}{2}) -2} + h^{2s} + h^{2(s -r- \frac{1}{2})} ) \sum_{T \in \mathcal{T} _{h}}^{} \| u \|_{ s, T }^{  }
     \]
+    \todo[inline]{ Cleanup proof }
 \end{proof}
 
+\begin{lemma}[Weak Galerkin Orthogonality]
+    Let $u $ in
+
+\end{lemma}
+
+\begin{assumption}[EP2]
+    \label{as:bi_EP2}
+    The ghost penalty $g_{h}$ extends the $H^{1}$ norm s.t. \[
+    \| D^2 v \|_{ \mathcal{T} _{h} }^{ 2 } \lesssim  \| D^2 v \|_{ \Omega  }^{ 2 } + \abs{ v } _{g_{h}}^{2}.
+    \]
+\end{assumption}
 
 
-\todo[inline]{TODO: Cleanup of consistency when using parameters $k,q,r,p,l,s$. My head is exploding of what is what.}
+
+
 
 \newpage
 \subsection{Condition number}%
@@ -667,10 +681,10 @@ Summation over the intersected triangles $\mathcal{T} _{\Gamma }$ implies,
         \]
         Remark that $\|  D^2 v \|_{ T_{l} }^{  } \lesssim  \|  D^2 v \|_{ T_{l} \cap \Omega  }^{  }  $ also holds based on Assumption \ref{as:s3}.
         Thus, it remains to show that \[
-        \sum_{j=0}^{k} h^{2j+1} ( \jump{   D^2 \partial ^{j}_{n}  v }, \jump{  D^2 \partial ^{j}_{n}  v}    )_{\mathcal{F}_{h}^{g}} \lesssim h^{-p} \sum_{j=0}^{k} h^{2j+1} ( \jump{    \partial ^{j}_{n}  v }, \jump{  \partial ^{j}_{n}  v}    )_{\mathcal{F}_{h}^{g}}
+        \sum_{j=0}^{k} h^{2j+1} ( \jump{   D^2 \partial ^{j}_{n}  v }, \jump{  D^2 \partial ^{j}_{n}  v}    )_{\mathcal{F}_{h}^{g}} \lesssim  \sum_{j=0}^{k} h^{2j-3} ( \jump{    \partial ^{j}_{n}  v }, \jump{  \partial ^{j}_{n}  v}
+        )_{\mathcal{F}_{h}^{g}}.
         \]
-        where $p \ge  0 $ is an undecided parameter.
-        Let us denote the tangential operator $P_{F} := I - n_{} \oplus n_{} $, where $n_{}\oplus n_{}$ is an outer product of the normals on the facet $F$. We apply this so we can to decompose the Hessian evaluated on the facet  s.t. \[
+        Let us denote the tangential operator $P_{F} := I - n_{} \oplus n_{} $, where $n_{}\oplus n_{}$ is an outer product of the normals on a facet $F$. We apply this so we can to decompose the Hessian evaluated on the facet  s.t. \[
         D^2 v  \mid _{F} = ( \partial _{n_{}n_{}}v)n_{} + P_{F} D^2 v .
         \]
         \todo[inline]{ Need to find a better version for $ (\partial _{n_{}n_{}}v)n_{}$  }
@@ -705,7 +719,7 @@ Finally, we now have the tools we need to construct an candidate for the ghost p
 
 \begin{proposition}[Face-based ghost penalty]
     For any set of positive parameters $\left\{ \gamma _{j} \right\} _{j=0}^{k}$, the ghost penalty defined as \[
-    g^{1}_{h}( v,w)  := \sum_{j=0}^{k} \sum_{F \in \mathcal{F} _{h}^{g}}^{} \gamma _{j} h^{2j-1}_{F} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n} w }  ) _{F} \text{ for any } v,w \in V_{h},
+    g^{}_{h}( v,w)  := \sum_{j=0}^{k} \sum_{F \in \mathcal{F} _{h}^{g}}^{} \gamma _{j} h^{2j-1}_{F} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n} w }  ) _{F} \text{ for any } v,w \in V_{h},
     \]
     satisfies the Assumption \ref{as:bi_EP1}
 \end{proposition}
