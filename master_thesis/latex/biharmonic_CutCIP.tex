@@ -10,6 +10,7 @@
 Let $\Omega \subseteq    \mathbb{R} ^d$ be a physical mesh, $\Gamma  $ be a $C^2$ boundary and the function $\alpha: \Omega \to \mathbb{R}  $. We define the strong biharmonic problem to be on the form
 
 \begin{equation}
+    \label{eq:Bi_strong}
 \begin{split}
     \Delta^2  u  + \alpha  u  & = f( x)  \quad \text{in } \Omega,   \\
     \partial _{n} u & = g_{1}(x)   \quad \text{on } \gamma ,  \\
@@ -524,18 +525,33 @@ Naturally can we see this is the tools we need to construct an estimate for the 
 \end{proof}
 
 \begin{lemma}[Weak Galerkin Orthogonality]
-    Let $u $ in
-
+    Let $u \in H^{4}( \Omega )  $ be solution to \eqref{eq:Bi_strong} and $u_{h} \in V_{h}$ is a solution to \eqref{eq:Bi_a_h}. Then is \[
+    a_{h}( u - u_{h}, v) = g_{h} ( u_{h}, v) \quad \forall v \in V_{h}.
+    \]
 \end{lemma}
 
 \begin{assumption}[EP2]
     \label{as:bi_EP2}
-    The ghost penalty $g_{h}$ extends the $H^{1}$ norm s.t. \[
-    \| D^2 v \|_{ \mathcal{T} _{h} }^{ 2 } \lesssim  \| D^2 v \|_{ \Omega  }^{ 2 } + \abs{ v } _{g_{h}}^{2}.
+    For $v \in H^{s}( \Omega ) $ and $r = \min \{s,k+1 \} $, the semi-norm $\abs{ \cdot  }_{g_{h}} $ satisfies the following estimate, \[
+    \abs{ \pi _{h}^{e} v } _{g_{h}} \lesssim  h^{r-1} \| v \|_{ r,\Omega  }^{  }.
     \]
 \end{assumption}
 
 
+\begin{theorem}
+    Let $u \in H^{s}( \Omega ) $ , $s\ge 3$ be the solution to \eqref{eq:Bi_strong} and let $u \in V_{h}$ of order $k$ be the solution to \eqref{eq:Bi_a_h}. Then for $r = \min_{}\{s, k+1\} $ the error $e = u - u_{h}$ satisfies
+    \begin{align}
+        \label{eq:bi_apriori_1}
+            \| e \|_{ a_{h},* }^{  } &\lesssim   h^{r-1} \| u \|_{ r,\Omega  }^{  }\\
+        \label{eq:bi_apriori_2}
+            \| e \|_{ \Omega  }^{  } &\lesssim   h^{r} \| u \|_{ r,\Omega  }^{  }
+    \end{align}
+
+\end{theorem}
+
+\begin{proof}
+
+\end{proof}
 
 
 
