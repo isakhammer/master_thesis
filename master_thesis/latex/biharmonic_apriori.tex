@@ -184,14 +184,15 @@ Naturally can we see this is the tools we need to construct an estimate for the 
             \| u - C_{h}^{e}u \|_{ a_{h}, * }^{  2}  \lesssim  & \   \sum_{T \in \mathcal{T}_h}^{}  \bigg(    h^{2s}\| u \|_{s, \omega ( T)   }^{  } +  h^{2(s-2)} \| u \|_{ s, \omega ( T)  }^{ 2 } \\
              & +  h^{2(s-1)} \| u \|_{s,T }^{ 2} + h^{2(s- r- \frac{1}{2}) -2}   \| u \|_{s,T  }^{  2} \\
             & + h^{2s}  \| u \|_{s, \omega ( T)   }^{  } + h^{2(s-r -\frac{1}{2})}  \| u \|_{ s, \omega ( T)  }^{2  } \bigg) \\
-            \lesssim & \ h^{2l ( l-2) } \| u \|_{H^{l}( \Omega )   }^{2  }
+            \lesssim & \ h^{2s ( s-2) } \| u \|_{H^{s}( \Omega )   }^{2  }
         \end{split}
     \]
+    Thus, the proof is complete.
     \todo[inline]{ Cleanup proof }
 \end{proof}
 
-\begin{lemma}[Weak Galerkin Orthogonality]
-    Let $u \in H^{4}( \Omega )  $ be solution to \eqref{eq:Bi_strong} and $u_{h} \in V_{h}$ is a solution to \eqref{eq:Bi_a_h}. Then is \[
+\begin{lemma}[Weak galerkin orthogonality]
+Let $u \in H^{s}( \Omega )  $, $ s\ge 3 $  be solution to \eqref{eq:Bi_strong} and $u_{h} \in V_{h}$ is a discrete solution to \eqref{eq:Bi_a_h}. Then is \[
     a_{h}( u - u_{h}, v) = g_{h} ( u_{h}, v) \quad \forall v \in V_{h}.
     \]
 \end{lemma}
@@ -208,7 +209,7 @@ Naturally can we see this is the tools we need to construct an estimate for the 
     Let $u \in H^{s}( \Omega ) $ , $s\ge 3$ be the solution to \eqref{eq:Bi_strong} and let $u \in V_{h}$ of order $k$ be the solution to \eqref{eq:Bi_a_h}. Then for $r = \min_{}\{s, k+1\} $ the error $e = u - u_{h}$ satisfies
     \begin{align}
         \label{eq:bi_apriori_1}
-            \| e \|_{ a_{h},* }^{  } &\lesssim   h^{r-1} \| u \|_{ r,\Omega  }^{  }\\
+            \| e \|_{ A_{h},* }^{  } &\lesssim   h^{r-1} \| u \|_{ r,\Omega  }^{  }\\
         \label{eq:bi_apriori_2}
             \| e \|_{ \Omega  }^{  } &\lesssim   h^{r} \| u \|_{ r,\Omega  }^{  }
     \end{align}
@@ -223,10 +224,7 @@ Naturally can we see this is the tools we need to construct an estimate for the 
     \[
     \| u - u_{h} \|_{ a_{h} }^{  }  \le \| e_{\pi } \|_{a_{h},*}^{  } + \| e_{h} \|_{A_{h}  }^{  }
     \]
-Using Lemma \ref{lemma:astar_estimate}, can we see that $\| e_{\pi } \|_{a_{h},*}^{  } \lesssim h^{r-1} \| u \|_{ u,\Omega  }^{  }  $ is already fulfilled. So it remains to check the discrete part.
-
-Hence, using Lemma \ref{lemma:bi_Ah_coercive} and
-the Weak Galerkin Orthogonality, $ a_{h}( u - u_{h}, e_{h}) = g_{h}( u_{h}, e_{h})$, is it natural to see that \[
+Using Lemma \ref{lemma:astar_estimate}, can we see that $\| e_{\pi } \|_{a_{h},*}^{  } \lesssim h^{r-1} \| u \|_{ u,\Omega  }^{  }  $ is already fulfilled. So it remains to check the discrete part. From Lemma \ref{lemma:bi_Ah_coercive}, \ref{lemma:bi_Ah_bounded}, the weak Galerkin orthogonality and Assumption \ref{as:bi_EP2} is it natural to see that, \[
     \begin{split}
 \| e_{h} \|_{ A_{h} }^{ 2 } & \lesssim a_{h}( C _{h}^{e} u - u_{h}, e_{h}) + g_{h}( C _{h}^{e}u - u_{h}, e_{h}) \\
  & = a_{h}( C _{h}^{e} u - u, e_{h}) + a_{h}( u - u_{h}, e_{h}) + g_{h}( C _{h}^{e}u - u_{h}, e_{h}) \\
@@ -234,7 +232,6 @@ the Weak Galerkin Orthogonality, $ a_{h}( u - u_{h}, e_{h}) = g_{h}( u_{h}, e_{h
  & \lesssim h^{r-1} \| u \|_{ r, \Omega  }^{  } \| e_{h} \|_{ A_{h} }^{  }.
     \end{split}
 \]
-
     \end{enumerate}
     \todo[inline]{ DO PROOF}
 \end{proof}

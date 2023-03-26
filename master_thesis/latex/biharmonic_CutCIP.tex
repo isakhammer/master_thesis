@@ -89,10 +89,13 @@ We define the underlying norms for $ v \in V_{h} $ as
         \label{eq:bi_gh_norm}
 \abs{ v } _{g_{h}}^{2} & = g( v,v) \\
         \label{eq:bi_Ah_norm}
-\| v \|_{A_{h}  }^{  2}  & = \| v \|_{ a_{h} }^{ 2 } + \abs{ v } _{g_{h}}^{2}
+\| v \|_{A_{h}  }^{  2}  & = \| v \|_{ a_{h} }^{ 2 } + \abs{ v } _{g_{h}}^{2} \\
     \end{align}
 and for $v \in V + V_{h}$ we get, \[
-\| v \|_{ a_{h}, * }^{  2} =\| v \|_{ a_{h} }^{ 2 } +  \| h^{\frac{1}{2}} \mean{ \partial _{nn} v }   \|_{\mathcal{F} _{h}^{} \cap \Omega   }^{  2} +  \| h^{\frac{1}{2}} \partial _{nn} v    \|_{ \Gamma }^{  2} .
+    \begin{split}
+\| v \|_{ a_{h}, * }^{  2} & =\| v \|_{ a_{h} }^{ 2 } +  \| h^{\frac{1}{2}} \mean{ \partial _{nn} v }   \|_{\mathcal{F} _{h}^{} \cap \Omega   }^{  2} +  \| h^{\frac{1}{2}} \partial _{nn} v    \|_{ \Gamma }^{  2}  \\
+\| v \|_{A_{h},*  }^{  2}  & = \| v \|_{ a_{h},* }^{ 2 } + \abs{ v } _{g_{h}}^{2}
+    \end{split}
 \]
 \begin{remark}
 Note that it holds that $\mathcal{T} _{h} \cap  \Omega   = \Omega  $ and $\mathcal{T} _{h} \cap  \Gamma  = \Gamma $. Depending on context, we choose the best suitable notation.
@@ -227,6 +230,7 @@ Combing the results we get the following convenient corollary.
 
 
 \begin{lemma}
+    \label{lemma:bi_Ah_bounded}
     The discrete form $A_{h}$ is bounded, that is,
     \begin{equation}
     \label{eq:bi_A_h_bounded}
