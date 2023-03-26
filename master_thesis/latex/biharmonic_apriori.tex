@@ -224,7 +224,17 @@ Naturally can we see this is the tools we need to construct an estimate for the 
     \| u - u_{h} \|_{ a_{h} }^{  }  \le \| e_{\pi } \|_{a_{h},*}^{  } + \| e_{h} \|_{A_{h}  }^{  }
     \]
 Using Lemma \ref{lemma:astar_estimate}, can we see that $\| e_{\pi } \|_{a_{h},*}^{  } \lesssim h^{r-1} \| u \|_{ u,\Omega  }^{  }  $ is already fulfilled. So it remains to check the discrete part.
-        \item And the other one
+
+Hence, using Lemma \ref{lemma:bi_Ah_coercive} and
+the Weak Galerkin Orthogonality, $ a_{h}( u - u_{h}, e_{h}) = g_{h}( u_{h}, e_{h})$, is it natural to see that \[
+    \begin{split}
+\| e_{h} \|_{ A_{h} }^{ 2 } & \lesssim a_{h}( C _{h}^{e} u - u_{h}, e_{h}) + g_{h}( C _{h}^{e}u - u_{h}, e_{h}) \\
+ & = a_{h}( C _{h}^{e} u - u, e_{h}) + a_{h}( u - u_{h}, e_{h}) + g_{h}( C _{h}^{e}u - u_{h}, e_{h}) \\
+ & = a_{h}( C _{h}^{e} u - u, e_{h}) + g_{h}( C _{h}^{e}u, e_{h}) \\
+ & \lesssim h^{r-1} \| u \|_{ r, \Omega  }^{  } \| e_{h} \|_{ A_{h} }^{  }.
+    \end{split}
+\]
+
     \end{enumerate}
     \todo[inline]{ DO PROOF}
 \end{proof}
