@@ -355,7 +355,7 @@ For proof, see \cite[Lemma 4.2]{hansbo2003finite}.
 \subsubsection{Cléments interpolation}%
 \label{ssub:clement_operator}
 
-We want to compute the expected convergence rate of the energy norm \eqref{eq:A_energy_norm}. An important tool in the process is the Cléments interpolation operator, $C_{h}$.
+We want to compute the expected convergence rate of the energy norm \eqref{eq:bi_Ah_norm}. An important tool in the process is the Cléments interpolation operator, $C_{h}$.
 It is used for interpolation on non smooth functions by applying an regularization on so-called macroelements. Let us denote the $\mathcal{P}_{c}^{k}( \Omega )  $ to be an $H^{1}$ conformal polynomial space. We denote $\left\{ a_{1}, \ldots, a_{N}
 \right\} $ to be the Lagrange nodes. Associated with each node $a_{i}$ we denote the macroelement $A_{i}$ to consist of all simplices containing $a_{i}$. Let $n_{cf}$ be the number of configurations for the macroelement, then we define the index $j:
 \left\{ 1,\ldots,N \right\} \to \left\{ 1, \ldots, n_{cf} \right\}  $ s.t. $j( i) $ is the index associated with the reference configuration $\widehat{A}_{j(i) }$ for corresponding macroelement $A_{i}$. Let us define a $C^{0}$-diffeomorphism $G_{A_{i}}:
@@ -443,6 +443,7 @@ We can immediately observe that the interpolation satisfies the global error est
 Naturally can we see this is the tools we need to construct an estimate for the energy norm.
 
 \begin{lemma}
+    \label{lemma:astar_estimate}
     Let $u \in H^{l}( \Omega ) $. Then we have  \[
     \|  u - C_{h}u \|_{ a_{h},*  }^{  } \lesssim h^{l(l-2)} \| u \|_{ H^{l}( \Omega )  }^{  }
     \]
@@ -479,7 +480,7 @@ Naturally can we see this is the tools we need to construct an estimate for the 
             \gamma \| h^{-\frac{1}{2}} \jump{ \partial _{n} ( u - C_{h}^{e}u ) }   \|_{ \mathcal{F}_{h} \cap \Omega   }^{  2}   &\lesssim \| h^{-\frac{1}{2}}  \partial _{n} ( u - C_{h}^{e}u )    \|_{  \partial \mathcal{T} _{h} }^{2  }
        \lesssim h^{-2} \|   \nabla  ( u - C_{h}^{e}u )    \|_{  \mathcal{T} _{h} }^{2  }     \\
                                                                                                                  &\lesssim h^{-2} \|      u - C_{h}^{e}u     \|_{1,  \mathcal{T}_{h} }^{2  }
-                                                                                                                 \lesssim \sum_{T \in \mathcal{T} _{h}}^{} h^{2(s-1)} \| u \|_{ \mathcal{T} _{h}  }^{ 2}
+                                                                                                                 \lesssim \sum_{T \in \mathcal{T} _{h}}^{} h^{2(s-1)} \| u \|_{ s,T  }^{ 2}
         \end{split}
     \]
     \todo[inline]{
@@ -518,7 +519,12 @@ Naturally can we see this is the tools we need to construct an estimate for the 
 
     Finally, combining all the estimates we have
     \[
-            \| u - C_{h}^{e}u \|_{ a_{h}, * }^{  2} \lesssim  (h^{2s} + h^{2(s -r- \frac{1}{2}) -2} + h^{2(s-2)} + h^{2(s -r- \frac{1}{2}) -2} + h^{2s} + h^{2(s -r- \frac{1}{2})} ) \sum_{T \in \mathcal{T} _{h}}^{} \| u \|_{ s, T }^{  }
+        \begin{split}
+            \| u - C_{h}^{e}u \|_{ a_{h}, * }^{  2}  \lesssim  & \   \sum_{T \in \mathcal{T}_h}^{}  \bigg(    h^{2s}\| u \|_{s, \omega ( T)   }^{  } +  h^{2(s-2)} \| u \|_{ s, \omega ( T)  }^{ 2 } \\
+             & +  h^{2(s-1)} \| u \|_{s,T }^{ 2} + h^{2(s- r- \frac{1}{2}) -2}   \| u \|_{s,T  }^{  2} \\
+            & + h^{2s}  \| u \|_{s, \omega ( T)   }^{  } + h^{2(s-r -\frac{1}{2})}  \| u \|_{ s, \omega ( T)  }^{2  } \bigg) \\
+            \lesssim & \ h^{2l ( l-2) } \| u \|_{H^{l}( \Omega )   }^{2  }
+        \end{split}
     \]
     \todo[inline]{ Cleanup proof }
 \end{proof}
@@ -552,9 +558,12 @@ Naturally can we see this is the tools we need to construct an estimate for the 
     We will divide the proof into two steps.
     \begin{enumerate}[label=\arabic*)]
         \item We want to prove that $\| e \|_{ a_{h},* }^{  } \lesssim   h^{r-1} \| u \|_{ r,\Omega  }^{  }$.
-    Let $e = u - u_{h}$ consist of $e = e_{h} + e_{\pi }$, where the discrete error has the form $e_{h} = \pi _{h}^{e} u - u_{h}$ and the projection error $e_{\pi } = u - \pi _{u} ^{e}u$. We can then observe that \[
+    Let $e = u - u_{h}$ consist of $e = e_{h} + e_{\pi }$, where the discrete error has the form $e_{h} = C _{h}^{e} u - u_{h}$ and the projection error $e_{\pi } = u - C _{h} ^{e}u$. We can then observe that
+    \[
     \| u - u_{h} \|_{ a_{h} }^{  }  \le \| e_{\pi } \|_{a_{h},*}^{  } + \| e_{h} \|_{A_{h}  }^{  }
     \]
+Using Lemma \ref{lemma:astar_estimate}, can we see that $\| e_{\pi } \|_{a_{h},*}^{  } \lesssim h^{r-1} \| u \|_{ u,\Omega  }^{  }  $ is already fulfilled. So it remains to check the discrete part.
+        \item And the other one
     \end{enumerate}
     \todo[inline]{ DO PROOF}
 \end{proof}
