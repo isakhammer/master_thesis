@@ -220,7 +220,7 @@ Let $u \in H^{s}( \Omega )  $, $ s\ge 3 $  be solution to \eqref{eq:Bi_strong} a
     We will divide the proof into two steps.
     \begin{enumerate}[label=\arabic*)]
         \item We want to prove that $\| e \|_{ a_{h},* }^{  } \lesssim   h^{r-1} \| u \|_{ r,\Omega  }^{  }$.
-    Let $e = u - u_{h}$ consist of $e = e_{h} + e_{\pi }$, where the discrete error has the form $e_{h} = C _{h}^{e} u - u_{h}$ and the projection error $e_{\pi } = u - C _{h} ^{e}u$. We can then observe that
+    Let $e = u - u_{h}$ consist of $e = e_{h} + e_{\pi }$, where the discrete error has the form $e_{h} = C _{h}^{e} u - u_{h}$ and the interpolation error $e_{\pi } = u - C _{h} ^{e}u$. We can then observe that
     \[
     \| u - u_{h} \|_{ a_{h} }^{  }  \le \| e_{\pi } \|_{a_{h},*}^{  } + \| e_{h} \|_{A_{h}  }^{  }
     \]
@@ -255,7 +255,7 @@ Hence, the first part of the proof is complete.
     \[
     \begin{split}
         (e, \psi  )_{\Omega } &= a_{h}( e, \phi ) \\
-        &= a_{h}(e, \phi -  C_{h}^{e} \phi   ) + g_{h}(u_{h} - C_{h}^{e} u,   \pi^{e}_{h} \phi   )  +g_{h}(\pi _{h} u, C_{h}^{e} \phi   ) \\
+        &= a_{h}(e, \phi -  C_{h}^{e} \phi   ) + g_{h}(u_{h} - C_{h}^{e} u,   C^{e}_{h} \phi   )  +g_{h}(C^{e} _{h} u, C_{h}^{e} \phi   ) \\
         & \lesssim h^{r} \| u \|_{ r, \Omega  }^{  } \| \psi  \|_{ \Omega  }^{  }
     \end{split}
     \]
@@ -265,16 +265,16 @@ Hence, the first part of the proof is complete.
         \begin{split}
     a_{h}( e, \phi ) & = a_{h}( e, \phi  - C^{e} _{h} \phi ) + a_{h}( u - u_{h}, C^{e} _{h} \phi ) \\
      & = a_{h}( e, \phi  - C^{e} _{h} \phi ) + g_{h}(  u_{h}, C^{e} _{h} \phi ) \\
-     & = a_{h}( e, \phi  - C^{e} _{h} \phi ) + g_{h}(  u_{h} - C ^{e}_{h}u, C^{e} _{h} \phi )+ g_{h}( C ^{e}_{h}u, \pi _{h} \phi ).
+     & = a_{h}( e, \phi  - C^{e} _{h} \phi ) + g_{h}(  u_{h} - C ^{e}_{h}u, C^{e} _{h} \phi )+ g_{h}( C ^{e}_{h}u, C^{e} _{h} \phi ).
         \end{split}
     \]
 
     The last inequality appears after applying Cauchy-Schwartz and Assumption \ref{as:EP2}.
 \[
     \begin{split}
-        a_{h}( e, \phi  - \pi _{h} \phi ) &+ g_{h}(  u_{h} - \pi ^{e}_{h}u, \pi _{h} \phi )+ g_{h}( \pi ^{e}_{h}u, \pi _{h} \phi ) \\
-                                          &\lesssim \| e \|_{ a_{h},*  }^{  } \| \phi - \pi _{h} \phi   \|_{a_{h},*  }^{  }   +
-     \abs{\pi _{h}^{e} u - u_{h} }_{ g_{h}}^{  } \abs{ \pi _{h} \phi  }_{g_{h}}+ \abs{ \pi^{e} _{h} u } _{g_{h}} \abs{ \pi _{h} \phi  }_{g_{h}} \\
+        a_{h}( e, \phi  - C _{h} \phi ) &+ g_{h}(  u_{h} - C ^{e}_{h}u, C^{e} _{h} \phi )+ g_{h}( C ^{e}_{h}u, C _{h} \phi ) \\
+                                          &\lesssim \| e \|_{ a_{h},*  }^{  } \| \phi - C _{h}^{e} \phi   \|_{a_{h},*  }^{  }   +
+     \abs{\pi _{h}^{e} u - u_{h} }_{ g_{h}}^{  } \abs{ C^{e} _{h} \phi  }_{g_{h}}+ \abs{ C^{e} _{h} u } _{g_{h}} \abs{ C^{e} _{h} \phi  }_{g_{h}} \\
 .
     \end{split}
 \]
@@ -284,7 +284,7 @@ Using the result from the first part and the Assumption \ref{as:EP2}.
     \begin{split}
         \| e \|_{ a_{h},*  }^{  } &\lesssim h^{r-1} \| u \|_{ r, \Omega  }^{  } \\
         \abs{ C^{e} _{h} u } _{g_{h}} &\lesssim h^{r-1}\| u \|_{2,\Omega   }^{  } \\
-        \abs{ C^{e} _{h} u - u_{h} } _{g_{h}} &\lesssim \|  \pi^{e} _{h} u - u_{h} \|_{ A_{h}  }^{  }  \\
+        \abs{ C^{e} _{h} u - u_{h} } _{g_{h}} &\lesssim \|  C^{e} _{h} u - u_{h} \|_{ A_{h}  }^{  }  \\
         \abs{ C^{e} _{h} \phi  } _{g_{h}} &\lesssim  \ldots \\
         \|\phi - C^{e} _{h} \phi  \|_{a_{h},*  }^{  }  &\lesssim  \ldots
     \end{split}
