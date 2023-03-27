@@ -32,16 +32,15 @@ Let $u \in H^{4}( \Omega ) $ be a solution of the strong problem and $v \in H^{2
     % = 0$   and $( \partial _{tn} u, \partial _{t}v)_{\Gamma } = 0$. This follows from the fact that that the Neumann boundary condition is homogeneous s.t. $\partial _{n} v = 0$ and $\partial _{t} (\partial _{n}u) = 0 $.
     % \todo[inline]{ But what if the Neumann conditions is not homogeneous? And why is it necessary to include it in the function space when it comes in "naturally"?  }
     Let $u,v \in V$ then is it natural to define an general bilinear form  \[
-    a( u,v) = ( D^2u, D^2v)_{\Omega } + ( \partial _{n} \Delta u ,v)_{\Gamma } - ( \partial _{nn} u, \partial _{n}v)_{\Gamma } - ( \partial _{tn} u, \partial _{t} v)_{\Gamma }.
+    a( u,v) = ( \alpha u,v)_{\Omega } +  ( D^2u, D^2v)_{\Omega }   .
     \]
     where $\alpha >0$ and a corresponding linear form $l: V \to \mathbb{R} $,
     \[
-    l( v) = ( f ,v)_{\Gamma } +  ( h_{2},v)_{\Gamma } .
+    l( v) = ( f ,v)_{\Omega  } -  ( g_{2},v)_{\Gamma } .
     \]
     We define the weak problem is to find a $u \in  V_{g}$ s.t. \[
     a( u,v) = l(v) \quad  \forall v \in V_{}
     \]
-    \todo[inline]{Write down correct bilinear form with $g_{1}$ and $g_{2}$. }
 
 \subsection{Initial discrete formulation}%
 \label{sub:initial_discrete_formulation}
