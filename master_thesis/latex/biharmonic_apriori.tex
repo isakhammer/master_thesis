@@ -232,8 +232,23 @@ Using Lemma \ref{lemma:astar_estimate}, can we see that $\| e_{\pi } \|_{a_{h},*
  & \lesssim h^{r-1} \| u \|_{ r, \Omega  }^{  } \| e_{h} \|_{ A_{h} }^{  }.
     \end{split}
 \]
+The last line of the calculations above comes from the fact that,
+\[
+    \begin{split}
+        a_{h}( C _{h}^{e} u - u, e_{h}) + g_{h}( C _{h}^{e}u, e_{h}) &\lesssim \| C _{h}^{e} u - u \|_{a_{h},*  }^{  } \| e_{h} \|_{a_{h},*  }^{  }
+        + \abs{ C _{h}^{e}u }_{g_{h}} \abs{e_{h}  }_{g_{h}} \\
+         &\lesssim \| C _{h}^{e} u - u \|_{a_{h},*  }^{  } \| e_{h} \|_{a_{h},*  }^{  } + h^{r-1} \| e_{h} \|_{r, \Omega   }^{  }\abs{e_{h}  }_{g_{h}} \\
+         &\lesssim (\| C _{h}^{e} u - u \|_{a_{h},*  }^{  } + h^{r-1} \| e_{h} \|_{r, \Omega   }^{  }) \|e_{h}\|_{A_{h}} \\
+         &\lesssim  h^{r-1} \| u \|_{r, \Omega   }^{  } \|e_{h}\|_{A_{h}}.
+    \end{split}
+\]
+Here we noticed that $\| e_{h} \|_{a_{h},*  }^{  } + \abs{e_{h}  }_{g_{h}} \lesssim \| e_{h} \|_{ A_{h} }^{  }  $. We also argued that $\| C _{h}^{e} u - u \|_{a_{h},*  }^{  } \lesssim h^{r-1}\| u \|_{ r,\Omega  }^{  }  $ from Lemma
+\ref{lemma:astar_estimate}.
+\todo[inline]{ TODO: Need to show $ \| e_{h} \|_{a_{h},*  }^{  } + |e_{h}  |_{g_{h}} \le  \| e_{h} \|_{ A_{h} }^{  }  $ }
+Hence, the first part of the proof is complete.
+
+\item Here is the second part.
     \end{enumerate}
-    \todo[inline]{ DO PROOF}
 \end{proof}
 
 
