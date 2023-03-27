@@ -224,7 +224,7 @@ Let $u \in H^{s}( \Omega )  $, $ s\ge 3 $  be solution to \eqref{eq:Bi_strong} a
     \[
     \| u - u_{h} \|_{ a_{h} }^{  }  \le \| e_{\pi } \|_{a_{h},*}^{  } + \| e_{h} \|_{A_{h}  }^{  }
     \]
-Using Lemma \ref{lemma:astar_estimate}, can we see that $\| e_{\pi } \|_{a_{h},*}^{  } \lesssim h^{r-1} \| u \|_{ u,\Omega  }^{  }  $ is already fulfilled. So it remains to check the discrete part. From Lemma \ref{lemma:bi_Ah_coercive}, \ref{lemma:bi_Ah_bounded}, the weak Galerkin orthogonality and Assumption \ref{as:bi_EP2} is it natural to see that, \[
+Using Lemma \ref{lemma:astar_estimate}, can we see that $\| e_{\pi } \|_{a_{h},*}^{  } \lesssim h^{r-1} \| u \|_{ r,\Omega  }^{  }  $ is already fulfilled. So it remains to check the discrete part. From Lemma \ref{lemma:bi_Ah_coercive}, \ref{lemma:bi_Ah_bounded}, the weak Galerkin orthogonality and Assumption \ref{as:bi_EP2} is it natural to see that, \[
     \begin{split}
 \| e_{h} \|_{ A_{h} }^{ 2 } & \lesssim a_{h}( C _{h}^{e} u - u_{h}, e_{h}) + g_{h}( C _{h}^{e}u - u_{h}, e_{h}) \\
  & = a_{h}( C _{h}^{e} u - u, e_{h}) + a_{h}( u - u_{h}, e_{h}) + g_{h}( C _{h}^{e}u - u_{h}, e_{h}) \\
@@ -232,7 +232,7 @@ Using Lemma \ref{lemma:astar_estimate}, can we see that $\| e_{\pi } \|_{a_{h},*
  & \lesssim h^{r-1} \| u \|_{ r, \Omega  }^{  } \| e_{h} \|_{ A_{h} }^{  }.
     \end{split}
 \]
-The last line of the calculations above comes from the fact that,
+The last line of the calculations above comes from the fact that
 \[
     \begin{split}
         a_{h}( C _{h}^{e} u - u, e_{h}) + g_{h}( C _{h}^{e}u, e_{h}) &\lesssim \| C _{h}^{e} u - u \|_{a_{h},*  }^{  } \| e_{h} \|_{a_{h},*  }^{  }
@@ -247,7 +247,50 @@ Here we noticed that $\| e_{h} \|_{a_{h},*  }^{  } + \abs{e_{h}  }_{g_{h}} \less
 \todo[inline]{ TODO: Need to show $ \| e_{h} \|_{a_{h},*  }^{  } + |e_{h}  |_{g_{h}} \le  \| e_{h} \|_{ A_{h} }^{  }  $ }
 Hence, the first part of the proof is complete.
 
-\item Here is the second part.
+    \item We want to show that $ \| e \|_{ \Omega  }^{  } \lesssim   h^{r} \| u \|_{ r,\Omega  }^{  }$. The idea is to apply the so-called Aubin-Nitsche duality trick by being aware of the ghost penalty $g_{h}$. Let us denote the following observation.
+    Because of the Assumption \ref{as:EP2} is there a function $\phi \in H^2( \Omega ) \cap H^{1}_{0}( \Omega ) $ and a $\psi \in L^2( \Omega )  $ s.t.
+    $$-\Delta \phi = \psi  \text{ and }  \| \phi  \|_{ 2, \Omega  }^{  } \lesssim \| \psi  \|_{ \Omega  }^{  }.$$
+
+    Because of the regularity $\phi $ can we write $ (e, \psi  )_{\Omega } = (e, -\Delta \phi )_{\Omega } = a_{h}(e, \phi )  $. Naturally, we can now seek to bound this operator. That is,
+    \[
+    \begin{split}
+        (e, \psi  )_{\Omega } &= a_{h}( e, \phi ) \\
+        &= a_{h}(e, \phi -  \pi_{h} \phi   ) + g_{h}(u_{h} - \pi^{e} _{h} u,   \pi^{e}_{h} \phi   )  +g_{h}(\pi _{h} u, \pi_{h} \phi   ) \\
+        & \lesssim h^{r} \| u \|_{ r, \Omega  }^{  } \| \psi  \|_{ \Omega  }^{  }
+    \end{split}
+    \]
+
+    In the first line we used the weak orthogonality, i.e.,
+    \[
+        \begin{split}
+    a_{h}( e, \phi ) & = a_{h}( e, \phi  - \pi _{h} \phi ) + a_{h}( u - u_{h}, \pi _{h} \phi ) \\
+     & = a_{h}( e, \phi  - \pi _{h} \phi ) + g_{h}(  u_{h}, \pi _{h} \phi ) \\
+     & = a_{h}( e, \phi  - \pi _{h} \phi ) + g_{h}(  u_{h} - \pi ^{e}_{h}u, \pi _{h} \phi )+ g_{h}( \pi ^{e}_{h}u, \pi _{h} \phi ).
+        \end{split}
+    \]
+
+    The last inequality appears after applying Cauchy-Schwartz and Assumption \ref{as:EP2}.
+\[
+    \begin{split}
+        a_{h}( e, \phi  - \pi _{h} \phi ) &+ g_{h}(  u_{h} - \pi ^{e}_{h}u, \pi _{h} \phi )+ g_{h}( \pi ^{e}_{h}u, \pi _{h} \phi ) \\
+                                          &\lesssim \| e \|_{ a_{h},*  }^{  } \| \phi - \pi _{h} \phi   \|_{a_{h},*  }^{  }   +
+     \abs{\pi _{h}^{e} u - u_{h} }_{ g_{h}}^{  } \abs{ \pi _{h} \phi  }_{g_{h}}+ \abs{ \pi^{e} _{h} u } _{g_{h}} \abs{ \pi _{h} \phi  }_{g_{h}} \\
+.
+    \end{split}
+\]
+
+Using the result from the first part \eqref{eq:apriori_1}, Assumption \ref{as:EP2}.
+\[
+    \begin{split}
+        \| e \|_{ a_{h},*  }^{  } &\lesssim h^{r-1} \| u \|_{ r, \Omega  }^{  } \\
+        \abs{ \pi^{e} _{h} u } _{g_{h}} &\lesssim h^{r-1}\| u \|_{2,\Omega   }^{  } \\
+        \abs{ \pi^{e} _{h} u - u_{h} } _{g_{h}} &\lesssim \|  \pi^{e} _{h} u - u_{h} \|_{ A_{h}  }^{  }  \\
+        \abs{ \pi^{e} _{h} \phi  } _{g_{h}} &\lesssim  \ldots \\
+        \|\phi - \pi _{h} \phi  \|_{a_{h},*  }^{  }  &\lesssim  \ldots
+    \end{split}
+\]
+    \todo[inline]{ TODO: Finish proof.  }
+
     \end{enumerate}
 \end{proof}
 
