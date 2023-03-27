@@ -255,7 +255,7 @@ Hence, the first part of the proof is complete.
     \[
     \begin{split}
         (e, \psi  )_{\Omega } &= a_{h}( e, \phi ) \\
-        &= a_{h}(e, \phi -  \pi_{h} \phi   ) + g_{h}(u_{h} - \pi^{e} _{h} u,   \pi^{e}_{h} \phi   )  +g_{h}(\pi _{h} u, \pi_{h} \phi   ) \\
+        &= a_{h}(e, \phi -  C_{h}^{e} \phi   ) + g_{h}(u_{h} - C_{h}^{e} u,   \pi^{e}_{h} \phi   )  +g_{h}(\pi _{h} u, C_{h}^{e} \phi   ) \\
         & \lesssim h^{r} \| u \|_{ r, \Omega  }^{  } \| \psi  \|_{ \Omega  }^{  }
     \end{split}
     \]
@@ -263,9 +263,9 @@ Hence, the first part of the proof is complete.
     In the first line we used the weak orthogonality, i.e.,
     \[
         \begin{split}
-    a_{h}( e, \phi ) & = a_{h}( e, \phi  - \pi _{h} \phi ) + a_{h}( u - u_{h}, \pi _{h} \phi ) \\
-     & = a_{h}( e, \phi  - \pi _{h} \phi ) + g_{h}(  u_{h}, \pi _{h} \phi ) \\
-     & = a_{h}( e, \phi  - \pi _{h} \phi ) + g_{h}(  u_{h} - \pi ^{e}_{h}u, \pi _{h} \phi )+ g_{h}( \pi ^{e}_{h}u, \pi _{h} \phi ).
+    a_{h}( e, \phi ) & = a_{h}( e, \phi  - C^{e} _{h} \phi ) + a_{h}( u - u_{h}, C^{e} _{h} \phi ) \\
+     & = a_{h}( e, \phi  - C^{e} _{h} \phi ) + g_{h}(  u_{h}, C^{e} _{h} \phi ) \\
+     & = a_{h}( e, \phi  - C^{e} _{h} \phi ) + g_{h}(  u_{h} - C ^{e}_{h}u, C^{e} _{h} \phi )+ g_{h}( C ^{e}_{h}u, \pi _{h} \phi ).
         \end{split}
     \]
 
@@ -279,14 +279,14 @@ Hence, the first part of the proof is complete.
     \end{split}
 \]
 
-Using the result from the first part \eqref{eq:apriori_1}, Assumption \ref{as:EP2}.
+Using the result from the first part and the Assumption \ref{as:EP2}.
 \[
     \begin{split}
         \| e \|_{ a_{h},*  }^{  } &\lesssim h^{r-1} \| u \|_{ r, \Omega  }^{  } \\
-        \abs{ \pi^{e} _{h} u } _{g_{h}} &\lesssim h^{r-1}\| u \|_{2,\Omega   }^{  } \\
-        \abs{ \pi^{e} _{h} u - u_{h} } _{g_{h}} &\lesssim \|  \pi^{e} _{h} u - u_{h} \|_{ A_{h}  }^{  }  \\
-        \abs{ \pi^{e} _{h} \phi  } _{g_{h}} &\lesssim  \ldots \\
-        \|\phi - \pi _{h} \phi  \|_{a_{h},*  }^{  }  &\lesssim  \ldots
+        \abs{ C^{e} _{h} u } _{g_{h}} &\lesssim h^{r-1}\| u \|_{2,\Omega   }^{  } \\
+        \abs{ C^{e} _{h} u - u_{h} } _{g_{h}} &\lesssim \|  \pi^{e} _{h} u - u_{h} \|_{ A_{h}  }^{  }  \\
+        \abs{ C^{e} _{h} \phi  } _{g_{h}} &\lesssim  \ldots \\
+        \|\phi - C^{e} _{h} \phi  \|_{a_{h},*  }^{  }  &\lesssim  \ldots
     \end{split}
 \]
     \todo[inline]{ TODO: Finish proof.  }
