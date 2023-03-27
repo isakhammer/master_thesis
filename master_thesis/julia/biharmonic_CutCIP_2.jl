@@ -197,7 +197,6 @@ module Solver
         uh = solve(op)
         A =  get_matrix(op)
         ndof = size(A)[1]
-        h = 1/sqrt(ndof)
         cond_number = compute_condition_number(A, ndof)
 
         e = u_ex - uh
@@ -223,7 +222,6 @@ module Solver
         if ( vtkdirname!=nothing)
             dirname =vtkdirname*"/order_"*string(order)*"_n_"*string(n)
             mkpath(dirname)
-            println("Generating vtk's in ", dirname)
 
             generate_vtk(sol=sol, dirname=dirname)
         end
@@ -308,13 +306,14 @@ function main()
     # %% Manufactured solution
     L, m, r = (1, 1, 1)
     u_ex(x) = (x[1]^2 + x[2]^2  - 1)^2*sin(2π*x[1])*cos(2π*x[2])
+    # u_ex(x) = sin(2π*x[1])*cos(2π*x[2])
     # u_ex(x) = 100*sin(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
     # u_ex(x) = 100*cos(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
     exact_sol = Solver.man_sol(u_ex)
     circle = true
     solver_config = Solver.Config(exact_sol, circle)
 
-    resultdir= "figures/biharmonic_CIP_nitsche/"*string(Dates.now())
+    resultdir= "figures/biharmonic_CutCIP/"*string(Dates.now())
     println(resultdir)
     mkpath(resultdir)
 
