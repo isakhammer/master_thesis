@@ -4,5 +4,28 @@
 \label{sec:biharmonic_mixed_formulation}
 
 
+\subsection{Introduction}%
+\label{sub:introduction}
+
+We say that we have a mixed formulation if the problem is written on the form; Give $f \in V' $  and $g \in W' $, then we want to find $( u, \phi ) \in V \times W$  s.t. \[
+    \begin{cases}
+       a( u,v) + b ( v, \phi )  & = ( f,v)  \quad  \forall v \in V, \\
+       b( u, \phi )  & = ( g, \phi )    \quad \forall \phi \in W
+    \end{cases}
+\]
+Where $V$  and $W$  is Hilbert spaces and $a: V\times V \to \mathbb{R}  $ and $b: V \times W \to \mathbb{R} $.
+
+There is several interesting papers on this subject.
+\begin{itemize}
+    \item Classical formulations \cite{babuvska1980analysis}
+    \item  A Nitsche mixed extended finite element method for the biharmonic interface problem \cite{cai2023nitsche}
+        \begin{enumerate}[label=\arabic*)]
+            \item Applying nitsche based penalty based on a so called Ciarlet–Raviart formulation
+        \end{enumerate}
+\end{itemize}
+
+
+
+
 
 
