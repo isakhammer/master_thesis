@@ -7,7 +7,7 @@
 \subsection{Introduction}%
 \label{sub:introduction}
 
-Recall the biharmonic problem formulation $u \in H^4( \Omega ) $  \[
+Recall the biharmonic problem formulation to find a $u \in H^4( \Omega ) $  \[
     \begin{split}
 \Delta ^2 u & = f \quad  \text{in } \Omega \\
 \partial _{n} u & = h_{1}(x ) \\
@@ -15,16 +15,32 @@ Recall the biharmonic problem formulation $u \in H^4( \Omega ) $  \[
     \end{split}
 \]
 For $f: \Omega  \to  \mathbb{R} $ and $h_{1},h_{2}: \Omega  \to \mathbb{R}  $. It is easy to see
-that the formulation can be rewritten in an equivalent mixed formulation, that is, \[
+that the formulation can be rewritten in an equivalent mixed formulation , that is, to find $\sigma, \tau  \in H^2( \Omega ) $ s.t. \[
     \begin{split}
-\Delta \sigma  & = f \quad  \text{in } \Omega \\
 \sigma   & = \Delta u  \text{ in } \Omega \\
+\Delta \sigma  & = f \quad  \text{in } \Omega \\
 \partial _{n} \sigma  & = h_{1}(x ) \text{ on } \Gamma  \\
 \partial _{n} \tau   & = h_{2}( x) \text{ on } \Gamma
     \end{split}
 \]
+In contrast to the CIP formulation, we will see that it is now easier to handle the constraints.
+The goal is to obtain an useful weak formulation. Using Greens theorem on the first equation we get,
+\[
+( \sigma, v)_{\Omega } = ( \nabla  u , \nabla v  )_{\Omega } - ( \nabla _{n} u , v) _{\Gamma }.
+\]
+Similarly for the second equation we obtain
+\[
+( \nabla \sigma , \nabla \varphi  )_{\Omega} - ( \nabla _{n} \sigma ,  \varphi )_{\Gamma } = ( f,\varphi ) _{\Omega}
+\]
+Putting it all together we have the following mixed weak formulation; Find $( u, \sigma ) \in H^{1}( \Omega ) \times H^{1}( \Omega )  $ s.t.  \[
+    \begin{split}
+     ( \nabla  u , \nabla v  )_{\Omega } -( \sigma, v)_{\Omega }  & =   ( h_{1} , v) _{\Gamma } \quad  \forall v \in H^{1}( \Omega ) \\
+( \nabla \sigma , \nabla \varphi  )_{\Omega}  & = ( f,\varphi ) _{\Omega} + ( h_{2} ,  \varphi )_{\Gamma } \quad  \forall \varphi \in H^{1}( \Omega )
+    \end{split}
+\]
 
 
+\todo[inline]{ Add a inkscape-picture illustrating $\Omega $ and $\Gamma $. }
 
 We say that we have a mixed formulation if the problem is written on the form; Give $f \in V' $  and $g \in W' $, then we want to find $( u, \phi ) \in V \times W$  s.t. \[
     \begin{cases}
