@@ -7,6 +7,25 @@
 \subsection{Introduction}%
 \label{sub:introduction}
 
+Recall the biharmonic problem formulation $u \in H^4( \Omega ) $  \[
+    \begin{split}
+\Delta ^2 u & = f \quad  \text{in } \Omega \\
+\partial _{n} u & = h_{1}(x ) \\
+\partial _{n}( \Delta u)  & = h_{2}( x)
+    \end{split}
+\]
+For $f: \Omega  \to  \mathbb{R} $ and $h_{1},h_{2}: \Omega  \to \mathbb{R}  $. It is easy to see
+that the formulation can be rewritten in an equivalent mixed formulation, that is, \[
+    \begin{split}
+\Delta \sigma  & = f \quad  \text{in } \Omega \\
+\sigma   & = \Delta u  \text{ in } \Omega \\
+\partial _{n} \sigma  & = h_{1}(x ) \text{ on } \Gamma  \\
+\partial _{n} \tau   & = h_{2}( x) \text{ on } \Gamma
+    \end{split}
+\]
+
+
+
 We say that we have a mixed formulation if the problem is written on the form; Give $f \in V' $  and $g \in W' $, then we want to find $( u, \phi ) \in V \times W$  s.t. \[
     \begin{cases}
        a( u,v) + b ( v, \phi )  & = ( f,v)  \quad  \forall v \in V, \\
