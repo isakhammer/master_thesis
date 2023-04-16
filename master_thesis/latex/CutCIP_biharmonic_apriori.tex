@@ -16,6 +16,36 @@ For proof, see \cite[Lemma 4.2]{hansbo2003finite}.
 \subsubsection{Cléments interpolation}%
 \label{ssub:clement_operator}
 
+\begin{figure}[htpb]
+    \centering
+    \begin{tikzpicture}[scale=0.5]
+        % Arbitrary triangle
+        \coordinate (A1) at (0,0);
+        \coordinate (B1) at (4,1);
+        \coordinate (C1) at (1,3);
+        \draw (A1) -- (B1) -- (C1) -- cycle;
+
+        % Centroid
+        \coordinate (ai) at (barycentric cs:A1=1,B1=1,C1=1);
+        \fill (ai) circle (2pt);
+        \node[anchor=north west] at (ai) {$a_i$};
+
+        % Reference triangle
+        \coordinate (A2) at ($(A1) + (6, 0)$);
+        \coordinate (B2) at ($(A2) + (0, 3)$);
+        \coordinate (C2) at ($(A2) + (3, 0)$);
+        \draw (A2) -- (B2) -- (C2) -- cycle;
+
+        % Centroid of the reference triangle
+        \coordinate (ahi) at (barycentric cs:A2=1,B2=1,C2=1);
+        \fill (ahi) circle (2pt);
+        \node[anchor=north west] at (ahi) {$\hat{a}_i$};
+    \end{tikzpicture}
+
+    \label{fig:ref1}
+    \caption{Reference triangle 1}
+\end{figure}
+
 We want to compute the expected convergence rate of the energy norm \eqref{eq:bi_Ah_norm}. An important tool in the process is the Cléments interpolation operator, $C_{h}$.
 It is used for interpolation on non smooth functions by applying an regularization on so-called macroelements. Let us denote the $\mathcal{P}_{c}^{k}( \Omega )  $ to be an $H^{1}$ conformal polynomial space. We denote $\left\{ a_{1}, \ldots, a_{N}
 \right\} $ to be the Lagrange nodes. Associated with each node $a_{i}$ we denote the macroelement $A_{i}$ to consist of all simplices containing $a_{i}$. Let $n_{cf}$ be the number of configurations for the macroelement, then we define the index $j:
