@@ -3,6 +3,63 @@
 \section{CutCIP Biharmonic problem}%
 \label{sec:cutcip_biharmonic_problem}
 
+\begin{figure}[h]
+    \centering
+    % First TikZ picture
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \begin{tikzpicture}
+            % Circle
+            % \draw (0, 0) circle (1.5cm);
+
+            % Fitted mesh (crude triangular mesh)
+            \foreach \i in {0, 30, ..., 330} {
+                \draw[fill=red!30] (0, 0) -- (\i:1.5cm) -- (\i+30:1.5cm) -- cycle;
+            }
+
+            % Mesh nodes
+            \foreach \i in {0, 30, ..., 330} {
+                \fill[black] (\i:1.5cm) circle (1pt);
+            }
+            \fill[black] (0, 0) circle (1pt);
+        \end{tikzpicture}
+    \end{minipage}
+    \hfill
+    % Second TikZ picture
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \begin{tikzpicture}
+            % Boundary points
+            \foreach \i in {0, 45, ..., 315} {
+                \coordinate (boundary-\i) at (\i:1.5cm);
+            }
+
+            % Interior points
+            \coordinate (interior-1) at (0.75, 0);
+            \coordinate (interior-2) at (-0.75, 0);
+            \coordinate (interior-3) at (0, 0.75);
+
+            % Create a cycle connecting all the boundary points
+            \fill[red!30] (boundary-0) -- (boundary-45) -- (boundary-90) -- (boundary-135) -- (boundary-180) -- (boundary-225) -- (boundary-270) -- (boundary-315) -- cycle;
+
+            % Triangulation (manually specified)
+            \draw (boundary-0) -- (boundary-45) -- (interior-1) -- cycle;
+            \draw (boundary-45) -- (boundary-90) -- (interior-1) -- cycle;
+            \draw (boundary-90) -- (boundary-135) -- (interior-3) -- cycle;
+            \draw (boundary-135) -- (boundary-180) -- (interior-3) -- cycle;
+            \draw (boundary-180) -- (boundary-225) -- (interior-2) -- cycle;
+            \draw (boundary-225) -- (boundary-270) -- (interior-2) -- cycle;
+            \draw (boundary-270) -- (boundary-315) -- (interior-1) -- cycle;
+            \draw (boundary-315) -- (boundary-0) -- (interior-1) -- cycle;
+
+            % Triangulation between interior points
+            \draw (interior-1) -- (interior-2) -- (interior-3) -- cycle;
+        \end{tikzpicture}
+\end{minipage}
+    \caption{Examples of different triangulations for a fitted mesh for a circle.}
+\end{figure}
+
+
 \subsection{Weak formulation}%
 \label{sub:weak_formulation}
 
@@ -139,50 +196,8 @@ V_{h} = \left\{ v \in C^{0}\left( \Omega  \right): v_{T} = v | _{T} \in \mathcal
 \mathcal{T}_{h}    \right\}
 \]
 
-\begin{tikzpicture}
-    % Circle
-    \draw (0, 0) circle (1.5cm);
-
-    % Fitted mesh (crude triangular mesh)
-    \foreach \i in {0, 30, ..., 330} {
-        \draw[fill=gray!30] (0, 0) -- (\i:1.5cm) -- (\i+30:1.5cm) -- cycle;
-    }
-
-    % Mesh nodes
-    \foreach \i in {0, 30, ..., 330} {
-        \fill[black] (\i:1.5cm) circle (1pt);
-    }
-    \fill[black] (0, 0) circle (1pt);
-\end{tikzpicture}
 
 
-\begin{tikzpicture}
-    % Circle
-    % \draw (0, 0) circle (1.5cm);
-
-    % Boundary points
-    \foreach \i in {0, 45, ..., 315} {
-        \coordinate (boundary-\i) at (\i:1.5cm);
-    }
-
-    % Interior points
-    \coordinate (interior-1) at (0.75, 0);
-    \coordinate (interior-2) at (-0.75, 0);
-    \coordinate (interior-3) at (0, 0.75);
-
-    % Triangulation (manually specified)
-    \draw (boundary-0) -- (boundary-45) -- (interior-1) -- cycle;
-    \draw (boundary-45) -- (boundary-90) -- (interior-1) -- cycle;
-    \draw (boundary-90) -- (boundary-135) -- (interior-3) -- cycle;
-    \draw (boundary-135) -- (boundary-180) -- (interior-3) -- cycle;
-    \draw (boundary-180) -- (boundary-225) -- (interior-2) -- cycle;
-    \draw (boundary-225) -- (boundary-270) -- (interior-2) -- cycle;
-    \draw (boundary-270) -- (boundary-315) -- (interior-1) -- cycle;
-    \draw (boundary-315) -- (boundary-0) -- (interior-1) -- cycle;
-
-    % Triangulation between interior points
-    \draw (interior-1) -- (interior-2) -- (interior-3) -- cycle;
-\end{tikzpicture}
 
 From the previous chapter can we write the CIP method. The bilinear form $a_{h}:  V_{h}\times  V_{h} \to \mathbb{R} $ is defined as
 
