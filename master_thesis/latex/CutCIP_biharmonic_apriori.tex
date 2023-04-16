@@ -102,7 +102,7 @@ For proof, see \cite[Lemma 4.2]{hansbo2003finite}.
     % Central vertex a_i
     \coordinate (ah_i) at (0, 0);
     \fill (ah_i) circle (2pt);
-    \node[anchor=south] at (ah_i) {$\hat{a}_i$};
+    \node[anchor=south, yshift=0.2cm] at (ah_i) {$\hat{a}_i$};
 
     % Reference hexagon
     \foreach \angle in {0, 60, ..., 300} {
@@ -129,7 +129,9 @@ For proof, see \cite[Lemma 4.2]{hansbo2003finite}.
     \draw (F1) -- (ai);
     % Centroid
     \fill (ai) circle (2pt);
-    \node[anchor=south] at (ai) {$a_i$};
+    \node[anchor=south, yshift=0.2cm] at (ai) {$a_i$};
+
+    \draw[->, thick, >=stealth] ($(ah_i)+(0.2,- 0.2)$) to[bend right] node[midway, above, yshift=0.1cm] {$G_{A_i}$} ($(ai)+(-0.2,-0.2)$);
 
 \end{tikzpicture}
 
