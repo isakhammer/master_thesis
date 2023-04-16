@@ -11,6 +11,8 @@
         \begin{tikzpicture}
             % Circle
             \draw (0.0,0.0) circle (1.5cm);
+            \fill[blue!30] (0.0,0.0) circle (1.5cm);
+
             \draw[->, line width=1.0pt] ({1.5*cos(45)}, { 1.5*sin(45) }) -- ({ 2.5*cos(45)  }, { 2.5*sin(45)  }) node[ above left] {$n $};
             \draw[->, line width=1.0pt] ({1.5*cos(45)}, { 1.5*sin(45) }) -- ({ 1.5*cos(45) - 1.5*sin(45) }, { 1.5*sin(45) + 1.5*cos(45) }) node[ above right] {$t $};
 
