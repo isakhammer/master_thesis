@@ -13,8 +13,8 @@ Let $\Omega \subseteq    \mathbb{R} ^d$ be a physical mesh, $\Gamma  $ be a $C^2
     \label{eq:Bi_strong}
 \begin{split}
     \Delta^2  u  + \alpha  u  & = f( x)  \quad \text{in } \Omega,   \\
-    \partial _{n} u & = g_{1}(x)   \quad \text{on } \gamma ,  \\
-    \partial _{n} \Delta  u & = g_2(x)  \quad \text{on } \gamma  .  \\
+    \partial _{n} u & = g_{1}(x)   \quad \text{on } \Gamma ,  \\
+    \partial _{n} \Delta  u & = g_2(x)  \quad \text{on } \Gamma  .  \\
 \end{split}
 \end{equation}
 
@@ -42,23 +42,98 @@ Let $u \in H^{4}( \Omega ) $ be a solution of the strong problem and $v \in H^{2
     a( u,v) = l(v) \quad  \forall v \in V_{}
     \]
 
+
+
+\begin{tikzpicture}
+    % Circle
+    \draw (0.0,0.0) circle (1.5cm);
+    \draw[->] (1.5,0) -- (1.7,0) node[below] {$\vec{n}$};
+
+
+    % Background mesh
+    \foreach \i in {-2.5, -2, ..., 2.5} {
+        \draw[shift={(-2.5,\i)}] (0,0) -- (5,0);
+        \draw[shift={(\i,-2.5)}] (0,0) -- (0,5);
+    }
+
+    % Labels
+    \node[below right] at (2.5,2.5) {$\widetilde{\mathcal{T}}_{h}$};
+    \node[below right] at (0.5,0.5) {$\Omega$};
+\end{tikzpicture}
+
+
+
+
 \subsection{Initial discrete formulation}%
 \label{sub:initial_discrete_formulation}
 
 We want to make a CutFEM version of the CIP problem. Let $\widetilde{\mathcal{T}_{h} } $ be a shape-regular and quasi-uniform background mesh. Let us denote the active set $\mathcal{T} _{h} \subseteq \widetilde{\mathcal{T}_{h}}$ which intersects the interior of the active domain $\Omega $, that is  \[
-\mathcal{T} _{h} = \left\{ T \in \widetilde{\mathcal{T} _{h}}  \mid  T \cap (\Omega \setminus \Gamma ) \neq \emptyset    \right\} .
+\mathcal{T} _{h} = \left\{ T \in \widetilde{\mathcal{T} }_{h}  \mid  T \cap (\Omega \setminus \Gamma ) \neq \emptyset    \right\} .
 \]
 With a corresponding set of interior facets, \[
     \mathcal{F} _{h} = \left\{ F = T^{+} \cap T^{-}  \mid  T^{+}, T^{-} \in \mathcal{T} _{h} \right\},
 \]
 and a set of cut elements \[
-\mathcal{T} _{\Gamma } = \left\{ T \in \mathcal{T} _{h}   \mid  T \cap \Gamma \neq \Omega \right\}.
+\mathcal{T} _{\Gamma } = \left\{ T \in \mathcal{T} _{h}   \mid  T \cap \Gamma \neq \emptyset  \right\}.
 \]
+For convenience, will we define also the interior of the active set as $\mathcal{T} _{int}$.
+\[
+\mathcal{T} _{int} = \left\{ T \in \mathcal{T} _{h}   \mid  T \cap  Int(\Omega ) \neq \emptyset  \right\}.
+\]
+Hence, we have that the active set is the union of the interior and cut elements, $\mathcal{T} _{h} = \mathcal{T} _{int} \cap \mathcal{T} _{\Gamma }$. For an illustration, see figure
+
+\begin{figure}
+\centering
+\begin{tikzpicture}
+
+    % POTENTIAL ACTIVE MESH
+    \fill[blue!30] (2,2) -- (2,-1.5) --(-1.5,-1.5) -- (-1.5,2) -- cycle;
+
+    % ELEMENTS WITH NO INTERSECTION
+    % lower left
+    \fill[white] (-1.5,-1.5) rectangle (-1.0,-1.0);
+    \fill[white] (-1.5,2.0) rectangle (-1.0,1.5);
+    \fill[white] (-1.0,2.0) rectangle (-0.5,1.5);
+    \fill[white] (2,2) rectangle (1.5,1.5);
+    \fill[white] (1.5,2) rectangle (1.0,1.5);
+    \fill[white] (2,1.5) rectangle (1.5,1.0);
+    \fill[white] (1.5,-1) rectangle (2,-1.5);
+    \fill[white] (1.5,-0.5) rectangle (2,-1.0);
+
+    % CUT ELEMENTS
+    \fill[green!40] (-0.5,2.0) rectangle (1.0,1.5);
+    \fill[green!40] (-1.5,1.5) rectangle (0.0,1.0);
+    \fill[green!40] (0.5,1.5) rectangle (1.5,1.0);
+    \fill[green!40] (-1.5,1.0) rectangle (-1.0,-1.0);
+    \fill[green!40] (-1.0,-0.5) rectangle (-0.5,-1.5);
+    \fill[green!40] (-0.5,-1.5) rectangle (1.5,-1.0);
+    \fill[green!40] (1.5,-1) rectangle (1.0,-0.0);
+    \fill[green!40] (1.5,-0.5) rectangle (2.0,1.0);
+    \fill[green!40] (1.0,0.5) rectangle (1.5,1.0);
+
+    \draw (0.1, 0.1) circle (1.5cm);
+    % Background mesh
+    \foreach \i in {-2.5, -2, ..., 2.5} {
+        \draw[line width=0.1pt, shift={(-2.5,\i)}] (0,0) -- (5,0);
+        \draw[line width=0.1pt, shift={(\i,-2.5)}] (0,0) -- (0,5);
+    }
+
+
+    % Labels
+    \node[below right] at (2.5,2.5) {$\widetilde{\mathcal{T}}_{h}$};
+    \node[below right] at (0.4,0.5) {$\mathcal{T}_{int}$};
+    \node[below right] at (-1.5,0.5) {$\mathcal{T}_{\Gamma }$};
+\end{tikzpicture}
+
+\caption{An illustration of the background mesh $\widetilde{\mathcal{T} }_{h}$,  cut elements $\mathcal{T} _{\Gamma }$ and the interior of the active set $\mathcal{T} _{int}$.      }
+\end{figure}
+
 We denote the $C^{0}$ polynomial space of order $k$ as
 \[
 V_{h} = \left\{ v \in C^{0}\left( \Omega  \right): v_{T} = v | _{T} \in \mathcal{P} ^{k}\left( T \right), \forall T \in
 \mathcal{T}_{h}    \right\}
 \]
+
 From the previous chapter can we write the CIP method. The bilinear form $a_{h}:  V_{h}\times  V_{h} \to \mathbb{R} $ is defined as
 
 \begin{equation}
