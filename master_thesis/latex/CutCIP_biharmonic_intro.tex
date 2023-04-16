@@ -6,8 +6,24 @@
 \subsection{Weak formulation}%
 \label{sub:weak_formulation}
 
+    \begin{figure}[htpb]
+        \centering
+        \begin{tikzpicture}
+            % Circle
+            \draw (0.0,0.0) circle (1.5cm);
+            \draw[->, line width=1.0pt] ({1.5*cos(45)}, { 1.5*sin(45) }) -- ({ 2.5*cos(45)  }, { 2.5*sin(45)  }) node[ above left] {$n $};
+            \draw[->, line width=1.0pt] ({1.5*cos(45)}, { 1.5*sin(45) }) -- ({ 1.5*cos(45) - 1.5*sin(45) }, { 1.5*sin(45) + 1.5*cos(45) }) node[ above right] {$t $};
 
-Let $\Omega \subseteq    \mathbb{R} ^d$ be a physical mesh, $\Gamma  $ be a $C^2$ boundary and the function $\alpha: \Omega \to \mathbb{R}  $. We define the strong biharmonic problem to be on the form
+            % Labels
+            \node[below right] at (0.5,0.5) {$\Omega$};
+            \node[below right] at (-1.5,-1.5) {$\Gamma  = \partial \Omega$};
+        \end{tikzpicture}
+        \caption{ Illustration of an domain $\Omega $, the boundary $\Gamma $. The normal vector $n$  and the corresponding tangent vector.   }
+        \label{fig:domain_construction}
+    \end{figure}
+
+
+    Let $\Omega \subseteq    \mathbb{R} ^d$ be a physical mesh, $\Gamma  $ be a $C^2$ boundary  illustrated at figure \ref{fig:domain_construction}. Assume we have the function $\alpha: \Omega \to \mathbb{R} $. We define the strong biharmonic problem to be on the form
 
 \begin{equation}
     \label{eq:Bi_strong}
@@ -44,19 +60,6 @@ Let $u \in H^{4}( \Omega ) $ be a solution of the strong problem and $v \in H^{2
 
 
 
-    \begin{figure}[htpb]
-        \centering
-        \begin{tikzpicture}
-            % Circle
-            \draw (0.0,0.0) circle (1.5cm);
-            \draw[->, line width=1.0pt] ({1.5*cos(45)}, { 1.5*sin(45) }) -- ({ 2.0*cos(45) }, { 2.0*sin(45) }) node[midway, above left] {$n $};
-
-            % Labels
-            \node[below right] at (0.5,0.5) {$\Omega$};
-        \end{tikzpicture}
-        \caption{ Illustration of the domain $\Omega $ }
-        \label{fig:}
-    \end{figure}
 
 
 
