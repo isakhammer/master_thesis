@@ -16,8 +16,12 @@ For proof, see \cite[Lemma 4.2]{hansbo2003finite}.
 \subsubsection{Cléments interpolation}%
 \label{ssub:clement_operator}
 
-\begin{figure}[htpb]
-    \centering
+
+\begin{figure}
+\begin{minipage}{.5\linewidth}
+\centering
+\subfloat[]{
+    \label{main:a}
     \begin{tikzpicture}[scale=0.5]
         % Arbitrary triangle
         \coordinate (A1) at (0,0);
@@ -43,16 +47,13 @@ For proof, see \cite[Lemma 4.2]{hansbo2003finite}.
 
         \draw[->, thick, >=stealth] ($(ahi)+(0.2,+0.2)$) to[bend right] node[midway, above] {$G_{A_i}$} ($(ai)+(0.2,+0.3)$);
 
-
     \end{tikzpicture}
-
-    \label{fig:ref1}
-    \caption{Reference triangle 1}
-\end{figure}
-
-\begin{figure}[htpb]
-    \centering
-    \label{fig:ref2}
+}
+\end{minipage}%
+\begin{minipage}{.5\linewidth}
+\centering
+\subfloat[]{
+    \label{main:b}
     \begin{tikzpicture}[scale=0.5]
     % Arbitrary square
     \coordinate (A1) at (0,0);
@@ -87,58 +88,54 @@ For proof, see \cite[Lemma 4.2]{hansbo2003finite}.
     % Draw the mapping G_{A_i} from ahat_i to a_i
     \draw[->, thick, >=stealth] ($(ahat_i)+(0.2,0.2)$) to[bend right] node[midway, above] {$G_{A_i}$} ($(a_i)+(0.2,0.2)$);
 \end{tikzpicture}
+}
+\end{minipage}\par\medskip
+\centering
+\subfloat[]{
+    \label{main:c}
+    \begin{tikzpicture}[scale=0.5]
 
-\caption{Reference triangle 2}
+        % Central vertex a_i
+        \coordinate (ah_i) at (0, 0);
+        \fill (ah_i) circle (2pt);
+        \node[anchor=south, yshift=0.2cm] at (ah_i) {$\hat{a}_i$};
+
+        % Reference hexagon
+        \foreach \angle in {0, 60, ..., 300} {
+            \coordinate (A) at (\angle:2);
+            \coordinate (B) at (\angle + 60:2);
+            \draw (ah_i) -- (A) -- (B) -- cycle;
+        }
+
+        \coordinate (A1) at (5, 0);
+        \coordinate (B1) at (8, 0);
+        \coordinate (C1) at (8, 3);
+        \coordinate (D1) at (7, 4);
+        \coordinate (E1) at (3.5, 4);
+        \coordinate (F1) at (3, 2);
+        \draw (A1) -- (B1) -- (C1) -- (D1) -- (E1) -- (F1) -- cycle;
+
+        \coordinate (ai) at (barycentric cs:A1=1,B1=1,C1=1,D1=1,E1=1,F1=1);
+        % Draw lines from vertices to a_i
+        \draw (A1) -- (ai);
+        \draw (B1) -- (ai);
+        \draw (C1) -- (ai);
+        \draw (D1) -- (ai);
+        \draw (E1) -- (ai);
+        \draw (F1) -- (ai);
+        % Centroid
+        \fill (ai) circle (2pt);
+        \node[anchor=south, yshift=0.2cm] at (ai) {$a_i$};
+
+        \draw[->, thick, >=stealth] ($(ah_i)+(0.2,- 0.2)$) to[bend right] node[midway, above, yshift=0.1cm] {$G_{A_i}$} ($(ai)+(-0.2,-0.2)$);
+
+    \end{tikzpicture}
+}
+
+\label{fig:macroelements}
+\caption{my fig}
 \end{figure}
 
-\begin{figure}[htpb]
-    \centering
-
-
-
-
-\begin{tikzpicture}[scale=0.5]
-
-    % Central vertex a_i
-    \coordinate (ah_i) at (0, 0);
-    \fill (ah_i) circle (2pt);
-    \node[anchor=south, yshift=0.2cm] at (ah_i) {$\hat{a}_i$};
-
-    % Reference hexagon
-    \foreach \angle in {0, 60, ..., 300} {
-        \coordinate (A) at (\angle:2);
-        \coordinate (B) at (\angle + 60:2);
-        \draw (ah_i) -- (A) -- (B) -- cycle;
-    }
-
-    \coordinate (A1) at (5, 0);
-    \coordinate (B1) at (8, 0);
-    \coordinate (C1) at (8, 3);
-    \coordinate (D1) at (7, 4);
-    \coordinate (E1) at (3.5, 4);
-    \coordinate (F1) at (3, 2);
-    \draw (A1) -- (B1) -- (C1) -- (D1) -- (E1) -- (F1) -- cycle;
-
-    \coordinate (ai) at (barycentric cs:A1=1,B1=1,C1=1,D1=1,E1=1,F1=1);
-    % Draw lines from vertices to a_i
-    \draw (A1) -- (ai);
-    \draw (B1) -- (ai);
-    \draw (C1) -- (ai);
-    \draw (D1) -- (ai);
-    \draw (E1) -- (ai);
-    \draw (F1) -- (ai);
-    % Centroid
-    \fill (ai) circle (2pt);
-    \node[anchor=south, yshift=0.2cm] at (ai) {$a_i$};
-
-    \draw[->, thick, >=stealth] ($(ah_i)+(0.2,- 0.2)$) to[bend right] node[midway, above, yshift=0.1cm] {$G_{A_i}$} ($(ai)+(-0.2,-0.2)$);
-
-\end{tikzpicture}
-
-\label{fig:ref3}
-
-\caption{Reference triangle 3}
-\end{figure}
 
 We want to compute the expected convergence rate of the energy norm \eqref{eq:bi_Ah_norm}. An important tool in the process is the Cléments interpolation operator, $C_{h}$.
 It is used for interpolation on non smooth functions by applying an regularization on so-called macroelements. Let us denote the $\mathcal{P}_{c}^{k}( \Omega )  $ to be an $H^{1}$ conformal polynomial space. We denote $\left\{ a_{1}, \ldots, a_{N}
