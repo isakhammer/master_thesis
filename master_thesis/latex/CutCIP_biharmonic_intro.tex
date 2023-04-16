@@ -44,22 +44,19 @@ Let $u \in H^{4}( \Omega ) $ be a solution of the strong problem and $v \in H^{2
 
 
 
-\begin{tikzpicture}
-    % Circle
-    \draw (0.0,0.0) circle (1.5cm);
-    \draw[->] (1.5,0) -- (1.7,0) node[below] {$\vec{n}$};
+    \begin{figure}[htpb]
+        \centering
+        \begin{tikzpicture}
+            % Circle
+            \draw (0.0,0.0) circle (1.5cm);
+            \draw[->, line width=1.0pt] ({1.5*cos(45)}, { 1.5*sin(45) }) -- ({ 2.0*cos(45) }, { 2.0*sin(45) }) node[midway, above left] {$n $};
 
-
-    % Background mesh
-    \foreach \i in {-2.5, -2, ..., 2.5} {
-        \draw[shift={(-2.5,\i)}] (0,0) -- (5,0);
-        \draw[shift={(\i,-2.5)}] (0,0) -- (0,5);
-    }
-
-    % Labels
-    \node[below right] at (2.5,2.5) {$\widetilde{\mathcal{T}}_{h}$};
-    \node[below right] at (0.5,0.5) {$\Omega$};
-\end{tikzpicture}
+            % Labels
+            \node[below right] at (0.5,0.5) {$\Omega$};
+        \end{tikzpicture}
+        \caption{ Illustration of the domain $\Omega $ }
+        \label{fig:}
+    \end{figure}
 
 
 
