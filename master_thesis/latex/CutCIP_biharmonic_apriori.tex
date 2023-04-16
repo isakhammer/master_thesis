@@ -40,6 +40,11 @@ For proof, see \cite[Lemma 4.2]{hansbo2003finite}.
         \coordinate (ahi) at (barycentric cs:A2=1,B2=1,C2=1);
         \fill (ahi) circle (2pt);
         \node[anchor=north west] at (ahi) {$\hat{a}_i$};
+
+        % \draw[->, thick, >=stealth] (ahi) to[bend right] node[midway, above] {$G_{A_i}$} (ai);
+        \draw[->, thick, >=stealth] ($(ahi)+(0.2,+0.2)$) to[bend right] node[midway, above] {$G_{A_i}$} ($(ai)+(0.2,+0.3)$);
+
+
     \end{tikzpicture}
 
     \label{fig:ref1}
