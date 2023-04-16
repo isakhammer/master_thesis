@@ -3,12 +3,10 @@
 \section{CutCIP Biharmonic problem}%
 \label{sec:cutcip_biharmonic_problem}
 
-\begin{figure}
+\begin{figure}[h!]
 \centering
-\begin{tikzpicture}
-
+\begin{tikzpicture}[scale=0.80]
     \draw[fill=red!30] (0.1, 0.1) circle (1.5cm);
-
     % Background mesh
     \foreach \i in {-2.5, -2, ..., 2.5} {
         \draw[line width=0.1pt, shift={(-2.5,\i)}] (0,0) -- (5,0);
@@ -18,12 +16,11 @@
     \node[below right] at (0.4,0.5) {$\Omega $};
     \node[below right] at (-1.5,1.5) {$\Gamma $};
 \end{tikzpicture}
-
 \caption{An illustration of a unfitted mesh.}
+\label{fig:domain_unfitted_mesh}
 \end{figure}
 
-
-\begin{figure}[h]
+\begin{figure}
     \centering
     % First TikZ picture
     \begin{minipage}{0.45\textwidth}
@@ -76,14 +73,20 @@
             \draw (interior-1) -- (interior-2) -- (interior-3) -- cycle;
         \end{tikzpicture}
 \end{minipage}
-    \caption{Examples of different triangulations for a fitted mesh for a circle.}
+\caption{Examples of different triangulations for a fitted mesh for a circle.}
+\label{fig:domain_fitted_mesh}
 \end{figure}
+
+A crucial advantage of CutFEM is its ability to handle unfitted meshes, as illustrated in Figure 1, where the mesh does not conform to the domain boundary $\Gamma$. The biharmonic equation, which is a fourth-order PDE, arises in numerous applications, such as thin plate bending, and is relevant to the Cahn-Hilliard problem. The Cahn-Hilliard equation describes phase separation in binary alloys and is characterized by a fourth-order term, making it a suitable candidate for the application of CutFEM.
+
+In contrast to the unfitted mesh in Figure \ref{fig:domain_unfitted_mesh}, Figure \ref{fig:domain_fitted_mesh} shows examples of fitted meshes, where the mesh conforms to the domain boundary. However, generating such meshes for complex geometries can be cumbersome and time-consuming. CutFEM offers a more flexible approach, enabling us to work with standard meshes and focus on the PDEs' discretization and the imposition of boundary conditions.
+
 
 
 \subsection{Weak formulation}%
 \label{sub:weak_formulation}
 
-    \begin{figure}[htpb]
+    \begin{figure}[htpb!]
         \centering
         \begin{tikzpicture}
             % Circle
@@ -102,7 +105,7 @@
     \end{figure}
 
 
-    Let $\Omega \subseteq    \mathbb{R} ^d$ be a physical mesh, $\Gamma  $ be a $C^2$ boundary  illustrated at figure \ref{fig:domain_construction}. Assume we have the function $\alpha: \Omega \to \mathbb{R} $. We define the strong biharmonic problem to be on the form
+    Let $\Omega \subseteq    \mathbb{R} ^d$ be a physical mesh, $\Gamma  $ be a $C^2$ boundary  illustrated at Figure \ref{fig:domain_construction}. Assume we have the function $\alpha: \Omega \to \mathbb{R} $. We define the strong biharmonic problem to be on the form
 
 \begin{equation}
     \label{eq:Bi_strong}
