@@ -17,11 +17,12 @@ For proof, see \cite[Lemma 4.2]{hansbo2003finite}.
 \label{ssub:clement_operator}
 
 
+
 \begin{figure}
 \begin{minipage}{.5\linewidth}
 \centering
 \subfloat[]{
-    \label{main:a}
+    \label{fig:macroelements:a}
     \begin{tikzpicture}[scale=0.5]
         % Arbitrary triangle
         \coordinate (A1) at (0,0);
@@ -55,7 +56,7 @@ For proof, see \cite[Lemma 4.2]{hansbo2003finite}.
 \begin{minipage}{.5\linewidth}
 \centering
 \subfloat[]{
-    \label{main:b}
+    \label{fig:macroelements:b}
     \begin{tikzpicture}[scale=0.5]
     % Arbitrary square
     \coordinate (A1) at (0,0);
@@ -96,7 +97,7 @@ For proof, see \cite[Lemma 4.2]{hansbo2003finite}.
 \end{minipage}\par\medskip
 \centering
 \subfloat[]{
-    \label{main:c}
+    \label{fig:macroelements:c}
  \begin{tikzpicture}[scale=0.5]
 
     % Central vertex a_i
@@ -139,16 +140,20 @@ For proof, see \cite[Lemma 4.2]{hansbo2003finite}.
 \end{tikzpicture}
 }
 
-\label{fig:macroelements}
 \caption{Illustration of the different cases when mapping from the reference macroelement $\widehat{A}_{j( i) }$  to the domain $A_{i}$,  $G_{A_{i}}: \widehat{A}_{j( i) } \to A_{i}$. Here we have defined $\hat{a}_{j(i)} \in \widehat{A}_{j(i)}$ s.t. $G( \hat{a}_{j( i) })
 = a_i$. }
+
+\label{fig:macroelements}
 \end{figure}
 
 
 We want to compute the expected convergence rate of the energy norm \eqref{eq:bi_Ah_norm}. An important tool in the process is the Cléments interpolation operator, $C_{h}$.
 It is used for interpolation on non smooth functions by applying an regularization on so-called macroelements. Let us denote the $\mathcal{P}_{c}^{k}( \Omega )  $ to be an $H^{1}$ conformal polynomial space. We denote $\left\{ a_{1}, \ldots, a_{N}
 \right\} $ to be the Lagrange nodes. Associated with each node $a_{i}$ we denote the macroelement $A_{i}$ to consist of all simplices containing $a_{i}$. Let $n_{cf}$ be the number of configurations for the macroelement, then we define the index $j:
-\left\{ 1,\ldots,N \right\} \to \left\{ 1, \ldots, n_{cf} \right\}  $ s.t. $j( i) $ is the index associated with the reference configuration $\widehat{A}_{j(i) }$ for corresponding macroelement $A_{i}$. Let us define a $C^{0}$-diffeomorphism $G_{A_{i}}:
+\left\{ 1,\ldots,N \right\} \to \left\{ 1, \ldots, n_{cf} \right\}  $ s.t. $j( i) $ is the index associated with the reference configuration $\widehat{A}_{j(i) }$ for corresponding macroelement $A_{i}$ for an illustration, see
+Figure \ref{fig:macroelements}.
+
+Let us define a $C^{0}$-diffeomorphism $G_{A_{i}}:
 \widehat{A}_{j( i) } \to A_{i}$ s.t. for all $\widehat{T} \in \widehat{A}_{j( i) } $ is the restriction $G_{A_{i}  \mid \widehat{T}}$ affine. The Cléments interpolation operator $C_{h}$ is defined as a $L^2$-projection onto the macroelements. That is, given
 a reference macroelement $\widehat{A}_{j( i) }$ and a function $\hat{v} \in L^{1}( \widehat{A}_{j( i) })  $, then $\widehat{C}_{j( i) } \hat{v}$  is the unique polynomial in $\mathcal{P}^{k} ( \widehat{A}_{j( i) })  $ s.t. \[
 \int_{  \widehat{A}_{j( i) }}^{} ( \widehat{C}_{j( i) } \hat{v} - \hat{v}) p \ dx  = 0 \quad  \forall p \in \mathcal{P}^{k} ( \widehat{A}_{j( i) })
