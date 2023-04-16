@@ -130,11 +130,59 @@ Hence, we have that the active set is the union of the interior and cut elements
 \caption{An illustration of the background mesh $\widetilde{\mathcal{T} }_{h}$,  cut elements $\mathcal{T} _{\Gamma }$ and the interior of the active set $\mathcal{T} _{int}$.      }
 \end{figure}
 
+
+
+
 We denote the $C^{0}$ polynomial space of order $k$ as
 \[
 V_{h} = \left\{ v \in C^{0}\left( \Omega  \right): v_{T} = v | _{T} \in \mathcal{P} ^{k}\left( T \right), \forall T \in
 \mathcal{T}_{h}    \right\}
 \]
+
+\begin{tikzpicture}
+    % Circle
+    \draw (0, 0) circle (1.5cm);
+
+    % Fitted mesh (crude triangular mesh)
+    \foreach \i in {0, 30, ..., 330} {
+        \draw[fill=gray!30] (0, 0) -- (\i:1.5cm) -- (\i+30:1.5cm) -- cycle;
+    }
+
+    % Mesh nodes
+    \foreach \i in {0, 30, ..., 330} {
+        \fill[black] (\i:1.5cm) circle (1pt);
+    }
+    \fill[black] (0, 0) circle (1pt);
+\end{tikzpicture}
+
+
+\begin{tikzpicture}
+    % Circle
+    % \draw (0, 0) circle (1.5cm);
+
+    % Boundary points
+    \foreach \i in {0, 45, ..., 315} {
+        \coordinate (boundary-\i) at (\i:1.5cm);
+    }
+
+    % Interior points
+    \coordinate (interior-1) at (0.75, 0);
+    \coordinate (interior-2) at (-0.75, 0);
+    \coordinate (interior-3) at (0, 0.75);
+
+    % Triangulation (manually specified)
+    \draw (boundary-0) -- (boundary-45) -- (interior-1) -- cycle;
+    \draw (boundary-45) -- (boundary-90) -- (interior-1) -- cycle;
+    \draw (boundary-90) -- (boundary-135) -- (interior-3) -- cycle;
+    \draw (boundary-135) -- (boundary-180) -- (interior-3) -- cycle;
+    \draw (boundary-180) -- (boundary-225) -- (interior-2) -- cycle;
+    \draw (boundary-225) -- (boundary-270) -- (interior-2) -- cycle;
+    \draw (boundary-270) -- (boundary-315) -- (interior-1) -- cycle;
+    \draw (boundary-315) -- (boundary-0) -- (interior-1) -- cycle;
+
+    % Triangulation between interior points
+    \draw (interior-1) -- (interior-2) -- (interior-3) -- cycle;
+\end{tikzpicture}
 
 From the previous chapter can we write the CIP method. The bilinear form $a_{h}:  V_{h}\times  V_{h} \to \mathbb{R} $ is defined as
 
