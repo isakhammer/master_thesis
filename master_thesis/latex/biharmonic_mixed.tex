@@ -3,10 +3,6 @@
 \section{Biharmonic Mixed Formulation}%
 \label{sec:biharmonic_mixed_formulation}
 
-
-\subsection{Introduction}%
-\label{sub:introduction}
-
 Recall the biharmonic problem formulation to find a $u \in H^4( \Omega ) $  \[
     \begin{split}
 \Delta ^2 u & = f \quad  \text{in } \Omega \\
@@ -52,15 +48,8 @@ Hence, we can connect it to the SPP. We want to find $( u,\sigma ) \in V \times 
 
 This is useful since we can now apply standard saddle point theory to do an analysis for the problem.
 
-There is several interesting papers on this subject.
-\begin{itemize}
-    \item General saddle point theory for the stokes equation \cite{john2016finite, knabner2003numerical}.
-    \item Classical formulations \cite{babuvska1980analysis}
-    \item  A Nitsche mixed extended finite element method for the biharmonic interface problem \cite{cai2023nitsche}
-        \begin{enumerate}[label=\arabic*)]
-            \item Applying Nitsche based penalty based on a so called Ciarlet–Raviart formulation
-        \end{enumerate}
-\end{itemize}
+A well known and mature application for SPP is the well known Stokes equation \cite{john2016finite, knabner2003numerical}. One of the more classical papers for the biharmonic mixed formulation is and still in active
+research going on \cite{babuvska1980analysis,cai2023nitsche}.
 
 
 
