@@ -29,46 +29,6 @@ where $f( c) $ is a nonlinear functional. First of all, a simplified training pr
 
 
 
-\subsection{Note on the Biharmonic Mixed Formulation}%
-\label{subsec:biharmonic_mixed_formulation}
-
-It is easy to see that the formulation can be rewritten in an equivalent mixed formulation , that is, to find $\sigma, \tau  \in H^2( \Omega ) $ s.t. \[
-    \begin{split}
-\Delta \sigma  & = f \quad  \text{in } \Omega \\
-\sigma   & = \Delta u  \text{ in } \Omega \\
-\partial _{n} \sigma  & = h_{1} \text{ on } \Gamma  \\
-\partial _{n} u   & = h_{2} \text{ on } \Gamma
-    \end{split}
-\]
-The goal is to obtain an useful weak formulation. Using Greens theorem on the first equation we get,
-\[
-( \sigma, v)_{\Omega } = ( \nabla  u , \nabla v  )_{\Omega } - ( \nabla _{n} u , v) _{\Gamma }.
-\]
-Similarly for the second equation we obtain
-\[
-( \nabla \sigma , \nabla \varphi  )_{\Omega} - ( \nabla _{n} \sigma ,  \varphi )_{\Gamma } = ( f,\varphi ) _{\Omega}
-\]
-Putting it all together we have the following mixed weak formulation; Find $( u, \sigma ) \in H^{1}( \Omega ) \times H^{1}( \Omega )  $ s.t. \[
-    \begin{split}
-     ( \nabla  u , \nabla v  )_{\Omega } -( \sigma, v)_{\Omega }  & =   ( h_{1} , v) _{\Gamma } \quad  \forall v \in H^{1}( \Omega ) \\
-( \nabla \sigma , \nabla \varphi  )_{\Omega}  & = ( f,\varphi ) _{\Omega} + ( h_{2} ,  \varphi )_{\Gamma } \quad  \forall \varphi \in H^{1}( \Omega )
-    \end{split}
-\]
-Now we want to relate this formulation to the abstract saddle point problem (SPP) (find references).
-Let $V = H^{1}( \Omega ) $  and $W=H^{1}( \Omega ) $ be  Hilbert spaces and define the bilinear form $a: V\times V \to \mathbb{R}  $ and $b: V \times W \to \mathbb{R} $ s.t. $a( \sigma,v ) = - ( \sigma , v) _{\Omega }  $ and $b( u,v) = ( \nabla u,
-\nabla v)_{\Omega  }  $. We also may define the linear forms, $G,F: V \to \mathbb{R} $ s.t. $ G( v)  = ( h_{1}, v) _{\Gamma } $ and $F( \varphi ) = ( f, \varphi )_{\Omega } + ( h_{2}, \varphi )_{\Gamma } $.
-
-Hence, we can connect it to the SPP. We want to find $( u,\sigma ) \in V \times W$ s.t.  \[
-    \begin{cases}
-       a( \sigma ,v) + b ( u, v )  & = G( v)   \quad  \forall v \in V \\
-       b( u, \varphi  )  & = F( \varphi )     \quad \forall \phi \in W
-    \end{cases}
-\]
-This is useful since we can now apply standard saddle point theory to do an analysis for the problem. We will see that it is now easier to handle the constraints with the cost of a more challenging time discretization step when applying the formulation to the Cahn-Hilliard Problem.
-A well known and mature application for SPP is the well known Stokes equation \cite{john2016finite, knabner2003numerical}. One of the more classical papers for the biharmonic mixed formulation is and still in active research going on \cite{babuvska1980analysis,cai2023nitsche}.
-
-However, in this master thesis is the focus on solving the biharmonic equation avoiding the mixed formulation using the so-called interior penalty method which does in fact handle the downsides with the SPP problem.
-
 \subsection{CIP biharmonic equation}%
 \label{sub:cip_biharmonic_equation}
 
