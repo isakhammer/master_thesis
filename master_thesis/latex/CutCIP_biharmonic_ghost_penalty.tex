@@ -98,12 +98,12 @@ This set is simply all facets that belong to all elements of the active mesh $\m
     \coordinate (A7) at (300:2.5);
 
     % Draw the individual edges
-    \draw (center) -- (A1) -- (A2) -- (center);
-    \draw (center) -- (A2) -- (A3) -- (center);
-    \draw (center) -- (A3) -- (A4) -- (center);
-    \draw (center) -- (A4) -- (A5) -- (center);
-    \draw (center) -- (A5) -- (A6) -- (center);
-    \draw (center) -- (A6) -- (A1) -- (center);
+    \draw[dotted, line width=1.5pt] (center) -- (A1) -- (A2);
+    \draw[dotted, line width=1.5pt] (center) -- (A2) -- (A3);
+    \draw[dotted, line width=1.5pt] (center) -- (A3) -- (A4) -- (center);
+    \draw (A4) -- (A5);
+    \draw (center) -- (A5) -- (A6) ;
+    \draw (center) -- (A6) -- (A1);
 
     \begin{scope}[shift={(2.5,0)}]
         % Shifted
@@ -117,16 +117,14 @@ This set is simply all facets that belong to all elements of the active mesh $\m
         \coordinate (B6) at (300:2.5);
 
         % Draw the individual edges
-        \draw (center) -- (B1) -- (B2) -- (center);
-        \draw (center) -- (B2) -- (B3) -- (center);
-        \draw (center) -- (B5) -- (B6) -- (center);
-        \draw (center) -- (B6) -- (B1) -- (center);
+        \draw[dotted, line width=1.5pt] (center) -- (B1) -- (B2);
+        \draw[dotted, line width=1.5pt] (center) -- (B2) -- (B3)--(center);
+        \draw (center) -- (B5) -- (B6);
+        \draw[dotted, line width=1.5pt] (center) -- (B6) -- (B1);
     \end{scope}
 
     \coordinate (C1) at (-3,0);
     \coordinate (C2) at (5.2,-0.5);
-    \fill (C1) circle (2pt);
-    \fill (C2) circle (2pt);
     \draw[-, line width=2pt, >=stealth] ($(C2)$) to[bend right] node[midway, above, yshift=0.1cm] {$\Gamma $} ($(C1)$);
 
 \end{tikzpicture}
