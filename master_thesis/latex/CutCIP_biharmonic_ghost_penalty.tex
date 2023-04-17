@@ -55,6 +55,8 @@ We will now introduce the so-called ghost penalty faces, that is, \[
 \mathcal{F} ^{g}_{h} = \left\{ F\in \mathcal{F} _{h} : T^{+}\cap \Gamma \neq \emptyset  \vee T^{-}\cap \Gamma \neq \emptyset  \right\}.
 \]
 
+
+
 \begin{proposition}
     \label{prop:hessian_change}
     The following identity holds for $j=0,1,2$.
@@ -82,6 +84,52 @@ We will now introduce the so-called ghost penalty faces, that is, \[
 \end{proof}
 
 This set is simply all facets that belong to all elements of the active mesh $\mathcal{T} _{h}$  intersected with $\Gamma $.
+
+\begin{tikzpicture}
+    \coordinate (center) at (0, 0);
+
+    % Reference hexagon vertices
+    \coordinate (A1) at (0:2.5);
+    \coordinate (A2) at (60:2.5);
+    \coordinate (A3) at (120:2.5);
+    \coordinate (A4) at (180:2.5);
+    \coordinate (A5) at (240:2.5);
+    \coordinate (A6) at (300:2.5);
+    \coordinate (A7) at (300:2.5);
+
+    % Draw the individual edges
+    \draw (center) -- (A1) -- (A2) -- (center);
+    \draw (center) -- (A2) -- (A3) -- (center);
+    \draw (center) -- (A3) -- (A4) -- (center);
+    \draw (center) -- (A4) -- (A5) -- (center);
+    \draw (center) -- (A5) -- (A6) -- (center);
+    \draw (center) -- (A6) -- (A1) -- (center);
+
+    \begin{scope}[shift={(2.5,0)}]
+        % Shifted
+        \coordinate (center) at (0, 0);
+
+        % Reference hexagon vertices
+        \coordinate (B1) at (0:2.5);
+        \coordinate (B2) at (60:2.5);
+        \coordinate (B3) at (120:2.5);
+        \coordinate (B5) at (240:2.5);
+        \coordinate (B6) at (300:2.5);
+
+        % Draw the individual edges
+        \draw (center) -- (B1) -- (B2) -- (center);
+        \draw (center) -- (B2) -- (B3) -- (center);
+        \draw (center) -- (B5) -- (B6) -- (center);
+        \draw (center) -- (B6) -- (B1) -- (center);
+    \end{scope}
+
+    \coordinate (C1) at (-3,0);
+    \coordinate (C2) at (5.2,-0.5);
+    \fill (C1) circle (2pt);
+    \fill (C2) circle (2pt);
+    \draw[-, line width=2pt, >=stealth] ($(C2)$) to[bend right] node[midway, above, yshift=0.1cm] {$\Gamma $} ($(C1)$);
+
+\end{tikzpicture}
 
 \begin{lemma}
     \label{lemma:bi_inv_gh_lemma}
