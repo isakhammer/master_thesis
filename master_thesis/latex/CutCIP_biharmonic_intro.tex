@@ -272,6 +272,123 @@ Hence, we have that the active set is the union of the interior and cut elements
 
 
 
+
+\begin{figure}\centering
+\subfloat[]{\label{a}
+        \begin{tikzpicture}
+
+            % POTENTIAL ACTIVE MESH
+            \fill[yellow!30] (-2.5,2.5) -- (2.5,2.5) -- (2.5,-2.5) -- (-2.5,-2.5) -- cycle;
+
+            \draw (0.1, 0.1) circle (1.5cm);
+            % Background mesh
+            \foreach \i in {-2.5, -2, ..., 2.5} {
+                \draw[line width=0.1pt, shift={(-2.5,\i)}] (0,0) -- (5,0);
+                \draw[line width=0.1pt, shift={(\i,-2.5)}] (0,0) -- (0,5);
+            }
+
+
+            % Labels
+            \node[below right] at (2.5,2.5) {$\widetilde{\mathcal{T}}_{h}$};
+        \end{tikzpicture}
+
+}\hfill
+\subfloat[]{\label{b}
+        \begin{tikzpicture}
+
+            % POTENTIAL ACTIVE MESH
+            \fill[orange!30] (2,2) -- (2,-1.5) --(-1.5,-1.5) -- (-1.5,2) -- cycle;
+
+            % ELEMENTS WITH NO INTERSECTION
+            % lower left
+            \fill[white] (-1.5,-1.5) rectangle (-1.0,-1.0);
+            \fill[white] (-1.5,2.0) rectangle (-1.0,1.5);
+            \fill[white] (-1.0,2.0) rectangle (-0.5,1.5);
+            \fill[white] (2,2) rectangle (1.5,1.5);
+            \fill[white] (1.5,2) rectangle (1.0,1.5);
+            \fill[white] (2,1.5) rectangle (1.5,1.0);
+            \fill[white] (1.5,-1) rectangle (2,-1.5);
+            \fill[white] (1.5,-0.5) rectangle (2,-1.0);
+
+            % CUT ELEMENTS
+            \fill[orange!30] (-0.5,2.0) rectangle (1.0,1.5);
+            \fill[orange!30] (-1.5,1.5) rectangle (0.0,1.0);
+            \fill[orange!30] (0.5,1.5) rectangle (1.5,1.0);
+            \fill[orange!30] (-1.5,1.0) rectangle (-1.0,-1.0);
+            \fill[orange!30] (-1.0,-0.5) rectangle (-0.5,-1.5);
+            \fill[orange!30] (-0.5,-1.5) rectangle (1.5,-1.0);
+            \fill[orange!30] (1.5,-1) rectangle (1.0,-0.0);
+            \fill[orange!30] (1.5,-0.5) rectangle (2.0,1.0);
+            \fill[orange!30] (1.0,0.5) rectangle (1.5,1.0);
+
+            \draw (0.1, 0.1) circle (1.5cm);
+            % Background mesh
+            \foreach \i in {-2.5, -2, ..., 2.5} {
+                \draw[line width=0.1pt, shift={(-2.5,\i)}] (0,0) -- (5,0);
+                \draw[line width=0.1pt, shift={(\i,-2.5)}] (0,0) -- (0,5);
+            }
+
+
+            % Labels
+            % \node[below right] at (2.5,2.5) {$\widetilde{\mathcal{T}}_{h}$};
+            % \node[below right] at (0.4,0.5) {$\mathcal{T}_{int}$};
+            \node[below right] at (-0.5,0.5) {$\mathcal{T}_{h }$};
+        \end{tikzpicture}
+
+
+}\par
+
+\subfloat[]{\label{c}
+        \begin{tikzpicture}
+
+            % POTENTIAL ACTIVE MESH
+            \fill[blue!30] (2,2) -- (2,-1.5) --(-1.5,-1.5) -- (-1.5,2) -- cycle;
+
+            % ELEMENTS WITH NO INTERSECTION
+            % lower left
+            \fill[white] (-1.5,-1.5) rectangle (-1.0,-1.0);
+            \fill[white] (-1.5,2.0) rectangle (-1.0,1.5);
+            \fill[white] (-1.0,2.0) rectangle (-0.5,1.5);
+            \fill[white] (2,2) rectangle (1.5,1.5);
+            \fill[white] (1.5,2) rectangle (1.0,1.5);
+            \fill[white] (2,1.5) rectangle (1.5,1.0);
+            \fill[white] (1.5,-1) rectangle (2,-1.5);
+            \fill[white] (1.5,-0.5) rectangle (2,-1.0);
+
+            % CUT ELEMENTS
+            \fill[green!40] (-0.5,2.0) rectangle (1.0,1.5);
+            \fill[green!40] (-1.5,1.5) rectangle (0.0,1.0);
+            \fill[green!40] (0.5,1.5) rectangle (1.5,1.0);
+            \fill[green!40] (-1.5,1.0) rectangle (-1.0,-1.0);
+            \fill[green!40] (-1.0,-0.5) rectangle (-0.5,-1.5);
+            \fill[green!40] (-0.5,-1.5) rectangle (1.5,-1.0);
+            \fill[green!40] (1.5,-1) rectangle (1.0,-0.0);
+            \fill[green!40] (1.5,-0.5) rectangle (2.0,1.0);
+            \fill[green!40] (1.0,0.5) rectangle (1.5,1.0);
+
+            \draw (0.1, 0.1) circle (1.5cm);
+            % Background mesh
+            \foreach \i in {-2.5, -2, ..., 2.5} {
+                \draw[line width=0.1pt, shift={(-2.5,\i)}] (0,0) -- (5,0);
+                \draw[line width=0.1pt, shift={(\i,-2.5)}] (0,0) -- (0,5);
+            }
+
+
+            % Labels
+            \node[below right] at (2.5,2.5) {$\widetilde{\mathcal{T}}_{h}$};
+            \node[below right] at (0.4,0.5) {$\mathcal{T}_{int}$};
+            \node[below right] at (-1.5,0.5) {$\mathcal{T}_{\Gamma }$};
+        \end{tikzpicture}
+}
+
+\caption{Illustration of the background mesh $\widetilde{T}_{h} $, the active set $\mathcal{T} _{h}$, the cut cells $\mathcal{T} _{\Gamma }$ and the interior of the active set $\mathcal{T} _{int}$ }
+\label{fig:background_mesh}
+\end{figure}
+
+
+
+
+
 We denote the $C^{0}$ polynomial space of order $k$ as
 \[
 V_{h} = \left\{ v \in C^{0}\left( \Omega  \right): v_{T} = v | _{T} \in \mathcal{P} ^{k}\left( T \right), \forall T \in
