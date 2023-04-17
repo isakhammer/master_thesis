@@ -248,25 +248,24 @@ l_{h}( v_{h} )  = \left( f, v_{h} \right) _{\Omega } +  \sum_ {F \in \mathcal{F}
 \end{equation}
 Notice that the regulation term determined by respectively a global tuning parameter $\gamma >0 $. Another key component to the formulation
 in \eqref{eq:CP_A_h_1} after introduction of $ w_{h}, v_{h} \in V^{*}_{h}$  is that we expanded $\left( \partial _{nn}w, \jump{ \partial _{n} v }  \right)_{F} \to \left( \mean{ \partial _{nn}w_{h} }  , \jump{ \partial _{n} v_{h} }  \right)_{F} $ since we can longer not guarantee a
-continuous jump. For symmetric purposes we also added $ \left( \mean{ \partial _{nn} v_{h}}  , \jump{ \partial _{n} w_{h} }  \right)_{F} $. For convenience will we introduce the compact notation of \eqref{eq:CP_A_h_1},
+continuous jump. For symmetric purposes we also added $ \left( \mean{ \partial _{nn} v_{h}}  , \jump{ \partial _{n} w_{h} }  \right)_{F} $. For convenience will we introduce the compact notation of \eqref{eq:CP_A_h_1} and \eqref{eq:CP_F_h};
 
-\begin{equation}
-\label{eq:CP_A_h}
+\begin{equation*}
 \begin{split}
 a_{h} \left( w_{h}, v_{h} \right)   =&
     \left( \alpha  w_{h}, v_{h} \right) _{\Omega }   +  \left( D^2 w_{h}, D^2v_{h} \right) _{\mathcal{T} _{h}} \\
  & +
   \left( \mean{  \partial _{n n} w_{h} }, \jump{ \partial _{n }v_{h}} \right)_{\mathcal{F}_{h}}  +
  \left( \mean{ \partial _{n n} v_{h} }, \jump{ \partial _{n}w }      \right)_{\mathcal{F}_{h}}  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} w_{h}}, \jump{ \partial _{n} v_{h}   }   \right)_{\mathcal{F}_{h}} \\
+ l_{h}( v_{h}) & =  \left( f, v_{h} \right) _{\Omega }  - \left(g_{2}, v_{h}  \right) _{\Gamma }
 \end{split}
-.
-\end{equation}
+\end{equation*}
 
 
 \subsection{Note on the Biharmonic Mixed Formulation}%
 \label{subsec:biharmonic_mixed_formulation}
 
-It is easy to see that the formulation can be rewritten in an equivalent mixed formulation , that is, to find $\sigma, \tau  \in H^2( \Omega ) $ s.t. \[
+It is easy to see that the biharmonic problem can be rewritten into an equivalent mixed formulation , that is, to find $\sigma, \tau  \in H^2( \Omega ) $ s.t. \[
     \begin{split}
 \Delta \sigma  & = f \quad  \text{in } \Omega \\
 \sigma   & = \Delta u  \text{ in } \Omega \\
