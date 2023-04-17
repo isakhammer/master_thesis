@@ -1,19 +1,75 @@
 \section{Introduction}\label{sec:introduction}
-The goal of the thesis implement modern FEM methods to solve the Cahn-Hilliard equation. The plan is to first understand the methods we want to use for the Poisson equation and then implement and do a thoughtful analysis for the method for the fourth order Biharmonic equation. Once this framework is established will we aim for solving the Chan-Hilliard equation using well known techniques for time-discretization and nonlinear problems.
+The goal of the thesis implement an modern unfitted finite element method (FEM) to solve the Cahn-Hilliard equation. The plan is to first derive the stability and well-posedness for the method for the fourth order Biharmonic equation. Once this framework is established will we aim for solving the Chan-Hilliard equation using well known techniques for time-discretization and nonlinear problems.
 
+We can describe the Cahn-Hilliard problem in this formulation. Let $\Omega  $ be a domain with boundary $\Gamma $. Assume that $c: \Omega  \to \left[ 0,1 \right] $ and let $h_{1},h_{2}:\Omega  \to \mathbb{R} $.
 
-The thesis is planned to have the following structure:
+\[
+    \begin{split}
+\partial _{t} c &= \Delta ( f(c) \Delta c)     \quad  \text{in } \Omega \\
+\partial _{n} c & = h_{1} \quad \text{ on } \Gamma  \\
+\partial _{n} \Delta c  & = h_{2} \quad \text{ on } \Gamma
+    \end{split}
+\]
+where $f( c) $ is a nonlinear functional. First of all, a simplified training problem is the so-called biharmonic problem.
+\[
+    \begin{split}
+\Delta ^2 u & = f \quad  \text{in } \Omega \\
+\partial _{n} u & = h_{1} \quad \text{ on } \Gamma  \\
+\partial _{n} \Delta u  & = h_{2} \quad \text{ on } \Gamma
+    \end{split}
+\]
+
 
 
 \begin{enumerate}[label=(\alph*)]
-    \item
- Understand and implement a discontinuous Galerkin method for the Poisson equation.
-    \item
- Derive an unfitted continuous interior penalty method for the biharmonic equation and show that the method is well-posed.
-    \item
- Implement a time discretization scheme of an linear Cahn-Hilliard equation
-    \item
- Implement nonlinear iteration methods for the (nonlinear) Cahn-Hilliard Equation
+    \item Derive an unfitted cut continuous interior penalty method (CutCIP) for the biharmonic equation and show that the method is well-posed.
+    \item Implement a time discretization scheme of an linear Cahn-Hilliard equation.
+    \item Implement nonlinear iteration methods for the (nonlinear) Cahn-Hilliard Equation.
 \end{enumerate}
+
+
+
+\subsection{Note on the Biharmonic Mixed Formulation}%
+\label{subsec:biharmonic_mixed_formulation}
+
+It is easy to see that the formulation can be rewritten in an equivalent mixed formulation , that is, to find $\sigma, \tau  \in H^2( \Omega ) $ s.t. \[
+    \begin{split}
+\Delta \sigma  & = f \quad  \text{in } \Omega \\
+\sigma   & = \Delta u  \text{ in } \Omega \\
+\partial _{n} \sigma  & = h_{1} \text{ on } \Gamma  \\
+\partial _{n} u   & = h_{2} \text{ on } \Gamma
+    \end{split}
+\]
+The goal is to obtain an useful weak formulation. Using Greens theorem on the first equation we get,
+\[
+( \sigma, v)_{\Omega } = ( \nabla  u , \nabla v  )_{\Omega } - ( \nabla _{n} u , v) _{\Gamma }.
+\]
+Similarly for the second equation we obtain
+\[
+( \nabla \sigma , \nabla \varphi  )_{\Omega} - ( \nabla _{n} \sigma ,  \varphi )_{\Gamma } = ( f,\varphi ) _{\Omega}
+\]
+Putting it all together we have the following mixed weak formulation; Find $( u, \sigma ) \in H^{1}( \Omega ) \times H^{1}( \Omega )  $ s.t. \[
+    \begin{split}
+     ( \nabla  u , \nabla v  )_{\Omega } -( \sigma, v)_{\Omega }  & =   ( h_{1} , v) _{\Gamma } \quad  \forall v \in H^{1}( \Omega ) \\
+( \nabla \sigma , \nabla \varphi  )_{\Omega}  & = ( f,\varphi ) _{\Omega} + ( h_{2} ,  \varphi )_{\Gamma } \quad  \forall \varphi \in H^{1}( \Omega )
+    \end{split}
+\]
+Now we want to relate this formulation to the abstract saddle point problem (SPP) (find references).
+Let $V = H^{1}( \Omega ) $  and $W=H^{1}( \Omega ) $ be  Hilbert spaces and define the bilinear form $a: V\times V \to \mathbb{R}  $ and $b: V \times W \to \mathbb{R} $ s.t. $a( \sigma,v ) = - ( \sigma , v) _{\Omega }  $ and $b( u,v) = ( \nabla u,
+\nabla v)_{\Omega  }  $. We also may define the linear forms, $G,F: V \to \mathbb{R} $ s.t. $ G( v)  = ( h_{1}, v) _{\Gamma } $ and $F( \varphi ) = ( f, \varphi )_{\Omega } + ( h_{2}, \varphi )_{\Gamma } $.
+
+Hence, we can connect it to the SPP. We want to find $( u,\sigma ) \in V \times W$ s.t.  \[
+    \begin{cases}
+       a( \sigma ,v) + b ( u, v )  & = G( v)   \quad  \forall v \in V \\
+       b( u, \varphi  )  & = F( \varphi )     \quad \forall \phi \in W
+    \end{cases}
+\]
+This is useful since we can now apply standard saddle point theory to do an analysis for the problem. We will see that it is now easier to handle the constraints with the cost of a more challenging time discretization step when applying the formulation to the Cahn-Hilliard Problem.
+A well known and mature application for SPP is the well known Stokes equation \cite{john2016finite, knabner2003numerical}. One of the more classical papers for the biharmonic mixed formulation is and still in active research going on \cite{babuvska1980analysis,cai2023nitsche}.
+
+However, in this master thesis is the focus on solving the biharmonic equation avoiding the mixed formulation using the so-called interior penalty method which does in fact handle the downsides with the SPP problem.
+
+\subsection{CIP biharmonic equation}%
+\label{sub:cip_biharmonic_equation}
 
 
