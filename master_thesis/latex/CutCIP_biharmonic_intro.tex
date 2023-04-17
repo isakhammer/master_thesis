@@ -36,9 +36,9 @@
 
             % Mesh nodes
             \foreach \i in {0, 30, ..., 330} {
-                \fill[black] (\i:1.5cm) circle (1pt);
+                \fill[black] (\i:1.5cm) circle (2pt);
             }
-            \fill[black] (0, 0) circle (1pt);
+            \fill[black] (0, 0) circle (2pt);
         \end{tikzpicture}
     \end{minipage}
     \hfill
@@ -50,7 +50,6 @@
             \foreach \i in {0, 45, ..., 315} {
                 \coordinate (boundary-\i) at (\i:1.5cm);
             }
-
             % Interior points
             \coordinate (interior-1) at (0.75, 0);
             \coordinate (interior-2) at (-0.75, 0);
@@ -58,6 +57,16 @@
 
             % Create a cycle connecting all the boundary points
             \fill[red!30] (boundary-0) -- (boundary-45) -- (boundary-90) -- (boundary-135) -- (boundary-180) -- (boundary-225) -- (boundary-270) -- (boundary-315) -- cycle;
+
+            \foreach \i in {0, 45, ..., 315} {
+                \fill[black] (\i:1.5cm) circle (2pt);
+            }
+
+
+            \fill[black] (interior-1) circle (2pt);
+            \fill[black] (interior-2) circle (2pt);
+            \fill[black] (interior-3) circle (2pt);
+
 
             % Triangulation (manually specified)
             \draw (boundary-0) -- (boundary-45) -- (interior-1) -- cycle;
@@ -72,7 +81,7 @@
             % Triangulation between interior points
             \draw (interior-1) -- (interior-2) -- (interior-3) -- cycle;
         \end{tikzpicture}
-\end{minipage}
+    \end{minipage}
 \caption{Examples of different triangulations for a fitted mesh for a circle.}
 \label{fig:domain_fitted_mesh}
 \end{figure}
