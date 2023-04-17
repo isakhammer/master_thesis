@@ -234,20 +234,17 @@ where
 \begin{equation}
 \label{eq:CP_A_h_1}
 \begin{split}
-\mathcal{A} \left( w_{h}, v_{h} \right)   =&
-  \quad  \left( \alpha  w_{h}, v_{h} \right) _{\Omega }\\
-&  + \sum_{T \in \mathcal{T} _{h}}^{} \left( D^2 w_{h}, D^2v_{h} \right) _{T} \\
- & +
-  \sum_{F \in \mathcal{F}_{h}^{int} }^{}
+a_{h} \left( w_{h}, v_{h} \right)   =&
+    \left( \alpha  w_{h}, v_{h} \right) _{\Omega } + \sum_{T \in \mathcal{T} _{h}}^{} \left( D^2 w_{h}, D^2v_{h} \right) _{T} \\
+ & + \sum_{F \in \mathcal{F}_{h} }^{}
   \left( \mean{  \partial _{n n} w_{h} }, \jump{ \partial _{n }v_{h}} \right)_{F}  +
- \left( \mean{ \partial _{n n} v_{h} }, \jump{ \partial _{n}w }      \right)_{F} \\
-& \quad \quad \quad \quad  + \frac{\gamma}{h}  \left( \jump{ \partial _{n} w_{h}}, \jump{ \partial _{n} v_{h}   }   \right)_{F}
+ \left( \mean{ \partial _{n n} v_{h} }, \jump{ \partial _{n}w }      \right)_{F}   + \frac{\gamma}{h}  \left( \jump{ \partial _{n} w_{h}}, \jump{ \partial _{n} v_{h}   }   \right)_{F}
 \end{split}
 \end{equation}
 and
 \begin{equation}
 \label{eq:CP_F_h}
-F\left( v_{h} \right)  = \left( f, v_{h} \right) _{\Omega } +  \sum_ {F \in \mathcal{F}_{h} ^{ext}}^{} - \left(g, v_{h}  \right) _{F}.
+l_{h}( v_{h} )  = \left( f, v_{h} \right) _{\Omega } +  \sum_ {F \in \mathcal{F}_{h} ^{ext}}^{} - \left(g, v_{h}  \right) _{F}.
 \end{equation}
 Notice that the regulation term determined by respectively a global tuning parameter $\gamma >0 $. Another key component to the formulation
 in \eqref{eq:CP_A_h_1} after introduction of $ w_{h}, v_{h} \in V^{*}_{h}$  is that we expanded $\left( \partial _{nn}w, \jump{ \partial _{n} v }  \right)_{F} \to \left( \mean{ \partial _{nn}w_{h} }  , \jump{ \partial _{n} v_{h} }  \right)_{F} $ since we can longer not guarantee a
@@ -256,14 +253,11 @@ continuous jump. For symmetric purposes we also added $ \left( \mean{ \partial _
 \begin{equation}
 \label{eq:CP_A_h}
 \begin{split}
-\mathcal{A} \left( w_{h}, v_{h} \right)   =&
-  \quad  \left( \alpha  w_{h}, v_{h} \right) _{\Omega }\\
-&  +  \left( D^2 w_{h}, D^2v_{h} \right) _{\mathcal{T} _{h}} \\
+a_{h} \left( w_{h}, v_{h} \right)   =&
+    \left( \alpha  w_{h}, v_{h} \right) _{\Omega }   +  \left( D^2 w_{h}, D^2v_{h} \right) _{\mathcal{T} _{h}} \\
  & +
   \left( \mean{  \partial _{n n} w_{h} }, \jump{ \partial _{n }v_{h}} \right)_{\mathcal{F}_{h}}  +
- \left( \mean{ \partial _{n n} v_{h} }, \jump{ \partial _{n}w }      \right)_{\mathcal{F}_{h}}
- \\
- & + \frac{\gamma }{h}  \left( \jump{ \partial _{n} w_{h}}, \jump{ \partial _{n} v_{h}   }   \right)_{\mathcal{F}_{h}} \\
+ \left( \mean{ \partial _{n n} v_{h} }, \jump{ \partial _{n}w }      \right)_{\mathcal{F}_{h}}  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} w_{h}}, \jump{ \partial _{n} v_{h}   }   \right)_{\mathcal{F}_{h}} \\
 \end{split}
 .
 \end{equation}
