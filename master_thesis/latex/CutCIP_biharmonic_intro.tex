@@ -86,6 +86,68 @@
 \label{fig:domain_fitted_mesh}
 \end{figure}
 
+
+% \begin{tikzpicture}
+%     % Boundary points
+%     \foreach \i in {0, 45, ..., 315} {
+%         \coordinate (boundary-\i) at (\i:1.5cm);
+%     }
+%     % Interior points
+%     \coordinate (interior-1) at (0.75, 0);
+%     \coordinate (interior-2) at (-0.75, 0);
+%     \coordinate (interior-3) at (0, 0.75);
+
+%     % Create a cycle connecting all the boundary points
+%     \fill[red!30] (boundary-0) -- (boundary-45) -- (boundary-90) -- (boundary-135) -- (boundary-180) -- (boundary-225) -- (boundary-270) -- (boundary-315) -- cycle;
+
+%     \foreach \i in {0, 45, ..., 315} {
+%         \fill[black] (\i:1.5cm) circle (2pt);
+%     }
+
+%     \fill[black] (interior-1) circle (2pt);
+%     \fill[black] (interior-2) circle (2pt);
+%     \fill[black] (interior-3) circle (2pt);
+
+%     % Triangulation (manually specified)
+%     \draw (boundary-0) -- (boundary-45) -- (interior-1) -- cycle;
+%     \draw (boundary-45) -- (boundary-90) -- (interior-3) -- cycle;
+%     \draw (boundary-90) -- (boundary-135) -- (interior-3) -- cycle;
+%     \draw (boundary-135) -- (boundary-180) -- (interior-2) -- cycle;
+%     \draw (boundary-180) -- (boundary-225) -- (interior-2) -- cycle;
+%     \draw (boundary-225) -- (boundary-270) -- (interior-2) -- cycle;
+%     \draw (boundary-270) -- (boundary-315) -- (interior-1) -- cycle;
+%     \draw (boundary-315) -- (boundary-0) -- (interior-1) -- cycle;
+
+%     % Triangulation between interior points
+%     \draw (interior-1) -- (interior-2) -- (interior-3) -- cycle;
+
+%     % Draw a square around the circle
+%     \draw[blue] (-2.0cm, -2.0cm) rectangle (3.5cm, 2.0cm);
+
+%     % Define rectangle node coordinates
+%     \foreach \x [evaluate=\x as \xx using int(10*\x)] in {-2.0, -1.0, ..., 3.5} {
+%       \foreach \y [evaluate=\y as \yy using int(10*\y)] in {-2.0, 2.0} {
+%         \coordinate (rect-\xx-\yy) at (\x, \y);
+%         \fill[black] (\x, \y) circle (2pt);
+%       }
+%     }
+%     \foreach \y [evaluate=\y as \yy using int(10*\y)] in {-1.0, 0, 1.0} {
+%       \foreach \x [evaluate=\x as \xx using int(10*\x)] in {-2.0, 2.3, 3.5} {
+%         \coordinate (rect-\xx-\yy) at (\x, \y);
+%         \fill[black] (\x, \y) circle (2pt);
+%       }
+%     }
+
+%     % Draw triangulation using \rect-\x-\y notation for x = 2.3 and x = 3.5
+%     % \draw (rect-23-20) -- (rect-35-20) -- (rect-23-0) -- cycle;
+%     % \draw (rect-23-10) -- (rect-35-10) -- (rect-23-0) -- cycle;
+%     % \draw (rect-23-0) -- (rect-35-0) -- (rect-23-10) -- cycle;
+%     % \draw (rect-23-10) -- (rect-35-10) -- (rect-23-20) -- cycle;
+%     % \draw (rect-23-20) -- (rect-35-20) -- (rect-35-10) -- cycle;
+
+% \end{tikzpicture}
+% \todo[inline]{ Fix triangulation. }
+
 A crucial advantage of CutFEM is its ability to handle unfitted meshes, as illustrated in Figure 1, where the mesh does not conform to the domain boundary $\Gamma$. The biharmonic equation, which is a fourth-order PDE, arises in numerous applications, such as thin plate bending, and is relevant to the Cahn-Hilliard problem. The Cahn-Hilliard equation describes phase separation in binary alloys and is characterized by a fourth-order term, making it a suitable candidate for the application of CutFEM.
 
 In contrast to the unfitted mesh in Figure \ref{fig:domain_unfitted_mesh}, Figure \ref{fig:domain_fitted_mesh} shows examples of fitted meshes, where the mesh conforms to the domain boundary. However, generating such meshes for complex geometries can be cumbersome and time-consuming. CutFEM offers a more flexible approach, enabling us to work with standard meshes and focus on the PDEs' discretization and the imposition of boundary conditions.
