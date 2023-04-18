@@ -246,19 +246,22 @@ function generate_figures(;ns, el2s, eh1s, ehs_energy, cond_numbers, ndofs, orde
     eoc_l2 =  [nothing; eoc_l2]
     eoc_eh1 =  [nothing; eoc_eh1]
     eoc_eh_energy =  [nothing; eoc_eh_energy]
-    data = hcat(ns, el2s,  eoc_l2, eh1s, eoc_eh1, ehs_energy, eoc_eh_energy, cond_numbers)
-    header = [L"$n$", L"$\Vert e \Vert_{L^2}$", "EOC", L"$ \Vert e \Vert_{H^1}$", "EOC", L"$\Vert e \Vert_{ a_h,* }$", "EOC", "Cond number"]
+    header = [L"$n$", L"$\Vert e \Vert_{L^2}$", "EOC", L"$ \Vert e \Vert_{H^1}$", "EOC", L"$\Vert e \Vert_{ a_h,* }$", "EOC", "Cond number", "ndofs"]
+    data = hcat(ns, el2s,  eoc_l2, eh1s, eoc_eh1, ehs_energy, eoc_eh_energy, cond_numbers, ndofs)
+
+    formatters = (ft_printf("%.0f", [1]), ft_printf("%.2f", [3, 5, 7]), ft_printf("%.1E", [2, 4, 6, 8, 9]), ft_nonothing)
 
     open(filename*".tex", "w") do io
-        pretty_table(io, data, header=header, backend=Val(:latex ), formatters = ( ft_printf("%.3E"), ft_nonothing ))
+        pretty_table(io, data, header=header, backend=Val(:latex ), formatters = formatters )
     end
 
     minimal_header = ["n", "L2", "EOC", "H1", "EOC", "a_h", "EOC", "cond", "const", "ndofs"]
     data = hcat(ns, el2s,  eoc_l2, eh1s, eoc_eh1, ehs_energy, eoc_eh_energy, cond_numbers, cond_numbers.*hs.^4, ndofs)
-    pretty_table(data, header=minimal_header, formatters = ( ft_printf("%.0f",[1,10]), ft_printf("%.2f",[3,5,7]), ft_printf("%.1E",[2,4,6,8,9]), ft_nonothing ))
+    formatters = ( ft_printf("%.0f",[1,10]), ft_printf("%.2f",[3,5,7]), ft_printf("%.1E",[2,4,6,8,9]), ft_nonothing )
+    pretty_table(data, header=minimal_header, formatters =formatters )
 
     # Plots.plot(hs, (el2s, eh1s, ehs_energy), label=(L"\\Vert e \\Vert_{L^2}", L"\\Vert e \\Vert_{ H^1 }^{  } ", L"\\Vert e  \\Vert_{ a_h,* }"))
-    Plots.plot(hs, [el2s, eh1s, ehs_energy], label=[L" | e |_{L^2}", L"| e |_{ H^1 }^{  } ", L"| e  |_{ a_h,* }"])
+    # Plots.plot(hs, [el2s, eh1s, ehs_energy], label=[L" \Vert e \Vert_{L^2}", L"\Vert e \Vert_{ H^1 }^{  } ", L"\Vert e  \Vert_{ a_h,* }"])
     Plots.plot(hs, el2s, label=L" | e |_{L^2}")
     Plots.plot!(hs, eh1s, label=L"| e |_{ H^1 }^{  } ")
     Plots.plot!(hs, ehs_energy, label=L"| e  |_{ a_h,* }")
