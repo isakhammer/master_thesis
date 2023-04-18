@@ -8,7 +8,8 @@ Since we have in the analysis assumed that $\Gamma $ is $C^2 $ will we run our t
 \label{ssub:test_problem_1}
 
 
-We introduce the following manufactured solution $u_{ex}(x,y) = (x^2 + y^2 - 1)^2 \sin(2\pi x) \cos(2\pi y)$. You can see the corresponding plots in Figure \ref{fig:CutFEM_error1} and Table \ref{table:CutFEM_error1}.
+We introduce the following manufactured solution $u_{ex}(x,y) = (x^2 + y^2 - 1)^2 \sin(2\pi x) \cos(2\pi y)$. To compute the corresponding functions $f, g_{1}$ and $g_{2}$ did we use algorithmic differentiation. The method was implemented in Julia
+using the FEM package Gridap \cite{verdugo22,julia17}. You can see the corresponding results in Figure \ref{fig:CutFEM_error1} and Table \ref{table:CutFEM_error1}.
 
 
 \begin{table}[h!]
