@@ -2,21 +2,19 @@
 \subsection{Results}%
 \label{sub:results}
 
-Here is a introduction about the problem.
+Since we have in the analysis assumed that $\Gamma $ is $C^2 $ will we run our test problems on a circle with radius $r=1$ with order $k=2$.
 
 \subsubsection{Test Problem 1}%
 \label{ssub:test_problem_1}
 
 
-We introduce the following manufactured solution.
-$u_{ex}(x) = (x_1^2 + x_2^2 - 1)^2 \sin(2\pi x_1) \cos(2\pi x_2)$
-
-
-
+We introduce the following manufactured solution $u_{ex}(x,y) = (x^2 + y^2 - 1)^2 \sin(2\pi x) \cos(2\pi y)$. You can see the corresponding plots in Figure \ref{fig:CutFEM_error1} and Table \ref{table:CutFEM_error1}.
 
 
 \begin{table}[h!]
-  \begin{tabular}{rrrrrrrrr}
+    \caption{Convergence analysis of the numerical method}
+    \label{table:CutFEM_error1}
+    \begin{tabular}{rrrrrrrrr}
     \hline\hline
     \textbf{$n$} & \textbf{$\Vert e \Vert_{L^2}$} & \textbf{EOC} & \textbf{$ \Vert e \Vert_{H^1}$} & \textbf{EOC} & \textbf{$\Vert e \Vert_{ a_h,* }$} & \textbf{EOC} & \textbf{Cond number} & \textbf{ndofs} \\\hline
     4 & 4.0E-01 &  & 3.6E+00 &  & 3.6E+01 &  & 1.1E+06 & 8.1E+01 \\
@@ -31,9 +29,9 @@ $u_{ex}(x) = (x_1^2 + x_2^2 - 1)^2 \sin(2\pi x_1) \cos(2\pi x_2)$
 
 
 \begin{figure}[h!]
-\centering
-\input{figures/CutFEM_order2}
-\caption{An illustration of a unfitted mesh.}
-\label{fig:domain_unfitted_mesh}
+    \centering
+    \input{figures/CutFEM_order2}
+    \caption{The plot presents the $L^2$ and $H^1$ error norms and the error in the energy norm ($\Vert e \Vert_{a_h,*}$).}
+    \label{fig:CutFEM_error1}
 \end{figure}
 
