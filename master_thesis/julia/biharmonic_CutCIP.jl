@@ -1,6 +1,5 @@
 using Dates
 import Plots
-Plots.pyplot()
 
 using LaTeXStrings
 using Latexify
@@ -260,16 +259,29 @@ function generate_figures(;ns, el2s, eh1s, ehs_energy, cond_numbers, ndofs, orde
     formatters = ( ft_printf("%.0f",[1,10]), ft_printf("%.2f",[3,5,7]), ft_printf("%.1E",[2,4,6,8,9]), ft_nonothing )
     pretty_table(data, header=minimal_header, formatters =formatters )
 
-    # Plots.plot(hs, (el2s, eh1s, ehs_energy), label=(L"\\Vert e \\Vert_{L^2}", L"\\Vert e \\Vert_{ H^1 }^{  } ", L"\\Vert e  \\Vert_{ a_h,* }"))
-    # Plots.plot(hs, [el2s, eh1s, ehs_energy], label=[L" \Vert e \Vert_{L^2}", L"\Vert e \Vert_{ H^1 }^{  } ", L"\Vert e  \Vert_{ a_h,* }"])
-    Plots.plot(hs, el2s, label=L" | e |_{L^2}")
-    Plots.plot!(hs, eh1s, label=L"| e |_{ H^1 }^{  } ")
-    Plots.plot!(hs, ehs_energy, label=L"| e  |_{ a_h,* }")
+    # Initial plot with the first data series
+    p = Plots.plot(hs, el2s, label=L"\Vert e \Vert_{L^2}", legend=:bottomright, xscale=:log2, yscale=:log2, minorgrid=true)
+    Plots.scatter!(p, hs, el2s, primary=false)
 
-    Plots.plot!(xscale=:log2, yscale=:log2, minorgrid=true)
-    Plots.scatter!(hs, [el2s, eh1s, ehs_energy],primary=false)
-    Plots.xlabel!("h")
-    Plots.savefig(filename*".png")
+    # Add the second data series
+    Plots.plot!(p, hs, eh1s, label=L"\Vert e \Vert_{H^1}")
+    Plots.scatter!(p, hs, eh1s, primary=false)
+
+    # Add the third data series
+    Plots.plot!(p, hs, ehs_energy, label=L"\Vert e \Vert_{a_{h,*}}")
+    Plots.scatter!(p, hs, ehs_energy, primary=false)
+
+    # Configs
+    Plots.xlabel!(p, "h")
+    Plots.plot!(p, xscale=:log2, yscale=:log2, minorgrid=true)
+    Plots.plot!(p, legendfontsize=14)  # Adjust the value 12 to your desired font size
+
+
+    # Save the plot as a .png file using the GR backend
+    Plots.gr()
+    Plots.savefig(p, filename*"_plot.png")
+    Plots.pgfplotsx()
+    Plots.savefig(p, filename*"_plot.tex")
 end
 
 function convergence_analysis(; orders, ns, dirname, solver_config, write_vtks=true)
@@ -321,7 +333,7 @@ function main()
     mkpath(resultdir)
 
     orders = [2]
-    ns = [2^2, 2^3, 2^4, 2^5, 2^6, 2^7]
+    ns = [2^2, 2^3, 2^4, 2^5, 2^6, 2^7, 2^8]
     dirname = resultdir
     mkpath(dirname)
     @time convergence_analysis( orders=orders, ns=ns, solver_config=solver_config, dirname=dirname)
