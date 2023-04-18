@@ -75,7 +75,7 @@ Finally, we can define the following bilinear functional $a:V\times V \to  \math
 \begin{split}
 a\left( u,v \right) & =    \left( D ^2 u , D ^2 v\right)_{\Omega }  +
 \alpha \left( u, v \right)_{\Omega }   , \\
-l\left( v \right) & = \left( f,v \right)_{\Omega } - \left(g,v \right)_{\partial \Omega }.
+l\left( v \right) & = \left( f,v \right)_{\Omega } - \left(g_{2},v \right)_{\partial \Omega }.
 \end{split}
 \end{equation}
 
@@ -87,8 +87,8 @@ We define the biharmonic problem to solve for $u \in V  $ s.t.
 a\left( u,v \right) = l(v)\quad \forall v \in
 V,
 \end{equation}
-where $ V = \left\{ v \in H^2\left( \Omega  \right) : \partial _{n} v = 0  \text{ on }
-\partial \Omega  \right\}$.
+where $ V = \left\{ v \in H^2\left( \Omega  \right) : \partial _{n} v = g_{1}  \text{ on }
+\Gamma   \right\}$.
 
 Remark that the problem the solution is only unique for $\alpha  > 0$. However, for $\alpha  = 0$ is it necessary to apply the solvability condition,
 \begin{equation*}
@@ -147,7 +147,7 @@ However, this expression can be written to distinguish integrating over triangle
 & + \sum_{F \in \mathcal{F}_{h}  ^{int}}^{} \left(\partial _{nn} u , \jump{ \partial _{n} v }
 \right)_{F} \\
 & = \sum_{T \in  \mathcal{T} _{h}}^{} \left( D^2u, D^2v \right)_{T} + \sum_{F \in
-\mathcal{F} ^{ext}_{h}}^{} \left(g, v  \right) _{F}
+\mathcal{F} ^{ext}_{h}}^{} \left(g_{2}, v  \right) _{F}
   + \sum_{F \in \mathcal{F}_{h}  ^{int}}^{} \left( \partial _{nn} u , \jump{ \partial_{n} v } \right)_{F}
 \end{split}
 \end{equation}
@@ -161,7 +161,7 @@ and likewise for the mean, $\mean{ a  } = \frac{1}{2}(   a^{+}
 \right)_{\partial T} - \left(\partial _{nn} u, \partial _{n}v \right)_{\partial T} + \left(\partial _{n} \Delta  u,v
 \right)_{\partial T} \\
 &= \sum_{T\in \mathcal{T} _{h}}^{} \left( D^2u,D^2v \right) _{T } \\
-&  \quad + \sum_{F \in \mathcal{F}_{h}^{ext} }^{} \underbrace{\left( \partial _{n} \Delta  u, v  \right)_{F}}_{= \left( g,v \right)_{F} }  -  \left(
+&  \quad + \sum_{F \in \mathcal{F}_{h}^{ext} }^{} \underbrace{\left( \partial _{n} \Delta  u, v  \right)_{F}}_{= \left( g_{2},v \right)_{F} }  -  \left(
 \partial _{nt} u, \partial _{t} v \right) _{F}  - \underbrace{\left( \partial _{nn} u, \partial _{n} v \right)_{F}}_{ = 0}    \\
 & \quad  + \sum_{F \in \mathcal{F} _{h}^{int}}^{} \underbrace{\left( \left(\partial _{n^{+}} \Delta  u^{+}
         ,v^{+}\right)_{F}
@@ -201,10 +201,10 @@ Where integration over all interior facets $ \forall F \in \mathcal{F}_{h}^{int}
                  _{nn}  u
          }}_{= 0}    \mean{ \partial _{n}v }   =  \left( \partial _{nn} u, \jump{ \partial_{n} v } \right)_{F}   \end{split}
 .\end{equation*}
-Observe that the cancellations in the term $(I)$ appears of the continuity of $v\in V $ and $u\in H^{4}\left( \Omega  \right) $ which makes the jumps zero. For the second term $(II)$ does the terms become zero cancelled because the tangential
+Observe that the cancellations in the term $(I)$ appears of the continuity of $v\in V $ and $u\in H^{4}( \Omega ) $ which makes the jumps zero. For the second term $(II)$ does the terms become zero cancelled because the tangential
 derivative at the facet has no jump. However, The third term $(III)$  is fairly interesting since the discontinuity in
 normal vector for $v \in V$ is a jump, while the second term is still continuous. It can also be raised that $\mean{
-\partial _{nn} u } = \partial _{nn} u  $ holds by the continuity of $H^{4}\left( \Omega  \right) $. Hence,
+\partial _{nn} u } = \partial _{nn} u  $ holds by the continuity of $H^{4}( \Omega  ) $. Hence,
 \eqref{eq:bi_basic_dg2} and \eqref{eq:bi_basic_dg_full_1} is equivalent.
 
 \subsection{Formulation of the Continuous Interior Penalty Method}%
@@ -225,26 +225,26 @@ V_{h}^{*} = \begin{cases}
 \]
 Now, if we choose $u \in V_{h}$, then we must take account that the jump is discrete.
  Finally, the CIP formulation can be stated as follows.
-The discretized numerical problem is to solve $w_{h} \in V_{h}^{*}$ such that
+The discretized numerical problem is to solve $w \in V_{h}^{*}$ such that
 \begin{equation}
 \label{eq:CP_A_F}
-a_{h}( w_{h}, v_{h} )   = l_{h}( v_{h}), \quad \forall v_{h} \in V_{h}^{*}  .
+a_{h}( w, v )   = l_{h}( v), \quad \forall v \in V_{h}^{*}  .
 \end{equation}
 where
 \begin{equation}
 \label{eq:CP_A_h_1}
 \begin{split}
-a_{h} \left( w_{h}, v_{h} \right)   =&
-    \left( \alpha  w_{h}, v_{h} \right) _{\Omega } + \sum_{T \in \mathcal{T} _{h}}^{} \left( D^2 w_{h}, D^2v_{h} \right) _{T} \\
+a_{h} ( w, v )   =&
+    \left( \alpha  w, v \right) _{\Omega } + \sum_{T \in \mathcal{T} _{h}}^{} \left( D^2 w, D^2v \right) _{T} \\
  & + \sum_{F \in \mathcal{F}_{h} }^{}
-  \left( \mean{  \partial _{n n} w_{h} }, \jump{ \partial _{n }v_{h}} \right)_{F}  +
- \left( \mean{ \partial _{n n} v_{h} }, \jump{ \partial _{n}w }      \right)_{F}   + \frac{\gamma}{h}  \left( \jump{ \partial _{n} w_{h}}, \jump{ \partial _{n} v_{h}   }   \right)_{F}
+  \left( \mean{  \partial _{n n} w }, \jump{ \partial _{n }v} \right)_{F}  +
+ \left( \mean{ \partial _{n n} v }, \jump{ \partial _{n}w }      \right)_{F}   + \frac{\gamma}{h}  \left( \jump{ \partial _{n} w}, \jump{ \partial _{n} v   }   \right)_{F}
 \end{split}
 \end{equation}
 and
 \begin{equation}
 \label{eq:CP_F_h}
-l_{h}( v_{h} )  = \left( f, v_{h} \right) _{\Omega } +  \sum_ {F \in \mathcal{F}_{h} ^{ext}}^{} - \left(g_{2}, v_{h}  \right) _{F}.
+l_{h}( v )  = \left( f, v \right) _{\Omega } +  \sum_ {F \in \mathcal{F}_{h} ^{ext}}^{} - \left(g_{2}, v  \right) _{F}.
 \end{equation}
 Notice that the regulation term determined by respectively a global tuning parameter $\gamma >0 $. Another key component to the formulation
 in \eqref{eq:CP_A_h_1} after introduction of $ w_{h}, v_{h} \in V^{*}_{h}$  is that we expanded $\left( \partial _{nn}w, \jump{ \partial _{n} v }  \right)_{F} \to \left( \mean{ \partial _{nn}w_{h} }  , \jump{ \partial _{n} v_{h} }  \right)_{F} $ since we can longer not guarantee a
@@ -252,12 +252,12 @@ continuous jump. For symmetric purposes we also added $ \left( \mean{ \partial _
 
 \begin{equation*}
 \begin{split}
-a_{h} \left( w_{h}, v_{h} \right)   =&
-    \left( \alpha  w_{h}, v_{h} \right) _{\Omega }   +  \left( D^2 w_{h}, D^2v_{h} \right) _{\mathcal{T} _{h}} \\
+a_{h} \left( w, v \right)   =&
+    \left( \alpha  w, v \right) _{\Omega }   +  \left( D^2 w, D^2v \right) _{\mathcal{T} _{h}} \\
  & +
-  \left( \mean{  \partial _{n n} w_{h} }, \jump{ \partial _{n }v_{h}} \right)_{\mathcal{F}_{h}}  +
- \left( \mean{ \partial _{n n} v_{h} }, \jump{ \partial _{n}w }      \right)_{\mathcal{F}_{h}}  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} w_{h}}, \jump{ \partial _{n} v_{h}   }   \right)_{\mathcal{F}_{h}} \\
- l_{h}( v_{h}) & =  \left( f, v_{h} \right) _{\Omega }  - \left(g_{2}, v_{h}  \right) _{\Gamma }
+  \left( \mean{  \partial _{n n} w }, \jump{ \partial _{n }v} \right)_{\mathcal{F}_{h}}  +
+ \left( \mean{ \partial _{n n} v }, \jump{ \partial _{n}w }      \right)_{\mathcal{F}_{h}}  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} w}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h}} \\
+ l_{h}( v_{h}) & =  \left( f, v \right) _{\Omega }  - \left(g_{2}, v  \right) _{\Gamma }
 \end{split}
 \end{equation*}
 
