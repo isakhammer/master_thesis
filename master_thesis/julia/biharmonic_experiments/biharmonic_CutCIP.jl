@@ -17,30 +17,6 @@ module Solver
     # α(x) = x[1]^2 + x[2]^2
     α(x) = 1
 
-    function compute_condition_number(A, ndof; method="p-inf")
-
-        if method == "svd"
-            tolin = 10^-8
-            s_max, _ = tsvdvals(A, k = 1, tolin = tolin)
-            s_min, _ = tsvdvals_irl(A, k = 2, tolin = tolin)
-            # Take the smallest singular value which isn't 0
-            s_min = isapprox(s_min[2], 0.0, atol=10^-10) ? s_min[1] : s_min[2]
-            return s_max[1] / s_min
-        elseif method == "p-inf"
-            # https://github.com/mfasi/julia/blob/4ceb4ea9ee46ea92d406cfced308451a112d16f9/base/sparse/linalg.jl#L505
-            return ( 1/sqrt(ndof) )*cond(A,Inf)
-        else method == "p-1"
-            return cond(A,p=1)
-        end
-
-        # catch e
-        #     # Use more expansive full svd if PROPACK throw "Invariant Subspace" error
-        #     svd_values = svdvals(Matrix(A))
-        #     return svd_values[1]/svd_values[end]
-        # end
-    end
-
-
     function man_sol(u_ex)
         ∇u_ex(x) = ∇(u_ex)(x)
         ∇Δu_ex(x) = ∇(Δ(u_ex))(x)
@@ -198,7 +174,7 @@ module Solver
         uh = solve(op)
         A =  get_matrix(op)
         ndof = size(A)[1]
-        cond_number = compute_condition_number(A, ndof)
+        cond_number = ( 1/sqrt(ndof) )*cond(A,Inf)
 
         e = u_ex - uh
         el2 = sqrt(sum( ∫(e*e)dΩ ))
@@ -280,9 +256,9 @@ function generate_figures(;ns, el2s, eh1s, ehs_energy, cond_numbers, ndofs, orde
 
 
     # Save the plot as a .png file using the GR backend
-    Plots.gr()
-    Plots.savefig(p, filename*"_plot.png")
+    # Plots.gr()
     Plots.pgfplotsx()
+    Plots.savefig(p, filename*"_plot.png")
     Plots.savefig(p, filename*"_plot.tex")
 end
 
