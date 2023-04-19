@@ -98,7 +98,6 @@ module Solver
             return ( n.plus⋅ ∇∇(u).plus⋅ n.plus - n.minus ⋅ ∇∇(u).minus ⋅ n.minus )
         end
 
-
         # Define weak form
         γ = 10
 
