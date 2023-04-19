@@ -312,8 +312,6 @@ function main()
 
     orders = [2]
     ns = [2^2, 2^3, 2^4, 2^5, 2^6, 2^7, 2^8]
-    dirname = resultdir
-    mkpath(dirname)
     @time convergence_analysis( orders=orders, ns=ns, solver_config=solver_config, dirname=dirname)
 end
 
