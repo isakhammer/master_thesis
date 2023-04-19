@@ -156,7 +156,8 @@ module Solver
         eh1_ts = Float64[]
         eh_energy_ts = Float64[]
 
-        solname = vtkdirname*"/sol"
+        solname = vtkdirname*"/sol_dt_"*string(dt)
+        mkpath(solname)
         println("\ndt = ", string(dt))
         createpvd(solname) do pvd
             for (U_h, t) in U_h_t
