@@ -30,6 +30,12 @@ module Solver
         circle
     end
 
+    @with_kw struct Solution
+        el2s_L2
+        eh1s_L2
+        ehs_energy_L2
+    end
+
     function run(;n, dt, solver_config,  vtkdirname=nothing)
         u_ex, f, ∇u_ex, ∇Δu_ex = solver_config.exact_sol
         order=2
@@ -76,14 +82,6 @@ module Solver
         n_Fg = get_normal_vector(Fg)
 
         # Define weak form
-        γ = 10
-
-        # Ghost penalty parameter
-        # γg0 = γ
-        γg1 = 10/2
-        γg2 = 0.1
-
-        # Mesh size
         h = L/n
 
         function mean_n(u,n)
@@ -103,7 +101,6 @@ module Solver
         γ = 10
 
         # Ghost penalty parameter
-        # γg0 = γ
         γg1 = 10/2
         γg2 = 0.1
 
@@ -145,7 +142,7 @@ module Solver
 
         # Inital condition
         t_0 = 0
-        T = 3
+        T = 0.5
         U_0 = interpolate_everywhere(0,U(0.0))
 
         #################
@@ -159,11 +156,12 @@ module Solver
         eh_energy_ts = Float64[]
 
         solname = vtkdirname*"/sol"
+        println("dt = ", string(dt))
         createpvd(solname) do pvd
             for (U_h, t) in U_h_t
-                println("t = "*string(t), ", dt = ", string( dt ))
-                pvd[t] = createvtk(Ω, solname*"_$t"*".vtu",cellfields=["u_h"=>U_h])
+                println("t = "*string(t))
                 e = u_ex(t) - U_h
+                pvd[t] = createvtk(Ω, solname*"_$t"*".vtu",cellfields=["u_h"=>U_h,"e"=>e])
                 el2_t = sqrt(sum( ∫(e*e)dΩ ))
                 eh1_t = sqrt(sum( ∫( e*e + ∇(e)⋅∇(e) )*dΩ ))
 
@@ -175,41 +173,40 @@ module Solver
                              ))
                 push!( ts, t)
                 push!( el2_ts, el2_t )
+                push!( eh1_ts, eh1_t )
                 push!( eh_energy_ts, eh_energy)
             end
         end
 
-
+        el2s_L2 = sqrt(sum(dt* e_ti^2 for e_ti in el2_ts))
+        eh1s_L2 = sqrt(sum(dt* e_ti^2 for e_ti in eh1_ts))
+        ehs_energy_L2 = sqrt(sum(dt* e_ti^2 for e_ti in eh_energy_ts))
+        sol = Solution(el2s_L2=el2s_L2, eh1s_L2=eh1s_L2, ehs_energy_L2=ehs_energy_L2)
+        return sol
     end
 
 end # Solver
 
+function generate_figures(dts, el2s_L2, eh1s_L2, ehs_energy_L2)
+
+end
 function convergence_analysis(; n, dts, dirname, solver_config, write_vtks=true)
     println("Run convergence",)
 
-    el2s = Float64[]
-    eh1s = Float64[]
-    ehs_energy = Float64[]
-    cond_numbers = Float64[]
-    ndofs = Float64[]
+    el2s_L2 = Float64[]
+    eh1s_L2 = Float64[]
+    ehs_energy_L2 = Float64[]
     println("Run convergence tests: n = "*string(n))
 
     for dt in dts
         sol = Solver.run(n=n, dt=dt, solver_config=solver_config, vtkdirname=dirname)
-        #     if (write_vtks)
-        #     else
-        #         sol = Solver.run(order=order, solver_config, n=n)
-        #     end
 
-        #     push!(el2s, sol.el2)
-        #     push!(eh1s, sol.eh1)
-        #     push!(ehs_energy, sol.eh_energy)
-        #     push!(cond_numbers, sol.cond_number)
-        #     push!(ndofs, sol.ndof)
-        # end
-        # generate_figures(ns=ns, el2s=el2s, eh1s=eh1s, ehs_energy=ehs_energy,
-        #                  cond_numbers=cond_numbers, order=order, ndofs=ndofs, dirname=dirname)
+        push!(el2s_L2, sol.el2s_L2)
+        push!(eh1s_L2, sol.eh1s_L2)
+        push!(ehs_energy_L2, sol.ehs_energy_L2)
     end
+    generate_figures(dts, el2s_L2, eh1s_L2, ehs_energy_L2)
+
 end
 
 function main()
@@ -224,8 +221,8 @@ function main()
     circle = true
     solver_config = Solver.Config(exact_sol, circle)
 
-    dts = [2^-4]
-    @time convergence_analysis( n=2^6, dts=dts, solver_config=solver_config, dirname=dirname)
+    dts = [2^-2]
+    @time convergence_analysis( n=2^5, dts=dts, solver_config=solver_config, dirname=dirname)
 
 end
 

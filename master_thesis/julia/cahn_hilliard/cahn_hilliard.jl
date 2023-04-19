@@ -95,8 +95,8 @@ function analyze(dirname::String, model, u, U_h_t, Ω, dΩ)
     createpvd(solname) do pvd
         for (U_h, t) in U_h_t
             println("t = "*string(t))
-            pvd[t] = createvtk(Ω, solname*"_$t"*".vtu",cellfields=["u_h"=>U_h])
             e = u(t) - U_h
+            pvd[t] = createvtk(Ω, solname*"_$t"*".vtu",cellfields=["u_h"=>U_h,"e"=>sol.e])
             el2_t = sqrt(sum( ∫(e*e)dΩ ))
             eh1_t = sqrt(sum( ∫( e*e + ∇(e)⋅∇(e) )*dΩ ))
 
@@ -105,6 +105,8 @@ function analyze(dirname::String, model, u, U_h_t, Ω, dΩ)
             push!( eh1_ts, eh1_t )
         end
     end
+
+
 
     # Checks if all error values are acceptable
     @test all(el2_ts.<10^-2)
