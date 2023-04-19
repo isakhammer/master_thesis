@@ -141,11 +141,11 @@ module Solver
         n_Fg = get_normal_vector(Fg)
 
         # Define weak form
-        γ = 25*order*( order+1)
+        γ = 10
 
         # Ghost penalty parameter
-        γg0 = γ
-        γg1 = 0.1
+        # γg0 = γ
+        γg1 = 10/2
         γg2 = 0.1
 
         # Mesh size
@@ -181,8 +181,10 @@ module Solver
 
         # Define of ghost penalties
         if order == 2
-            g(u,v) = h^(-2)*(∫( (γg0/h)*jump(u)*jump(v)) * dFg +
-                              ∫( (γg1*h)*jump(n_Fg⋅∇(u))*jump(n_Fg⋅∇(v)) ) * dFg +
+            # g(u,v) = h^(-2)*(∫( (γg0/h)*jump(u)*jump(v)) * dFg +
+            #                   ∫( (γg1*h)*jump(n_Fg⋅∇(u))*jump(n_Fg⋅∇(v)) ) * dFg +
+            #                   ∫( (γg2*h^3)*jump_nn(u,n_Fg)*jump_nn(v,n_Fg) ) * dFg)
+            g(u,v) = h^(-2)*( ∫( (γg1*h)*jump(n_Fg⋅∇(u))*jump(n_Fg⋅∇(v)) ) * dFg +
                               ∫( (γg2*h^3)*jump_nn(u,n_Fg)*jump_nn(v,n_Fg) ) * dFg)
         else
             println("Not supported order:", order)
