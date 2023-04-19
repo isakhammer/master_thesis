@@ -159,9 +159,8 @@ module Solver
         solname = vtkdirname*"/sol_dt_"*string(dt)
         mkpath(solname)
         println("\ndt = ", string(dt))
-        createpvd(solname) do pvd
+        createpvd(solname*"/") do pvd
             for (U_h, t) in U_h_t
-                println("t = "*string(t))
                 e = u_ex(t) - U_h
                 pvd[t] = createvtk(Ω, solname*"_$t"*".vtu",cellfields=["u_h"=>U_h,"e"=>e])
                 el2_t = sqrt(sum( ∫(e*e)dΩ ))
@@ -189,35 +188,35 @@ module Solver
 
 end # Solver
 
-function generate_figures(dts, el2s_L2, eh1s_L2, ehs_energy_L2, dirname::String)
+function generate_figures(Xs, el2s_L2, eh1s_L2, ehs_energy_L2, dirname::String, eoc_name::String)
 
-    filename = dirname*"/conv"
-    compute_eoc(dts, errs) = log.(errs[1:end-1]./errs[2:end])./log.(dts[1:end-1]./dts[2:end])
-    eoc_l2s_L2 = compute_eoc(dts, el2s_L2)
-    eoc_eh1s_L2 = compute_eoc(dts, eh1s_L2)
-    eoc_ehs_energy_L2 = compute_eoc(dts, ehs_energy_L2)
+    filename = dirname*"/conv_"*eoc_name
+    compute_eoc(Xs, errs) = log.(errs[1:end-1]./errs[2:end])./log.(Xs[1:end-1]./Xs[2:end])
+    eoc_l2s_L2 = compute_eoc(Xs, el2s_L2)
+    eoc_eh1s_L2 = compute_eoc(Xs, eh1s_L2)
+    eoc_ehs_energy_L2 = compute_eoc(Xs, ehs_energy_L2)
     eoc_l2s_L2 =  [nothing; eoc_l2s_L2]
     eoc_eh1s_L2 =  [nothing; eoc_eh1s_L2]
     eoc_ehs_energy_L2 =  [nothing; eoc_ehs_energy_L2]
 
-    minimal_header = ["dt", "L2L2", "EOC", "L2H1", "EOC", "L2a_h", "EOC"]
-    data = hcat(dts, el2s_L2,  eoc_l2s_L2, eh1s_L2, eoc_eh1s_L2, ehs_energy_L2, eoc_ehs_energy_L2)
+    minimal_header = ["$eoc_name", "L2L2", "EOC", "L2H1", "EOC", "L2a_h", "EOC"]
+    data = hcat(Xs, el2s_L2,  eoc_l2s_L2, eh1s_L2, eoc_eh1s_L2, ehs_energy_L2, eoc_ehs_energy_L2)
     # formatters = ( ft_printf("%.2f",[3,5,7]), ft_printf("%.1E",[2,4,6,8,9]), ft_nonothing )
     pretty_table(data, header=minimal_header)#, formatters =formatters )
 
-    p = Plots.plot(dts, el2s_L2, label="L2L2", legend=:bottomright, xscale=:log2, yscale=:log2, minorgrid=true)
-    Plots.scatter!(p, dts, el2s_L2, primary=false)
+    p = Plots.plot(Xs, el2s_L2, label="L2L2", legend=:bottomright, xscale=:log2, yscale=:log2, minorgrid=true)
+    Plots.scatter!(p, Xs, el2s_L2, primary=false)
 
     # Add the second data series
-    Plots.plot!(p, dts, eh1s_L2, label=L"L2H1")
-    Plots.scatter!(p, dts, eh1s_L2, primary=false)
+    Plots.plot!(p, Xs, eh1s_L2, label=L"L2H1")
+    Plots.scatter!(p, Xs, eh1s_L2, primary=false)
 
     # Add the second data series
-    Plots.plot!(p, dts, ehs_energy_L2, label=L"L2Energy")
-    Plots.scatter!(p, dts, ehs_energy_L2, primary=false)
+    Plots.plot!(p, Xs, ehs_energy_L2, label=L"L2Energy")
+    Plots.scatter!(p, Xs, ehs_energy_L2, primary=false)
 
     # Configs
-    Plots.xlabel!(p, "dt")
+    Plots.xlabel!(p, "$eoc_name")
     Plots.plot!(p, xscale=:log2, yscale=:log2, minorgrid=true)
     Plots.plot!(p, legendfontsize=14)  # Adjust the value 12 to your desired font size
 
@@ -228,12 +227,13 @@ function generate_figures(dts, el2s_L2, eh1s_L2, ehs_energy_L2, dirname::String)
     # Plots.savefig(p, filename*"_plot.tex")
 
 end
-function convergence_analysis(; n, dts, dirname, solver_config, write_vtks=true)
+function convergence_analysis(; ns, dts, dirname, solver_config, write_vtks=true)
     println("Run convergence",)
 
     el2s_L2 = Float64[]
     eh1s_L2 = Float64[]
     ehs_energy_L2 = Float64[]
+    n= 2^5
     println("Run convergence tests: n = "*string(n))
 
     for dt in dts
@@ -243,7 +243,18 @@ function convergence_analysis(; n, dts, dirname, solver_config, write_vtks=true)
         push!(eh1s_L2, sol.eh1s_L2)
         push!(ehs_energy_L2, sol.ehs_energy_L2)
     end
-    generate_figures(dts, el2s_L2, eh1s_L2, ehs_energy_L2, dirname)
+    generate_figures(dts, el2s_L2, eh1s_L2, ehs_energy_L2, dirname, "dt")
+
+    # dt = 2^-4
+    # println("Run convergence tests: d = "*string(n))
+    # for n in ns
+    #     sol = Solver.run(n=n, dt=dt, solver_config=solver_config, vtkdirname=dirname)
+    #     push!(el2s_L2, sol.el2s_L2)
+    #     push!(eh1s_L2, sol.eh1s_L2)
+    #     push!(ehs_energy_L2, sol.ehs_energy_L2)
+    # end
+
+
 
 end
 
@@ -260,7 +271,8 @@ function main()
     solver_config = Solver.Config(exact_sol, circle)
 
     dts = [2^-2,2^-3,2^-4,2^-5]
-    @time convergence_analysis( n=2^5, dts=dts, solver_config=solver_config, dirname=dirname)
+    ns = [2^2,2^3,2^4,2^5]
+    @time convergence_analysis( ns=ns, dts=dts, solver_config=solver_config, dirname=dirname)
 
 end
 
