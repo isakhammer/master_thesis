@@ -29,6 +29,7 @@ module Solver
         exact_sol
         circle
     end
+
     function run(;n, dt, solver_config,  vtkdirname=nothing)
         u_ex, f, ∇u_ex, ∇Δu_ex = solver_config.exact_sol
         order=2
@@ -81,7 +82,59 @@ module Solver
         # γg0 = γ
         γg1 = 10/2
         γg2 = 0.1
-        println("order")
+
+        # Mesh size
+        h = L/n
+
+        function mean_n(u,n)
+            return 0.5*( u.plus⋅n.plus + u.minus⋅n.minus )
+        end
+
+        function mean_nn(u,n)
+            return 0.5*( n.plus⋅ ∇∇(u).plus⋅ n.plus + n.minus ⋅ ∇∇(u).minus ⋅ n.minus )
+        end
+
+        function jump_nn(u,n)
+            return ( n.plus⋅ ∇∇(u).plus⋅ n.plus - n.minus ⋅ ∇∇(u).minus ⋅ n.minus )
+        end
+
+
+        # Define weak form
+        γ = 10
+
+        # Ghost penalty parameter
+        # γg0 = γ
+        γg1 = 10/2
+        γg2 = 0.1
+
+        # Inner facets
+        a(t,u,v) =( ∫( ∇∇(v)⊙∇∇(u) + α⋅(v⊙u) )dΩ
+                 + ∫(-mean_nn(v,n_Λ)⊙jump(∇(u)⋅n_Λ) - mean_nn(u,n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ
+                 + ∫(-( n_Γ ⋅ ∇∇(v)⋅ n_Γ )⊙∇(u)⋅n_Γ - ( n_Γ ⋅ ∇∇(u)⋅ n_Γ )⊙∇(v)⋅n_Γ)dΓ
+                 + ∫((γ/h)⋅jump(∇(u)⋅n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ + ∫((γ/h)⋅ ∇(u)⊙n_Γ⋅∇(v)⊙n_Γ )dΓ
+                )
+
+        # Define linear form
+        g_1(t) = ∇u_ex(t)⋅n_Γ
+        g_2(t) = ∇Δu_ex(t)⋅n_Γ
+        l(t,v) = (∫( f(t)*v ) * dΩ
+                  +  ∫(-(g_2(t)⋅v))dΓ
+                  + ∫(g_1(t)⊙(-(n_Γ⋅∇∇(v)⋅n_Γ) + (γ/h)*∇(v)⋅n_Γ)) * dΓ
+               )
+
+        # # Define of ghost penalties
+        if order != 2
+            println("Not supported order:", order)
+        end
+
+        g(t,u,v) = h^(-2)*( ∫( (γg1*h)*jump(n_Fg⋅∇(u))*jump(n_Fg⋅∇(v)) ) * dFg +
+                         ∫( (γg2*h^3)*jump_nn(u,n_Fg)*jump_nn(v,n_Fg) ) * dFg)
+
+        A(t,u,v) = a(t,u,v) + g(t,u,v)
+
+        # # bilinear form
+        m(t, u, v) = ∫( α* u⋅v )dΩ
+
     end
 
 end # Solver
