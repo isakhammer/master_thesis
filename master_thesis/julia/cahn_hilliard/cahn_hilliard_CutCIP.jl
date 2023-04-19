@@ -4,6 +4,8 @@ using Gridap
 using Plots
 using Dates
 using LaTeXStrings
+using Latexify
+using PrettyTables
 
 module Solver
     using Gridap
@@ -156,7 +158,7 @@ module Solver
         eh_energy_ts = Float64[]
 
         solname = vtkdirname*"/sol"
-        println("dt = ", string(dt))
+        println("\ndt = ", string(dt))
         createpvd(solname) do pvd
             for (U_h, t) in U_h_t
                 println("t = "*string(t))
@@ -190,6 +192,18 @@ end # Solver
 function generate_figures(dts, el2s_L2, eh1s_L2, ehs_energy_L2, dirname::String)
 
     filename = dirname*"/conv"
+    compute_eoc(dts, errs) = log.(errs[1:end-1]./errs[2:end])./log.(dts[1:end-1]./dts[2:end])
+    eoc_l2s_L2 = compute_eoc(dts, el2s_L2)
+    eoc_eh1s_L2 = compute_eoc(dts, eh1s_L2)
+    eoc_ehs_energy_L2 = compute_eoc(dts, ehs_energy_L2)
+    eoc_l2s_L2 =  [nothing; eoc_l2s_L2]
+    eoc_eh1s_L2 =  [nothing; eoc_eh1s_L2]
+    eoc_ehs_energy_L2 =  [nothing; eoc_ehs_energy_L2]
+
+    minimal_header = ["dt", "L2L2", "EOC", "L2H1", "EOC", "L2a_h", "EOC"]
+    data = hcat(dts, el2s_L2,  eoc_l2s_L2, eh1s_L2, eoc_eh1s_L2, ehs_energy_L2, eoc_ehs_energy_L2)
+    # formatters = ( ft_printf("%.2f",[3,5,7]), ft_printf("%.1E",[2,4,6,8,9]), ft_nonothing )
+    pretty_table(data, header=minimal_header)#, formatters =formatters )
 
     p = Plots.plot(dts, el2s_L2, label="L2L2", legend=:bottomright, xscale=:log2, yscale=:log2, minorgrid=true)
     Plots.scatter!(p, dts, el2s_L2, primary=false)
