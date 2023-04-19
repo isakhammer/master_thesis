@@ -187,7 +187,31 @@ module Solver
 
 end # Solver
 
-function generate_figures(dts, el2s_L2, eh1s_L2, ehs_energy_L2)
+function generate_figures(dts, el2s_L2, eh1s_L2, ehs_energy_L2, dirname::String)
+
+    filename = dirname*"/conv"
+
+    p = Plots.plot(dts, el2s_L2, label="L2L2", legend=:bottomright, xscale=:log2, yscale=:log2, minorgrid=true)
+    Plots.scatter!(p, dts, el2s_L2, primary=false)
+
+    # Add the second data series
+    Plots.plot!(p, dts, eh1s_L2, label=L"L2H1")
+    Plots.scatter!(p, dts, eh1s_L2, primary=false)
+
+    # Add the second data series
+    Plots.plot!(p, dts, ehs_energy_L2, label=L"L2Energy")
+    Plots.scatter!(p, dts, ehs_energy_L2, primary=false)
+
+    # Configs
+    Plots.xlabel!(p, "dt")
+    Plots.plot!(p, xscale=:log2, yscale=:log2, minorgrid=true)
+    Plots.plot!(p, legendfontsize=14)  # Adjust the value 12 to your desired font size
+
+    # Save the plot as a .png file using the GR backend
+    Plots.gr()
+    # Plots.pgfplotsx()
+    Plots.savefig(p, filename*"_plot.png")
+    # Plots.savefig(p, filename*"_plot.tex")
 
 end
 function convergence_analysis(; n, dts, dirname, solver_config, write_vtks=true)
@@ -205,7 +229,7 @@ function convergence_analysis(; n, dts, dirname, solver_config, write_vtks=true)
         push!(eh1s_L2, sol.eh1s_L2)
         push!(ehs_energy_L2, sol.ehs_energy_L2)
     end
-    generate_figures(dts, el2s_L2, eh1s_L2, ehs_energy_L2)
+    generate_figures(dts, el2s_L2, eh1s_L2, ehs_energy_L2, dirname)
 
 end
 
@@ -221,7 +245,7 @@ function main()
     circle = true
     solver_config = Solver.Config(exact_sol, circle)
 
-    dts = [2^-2]
+    dts = [2^-2,2^-3,2^-4,2^-5]
     @time convergence_analysis( n=2^5, dts=dts, solver_config=solver_config, dirname=dirname)
 
 end
