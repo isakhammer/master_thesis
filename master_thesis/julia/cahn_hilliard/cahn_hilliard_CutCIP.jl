@@ -117,7 +117,7 @@ module Solver
         # Define linear form
         g_1(t) = ∇u_ex(t)⋅n_Γ
         g_2(t) = ∇Δu_ex(t)⋅n_Γ
-        l(t,v) = (∫( f(t)*v ) * dΩ
+        b(t,v) = (∫( f(t)*v ) * dΩ
                   +  ∫(-(g_2(t)⋅v))dΓ
                   + ∫(g_1(t)⊙(-(n_Γ⋅∇∇(v)⋅n_Γ) + (γ/h)*∇(v)⋅n_Γ)) * dΓ
                )
@@ -134,6 +134,24 @@ module Solver
 
         # # bilinear form
         m(t, u, v) = ∫( α* u⋅v )dΩ
+
+        # Initializing linear terms
+        op_Af = TransientAffineFEOperator(m,a,b,U,V)
+
+        # Solving time problem
+        linear_solver = LUSolver()
+        th = 0.5
+        ode_solver = ThetaMethod(linear_solver,dt,th)
+
+        # Inital condition
+        t_0 = 0
+        T = 3
+        U_0 = interpolate_everywhere(0,U(0.0))
+
+        #################
+
+        op = op_Af
+        U_h_t = solve(ode_solver, op, U_0, t_0, T)
 
     end
 
