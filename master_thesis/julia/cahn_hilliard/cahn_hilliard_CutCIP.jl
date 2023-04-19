@@ -52,9 +52,6 @@ module Solver
         # Set up interpolation mesh and function spaces
         Ω_act = Triangulation(cutgeo, ACTIVE)
 
-        # Set up interpolation mesh and function spaces
-        Ω_act = Triangulation(cutgeo, ACTIVE)
-
         # Construct function spaces
         V = TestFESpace(Ω_act, ReferenceFE(lagrangian, Float64, order), conformity=:H1)
         U = TrialFESpace(V)
