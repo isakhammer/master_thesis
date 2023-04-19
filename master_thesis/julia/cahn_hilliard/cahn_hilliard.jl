@@ -6,28 +6,22 @@ using Dates
 using LaTeXStrings
 # plotlyjs()
 
-function makedir(dirname)
-    if (isdir(dirname))
-        rm(dirname, recursive=true)
-    end
-    mkdir(dirname)
-end
+# Analytical manufactured solution
+α = 1
+u(x,t::Real) = t*cos(x[1])*cos(x[2])
+u(t::Real) = x -> u(x,t)
+
+
+f(t) = x -> α*∂t(u)(x,t)+Δ(Δ(u(t)))(x)
+g(t) = x ->  Δ(u(t))(x)
+
+# Manufactured solution test
+tₜ, x1ₜ, x2ₜ  = 0.5, 0.5, 0.5
+@test f(tₜ)(VectorValue(x1ₜ,x2ₜ)) ==  4*tₜ*cos(x1ₜ)*cos(x2ₜ) + cos(x1ₜ)*cos(x2ₜ)
+@test g(tₜ)(VectorValue(x1ₜ,x2ₜ)) == -2*tₜ*cos(x1ₜ)*cos(x2ₜ)
+
 
 function run_cahn_hilliard(; n=10, order::Int, generate_vtk=false, dirname="cahn_hilliard", test=false, Δt=0.1, t_0=0, T=3)
-
-    # Analytical manufactured solution
-    α = 1
-    u(x,t::Real) = t*cos(x[1])*cos(x[2])
-    u(t::Real) = x -> u(x,t)
-
-
-    f(t) = x -> α*∂t(u)(x,t)+Δ(Δ(u(t)))(x)
-    g(t) = x ->  Δ(u(t))(x)
-
-    # Manufactured solution test
-    tₜ, x1ₜ, x2ₜ  = 0.5, 0.5, 0.5
-    @test f(tₜ)(VectorValue(x1ₜ,x2ₜ)) ==  4*tₜ*cos(x1ₜ)*cos(x2ₜ) + cos(x1ₜ)*cos(x2ₜ)
-    @test g(tₜ)(VectorValue(x1ₜ,x2ₜ)) == -2*tₜ*cos(x1ₜ)*cos(x2ₜ)
 
     # Domain
     L = 2*π
@@ -139,94 +133,6 @@ function main()
 
     model, u, U_h_t, Ω, dΩ = run_cahn_hilliard(n=90, order=2, generate_vtk=true, dirname=dirname, test=false)
     ts, el2_ts, eh1_ts = analyze(dirname, model, u, U_h_t, Ω, dΩ)
-
-    # mansolname = pvddirname*"/mansol"
-    # createpvd(mansolname) do pvd
-    #     for (U_h, t) in U_h_t
-    #         pvd[t] = createvtk(Ω, mansolname*"_$t"*".vtu",cellfields=["u"=>u(t)])
-    #     end
-    # end
-end
-
-
-function searchsortednearest(a,x)
-    # https://discourse.julialang.org/t/findnearest-function/4143/5
-    idx = searchsortedfirst(a,x)
-    if (idx==1); return idx; end
-    if (idx>length(a)); return length(a); end
-    if (a[idx]==x); return idx; end
-    if (abs(a[idx]-x) < abs(a[idx-1]-x))
-        return idx
-    else
-        return idx-1
-    end
-end
-
-
-function unit_square_convergence()
-
-
-    dirname= "figures/cahn_hilliard/unit_square_convergence"*string(Dates.now())
-    println(dirname)
-    mkpath(dirname)
-
-    Δt, t_0, T = 0.1, 0, 3
-
-    ns = [ 32, 64, 90]
-    # ns = [ 8, 16]#, 32, 64, 90]
-
-    N = size(ns)[1]
-    hs = zeros(N)
-    ts = Float64[]
-    el2_matrix = zeros( ( N, Int(T/Δt) ) )
-    eh1_matrix = zeros( ( N, Int(T/Δt) ) )
-
-    for i in 1:N
-        n = ns[i]
-        println("runs n", n)
-        n_dirname = dirname*"/man_sol_se_"*string(n)
-        model, u, U_h_t, Ω, dΩ = run_cahn_hilliard(; n=n,  order=2, generate_vtk=false, dirname="cahn_hilliard", test=false, Δt=Δt, t_0=t_0, T=T)
-        ts2, el2_ts, eh1_ts = analyze(n_dirname, model, u, U_h_t, Ω, dΩ)
-        ts =ts2 # huh?
-        el2_matrix[i,:] = el2_ts
-        eh1_matrix[i,:] = eh1_ts
-        hs[i] = 2*π/n
-    end
-
-    t1 = t_0
-    j1 = searchsortednearest(ts,t1)
-
-    t2 = 1.0
-    j2 = searchsortednearest(ts,t2)
-
-    t3 = T
-    j3 = searchsortednearest(ts,t3)
-
-
-    Plots.plot(hs, [ el2_matrix[:, j1] el2_matrix[:, j2] el2_matrix[:, j3] ] ,
-        yaxis=:log,
-        xaxis=:log,
-        label=["t = "*string(t1) "t = "*string(t2) "t = "*string(t3)  ],
-        shape=:auto,
-        xlabel="h",
-        ylabel="L2 - error norm")
-
-    Plots.png(dirname*"/L2_convergence_plots")
-
-    Plots.plot(hs, [ eh1_matrix[:, j1] eh1_matrix[:, j2] eh1_matrix[:, j3] ] ,
-        yaxis=:log,
-        xaxis=:log,
-        label=["t = "*string(t1) "t = "*string(t2) "t = "*string(t3)  ],
-        shape=:auto,
-        xlabel="h",
-        ylabel="H1 - error norm")
-
-    Plots.png(dirname*"/H1_convergence_plots")
-
-    println("Here")
-    return
-
 end
 
 main()
-# unit_square_convergence()
