@@ -153,6 +153,33 @@ module Solver
         op = op_Af
         U_h_t = solve(ode_solver, op, U_0, t_0, T)
 
+        ts = Float64[]
+        el2_ts = Float64[]
+        eh1_ts = Float64[]
+        eh_energy_ts = Float64[]
+
+        solname = vtkdirname*"/sol"
+        createpvd(solname) do pvd
+            for (U_h, t) in U_h_t
+                println("t = "*string(t), ", dt = ", string( dt ))
+                pvd[t] = createvtk(Ω, solname*"_$t"*".vtu",cellfields=["u_h"=>U_h])
+                e = u_ex(t) - U_h
+                el2_t = sqrt(sum( ∫(e*e)dΩ ))
+                eh1_t = sqrt(sum( ∫( e*e + ∇(e)⋅∇(e) )*dΩ ))
+
+                eh_energy = sqrt(sum( ∫(e⊙e)*dΩ + ∫( ∇∇(e)⊙∇∇(e) )*dΩ
+                              + ( γ/h ) * ∫(jump(∇(e)⋅n_Λ) ⊙ jump(∇(e)⋅n_Λ))dΛ
+                              + ( h/γ ) * ∫(mean_nn(e,n_Λ) ⊙ mean_nn(e,n_Λ))dΛ
+                              + ( γ/h ) * ∫((∇(e)⋅n_Γ) ⊙ (∇(e)⋅n_Γ))dΓ
+                              + ( h/γ ) * ∫(( n_Γ ⋅ ∇∇(e)⋅ n_Γ ) ⊙ ( n_Γ ⋅ ∇∇(e)⋅ n_Γ ))dΓ
+                             ))
+                push!( ts, t)
+                push!( el2_ts, el2_t )
+                push!( eh_energy_ts, eh_energy)
+            end
+        end
+
+
     end
 
 end # Solver
