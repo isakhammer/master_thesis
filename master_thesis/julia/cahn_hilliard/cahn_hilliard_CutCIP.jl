@@ -158,7 +158,7 @@ module Solver
 
         solname = vtkdirname*"/sol_dt_"*string(dt)
         mkpath(solname)
-        println("\ndt = ", string(dt))
+        println("\ndt = ", string(dt), ", n = "*string(n))
         createpvd(solname*"/") do pvd
             for (U_h, t) in U_h_t
                 e = u_ex(t) - U_h
@@ -227,32 +227,44 @@ function generate_figures(Xs, el2s_L2, eh1s_L2, ehs_energy_L2, dirname::String, 
     # Plots.savefig(p, filename*"_plot.tex")
 
 end
-function convergence_analysis(; ns, dts, dirname, solver_config, write_vtks=true)
+function convergence_analysis(; ns, dts, dirname, solver_config, write_vtks=true, spatial=false, time_dim=true)
     println("Run convergence",)
 
-    el2s_L2 = Float64[]
-    eh1s_L2 = Float64[]
-    ehs_energy_L2 = Float64[]
-    n= 2^5
-    println("Run convergence tests: n = "*string(n))
+    if (time_dim)
+        time_dim
+        # Time dim EOC
+        el2s_L2 = Float64[]
+        eh1s_L2 = Float64[]
+        ehs_energy_L2 = Float64[]
+        n= 2^5
+        println("Run convergence tests: n = "*string(n))
 
-    for dt in dts
-        sol = Solver.run(n=n, dt=dt, solver_config=solver_config, vtkdirname=dirname)
+        for dt in dts
+            sol = Solver.run(n=n, dt=dt, solver_config=solver_config, vtkdirname=dirname)
 
-        push!(el2s_L2, sol.el2s_L2)
-        push!(eh1s_L2, sol.eh1s_L2)
-        push!(ehs_energy_L2, sol.ehs_energy_L2)
+            push!(el2s_L2, sol.el2s_L2)
+            push!(eh1s_L2, sol.eh1s_L2)
+            push!(ehs_energy_L2, sol.ehs_energy_L2)
+        end
+        generate_figures(dts, el2s_L2, eh1s_L2, ehs_energy_L2, dirname, "dt")
     end
-    generate_figures(dts, el2s_L2, eh1s_L2, ehs_energy_L2, dirname, "dt")
 
-    # dt = 2^-4
-    # println("Run convergence tests: d = "*string(n))
-    # for n in ns
-    #     sol = Solver.run(n=n, dt=dt, solver_config=solver_config, vtkdirname=dirname)
-    #     push!(el2s_L2, sol.el2s_L2)
-    #     push!(eh1s_L2, sol.eh1s_L2)
-    #     push!(ehs_energy_L2, sol.ehs_energy_L2)
-    # end
+
+    if (spatial)
+        # Spatial EOC
+        el2s_L2 = Float64[]
+        eh1s_L2 = Float64[]
+        ehs_energy_L2 = Float64[]
+        dt = 2^-4
+        println("Run convergence tests: n = "*string(dt))
+        for n in ns
+            sol = Solver.run(n=n, dt=dt, solver_config=solver_config, vtkdirname=dirname)
+            push!(el2s_L2, sol.el2s_L2)
+            push!(eh1s_L2, sol.eh1s_L2)
+            push!(ehs_energy_L2, sol.ehs_energy_L2)
+        end
+        generate_figures(ns, el2s_L2, eh1s_L2, ehs_energy_L2, dirname, "ns")
+    end
 
 
 
