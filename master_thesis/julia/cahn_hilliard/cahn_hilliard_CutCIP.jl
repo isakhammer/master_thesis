@@ -234,21 +234,30 @@ function generate_figures(Xs,
                ft_printf("%.1E", [2, 4, 6, 8, 10,12]))
     pretty_table(data, header=minimal_header, formatters =formatters )
 
+    # L2 norms
     p = Plots.plot(Xs, el2s_L2, label="L2L2", legend=:bottomright, xscale=:log2, yscale=:log2, minorgrid=true)
     Plots.scatter!(p, Xs, el2s_L2, primary=false)
 
-    # Add the second data series
     Plots.plot!(p, Xs, eh1s_L2, label=L"L2H1")
     Plots.scatter!(p, Xs, eh1s_L2, primary=false)
 
-    # Add the second data series
     Plots.plot!(p, Xs, ehs_energy_L2, label=L"L2ah")
     Plots.scatter!(p, Xs, ehs_energy_L2, primary=false)
+
+    # inf norms
+    Plots.plot!(p, Xs, el2s_inf, label=L"infL2")
+    Plots.scatter!(p, Xs, el2s_inf, primary=false)
+
+    Plots.plot!(p, Xs, eh1s_inf, label=L"infH1")
+    Plots.scatter!(p, Xs, eh1s_inf, primary=false)
+
+    Plots.plot!(p, Xs, ehs_energy_inf, label=L"infah")
+    Plots.scatter!(p, Xs, ehs_energy_inf, primary=false)
 
     # Configs
     Plots.xlabel!(p, "$Xs_name")
     Plots.plot!(p, xscale=:log2, yscale=:log2, minorgrid=true)
-    Plots.plot!(p, legendfontsize=14)  # Adjust the value 12 to your desired font size
+    Plots.plot!(p, legendfontsize=12)  # Adjust the value 12 to your desired font size
 
     # Save the plot as a .png file using the GR backend
     # Plots.gr()
@@ -257,10 +266,10 @@ function generate_figures(Xs,
     # Plots.savefig(p, filename*"_plot.tex")
 
 end
-function convergence_analysis(; ns, dts, dirname, solver_config, write_vtks=true, spatial=true, time_dim=true)
+function convergence_analysis(; ns, dts, dirname, solver_config, spatial=false, dt_const=2^-4, transient=false, n_const=2^5)
     println("Run convergence",)
 
-    if (time_dim)
+    if (transient)
         # Time dim EOC
         el2s_L2 = Float64[]
         eh1s_L2 = Float64[]
@@ -268,11 +277,10 @@ function convergence_analysis(; ns, dts, dirname, solver_config, write_vtks=true
         el2s_inf = Float64[]
         eh1s_inf = Float64[]
         ehs_energy_inf = Float64[]
-        n= 2^5
-        println("Run convergence tests with constant n = "*string(n))
+        println("Run convergence tests with constant n = "*string(n_const))
 
         for dt in dts
-            sol = Solver.run(n=n, dt=dt, solver_config=solver_config, vtkdirname=dirname)
+            sol = Solver.run(n=n_const, dt=dt, solver_config=solver_config, vtkdirname=dirname)
 
             push!(el2s_L2, sol.el2s_L2)
             push!(eh1s_L2, sol.eh1s_L2)
@@ -295,10 +303,9 @@ function convergence_analysis(; ns, dts, dirname, solver_config, write_vtks=true
         el2s_inf = Float64[]
         eh1s_inf = Float64[]
         ehs_energy_inf = Float64[]
-        dt = 2^-4
-        println("Run convergence tests with constant dt = "*string(dt))
+        println("Run convergence tests with constant dt = "*string(dt_const))
         for n in ns
-            sol = Solver.run(n=n, dt=dt, solver_config=solver_config, vtkdirname=dirname)
+            sol = Solver.run(n=n, dt=dt_const, solver_config=solver_config, vtkdirname=dirname)
             push!(el2s_L2, sol.el2s_L2)
             push!(eh1s_L2, sol.eh1s_L2)
             push!(ehs_energy_L2, sol.ehs_energy_L2)
@@ -330,7 +337,18 @@ function main()
 
     dts = [2^-2,2^-3,2^-4,2^-5]
     ns = [2^2,2^3,2^4,2^5, 2^6]
-    @time convergence_analysis( ns=ns, dts=dts, solver_config=solver_config, dirname=dirname)
+
+    # @time convergence_analysis( ns=ns, dts=dts, dirname=dirname, solver_config=solver_config,
+    #                            spatial=false, dt_const=2^-4, transient=true, n_const=2^5)
+
+#     n = 2^4
+#     @time convergence_analysis( ns=ns, dts=dts, dirname=dirname, solver_config=solver_config, transient=true, n_const=n)
+#     n = 2^5
+#     @time convergence_analysis( ns=ns, dts=dts, dirname=dirname, solver_config=solver_config, transient=true, n_const=n)
+    # n = 2^6
+    # @time convergence_analysis( ns=ns, dts=dts, dirname=dirname, solver_config=solver_config, transient=true, n_const=n)
+    n = 2^7
+    @time convergence_analysis( ns=ns, dts=dts, dirname=dirname, solver_config=solver_config, transient=true, n_const=n)
 
 end
 
