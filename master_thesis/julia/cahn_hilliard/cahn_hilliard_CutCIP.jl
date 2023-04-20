@@ -37,6 +37,9 @@ module Solver
         el2s_L2
         eh1s_L2
         ehs_energy_L2
+        el2s_Linf
+        eh1s_Linf
+        ehs_energy_Linf
     end
 
     function run(;n, dt, solver_config,  vtkdirname=nothing)
@@ -139,12 +142,12 @@ module Solver
 
         # Solving time problem
         linear_solver = LUSolver()
-        th = 0.5
+        th = 1
         ode_solver = ThetaMethod(linear_solver,dt,th)
 
         # Inital condition
         t_0 = 0
-        T = 0.5
+        T = 1.0
         U_0 = interpolate_everywhere(0,U(0.0))
 
         #################
@@ -160,7 +163,7 @@ module Solver
         solname = vtkdirname*"/sol_dt_"*string(dt)
         mkpath(solname)
         println("\ndt = ", string(dt), ", n = "*string(n))
-        createpvd(solname*"/") do pvd
+        createpvd(solname) do pvd
             for (U_h, t) in U_h_t
                 e = u_ex(t) - U_h
                 pvd[t] = createvtk(Ω, solname*"_$t"*".vtu",cellfields=["u_h"=>U_h,"e"=>e])
@@ -201,7 +204,7 @@ function generate_figures(Xs, el2s_L2, eh1s_L2, ehs_energy_L2, dirname::String, 
     eoc_ehs_energy_L2 =  [nothing; eoc_ehs_energy_L2]
     Xs_str =  latexify.(Xs)
 
-    minimal_header = ["$Xs_name", "L2L2", "EOC", "L2H1", "EOC", "L2Ah", "EOC"]
+    minimal_header = ["$Xs_name", "L2L2", "EOC", "L2H1", "EOC", "L2ah", "EOC"]
     data = hcat(Xs_str, el2s_L2,  eoc_l2s_L2, eh1s_L2, eoc_eh1s_L2, ehs_energy_L2, eoc_ehs_energy_L2)
     # formatters = ( ft_printf("%.2f",[3,5,7]), ft_printf("%.1E",[2,4,6,8,9]), ft_nonothing )
     pretty_table(data, header=minimal_header)#, formatters =formatters )
@@ -214,7 +217,7 @@ function generate_figures(Xs, el2s_L2, eh1s_L2, ehs_energy_L2, dirname::String, 
     Plots.scatter!(p, Xs, eh1s_L2, primary=false)
 
     # Add the second data series
-    Plots.plot!(p, Xs, ehs_energy_L2, label=L"L2Ah")
+    Plots.plot!(p, Xs, ehs_energy_L2, label=L"L2ah")
     Plots.scatter!(p, Xs, ehs_energy_L2, primary=false)
 
     # Configs
