@@ -189,9 +189,9 @@ module Solver
 
 end # Solver
 
-function generate_figures(Xs, el2s_L2, eh1s_L2, ehs_energy_L2, dirname::String, eoc_name::String)
+function generate_figures(Xs, el2s_L2, eh1s_L2, ehs_energy_L2, dirname::String, Xs_name::String)
 
-    filename = dirname*"/conv_"*eoc_name
+    filename = dirname*"/conv_"*Xs_name
     compute_eoc(Xs, errs) = log.(errs[1:end-1]./errs[2:end])./log.(Xs[1:end-1]./Xs[2:end])
     eoc_l2s_L2 = compute_eoc(Xs, el2s_L2)
     eoc_eh1s_L2 = compute_eoc(Xs, eh1s_L2)
@@ -199,9 +199,10 @@ function generate_figures(Xs, el2s_L2, eh1s_L2, ehs_energy_L2, dirname::String, 
     eoc_l2s_L2 =  [nothing; eoc_l2s_L2]
     eoc_eh1s_L2 =  [nothing; eoc_eh1s_L2]
     eoc_ehs_energy_L2 =  [nothing; eoc_ehs_energy_L2]
+    Xs_str =  latexify.(Xs)
 
-    minimal_header = ["$eoc_name", "L2L2", "EOC", "L2H1", "EOC", "L2a_h", "EOC"]
-    data = hcat(Xs, el2s_L2,  eoc_l2s_L2, eh1s_L2, eoc_eh1s_L2, ehs_energy_L2, eoc_ehs_energy_L2)
+    minimal_header = ["$Xs_name", "L2L2", "EOC", "L2H1", "EOC", "L2Ah", "EOC"]
+    data = hcat(Xs_str, el2s_L2,  eoc_l2s_L2, eh1s_L2, eoc_eh1s_L2, ehs_energy_L2, eoc_ehs_energy_L2)
     # formatters = ( ft_printf("%.2f",[3,5,7]), ft_printf("%.1E",[2,4,6,8,9]), ft_nonothing )
     pretty_table(data, header=minimal_header)#, formatters =formatters )
 
@@ -213,22 +214,22 @@ function generate_figures(Xs, el2s_L2, eh1s_L2, ehs_energy_L2, dirname::String, 
     Plots.scatter!(p, Xs, eh1s_L2, primary=false)
 
     # Add the second data series
-    Plots.plot!(p, Xs, ehs_energy_L2, label=L"L2Energy")
+    Plots.plot!(p, Xs, ehs_energy_L2, label=L"L2Ah")
     Plots.scatter!(p, Xs, ehs_energy_L2, primary=false)
 
     # Configs
-    Plots.xlabel!(p, "$eoc_name")
+    Plots.xlabel!(p, "$Xs_name")
     Plots.plot!(p, xscale=:log2, yscale=:log2, minorgrid=true)
     Plots.plot!(p, legendfontsize=14)  # Adjust the value 12 to your desired font size
 
     # Save the plot as a .png file using the GR backend
-    Plots.gr()
+    # Plots.gr()
     # Plots.pgfplotsx()
     Plots.savefig(p, filename*"_plot.png")
     # Plots.savefig(p, filename*"_plot.tex")
 
 end
-function convergence_analysis(; ns, dts, dirname, solver_config, write_vtks=true, spatial=true, time_dim=false)
+function convergence_analysis(; ns, dts, dirname, solver_config, write_vtks=true, spatial=true, time_dim=true)
     println("Run convergence",)
 
     if (time_dim)
@@ -238,7 +239,7 @@ function convergence_analysis(; ns, dts, dirname, solver_config, write_vtks=true
         eh1s_L2 = Float64[]
         ehs_energy_L2 = Float64[]
         n= 2^5
-        println("Run convergence tests: n = "*string(n))
+        println("Run convergence tests with constant n = "*string(n))
 
         for dt in dts
             sol = Solver.run(n=n, dt=dt, solver_config=solver_config, vtkdirname=dirname)
@@ -257,14 +258,15 @@ function convergence_analysis(; ns, dts, dirname, solver_config, write_vtks=true
         eh1s_L2 = Float64[]
         ehs_energy_L2 = Float64[]
         dt = 2^-4
-        println("Run convergence tests: n = "*string(dt))
+        println("Run convergence tests with constant dt = "*string(dt))
         for n in ns
             sol = Solver.run(n=n, dt=dt, solver_config=solver_config, vtkdirname=dirname)
             push!(el2s_L2, sol.el2s_L2)
             push!(eh1s_L2, sol.eh1s_L2)
             push!(ehs_energy_L2, sol.ehs_energy_L2)
         end
-        generate_figures(ns, el2s_L2, eh1s_L2, ehs_energy_L2, dirname, "ns")
+        hs =  1 .// ns
+        generate_figures(hs, el2s_L2, eh1s_L2, ehs_energy_L2, dirname, "h")
     end
 
 
@@ -284,7 +286,7 @@ function main()
     solver_config = Solver.Config(exact_sol, circle)
 
     dts = [2^-2,2^-3,2^-4,2^-5]
-    ns = [2^2,2^3,2^4,2^5]
+    ns = [2^2,2^3,2^4,2^5, 2^6]
     @time convergence_analysis( ns=ns, dts=dts, solver_config=solver_config, dirname=dirname)
 
 end
