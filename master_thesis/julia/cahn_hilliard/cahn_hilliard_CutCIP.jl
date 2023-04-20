@@ -21,7 +21,8 @@ module Solver
 
     function man_sol(u_ex)
         α = 1
-        f(t) = x ->  Δ(u_ex(t))(x)
+        # Here is the problem!!
+        f(t) = x ->  ∂t(u_ex)(x,t) + Δ(Δ(u_ex(t)))(x)
         ∇u_ex(t) = x ->  ∇(u_ex(t))(x)
         ∇Δu_ex(t) = x ->  ∇(Δ(u_ex(t)))(x)
         return u_ex, f, ∇u_ex, ∇Δu_ex
@@ -106,7 +107,7 @@ module Solver
         γg2 = 0.1
 
         # Inner facets
-        a(t,u,v) =( ∫( ∇∇(v)⊙∇∇(u) + α⋅(v⊙u) )dΩ
+        a(t,u,v) =( ∫( ∇∇(v)⊙∇∇(u) )dΩ
                  + ∫(-mean_nn(v,n_Λ)⊙jump(∇(u)⋅n_Λ) - mean_nn(u,n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ
                  + ∫(-( n_Γ ⋅ ∇∇(v)⋅ n_Γ )⊙∇(u)⋅n_Γ - ( n_Γ ⋅ ∇∇(u)⋅ n_Γ )⊙∇(v)⋅n_Γ)dΓ
                  + ∫((γ/h)⋅jump(∇(u)⋅n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ + ∫((γ/h)⋅ ∇(u)⊙n_Γ⋅∇(v)⊙n_Γ )dΓ
@@ -227,7 +228,7 @@ function generate_figures(Xs, el2s_L2, eh1s_L2, ehs_energy_L2, dirname::String, 
     # Plots.savefig(p, filename*"_plot.tex")
 
 end
-function convergence_analysis(; ns, dts, dirname, solver_config, write_vtks=true, spatial=false, time_dim=true)
+function convergence_analysis(; ns, dts, dirname, solver_config, write_vtks=true, spatial=true, time_dim=false)
     println("Run convergence",)
 
     if (time_dim)
@@ -276,7 +277,7 @@ function main()
     println(dirname)
     mkpath(dirname)
 
-    u_ex(x,t::Real) = t*cos(x[1])*cos(x[2])
+    u_ex(x,t::Real) = sin(t)*(x[1]^2 + x[2]^2 - 1 )^3*sin(x[1])*cos(x[2])
     u_ex(t::Real) = x -> u_ex(x,t)
     exact_sol = Solver.man_sol(u_ex)
     circle = true
