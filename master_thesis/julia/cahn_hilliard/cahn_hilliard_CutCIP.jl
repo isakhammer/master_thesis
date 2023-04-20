@@ -37,9 +37,9 @@ module Solver
         el2s_L2
         eh1s_L2
         ehs_energy_L2
-        el2s_Linf
-        eh1s_Linf
-        ehs_energy_Linf
+        el2s_inf
+        eh1s_inf
+        ehs_energy_inf
     end
 
     function run(;n, dt, solver_config,  vtkdirname=nothing)
@@ -186,28 +186,53 @@ module Solver
         el2s_L2 = sqrt(sum(dt* e_ti^2 for e_ti in el2_ts))
         eh1s_L2 = sqrt(sum(dt* e_ti^2 for e_ti in eh1_ts))
         ehs_energy_L2 = sqrt(sum(dt* e_ti^2 for e_ti in eh_energy_ts))
-        sol = Solution(el2s_L2=el2s_L2, eh1s_L2=eh1s_L2, ehs_energy_L2=ehs_energy_L2)
+
+        el2s_inf = maximum(abs.(el2_ts))
+        eh1s_inf = maximum(abs.(eh1_ts))
+        ehs_energy_inf = maximum(abs.(eh_energy_ts))
+
+        sol = Solution(el2s_L2=el2s_L2, eh1s_L2=eh1s_L2, ehs_energy_L2=ehs_energy_L2,
+                       el2s_inf=el2s_inf, eh1s_inf=eh1s_inf, ehs_energy_inf=ehs_energy_inf)
         return sol
     end
 
 end # Solver
 
-function generate_figures(Xs, el2s_L2, eh1s_L2, ehs_energy_L2, dirname::String, Xs_name::String)
+function generate_figures(Xs,
+        el2s_L2, eh1s_L2, ehs_energy_L2,
+        el2s_inf, eh1s_inf, ehs_energy_inf,
+        dirname::String, Xs_name::String)
 
     filename = dirname*"/conv_"*Xs_name
     compute_eoc(Xs, errs) = log.(errs[1:end-1]./errs[2:end])./log.(Xs[1:end-1]./Xs[2:end])
+
+
+    Xs_str =  latexify.(Xs)
+
     eoc_l2s_L2 = compute_eoc(Xs, el2s_L2)
     eoc_eh1s_L2 = compute_eoc(Xs, eh1s_L2)
     eoc_ehs_energy_L2 = compute_eoc(Xs, ehs_energy_L2)
+    eoc_l2s_inf = compute_eoc(Xs, el2s_inf)
+    eoc_eh1s_inf = compute_eoc(Xs, eh1s_inf)
+    eoc_ehs_energy_inf = compute_eoc(Xs, ehs_energy_inf)
+
     eoc_l2s_L2 =  [nothing; eoc_l2s_L2]
     eoc_eh1s_L2 =  [nothing; eoc_eh1s_L2]
     eoc_ehs_energy_L2 =  [nothing; eoc_ehs_energy_L2]
-    Xs_str =  latexify.(Xs)
+    eoc_l2s_inf =  [nothing; eoc_l2s_inf]
+    eoc_eh1s_inf =  [nothing; eoc_eh1s_inf]
+    eoc_ehs_energy_inf =  [nothing; eoc_ehs_energy_inf]
 
-    minimal_header = ["$Xs_name", "L2L2", "EOC", "L2H1", "EOC", "L2ah", "EOC"]
-    data = hcat(Xs_str, el2s_L2,  eoc_l2s_L2, eh1s_L2, eoc_eh1s_L2, ehs_energy_L2, eoc_ehs_energy_L2)
-    # formatters = ( ft_printf("%.2f",[3,5,7]), ft_printf("%.1E",[2,4,6,8,9]), ft_nonothing )
-    pretty_table(data, header=minimal_header)#, formatters =formatters )
+    minimal_header = ["$Xs_name",
+                      "L2L2", "EOC", "L2H1", "EOC", "L2ah", "EOC",
+                      "infL2", "EOC", "infH1", "EOC", "infah", "EOC"]
+    data = hcat(Xs_str,
+                el2s_L2,  eoc_l2s_L2, eh1s_L2, eoc_eh1s_L2, ehs_energy_L2, eoc_ehs_energy_L2,
+                el2s_inf,  eoc_l2s_inf, eh1s_inf, eoc_eh1s_inf, ehs_energy_inf, eoc_ehs_energy_inf)
+
+    formatters = ( ft_nonothing, ft_printf("%.2f", [3, 5, 7, 9, 11,13]),
+               ft_printf("%.1E", [2, 4, 6, 8, 10,12]))
+    pretty_table(data, header=minimal_header, formatters =formatters )
 
     p = Plots.plot(Xs, el2s_L2, label="L2L2", legend=:bottomright, xscale=:log2, yscale=:log2, minorgrid=true)
     Plots.scatter!(p, Xs, el2s_L2, primary=false)
@@ -236,11 +261,13 @@ function convergence_analysis(; ns, dts, dirname, solver_config, write_vtks=true
     println("Run convergence",)
 
     if (time_dim)
-        time_dim
         # Time dim EOC
         el2s_L2 = Float64[]
         eh1s_L2 = Float64[]
         ehs_energy_L2 = Float64[]
+        el2s_inf = Float64[]
+        eh1s_inf = Float64[]
+        ehs_energy_inf = Float64[]
         n= 2^5
         println("Run convergence tests with constant n = "*string(n))
 
@@ -250,8 +277,13 @@ function convergence_analysis(; ns, dts, dirname, solver_config, write_vtks=true
             push!(el2s_L2, sol.el2s_L2)
             push!(eh1s_L2, sol.eh1s_L2)
             push!(ehs_energy_L2, sol.ehs_energy_L2)
+            push!(el2s_inf, sol.el2s_inf)
+            push!(eh1s_inf, sol.eh1s_inf)
+            push!(ehs_energy_inf, sol.ehs_energy_inf)
         end
-        generate_figures(dts, el2s_L2, eh1s_L2, ehs_energy_L2, dirname, "dt")
+        generate_figures(dts, el2s_L2, eh1s_L2, ehs_energy_L2,
+                         el2s_inf, eh1s_inf, ehs_energy_inf,
+                         dirname, "dt")
     end
 
 
@@ -260,6 +292,9 @@ function convergence_analysis(; ns, dts, dirname, solver_config, write_vtks=true
         el2s_L2 = Float64[]
         eh1s_L2 = Float64[]
         ehs_energy_L2 = Float64[]
+        el2s_inf = Float64[]
+        eh1s_inf = Float64[]
+        ehs_energy_inf = Float64[]
         dt = 2^-4
         println("Run convergence tests with constant dt = "*string(dt))
         for n in ns
@@ -267,9 +302,14 @@ function convergence_analysis(; ns, dts, dirname, solver_config, write_vtks=true
             push!(el2s_L2, sol.el2s_L2)
             push!(eh1s_L2, sol.eh1s_L2)
             push!(ehs_energy_L2, sol.ehs_energy_L2)
+            push!(el2s_inf, sol.el2s_inf)
+            push!(eh1s_inf, sol.eh1s_inf)
+            push!(ehs_energy_inf, sol.ehs_energy_inf)
         end
         hs =  1 .// ns
-        generate_figures(hs, el2s_L2, eh1s_L2, ehs_energy_L2, dirname, "h")
+        generate_figures(hs, el2s_L2, eh1s_L2, ehs_energy_L2,
+                         el2s_inf, eh1s_inf, ehs_energy_inf,
+                         dirname, "h")
     end
 
 
