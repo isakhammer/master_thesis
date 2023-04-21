@@ -348,15 +348,6 @@ function main()
     dts = [2^-2,2^-3,2^-4,2^-5]
     ns = [2^2,2^3,2^4,2^5, 2^6]
 
-    # @time convergence_analysis( ns=ns, dts=dts, dirname=dirname, solver_config=solver_config,
-    #                            spatial=false, dt_const=2^-4, transient=true, n_const=2^5)
-
-#     n = 2^4
-#     @time convergence_analysis( ns=ns, dts=dts, dirname=dirname, solver_config=solver_config, transient=true, n_const=n)
-#     n = 2^5
-#     @time convergence_analysis( ns=ns, dts=dts, dirname=dirname, solver_config=solver_config, transient=true, n_const=n)
-    # n = 2^6
-    # @time convergence_analysis( ns=ns, dts=dts, dirname=dirname, solver_config=solver_config, transient=true, n_const=n)
     n = 2^7
     @time convergence_analysis( ns=ns, dts=dts, dirname=dirname, solver_config=solver_config, transient=true, n_const=n)
 
