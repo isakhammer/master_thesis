@@ -223,16 +223,26 @@ function generate_figures(Xs,
     eoc_eh1s_inf =  [nothing; eoc_eh1s_inf]
     eoc_ehs_energy_inf =  [nothing; eoc_ehs_energy_inf]
 
-    minimal_header = ["$Xs_name",
-                      "L2L2", "EOC", "L2H1", "EOC", "L2ah", "EOC",
-                      "infL2", "EOC", "infH1", "EOC", "infah", "EOC"]
     data = hcat(Xs_str,
                 el2s_L2,  eoc_l2s_L2, eh1s_L2, eoc_eh1s_L2, ehs_energy_L2, eoc_ehs_energy_L2,
                 el2s_inf,  eoc_l2s_inf, eh1s_inf, eoc_eh1s_inf, ehs_energy_inf, eoc_ehs_energy_inf)
 
     formatters = ( ft_nonothing, ft_printf("%.2f", [3, 5, 7, 9, 11,13]),
-               ft_printf("%.1E", [2, 4, 6, 8, 10,12]))
-    pretty_table(data, header=minimal_header, formatters =formatters )
+                  ft_printf("%.1E", [2, 4, 6, 8, 10,12]))
+
+    header = ["$Xs_name",
+              "L2L2", "EOC", "L2H1", "EOC", "L2ah", "EOC",
+              "infL2", "EOC", "infH1", "EOC", "infah", "EOC"]
+
+    pretty_table(data, header=header, formatters =formatters )
+
+
+    formatters = ( ft_nonothing, ft_printf("%.5f", [3, 5, 7, 9, 11,13]),
+                  ft_printf("%.1E", [2, 4, 6, 8, 10,12]))
+
+    open(filename*".tex", "w") do io
+        pretty_table(io, data, header=header, backend=Val(:latex ), formatters = formatters )
+    end
 
     # L2 norms
     p = Plots.plot(Xs, el2s_L2, label="L2L2", legend=:bottomright, xscale=:log2, yscale=:log2, minorgrid=true)
