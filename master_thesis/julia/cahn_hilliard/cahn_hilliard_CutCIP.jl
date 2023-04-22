@@ -134,19 +134,30 @@ module Solver
 
         A(t,u,v) = a(t,u,v) + g(t,u,v)
 
-        # # bilinear form
+        # Initializing linear terms
         m(t, u, v) = ∫( α* u⋅v )dΩ
 
-        # Initializing linear terms
-        op_Af = TransientAffineFEOperator(m,A,b,U,V)
+        # Alternative 1 (linear)
+        op1 = TransientAffineFEOperator(m,A,b,U,V)
 
-        # res(t,u,v) = A(t,u,v) - ∫( α* ∂t(u)⋅v )dΩ
-        # op_Af = TransientAffineFEOperator(m,a,b,U,V)
+        # Alternative 2 (general form)
+        res(t,u,v) = A(t,u,v) + m(t, ∂t(u),v) - b(t,v)
+        jac(t,u,du,v) = A(t,du,v)
+        jac_t(t,u,dut,v) = m(t, dut,v)
+        op2 = TransientFEOperator(res,jac,jac_t,U,V)
+
+        # Alternative 3 (Algorithmic differential)
+        op3 = TransientFEOperator(res, U, V) # Does not work
+
+        # Intalization of method
+        op = op2
 
         # Solving time problem
-        linear_solver = LUSolver()
-        th = 1
-        ode_solver = ThetaMethod(linear_solver,dt,th)
+        solver_method = LUSolver()
+        # solver_method = NLSolver(LUSolver();show_trace=true,method=:newton) #line
+
+        th = 1 # Backward Euler
+        ode_solver = ThetaMethod(solver_method,dt,th)
 
         # Inital condition
         t_0 = 0
@@ -155,7 +166,6 @@ module Solver
 
         #################
 
-        op = op_Af
         U_h_t = solve(ode_solver, op, U_0, t_0, T)
 
         ts = Float64[]
@@ -163,10 +173,10 @@ module Solver
         eh1_ts = Float64[]
         eh_energy_ts = Float64[]
 
-        solname = vtkdirname*"/sol_dt_"*string(dt)
+        solname = vtkdirname*"/sol_dt_$dt"*"_n_$n"
         mkpath(solname)
         println("\ndt = ", string(dt), ", n = "*string(n))
-        createpvd(solname) do pvd
+        createpvd(solname*".pvd") do pvd
             for (U_h, t) in U_h_t
                 e = u_ex(t) - U_h
                 pvd[t] = createvtk(Ω, solname*"_$t"*".vtu",cellfields=["u_h"=>U_h,"e"=>e])
@@ -336,7 +346,7 @@ function convergence_analysis(; ns, dts, dirname, solver_config, spatial=false, 
 
 end
 
-function main()
+function main_convergence()
 
     dirname= "figures/CIP_cahn_hilliard/example"*string(Dates.now())
     println(dirname)
@@ -350,9 +360,25 @@ function main()
 
     dts = [2^-2,2^-3,2^-4,2^-5]
     ns = [2^2,2^3,2^4,2^5, 2^6]
-
     @time convergence_analysis( ns=ns, dts=dts, dirname=dirname, solver_config=solver_config, transient=true, spatial=true)
+
+
 
 end
 
-main()
+function main_simulation_test()
+    dirname= "figures/CIP_cahn_hilliard/example"*string(Dates.now())
+    println(dirname)
+    mkpath(dirname)
+
+    u_ex(x,t::Real) = sin(t)*(x[1]^2 + x[2]^2 - 1 )^3*sin(x[1])*cos(x[2])
+    u_ex(t::Real) = x -> u_ex(x,t)
+    exact_sol = Solver.man_sol(u_ex)
+    circle = true
+    solver_config = Solver.Config(exact_sol, circle)
+    @time Solver.run(n=2^5, dt=2^-3, solver_config=solver_config, vtkdirname=dirname)
+end
+
+
+# main()
+main_convergence()
