@@ -279,7 +279,7 @@ function generate_figures(Xs,
     # Plots.savefig(p, filename*"_plot.tex")
 
 end
-function convergence_analysis(; ns, dts, dirname, solver_config, spatial=false, dt_const=2^-4, transient=false, n_const=2^5)
+function convergence_analysis(; ns, dts, dirname, solver_config, spatial=false, dt_const=2^-4, transient=false, n_const=2^7)
     println("Run convergence",)
 
     if (transient)
@@ -351,8 +351,7 @@ function main()
     dts = [2^-2,2^-3,2^-4,2^-5]
     ns = [2^2,2^3,2^4,2^5, 2^6]
 
-    n = 2^7
-    @time convergence_analysis( ns=ns, dts=dts, dirname=dirname, solver_config=solver_config, transient=true, n_const=n)
+    @time convergence_analysis( ns=ns, dts=dts, dirname=dirname, solver_config=solver_config, transient=true, spatial=true)
 
 end
 
