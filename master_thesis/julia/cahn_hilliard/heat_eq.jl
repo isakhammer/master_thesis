@@ -18,7 +18,6 @@ module Solver
     using Parameters
     import Gridap: ∇
 
-    # α(x) = x[1]^2 + x[2]^2
     function man_sol(u_ex)
         α = 1
         f(t) = x ->  ∂t(u_ex)(x,t) - Δ(u_ex(t))(x)
