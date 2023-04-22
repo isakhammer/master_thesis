@@ -152,12 +152,20 @@ module Solver
         # Intalization of method
         op = op2
 
-        # Solving time problem
+        # Iterative solvers
         solver_method = LUSolver()
         # solver_method = NLSolver(LUSolver();show_trace=true,method=:newton) #line
 
-        th = 1 # Backward Euler
-        ode_solver = ThetaMethod(solver_method,dt,th)
+        # ODE solvers
+        # ode_solver = ThetaMethod(solver_method,dt, 1) # Backward Euler
+        # ode_solver = RungeKutta(solver_method,dt,:BE_1_0_1)
+        # ode_solver = RungeKutta(solver_method,dt,:SDIRK_2_1_2)
+        # ode_solver = RungeKutta(solver_method,dt,:TRBDF2_3_3_2) # does not work???
+        γ, β  = 0.5, 0.25
+        ode_solver = Newmark(solver_method,dt,γ,β)
+        # ρ∞ = 1.0 # Equivalent to Newmark(0.5, 0.25)
+        # ode_solver = GeneralizedAlpha(solver_method, dt, ρ∞)
+
 
         # Inital condition
         t_0 = 0
@@ -348,7 +356,7 @@ end
 
 function main_convergence()
 
-    dirname= "figures/CIP_cahn_hilliard/example"*string(Dates.now())
+    dirname= "figures/cahn_hilliard_CutCIP/example"*string(Dates.now())
     println(dirname)
     mkpath(dirname)
 
@@ -362,12 +370,10 @@ function main_convergence()
     ns = [2^2,2^3,2^4,2^5, 2^6]
     @time convergence_analysis( ns=ns, dts=dts, dirname=dirname, solver_config=solver_config, transient=true, spatial=true)
 
-
-
 end
 
 function main_simulation_test()
-    dirname= "figures/CIP_cahn_hilliard/example"*string(Dates.now())
+    dirname= "figures/cahn_hilliard_CutCIP/example"*string(Dates.now())
     println(dirname)
     mkpath(dirname)
 
