@@ -48,8 +48,8 @@ module Solver
         partition = (n,n)
         model = CartesianDiscreteModel(domain, partition)
         reffe = ReferenceFE(lagrangian, Float64, order)
-        V0 = FESpace( model, reffe, conformity=:H1)
-        U = TrialFESpace(V0)
+        V = FESpace( model, reffe, conformity=:H1)
+        U = TrialFESpace(V)
 
         Ω = Triangulation(model)
         Γ = BoundaryTriangulation(model)
@@ -66,7 +66,7 @@ module Solver
         jac(t,u,du,v) = a(du,v)
         jac_t(t,u,dut,v) = ∫(dut*v)dΩ
 
-        op = TransientFEOperator(res,jac,jac_t,U,V0)
+        op = TransientFEOperator(res,jac,jac_t,U,V)
 
         # Nonlinear/Linear solver
         solver_method =LUSolver()
@@ -75,8 +75,8 @@ module Solver
         # ODE solver
         ode_solver = ThetaMethod(solver_method,dt, 1) # Works!
         # ode_solver = RungeKutta(solver_method,dt,:BE_1_0_1) # Works!
-        # ode_solver = RungeKutta(solver_method,dt,:SDIRK_2_1_2) # Does not work!
-        # ode_solver = RungeKutta(solver_method,dt,:TRBDF2_3_3_2) # Does not work!
+        # ode_solver = RungeKutta(solver_method,dt,:SDIRK_2_1_2) # Does not converge!
+        # ode_solver = RungeKutta(solver_method,dt,:TRBDF2_3_3_2) # Does not converge!
         # γ, β  = 0.5, 0.25
         # ode_solver = Newmark(solver_method,dt,γ,β) # Does not compile
         # ρ∞ = 1.0 # Equivalent to Newmark(0.5, 0.25)
