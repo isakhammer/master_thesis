@@ -19,7 +19,7 @@ module Solver
     α = 1
     function man_sol(u_ex)
         # Here is the problem!!
-        f(t) = x ->  α*∂t(u_ex)(x,t) + Δ(Δ(u_ex(t)))(x) + 10*u_ex(x,t)*u_ex(x,t)
+        f(t) = x ->  α*∂t(u_ex)(x,t) + Δ(Δ(u_ex(t)))(x) + 20*u_ex(x,t)*u_ex(x,t)
         ∇u_ex(t) = x ->  ∇(u_ex(t))(x)
         ∇Δu_ex(t) = x ->  ∇(Δ(u_ex(t)))(x)
         return u_ex, f, ∇u_ex, ∇Δu_ex
@@ -129,7 +129,7 @@ module Solver
         g(t,u,v) = h^(-2)*( ∫( (γg1*h)*jump(n_Fg⋅∇(u))*jump(n_Fg⋅∇(v)) ) * dFg +
                          ∫( (γg2*h^3)*jump_nn(u,n_Fg)*jump_nn(v,n_Fg) ) * dFg)
 
-        F(t,v,u) = ∫( 10*u*u*v )dΩ
+        F(t,v,u) = ∫( 20*u*u*v )dΩ
         A(t,u,v) = a(t,u,v) + g(t,u,v) + F(t,v,u)
         # Initializing linear terms
         m(t, u, v) = ∫( α* u⋅v )dΩ
@@ -379,5 +379,5 @@ function main_simulation_test()
     @time Solver.run(n=2^5, dt=2^-3, solver_config=solver_config, vtkdirname=dirname)
 end
 
-main_simulation_test()
+main_convergence()
 
