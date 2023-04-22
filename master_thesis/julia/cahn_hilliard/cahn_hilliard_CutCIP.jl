@@ -138,7 +138,10 @@ module Solver
         m(t, u, v) = ∫( α* u⋅v )dΩ
 
         # Initializing linear terms
-        op_Af = TransientAffineFEOperator(m,a,b,U,V)
+        op_Af = TransientAffineFEOperator(m,A,b,U,V)
+
+        # res(t,u,v) = A(t,u,v) - ∫( α* ∂t(u)⋅v )dΩ
+        # op_Af = TransientAffineFEOperator(m,a,b,U,V)
 
         # Solving time problem
         linear_solver = LUSolver()
