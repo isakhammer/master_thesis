@@ -19,13 +19,11 @@ module Solver
     import Gridap: ∇
 
     # α(x) = x[1]^2 + x[2]^2
-    α = 1
-
     function man_sol(u_ex)
         α = 1
-        # Here is the problem!!
         f(t) = x ->  ∂t(u_ex)(x,t) - Δ(u_ex(t))(x)
-        return u_ex, f
+        ∇u_ex(t) = x ->  ∇(u_ex(t))(x)
+        return u_ex, ∇u_ex, f
     end
 
     @with_kw struct Config
@@ -42,7 +40,7 @@ module Solver
     end
 
     function run(;n, dt, solver_config,  vtkdirname=nothing)
-        u_ex, f = solver_config.exact_sol
+        u_ex, ∇u_ex, f = solver_config.exact_sol
         order = 2
 
         L= 1.0
@@ -50,15 +48,20 @@ module Solver
         partition = (n,n)
         model = CartesianDiscreteModel(domain, partition)
         reffe = ReferenceFE(lagrangian, Float64, order)
-        V0 = FESpace( model, reffe, conformity=:H1, dirichlet_tags="boundary")
+        V0 = FESpace( model, reffe, conformity=:H1)
         U = TransientTrialFESpace(V0, u_ex)
 
         Ω = Triangulation(model)
+        Γ = BoundaryTriangulation(model)
         degree = 2*order
         dΩ = Measure(Ω,degree)
+        dΓ = Measure(Γ,degree)
+        n_Γ = get_normal_vector(Γ)
 
+        g(t) = ∇u_ex(t)⋅n_Γ
         a(u,v) = ∫(∇(v)⋅∇(u))dΩ
-        b(v,t) = ∫(v*f(t))dΩ
+        b(v,t) = ∫(v*f(t))dΩ + ∫((g(t)⋅v))dΓ
+
 
         res(t,u,v) = a(u,v) + ∫(∂t(u)*v)dΩ - b(v,t)
         jac(t,u,du,v) = a(du,v)
@@ -253,18 +256,18 @@ end
 
 function main_convergence()
 
-    dirname= "figures/heat_eq/example"*string(Dates.now())
+    dirname= "figures/heat_eq/conv_"*string(Dates.now())
     println(dirname)
     mkpath(dirname)
 
-    u_ex(x,t) = sin(x[1])*(1.0-x[1])*x[1]*(1.0-x[2])*x[2]*t
+    u_ex(x,t) = sin(t)*cos(2π*x[1])*sin(2π*x[2])
     u_ex(t::Real) = x -> u_ex(x,t)
     exact_sol = Solver.man_sol(u_ex)
     solver_config = Solver.Config(exact_sol)
 
     dts = [2^-2,2^-3,2^-4,2^-5]
     ns = [2^2,2^3,2^4,2^5, 2^6]
-    @time convergence_analysis( ns=ns, dts=dts, dirname=dirname, solver_config=solver_config, transient=false, spatial=true)
+    @time convergence_analysis( ns=ns, dts=dts, dirname=dirname, solver_config=solver_config, transient=true, spatial=true)
 
 end
 
@@ -273,11 +276,11 @@ function main_simulation_test()
     println(dirname)
     mkpath(dirname)
 
-    u_ex(x,t) = sin(x[1])*(1.0-x[1])*x[1]*(1.0-x[2])*x[2]*t
+    u_ex(x,t) = sin(t)*cos(2π*x[1])*sin(2π*x[2])
     u_ex(t::Real) = x -> u_ex(x,t)
     exact_sol = Solver.man_sol(u_ex)
     solver_config = Solver.Config(exact_sol)
-    @time Solver.run(n=2^5, dt=2^-3, solver_config=solver_config, vtkdirname=dirname)
+    @time Solver.run(n=2^5, dt=2^-4, solver_config=solver_config, vtkdirname=dirname)
 end
 
 
