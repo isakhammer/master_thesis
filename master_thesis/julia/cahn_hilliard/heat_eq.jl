@@ -1,6 +1,6 @@
 
+
 using Test
-using Gridap
 using Plots
 using Dates
 using LaTeXStrings
@@ -49,7 +49,7 @@ module Solver
         model = CartesianDiscreteModel(domain, partition)
         reffe = ReferenceFE(lagrangian, Float64, order)
         V0 = FESpace( model, reffe, conformity=:H1)
-        U = TransientTrialFESpace(V0, u_ex)
+        U = TrialFESpace(V0)
 
         Ω = Triangulation(model)
         Γ = BoundaryTriangulation(model)
@@ -62,16 +62,25 @@ module Solver
         a(u,v) = ∫(∇(v)⋅∇(u))dΩ
         b(v,t) = ∫(v*f(t))dΩ + ∫((g(t)⋅v))dΓ
 
-
         res(t,u,v) = a(u,v) + ∫(∂t(u)*v)dΩ - b(v,t)
         jac(t,u,du,v) = a(du,v)
         jac_t(t,u,dut,v) = ∫(dut*v)dΩ
 
         op = TransientFEOperator(res,jac,jac_t,U,V0)
 
-        ls =LUSolver()
-        # ls = NLSolver(LUSolver();show_trace=true,method=:newton) #linesearch=BackTracking())
-        ode_solver = ThetaMethod(ls,dt,1)
+        # Nonlinear/Linear solver
+        solver_method =LUSolver()
+        # solver_method = NLSolver(LUSolver();show_trace=true,method=:newton) #linesearch=BackTracking())
+
+        # ODE solver
+        ode_solver = ThetaMethod(solver_method,dt, 1) # Works!
+        # ode_solver = RungeKutta(solver_method,dt,:BE_1_0_1) # Works!
+        # ode_solver = RungeKutta(solver_method,dt,:SDIRK_2_1_2) # Does not work!
+        # ode_solver = RungeKutta(solver_method,dt,:TRBDF2_3_3_2) # Does not work!
+        # γ, β  = 0.5, 0.25
+        # ode_solver = Newmark(solver_method,dt,γ,β) # Does not compile
+        # ρ∞ = 1.0 # Equivalent to Newmark(0.5, 0.25)
+        # ode_solver = GeneralizedAlpha(solver_method, dt, ρ∞) # Does not compile
 
         # Inital condition
         t_0 = 0
@@ -96,7 +105,7 @@ module Solver
                 pvd[t] = createvtk(Ω, solname*"_$t"*".vtu",cellfields=["u_h"=>U_h,"e"=>e])
                 el2_t = sqrt(sum( ∫(e*e)dΩ ))
                 eh1_t = sqrt(sum( ∫( e*e + ∇(e)⋅∇(e) )*dΩ ))
-                eh_energy = eh1_t
+                eh_energy = sqrt(sum( ∫(∇(e)⋅∇(e) )*dΩ ))
                 push!( ts, t)
                 push!( el2_ts, el2_t )
                 push!( eh1_ts, eh1_t )
@@ -164,37 +173,6 @@ function generate_figures(Xs,
     open(filename*".tex", "w") do io
         pretty_table(io, data, header=header, backend=Val(:latex ), formatters = formatters )
     end
-
-    # L2 norms
-    p = Plots.plot(Xs, el2s_L2, label="L2L2", legend=:bottomright, xscale=:log2, yscale=:log2, minorgrid=true)
-    Plots.scatter!(p, Xs, el2s_L2, primary=false)
-
-    Plots.plot!(p, Xs, eh1s_L2, label=L"L2H1")
-    Plots.scatter!(p, Xs, eh1s_L2, primary=false)
-
-    Plots.plot!(p, Xs, ehs_energy_L2, label=L"L2ah")
-    Plots.scatter!(p, Xs, ehs_energy_L2, primary=false)
-
-    # inf norms
-    Plots.plot!(p, Xs, el2s_inf, label=L"infL2")
-    Plots.scatter!(p, Xs, el2s_inf, primary=false)
-
-    Plots.plot!(p, Xs, eh1s_inf, label=L"infH1")
-    Plots.scatter!(p, Xs, eh1s_inf, primary=false)
-
-    Plots.plot!(p, Xs, ehs_energy_inf, label=L"infah")
-    Plots.scatter!(p, Xs, ehs_energy_inf, primary=false)
-
-    # Configs
-    Plots.xlabel!(p, "$Xs_name")
-    Plots.plot!(p, xscale=:log2, yscale=:log2, minorgrid=true)
-    Plots.plot!(p, legendfontsize=12)  # Adjust the value 12 to your desired font size
-
-    # Save the plot as a .png file using the GR backend
-    # Plots.gr()
-    # Plots.pgfplotsx()
-    Plots.savefig(p, filename*"_plot.png")
-    # Plots.savefig(p, filename*"_plot.tex")
 
 end
 function convergence_analysis(; ns, dts, dirname, solver_config, spatial=false, dt_const=2^-4, transient=false, n_const=2^7)
