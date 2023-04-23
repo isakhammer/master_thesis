@@ -61,7 +61,7 @@ function run(;n, u_ex,  dt, solver_choice="ThetaMethod", vtkdirname=nothing)
     ode_solver = choose_solver(solver_choice, s, dt)
 
     # Inital condition
-    t_0 = 0
+    t_0 = 0.0
     T = 1.0
     U_0 = interpolate_everywhere(0, U(0.0))
 
