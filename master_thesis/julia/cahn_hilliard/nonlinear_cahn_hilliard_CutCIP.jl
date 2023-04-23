@@ -19,7 +19,7 @@ module Solver
     α = 1
     function man_sol(u_ex)
         # Here is the problem!!
-        f(t) = x ->  α*∂t(u_ex)(x,t) + Δ(Δ(u_ex(t)))(x) + 20*u_ex(x,t)*u_ex(x,t)
+        f(t) = x ->  α*∂t(u_ex)(x,t) + Δ(Δ(u_ex(t)))(x) + 20*u_ex(x,t)*u_ex(x,t)*u_ex(x,t)
         ∇u_ex(t) = x ->  ∇(u_ex(t))(x)
         ∇Δu_ex(t) = x ->  ∇(Δ(u_ex(t)))(x)
         return u_ex, f, ∇u_ex, ∇Δu_ex
@@ -129,7 +129,7 @@ module Solver
         g(t,u,v) = h^(-2)*( ∫( (γg1*h)*jump(n_Fg⋅∇(u))*jump(n_Fg⋅∇(v)) ) * dFg +
                          ∫( (γg2*h^3)*jump_nn(u,n_Fg)*jump_nn(v,n_Fg) ) * dFg)
 
-        F(t,v,u) = ∫( 20*u*u*v )dΩ
+        F(t,v,u) = ∫( 20*u*u*u*v )dΩ
         A(t,u,v) = a(t,u,v) + g(t,u,v) + F(t,v,u)
         # Initializing linear terms
         m(t, u, v) = ∫( α* u⋅v )dΩ
@@ -360,7 +360,7 @@ function main_convergence()
     dts = [2^-2,2^-3,2^-4,2^-5]
     ns = [2^2,2^3,2^4,2^5, 2^6]
 
-    @time convergence_analysis( ns=ns, dts=dts, dirname=dirname, solver_config=solver_config, transient=false, spatial=true)
+    @time convergence_analysis( ns=ns, dts=dts, dirname=dirname, solver_config=solver_config, transient=true, spatial=true)
 
 
 
