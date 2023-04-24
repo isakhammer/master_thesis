@@ -33,7 +33,7 @@ end
 function generate_figures(ns::Vector, dts::Vector,
         el2s_L2::Vector, eh1s_L2::Vector, ehs_energy_L2::Vector,
         el2s_inf::Vector, eh1s_inf::Vector, ehs_energy_inf::Vector,
-        dirname::String)
+        filename::String)
 
     hs = 1 .// ns
     compute_eoc(hs, dts, errs) = log.(errs[1:end-1]./errs[2:end])./( log.(hs[1:end-1]./hs[2:end]) + log.(dts[1:end-1]./dts[2:end]) )
@@ -59,8 +59,8 @@ function generate_figures(ns::Vector, dts::Vector,
                 el2s_L2,  eoc_l2s_L2, eh1s_L2, eoc_eh1s_L2, ehs_energy_L2, eoc_ehs_energy_L2,
                 el2s_inf,  eoc_l2s_inf, eh1s_inf, eoc_eh1s_inf, ehs_energy_inf, eoc_ehs_energy_inf)
 
-    formatters = ( ft_nonothing, ft_nonothing, ft_printf("%.2f", [3, 5, 7, 9, 11,13]),
-                  ft_printf("%.1E", [2, 4, 6, 8, 10,12]))
+    formatters = (ft_nonothing, ft_nonothing, ft_printf("%.2f", [2, 4, 6, 8, 10, 12]),
+                  ft_printf("%.1E", [3, 5, 7, 9, 11, 13]))
 
     header = ["hs", "dt",
               "L2L2", "EOC", "L2H1", "EOC", "L2ah", "EOC",
@@ -69,8 +69,8 @@ function generate_figures(ns::Vector, dts::Vector,
     pretty_table(data, header=header, formatters =formatters )
 
 
-    formatters = ( ft_nonothing, ft_nonothing, ft_printf("%.5f", [3, 5, 7, 9, 11,13]),
-                  ft_printf("%.1E", [2, 4, 6, 8, 10,12]))
+    # formatters = ( ft_nonothing, ft_nonothing, ft_printf("%.5f", [3, 5, 7, 9, 11,13]),
+    #               ft_printf("%.1E", [2, 4, 6, 8, 10,12]))
 
     open(filename*".tex", "w") do io
         pretty_table(io, data, header=header, backend=Val(:latex ), formatters = formatters )
@@ -83,12 +83,12 @@ end
 function convergence_analysis(; ns::Vector, dts::Vector, dirname::String, solver_config, spatial=false, dt_const=2^-3, transient=false, n_const=2^4, diagonal=false)
     println("Run convergence",)
 
-    # el2s_L2 = fill(1.0, length( ns ))
-    # eh1s_L2 = fill(1.0, length(ns))
-    # ehs_energy_L2 = fill(1.0, length(ns))
-    # el2s_inf = fill(1.0, length(ns))
-    # eh1s_inf = fill(1.0, length(ns))
-    # ehs_energy_inf = fill(1.0, length(ns))
+    el2s_L2 = fill(1.0, length( ns ))
+    eh1s_L2 = fill(1.0, length(ns))
+    ehs_energy_L2 = fill(1.0, length(ns))
+    el2s_inf = fill(1.0, length(ns))
+    eh1s_inf = fill(1.0, length(ns))
+    ehs_energy_inf = fill(1.0, length(ns))
 
     if (transient)
         el2s_L2 = Float64[]
@@ -114,7 +114,7 @@ function convergence_analysis(; ns::Vector, dts::Vector, dirname::String, solver
         generate_figures(n_const, dts,
                          el2s_L2, eh1s_L2, ehs_energy_L2,
                          el2s_inf, eh1s_inf, ehs_energy_inf,
-                         dirname)
+                         filename)
     end
 
     if (spatial)
@@ -126,8 +126,9 @@ function convergence_analysis(; ns::Vector, dts::Vector, dirname::String, solver
         ehs_energy_inf = Float64[]
         # Spatial EOC
         println("Run spatial EOC tests with constant dt = "*string(dt_const))
+        filename = dirname*"/conv_spatial"
         for n in ns
-            sol = Solver.run(n=n, dt=dt_const, solver_config=solver_config, vtkdirname=dirname)
+            sol = Solver.run(n=n, dt=dt_const, solver_config=solver_config, vtkdirname=filename)
             push!(el2s_L2, sol.el2s_L2)
             push!(eh1s_L2, sol.eh1s_L2)
             push!(ehs_energy_L2, sol.ehs_energy_L2)
@@ -136,7 +137,6 @@ function convergence_analysis(; ns::Vector, dts::Vector, dirname::String, solver
             push!(ehs_energy_inf, sol.ehs_energy_inf)
         end
 
-        filename = dirname*"/conv_spatial"
         generate_figures(ns, dt_const,
                          el2s_L2, eh1s_L2, ehs_energy_L2,
                          el2s_inf, eh1s_inf, ehs_energy_inf,
@@ -155,12 +155,14 @@ function convergence_analysis(; ns::Vector, dts::Vector, dirname::String, solver
         # Spatial EOC
         println("Run convergence tests with dt = $dts"*" and ns= $ns")
 
-        if length(ns) != length(ts)
+        if length(ns) != length(dts)
             error("Cannot compute diagonal. Length does not match")
         end
 
-        for n in 1:length(ns)
-            sol = Solver.run(n=n, dt=dt, solver_config=solver_config, vtkdirname=dirname)
+        for i in 1:length(ns)
+            ni = ns[i]
+            dti = dts[i]
+            sol = Solver.run(n=ni, dt=dti, solver_config=solver_config, vtkdirname=dirname)
             push!(el2s_L2, sol.el2s_L2)
             push!(eh1s_L2, sol.eh1s_L2)
             push!(ehs_energy_L2, sol.ehs_energy_L2)
@@ -173,7 +175,7 @@ function convergence_analysis(; ns::Vector, dts::Vector, dirname::String, solver
         generate_figures(ns, dts,
                          el2s_L2, eh1s_L2, ehs_energy_L2,
                          el2s_inf, eh1s_inf, ehs_energy_inf,
-                         dirname)
+                         filename)
     end
 
 end
@@ -190,9 +192,9 @@ function main_convergence()
     circle = true
     solver_config = Solver.Config(exact_sol, circle)
 
-    dts = [2^-2,2^-3,2^-4,2^-5]
-    ns = [2^2,2^3,2^4,2^5]
-    @time convergence_analysis( ns=ns, dts=dts, dirname=dirname, solver_config=solver_config, transient=false, spatial=true, diagonal=false)
+    dts = [2^-2,2^-3,2^-4,2^-5,2^-6]
+    ns = [2^4,2^5,2^6,2^7, 2^8]
+    @time convergence_analysis( ns=ns, dts=dts, dirname=dirname, solver_config=solver_config, spatial=false, dt_const=2^-5, transient=false, n_const=2^8, diagonal=true)
 
 end
 
