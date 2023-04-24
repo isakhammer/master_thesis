@@ -157,12 +157,12 @@ module Solver
         # solver_method = NLSolver(LUSolver();show_trace=true,method=:newton) #line
 
         # ODE solvers
-        # ode_solver = ThetaMethod(solver_method,dt, 1) # Backward Euler
+        ode_solver = ThetaMethod(solver_method,dt, 1) # Backward Euler
         # ode_solver = RungeKutta(solver_method,dt,:BE_1_0_1)
         # ode_solver = RungeKutta(solver_method,dt,:SDIRK_2_1_2)
         # ode_solver = RungeKutta(solver_method,dt,:TRBDF2_3_3_2) # does not work???
-        γ, β  = 0.5, 0.25
-        ode_solver = Newmark(solver_method,dt,γ,β)
+        # γ, β  = 0.5, 0.25
+        # ode_solver = Newmark(solver_method,dt,γ,β)
         # ρ∞ = 1.0 # Equivalent to Newmark(0.5, 0.25)
         # ode_solver = GeneralizedAlpha(solver_method, dt, ρ∞)
 
