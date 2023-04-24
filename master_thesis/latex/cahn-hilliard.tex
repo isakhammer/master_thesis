@@ -3,6 +3,19 @@
 \section{Cahn Hilliard equation }%
 \label{sec:cahn_hilliard_equation}
 
+\subsection{Introduction to numerical methods for Cahn Hilliard}%
+\label{sub:introduction_to_numerical_methods_for_cahn_hilliard}
+
+Mixed CutFEM formulation of Cahn-Hilliard \cite{karatzas2021reduced}.
+
+
+\subsection{ODE integrators}%
+\label{sub:ode_integrators}
+\todo[inline]{ Write about explicit and implicit integrators,numerically dissipative, accuracy and conditionally/unconditionally stability }
+
+      Introduced unconditionally stable, second order accurate, numerically dissipative with parameters $\alpha$ and $ \beta $,  Newmans Method \cite{newmark1959method}
+    Improved versions of the Newmark method by introducing the numerically dissipative parameters such as the Hilber method and the Bossak Method \cite{hilber1977improved, wood1980alpha}. Combing these ideas the Generalized $\alpha $ method from which all the other methods can be derived \cite{chung1993time}.
+
 
 \newpage
 
