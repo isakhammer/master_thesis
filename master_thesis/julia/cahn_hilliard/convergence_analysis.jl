@@ -83,13 +83,6 @@ end
 function convergence_analysis(; ns::Vector, dts::Vector, dirname::String, solver_config, spatial=false, dt_const=2^-3, transient=false, n_const=2^4, diagonal=false)
     println("Run convergence",)
 
-    el2s_L2 = fill(1.0, length( ns ))
-    eh1s_L2 = fill(1.0, length(ns))
-    ehs_energy_L2 = fill(1.0, length(ns))
-    el2s_inf = fill(1.0, length(ns))
-    eh1s_inf = fill(1.0, length(ns))
-    ehs_energy_inf = fill(1.0, length(ns))
-
     if (transient)
         el2s_L2 = Float64[]
         eh1s_L2 = Float64[]
@@ -100,8 +93,9 @@ function convergence_analysis(; ns::Vector, dts::Vector, dirname::String, solver
         # Transient EOC
         println("Run transient EOC tests with constant n = "*string(n_const))
 
+        filename = dirname*"/conv_transient"
         for dt in dts
-            sol = Solver.run(n=n_const, dt=dt, solver_config=solver_config, vtkdirname=dirname)
+            sol = Solver.run(n=n_const, dt=dt, solver_config=solver_config, vtkdirname=filename)
 
             push!(el2s_L2, sol.el2s_L2)
             push!(eh1s_L2, sol.eh1s_L2)
@@ -110,7 +104,6 @@ function convergence_analysis(; ns::Vector, dts::Vector, dirname::String, solver
             push!(eh1s_inf, sol.eh1s_inf)
             push!(ehs_energy_inf, sol.ehs_energy_inf)
         end
-        filename = dirname*"/conv_transient"
         generate_figures(n_const, dts,
                          el2s_L2, eh1s_L2, ehs_energy_L2,
                          el2s_inf, eh1s_inf, ehs_energy_inf,
@@ -159,10 +152,11 @@ function convergence_analysis(; ns::Vector, dts::Vector, dirname::String, solver
             error("Cannot compute diagonal. Length does not match")
         end
 
+        filename = dirname*"/conv_diagonal"
         for i in 1:length(ns)
             ni = ns[i]
             dti = dts[i]
-            sol = Solver.run(n=ni, dt=dti, solver_config=solver_config, vtkdirname=dirname)
+            sol = Solver.run(n=ni, dt=dti, solver_config=solver_config, vtkdirname=filename)
             push!(el2s_L2, sol.el2s_L2)
             push!(eh1s_L2, sol.eh1s_L2)
             push!(ehs_energy_L2, sol.ehs_energy_L2)
@@ -171,13 +165,57 @@ function convergence_analysis(; ns::Vector, dts::Vector, dirname::String, solver
             push!(ehs_energy_inf, sol.ehs_energy_inf)
         end
 
-        filename = dirname*"/conv_diagonal"
         generate_figures(ns, dts,
                          el2s_L2, eh1s_L2, ehs_energy_L2,
                          el2s_inf, eh1s_inf, ehs_energy_inf,
                          filename)
     end
 
+end
+
+function convergence_matrix(; ns::Vector, dts::Vector, dirname::String, solver_config)
+
+    # Create a matrix to store the error values for each combination
+    el2_L2_matrix         = Array{Float64}(undef, length(dts), length(ns))
+    eh1_L2_matrix         = Array{Float64}(undef, length(dts), length(ns))
+    eh_energy_L2_matrix   = Array{Float64}(undef, length(dts), length(ns))
+    el2_inf_matrix        = Array{Float64}(undef, length(dts), length(ns))
+    eh1_inf_matrix        = Array{Float64}(undef, length(dts), length(ns))
+    eh_energy_inf_matrix  = Array{Float64}(undef, length(dts), length(ns))
+
+    # Fill the error matrices
+    for i in 1:length(ns)
+        for j in 1:length(dts)
+            sol = Solver.run(n=n[i], dt=dt[j],
+                             solver_config=solver_config,
+                             vtkdirname=dirname*"/conv_matrix")
+            el2_L2_matrix[i,j] = sol.el2s_L2
+            el2_L2_matrix[i, j] = sol.el2s_L2
+            eh1_L2_matrix[i, j] = sol.eh1s_L2
+            eh_energy_L2_matrix[i, j] = sol.eh_energys_L2
+            el2_inf_matrix[i, j] = sol.el2s_inf
+            eh1_inf_matrix[i, j] = sol.eh1s_inf
+            eh_energy_inf_matrix[i, j] = sol.eh_energys_inf
+        end
+    end
+
+    # Function to compute a corresponding EOC matrix
+    hs = 1 .// ns
+    compute_eoc(hs, dts, error_vector) = log.(errs[1:end-1]./errs[2:end])./( log.(hs[1:end-1]./hs[2:end]) + log.(dts[1:end-1]./dts[2:end]) ) # Error! It only works for vectors
+
+    # Create LaTeX-formatted strings for dts and ns
+    dt_str = latexify.(1 .// Int.(1 ./ dts))
+    n_str = latexify.(ns)
+
+    # Create the header for the table
+    header = ["dt \\ n"]
+    append!(header, ["n = $(n_str[i])" for i in 1:length(ns)])
+
+    # Create a table with row names as the dt values
+    row_names = dt_str
+
+    # Print the EOC matrix as a pretty table
+    pretty_table(eoc_matrix, header, row_names=row_names, formatters = ft_printf("%12.5f"))
 end
 
 function main_convergence()
@@ -194,7 +232,7 @@ function main_convergence()
 
     dts = [2^-2,2^-3,2^-4,2^-5,2^-6]
     ns = [2^4,2^5,2^6,2^7, 2^8]
-    @time convergence_analysis( ns=ns, dts=dts, dirname=dirname, solver_config=solver_config, spatial=false, dt_const=2^-5, transient=false, n_const=2^8, diagonal=true)
+    @time convergence_analysis( ns=ns, dts=dts, dirname=dirname, solver_config=solver_config, spatial=true, dt_const=2^-6, transient=true, n_const=2^8, diagonal=true)
 
 end
 
