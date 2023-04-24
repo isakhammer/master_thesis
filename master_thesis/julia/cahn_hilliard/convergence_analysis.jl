@@ -1,0 +1,199 @@
+include("cahn_hilliard_CutCIP.jl")
+using Test
+using Plots
+using Dates
+using LaTeXStrings
+using Latexify
+using PrettyTables
+
+function generate_figures(ns::Vector, dt,
+        el2s_L2::Vector, eh1s_L2::Vector, ehs_energy_L2::Vector,
+        el2s_inf::Vector, eh1s_inf::Vector, ehs_energy_inf::Vector,
+        dirname::String)
+
+    dts = fill(dt, length(ns))
+
+    # call the original function with ns instead of n
+    generate_figures(ns, dts, el2s_L2, eh1s_L2, ehs_energy_L2,
+                     el2s_inf, eh1s_inf, ehs_energy_inf, dirname)
+end
+
+function generate_figures(n, dts::Vector,
+        el2s_L2::Vector, eh1s_L2::Vector, ehs_energy_L2::Vector,
+        el2s_inf::Vector, eh1s_inf::Vector, ehs_energy_inf::Vector,
+        dirname::String)
+
+    ns = fill(n, length(dts))
+
+    # call the original function with ns instead of n
+    generate_figures(ns, dts, el2s_L2, eh1s_L2, ehs_energy_L2,
+                     el2s_inf, eh1s_inf, ehs_energy_inf, dirname)
+end
+
+function generate_figures(ns::Vector, dts::Vector,
+        el2s_L2::Vector, eh1s_L2::Vector, ehs_energy_L2::Vector,
+        el2s_inf::Vector, eh1s_inf::Vector, ehs_energy_inf::Vector,
+        dirname::String)
+
+    hs = 1 .// ns
+    compute_eoc(hs, dts, errs) = log.(errs[1:end-1]./errs[2:end])./( log.(hs[1:end-1]./hs[2:end]) + log.(dts[1:end-1]./dts[2:end]) )
+
+    hs_str =  latexify.(hs)
+    dt_str =  latexify.( 1 .//Int.(1 ./ dts))
+
+    eoc_l2s_L2 = compute_eoc(hs, dts, el2s_L2)
+    eoc_eh1s_L2 = compute_eoc(hs, dts, eh1s_L2)
+    eoc_ehs_energy_L2 = compute_eoc(hs,dts, ehs_energy_L2)
+    eoc_l2s_inf = compute_eoc(hs, dts, el2s_inf)
+    eoc_eh1s_inf = compute_eoc(hs, dts, eh1s_inf)
+    eoc_ehs_energy_inf = compute_eoc(hs, dts, ehs_energy_inf)
+
+    eoc_l2s_L2 =  [nothing; eoc_l2s_L2]
+    eoc_eh1s_L2 =  [nothing; eoc_eh1s_L2]
+    eoc_ehs_energy_L2 =  [nothing; eoc_ehs_energy_L2]
+    eoc_l2s_inf =  [nothing; eoc_l2s_inf]
+    eoc_eh1s_inf =  [nothing; eoc_eh1s_inf]
+    eoc_ehs_energy_inf =  [nothing; eoc_ehs_energy_inf]
+
+    data = hcat(hs_str, dt_str,
+                el2s_L2,  eoc_l2s_L2, eh1s_L2, eoc_eh1s_L2, ehs_energy_L2, eoc_ehs_energy_L2,
+                el2s_inf,  eoc_l2s_inf, eh1s_inf, eoc_eh1s_inf, ehs_energy_inf, eoc_ehs_energy_inf)
+
+    formatters = ( ft_nonothing, ft_nonothing, ft_printf("%.2f", [3, 5, 7, 9, 11,13]),
+                  ft_printf("%.1E", [2, 4, 6, 8, 10,12]))
+
+    header = ["hs", "dt",
+              "L2L2", "EOC", "L2H1", "EOC", "L2ah", "EOC",
+              "infL2", "EOC", "infH1", "EOC", "infah", "EOC"]
+
+    pretty_table(data, header=header, formatters =formatters )
+
+
+    formatters = ( ft_nonothing, ft_nonothing, ft_printf("%.5f", [3, 5, 7, 9, 11,13]),
+                  ft_printf("%.1E", [2, 4, 6, 8, 10,12]))
+
+    open(filename*".tex", "w") do io
+        pretty_table(io, data, header=header, backend=Val(:latex ), formatters = formatters )
+    end
+
+
+end
+
+
+function convergence_analysis(; ns::Vector, dts::Vector, dirname::String, solver_config, spatial=false, dt_const=2^-3, transient=false, n_const=2^4, diagonal=false)
+    println("Run convergence",)
+
+    # el2s_L2 = fill(1.0, length( ns ))
+    # eh1s_L2 = fill(1.0, length(ns))
+    # ehs_energy_L2 = fill(1.0, length(ns))
+    # el2s_inf = fill(1.0, length(ns))
+    # eh1s_inf = fill(1.0, length(ns))
+    # ehs_energy_inf = fill(1.0, length(ns))
+
+    if (transient)
+        el2s_L2 = Float64[]
+        eh1s_L2 = Float64[]
+        ehs_energy_L2 = Float64[]
+        el2s_inf = Float64[]
+        eh1s_inf = Float64[]
+        ehs_energy_inf = Float64[]
+        # Transient EOC
+        println("Run transient EOC tests with constant n = "*string(n_const))
+
+        for dt in dts
+            sol = Solver.run(n=n_const, dt=dt, solver_config=solver_config, vtkdirname=dirname)
+
+            push!(el2s_L2, sol.el2s_L2)
+            push!(eh1s_L2, sol.eh1s_L2)
+            push!(ehs_energy_L2, sol.ehs_energy_L2)
+            push!(el2s_inf, sol.el2s_inf)
+            push!(eh1s_inf, sol.eh1s_inf)
+            push!(ehs_energy_inf, sol.ehs_energy_inf)
+        end
+        filename = dirname*"/conv_transient"
+        generate_figures(n_const, dts,
+                         el2s_L2, eh1s_L2, ehs_energy_L2,
+                         el2s_inf, eh1s_inf, ehs_energy_inf,
+                         dirname)
+    end
+
+    if (spatial)
+        el2s_L2 = Float64[]
+        eh1s_L2 = Float64[]
+        ehs_energy_L2 = Float64[]
+        el2s_inf = Float64[]
+        eh1s_inf = Float64[]
+        ehs_energy_inf = Float64[]
+        # Spatial EOC
+        println("Run spatial EOC tests with constant dt = "*string(dt_const))
+        for n in ns
+            sol = Solver.run(n=n, dt=dt_const, solver_config=solver_config, vtkdirname=dirname)
+            push!(el2s_L2, sol.el2s_L2)
+            push!(eh1s_L2, sol.eh1s_L2)
+            push!(ehs_energy_L2, sol.ehs_energy_L2)
+            push!(el2s_inf, sol.el2s_inf)
+            push!(eh1s_inf, sol.eh1s_inf)
+            push!(ehs_energy_inf, sol.ehs_energy_inf)
+        end
+
+        filename = dirname*"/conv_spatial"
+        generate_figures(ns, dt_const,
+                         el2s_L2, eh1s_L2, ehs_energy_L2,
+                         el2s_inf, eh1s_inf, ehs_energy_inf,
+                         filename)
+    end
+
+
+    if (diagonal)
+        el2s_L2 = Float64[]
+        eh1s_L2 = Float64[]
+        ehs_energy_L2 = Float64[]
+        el2s_inf = Float64[]
+        eh1s_inf = Float64[]
+        ehs_energy_inf = Float64[]
+
+        # Spatial EOC
+        println("Run convergence tests with dt = $dts"*" and ns= $ns")
+
+        if length(ns) != length(ts)
+            error("Cannot compute diagonal. Length does not match")
+        end
+
+        for n in 1:length(ns)
+            sol = Solver.run(n=n, dt=dt, solver_config=solver_config, vtkdirname=dirname)
+            push!(el2s_L2, sol.el2s_L2)
+            push!(eh1s_L2, sol.eh1s_L2)
+            push!(ehs_energy_L2, sol.ehs_energy_L2)
+            push!(el2s_inf, sol.el2s_inf)
+            push!(eh1s_inf, sol.eh1s_inf)
+            push!(ehs_energy_inf, sol.ehs_energy_inf)
+        end
+
+        filename = dirname*"/conv_diagonal"
+        generate_figures(ns, dts,
+                         el2s_L2, eh1s_L2, ehs_energy_L2,
+                         el2s_inf, eh1s_inf, ehs_energy_inf,
+                         dirname)
+    end
+
+end
+
+function main_convergence()
+
+    dirname= "figures/cahn_hilliard_CutCIP/example"*string(Dates.now())
+    println(dirname)
+    mkpath(dirname)
+
+    u_ex(x,t::Real) = sin(t)*(x[1]^2 + x[2]^2 - 1 )^3*sin(x[1])*cos(x[2])
+    u_ex(t::Real) = x -> u_ex(x,t)
+    exact_sol = Solver.man_sol(u_ex)
+    circle = true
+    solver_config = Solver.Config(exact_sol, circle)
+
+    dts = [2^-2,2^-3,2^-4,2^-5]
+    ns = [2^2,2^3,2^4,2^5]
+    @time convergence_analysis( ns=ns, dts=dts, dirname=dirname, solver_config=solver_config, transient=false, spatial=true, diagonal=false)
+
+end
+
+main_convergence()
