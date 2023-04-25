@@ -38,10 +38,7 @@ module CH
 
 
     function run(;n::Number, dt::Number,
-            vtkdirname::String, ode_method::String="BE", u_ex::Function=nothing)
-        if u_ex != nothing
-            u_ex, f, ∇u_ex, ∇Δu_ex = man_sol(u_ex)
-        end
+            vtkdirname::String, ode_method::String="BE", u_ex::Union{Function, Nothing}=nothing)
 
         order=2
 
@@ -115,9 +112,13 @@ module CH
                  + ∫((γ/h)⋅jump(∇(u)⋅n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ + ∫((γ/h)⋅ ∇(u)⊙n_Γ⋅∇(v)⊙n_Γ )dΓ
                 )
 
-        # Define linear form
+
+        u_ex, f, ∇u_ex, ∇Δu_ex = man_sol(u_ex)
+
         g_1(t) = ∇u_ex(t)⋅n_Γ
         g_2(t) = ∇Δu_ex(t)⋅n_Γ
+
+
         b(t,v) = (∫( f(t)*v ) * dΩ
                   +  ∫(-(g_2(t)⋅v))dΓ
                   + ∫(g_1(t)⊙(-(n_Γ⋅∇∇(v)⋅n_Γ) + (γ/h)*∇(v)⋅n_Γ)) * dΓ
@@ -179,14 +180,13 @@ module CH
 
         U_h_t = solve(solver, op, U_0, t_0, T)
 
+        solname = vtkdirname*"/sol_dt_$dt"*"_n_$n"
         ts = Float64[]
         el2_ts = Float64[]
         eh1_ts = Float64[]
         eh_energy_ts = Float64[]
 
-        solname = vtkdirname*"/sol_dt_$dt"*"_n_$n"
-        mkpath(solname)
-        println("\ndt = ", string(dt), ", n = "*string(n))
+        println("\n Convergence simulation: dt = $dt, n = $n")
         createpvd(solname*".pvd") do pvd
             for (U_h, t) in U_h_t
                 e = u_ex(t) - U_h
@@ -195,11 +195,11 @@ module CH
                 eh1_t = sqrt(sum( ∫( e*e + ∇(e)⋅∇(e) )*dΩ ))
 
                 eh_energy = sqrt(sum( ∫(e⊙e)*dΩ + ∫( ∇∇(e)⊙∇∇(e) )*dΩ
-                              + ( γ/h ) * ∫(jump(∇(e)⋅n_Λ) ⊙ jump(∇(e)⋅n_Λ))dΛ
-                              + ( h/γ ) * ∫(mean_nn(e,n_Λ) ⊙ mean_nn(e,n_Λ))dΛ
-                              + ( γ/h ) * ∫((∇(e)⋅n_Γ) ⊙ (∇(e)⋅n_Γ))dΓ
-                              + ( h/γ ) * ∫(( n_Γ ⋅ ∇∇(e)⋅ n_Γ ) ⊙ ( n_Γ ⋅ ∇∇(e)⋅ n_Γ ))dΓ
-                             ))
+                                     + ( γ/h ) * ∫(jump(∇(e)⋅n_Λ) ⊙ jump(∇(e)⋅n_Λ))dΛ
+                                     + ( h/γ ) * ∫(mean_nn(e,n_Λ) ⊙ mean_nn(e,n_Λ))dΛ
+                                     + ( γ/h ) * ∫((∇(e)⋅n_Γ) ⊙ (∇(e)⋅n_Γ))dΓ
+                                     + ( h/γ ) * ∫(( n_Γ ⋅ ∇∇(e)⋅ n_Γ ) ⊙ ( n_Γ ⋅ ∇∇(e)⋅ n_Γ ))dΓ
+                                    ))
                 push!( ts, t)
                 push!( el2_ts, el2_t )
                 push!( eh1_ts, eh1_t )
