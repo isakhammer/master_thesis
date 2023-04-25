@@ -1,10 +1,47 @@
 include("cahn_hilliard_CutCIP.jl")
+include("nonlinear_cahn_hilliard_CutCIP.jl")
 using Test
 using Plots
 using Dates
 using LaTeXStrings
 using Latexify
 using PrettyTables
+
+function generate_plot(Xs,
+        el2s_L2, eh1s_L2, ehs_energy_L2,
+        el2s_inf, eh1s_inf, ehs_energy_inf,
+        dirname::String, Xs_name::String)
+    # L2 norms
+    p = Plots.plot(Xs, el2s_L2, label="L2L2", legend=:bottomright, xscale=:log2, yscale=:log2, minorgrid=true)
+    Plots.scatter!(p, Xs, el2s_L2, primary=false)
+
+    Plots.plot!(p, Xs, eh1s_L2, label=L"L2H1")
+    Plots.scatter!(p, Xs, eh1s_L2, primary=false)
+
+    Plots.plot!(p, Xs, ehs_energy_L2, label=L"L2ah")
+    Plots.scatter!(p, Xs, ehs_energy_L2, primary=false)
+
+    # inf norms
+    Plots.plot!(p, Xs, el2s_inf, label=L"infL2")
+    Plots.scatter!(p, Xs, el2s_inf, primary=false)
+
+    Plots.plot!(p, Xs, eh1s_inf, label=L"infH1")
+    Plots.scatter!(p, Xs, eh1s_inf, primary=false)
+
+    Plots.plot!(p, Xs, ehs_energy_inf, label=L"infah")
+    Plots.scatter!(p, Xs, ehs_energy_inf, primary=false)
+
+    # Configs
+    Plots.xlabel!(p, "$Xs_name")
+    Plots.plot!(p, xscale=:log2, yscale=:log2, minorgrid=true)
+    Plots.plot!(p, legendfontsize=12)  # Adjust the value 12 to your desired font size
+
+    # Save the plot as a .png file using the GR backend
+    # Plots.gr()
+    # Plots.pgfplotsx()
+    Plots.savefig(p, filename*"_plot.png")
+    # Plots.savefig(p, filename*"_plot.tex")
+end
 
 function generate_figures(ns::Vector, dt,
         el2s_L2::Vector, eh1s_L2::Vector, ehs_energy_L2::Vector,
@@ -16,6 +53,7 @@ function generate_figures(ns::Vector, dt,
     # call the original function with ns instead of n
     generate_figures(ns, dts, el2s_L2, eh1s_L2, ehs_energy_L2,
                      el2s_inf, eh1s_inf, ehs_energy_inf, dirname)
+
 end
 
 function generate_figures(n, dts::Vector,
@@ -28,6 +66,7 @@ function generate_figures(n, dts::Vector,
     # call the original function with ns instead of n
     generate_figures(ns, dts, el2s_L2, eh1s_L2, ehs_energy_L2,
                      el2s_inf, eh1s_inf, ehs_energy_inf, dirname)
+
 end
 
 function generate_figures(ns::Vector, dts::Vector,
@@ -94,6 +133,8 @@ function convergence_analysis(; ns::Vector, dts::Vector,
             vtkdirname::String)
         if problem == "CH"
             return CH.run(n=n, dt=dt, u_ex=u_ex, ode_method=ode_method, vtkdirname=vtkdirname)
+        elseif problem == "NLCH"
+            return NLCH.run(n=n, dt=dt, u_ex=u_ex, ode_method=ode_method, vtkdirname=vtkdirname)
         else
             error("Invalid problem: $problem")
         end
@@ -248,13 +289,12 @@ function main_convergence()
     dts = [2^-2,    2^-3,   2^-4,   2^-5]
     ns = [2^4,      2^5,    2^6,    2^7]
     @time convergence_analysis( ns=ns, dts=dts,
-                               main_dirname=main_dirname, u_ex=u_ex, problem="CH", ode_method="CN",
-                               spatial=true, dt_const=2^-4, transient=false, n_const=2^8, diagonal=false)
+                               main_dirname=main_dirname, u_ex=u_ex, problem="NLCH", ode_method="CN",
+                               spatial=false, dt_const=2^-4, transient=true, n_const=2^5, diagonal=true)
 
-    @time convergence_analysis( ns=ns, dts=dts,
-                               main_dirname=main_dirname, u_ex=u_ex, problem="CH", ode_method="BE",
-                               spatial=true, dt_const=2^-4, transient=false, n_const=2^8, diagonal=false)
-
+    # @time convergence_analysis( ns=ns, dts=dts,
+    #                            main_dirname=main_dirname, u_ex=u_ex, problem="CH", ode_method="BE",
+    #                            spatial=true, dt_const=2^-4, transient=false, n_const=2^8, diagonal=false)
 
 end
 

@@ -37,7 +37,8 @@ module CH
     end
 
 
-    function run(;n::Number, dt::Number,  vtkdirname::String, ode_method::String="BE", u_ex::Function=nothing)
+    function run(;n::Number, dt::Number,
+            vtkdirname::String, ode_method::String="BE", u_ex::Function=nothing)
         if u_ex != nothing
             u_ex, f, ∇u_ex, ∇Δu_ex = man_sol(u_ex)
         end
