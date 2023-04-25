@@ -7,7 +7,7 @@ using LaTeXStrings
 using Latexify
 using PrettyTables
 
-module Solver
+module CH
     using Gridap
     using LinearAlgebra
     using PROPACK
@@ -37,7 +37,7 @@ module Solver
     end
 
 
-    function run(;n::Number, dt::Number,  vtkdirname::String, u_ex::Function=nothing, circle::Bool=true)
+    function run(;n::Number, dt::Number,  vtkdirname::String, ode_method::String="BE", u_ex::Function=nothing)
         if u_ex != nothing
             u_ex, f, ∇u_ex, ∇Δu_ex = man_sol(u_ex)
         end
@@ -151,18 +151,22 @@ module Solver
         op = op2
 
         # Iterative solvers
-        solver_method = LUSolver()
+        algebraic_solver = LUSolver()
         # solver_method = NLSolver(LUSolver();show_trace=true,method=:newton) #line
 
         # ODE solvers
-        ode_solver = ThetaMethod(solver_method,dt, 1) # Backward Euler
-        # ode_solver = RungeKutta(solver_method,dt,:BE_1_0_1)
-        # ode_solver = RungeKutta(solver_method,dt,:SDIRK_2_1_2)
-        # ode_solver = RungeKutta(solver_method,dt,:TRBDF2_3_3_2) # does not work???
-        # γ, β  = 0.5, 0.25
-        # ode_solver = Newmark(solver_method,dt,γ,β)
-        # ρ∞ = 1.0 # Equivalent to Newmark(0.5, 0.25)
-        # ode_solver = GeneralizedAlpha(solver_method, dt, ρ∞)
+
+        function ode_solver(ode_method, algebraic_solver, dt)
+            if ode_method == "BE"
+                return ThetaMethod(algebraic_solver, dt, 1)
+            elseif ode_method == "CN"
+                return ThetaMethod(algebraic_solver, dt, 0.5)
+            else
+                error("Invalid solver_choice: $ode_method")
+            end
+        end
+
+        solver = ode_solver(ode_method, algebraic_solver, dt)
 
 
         # Inital condition
@@ -172,7 +176,7 @@ module Solver
 
         #################
 
-        U_h_t = solve(ode_solver, op, U_0, t_0, T)
+        U_h_t = solve(solver, op, U_0, t_0, T)
 
         ts = Float64[]
         el2_ts = Float64[]
@@ -214,8 +218,6 @@ module Solver
                        el2s_inf=el2s_inf, eh1s_inf=eh1s_inf, ehs_energy_inf=ehs_energy_inf)
         return sol
     end
-
-
 end # Solver
 
 # """
