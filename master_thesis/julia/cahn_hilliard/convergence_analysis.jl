@@ -80,7 +80,7 @@ function generate_figures(ns::Vector, dts::Vector,
 end
 
 
-function convergence_analysis(; ns::Vector, dts::Vector, dirname::String, solver_config, spatial=false, dt_const=2^-3, transient=false, n_const=2^4, diagonal=false)
+function convergence_analysis(; ns::Vector, dts::Vector, dirname::String, u_ex::Function, spatial=false, dt_const=2^-3, transient=false, n_const=2^4, diagonal=false)
     println("Run convergence",)
 
     if (transient)
@@ -95,7 +95,7 @@ function convergence_analysis(; ns::Vector, dts::Vector, dirname::String, solver
 
         filename = dirname*"/conv_transient"
         for dt in dts
-            sol = Solver.run(n=n_const, dt=dt, solver_config=solver_config, vtkdirname=filename)
+            sol = Solver.run(n=n_const, dt=dt, u_ex=u_ex, vtkdirname=filename)
 
             push!(el2s_L2, sol.el2s_L2)
             push!(eh1s_L2, sol.eh1s_L2)
@@ -121,7 +121,7 @@ function convergence_analysis(; ns::Vector, dts::Vector, dirname::String, solver
         println("Run spatial EOC tests with constant dt = "*string(dt_const))
         filename = dirname*"/conv_spatial"
         for n in ns
-            sol = Solver.run(n=n, dt=dt_const, solver_config=solver_config, vtkdirname=filename)
+            sol = Solver.run(n=n, dt=dt_const, u_ex=u_ex, vtkdirname=filename)
             push!(el2s_L2, sol.el2s_L2)
             push!(eh1s_L2, sol.eh1s_L2)
             push!(ehs_energy_L2, sol.ehs_energy_L2)
@@ -156,7 +156,7 @@ function convergence_analysis(; ns::Vector, dts::Vector, dirname::String, solver
         for i in 1:length(ns)
             ni = ns[i]
             dti = dts[i]
-            sol = Solver.run(n=ni, dt=dti, solver_config=solver_config, vtkdirname=filename)
+            sol = Solver.run(n=ni, dt=dti, u_ex=u_ex, vtkdirname=filename)
             push!(el2s_L2, sol.el2s_L2)
             push!(eh1s_L2, sol.eh1s_L2)
             push!(ehs_energy_L2, sol.ehs_energy_L2)
@@ -226,13 +226,12 @@ function main_convergence()
 
     u_ex(x,t::Real) = sin(t)*(x[1]^2 + x[2]^2 - 1 )^3*sin(x[1])*cos(x[2])
     u_ex(t::Real) = x -> u_ex(x,t)
-    exact_sol = Solver.man_sol(u_ex)
-    circle = true
-    solver_config = Solver.Config(exact_sol, circle)
+    println(typeof(u_ex))
+
 
     dts = [2^-2,2^-3,2^-4,2^-5,2^-6]
-    ns = [2^4,2^5,2^6,2^7, 2^8]
-    @time convergence_analysis( ns=ns, dts=dts, dirname=dirname, solver_config=solver_config, spatial=true, dt_const=2^-6, transient=true, n_const=2^8, diagonal=true)
+    ns = [2^4,2^5,2^6,2^7]
+    @time convergence_analysis( ns=ns, dts=dts, dirname=dirname, u_ex=u_ex, spatial=true, dt_const=2^-4, transient=false, n_const=2^8, diagonal=false)
 
 end
 

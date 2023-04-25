@@ -21,16 +21,10 @@ module Solver
 
     function man_sol(u_ex)
         α = 1
-        # Here is the problem!!
         f(t) = x ->  ∂t(u_ex)(x,t) + Δ(Δ(u_ex(t)))(x)
         ∇u_ex(t) = x ->  ∇(u_ex(t))(x)
         ∇Δu_ex(t) = x ->  ∇(Δ(u_ex(t)))(x)
         return u_ex, f, ∇u_ex, ∇Δu_ex
-    end
-
-    @with_kw struct Config
-        exact_sol
-        circle
     end
 
     @with_kw struct Solution
@@ -42,8 +36,12 @@ module Solver
         ehs_energy_inf
     end
 
-    function run(;n, dt, solver_config,  vtkdirname=nothing)
-        u_ex, f, ∇u_ex, ∇Δu_ex = solver_config.exact_sol
+
+    function run(;n::Number, dt::Number,  vtkdirname::String, u_ex::Function=nothing, circle::Bool=true)
+        if u_ex != nothing
+            u_ex, f, ∇u_ex, ∇Δu_ex = man_sol(u_ex)
+        end
+
         order=2
 
         # Background model
@@ -217,6 +215,7 @@ module Solver
         return sol
     end
 
+
 end # Solver
 
 # """
@@ -377,13 +376,10 @@ end # Solver
 
 #     u_ex(x,t::Real) = sin(t)*(x[1]^2 + x[2]^2 - 1 )^3*sin(x[1])*cos(x[2])
 #     u_ex(t::Real) = x -> u_ex(x,t)
-#     exact_sol = Solver.man_sol(u_ex)
-#     circle = true
-#     solver_config = Solver.Config(exact_sol, circle)
-#     @time Solver.run(n=2^5, dt=2^-3, solver_config=solver_config, vtkdirname=dirname)
+#     @time Solver.run(n=2^5, dt=2^-3, u_ex=u_ex, vtkdirname=dirname)
 # end
-# """
 
 
 # main()
 # main_convergence()
+# main_simulation_test()
