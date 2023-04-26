@@ -135,6 +135,8 @@ function convergence_analysis(; ns::Vector, dts::Vector,
             return CH.run(n=n, dt=dt, u_ex=u_ex, ode_method=ode_method, vtkdirname=vtkdirname)
         elseif problem == "NLCH"
             return NLCH.run(n=n, dt=dt, u_ex=u_ex, ode_method=ode_method, vtkdirname=vtkdirname)
+        elseif problem == "HE"
+            return HE.run(n=n, dt=dt, u_ex=u_ex, ode_method=ode_method, vtkdirname=vtkdirname)
         else
             error("Invalid problem: $problem")
         end
@@ -167,6 +169,7 @@ function convergence_analysis(; ns::Vector, dts::Vector,
                          el2s_inf, eh1s_inf, ehs_energy_inf,
                          filename)
     end
+
 
     if (spatial)
         el2s_L2 = Float64[]
@@ -289,12 +292,17 @@ function main_convergence()
     dts = [2^-3, 2^-4, 2^-5, 2^-6, 2^-7, 2^-8]
     ns = [2^4, 2^5, 2^6, 2^7, 2^8, 2^9]
 
+    # @time convergence_analysis( ns=ns, dts=dts,
+    #                            main_dirname=main_dirname, u_ex=u_ex, problem="CH", ode_method="BE",
+    #                            spatial=true, dt_const=2^-7, transient=true, n_const=2^8, diagonal=true)
+
     @time convergence_analysis( ns=ns, dts=dts,
-                               main_dirname=main_dirname, u_ex=u_ex, problem="CH", ode_method="BE",
+                               main_dirname=main_dirname, u_ex=u_ex, problem="HE", ode_method="BE",
                                spatial=true, dt_const=2^-7, transient=true, n_const=2^8, diagonal=true)
-    @time convergence_analysis( ns=ns, dts=dts,
-                               main_dirname=main_dirname, u_ex=u_ex, problem="CH", ode_method="CN",
-                               spatial=true, dt_const=2^-7, transient=true, n_const=2^8, diagonal=true)
+
+    # @time convergence_analysis( ns=ns, dts=dts,
+    #                            main_dirname=main_dirname, u_ex=u_ex, problem="CH", ode_method="CN",
+    #                            spatial=true, dt_const=2^-7, transient=true, n_const=2^8, diagonal=true)
     # @time convergence_analysis( ns=ns, dts=dts,
     #                            main_dirname=main_dirname, u_ex=u_ex, problem="NLCH", ode_method="BE",
     #                            spatial=true, dt_const=2^-7, transient=true, n_const=2^8, diagonal=true)

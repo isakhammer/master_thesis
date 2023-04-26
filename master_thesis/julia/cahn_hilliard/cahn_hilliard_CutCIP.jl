@@ -138,7 +138,7 @@ module CH
         m(t, u, v) = ∫( α* u⋅v )dΩ
 
         # Alternative 1 (linear)
-        op1 = TransientAffineFEOperator(m,A,b,U,V)
+        # op1 = TransientAffineFEOperator(m,A,b,U,V)
 
         # Alternative 2 (general form)
         res(t,u,v) = A(t,u,v) + m(t, ∂t(u),v) - b(t,v)
@@ -147,7 +147,7 @@ module CH
         op2 = TransientFEOperator(res,jac,jac_t,U,V)
 
         # Alternative 3 (Algorithmic differential)
-        op3 = TransientFEOperator(res, U, V) # Does not work
+        # op3 = TransientFEOperator(res, U, V) # Does not work
 
         # Intalization of method
         op = op2

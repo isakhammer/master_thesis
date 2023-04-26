@@ -7,7 +7,7 @@ using LaTeXStrings
 using Latexify
 using PrettyTables
 
-module Solver
+module HE
     using Gridap
     using LinearAlgebra
     using PROPACK
@@ -38,8 +38,10 @@ module Solver
         ehs_energy_inf
     end
 
-    function run(;n, dt, solver_config,  vtkdirname=nothing)
-        u_ex, ∇u_ex, f = solver_config.exact_sol
+    function run(;n::Number, dt::Number,
+            vtkdirname::String, ode_method::String="BE", u_ex::Union{Function, Nothing}=nothing)
+
+        u_ex, ∇u_ex, f = man_sol(u_ex)
         order = 2
 
         L= 1.0
@@ -67,19 +69,23 @@ module Solver
 
         op = TransientFEOperator(res,jac,jac_t,U,V)
 
-        # Nonlinear/Linear solver
-        solver_method =LUSolver()
-        # solver_method = NLSolver(LUSolver();show_trace=true,method=:newton) #linesearch=BackTracking())
+        # Iterative solvers
+        algebraic_solver = LUSolver()
+        # solver_method = NLSolver(LUSolver();show_trace=true,method=:newton) #line
 
-        # ODE solver
-        ode_solver = ThetaMethod(solver_method,dt, 1) # Works!
-        # ode_solver = RungeKutta(solver_method,dt,:BE_1_0_1) # Works!
-        # ode_solver = RungeKutta(solver_method,dt,:SDIRK_2_1_2) # Does not converge!
-        # ode_solver = RungeKutta(solver_method,dt,:TRBDF2_3_3_2) # Does not converge!
-        # γ, β  = 0.5, 0.25
-        # ode_solver = Newmark(solver_method,dt,γ,β) # Does not compile
-        # ρ∞ = 1.0 # Equivalent to Newmark(0.5, 0.25)
-        # ode_solver = GeneralizedAlpha(solver_method, dt, ρ∞) # Does not compile
+        # ODE solvers
+
+        function ode_solver(ode_method, algebraic_solver, dt)
+            if ode_method == "BE"
+                return ThetaMethod(algebraic_solver, dt, 1)
+            elseif ode_method == "CN"
+                return ThetaMethod(algebraic_solver, dt, 0.5)
+            else
+                error("Invalid solver_choice: $ode_method")
+            end
+        end
+
+        solver = ode_solver(ode_method, algebraic_solver, dt)
 
         # Inital condition
         t_0 = 0
@@ -88,7 +94,7 @@ module Solver
 
         #################
 
-        U_h_t = solve(ode_solver, op, U_0, t_0, T)
+        U_h_t = solve(solver, op, U_0, t_0, T)
 
         ts = Float64[]
         el2_ts = Float64[]
@@ -127,139 +133,16 @@ module Solver
 
 end # Solver
 
-function generate_figures(Xs,
-        el2s_L2, eh1s_L2, ehs_energy_L2,
-        el2s_inf, eh1s_inf, ehs_energy_inf,
-        dirname::String, Xs_name::String)
 
-    filename = dirname*"/conv_"*Xs_name
-    compute_eoc(Xs, errs) = log.(errs[1:end-1]./errs[2:end])./log.(Xs[1:end-1]./Xs[2:end])
-
-
-    Xs_str =  latexify.(Xs)
-
-    eoc_l2s_L2 = compute_eoc(Xs, el2s_L2)
-    eoc_eh1s_L2 = compute_eoc(Xs, eh1s_L2)
-    eoc_ehs_energy_L2 = compute_eoc(Xs, ehs_energy_L2)
-    eoc_l2s_inf = compute_eoc(Xs, el2s_inf)
-    eoc_eh1s_inf = compute_eoc(Xs, eh1s_inf)
-    eoc_ehs_energy_inf = compute_eoc(Xs, ehs_energy_inf)
-
-    eoc_l2s_L2 =  [nothing; eoc_l2s_L2]
-    eoc_eh1s_L2 =  [nothing; eoc_eh1s_L2]
-    eoc_ehs_energy_L2 =  [nothing; eoc_ehs_energy_L2]
-    eoc_l2s_inf =  [nothing; eoc_l2s_inf]
-    eoc_eh1s_inf =  [nothing; eoc_eh1s_inf]
-    eoc_ehs_energy_inf =  [nothing; eoc_ehs_energy_inf]
-
-    data = hcat(Xs_str,
-                el2s_L2,  eoc_l2s_L2, eh1s_L2, eoc_eh1s_L2, ehs_energy_L2, eoc_ehs_energy_L2,
-                el2s_inf,  eoc_l2s_inf, eh1s_inf, eoc_eh1s_inf, ehs_energy_inf, eoc_ehs_energy_inf)
-
-    formatters = ( ft_nonothing, ft_printf("%.2f", [3, 5, 7, 9, 11,13]),
-                  ft_printf("%.1E", [2, 4, 6, 8, 10,12]))
-
-    header = ["$Xs_name",
-              "L2L2", "EOC", "L2H1", "EOC", "L2ah", "EOC",
-              "infL2", "EOC", "infH1", "EOC", "infah", "EOC"]
-
-    pretty_table(data, header=header, formatters =formatters )
-
-
-    formatters = ( ft_nonothing, ft_printf("%.5f", [3, 5, 7, 9, 11,13]),
-                  ft_printf("%.1E", [2, 4, 6, 8, 10,12]))
-
-    open(filename*".tex", "w") do io
-        pretty_table(io, data, header=header, backend=Val(:latex ), formatters = formatters )
-    end
-
-end
-function convergence_analysis(; ns, dts, dirname, solver_config, spatial=false, dt_const=2^-4, transient=false, n_const=2^7)
-    println("Run convergence",)
-
-    if (transient)
-        # Time dim EOC
-        el2s_L2 = Float64[]
-        eh1s_L2 = Float64[]
-        ehs_energy_L2 = Float64[]
-        el2s_inf = Float64[]
-        eh1s_inf = Float64[]
-        ehs_energy_inf = Float64[]
-        println("Run convergence tests with constant n = "*string(n_const))
-
-        for dt in dts
-            sol = Solver.run(n=n_const, dt=dt, solver_config=solver_config, vtkdirname=dirname)
-
-            push!(el2s_L2, sol.el2s_L2)
-            push!(eh1s_L2, sol.eh1s_L2)
-            push!(ehs_energy_L2, sol.ehs_energy_L2)
-            push!(el2s_inf, sol.el2s_inf)
-            push!(eh1s_inf, sol.eh1s_inf)
-            push!(ehs_energy_inf, sol.ehs_energy_inf)
-        end
-        generate_figures(dts, el2s_L2, eh1s_L2, ehs_energy_L2,
-                         el2s_inf, eh1s_inf, ehs_energy_inf,
-                         dirname, "dt")
-    end
-
-
-    if (spatial)
-        # Spatial EOC
-        el2s_L2 = Float64[]
-        eh1s_L2 = Float64[]
-        ehs_energy_L2 = Float64[]
-        el2s_inf = Float64[]
-        eh1s_inf = Float64[]
-        ehs_energy_inf = Float64[]
-        println("Run convergence tests with constant dt = "*string(dt_const))
-        for n in ns
-            sol = Solver.run(n=n, dt=dt_const, solver_config=solver_config, vtkdirname=dirname)
-            push!(el2s_L2, sol.el2s_L2)
-            push!(eh1s_L2, sol.eh1s_L2)
-            push!(ehs_energy_L2, sol.ehs_energy_L2)
-            push!(el2s_inf, sol.el2s_inf)
-            push!(eh1s_inf, sol.eh1s_inf)
-            push!(ehs_energy_inf, sol.ehs_energy_inf)
-        end
-        hs =  1 .// ns
-        generate_figures(hs, el2s_L2, eh1s_L2, ehs_energy_L2,
-                         el2s_inf, eh1s_inf, ehs_energy_inf,
-                         dirname, "h")
-    end
-
-
-
-end
-
-function main_convergence()
-
-    dirname= "figures/heat_eq/conv_"*string(Dates.now())
-    println(dirname)
-    mkpath(dirname)
-
-    u_ex(x,t) = sin(t)*cos(2π*x[1])*sin(2π*x[2])
+function main()
+    vtkdirname= "figures/heat_eq/test_"*string(Dates.now())
+    println(vtkdirname)
+    mkpath(vtkdirname)
+    u_ex(x,t::Real) = sin(t)*(x[1]^2 + x[2]^2 - 1 )^3*sin(x[1])*cos(x[2])
     u_ex(t::Real) = x -> u_ex(x,t)
-    exact_sol = Solver.man_sol(u_ex)
-    solver_config = Solver.Config(exact_sol)
-
-    dts = [2^-2,2^-3,2^-4,2^-5]
-    ns = [2^2,2^3,2^4,2^5, 2^6]
-    @time convergence_analysis( ns=ns, dts=dts, dirname=dirname, solver_config=solver_config, transient=true, spatial=true)
-
+    n, dt = 2^6, 2^(-4)
+    HE.run(n=n, dt=dt, vtkdirname=vtkdirname, ode_method="BE", u_ex=u_ex)
 end
 
-function main_simulation_test()
-    dirname= "figures/heat_eq/sim_"*string(Dates.now())
-    println(dirname)
-    mkpath(dirname)
-
-    u_ex(x,t) = sin(t)*cos(2π*x[1])*sin(2π*x[2])
-    u_ex(t::Real) = x -> u_ex(x,t)
-    exact_sol = Solver.man_sol(u_ex)
-    solver_config = Solver.Config(exact_sol)
-    @time Solver.run(n=2^5, dt=2^-4, solver_config=solver_config, vtkdirname=dirname)
-end
-
-
-main_convergence()
 # main_simulation_test()
+main()
