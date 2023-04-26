@@ -216,13 +216,10 @@ end
 
 
 function main_convergence()
-
-    main_dirname= "figures/convergence_analysis_"*string(Dates.now())
-    println(main_dirname)
-    mkpath(main_dirname)
-
     u_ex(x,t::Real) = sin(t)*(x[1]^2 + x[2]^2 - 1 )^3*sin(x[1])*cos(x[2])
     u_ex(t::Real) = x -> u_ex(x,t)
+
+
 
 
     # Easy
@@ -236,12 +233,17 @@ function main_convergence()
     dt_const = 2^-7
     dts = [2^-3, 2^-4, 2^-5, 2^-6, 2^-7]
     ns = [2^4, 2^5, 2^6, 2^7, 2^8]
+    main_dirname= "figures/MEDIUM_convergence_analysis_"*string(Dates.now())
 
     # Hard
-    # n_const = 2^8
-    # dt_const = 2^-7
-    # dts = [2^-3, 2^-4, 2^-5, 2^-6, 2^-7]
-    # ns = [2^4, 2^5, 2^6, 2^7, 2^8]
+    # n_const = 2^9
+    # dt_const = 2^-8
+    # dts = [2^-3, 2^-4, 2^-5, 2^-6, 2^-7, 2^-8]
+    # ns = [2^4, 2^5, 2^6, 2^7, 2^8, 2^9]
+    # main_dirname= "figures/HARD_convergence_analysis_"*string(Dates.now())
+
+    println(main_dirname)
+    mkpath(main_dirname)
 
     @time convergence_analysis( ns=ns, dts=dts,
                                main_dirname=main_dirname, u_ex=u_ex, problem="HE", ode_method="BE",
