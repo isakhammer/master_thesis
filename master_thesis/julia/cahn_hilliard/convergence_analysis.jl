@@ -1,5 +1,6 @@
 include("cahn_hilliard_CutCIP.jl")
 include("nonlinear_cahn_hilliard_CutCIP.jl")
+include("heat_eq.jl")
 using Test
 using Plots
 using Dates
@@ -282,7 +283,7 @@ end
 
 function main_convergence()
 
-    main_dirname= "figures/cahn_hilliard_CutCIP/convergence_analysis_"*string(Dates.now())
+    main_dirname= "figures/convergence_analysis_"*string(Dates.now())
     println(main_dirname)
     mkpath(main_dirname)
 
