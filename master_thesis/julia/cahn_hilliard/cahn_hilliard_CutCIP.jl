@@ -186,7 +186,7 @@ module CH
         eh1_ts = Float64[]
         eh_energy_ts = Float64[]
 
-        println("\n Convergence simulation: dt = $dt, n = $n")
+        println("Convergence simulation: dt = $dt, n = $n")
         createpvd(solname*".pvd") do pvd
             for (U_h, t) in U_h_t
                 e = u_ex(t) - U_h
