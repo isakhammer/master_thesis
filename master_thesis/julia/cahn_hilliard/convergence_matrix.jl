@@ -4,6 +4,7 @@ include("heat_eq.jl")
 
 using Test
 using Plots
+using PrettyTables
 using Dates
 using LaTeXStrings
 using Latexify
@@ -26,52 +27,101 @@ end
 function convergence_matrix(; ns::Vector, dts::Vector,
         main_dirname::String, u_ex::Function, problem::String, ode_method::String)
 
-    # Create a matrix to store the error values for each combination
-    el2_L2_matrix         = Array{Float64}(undef, length(dts), length(ns))
-    eh1_L2_matrix         = Array{Float64}(undef, length(dts), length(ns))
-    eh_energy_L2_matrix   = Array{Float64}(undef, length(dts), length(ns))
-    el2_inf_matrix        = Array{Float64}(undef, length(dts), length(ns))
-    eh1_inf_matrix        = Array{Float64}(undef, length(dts), length(ns))
-    eh_energy_inf_matrix  = Array{Float64}(undef, length(dts), length(ns))
+    if (false)
+        # # Create a matrix to store the error values for each combination
+        el2_L2_matrix         = Array{Float64}(undef, length(dts), length(ns))
+        eh1_L2_matrix         = Array{Float64}(undef, length(dts), length(ns))
+        eh_energy_L2_matrix   = Array{Float64}(undef, length(dts), length(ns))
+        el2_inf_matrix        = Array{Float64}(undef, length(dts), length(ns))
+        eh1_inf_matrix        = Array{Float64}(undef, length(dts), length(ns))
+        eh_energy_inf_matrix  = Array{Float64}(undef, length(dts), length(ns))
 
-    dirname = main_dirname*"/$problem"*"_$ode_method"
-    println(dirname)
-    mkpath(dirname)
-    println("Run convergence for problem $problem and with ODE solver $ode_method")
+        dirname = main_dirname*"/$problem"*"_$ode_method"
+        println(dirname)
+        mkpath(dirname)
+        println("Run convergence for problem $problem and with ODE solver $ode_method")
 
-    # Fill the error matrices
-    for i in 1:length(ns)
-        for j in 1:length(dts)
-            filename = dirname*"_n_$(ns[i])"*"_dt_$(dts[j])"
-            sol = run_problem(problem=problem, ode_method=ode_method, n=ns[i],
-                              dt=dts[j], u_ex=u_ex, vtkdirname=filename)
-            el2_L2_matrix[i,j] = sol.el2s_L2
-            el2_L2_matrix[i, j] = sol.el2s_L2
-            eh1_L2_matrix[i, j] = sol.eh1s_L2
-            eh_energy_L2_matrix[i, j] = sol.ehs_energy_L2
-            el2_inf_matrix[i, j] = sol.el2s_inf
-            eh1_inf_matrix[i, j] = sol.eh1s_inf
-            eh_energy_inf_matrix[i, j] = sol.ehs_energy_inf
+        # Fill the error matrices
+        for i in 1:length(ns)
+            for j in 1:length(dts)
+                filename = dirname*"_n_$(ns[i])"*"_dt_$(dts[j])"
+                sol = run_problem(problem=problem, ode_method=ode_method, n=ns[i],
+                                  dt=dts[j], u_ex=u_ex, vtkdirname=filename)
+                el2_L2_matrix[i,j] = sol.el2s_L2
+                el2_L2_matrix[i, j] = sol.el2s_L2
+                eh1_L2_matrix[i, j] = sol.eh1s_L2
+                eh_energy_L2_matrix[i, j] = sol.ehs_energy_L2
+                el2_inf_matrix[i, j] = sol.el2s_inf
+                eh1_inf_matrix[i, j] = sol.eh1s_inf
+                eh_energy_inf_matrix[i, j] = sol.ehs_energy_inf
+            end
         end
     end
 
     # Function to compute a corresponding EOC matrix
     hs = 1 .// ns
-    compute_eoc(hs, dts, error_vector) = log.(errs[1:end-1]./errs[2:end])./( log.(hs[1:end-1]./hs[2:end]) + log.(dts[1:end-1]./dts[2:end]) ) # Error! It only works for vectors
+
+
+    compute_eoc_vector(hs, dts, error_vector) = log.(error_vector[1:end-1]./error_vector[2:end])./( log.(hs[1:end-1]./hs[2:end]) + log.(dts[1:end-1]./dts[2:end]) ) # Error! It only works for vectors
+
+    function compute_eoc_matrices(error_matrix, hs, dts)
+        N,M = size(error_matrix)
+
+        transient_eoc_matrix = Matrix{Union{Nothing, Float64}}(undef, N, M)
+        # Transient EOC
+        for i in 1:N
+            error_vector = error_matrix[i,:]
+            his = fill(hs[i], N)
+            eoc_vector = compute_eoc_vector(his, dts, error_vector)
+            eoc_vector =  [nothing; eoc_vector]
+            transient_eoc_matrix[i,:] = eoc_vector
+        end
+
+        spatial_eoc_matrix = Matrix{Union{Nothing, Float64}}(undef, N, M)
+        # Transient EOC
+        for j in 1:M
+            error_vector = error_matrix[:,j]
+            dtjs = fill(dts[j], M)
+            eoc_vector = compute_eoc_vector(hs, dtjs, error_vector)
+            eoc_vector =  [nothing; eoc_vector]
+            spatial_eoc_matrix[:,j] = eoc_vector
+        end
+
+        # diagonal EOC
+        # for j in 1:M
+        #     for i in 1:N
+        #         error_vector = error_matrix[:,j]
+        #         dtjs = fill(dts[j], M)
+        #         eoc_vector = compute_eoc_vector(hs, dtjs, error_vector)
+        #         eoc_vector =  [nothing; eoc_vector]
+        #         spatial_eoc_matrix[:,j] = eoc_vector
+        #     end
+        # end
+
+        return transient_eoc_matrix, spatial_eoc_matrix
+    end
+
+    # Test example
+    error_matrix = ones(length(hs), length(dts))
+    pretty_table(error_matrix)
+    transient_eoc_matrix, spatial_eoc_matrix = compute_eoc_matrices(error_matrix, hs, dts)
+
+    pretty_table(transient_eoc_matrix)
+    pretty_table(spatial_eoc_matrix)
+
 
     # Create LaTeX-formatted strings for dts and ns
     dt_str = latexify.(1 .// Int.(1 ./ dts))
-    n_str = latexify.(ns)
+    hs_str = latexify.(1 .// ns)
 
-    # # Create the header for the table
-    # header = ["dt \\ n"]
-    # append!(header, ["n = $(n_str[i])" for i in 1:length(ns)])
+    # Create the header for the table
+    header = [" $(hs_str[i])" for i in 1:length(hs_str)]
 
-    # # Create a table with row names as the dt values
-    # row_names = dt_str
+    # Create a table with row names as the dt values
+    row_names = dt_str
 
-    # # Print the EOC matrix as a pretty table
-    # pretty_table(eoc_matrix, header, row_names=row_names, formatters = ft_printf("%12.5f"))
+    # Print the EOC matrix as a pretty table
+    pretty_table(transient_eoc_matrix, header, row_names=row_names, formatters = ft_printf("%12.5f"))
 end
 
 function main_convergence()
