@@ -181,7 +181,6 @@ module CH
         U_h_t = solve(solver, op, U_0, t_0, T)
 
         solname = vtkdirname*"/sol_dt_$dt"*"_n_$n"
-        mkpath(solname)
         ts = Float64[]
         el2_ts = Float64[]
         eh1_ts = Float64[]

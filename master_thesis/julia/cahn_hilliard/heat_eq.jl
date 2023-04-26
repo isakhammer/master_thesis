@@ -102,7 +102,6 @@ module HE
         eh_energy_ts = Float64[]
 
         solname = vtkdirname*"/sol_dt_$dt"*"_n_$n"
-        mkpath(solname)
         println("\ndt = ", string(dt), ", n = "*string(n))
         createpvd(solname*".pvd") do pvd
             for (U_h, t) in U_h_t
