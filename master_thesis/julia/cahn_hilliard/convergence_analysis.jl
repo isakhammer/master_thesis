@@ -225,22 +225,31 @@ function main_convergence()
     u_ex(t::Real) = x -> u_ex(x,t)
 
 
-    n_const = 2^5
-    dt_const = 2^-4
-    dts = [2^-3, 2^-4, 2^-5]
-    ns = [2^4, 2^5, 2^6]
+    # Easy
+    # n_const = 2^5
+    # dt_const = 2^-4
+    # dts = [2^-3, 2^-4, 2^-5]
+    # ns = [2^4, 2^5, 2^6]
+
+    # Medium
+    n_const = 2^8
+    dt_const = 2^-7
+    dts = [2^-3, 2^-4, 2^-5, 2^-6, 2^-7]
+    ns = [2^4, 2^5, 2^6, 2^7, 2^8]
+
+    # Hard
     # n_const = 2^8
     # dt_const = 2^-7
     # dts = [2^-3, 2^-4, 2^-5, 2^-6, 2^-7]
     # ns = [2^4, 2^5, 2^6, 2^7, 2^8]
 
-    # @time convergence_analysis( ns=ns, dts=dts,
-    #                            main_dirname=main_dirname, u_ex=u_ex, problem="HE", ode_method="BE",
-    #                            spatial=true, dt_const=dt_const, transient=true, n_const=n_const, diagonal=true)
+    @time convergence_analysis( ns=ns, dts=dts,
+                               main_dirname=main_dirname, u_ex=u_ex, problem="HE", ode_method="BE",
+                               spatial=true, dt_const=dt_const, transient=true, n_const=n_const, diagonal=true)
 
-    # @time convergence_analysis( ns=ns, dts=dts,
-    #                            main_dirname=main_dirname, u_ex=u_ex, problem="HE", ode_method="CN",
-    #                            spatial=true, dt_const=dt_const, transient=true, n_const=n_const, diagonal=true)
+    @time convergence_analysis( ns=ns, dts=dts,
+                               main_dirname=main_dirname, u_ex=u_ex, problem="HE", ode_method="CN",
+                               spatial=true, dt_const=dt_const, transient=true, n_const=n_const, diagonal=true)
 
     @time convergence_analysis( ns=ns, dts=dts,
                                main_dirname=main_dirname, u_ex=u_ex, problem="CH", ode_method="BE",
@@ -249,7 +258,6 @@ function main_convergence()
     @time convergence_analysis( ns=ns, dts=dts,
                                main_dirname=main_dirname, u_ex=u_ex, problem="CH", ode_method="CN",
                                spatial=true, dt_const=dt_const, transient=true, n_const=n_const, diagonal=true)
-
 
     @time convergence_analysis( ns=ns, dts=dts,
                                main_dirname=main_dirname, u_ex=u_ex, problem="NLCH", ode_method="BE",
