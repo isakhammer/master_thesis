@@ -33,9 +33,8 @@ module Solver
     end
 
 
-    function run(; n, u_ex, dirname)
+    function run(; order, n, u_ex, dirname)
 
-        order = 2
         println("sim order ", order, " n ", n)
         u_ex, f, ∇u_ex, ∇Δu_ex = man_sol(u_ex)
 
@@ -106,6 +105,7 @@ module Solver
             return ( n.plus⋅ ∇∇(u).plus⋅ n.plus - n.minus ⋅ ∇∇(u).minus ⋅ n.minus )
             # return jump( n⋅ ∇∇(u)⋅ n)
         end
+
         # Inner facets
         a(u,v) =( ∫( ∇∇(v)⊙∇∇(u) + α⋅(v⊙u) )dΩ
                  + ∫(-mean_nn(v,n_Λ)⊙jump(∇(u)⋅n_Λ) - mean_nn(u,n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ
@@ -233,7 +233,7 @@ function generate_figures(;ns, el2s, eh1s, ehs_energy, cond_numbers, ndofs, dirn
     Plots.savefig(p, filename*"_plot.tex")
 end
 
-function convergence_analysis(;  ns, dirname, u_ex)
+function convergence_analysis(;order,  ns, dirname, u_ex)
 
     el2s = Float64[]
     eh1s = Float64[]
@@ -243,7 +243,7 @@ function convergence_analysis(;  ns, dirname, u_ex)
 
     for n in ns
 
-        sol = Solver.run( n=n, u_ex=u_ex, dirname=dirname)
+        sol = Solver.run( order=order, n=n, u_ex=u_ex, dirname=dirname)
 
         push!(el2s, sol.el2)
         push!(eh1s, sol.eh1)
@@ -260,10 +260,15 @@ function main()
 
     # %% Manufactured solution
     L, m, r = (1, 1, 1)
-    u_ex(x) = (x[1]^2 + x[2]^2  - 1)^2*sin(2π*x[1])*cos(2π*x[2])
+
+    # Examples that works badly
     # u_ex(x) = sin(2π*x[1])*cos(2π*x[2])
     # u_ex(x) = 100*sin(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
     # u_ex(x) = 100*cos(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
+
+    # Good examples
+    u_ex(x) = (x[1]^2 + x[2]^2  - 1)^2*sin(2π*x[1])*cos(2π*x[2])
+    # u_ex(x) = (x[1]^2 + x[2]^2  - 1)^2
     exact_sol = Solver.man_sol(u_ex)
 
     resultdir= "figures/biharmonic_CutCIP/"*string(Dates.now())
@@ -271,7 +276,9 @@ function main()
     mkpath(resultdir)
 
     ns = [2^2, 2^3, 2^4, 2^5, 2^6, 2^7]
-    @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex,)
+    # ns = [2^2, 2^3, 2^4, 2^5, 2^6]
+
+    @time convergence_analysis( order=4, ns=ns,  dirname=resultdir, u_ex=u_ex,)
 end
 
 
