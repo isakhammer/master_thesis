@@ -181,6 +181,7 @@ module CH
         U_h_t = solve(solver, op, U_0, t_0, T)
 
         solname = vtkdirname*"/sol_dt_$dt"*"_n_$n"
+        mkpath(solname)
         ts = Float64[]
         el2_ts = Float64[]
         eh1_ts = Float64[]
@@ -221,3 +222,15 @@ module CH
     end
 end # Solver
 
+function main()
+    vtkdirname= "figures/cahn_hilliard_CutCIP/test_"*string(Dates.now())
+    println(vtkdirname)
+    mkpath(vtkdirname)
+    u_ex(x,t::Real) = sin(t)*(x[1]^2 + x[2]^2 - 1 )^3*sin(x[1])*cos(x[2])
+    u_ex(t::Real) = x -> u_ex(x,t)
+    n, dt = 2^6, 2^(-4)
+    CH.run(n=n, dt=dt, vtkdirname=vtkdirname, ode_method="BE", u_ex=u_ex)
+end
+
+
+# @time main()

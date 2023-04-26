@@ -286,16 +286,22 @@ function main_convergence()
     u_ex(x,t::Real) = sin(t)*(x[1]^2 + x[2]^2 - 1 )^3*sin(x[1])*cos(x[2])
     u_ex(t::Real) = x -> u_ex(x,t)
 
-    dts = [2^-2,    2^-3,   2^-4,   2^-5]
-    ns = [2^4,      2^5,    2^6,    2^7]
-    @time convergence_analysis( ns=ns, dts=dts,
-                               main_dirname=main_dirname, u_ex=u_ex, problem="NLCH", ode_method="CN",
-                               spatial=false, dt_const=2^-4, transient=true, n_const=2^5, diagonal=true)
+    dts = [2^-3, 2^-4, 2^-5, 2^-6, 2^-7, 2^-8]
+    ns = [2^4, 2^5, 2^6, 2^7, 2^8, 2^9]
 
+    @time convergence_analysis( ns=ns, dts=dts,
+                               main_dirname=main_dirname, u_ex=u_ex, problem="CH", ode_method="BE",
+                               spatial=true, dt_const=2^-7, transient=true, n_const=2^8, diagonal=true)
+    @time convergence_analysis( ns=ns, dts=dts,
+                               main_dirname=main_dirname, u_ex=u_ex, problem="CH", ode_method="CN",
+                               spatial=true, dt_const=2^-7, transient=true, n_const=2^8, diagonal=true)
     # @time convergence_analysis( ns=ns, dts=dts,
-    #                            main_dirname=main_dirname, u_ex=u_ex, problem="CH", ode_method="BE",
-    #                            spatial=true, dt_const=2^-4, transient=false, n_const=2^8, diagonal=false)
+    #                            main_dirname=main_dirname, u_ex=u_ex, problem="NLCH", ode_method="BE",
+    #                            spatial=true, dt_const=2^-7, transient=true, n_const=2^8, diagonal=true)
+    # @time convergence_analysis( ns=ns, dts=dts,
+    #                            main_dirname=main_dirname, u_ex=u_ex, problem="NLCH", ode_method="CN",
+    #                            spatial=true, dt_const=2^-7, transient=true, n_const=2^8, diagonal=true)
 
 end
 
-main_convergence()
+@time main_convergence()
