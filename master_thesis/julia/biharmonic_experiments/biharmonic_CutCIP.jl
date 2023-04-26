@@ -24,25 +24,7 @@ module Solver
         return u_ex, f, ∇u_ex, ∇Δu_ex
     end
 
-    @with_kw struct Config
-        exact_sol
-        circle
-    end
-
     @with_kw struct Solution
-        Ω
-        Ω_act
-        Fg
-
-        Γ
-        Λ
-
-        model
-        h::Real
-
-        u
-        uh
-        e
         el2
         eh1
         eh_energy
@@ -50,27 +32,12 @@ module Solver
         ndof
     end
 
-    function generate_vtk(; sol::Solution, dirname::String)
-        println("Generating vtk's in ", dirname)
-        mkpath(dirname)
 
-        # Write out models and computational domains for inspection
-        writevtk(sol.model,   dirname*"/model")
-        writevtk(sol.Ω,         dirname*"/Omega")
-        writevtk(sol.Ω_act,     dirname*"/Omega_act")
-        writevtk(sol.Λ,         dirname*"/Lambda")
-        writevtk(sol.Γ,         dirname*"/Gamma")
-        writevtk(sol.Fg,        dirname*"/Fg")
-        writevtk(sol.Λ,         dirname*"/jumps",        cellfields=["jump_u"=>jump(sol.uh)])
-        writevtk(sol.Ω,         dirname*"/omega",        cellfields=["uh"=>sol.uh])
-        writevtk(sol.Ω,         dirname*"/error",        cellfields=["e"=>sol.e])
-        writevtk(sol.Ω,         dirname*"/manufatured",  cellfields=["u"=>sol.u])
-    end
+    function run(; n, u_ex, dirname)
 
-
-    function run(;order, n, solver_config, vtkdirname=nothing)
-
-        u_ex, f, ∇u_ex, ∇Δu_ex = solver_config.exact_sol
+        order = 2
+        println("sim order ", order, " n ", n)
+        u_ex, f, ∇u_ex, ∇Δu_ex = man_sol(u_ex)
 
         # Background model
         L = 1.11
@@ -117,7 +84,7 @@ module Solver
         n_Fg = get_normal_vector(Fg)
 
         # Define weak form
-        γ = 10
+        γ = 10*(order*(order - 1)/2)
 
         # Ghost penalty parameter
         # γg0 = γ
@@ -156,7 +123,7 @@ module Solver
                )
 
         # Define of ghost penalties
-        if order == 2
+        if order >= 2
             # g(u,v) = h^(-2)*(∫( (γg0/h)*jump(u)*jump(v)) * dFg +
             #                   ∫( (γg1*h)*jump(n_Fg⋅∇(u))*jump(n_Fg⋅∇(v)) ) * dFg +
             #                   ∫( (γg2*h^3)*jump_nn(u,n_Fg)*jump_nn(v,n_Fg) ) * dFg)
@@ -176,41 +143,45 @@ module Solver
         ndof = size(A)[1]
         cond_number = ( 1/sqrt(ndof) )*cond(A,Inf)
 
-        e = u_ex - uh
+        u_inter = interpolate(u_ex, V) # remove?
+        e = u_inter - uh
         el2 = sqrt(sum( ∫(e*e)dΩ ))
 
         # TODO: Add α into ∫(e⊙e)*dΩ
-        eh_energy = sqrt(sum( ∫(e⊙e)*dΩ + ∫( ∇∇(e)⊙∇∇(e) )*dΩ
+        eh_energy = sqrt(sum( ∫(e⊙e)dΩ + ∫( ∇∇(e)⊙∇∇(e) )dΩ
                       + ( γ/h ) * ∫(jump(∇(e)⋅n_Λ) ⊙ jump(∇(e)⋅n_Λ))dΛ
                       + ( h/γ ) * ∫(mean_nn(e,n_Λ) ⊙ mean_nn(e,n_Λ))dΛ
                       + ( γ/h ) * ∫((∇(e)⋅n_Γ) ⊙ (∇(e)⋅n_Γ))dΓ
                       + ( h/γ ) * ∫(( n_Γ ⋅ ∇∇(e)⋅ n_Γ ) ⊙ ( n_Γ ⋅ ∇∇(e)⋅ n_Γ ))dΓ
                      ))
 
-        eh1 = sqrt(sum( ∫( e⊙e + ∇(e)⊙∇(e) )*dΩ ))
+        eh1 = sqrt(sum( ∫( e⊙e + ∇(e)⊙∇(e) )dΩ ))
 
-        u_inter = interpolate(u_ex, V) # remove?
+        vtkdirname =dirname*"/order_"*string( order )*"_n_"*string(n)
+        mkpath(vtkdirname)
+        # dirname = vtkdirname * "order_" * string(order) * "_n_" * string(n)
 
 
-        sol = Solution(  model=bgmodel, Ω_act=Ω_act, Fg=Fg, Ω=Ω, Γ=Γ, Λ=Λ, h=h,
-                        u=u_inter, uh=uh, e=e, el2=el2, eh1=eh1, eh_energy=eh_energy,
+        # Write out models and computational domains for inspection
+        writevtk(bgmodel,   vtkdirname*"/model")
+        writevtk(Ω,         vtkdirname*"/Omega")
+        writevtk(Ω_act,     vtkdirname*"/Omega_act")
+        writevtk(Λ,         vtkdirname*"/Lambda")
+        writevtk(Γ,         vtkdirname*"/Gamma")
+        writevtk(Fg,        vtkdirname*"/Fg")
+        writevtk(Λ,         vtkdirname*"/jumps",      cellfields=["jump_u"=>jump(uh)])
+        writevtk(Ω,         vtkdirname*"/sol",        cellfields=["e"=>e, "uh"=>uh, "u"=>u_inter])
+
+        sol = Solution( el2=el2, eh1=eh1, eh_energy=eh_energy,
                         cond_number=cond_number, ndof=ndof)
-
-        if ( vtkdirname!=nothing)
-            dirname =vtkdirname*"/order_"*string(order)*"_n_"*string(n)
-            mkpath(dirname)
-
-            generate_vtk(sol=sol, dirname=dirname)
-        end
-
         return sol
     end
 
 end # module
 
 
-function generate_figures(;ns, el2s, eh1s, ehs_energy, cond_numbers, ndofs, order::Integer, dirname::String)
-    filename = dirname*"/conv_order_"*string(order)
+function generate_figures(;ns, el2s, eh1s, ehs_energy, cond_numbers, ndofs, dirname::String)
+    filename = dirname*"/conv"
 
     hs = 1 .// ns
     # hs_str =  latexify.(hs)
@@ -262,35 +233,26 @@ function generate_figures(;ns, el2s, eh1s, ehs_energy, cond_numbers, ndofs, orde
     Plots.savefig(p, filename*"_plot.tex")
 end
 
-function convergence_analysis(; orders, ns, dirname, solver_config, write_vtks=true)
-    println("Run convergence",)
+function convergence_analysis(;  ns, dirname, u_ex)
 
-    for order in orders
+    el2s = Float64[]
+    eh1s = Float64[]
+    ehs_energy = Float64[]
+    cond_numbers = Float64[]
+    ndofs = Float64[]
 
-        el2s = Float64[]
-        eh1s = Float64[]
-        ehs_energy = Float64[]
-        cond_numbers = Float64[]
-        ndofs = Float64[]
-        println("Run convergence tests: order = "*string(order))
+    for n in ns
 
-        for n in ns
+        sol = Solver.run( n=n, u_ex=u_ex, dirname=dirname)
 
-            if (write_vtks)
-                sol = Solver.run(order=order, n=n, solver_config=solver_config, vtkdirname=dirname)
-            else
-                sol = Solver.run(order=order, solver_config, n=n)
-            end
-
-            push!(el2s, sol.el2)
-            push!(eh1s, sol.eh1)
-            push!(ehs_energy, sol.eh_energy)
-            push!(cond_numbers, sol.cond_number)
-            push!(ndofs, sol.ndof)
-        end
-        generate_figures(ns=ns, el2s=el2s, eh1s=eh1s, ehs_energy=ehs_energy,
-                         cond_numbers=cond_numbers, order=order, ndofs=ndofs, dirname=dirname)
+        push!(el2s, sol.el2)
+        push!(eh1s, sol.eh1)
+        push!(ehs_energy, sol.eh_energy)
+        push!(cond_numbers, sol.cond_number)
+        push!(ndofs, sol.ndof)
     end
+    generate_figures(ns=ns, el2s=el2s, eh1s=eh1s, ehs_energy=ehs_energy,
+                     cond_numbers=cond_numbers, ndofs=ndofs, dirname=dirname)
 end
 
 
@@ -303,16 +265,13 @@ function main()
     # u_ex(x) = 100*sin(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
     # u_ex(x) = 100*cos(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
     exact_sol = Solver.man_sol(u_ex)
-    circle = true
-    solver_config = Solver.Config(exact_sol, circle)
 
     resultdir= "figures/biharmonic_CutCIP/"*string(Dates.now())
     println(resultdir)
     mkpath(resultdir)
 
-    orders = [2]
-    ns = [2^2, 2^3, 2^4, 2^5, 2^6, 2^7, 2^8]
-    @time convergence_analysis( orders=orders, ns=ns, solver_config=solver_config, dirname=dirname)
+    ns = [2^2, 2^3, 2^4, 2^5, 2^6, 2^7]
+    @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex,)
 end
 
 
