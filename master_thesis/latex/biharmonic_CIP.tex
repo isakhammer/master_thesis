@@ -25,6 +25,27 @@ $. The functions $g_{1},g_{2}: \Omega  \to \mathbb{R}$ are denoted as boundary c
 \subsection{  Weak form biharmonic equation in $H^{4}\left( \Omega  \right) $}%
 \label{sub:continious_weak_form_of_biharmonic_equation}
 
+
+\begin{figure}
+  \centering
+  \begin{tikzpicture}
+    % Draw x-axis
+    \draw[->, thick] (0,0) -- (4,0) node[right] {$x$};
+    % Draw y-axis
+    \draw[->, thick] (0,0) -- (0,3) node[above] {$y$};
+
+    % Draw nodes at center, A, B, and C with arbitrary y-values
+    \foreach \x/\y in {0/1.0, 1/1.7, 2/2.5, 3/1.2} {
+      \fill (\x,\y) circle (2pt);
+    }
+
+    % Draw linear interpolation between points
+    \draw[blue, thick] (0,1.0) -- (1,1.7) -- (2,2.5) -- (3,1.2);
+  \end{tikzpicture}
+  \caption{ Illustration of $C^{0}$ continuous elements using $P^{1}$.}
+  \label{fig:xyplot_quadrant_nodes_linear_interpolation}
+\end{figure}
+
 The goal is to find a useful full weak formulation of \eqref{eq:bi_problem}. Now, let the solution space be on the form,
 \begin{equation*}
 V = \left\{ v \in H^2( \Omega  ) : \partial _{n} v = g_{1}    \text{ on }
