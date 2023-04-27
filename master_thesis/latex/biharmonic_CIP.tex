@@ -45,7 +45,7 @@ $. The functions $g_{1},g_{2}: \Omega  \to \mathbb{R}$ are denoted as boundary c
       \draw[blue, thick] (0,2.5) -- (1,1.7) -- (2,2.5) -- (3,1.2);
 
       \draw[red, thick] (0,2.5) .. controls (0.5,0.5) and (0.5,3) .. (1,1.7) .. controls (1.5,0) and (1.5,6) .. (2,2.5) .. controls (2.5,1) and (2.5,3.5) .. (3,1.2);
-      \node at (1,0.5) [above] {$\jump{ u } = 0$};
+      \node at (1,0.5) [above] {$\jump{ u_{h} } = 0$};
 
       \draw (3.2,2.8) rectangle (4.8,3.8); % Legend box
       \draw[blue, thick] (3.4,3.5) -- (3.9,3.5); % Blue line for u_h
@@ -81,7 +81,7 @@ $. The functions $g_{1},g_{2}: \Omega  \to \mathbb{R}$ are denoted as boundary c
       \draw[blue, thick, dotted] (1,1.9) -- (1,1.3);
       \draw[blue, thick, dotted] (2,3.4) -- (2,2.5);
 
-      \node at (1,0.5) [above] {$\jump{ u } \neq 0$};
+      \node at (1,0.5) [above] {$\jump{ u_{h} } \neq 0$};
 
       \draw[red, thick] (0,2.5) .. controls (0.5,0.5) and (0.5,3) .. (1,1.7) .. controls (1.5,0) and (1.5,6) .. (2,2.5) .. controls (2.5,1) and (2.5,3.5) .. (3,1.2);
 
@@ -96,6 +96,78 @@ $. The functions $g_{1},g_{2}: \Omega  \to \mathbb{R}$ are denoted as boundary c
     \label{fig:DG_P1_ements}
   \end{minipage}
 \end{figure}
+
+\begin{figure}
+  \centering
+  \begin{minipage}[b]{0.45\textwidth}
+    \centering
+    \begin{tikzpicture}
+        % Draw x-axis
+        \draw[->, thick] (0,0) -- (4,0) node[right] {$x$};
+        % Draw y-axis
+        \draw[->, thick] (0,0) -- (0,3) node[above] {$y$};
+
+        % Draw nodes at center, A, B, and C with arbitrary y-values
+        \foreach \x/\y in {0/2.5, 1/1.7, 2/2.5, 3/1.2} {
+            \fill (\x,\y) circle (2pt); % Filled nodes with y-values
+            \fill (\x,0) circle (2pt); % Filled circles on x-axis
+        }
+
+        % Exact solution
+        \draw[red, thick] (0,2.5) .. controls (0.5,0.5) and (0.5,3) .. (1,1.7) .. controls (1.5,0) and (1.5,6) .. (2,2.5) .. controls (2.5,1) and (2.5,3.5) .. (3,1.2);
+        \node at (1,0.6) [above] {$\jump{ \partial _{n} u_{h} } = 0$};
+        \node at (1,0.7) [below] {$\jump{ u_{h} }   = 0$};
+
+        % Second
+        \draw[blue, thick] (0,2.5) .. controls (0.5,1.7) and (0.5,1.7) .. (1,1.7) .. controls (1.5,1.7) and (1.5,2.5) .. (2,2.5) .. controls (2.5,2.5) and (2.5,1.2) .. (3,1.2);
+
+        \draw (3.2,2.8) rectangle (4.8,3.8); % Legend box
+        \draw[blue, thick] (3.4,3.5) -- (3.9,3.5); % Blue line for u_h
+        \draw[red, thick] (3.4,3.1) -- (3.9,3.1); % Red line for u
+        \node[anchor=west] at (4.0,3.5) {$u_h$}; % Label for u_h
+        \node[anchor=west] at (4.0,3.1) {$u$}; % Label for u
+
+    \end{tikzpicture}
+    \caption{Illustration of globally $C^{1}$ continuous elements using $P^{2}$ elements.}
+    \label{fig:C1_P2_ements}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.45\textwidth}
+    \centering
+    \begin{tikzpicture}
+        % Draw x-axis
+        \draw[->, thick] (0,0) -- (4,0) node[right] {$x$};
+        % Draw y-axis
+        \draw[->, thick] (0,0) -- (0,3) node[above] {$y$};
+
+        % Draw nodes at center, A, B, and C with arbitrary y-values
+        \foreach \x/\y in {0/2.5, 1/1.7, 2/2.5, 3/1.2} {
+            \fill (\x,\y) circle (2pt); % Filled nodes with y-values
+            \fill (\x,0) circle (2pt); % Filled circles on x-axis
+        }
+
+        % Exact solution
+        \draw[red, thick] (0,2.5) .. controls (0.5,0.5) and (0.5,3) .. (1,1.7) .. controls (1.5,0) and (1.5,6) .. (2,2.5) .. controls (2.5,1) and (2.5,3.5) .. (3,1.2);
+        \node at (1,0.6) [above] {$\jump{ \partial _{n} u_{h} } \neq 0$};
+        \node at (1,0.7) [below] {$\jump{ u_{h} }   = 0$};
+
+        % Second
+        \draw[blue, thick] (0,2.5) .. controls (0.5,1.6) and (0.5,1.2) .. (1,1.7) .. controls (1.5,5.0) and (1.5,2.2) .. (2,2.5) .. controls (2.8,1.8) and (2.5,1.8) .. (3,1.2);
+
+        \draw (3.2,2.8) rectangle (4.8,3.8); % Legend box
+        \draw[blue, thick] (3.4,3.5) -- (3.9,3.5); % Blue line for u_h
+        \draw[red, thick] (3.4,3.1) -- (3.9,3.1); % Red line for u
+        \node[anchor=west] at (4.0,3.5) {$u_h$}; % Label for u_h
+        \node[anchor=west] at (4.0,3.1) {$u$}; % Label for u
+
+    \end{tikzpicture}
+    \caption{Illustration of $C^{0}$ continuous elements and locally $C^1$ using $P^{2}$.}
+    \label{fig:C0_P2_ements}
+  \end{minipage}
+\end{figure}
+
+
+\todo[inline]{ Question? Why do we not use complete DG for biharmonic? }
 
 The goal is to find a useful full weak formulation of \eqref{eq:bi_problem}. Now, let the solution space be on the form,
 \begin{equation*}
