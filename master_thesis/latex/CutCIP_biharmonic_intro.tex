@@ -152,6 +152,10 @@ A crucial advantage of CutFEM is its ability to handle unfitted meshes, as illus
 
 In contrast to the unfitted mesh in Figure \ref{fig:domain_unfitted_mesh}, Figure \ref{fig:domain_fitted_mesh} shows examples of fitted meshes, where the mesh conforms to the domain boundary. However, generating such meshes for complex geometries can be cumbersome and time-consuming. CutFEM offers a more flexible approach, enabling us to work with standard meshes and focus on the PDEs' discretization and the imposition of boundary conditions.
 
+For the CutFEM formulation we impose the Neumann boundary condition similarly to the Nitsche's method \cite{nitsche1971variationsprinzip}.
+
+
+
 Mixed formulation of the biharmonic problem has been discussed here \cite{cai2023nitsche,burman2020cut}.
 
 
