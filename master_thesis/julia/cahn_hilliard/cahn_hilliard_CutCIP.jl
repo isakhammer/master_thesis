@@ -38,10 +38,7 @@ module CH
 
 
     function run(;n::Number, dt::Number,
-            vtkdirname::String, ode_method::String="BE", u_ex::Function=nothing)
-        if u_ex != nothing
-            u_ex, f, ∇u_ex, ∇Δu_ex = man_sol(u_ex)
-        end
+            vtkdirname::String, ode_method::String="BE", u_ex::Union{Function, Nothing}=nothing)
 
         order=2
 
@@ -115,9 +112,13 @@ module CH
                  + ∫((γ/h)⋅jump(∇(u)⋅n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ + ∫((γ/h)⋅ ∇(u)⊙n_Γ⋅∇(v)⊙n_Γ )dΓ
                 )
 
-        # Define linear form
+
+        u_ex, f, ∇u_ex, ∇Δu_ex = man_sol(u_ex)
+
         g_1(t) = ∇u_ex(t)⋅n_Γ
         g_2(t) = ∇Δu_ex(t)⋅n_Γ
+
+
         b(t,v) = (∫( f(t)*v ) * dΩ
                   +  ∫(-(g_2(t)⋅v))dΓ
                   + ∫(g_1(t)⊙(-(n_Γ⋅∇∇(v)⋅n_Γ) + (γ/h)*∇(v)⋅n_Γ)) * dΓ
@@ -137,7 +138,7 @@ module CH
         m(t, u, v) = ∫( α* u⋅v )dΩ
 
         # Alternative 1 (linear)
-        op1 = TransientAffineFEOperator(m,A,b,U,V)
+        # op1 = TransientAffineFEOperator(m,A,b,U,V)
 
         # Alternative 2 (general form)
         res(t,u,v) = A(t,u,v) + m(t, ∂t(u),v) - b(t,v)
@@ -146,7 +147,7 @@ module CH
         op2 = TransientFEOperator(res,jac,jac_t,U,V)
 
         # Alternative 3 (Algorithmic differential)
-        op3 = TransientFEOperator(res, U, V) # Does not work
+        # op3 = TransientFEOperator(res, U, V) # Does not work
 
         # Intalization of method
         op = op2
@@ -179,14 +180,13 @@ module CH
 
         U_h_t = solve(solver, op, U_0, t_0, T)
 
+        solname = vtkdirname*"/sol_dt_$dt"*"_n_$n"
         ts = Float64[]
         el2_ts = Float64[]
         eh1_ts = Float64[]
         eh_energy_ts = Float64[]
 
-        solname = vtkdirname*"/sol_dt_$dt"*"_n_$n"
-        mkpath(solname)
-        println("\ndt = ", string(dt), ", n = "*string(n))
+        println("Convergence simulation: dt = $dt, n = $n")
         createpvd(solname*".pvd") do pvd
             for (U_h, t) in U_h_t
                 e = u_ex(t) - U_h
@@ -195,11 +195,11 @@ module CH
                 eh1_t = sqrt(sum( ∫( e*e + ∇(e)⋅∇(e) )*dΩ ))
 
                 eh_energy = sqrt(sum( ∫(e⊙e)*dΩ + ∫( ∇∇(e)⊙∇∇(e) )*dΩ
-                              + ( γ/h ) * ∫(jump(∇(e)⋅n_Λ) ⊙ jump(∇(e)⋅n_Λ))dΛ
-                              + ( h/γ ) * ∫(mean_nn(e,n_Λ) ⊙ mean_nn(e,n_Λ))dΛ
-                              + ( γ/h ) * ∫((∇(e)⋅n_Γ) ⊙ (∇(e)⋅n_Γ))dΓ
-                              + ( h/γ ) * ∫(( n_Γ ⋅ ∇∇(e)⋅ n_Γ ) ⊙ ( n_Γ ⋅ ∇∇(e)⋅ n_Γ ))dΓ
-                             ))
+                                     + ( γ/h ) * ∫(jump(∇(e)⋅n_Λ) ⊙ jump(∇(e)⋅n_Λ))dΛ
+                                     + ( h/γ ) * ∫(mean_nn(e,n_Λ) ⊙ mean_nn(e,n_Λ))dΛ
+                                     + ( γ/h ) * ∫((∇(e)⋅n_Γ) ⊙ (∇(e)⋅n_Γ))dΓ
+                                     + ( h/γ ) * ∫(( n_Γ ⋅ ∇∇(e)⋅ n_Γ ) ⊙ ( n_Γ ⋅ ∇∇(e)⋅ n_Γ ))dΓ
+                                    ))
                 push!( ts, t)
                 push!( el2_ts, el2_t )
                 push!( eh1_ts, eh1_t )
@@ -221,3 +221,15 @@ module CH
     end
 end # Solver
 
+function main()
+    vtkdirname= "figures/cahn_hilliard_CutCIP/test_"*string(Dates.now())
+    println(vtkdirname)
+    mkpath(vtkdirname)
+    u_ex(x,t::Real) = sin(t)*(x[1]^2 + x[2]^2 - 1 )^3*sin(x[1])*cos(x[2])
+    u_ex(t::Real) = x -> u_ex(x,t)
+    n, dt = 2^6, 2^(-4)
+    CH.run(n=n, dt=dt, vtkdirname=vtkdirname, ode_method="BE", u_ex=u_ex)
+end
+
+
+# @time main()
