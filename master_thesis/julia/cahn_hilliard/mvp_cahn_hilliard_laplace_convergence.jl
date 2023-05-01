@@ -10,17 +10,17 @@ module Solver
     using Gridap
     using Gridap.Algebra
 
-    ε = 1/100
+    # ε = 1/100
+    ε = 1
 
     function run(τ, n)
         ## Cahn-hilliard
-        ε = 1/100
-        # ε = 1
         # Gibb's potential
-        ψ(u) = u*(1-u^2)
-        u_ex(x, t::Real) = cos(x[1])*cos(x[2])*exp(-4*t*ε^2)
+        # ψ(u) = u*(1-u^2)
+        # u_ex(x, t::Real) = cos(x[1])*cos(x[2])*exp(-4*t*ε^2)
+        u_ex(x, t::Real) = cos(x[1])*cos(x[2])*sin(4*t)
         u_ex(t) = x -> u_ex(x,t)
-        f_ex(x, t::Real) = 0
+        f(t) = x ->  ∂t(u_ex)(x,t) + Δ(Δ(u_ex(t)))(x)
 
         ##
         L=2π
@@ -58,7 +58,7 @@ module Solver
                                     + ∫(-Δ(v)⊙∇(u)⋅n_Γ - Δ(u)⊙∇(v)⋅n_Γ + (γ/h)⋅ ∇(u)⊙n_Γ⋅∇(v)⊙n_Γ )dΓ
                                    )
 
-        # l(u, v) = ∫(τ*f*v + u*v)*dΩ
+        # l(u, v) = ∫(τ*f(t)*v + u*v)*dΩ
         l(u, v) = ∫(u*v)*dΩ
         l(u) = v -> l(u,v)
 
