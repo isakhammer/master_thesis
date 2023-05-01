@@ -1,0 +1,48 @@
+\documentclass[aspectratio=169]{beamer}
+\usepackage[english]{babel}
+\usepackage{booktabs,listings}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\usetheme[slogan=english,mathfont=serif]{NTNU}
+
+\newcommand{\mean}[1]{\left\{\!\!\left\{#1\right\}\!\!\right\}}
+\newcommand{\jump}[1]{\left[\!\!\left[ #1 \right]\!\!\right]}
+\newcommand{\abs}[1]{\left\lvert #1 \right\rvert}
+
+	\title[Your Short Title]{Introduction to \\ Cut Finite Element Method}
+	\subtitle{And why this is potentially a great technology for solving complex PDE problems.}
+	\author{Isak Hammer}
+	\date{\today}
+
+\begin{document}
+	\maketitle
+
+	\include{introduction}
+	\begin{frame}{Contents}
+        \textbf{Plan for today}
+        \begin{enumerate}
+        \item Crash course in basic FEM - 10 min
+        \item Introduction to CutFEM - 10 min
+        \end{enumerate}
+
+        \begin{block}{My goal is to give you a taste of modern finite element methods!}
+
+    \end{block}
+
+	\end{frame}
+	% \include{FEM}
+	\include{cutFEM}
+
+
+    % \begin{frame}{Example block}
+
+    %     \begin{block}{Example}
+    %         Rather than freely writing text in the frame, the use of blocks (such as this) is recommended.
+    %         \begin{enumerate}
+    %             \item https://www.overleaf.com/learn/latex/beamer
+    %         \end{enumerate}
+    %     \end{block}
+    % \end{frame}
+
+    \end{document}
