@@ -4,7 +4,7 @@ using Gridap.Algebra
 using GridapEmbedded
 
 ## Cahn-hilliard
-ε = 1/30
+ε = 1/20
 # ε = 1
 # Gibb's potential
 ψ(u) = mean(u)*(1-mean(u)*mean(u))
@@ -16,8 +16,8 @@ u_ex(t) = x -> u_ex(x,t)
 f_ex(x, t::Real) = 0
 
 ##
-L=2π
-n = 64
+L=1.11
+n = 2^7
 h = L/n
 # domain2D = (0, L, 0, L)
 # partition2D = (n, n)
@@ -27,7 +27,11 @@ pmin = Point(-L, -L)
 pmax = Point(L, L)
 partition = (n,n)
 bgmodel = CartesianDiscreteModel(pmin, pmax, partition)
+
 resultdir = "cahn-hilliard-results/"
+if isdir(resultdir)
+    rm(resultdir, force=true, recursive=true)
+end
 mkpath(resultdir)
 writevtk(bgmodel, joinpath(resultdir,"model"))
 
@@ -77,7 +81,6 @@ end
 
 # M+ dt A
 γ = 1.5*order*( order+1)
-τ = ε^2/100
 a_CIP(u,v) = ∫(u*v)*dΩ + τ*ε^2*( ∫(Δ(v)⊙Δ(u))dΩ
             + ∫(-mean(Δ(v))⊙jump(∇(u)⋅n_Λ) - mean(Δ(u))⊙jump(∇(v)⋅n_Λ) + (γ/h)⋅jump(∇(u)⋅n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ
             + ∫(-Δ(v)⊙∇(u)⋅n_Γ - Δ(u)⊙∇(v)⋅n_Γ + (γ/h)⋅ ∇(u)⊙n_Γ⋅∇(v)⊙n_Γ )dΓ
@@ -100,10 +103,13 @@ l(u) = v -> l(u,v)
 
 createpvd(resultdir*"CutFEM-ch-solution") do pvd
 
+    τ = ε^2/10^13
+
     ## time loop
     t0 = 0.0
-    T = 1000*τ
-    Nt_max = convert(Int64, ceil((T - t0)/τ))
+    # T = 1000*τ
+    # Nt_max = convert(Int64, ceil((T - t0)/τ))
+    T = 10^-12
     t = t0
 
     # Initial data
@@ -115,7 +121,7 @@ createpvd(resultdir*"CutFEM-ch-solution") do pvd
     println("========================================")
     Nt = 1
     t += τ
-    println("Solving CutFEM Cahn-Hilliard with t0 = $t0, T = $T and time step τ = $τ with Nt_max = $Nt_max timesteps")
+    println("Solving CutFEM Cahn-Hilliard with t0 = $t0, T = $T and time step τ = $τ")
     println("----------------------------------------")
 
     ## Set up linear algebra system
@@ -129,20 +135,24 @@ createpvd(resultdir*"CutFEM-ch-solution") do pvd
     cache = solve!(u_dof_vals, lu, op)
     uh = FEFunction(U, u_dof_vals)
 
-    pvd[t] = createvtk(Ω, resultdir*"ch-solution_$t"*".vtu",cellfields=["uh"=>uh, "u_ex"=>u_ex(t)])
+    pvd[t] = createvtk(Ω, resultdir*"CutFEM-ch-solution_$t"*".vtu",cellfields=["uh"=>uh, "u_ex"=>u_ex(t)])
 
     # Remaining while loop
     while t < T
         Nt += 1
         t += τ
-        println("Solving Cahn-Hilliard for t = $t, step $(Nt)/$(Nt_max)")
+        # println("Solving Cahn-Hilliard for t = $t, step $(Nt)/$(Nt_max) and timestep $τ ")
+        println("Solving Cahn-Hilliard for t = $t of T=$T, step $(Nt) and timestep $τ ")
         println("----------------------------------------")
+        if Nt%50==0
+            τ *=2
+        end
         b = assemble_vector(l(uh), V)
         u_dof_vals = get_free_dof_values(uh)
         op = AffineOperator(A, b)
         cache = solve!(u_dof_vals, lu, op, cache, false)
         uh = FEFunction(U, u_dof_vals)
 
-        pvd[t] = createvtk(Ω, resultdir*"ch-solution_$t"*".vtu",cellfields=["uh"=>uh, "u_ex"=>u_ex(t)])
+        pvd[t] = createvtk(Ω, resultdir*"CutFEM-ch-solution_$t"*".vtu",cellfields=["uh"=>uh, "u_ex"=>u_ex(t)])
     end
 end
