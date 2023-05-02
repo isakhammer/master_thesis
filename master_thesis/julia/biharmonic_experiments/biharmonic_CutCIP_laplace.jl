@@ -272,7 +272,7 @@ function main()
     u_ex(x) = (x[1]^2 + x[2]^2  - 1)^2*cos(2π*x[1])*cos(2π*x[2])
     # u_ex(x) = (x[1]^2 + x[2]^2  - 1)^2
 
-    resultdir= "figures/biharmonic_CutCIP/"*string(Dates.now())
+    resultdir= "figures/biharmonic_laplace_CutCIP/"*string(Dates.now())
     println(resultdir)
     mkpath(resultdir)
 

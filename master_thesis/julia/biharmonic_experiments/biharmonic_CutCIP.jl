@@ -269,7 +269,6 @@ function main()
     # Good examples
     u_ex(x) = (x[1]^2 + x[2]^2  - 1)^2*sin(2π*x[1])*cos(2π*x[2])
     # u_ex(x) = (x[1]^2 + x[2]^2  - 1)^2
-    exact_sol = Solver.man_sol(u_ex)
 
     resultdir= "figures/biharmonic_CutCIP/"*string(Dates.now())
     println(resultdir)
@@ -278,7 +277,7 @@ function main()
     ns = [2^2, 2^3, 2^4, 2^5, 2^6, 2^7]
     # ns = [2^2, 2^3, 2^4, 2^5, 2^6]
 
-    @time convergence_analysis( order=4, ns=ns,  dirname=resultdir, u_ex=u_ex,)
+    @time convergence_analysis( order=2, ns=ns,  dirname=resultdir, u_ex=u_ex,)
 end
 
 
