@@ -57,7 +57,7 @@ where $f(s)=F^{\prime}(s)$ and $F(s)=\frac{1}{4}\left(s^2-1\right)^2$ and $\Omeg
 
 \begin{block}{Challenges}
     \begin{enumerate}
-        \item Highly nonlinear and stiff. Often the physics require $\varepsilon \ll 1$.
+        \item Highly nonlinear and stiff. Often practical applications require $\varepsilon \ll 1$.
         \item 4th order system.
         \item Conservation of mass and the Neumann conditions conditions.
     \end{enumerate}
@@ -65,12 +65,25 @@ where $f(s)=F^{\prime}(s)$ and $F(s)=\frac{1}{4}\left(s^2-1\right)^2$ and $\Omeg
 
 \end{frame}
 
+\begin{frame}
+    \begin{block}{Why Finite element method}
+        \begin{itemize}
+            \item Can utilize the domain because of its generalizations on domains
+            \item Can easily handle several polynomial basis
+            \item Very nice formulations
+        \end{itemize}
+    \end{block}
+
+    \begin{block}{Challenges}
+            \item May be difficult to handle higher order problems
+    \end{block}
+
+\end{frame}
 
 
 \begin{frame}
-\frametitle{Why CutFEM is Well-Suited for the Cahn-Hilliard Equation}
 
-\begin{block}{Cut Finite Element Method (CutFEM)}
+\begin{block}{Unfitted mesh vs fitted mesh}
     CutFEM is a numerical method for solving partial differential equations (PDEs) using an unfitted mesh.
 
 \begin{figure}
@@ -132,10 +145,13 @@ where $f(s)=F^{\prime}(s)$ and $F(s)=\frac{1}{4}\left(s^2-1\right)^2$ and $\Omeg
 
         \end{tikzpicture}
     \end{minipage}
-\caption{Examples fitted mesh and a unfitted mesh for a circle.}
+
+
+\caption{Mesh comparison: unfitted mesh (left) adheres to domain and boundary, while fitted mesh (right) employs a triangular mesh for polygonal approximation of the circular domain.}
 \label{fig:domain_mesh}
 \end{figure}
 
 \end{block}
 
 \end{frame}
+
