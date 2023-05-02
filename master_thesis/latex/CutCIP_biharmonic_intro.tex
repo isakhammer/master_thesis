@@ -19,20 +19,21 @@
         \begin{tikzpicture}[scale=0.80]
             \draw[fill=blue!30] (0.1, 0.1) circle (1.5cm);
             % Background mesh
-            \foreach \i in {-2.5, -2, ..., 2.5} {
+            \foreach \i in {-2.5, -1.8, ..., 2.5} {
                 \draw[line width=0.1pt, shift={(-2.5,\i)}] (0,0) -- (5,0);
                 \draw[line width=0.1pt, shift={(\i,-2.5)}] (0,0) -- (0,5);
             }
             % Labels
             \node[below right] at (0.4,0.5) {$\Omega $};
             \node[below right] at (-1.5,1.5) {$\Gamma $};
+            \draw[blue, thick] (-2.5, -2.5) rectangle (2.5, 2.5);
         \end{tikzpicture}
     \end{minipage}
     \hfill
     % Second TikZ picture
     \begin{minipage}{0.45\textwidth}
         \centering
-        \begin{tikzpicture}
+        \begin{tikzpicture}[scale=0.80]
             % FIGURE OF UNFITTED MESH
             % Boundary points
             \foreach \i in {0, 45, ..., 315} {
@@ -45,30 +46,25 @@
             \coordinate (interior-4) at (0, -0.75);
 
             % Create a cycle connecting all the boundary points
-            \fill[red!30] (boundary-0) -- (boundary-45) -- (boundary-90) -- (boundary-135) -- (boundary-180) -- (boundary-225) -- (boundary-270) -- (boundary-315) -- cycle;
+            \fill[blue!30] (boundary-0) -- (boundary-45) -- (boundary-90) -- (boundary-135) -- (boundary-180) -- (boundary-225) -- (boundary-270) -- (boundary-315) -- cycle;
 
-            \foreach \i in {0, 45, ..., 315} {
-                \fill[black] (\i:1.5cm) circle (2pt);
-            }
-
-            \fill[black] (interior-1) circle (2pt);
-            \fill[black] (interior-2) circle (2pt);
-            \fill[black] (interior-3) circle (2pt);
-            \fill[black] (interior-4) circle (2pt);
+            % Labels
+            \node[below right] at (0.4,0.5) {$\Omega $};
+            \node[below right] at (-1.5,1.5) {$\Gamma $};
 
             % Triangulation (manually specified)
-            \draw (boundary-0) -- (boundary-45) -- (interior-1) -- cycle;
-            \draw (boundary-45) -- (boundary-90) -- (interior-3) -- cycle;
-            \draw (boundary-90) -- (boundary-135) -- (interior-3) -- cycle;
-            \draw (boundary-135) -- (boundary-180) -- (interior-2) -- cycle;
-            \draw (boundary-180) -- (boundary-225) -- (interior-2) -- cycle;
-            \draw (boundary-225) -- (boundary-270) -- (interior-4) -- cycle;
-            \draw (boundary-270) -- (boundary-315) -- (interior-4) -- cycle;
-            \draw (boundary-315) -- (boundary-0) -- (interior-1) -- cycle;
+            \draw[line width=0.1pt] (boundary-0) -- (boundary-45) -- (interior-1) -- cycle;
+            \draw[line width=0.1pt] (boundary-45) -- (boundary-90) -- (interior-3) -- cycle;
+            \draw[line width=0.1pt] (boundary-90) -- (boundary-135) -- (interior-3) -- cycle;
+            \draw[line width=0.1pt] (boundary-135) -- (boundary-180) -- (interior-2) -- cycle;
+            \draw[line width=0.1pt] (boundary-180) -- (boundary-225) -- (interior-2) -- cycle;
+            \draw[line width=0.1pt] (boundary-225) -- (boundary-270) -- (interior-4) -- cycle;
+            \draw[line width=0.1pt] (boundary-270) -- (boundary-315) -- (interior-4) -- cycle;
+            \draw[line width=0.1pt] (boundary-315) -- (boundary-0) -- (interior-1) -- cycle;
 
             % Triangulation between interior points
-            \draw (interior-1) -- (interior-2) -- (interior-3) -- cycle;
-            \draw (interior-1) -- (interior-2) -- (interior-4) -- cycle;
+            \draw[line width=0.1pt] (interior-1) -- (interior-2) -- (interior-3) -- cycle;
+            \draw[line width=0.1pt] (interior-1) -- (interior-2) -- (interior-4) -- cycle;
 
             \draw[blue, thick] (-2.5, -2.5) rectangle (2.5, 2.5);
 
