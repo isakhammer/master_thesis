@@ -3,6 +3,7 @@
 \usepackage{booktabs,listings}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
+\usepackage[style=numeric,backend=bibtex,sorting=none]{biblatex}
 
 \usetheme[slogan=english,mathfont=serif]{NTNU}
 
@@ -10,27 +11,30 @@
 \newcommand{\jump}[1]{\left[\!\!\left[ #1 \right]\!\!\right]}
 \newcommand{\abs}[1]{\left\lvert #1 \right\rvert}
 
-	\title[Your Short Title]{ Cut Finite Element Method for the Cahn-Hilliard Equation}
-	\subtitle{And why it is quite cool stuff}
-	\author{Isak Hammer}
-	\date{\today}
+\addbibresource{bibliography.bib}
+
+\title[Your Short Title]{Cut Finite Element Method for the Cahn-Hilliard Equation}
+\subtitle{And why it is quite cool stuff}
+\author{Isak Hammer}
+\date{\today}
 
 \begin{document}
-	\maketitle
+\maketitle
 
-	\include{introduction}
-	% \include{FEM}
-	\include{cutFEM}
+\include{introduction}
+% \include{FEM}
+% \include{cutFEM}
 
+% \printbibliography
 
-    % \begin{frame}{Example block}
+% \begin{frame}{Example block}
 
-    %     \begin{block}{Example}
-    %         Rather than freely writing text in the frame, the use of blocks (such as this) is recommended.
-    %         \begin{enumerate}
-    %             \item https://www.overleaf.com/learn/latex/beamer
-    %         \end{enumerate}
-    %     \end{block}
-    % \end{frame}
+%     \begin{block}{Example}
+%         Rather than freely writing text in the frame, the use of blocks (such as this) is recommended.
+%         \begin{enumerate}
+%             \item https://www.overleaf.com/learn/latex/beamer
+%         \end{enumerate}
+%     \end{block}
+% \end{frame}
 
-    \end{document}
+\end{document}
