@@ -5,40 +5,27 @@
 
 \begin{figure}[h!]
 \centering
-\begin{tikzpicture}[scale=0.80]
-    \draw[fill=blue!30] (0.1, 0.1) circle (1.5cm);
-    % Background mesh
-    \foreach \i in {-2.5, -2, ..., 2.5} {
-        \draw[line width=0.1pt, shift={(-2.5,\i)}] (0,0) -- (5,0);
-        \draw[line width=0.1pt, shift={(\i,-2.5)}] (0,0) -- (0,5);
-    }
-    % Labels
-    \node[below right] at (0.4,0.5) {$\Omega $};
-    \node[below right] at (-1.5,1.5) {$\Gamma $};
-\end{tikzpicture}
-\caption{An illustration of a unfitted mesh.}
-\label{fig:domain_unfitted_mesh}
 \end{figure}
+
+
+
+
 
 \begin{figure}
     \centering
     % First TikZ picture
     \begin{minipage}{0.45\textwidth}
         \centering
-        \begin{tikzpicture}
-            % Circle
-            % \draw (0, 0) circle (1.5cm);
-
-            % Fitted mesh (crude triangular mesh)
-            \foreach \i in {0, 30, ..., 330} {
-                \draw[fill=red!30] (0, 0) -- (\i:1.5cm) -- (\i+30:1.5cm) -- cycle;
+        \begin{tikzpicture}[scale=0.80]
+            \draw[fill=blue!30] (0.1, 0.1) circle (1.5cm);
+            % Background mesh
+            \foreach \i in {-2.5, -2, ..., 2.5} {
+                \draw[line width=0.1pt, shift={(-2.5,\i)}] (0,0) -- (5,0);
+                \draw[line width=0.1pt, shift={(\i,-2.5)}] (0,0) -- (0,5);
             }
-
-            % Mesh nodes
-            \foreach \i in {0, 30, ..., 330} {
-                \fill[black] (\i:1.5cm) circle (2pt);
-            }
-            \fill[black] (0, 0) circle (2pt);
+            % Labels
+            \node[below right] at (0.4,0.5) {$\Omega $};
+            \node[below right] at (-1.5,1.5) {$\Gamma $};
         \end{tikzpicture}
     \end{minipage}
     \hfill
@@ -46,6 +33,7 @@
     \begin{minipage}{0.45\textwidth}
         \centering
         \begin{tikzpicture}
+            % FIGURE OF UNFITTED MESH
             % Boundary points
             \foreach \i in {0, 45, ..., 315} {
                 \coordinate (boundary-\i) at (\i:1.5cm);
@@ -54,6 +42,7 @@
             \coordinate (interior-1) at (0.75, 0);
             \coordinate (interior-2) at (-0.75, 0);
             \coordinate (interior-3) at (0, 0.75);
+            \coordinate (interior-4) at (0, -0.75);
 
             % Create a cycle connecting all the boundary points
             \fill[red!30] (boundary-0) -- (boundary-45) -- (boundary-90) -- (boundary-135) -- (boundary-180) -- (boundary-225) -- (boundary-270) -- (boundary-315) -- cycle;
@@ -62,11 +51,10 @@
                 \fill[black] (\i:1.5cm) circle (2pt);
             }
 
-
             \fill[black] (interior-1) circle (2pt);
             \fill[black] (interior-2) circle (2pt);
             \fill[black] (interior-3) circle (2pt);
-
+            \fill[black] (interior-4) circle (2pt);
 
             % Triangulation (manually specified)
             \draw (boundary-0) -- (boundary-45) -- (interior-1) -- cycle;
@@ -74,64 +62,29 @@
             \draw (boundary-90) -- (boundary-135) -- (interior-3) -- cycle;
             \draw (boundary-135) -- (boundary-180) -- (interior-2) -- cycle;
             \draw (boundary-180) -- (boundary-225) -- (interior-2) -- cycle;
-            \draw (boundary-225) -- (boundary-270) -- (interior-2) -- cycle;
-            \draw (boundary-270) -- (boundary-315) -- (interior-1) -- cycle;
+            \draw (boundary-225) -- (boundary-270) -- (interior-4) -- cycle;
+            \draw (boundary-270) -- (boundary-315) -- (interior-4) -- cycle;
             \draw (boundary-315) -- (boundary-0) -- (interior-1) -- cycle;
 
             % Triangulation between interior points
             \draw (interior-1) -- (interior-2) -- (interior-3) -- cycle;
+            \draw (interior-1) -- (interior-2) -- (interior-4) -- cycle;
+
+            \draw[blue, thick] (-2.5, -2.5) rectangle (2.5, 2.5);
+
         \end{tikzpicture}
     \end{minipage}
-\caption{Examples of different triangulations for a fitted mesh for a circle.}
-\label{fig:domain_fitted_mesh}
+\caption{Examples of different triangulations for a fitted mesh and a unfitted mesh for a circle.}
+\label{fig:domain_mesh}
 \end{figure}
 
 
-\begin{tikzpicture}
-    % Boundary points
-    \foreach \i in {0, 45, ..., 315} {
-        \coordinate (boundary-\i) at (\i:1.5cm);
-    }
-    % Interior points
-    \coordinate (interior-1) at (0.75, 0);
-    \coordinate (interior-2) at (-0.75, 0);
-    \coordinate (interior-3) at (0, 0.75);
-    \coordinate (interior-4) at (0, -0.75);
-
-    % Create a cycle connecting all the boundary points
-    \fill[red!30] (boundary-0) -- (boundary-45) -- (boundary-90) -- (boundary-135) -- (boundary-180) -- (boundary-225) -- (boundary-270) -- (boundary-315) -- cycle;
-
-    \foreach \i in {0, 45, ..., 315} {
-        \fill[black] (\i:1.5cm) circle (2pt);
-    }
-
-    \fill[black] (interior-1) circle (2pt);
-    \fill[black] (interior-2) circle (2pt);
-    \fill[black] (interior-3) circle (2pt);
-    \fill[black] (interior-4) circle (2pt);
-
-    % Triangulation (manually specified)
-    \draw (boundary-0) -- (boundary-45) -- (interior-1) -- cycle;
-    \draw (boundary-45) -- (boundary-90) -- (interior-3) -- cycle;
-    \draw (boundary-90) -- (boundary-135) -- (interior-3) -- cycle;
-    \draw (boundary-135) -- (boundary-180) -- (interior-2) -- cycle;
-    \draw (boundary-180) -- (boundary-225) -- (interior-2) -- cycle;
-    \draw (boundary-225) -- (boundary-270) -- (interior-4) -- cycle;
-    \draw (boundary-270) -- (boundary-315) -- (interior-4) -- cycle;
-    \draw (boundary-315) -- (boundary-0) -- (interior-1) -- cycle;
-
-    % Triangulation between interior points
-    \draw (interior-1) -- (interior-2) -- (interior-3) -- cycle;
-    \draw (interior-1) -- (interior-2) -- (interior-4) -- cycle;
-
-
-\end{tikzpicture}
 \todo[inline]{ Fix triangulation. }
 
 
 A crucial advantage of CutFEM is its ability to handle unfitted meshes, as illustrated in Figure 1, where the mesh does not conform to the domain boundary $\Gamma$. The biharmonic equation, which is a fourth-order PDE, arises in numerous applications, such as thin plate bending, and is relevant to the Cahn-Hilliard problem. The Cahn-Hilliard equation describes phase separation in binary alloys and is characterized by a fourth-order term, making it a suitable candidate for the application of CutFEM.
 
-In contrast to the unfitted mesh in Figure \ref{fig:domain_unfitted_mesh}, Figure \ref{fig:domain_fitted_mesh} shows examples of fitted meshes, where the mesh conforms to the domain boundary. However, generating such meshes for complex geometries can be cumbersome and time-consuming. CutFEM offers a more flexible approach, enabling us to work with standard meshes and focus on the PDEs' discretization and the imposition of boundary conditions.
+In contrast to the unfitted mesh in Figure \ref{fig:domain_mesh}, Figure \ref{fig:domain_mesh} shows examples of fitted meshes, where the mesh conforms to the domain boundary. However, generating such meshes for complex geometries can be cumbersome and time-consuming. CutFEM offers a more flexible approach, enabling us to work with standard meshes and focus on the PDEs' discretization and the imposition of boundary conditions.
 
 Continuous interior penalty was first used for parabolic and elliptic problems \cite{douglas2008interior, arnold1982interior}. It was later applied to biharmonic problems.
 
