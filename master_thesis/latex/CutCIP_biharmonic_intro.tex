@@ -16,24 +16,24 @@
     % First TikZ picture
     \begin{minipage}{0.45\textwidth}
         \centering
-        \begin{tikzpicture}[scale=0.80]
-            \draw[fill=blue!30] (0.1, 0.1) circle (1.5cm);
+        \begin{tikzpicture}
+            \draw[fill=blue!30] (0.2, 0.2) circle (1.5cm);
             % Background mesh
-            \foreach \i in {-2.5, -1.8, ..., 2.5} {
+            \foreach \i in {-2.5, -1.5, ..., 2.5} {
                 \draw[line width=0.1pt, shift={(-2.5,\i)}] (0,0) -- (5,0);
                 \draw[line width=0.1pt, shift={(\i,-2.5)}] (0,0) -- (0,5);
             }
             % Labels
             \node[below right] at (0.4,0.5) {$\Omega $};
             \node[below right] at (-1.5,1.5) {$\Gamma $};
-            \draw[blue, thick] (-2.5, -2.5) rectangle (2.5, 2.5);
+            % \draw[blue, thick] (-2.5, -2.5) rectangle (2.5, 2.5);
         \end{tikzpicture}
     \end{minipage}
     \hfill
     % Second TikZ picture
     \begin{minipage}{0.45\textwidth}
         \centering
-        \begin{tikzpicture}[scale=0.80]
+        \begin{tikzpicture}
             % FIGURE OF UNFITTED MESH
             % Boundary points
             \foreach \i in {0, 45, ..., 315} {
@@ -49,8 +49,8 @@
             \fill[blue!30] (boundary-0) -- (boundary-45) -- (boundary-90) -- (boundary-135) -- (boundary-180) -- (boundary-225) -- (boundary-270) -- (boundary-315) -- cycle;
 
             % Labels
-            \node[below right] at (0.4,0.5) {$\Omega $};
-            \node[below right] at (-1.5,1.5) {$\Gamma $};
+            \node[below right] at (0.4,0.7) {$\Omega $};
+            \node[below right] at (-1.5,1.7) {$\Gamma $};
 
             % Triangulation (manually specified)
             \draw[line width=0.1pt] (boundary-0) -- (boundary-45) -- (interior-1) -- cycle;
@@ -66,7 +66,7 @@
             \draw[line width=0.1pt] (interior-1) -- (interior-2) -- (interior-3) -- cycle;
             \draw[line width=0.1pt] (interior-1) -- (interior-2) -- (interior-4) -- cycle;
 
-            \draw[blue, thick] (-2.5, -2.5) rectangle (2.5, 2.5);
+            % \draw[blue, thick] (-2.5, -2.5) rectangle (2.5, 2.5);
 
         \end{tikzpicture}
     \end{minipage}
