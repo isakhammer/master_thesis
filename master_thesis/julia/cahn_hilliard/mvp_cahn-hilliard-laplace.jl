@@ -44,7 +44,7 @@ n_Γ = get_normal_vector(Γ)
 
 # M+ dt A
 γ = 1.5*order*( order+1)
-τ = ε^2/100
+τ = ε^2/10
 a(u,v) = ∫(u*v)*dΩ + τ*ε^2*( ∫(Δ(v)⊙Δ(u))dΩ
             + ∫(-mean(Δ(v))⊙jump(∇(u)⋅n_Λ) - mean(Δ(u))⊙jump(∇(v)⋅n_Λ) + (γ/h)⋅jump(∇(u)⋅n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ
             + ∫(-Δ(v)⊙∇(u)⋅n_Γ - Δ(u)⊙∇(v)⋅n_Γ + (γ/h)⋅ ∇(u)⊙n_Γ⋅∇(v)⊙n_Γ )dΓ
@@ -62,9 +62,13 @@ createpvd(resultdir*"ch-solution") do pvd
 
     ## time loop
     t0 = 0.0
-    T = 1000*τ
+    T = 10000*τ
     Nt_max = convert(Int64, ceil((T - t0)/τ))
+    Nt = 0
     t = t0
+
+    # Maximal number of Picard iterations
+    kmax = 1
 
     # Initial data
     u_dof_vals = (rand(Float64, num_free_dofs(U)) .-0.5)*2.0
@@ -73,36 +77,30 @@ createpvd(resultdir*"ch-solution") do pvd
     pvd[t] = createvtk(Ω, resultdir*"ch-solution_$t"*".vtu",cellfields=["uh"=>uh, "u_ex"=>u_ex(t)])
 
     println("========================================")
-    Nt = 1
-    t += τ
     println("Solving Cahn-Hilliard with t0 = $t0, T = $T and time step τ = $τ with Nt_max = $Nt_max timesteps")
-    println("----------------------------------------")
+    println("========================================")
 
     ## Set up linear algebra system
     A = assemble_matrix(a, U, V)
     lu = LUSolver()
+    cache = nothing
 
-    # Solve for first time step
-    b = assemble_vector(l(uh), V)
-    op = AffineOperator(A, b)
-    u_dof_vals = get_free_dof_values(uh)
-    cache = solve!(u_dof_vals, lu, op)
-    uh = FEFunction(U, u_dof_vals)
-
-    pvd[t] = createvtk(Ω, resultdir*"ch-solution_$t"*".vtu",cellfields=["uh"=>uh, "u_ex"=>u_ex(t)])
-
-    # Remaining while loop
+    # Time loop
     while t < T
         Nt += 1
         t += τ
-        println("Solving Cahn-Hilliard for t = $t, step $(Nt)/$(Nt_max)")
         println("----------------------------------------")
-        b = assemble_vector(l(uh), V)
-        u_dof_vals = get_free_dof_values(uh)
-        op = AffineOperator(A, b)
-        cache = solve!(u_dof_vals, lu, op, cache, false)
-        uh = FEFunction(U, u_dof_vals)
-
+        println("Solving Cahn-Hilliard for t = $t, step $(Nt)/$(Nt_max)")
+        k = 0
+        while k < kmax
+            k += 1
+            println("Iteration k = $k")
+            b = assemble_vector(l(uh), V)
+            op = AffineOperator(A, b)
+            cache = solve!(u_dof_vals, lu, op, cache, isnothing(cache))
+            uh = FEFunction(U, u_dof_vals)
+        end
+        println("----------------------------------------")
         pvd[t] = createvtk(Ω, resultdir*"ch-solution_$t"*".vtu",cellfields=["uh"=>uh, "u_ex"=>u_ex(t)])
     end
 end 
