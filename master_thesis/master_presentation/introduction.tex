@@ -314,8 +314,9 @@ Here is $\Delta ^2 = \Delta \left( \Delta \right) $ the biharmonic operator. The
 \end{frame}
 
 \begin{frame}
+\frametitle{ $C^0$ Interior penalty method (CIP) }
 
-\begin{block}{ $C^0$ Interior penalty method. }
+\begin{block}{}
 The discretized numerical problem is to solve $w \in V_{h}$ such that
 \begin{equation*}
 \label{eq:CP_A_F}
@@ -342,6 +343,7 @@ Which is inspired from Brenner2012 \footnotemark
 \end{frame}
 
 \begin{frame}
+\frametitle{Cut Finite Element Method (CutFEM)}
 
 \begin{block}{Unfitted mesh vs fitted mesh}
     CutFEM is a numerical method for solving partial differential equations (PDEs) using an unfitted mesh.
@@ -416,13 +418,132 @@ Which is inspired from Brenner2012 \footnotemark
 
 
 \begin{frame}
+\frametitle{Cut Finite Element Method (CutFEM)}
 
-\begin{block}{CutFEM}
+\begin{block}{}
     \begin{itemize}
-        \item Elegant method to solve the numerical anomalies when integrating cut cells.
-        \item Utilizing so-called ghost penalties to ensure well-posedness of the numerical scheme.
+        \item  Can handle smooth boundaries $\Gamma \in C^2 $, very complex domains and moving domains efficiently.
+        \item Utilizing so-called ghost penalties to ensure well-posedness on the so-called cut cells.
+        \item Diving the computational domains into background, active and interior mesh.
     \end{itemize}
 \end{block}
 
-
 \end{frame}
+
+\begin{frame}
+    \frametitle{Cut Finite Element method}
+Background Mesh
+    \begin{block}{}
+        \begin{tikzpicture}[scale=1.0]
+
+            \fill[yellow!30] (-2.5,2.5) -- (2.5,2.5) -- (2.5,-2.5) -- (-2.5,-2.5) -- cycle;
+
+            \draw (0.1, 0.1) circle (1.5cm);
+            % Background mesh
+            \foreach \i in {-2.5, -2, ..., 2.5} {
+                \draw[line width=0.1pt, shift={(-2.5,\i)}] (0,0) -- (5,0);
+                \draw[line width=0.1pt, shift={(\i,-2.5)}] (0,0) -- (0,5);
+            }
+
+
+            % Labels
+            \node[below right] at (2.5,2.5) {$\widetilde{\mathcal{T}}_{h}$};
+        \end{tikzpicture}
+    \end{block}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Cut Finite Element method}
+    Active Mesh
+    \begin{block}{}
+        \begin{tikzpicture}[scale=1.0]
+
+            % POTENTIAL ACTIVE MESH
+            \fill[orange!30] (2,2) -- (2,-1.5) --(-1.5,-1.5) -- (-1.5,2) -- cycle;
+
+            % ELEMENTS WITH NO INTERSECTION
+            % lower left
+            \fill[white] (-1.5,-1.5) rectangle (-1.0,-1.0);
+            \fill[white] (-1.5,2.0) rectangle (-1.0,1.5);
+            \fill[white] (-1.0,2.0) rectangle (-0.5,1.5);
+            \fill[white] (2,2) rectangle (1.5,1.5);
+            \fill[white] (1.5,2) rectangle (1.0,1.5);
+            \fill[white] (2,1.5) rectangle (1.5,1.0);
+            \fill[white] (1.5,-1) rectangle (2,-1.5);
+            \fill[white] (1.5,-0.5) rectangle (2,-1.0);
+
+            % CUT ELEMENTS
+            \fill[orange!30] (-0.5,2.0) rectangle (1.0,1.5);
+            \fill[orange!30] (-1.5,1.5) rectangle (0.0,1.0);
+            \fill[orange!30] (0.5,1.5) rectangle (1.5,1.0);
+            \fill[orange!30] (-1.5,1.0) rectangle (-1.0,-1.0);
+            \fill[orange!30] (-1.0,-0.5) rectangle (-0.5,-1.5);
+            \fill[orange!30] (-0.5,-1.5) rectangle (1.5,-1.0);
+            \fill[orange!30] (1.5,-1) rectangle (1.0,-0.0);
+            \fill[orange!30] (1.5,-0.5) rectangle (2.0,1.0);
+            \fill[orange!30] (1.0,0.5) rectangle (1.5,1.0);
+
+            \draw (0.1, 0.1) circle (1.5cm);
+            % Background mesh
+            \foreach \i in {-2.5, -2, ..., 2.5} {
+                \draw[line width=0.1pt, shift={(-2.5,\i)}] (0,0) -- (5,0);
+                \draw[line width=0.1pt, shift={(\i,-2.5)}] (0,0) -- (0,5);
+            }
+
+
+            % Labels
+            % \node[below right] at (2.5,2.5) {$\widetilde{\mathcal{T}}_{h}$};
+            % \node[below right] at (0.4,0.5) {$\mathcal{T}_{int}$};
+            \node[below right] at (-0.5,0.5) {$\mathcal{T}_{h }$};
+        \end{tikzpicture}
+    \end{block}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Cut Finite Element method}
+    Interior mesh and Cut Cells
+    \begin{block}{}
+        \begin{tikzpicture}[scale=1]
+
+            % POTENTIAL ACTIVE MESH
+            \fill[blue!30] (2,2) -- (2,-1.5) --(-1.5,-1.5) -- (-1.5,2) -- cycle;
+
+            % ELEMENTS WITH NO INTERSECTION
+            % lower left
+            \fill[white] (-1.5,-1.5) rectangle (-1.0,-1.0);
+            \fill[white] (-1.5,2.0) rectangle (-1.0,1.5);
+            \fill[white] (-1.0,2.0) rectangle (-0.5,1.5);
+            \fill[white] (2,2) rectangle (1.5,1.5);
+            \fill[white] (1.5,2) rectangle (1.0,1.5);
+            \fill[white] (2,1.5) rectangle (1.5,1.0);
+            \fill[white] (1.5,-1) rectangle (2,-1.5);
+            \fill[white] (1.5,-0.5) rectangle (2,-1.0);
+
+            % CUT ELEMENTS
+            \fill[green!40] (-0.5,2.0) rectangle (1.0,1.5);
+            \fill[green!40] (-1.5,1.5) rectangle (0.0,1.0);
+            \fill[green!40] (0.5,1.5) rectangle (1.5,1.0);
+            \fill[green!40] (-1.5,1.0) rectangle (-1.0,-1.0);
+            \fill[green!40] (-1.0,-0.5) rectangle (-0.5,-1.5);
+            \fill[green!40] (-0.5,-1.5) rectangle (1.5,-1.0);
+            \fill[green!40] (1.5,-1) rectangle (1.0,-0.0);
+            \fill[green!40] (1.5,-0.5) rectangle (2.0,1.0);
+            \fill[green!40] (1.0,0.5) rectangle (1.5,1.0);
+
+            \draw (0.1, 0.1) circle (1.5cm);
+            % Background mesh
+            \foreach \i in {-2.5, -2, ..., 2.5} {
+                \draw[line width=0.1pt, shift={(-2.5,\i)}] (0,0) -- (5,0);
+                \draw[line width=0.1pt, shift={(\i,-2.5)}] (0,0) -- (0,5);
+            }
+
+
+            % Labels
+            \node[below right] at (0.4,0.5) {$\mathcal{T}_{int}$};
+            \node[below right] at (-1.5,0.5) {$\mathcal{T}_{\Gamma }$};
+        \end{tikzpicture}
+    \end{block}
+\end{frame}
+
+
+
