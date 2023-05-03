@@ -419,7 +419,7 @@ Background Mesh
 \end{frame}
 
 \begin{frame}
-\frametitle{Cut Finite Element Method (CutFEM)}
+\frametitle{Cut Finite Element Method}
 
 A recent and promising numerical technique for PDEs, has gained significant momentum in the past decade \footnotemark[1]\footnotemark[2].
 
@@ -436,26 +436,24 @@ A recent and promising numerical technique for PDEs, has gained significant mome
 \end{frame}
 
 
+\begin{frame}
+\frametitle{ Cut $C^0$ Interior Penalty Method (CutCIP) }
 
+\begin{block}{}
+The discretized numerical problem is to solve $w \in V_{h}$ such that
+\begin{equation*}
+\label{eq:CP_A_F}
+A( w, v )  = a_{h}( w,v) + \textcolor{red}{g_{h}( w,v)}  = l_{h}( v), \quad \forall v \in V_{h}  .
+\end{equation*}
 
-% \begin{frame}
-% \frametitle{ Cut $C^0$ Interior penalty method (CutCIP) }
+Where the additional bilinear term $g_{h}( w,v) : V_{h} \times V_{h} \to  \mathbb{R} $ is the so-called \textbf{ghost penalty}, which does the numerical regularization to ensure stability on cut cells.
 
-% \begin{block}{}
-% The discretized numerical problem is to solve $w \in V_{h}$ such that
-% \begin{equation*}
-% \label{eq:CP_A_F}
-% A( w, v )  = a_{h}( w,v) + \textcolor{red}{g_{h}( w,v)}  = l_{h}( v), \quad \forall v \in V_{h}  .
-% \end{equation*}
+\end{block}
 
-% Where the additional bilinear term $g_{h}( w,v) : V_{h} \times V_{h} \to  \mathbb{R} $ is the so-called \textbf{ghost penalty}, which does the numerical regularization to ensure stability on cut cells.
-
-% \end{block}
-
-% \end{frame}
+\end{frame}
 
 \begin{frame}
-\frametitle{ CutCIP Method}
+\frametitle{ Cut $C^0$ Interior Penalty Method}
 
 My master's thesis is dedicated to demonstrating that the relevant properties remain valid for CutCIP formulation still holds.
 
@@ -482,7 +480,7 @@ My master's thesis is dedicated to demonstrating that the relevant properties re
 
 
 \begin{frame}
-\frametitle{ Cut $C^0$ Interior Penalty Method (CutCIP) Results }
+\frametitle{ Cut $C^0$ Interior Penalty Method Results }
 % \frametitle{Manufactured Solution}
 
 
