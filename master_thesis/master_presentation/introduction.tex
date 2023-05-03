@@ -77,10 +77,134 @@ where $f(s)=F^{\prime}(s)$ and $F(s)=\frac{1}{4}\left(s^2-1\right)^2$ and $\Omeg
 \end{frame}
 
 \begin{frame}
-    \begin{block}{Continuous Interior Penalty (CIP) Method}
+    \begin{block}{Strategy to solve the Cahn-Hilliard problem on smooth domains}
+        \begin{enumerate}
+            \item First find a suitable method to solve an 4th order PDE for polygonal domains.
+            \item Modify the problem formulation to take account for smooth domains.
+            \item Utilize the time integration to handle nonlinearity.
+        \end{enumerate}
     \end{block}
 \end{frame}
 
+\begin{frame}
+    \begin{block}{Strategy to solve the Cahn-Hilliard problem on smooth domains}
+        \begin{enumerate}
+            \item First find a suitable method to solve an 4th order PDE for polygonal domains.
+            \item Modify the problem formulation to take account for smooth domains.
+            \item Utilize the time integration to handle nonlinearity.
+\item \textcolor{red}{Make the time-steps small enough or implement adaptivity time schemes.}
+        \end{enumerate}
+    \end{block}
+\end{frame}
+
+
+\begin{frame}
+\begin{columns}
+\column{0.55\textwidth}
+\begin{block}{The Biharmonic Problem}
+Let $\Omega \subseteq \mathbb{R} ^d$ be a bounded domain with boundary $\Gamma $ . Let the biharmonic problem have the form s.t. $u:\Omega \mapsto \mathbb{R} $,
+\begin{equation}
+\label{eq:bi_problem}
+\begin{split}
+\Delta^2 u + \alpha u & = f( x) \quad \text{in } \Omega, \\
+\partial_{n} u & = g_{1} \quad \text{on } \Gamma , \\
+\partial_{n} \Delta u & = g_{2} \quad \text{on } \Gamma . \\
+\end{split}
+\end{equation}
+Here is $\Delta ^2 = \Delta \left( \Delta \right) $ the biharmonic operator. The functions $g_{1},g_{2}: \Omega \to \mathbb{R}$ are denoted as boundary conditions.
+\end{block}
+
+\column{0.45\textwidth}
+\begin{figure}[htpb!]
+    \centering
+    \begin{tikzpicture}
+        % Circle
+        \draw (0.0,0.0) circle (1.5cm);
+        \fill[blue!30] (0.0,0.0) circle (1.5cm);
+
+        \draw[->, line width=1.0pt] ({1.5*cos(65)}, { 1.5*sin(65) }) -- ({ 2.5*cos(65)  }, { 2.5*sin(65)  }) node[ above left] {$n $};
+        % \draw[->, line width=1.0pt] ({1.5*cos(45)}, { 1.5*sin(45) }) -- ({ 1.5*cos(45) - 1.5*sin(45) }, { 1.5*sin(45) + 1.5*cos(45) }) node[ above right] {$t $};
+
+        % Labels
+        \node[below right] at (0.5,0.5) {$\Omega$};
+        \node[below right] at (-1.5,-1.2) {$\Gamma$};
+    \end{tikzpicture}
+    \caption{ Illustration of the domain $\Omega $, the boundary $\Gamma $ and the normal vector $n$. }
+    \label{fig:domain_construction}
+\end{figure}
+\end{columns}
+
+\end{frame}
+
+\begin{frame}
+\begin{columns}
+\column{0.55\textwidth}
+\begin{block}{The Biharmonic Problem (on a mesh)}
+    Let $\Omega \approx \Omega_{h} = \mathcal{T}_{h}$ be a bounded \textcolor{red}{polygonal} domain with boundary $\Gamma $ . Let the biharmonic problem have the form s.t. $u:\Omega \mapsto \mathbb{R} $,
+\begin{equation}
+\label{eq:bi_problem}
+\begin{split}
+\Delta^2 u + \alpha u & = f( x) \quad \text{in } \Omega, \\
+\partial_{n} u & = g_{1} \quad \text{on } \Gamma , \\
+\partial_{n} \Delta u & = g_{2} \quad \text{on } \Gamma . \\
+\end{split}
+\end{equation}
+Here is $\Delta ^2 = \Delta \left( \Delta \right) $ the biharmonic operator. The functions $g_{1},g_{2}: \Omega_{h} \to \mathbb{R}$ are denoted as boundary conditions.
+\end{block}
+
+\column{0.45\textwidth}
+\begin{figure}[htpb!]
+    \centering
+        \begin{tikzpicture}
+            % FIGURE OF FITTED MESH
+            % Boundary points
+            \foreach \i in {0, 45, ..., 315} {
+                \coordinate (boundary-\i) at (\i:1.5cm);
+            }
+            % Interior points
+            \coordinate (interior-1) at (0.75, 0);
+            \coordinate (interior-2) at (-0.75, 0);
+            \coordinate (interior-3) at (0, 0.75);
+            \coordinate (interior-4) at (0, -0.75);
+
+            % Create a cycle connecting all the boundary points
+            \fill[blue!30] (boundary-0) -- (boundary-45) -- (boundary-90) -- (boundary-135) -- (boundary-180) -- (boundary-225) -- (boundary-270) -- (boundary-315) -- cycle;
+
+            % Labels
+            \node[below right] at (0.4,0.7) {$\Omega $};
+            \node[below right] at (-1.5,1.7) {$\Gamma $};
+
+            % Triangulation (manually specified)
+            \draw[line width=0.1pt] (boundary-0) -- (boundary-45) -- (interior-1) -- cycle;
+            \draw[line width=0.1pt] (boundary-45) -- (boundary-90) -- (interior-3) -- cycle;
+            \draw[line width=0.1pt] (boundary-90) -- (boundary-135) -- (interior-3) -- cycle;
+            \draw[line width=0.1pt] (boundary-135) -- (boundary-180) -- (interior-2) -- cycle;
+            \draw[line width=0.1pt] (boundary-180) -- (boundary-225) -- (interior-2) -- cycle;
+            \draw[line width=0.1pt] (boundary-225) -- (boundary-270) -- (interior-4) -- cycle;
+            \draw[line width=0.1pt] (boundary-270) -- (boundary-315) -- (interior-4) -- cycle;
+            \draw[line width=0.1pt] (boundary-315) -- (boundary-0) -- (interior-1) -- cycle;
+
+            % Triangulation between interior points
+            \draw[line width=0.1pt] (interior-1) -- (interior-2) -- (interior-3) -- cycle;
+            \draw[line width=0.1pt] (interior-1) -- (interior-2) -- (interior-4) -- cycle;
+
+            \draw[->, line width=1.0pt] ({1.4*cos(65)}, { 1.4*sin(65) }) -- ({ 2.4*cos(65)  }, { 2.4*sin(65)  }) node[ above left] {$n $};
+
+        \end{tikzpicture}
+    \caption{ Illustration of the mesh $\Omega_{h} $, the boundary $\Gamma $ and the normal vector $n$. }
+    \label{fig:domain_construction}
+\end{figure}
+\end{columns}
+
+\end{frame}
+
+
+\begin{frame}
+\begin{block}{Continuous interior penalty method}
+    here is penalty
+\end{block}
+
+\end{frame}
 
 \begin{frame}
     \begin{block}{Illustration of an discontinuous polynomial space}
