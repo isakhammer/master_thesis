@@ -341,6 +341,22 @@ Which is inspired from Brenner2012 \footnotemark[1]
 \footnotetext[1]{\fullcite{brenner2012}}
 
 \end{frame}
+\begin{frame}
+    The following results has been shown to hold for the bilinear form.
+
+    \begin{block}{Well-posedness }
+         We say that the discrete bilinear form $a_{h}$ is wellposed on $V_{h}$ if there exists an constant $C > 0 $ s.t. \[
+             \begin{split}
+                 (Coercivity) \quad  a_{h}( v,v) &  \gtrsim  \| v \|_{a_{h} }^{ 2 } \quad  \forall v \in  V_{h} \\
+            (Boundedness) \quad a_{h}( v,w) & \lesssim  \| v \|_{a_{h} }^{  }\| w \|_{a_{h} }^{  } \quad  \forall v,w \in  V_{h}
+             \end{split}
+        \]
+
+    \end{block}
+
+    \begin{block}{Optimal convergence}
+    \end{block}
+\end{frame}
 
 \begin{frame}
 \frametitle{Cut Finite Element Method (CutFEM)}
@@ -578,7 +594,7 @@ Where the additional bilinear term $g_{h}( w,v) : V_{h} \times V_{h} \to  \mathb
     g^{}_{h}( v,w)  := \sum_{j=1}^{k} \gamma _{j} h^{2j-3}_{} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n} w }  ) _{\mathcal{F} _{h}^{g}} \text{ for any } v,w \in V_{h},
     \]
     satisfies the necessarry Assumptions \footnotemark[2].
-    The set $\mathcal{F} _{h}^{g}$ defined as all facets which belongs to cut cells $\mathcal{T} _{\Gamma }$ sharing a node with interior elements $\mathcal{T} _{int }$ .
+    Here is the set $\mathcal{F} _{h}^{g}$ defined as all facets which belongs to cut cells $\mathcal{T} _{\Gamma }$ sharing a node with interior elements $\mathcal{T} _{int }$ .
 
 \end{block}
 
@@ -652,7 +668,6 @@ Where the additional bilinear term $g_{h}( w,v) : V_{h} \times V_{h} \to  \mathb
         \coordinate (C1) at (-3,0);
         \coordinate (C2) at (5.2,-0.5);
         \draw[-, line width=2pt, >=stealth] ($(C2)$) to[bend right] node[midway, yshift=-0.3cm] {$\Gamma $} ($(C1)$);
-
 
         \begin{scope}[shift={(6.0,1.7)}]
             \draw[dotted, line width=1.5pt] (-1.5,0) -- (-1,0);
