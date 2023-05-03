@@ -145,8 +145,8 @@ Here is $\Delta ^2 = \Delta \left( \Delta \right) $ the biharmonic operator. The
 \label{eq:bi_problem}
 \begin{split}
 \Delta^2 u + \alpha u & = f( x) \quad \text{in } \Omega, \\
-\partial_{n} u & = g_{1} \quad \text{on } \Gamma , \\
-\partial_{n} \Delta u & = g_{2} \quad \text{on } \Gamma . \\
+\partial_{n} u & = 0 \quad \text{on } \Gamma , \\
+\partial_{n} \Delta u & = 0 \quad \text{on } \Gamma . \\
 \end{split}
 \end{equation}
 Here is $\Delta ^2 = \Delta \left( \Delta \right) $ the biharmonic operator. The functions $g_{1},g_{2}: \Omega_{h} \to \mathbb{R}$ are denoted as boundary conditions.
@@ -313,7 +313,33 @@ Here is $\Delta ^2 = \Delta \left( \Delta \right) $ the biharmonic operator. The
 \end{block}
 \end{frame}
 
+\begin{frame}
 
+\begin{block}{ $C^0$ Interior penalty method. }
+The discretized numerical problem is to solve $w \in V_{h}$ such that
+\begin{equation*}
+\label{eq:CP_A_F}
+a_{h}( w, v )   = l_{h}( v), \quad \forall v \in V_{h}  .
+\end{equation*}
+where
+
+\begin{equation*}
+\begin{split}
+a_{h} \left( w, v \right)   =&
+    \left( \alpha  w, v \right) _{\Omega }   +  \left( \Delta  w, \Delta v \right) _{\mathcal{T} _{h}} \\
+ & +
+  \left( \mean{  \Delta  w }, \jump{ \partial _{n }v} \right)_{\mathcal{F}_{h}}  +
+ \left( \mean{ \Delta  v }, \jump{ \partial _{n}w }      \right)_{\mathcal{F}_{h}}  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} w}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h}} \\
+ l_{h}( v_{h}) & =  \left( f, v \right) _{\Omega }
+\end{split}
+\end{equation*}
+
+Which is inspired from Brenner2012 \footnotemark
+\end{block}
+
+\footnotetext[1]{\fullcite{brenner2012}}
+
+\end{frame}
 
 \begin{frame}
 
@@ -381,10 +407,22 @@ Here is $\Delta ^2 = \Delta \left( \Delta \right) $ the biharmonic operator. The
     \end{minipage}
 
 
-    \caption{Mesh comparison: unfitted mesh (left) adheres to domain and boundary, while fitted mesh (right) employs a triangular mesh for polygonal approximation of the circular domain.}
+    % \caption{Mesh comparison: unfitted mesh (left) adheres to domain and boundary, while fitted mesh (right) employs a triangular mesh for polygonal approximation of the circular domain.}
     \label{fig:domain_mesh}
     \end{figure}
 \end{block}
 
 \end{frame}
 
+
+\begin{frame}
+
+\begin{block}{CutFEM}
+    \begin{itemize}
+        \item Elegant method to solve the numerical anomalies when integrating cut cells.
+        \item Utilizing so-called ghost penalties to ensure well-posedness of the numerical scheme.
+    \end{itemize}
+\end{block}
+
+
+\end{frame}
