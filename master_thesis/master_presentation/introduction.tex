@@ -842,9 +842,66 @@ This manufactured solution can be used to test the accuracy of numerical methods
 
 \begin{figure}[h!]
     \centering
-    \input{conv_plot}
+    \resizebox{0.6\textwidth}{!}{\input{conv_plot}}
     \caption{The plot presents the $L^2$ and $H^1$ error norms and the error in the energy norm ($\Vert e \Vert_{a_h,*}$).}
     \label{fig:CutFEM_error1}
 \end{figure}
 
+\end{frame}
+
+\begin{frame}
+\frametitle{The Cahn Hilliard Equation}
+    \begin{columns}
+        % Left column
+        \begin{column}{0.5\textwidth}
+            \begin{block}{Recall}
+                The problem has the form $u( x, t): \Omega \times [0,T] \mapsto [-1,1]$ s.t.
+                \[
+                \begin{split}
+                    u_t+\Delta\left(\varepsilon \Delta u-\frac{1}{\varepsilon} f(u)\right)&=0 \quad \text{in } \Omega \\
+                    \partial_n u=\partial_n \Delta u& =0 \quad \text{on } \Gamma  \\
+                    u & =u_0 \quad \text{on } \Omega
+                \end{split}
+                \]
+                where $f(u)$ is a nonlinear function.
+            \end{block}
+        \end{column}
+        % Right column
+        \begin{column}{0.5\textwidth}
+            \begin{block}{Plan forward}
+                \begin{enumerate}
+                    \item We have now a tool to solve the $\Delta ( \Delta u) $ operator
+                    \item Will utilize the time-iteration scheme to solve non-linearity
+                \end{enumerate}
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{The CutCIP Cahn-Hilliard Formulation}
+
+
+Drawing upon the concepts delineated in Feng\footnotemark[1], the most efficient approach to address the nonlinear term is by employing an implicit-explicit (IMEX) scheme.
+
+\begin{block}{IMEX method on the CutCIP formulation}
+    Let $u^{m}_{h} \in V_{h}$ for the timesteps $m=0,1,\ldots,M$. Let $u_{h}^{0} = u_{0}$ be the initial timestep, then is.
+\[
+(\overline{\partial}  _{t} u_{h}^m, v_h ) + \varepsilon A (u_{h}^{m}, v_h )+\frac{1}{\varepsilon} c_h ( u_{h}^{m-1}, v_h)=0 \quad \forall v_h \in V_h^m .
+\]
+Here is $c_{h}( . , .) $ an the nonlinear terms handled in a implicit fashion. The $ \overline{\partial}  _{t}$ operator is simply a finite difference scheme in time-dimension.
+
+\end{block}
+
+\footnotetext[1]{\fullcite{feng2007fully}}
+\end{frame}
+
+\begin{frame}
+\frametitle{The CutCIP Cahn-Hilliard Experiments}
+
+\begin{block}{IMEX method on the CutCIP formulation}
+\end{block}
+
+\footnotetext[1]{\fullcite{feng2007fully}}
 \end{frame}
