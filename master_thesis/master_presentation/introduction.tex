@@ -8,7 +8,7 @@
                 \begin{itemize}
                     \item Isak Hammer, 27 year old, Lofoten
                     \item Graduate student in Industrial Mathematics
-                    \item Research Focus: Analysis and numerical techniques for Partial Differential Equations (PDEs), with a strong emphasis on applications for Finite Element Methods (FEM).
+                    \item Research Focus: Numerical methods for Partial Differential Equations (PDEs).
                 \end{itemize}
             \end{column}
 
@@ -44,7 +44,7 @@
 
 \begin{frame}
     \begin{block}{The Cahn Hilliard Equation}
-        The general Cahn Hilliard Equation  has the form $u( t,x): \Omega \mapsto [-1,1]   $ s.t.
+        The general Cahn Hilliard Equation  has the form $u( x, t): \Omega \times [0,T] \mapsto [-1,1]   $ s.t.
             \[
             \begin{split}
                  u_t+\Delta\left(\varepsilon \Delta u-\frac{1}{\varepsilon} f(u)\right)&=0 \quad \text{in } \Omega_T:=\Omega \times(0, T) \\
@@ -52,7 +52,7 @@
  u & =u_0 \quad \text{on } \Omega \times\{0\}
             \end{split}
             \]
-where $f(s)=F^{\prime}(s)$ and $F(s)=\frac{1}{4}\left(s^2-1\right)^2$ and $\Omega \subset \mathbf{R}^d, d=2,3$, is a bounded domain. $\partial_n$ denotes the normal derivative operator on $\partial \Omega$.
+where $f(s)=F^{\prime}(s)$ and $F(s)=\frac{1}{4}\left(s^2-1\right)^2$ and $\Omega \subset \mathbf{R}^d, d=2,3$, is a bounded domain.
 \end{block}
 
 \begin{block}{Challenges}
@@ -343,6 +343,7 @@ Which is inspired from Brenner2012 \footnotemark[1]
 \end{frame}
 
 \begin{frame}
+    \frametitle{ $C^0$ Interior penalty method (CIP) }
     The following results has been shown to hold for the bilinear form \footnotemark[1].
 
     \begin{block}{Well-posedness}
@@ -353,11 +354,8 @@ Which is inspired from Brenner2012 \footnotemark[1]
              \end{split}
         \]
     \end{block}
-
     \begin{block}{Apriori estimates }
-
-         Let $u$ be the solution to the strong problem with the corresponding discrete solution $u_{h}$ with polynomical order $k\ge 2$ .
-        Then does it exist  $l = \min_{} ( 2, k)  $ s.t.
+        Let $k\ge 2$ be polynomial order. Then does it exist  $l = \min_{} ( 2, k)  $ s.t.
 \[
         \| u - u_{h} \|_{a_{h}  }^{  } \lesssim  h^{l-1} \| u \|_{ H^{l} ( \Omega ) }^{  }
 \]
@@ -803,4 +801,50 @@ My master's thesis is dedicated to demonstrating that the relevant properties re
 
 \begin{frame}
 \frametitle{ Cut $C^0$ Interior penalty method (CutCIP) Results }
+% \frametitle{Manufactured Solution}
+
+
+\begin{block}{Manufactured solution}
+    In the experiments will we only consider polynomial order $k=2$.
+We consider the manufactured solution:
+$$
+u_{ex}(\mathbf{x}) = \left(x_1^2 + x_2^2 - 1\right)^2 \cos(2\pi x_1) \cos(2\pi x_2)
+$$
+where $\mathbf{x}=(x_1,x_2)$ and $\Omega=\{(x_1,x_2): x_1^2 + x_2^2 \le  1\}$.
+This manufactured solution can be used to test the accuracy of numerical methods for solving the above differential equation.
+\end{block}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{ Cut $C^0$ Interior penalty method (CutCIP) Results }
+\resizebox{\textwidth}{!}{
+\begin{tabular}{rrrrrrrrr}
+    \hline\hline
+    \textbf{$n$} & \textbf{$\Vert e \Vert_{L^2}$} & \textbf{EOC} & \textbf{$ \Vert e \Vert_{H^1}$} & \textbf{EOC} & \textbf{$\Vert e \Vert_{ a_h,* }$} & \textbf{EOC} & \textbf{Cond number} & \textbf{ndofs} \\\hline
+    4 & 2.4E+00 &  & 3.3E+00 &  & 6.2E+01 &  & 8.7E+04 & 8.1E+01 \\
+    8 & 3.6E-01 & 2.72 & 1.1E+00 & 1.60 & 3.9E+01 & 0.68 & 5.1E+05 & 2.4E+02 \\
+    16 & 2.2E-02 & 4.06 & 2.5E-01 & 2.12 & 1.4E+01 & 1.51 & 3.7E+06 & 8.3E+02 \\
+    32 & 5.6E-03 & 1.97 & 6.0E-02 & 2.04 & 3.6E+00 & 1.93 & 2.8E+07 & 3.0E+03 \\
+    64 & 1.4E-03 & 2.00 & 1.5E-02 & 2.02 & 9.2E-01 & 1.96 & 2.1E+08 & 1.1E+04 \\
+    128 & 3.5E-04 & 2.00 & 3.7E-03 & 2.01 & 2.4E-01 & 1.94 & 1.7E+09 & 4.3E+04 \\\hline\hline
+  \end{tabular}
+}
+\end{frame}
+
+
+
+
+
+
+\begin{frame}
+\frametitle{ Cut $C^0$ Interior penalty method (CutCIP) Results }
+
+\begin{figure}[h!]
+    \centering
+    \input{conv_plot}
+    \caption{The plot presents the $L^2$ and $H^1$ error norms and the error in the energy norm ($\Vert e \Vert_{a_h,*}$).}
+    \label{fig:CutFEM_error1}
+\end{figure}
+
 \end{frame}

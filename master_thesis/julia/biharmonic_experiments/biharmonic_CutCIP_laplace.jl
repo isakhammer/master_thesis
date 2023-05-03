@@ -230,8 +230,8 @@ function generate_figures(;ns, el2s, eh1s, ehs_energy, cond_numbers, ndofs, dirn
 
     # Save the plot as a .png file using the GR backend
     # Plots.gr()
+    # Plots.savefig(p, filename*"_plot.png")
     Plots.pgfplotsx()
-    Plots.savefig(p, filename*"_plot.png")
     Plots.savefig(p, filename*"_plot.tex")
 end
 
