@@ -342,20 +342,26 @@ Which is inspired from Brenner2012 \footnotemark[1]
 
 \end{frame}
 \begin{frame}
-    The following results has been shown to hold for the bilinear form.
+    The following results has been shown to hold for the bilinear form \footnotemark[1].
 
-    \begin{block}{Well-posedness }
-         We say that the discrete bilinear form $a_{h}$ is wellposed on $V_{h}$ if there exists an constant $C > 0 $ s.t. \[
+    \begin{block}{Well-posedness and Optimal convergence }
+         The discrete bilinear form $a_{h}$ is wellposed on $V_{h}$ if this holds; \[
              \begin{split}
                  (Coercivity) \quad  a_{h}( v,v) &  \gtrsim  \| v \|_{a_{h} }^{ 2 } \quad  \forall v \in  V_{h} \\
             (Boundedness) \quad a_{h}( v,w) & \lesssim  \| v \|_{a_{h} }^{  }\| w \|_{a_{h} }^{  } \quad  \forall v,w \in  V_{h}
              \end{split}
         \]
-
     \end{block}
 
-    \begin{block}{Optimal convergence}
+    \begin{block}{Apriori estimates }
+
+         Let $u$ be the solution to the strong problem with the corresponding discrete solution $u_{h}$ with polynomical order $k\ge 2$ .
+        Then does it exist  $l = \min_{} ( 2, k)  $ s.t.
+\[
+        \| u - u_{h} \|_{a_{h}  }^{  } \lesssim  h^{l-1} \| u \|_{ H^{l} ( \Omega ) }^{  }
+\]
     \end{block}
+\footnotetext[1]{\fullcite{Gu2012}}
 \end{frame}
 
 \begin{frame}
