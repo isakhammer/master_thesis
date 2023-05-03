@@ -47,9 +47,9 @@
         The general Cahn Hilliard Equation  has the form $u( x, t): \Omega \times [0,T] \mapsto [-1,1]   $ s.t.
             \[
             \begin{split}
-                 u_t+\Delta\left(\varepsilon \Delta u-\frac{1}{\varepsilon} f(u)\right)&=0 \quad \text{in } \Omega_T:=\Omega \times(0, T) \\
-\partial_n u=\partial_n \Delta u& =0 \quad \text{on } \partial \Omega_T:=\partial \Omega \times(0, T) \\
- u & =u_0 \quad \text{on } \Omega \times\{0\}
+                 u_t+\Delta\left(\varepsilon \Delta u-\frac{1}{\varepsilon} f(u)\right)&=0 \quad \text{in } \Omega \\
+\partial_n u=\partial_n \Delta u& =0 \quad \text{on } \Gamma  \\
+ u & =u_0 \quad \text{on } \Omega
             \end{split}
             \]
 where $f(s)=F^{\prime}(s)$ and $F(s)=\frac{1}{4}\left(s^2-1\right)^2$ and $\Omega \subset \mathbf{R}^d, d=2,3$, is a bounded domain.
@@ -899,9 +899,19 @@ Here is $c_{h}( . , .) $ an the nonlinear terms handled in a implicit fashion. T
 
 \begin{frame}
 \frametitle{The CutCIP Cahn-Hilliard Experiments}
+Implemented using the Gridap FEM framework written in Julia \footnotemark[1].
 
-\begin{block}{IMEX method on the CutCIP formulation}
+\begin{block}{Simulation parameters}
+    \begin{itemize}
+        \item Physical domain is a circle of radius $R=1$.
+        \item Backgroundmesh with size ($L\times L$ ) for $L=1$ and $n=128$.
+        \item Polynomial order $k=2$ .
+        \item Physical parameter $\varepsilon  = \frac{1}{30}$.
+        \item Time-step $\tau = \varepsilon ^{2} \frac{1}{10} $ for the interval $ 0\le t \le 10^3 \tau $.
+    \end{itemize}
 \end{block}
 
-\footnotetext[1]{\fullcite{feng2007fully}}
+\footnotetext[1]{\fullcite{badia2020gridap}}
+
+
 \end{frame}
