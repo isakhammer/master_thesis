@@ -27,13 +27,13 @@
         % Column 1
         \begin{column}{0.5\textwidth}
             \begin{itemize}
-            \item Thermodynamically modelling of a two-component liquid separation\footnotemark.
-                \item Modelling of so-called lipid rafts in biological membrane dynamics \footnotemark.
+                \item Thermodynamically modelling of a two-component liquid separation\footnotemark[1].
+            \item Modelling of so-called lipid rafts in biological membrane dynamics \footnotemark[2].
             \end{itemize}
         \end{column}
         \begin{column}{0.5\textwidth}
             \begin{itemize}
-                \item Droplet dynamics, i.e., coalescence, breakup and movement by coupling with Navier-Stokes \footnotemark.
+                \item Droplet dynamics, i.e., coalescence, breakup and movement by coupling with Navier-Stokes \footnotemark[3].
             \end{itemize}
         \end{column}
     \end{columns}
@@ -252,7 +252,7 @@ Here is $\Delta ^2 = \Delta \left( \Delta \right) $ the biharmonic operator. The
         \item Let $\jump{ u_{h} } = u_{+} - u_{-} $ be defined as the jumps between elements.
         \item The numerical solution is \textbf{continuous}, i.e. $\jump{ u_{h} }     =0   $
         \item The numerical solution derivative is \textbf{continuous} , i.e. $\jump{ \partial _{n}u_{h} }     =0   $
-        \item Not very flexible and difficult to implement in higher dimensions.\footnotemark
+        \item Not very flexible and difficult to implement in higher dimensions.\footnotemark[1]
     \end{itemize}
 \end{column}
 \footnotetext[1]{\fullcite{kapl2021family}}
@@ -335,7 +335,7 @@ a_{h} \left( w, v \right)   =&
 \end{split}
 \end{equation*}
 
-Which is inspired from Brenner2012 \footnotemark
+Which is inspired from Brenner2012 \footnotemark[1]
 \end{block}
 
 \footnotetext[1]{\fullcite{brenner2012}}
@@ -420,6 +420,8 @@ Which is inspired from Brenner2012 \footnotemark
 \begin{frame}
 \frametitle{Cut Finite Element Method (CutFEM)}
 
+A recent and promising numerical technique for PDEs, has gained significant momentum in the past decade \footnotemark[1]\footnotemark[2].
+
 \begin{block}{}
     \begin{itemize}
         \item  Can handle smooth boundaries $\Gamma \in C^2 $, very complex domains and moving domains efficiently.
@@ -427,6 +429,8 @@ Which is inspired from Brenner2012 \footnotemark
         \item Diving the computational domains into background, active and interior mesh.
     \end{itemize}
 \end{block}
+\footnotetext[1]{\fullcite{burman2015cutfem}}
+\footnotetext[2]{\fullcite{gurkan2019stabilized}}
 
 \end{frame}
 
@@ -547,3 +551,18 @@ Background Mesh
 
 
 
+\begin{frame}
+\frametitle{ Cut $C^0$ Interior penalty method (CutCIP) }
+
+\begin{block}{}
+The discretized numerical problem is to solve $w \in V_{h}$ such that
+\begin{equation*}
+\label{eq:CP_A_F}
+A( w, v )  = a_{h}( w,v) + \textcolor{red}{g_{h}( w,v)}  = l_{h}( v), \quad \forall v \in V_{h}  .
+\end{equation*}
+
+Where the additional bilinear term $g_{h}( w,v) : V_{h} \times V_{h} \to  \mathbb{R} $ is the so-called \textbf{ghost penalty}, which does the numerical regularization.
+
+\end{block}
+
+\end{frame}
