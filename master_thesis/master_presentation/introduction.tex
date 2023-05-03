@@ -567,6 +567,25 @@ Where the additional bilinear term $g_{h}( w,v) : V_{h} \times V_{h} \to  \mathb
 
 \end{frame}
 
+
+
+\begin{frame}
+\frametitle{ Cut $C^0$ Interior penalty method (CutCIP) }
+
+\begin{block}{Face-based ghost penalty}
+    Let $k\ge 2$ be the polynomial order.
+    For any set of positive parameters $\left\{ \gamma _{j} \right\} _{j=1}^{k}$, the ghost penalty defined as \[
+    g^{}_{h}( v,w)  := \sum_{j=1}^{k} \gamma _{j} h^{2j-3}_{} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n} w }  ) _{\mathcal{F} _{h}^{g}} \text{ for any } v,w \in V_{h},
+    \]
+    satisfies the necessarry Assumptions \footnotemark[2].
+    The set $\mathcal{F} _{h}^{g}$ defined as all facets which belongs to cut cells $\mathcal{T} _{\Gamma }$ sharing a node with interior elements $\mathcal{T} _{int }$ .
+
+\end{block}
+
+\footnotetext[2]{\fullcite{gurkan2019stabilized}}
+
+\end{frame}
+
 \begin{frame}
 \frametitle{ Cut $C^0$ Interior penalty method (CutCIP) }
 
@@ -648,9 +667,10 @@ Where the additional bilinear term $g_{h}( w,v) : V_{h} \times V_{h} \to  \mathb
 
 \end{tikzpicture}
 
-\caption{Illustration of $\mathcal{F} _{h}^{g}$ denoted as the dotted lines. The set is defined as all facets which belongs to cut cells $\mathcal{T} _{\Gamma }$ .  }
+\caption{Illustration of $\mathcal{F} _{h}^{g}$ denoted as the dotted lines. The set is defined as all facets which belongs to cut cells $\mathcal{T} _{\Gamma }$ sharing a node with interior elements $\mathcal{T} _{int }$ .  }
 \label{fig:illustration_F_g}
 \end{figure}
 \end{block}
 
 \end{frame}
+
