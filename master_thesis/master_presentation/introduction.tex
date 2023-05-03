@@ -903,8 +903,9 @@ Implemented using the Gridap FEM framework written in Julia \footnotemark[1].
 
 \begin{block}{Simulation parameters}
     \begin{itemize}
-        \item Physical domain is a circle of radius $R=1$.
-        \item Backgroundmesh with size ($L\times L$ ) for $L=1$ and $n=128$.
+        \item Physical domain $\Omega$  is a 4 circles of radius $R=1$ with distance $d=0.999$, i.e. they are touching!
+        \item Inital data is $u_0 = random(-1,1)$ in $\Omega $.
+        \item Backgroundmesh with size ($L\times L$ ) for $L=2$ and $n=128$.
         \item Polynomial order $k=2$ .
         \item Physical parameter $\varepsilon  = \frac{1}{30}$.
         \item Time-step $\tau = \varepsilon ^{2} \frac{1}{10} $ for the interval $ 0\le t \le 10^3 \tau $.
@@ -915,3 +916,73 @@ Implemented using the Gridap FEM framework written in Julia \footnotemark[1].
 
 
 \end{frame}
+
+\begin{frame}
+\frametitle{The CutCIP Cahn-Hilliard Experiments}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{CH-example/0.png}
+    \caption{Iteration 0}
+    \label{fig:your_image_label}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{The CutCIP Cahn-Hilliard Experiments}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{CH-example/1.png}
+    \caption{Iteration 1}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{The CutCIP Cahn-Hilliard Experiments}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{CH-example/10.png}
+    \caption{Iteration 10}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{The CutCIP Cahn-Hilliard Experiments}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{CH-example/50.png}
+    \caption{Iteration 50}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{The CutCIP Cahn-Hilliard Experiments}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{CH-example/200.png}
+    \caption{Iteration 200}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{The CutCIP Cahn-Hilliard Experiments}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{CH-example/1000.png}
+    \caption{Iteration 1000}
+\end{figure}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Further work}
+\begin{enumerate}
+    \item Adaptive time steps.
+    \item Further numerical validation.
+    \item Extend the method to handle moving domains.
+
+\end{enumerate}
+\end{frame}
+
+

@@ -16,8 +16,8 @@ u_ex(t) = x -> u_ex(x,t)
 f_ex(x, t::Real) = 0
 
 ##
-L=1.11
-n = 2^6
+L=2.50
+n = 2^7
 h = L/n
 pmin = Point(-L, -L)
 pmax = Point(L, L)
@@ -29,8 +29,21 @@ mkpath(resultdir)
 writevtk(bgmodel, joinpath(resultdir,"model"))
 
 # Implicit geometry
-R  = 1.0
-geo = disk(R)
+domain = "other"
+if domain=="circle"
+    R  = 1.0
+    geo1 = disk(R)
+elseif domain=="other"
+    geo1 = disk(0.5, x0=Point(0.0,0.0))
+    geo2 = disk(0.5, x0=Point(0.95,0.0))
+    geo3 = disk(0.5, x0=Point(0.95,0.95))
+    geo4 = disk(0.5, x0=Point(0.0,0.95))
+
+    geo = union(geo1,geo2)
+    geo = union(geo,geo3)
+    geo = union(geo,geo4)
+end
+
 
 # Cut the background model
 cutgeo = cut(bgmodel, geo)
@@ -98,7 +111,7 @@ createpvd(resultdir*"ch-solution") do pvd
 
     ## time loop
     t0 = 0.0
-    T = 10000*τ
+    T = 1000*τ
     Nt_max = convert(Int64, ceil((T - t0)/τ))
     Nt = 0
     t = t0
