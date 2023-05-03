@@ -66,18 +66,21 @@ where $f(s)=F^{\prime}(s)$ and $F(s)=\frac{1}{4}\left(s^2-1\right)^2$ and $\Omeg
 \end{frame}
 
 \begin{frame}
-    \begin{block}{Why Finite element method}
-        \begin{itemize}
-            \item Can utilize the domain because of its generalizations on domains
-            \item Can easily handle several polynomial basis
-            \item Very nice formulations
-        \end{itemize}
-    \end{block}
 
-    \begin{block}{Challenges}
-            \item May be difficult to handle higher order problems
+    \begin{block}{Why Finite Element Method (FEM)}
+        \begin{enumerate}
+            \item \textbf{Flexibility:} Weak formulation provides versatility in imposing boundary conditions effectively.
+            \item \textbf{Complex geometries:} FEM can efficiently handle intricate geometries, making it suitable for a wide range of applications.
+            \item \textbf{Polynomial basis:} FEM is built upon polynomial basis functions, offering flexibility, accuracy and smoothness in the solution.
+            \item \textbf{Other: } Elegant mathematical formulation, supports adaptive refinements, easily adaptable to multi-physics problems, among other benefits.
+        \end{enumerate}
     \end{block}
+\end{frame}
 
+\begin{frame}
+
+    \begin{block}{Illustration on the polynomial basis}
+    \end{block}
 \end{frame}
 
 
@@ -147,10 +150,9 @@ where $f(s)=F^{\prime}(s)$ and $F(s)=\frac{1}{4}\left(s^2-1\right)^2$ and $\Omeg
     \end{minipage}
 
 
-\caption{Mesh comparison: unfitted mesh (left) adheres to domain and boundary, while fitted mesh (right) employs a triangular mesh for polygonal approximation of the circular domain.}
-\label{fig:domain_mesh}
-\end{figure}
-
+    \caption{Mesh comparison: unfitted mesh (left) adheres to domain and boundary, while fitted mesh (right) employs a triangular mesh for polygonal approximation of the circular domain.}
+    \label{fig:domain_mesh}
+    \end{figure}
 \end{block}
 
 \end{frame}
