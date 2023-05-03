@@ -59,7 +59,7 @@ where $f(s)=F^{\prime}(s)$ and $F(s)=\frac{1}{4}\left(s^2-1\right)^2$ and $\Omeg
     \begin{enumerate}
         \item Highly nonlinear and stiff. Often practical applications require $\varepsilon \ll 1$.
         \item 4th order system.
-        \item Conservation of mass and the Neumann conditions conditions.
+        % \item Conservation of mass and the Neumann conditions conditions.
     \end{enumerate}
 \end{block}
 
@@ -68,10 +68,10 @@ where $f(s)=F^{\prime}(s)$ and $F(s)=\frac{1}{4}\left(s^2-1\right)^2$ and $\Omeg
 \begin{frame}
     \begin{block}{Why Finite Element Method (FEM)}
         \begin{enumerate}
-            \item \textbf{Flexibility:} Weak formulation provides versatility in imposing boundary conditions effectively.
-            \item \textbf{Complex geometries:} FEM can efficiently handle intricate geometries, making it suitable for a wide range of applications.
-            \item \textbf{Polynomial basis:} FEM is built upon polynomial basis functions, offering flexibility, accuracy and smoothness in the solution.
-            \item \textbf{Other: } Elegant mathematical formulation, supports adaptive refinements, easily adaptable to multi-physics problems, among other benefits.
+            \item \textbf{Robust Mathematical Framework}
+            \item \textbf{Can easily handle Complex Geometries}
+            \item \textbf{High flexibility of Basis functions}
+            \item \textbf{Other: } Supports adaptive refinements, easily adaptable to multi-physics problems ++ .
         \end{enumerate}
     \end{block}
 \end{frame}
@@ -79,67 +79,68 @@ where $f(s)=F^{\prime}(s)$ and $F(s)=\frac{1}{4}\left(s^2-1\right)^2$ and $\Omeg
 \begin{frame}
     \begin{block}{Strategy to solve the Cahn-Hilliard problem on smooth domains}
         \begin{enumerate}
-            \item First find a suitable method to solve an 4th order PDE for polygonal domains.
-            \item Modify the problem formulation to take account for smooth domains.
-            \item Utilize the time integration to handle nonlinearity.
+            \item Solve the biharmonic problem $\Delta ^2 u = f$ for polygonal domains.
+            \item Modify the method to handle smooth domains.
+            \item Utilize the time integration to handle non-linearity.
         \end{enumerate}
     \end{block}
 \end{frame}
 
-\begin{frame}
-    \begin{block}{Strategy to solve the Cahn-Hilliard problem on smooth domains}
-        \begin{enumerate}
-            \item First find a suitable method to solve an 4th order PDE for polygonal domains.
-            \item Modify the problem formulation to take account for smooth domains.
-            \item Utilize the time integration to handle nonlinearity.
-\item \textcolor{red}{Make the time-steps small enough or implement adaptivity time schemes.}
-        \end{enumerate}
-    \end{block}
-\end{frame}
+% \begin{frame}
+%     \begin{block}{Strategy to solve the Cahn-Hilliard problem on smooth domains}
+%         \begin{enumerate}
+%             \item First find a suitable method to solve an 4th order PDE for polygonal domains.
+%             \item Modify the problem formulation to take account for smooth domains.
+%             \item Utilize the time integration to handle nonlinearity.
+% \item \textcolor{red}{Make the time-steps small enough or implement adaptivity time schemes.}
+%         \end{enumerate}
+%     \end{block}
+% \end{frame}
 
 
+% \begin{frame}
+% \begin{columns}
+% \column{0.55\textwidth}
+% \begin{block}{The Biharmonic Problem}
+% Let $\Omega \subseteq \mathbb{R} ^d$ be a bounded domain with boundary $\Gamma $ . Let the biharmonic problem have the form s.t. $u:\Omega \mapsto \mathbb{R} $,
+% \begin{equation}
+% \label{eq:bi_problem}
+% \begin{split}
+% \Delta^2 u + \alpha u & = f( x) \quad \text{in } \Omega, \\
+% \partial_{n} u & = g_{1} \quad \text{on } \Gamma , \\
+% \partial_{n} \Delta u & = g_{2} \quad \text{on } \Gamma . \\
+% \end{split}
+% \end{equation}
+% Here is $\Delta ^2 = \Delta \left( \Delta \right) $ the biharmonic operator. The functions $g_{1},g_{2}: \Omega \to \mathbb{R}$ are denoted as boundary conditions.
+% \end{block}
+
+% \column{0.45\textwidth}
+% \begin{figure}[htpb!]
+%     \centering
+%     \begin{tikzpicture}
+%         % Circle
+%         \draw (0.0,0.0) circle (1.5cm);
+%         \fill[blue!30] (0.0,0.0) circle (1.5cm);
+
+%         \draw[->, line width=1.0pt] ({1.5*cos(65)}, { 1.5*sin(65) }) -- ({ 2.5*cos(65)  }, { 2.5*sin(65)  }) node[ above left] {$n $};
+%         % \draw[->, line width=1.0pt] ({1.5*cos(45)}, { 1.5*sin(45) }) -- ({ 1.5*cos(45) - 1.5*sin(45) }, { 1.5*sin(45) + 1.5*cos(45) }) node[ above right] {$t $};
+
+%         % Labels
+%         \node[below right] at (0.5,0.5) {$\Omega$};
+%         \node[below right] at (-1.5,-1.2) {$\Gamma$};
+%     \end{tikzpicture}
+%     \caption{ Illustration of the domain $\Omega $, the boundary $\Gamma $ and the normal vector $n$. }
+%     \label{fig:domain_construction}
+% \end{figure}
+% \end{columns}
+
+% \end{frame}
+
 \begin{frame}
+\frametitle{The Biharmonic Problem (on a polygon)}
 \begin{columns}
 \column{0.55\textwidth}
-\begin{block}{The Biharmonic Problem}
-Let $\Omega \subseteq \mathbb{R} ^d$ be a bounded domain with boundary $\Gamma $ . Let the biharmonic problem have the form s.t. $u:\Omega \mapsto \mathbb{R} $,
-\begin{equation}
-\label{eq:bi_problem}
-\begin{split}
-\Delta^2 u + \alpha u & = f( x) \quad \text{in } \Omega, \\
-\partial_{n} u & = g_{1} \quad \text{on } \Gamma , \\
-\partial_{n} \Delta u & = g_{2} \quad \text{on } \Gamma . \\
-\end{split}
-\end{equation}
-Here is $\Delta ^2 = \Delta \left( \Delta \right) $ the biharmonic operator. The functions $g_{1},g_{2}: \Omega \to \mathbb{R}$ are denoted as boundary conditions.
-\end{block}
-
-\column{0.45\textwidth}
-\begin{figure}[htpb!]
-    \centering
-    \begin{tikzpicture}
-        % Circle
-        \draw (0.0,0.0) circle (1.5cm);
-        \fill[blue!30] (0.0,0.0) circle (1.5cm);
-
-        \draw[->, line width=1.0pt] ({1.5*cos(65)}, { 1.5*sin(65) }) -- ({ 2.5*cos(65)  }, { 2.5*sin(65)  }) node[ above left] {$n $};
-        % \draw[->, line width=1.0pt] ({1.5*cos(45)}, { 1.5*sin(45) }) -- ({ 1.5*cos(45) - 1.5*sin(45) }, { 1.5*sin(45) + 1.5*cos(45) }) node[ above right] {$t $};
-
-        % Labels
-        \node[below right] at (0.5,0.5) {$\Omega$};
-        \node[below right] at (-1.5,-1.2) {$\Gamma$};
-    \end{tikzpicture}
-    \caption{ Illustration of the domain $\Omega $, the boundary $\Gamma $ and the normal vector $n$. }
-    \label{fig:domain_construction}
-\end{figure}
-\end{columns}
-
-\end{frame}
-
-\begin{frame}
-\begin{columns}
-\column{0.55\textwidth}
-\begin{block}{The Biharmonic Problem (on a polygon)}
+\begin{block}{}
     Let $\Omega \approx \Omega_{h} = \mathcal{T}_{h}$ be a bounded \textcolor{red}{polygonal} domain with boundary $\Gamma $ . Let the biharmonic problem have the form s.t. $u:\Omega \mapsto \mathbb{R} $,
 \begin{equation}
 \label{eq:bi_problem}
@@ -149,7 +150,7 @@ Here is $\Delta ^2 = \Delta \left( \Delta \right) $ the biharmonic operator. The
 \partial_{n} \Delta u & = 0 \quad \text{on } \Gamma . \\
 \end{split}
 \end{equation}
-Here is $\Delta ^2 = \Delta \left( \Delta \right) $ the biharmonic operator. The functions $g_{1},g_{2}: \Omega_{h} \to \mathbb{R}$ are denoted as boundary conditions.
+Here is $\Delta ^2 = \Delta \left( \Delta \right) $ the biharmonic operator.
 \end{block}
 
 \column{0.45\textwidth}
@@ -199,139 +200,137 @@ Here is $\Delta ^2 = \Delta \left( \Delta \right) $ the biharmonic operator. The
 \end{frame}
 
 
-\begin{frame}
-\begin{block}{Defining the global polynomial space}
-    \begin{itemize}
-        \item When writing the biharmonic on weak form we end up with Hessians/Laplacian.
-        \item Thus, a requirement that solution is locally at least $\mathcal{P}^{k} $ for $k\ge 2$
-        \item What should we require globally?
-    \end{itemize}
-\end{block}
-\end{frame}
+% \begin{frame}
+% \begin{block}{Defining the global polynomial space}
+%     \begin{itemize}
+%         \item When writing the biharmonic on weak form we end up with Hessians/Laplacian.
+%         \item Thus, a requirement that solution is locally at least $\mathcal{P}^{k} $ for $k\ge 2$
+%         \item What should we require globally?
+%     \end{itemize}
+% \end{block}
+% \end{frame}
+
+% \begin{frame}
+
+% \begin{block}{Illustration the global $C^{1}$ continuous finite elements}
+% \begin{columns}
+
+% \begin{column}{0.3\textwidth}
+%     \begin{tikzpicture}
+%         % Draw x-axis
+%         \draw[->, thick] (0,0) -- (4,0) node[right] {$x$};
+%         % Draw y-axis
+%         \draw[->, thick] (0,0) -- (0,3) node[above] {$y$};
+
+%         % Draw nodes at center, A, B, and C with arbitrary y-values
+%         \foreach \x/\y in {0/2.5, 1/1.7, 2/2.5, 3/1.2} {
+%             \fill (\x,\y) circle (2pt); % Filled nodes with y-values
+%             \fill (\x,0) circle (2pt); % Filled circles on x-axis
+%         }
+
+%         % Exact solution
+%         \draw[red, thick] (0,2.5) .. controls (0.5,0.5) and (0.5,3) .. (1,1.7) .. controls (1.5,0) and (1.5,6) .. (2,2.5) .. controls (2.5,1) and (2.5,3.5) .. (3,1.2);
+%         \node at (1,0.6) [above] {$\jump{ \partial _{n} u_{h} } = 0$};
+%         \node at (1,0.7) [below] {$\jump{ u_{h} }   = 0$};
+
+%         % Second
+%         \draw[blue, thick]
+%         (0,2.5) .. controls (0.25,2.1) .. (1,1.7)
+%         (1,1.7) .. controls (1.5,1.7) .. (2,2.5)
+%         (2,2.5) .. controls (2.5,3.3) .. (3,1.2);
+
+%         \draw (3.2,2.8) rectangle (4.8,3.8); % Legend box
+%         \draw[blue, thick] (3.4,3.5) -- (3.9,3.5); % Blue line for u_h
+%         \draw[red, thick] (3.4,3.1) -- (3.9,3.1); % Red line for u
+%         \node[anchor=west] at (4.0,3.5) {$u_h$}; % Label for u_h
+%         \node[anchor=west] at (4.0,3.1) {$u$}; % Label for u
+%     \end{tikzpicture}
+% \end{column}
+
+% \begin{column}{0.5\textwidth}
+%     % Add your points here
+%     \begin{itemize}
+%         \item Let $\jump{ u_{h} } = u_{+} - u_{-} $ be defined as the jumps between elements.
+%         \item The numerical solution is \textbf{continuous}, i.e. $\jump{ u_{h} }     =0   $
+%         \item The numerical solution derivative is \textbf{continuous} , i.e. $\jump{ \partial _{n}u_{h} }     =0   $
+%         \item Not very flexible and difficult to implement in higher dimensions.\footnotemark[1]
+%     \end{itemize}
+% \end{column}
+% \footnotetext[1]{\fullcite{kapl2021family}}
+
+% \end{columns}
+% \end{block}
+% \end{frame}
+
+% \begin{frame}
+% \begin{block}{Illustration the global $C^{0}$ continuous $\mathcal{P}^k $  finite elements}
+% \begin{columns}
+% \begin{column}{0.3\textwidth}
+%     \begin{tikzpicture}
+%         % Draw x-axis
+%         \draw[->, thick] (0,0) -- (4,0) node[right] {$x$};
+%         % Draw y-axis
+%         \draw[->, thick] (0,0) -- (0,3) node[above] {$y$};
+
+%         % Draw nodes at center, A, B, and C with arbitrary y-values
+%         \foreach \x/\y in {0/2.5, 1/1.7, 2/2.5, 3/1.2} {
+%             \fill (\x,\y) circle (2pt); % Filled nodes with y-values
+%             \fill (\x,0) circle (2pt); % Filled circles on x-axis
+%         }
+
+%         % Exact solution
+%         \draw[red, thick] (0,2.5) .. controls (0.5,0.5) and (0.5,3) .. (1,1.7) .. controls (1.5,0) and (1.5,6) .. (2,2.5) .. controls (2.5,1) and (2.5,3.5) .. (3,1.2);
+%         \node at (1,0.6) [above] {$\jump{ \partial _{n} u_{h} } \neq 0$};
+%         \node at (1,0.7) [below] {$\jump{ u_{h} }   = 0$};
+
+%         %% Second
+%         \draw[blue, thick] (0,2.5) .. controls (0.5,1.2) .. (1,1.7)
+%         .. controls (1.7,3.9) .. (2,2.5)
+%         .. controls (2.7,1.9) .. (3,1.2); Second
+
+%         \draw (3.2,2.8) rectangle (4.8,3.8); % Legend box
+%         \draw[blue, thick] (3.4,3.5) -- (3.9,3.5); % Blue line for u_h
+%         \draw[red, thick] (3.4,3.1) -- (3.9,3.1); % Red line for u
+%         \node[anchor=west] at (4.0,3.5) {$u_h$}; % Label for u_h
+%         \node[anchor=west] at (4.0,3.1) {$u$}; % Label for u
+
+%     \end{tikzpicture}
+% \end{column}
+% \begin{column}{0.6\textwidth}
+%     % Add your points here
+%     \begin{itemize}
+%         \item Locally $\mathcal{P}^{k}( T)  $ of degree $k$, but globally $C^{0}$, i.e.,
+%             \[
+%             V_{h} = \left\{ v \in C^{0}\left( \Omega  \right): v_{T} = v | _{T} \in \mathcal{P} ^{k}\left( T \right), \forall T \in
+% \mathcal{T}_{h}    \right\}
+%             \]
+
+%         \item The numerical solution is \textbf{continuous} , i.e. $\jump{ u_{h} } = 0   $
+%         \item The numerical solution derivative is \textbf{discontinuous} , i.e. $\jump{ \partial _{n}u_{h} } \neq 0   $
+%     \end{itemize}
+% \end{column}
+% \end{columns}
+% \end{block}
+% \end{frame}
 
 \begin{frame}
-
-\begin{block}{Illustration the global $C^{1}$ continuous finite elements}
-\begin{columns}
-
-\begin{column}{0.3\textwidth}
-    \begin{tikzpicture}
-        % Draw x-axis
-        \draw[->, thick] (0,0) -- (4,0) node[right] {$x$};
-        % Draw y-axis
-        \draw[->, thick] (0,0) -- (0,3) node[above] {$y$};
-
-        % Draw nodes at center, A, B, and C with arbitrary y-values
-        \foreach \x/\y in {0/2.5, 1/1.7, 2/2.5, 3/1.2} {
-            \fill (\x,\y) circle (2pt); % Filled nodes with y-values
-            \fill (\x,0) circle (2pt); % Filled circles on x-axis
-        }
-
-        % Exact solution
-        \draw[red, thick] (0,2.5) .. controls (0.5,0.5) and (0.5,3) .. (1,1.7) .. controls (1.5,0) and (1.5,6) .. (2,2.5) .. controls (2.5,1) and (2.5,3.5) .. (3,1.2);
-        \node at (1,0.6) [above] {$\jump{ \partial _{n} u_{h} } = 0$};
-        \node at (1,0.7) [below] {$\jump{ u_{h} }   = 0$};
-
-        % Second
-        \draw[blue, thick]
-        (0,2.5) .. controls (0.25,2.1) .. (1,1.7)
-        (1,1.7) .. controls (1.5,1.7) .. (2,2.5)
-        (2,2.5) .. controls (2.5,3.3) .. (3,1.2);
-
-        \draw (3.2,2.8) rectangle (4.8,3.8); % Legend box
-        \draw[blue, thick] (3.4,3.5) -- (3.9,3.5); % Blue line for u_h
-        \draw[red, thick] (3.4,3.1) -- (3.9,3.1); % Red line for u
-        \node[anchor=west] at (4.0,3.5) {$u_h$}; % Label for u_h
-        \node[anchor=west] at (4.0,3.1) {$u$}; % Label for u
-    \end{tikzpicture}
-\end{column}
-
-\begin{column}{0.5\textwidth}
-    % Add your points here
-    \begin{itemize}
-        \item Let $\jump{ u_{h} } = u_{+} - u_{-} $ be defined as the jumps between elements.
-        \item The numerical solution is \textbf{continuous}, i.e. $\jump{ u_{h} }     =0   $
-        \item The numerical solution derivative is \textbf{continuous} , i.e. $\jump{ \partial _{n}u_{h} }     =0   $
-        \item Not very flexible and difficult to implement in higher dimensions.\footnotemark[1]
-    \end{itemize}
-\end{column}
-\footnotetext[1]{\fullcite{kapl2021family}}
-
-\end{columns}
-\end{block}
-\end{frame}
-
-\begin{frame}
-
-\begin{block}{Illustration the global $C^{0}$ continuous $\mathcal{P}^k $  finite elements}
-\begin{columns}
-\begin{column}{0.3\textwidth}
-    \begin{tikzpicture}
-        % Draw x-axis
-        \draw[->, thick] (0,0) -- (4,0) node[right] {$x$};
-        % Draw y-axis
-        \draw[->, thick] (0,0) -- (0,3) node[above] {$y$};
-
-        % Draw nodes at center, A, B, and C with arbitrary y-values
-        \foreach \x/\y in {0/2.5, 1/1.7, 2/2.5, 3/1.2} {
-            \fill (\x,\y) circle (2pt); % Filled nodes with y-values
-            \fill (\x,0) circle (2pt); % Filled circles on x-axis
-        }
-
-        % Exact solution
-        \draw[red, thick] (0,2.5) .. controls (0.5,0.5) and (0.5,3) .. (1,1.7) .. controls (1.5,0) and (1.5,6) .. (2,2.5) .. controls (2.5,1) and (2.5,3.5) .. (3,1.2);
-        \node at (1,0.6) [above] {$\jump{ \partial _{n} u_{h} } \neq 0$};
-        \node at (1,0.7) [below] {$\jump{ u_{h} }   = 0$};
-
-        %% Second
-        \draw[blue, thick] (0,2.5) .. controls (0.5,1.2) .. (1,1.7)
-        .. controls (1.7,3.9) .. (2,2.5)
-        .. controls (2.7,1.9) .. (3,1.2); Second
-
-        \draw (3.2,2.8) rectangle (4.8,3.8); % Legend box
-        \draw[blue, thick] (3.4,3.5) -- (3.9,3.5); % Blue line for u_h
-        \draw[red, thick] (3.4,3.1) -- (3.9,3.1); % Red line for u
-        \node[anchor=west] at (4.0,3.5) {$u_h$}; % Label for u_h
-        \node[anchor=west] at (4.0,3.1) {$u$}; % Label for u
-
-    \end{tikzpicture}
-\end{column}
-\begin{column}{0.6\textwidth}
-    % Add your points here
-    \begin{itemize}
-        \item Locally $\mathcal{P}^{k}( T)  $ of degree $k$, but globally $C^{0}$, i.e.,
-            \[
-            V_{h} = \left\{ v \in C^{0}\left( \Omega  \right): v_{T} = v | _{T} \in \mathcal{P} ^{k}\left( T \right), \forall T \in
-\mathcal{T}_{h}    \right\}
-            \]
-
-        \item The numerical solution is \textbf{continuous} , i.e. $\jump{ u_{h} } = 0   $
-        \item The numerical solution derivative is \textbf{discontinuous} , i.e. $\jump{ \partial _{n}u_{h} } \neq 0   $
-    \end{itemize}
-\end{column}
-\end{columns}
-\end{block}
-\end{frame}
-
-\begin{frame}
-\frametitle{ $C^0$ Interior penalty method (CIP) }
+\frametitle{ $C^0$ Interior Penalty Method (CIP) for the Biharmonic Problem }
 
 \begin{block}{}
-The discretized numerical problem is to solve $w \in V_{h}$ such that
+The proposed numerical scheme is to find an  $w \in V_{h}$ .t.
 \begin{equation*}
 \label{eq:CP_A_F}
-a_{h}( w, v )   = l_{h}( v), \quad \forall v \in V_{h}  .
+a_{h}( w, v )   = l_{h}( v) = ( f,v)_{\Omega } , \quad \forall v \in V_{h}  .
 \end{equation*}
 where
-
 \begin{equation*}
 \begin{split}
 a_{h} \left( w, v \right)   =&
     \left( \alpha  w, v \right) _{\Omega }   +  \left( \Delta  w, \Delta v \right) _{\Omega } \\
  & +
   \left( \mean{  \Delta  w }, \jump{ \partial _{n }v} \right)_{\mathcal{F}_{h}}  +
- \left( \mean{ \Delta  v }, \jump{ \partial _{n}w }      \right)_{\mathcal{F}_{h}}  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} w}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h}} \\
- l_{h}( v_{h}) & =  \left( f, v \right) _{\Omega }
+ \left( \mean{ \Delta  v }, \jump{ \partial _{n}w }      \right)_{\mathcal{F}_{h}}  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} w}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h}}
+ % l_{h}( v_{h}) & =  \left( f, v \right) _{\Omega }
 \end{split}
 \end{equation*}
 
@@ -342,26 +341,25 @@ Which is inspired from Brenner2012 \footnotemark[1]
 
 \end{frame}
 
-\begin{frame}
-    \frametitle{ $C^0$ Interior penalty method (CIP) }
-    The following results has been shown to hold for the bilinear form \footnotemark[1].
+% \begin{frame}
+%     \frametitle{ $C^0$ Interior penalty method (CIP) }
+%     The following results has been shown to hold for the bilinear form \footnotemark[1].
 
-    \begin{block}{Well-posedness}
-         The discrete bilinear form $a_{h}$ is wellposed on $V_{h}$ if this holds; \[
-             \begin{split}
-                 (Coercivity) \quad  a_{h}( v,v) &  \gtrsim  \| v \|_{a_{h} }^{ 2 } \quad  \forall v \in  V_{h} \\
-            (Boundedness) \quad a_{h}( v,w) & \lesssim  \| v \|_{a_{h} }^{  }\| w \|_{a_{h} }^{  } \quad  \forall v,w \in  V_{h}
-             \end{split}
-        \]
-    \end{block}
-    \begin{block}{Apriori estimates }
-        Let $k\ge 2$ be polynomial order. Then does it exist  $l = \min_{} ( 2, k)  $ s.t.
-\[
-        \| u - u_{h} \|_{a_{h}  }^{  } \lesssim  h^{l-1} \| u \|_{ H^{l} ( \Omega ) }^{  }
-\]
-    \end{block}
-\footnotetext[1]{\fullcite{Gu2012}}
-\end{frame}
+%     \begin{block}{Well-posedness}
+%          The discrete bilinear form $a_{h}$ is wellposed on $V_{h}$ if this holds; \[
+%              \begin{split}
+%                  (Coercivity) \quad  a_{h}( v,v) &  \gtrsim  \| v \|_{a_{h} }^{ 2 } \quad  \forall v \in  V_{h} \\
+%             (Boundedness) \quad a_{h}( v,w) & \lesssim  \| v \|_{a_{h} }^{  }\| w \|_{a_{h} }^{  } \quad  \forall v,w \in  V_{h}
+%              \end{split}
+%         \]
+%     \end{block}
+%     \begin{block}{Apriori estimates }
+%         Let $k\ge 2$ be polynomial order. Then does it exist  $l = \min_{} ( 2, k)  $ s.t.
+% \[
+%         \| u - u_{h} \|_{a_{h}  }^{  } \lesssim  h^{l-1} \| u \|_{ H^{l} ( \Omega ) }^{  }
+% \]
+%     \end{block}
+% \end{frame}
 
 \begin{frame}
 \frametitle{Cut Finite Element Method (CutFEM)}
@@ -445,9 +443,9 @@ A recent and promising numerical technique for PDEs, has gained significant mome
 
 \begin{block}{}
     \begin{itemize}
-        \item  Can handle smooth boundaries $\Gamma \in C^2 $, very complex domains and moving domains efficiently.
-        \item Utilizing so-called ghost penalties to ensure well-posedness on the so-called cut cells.
-        \item Diving the computational domains into background, active and interior mesh.
+        \item  Complex domains and moving domains efficiently.
+        \item Utilizing so-called ghost penalties to ensure well-posedness.
+        \item Dividing the computational domains into \textbf{background} , \textbf{active}, \textbf{cut}  and \textbf{interior} mesh.
     \end{itemize}
 \end{block}
 \footnotetext[1]{\fullcite{burman2015cutfem}}
@@ -610,82 +608,85 @@ My master's thesis is dedicated to demonstrating that the relevant properties re
         \| u - u_{h} \|_{a_{h}  }^{  } \lesssim  h^{l-1} \| u \|_{ H^{l} ( \Omega ) }^{  }
 \]
     \end{block}
-\end{frame}
-
-\begin{frame}{CutCIP Method}
-    Inspired by Massing2019 \footnotemark[1], do we end up the the following necessarry assumptions;
-\begin{enumerate}
-    \item \label{as:EP1} The ghost penalty $g_{h}$ extends the $H^{1}$ norm s.t. \[
-    \| \Delta v \|_{ \mathcal{T} _{h} }^{ 2 }  \lesssim \| \Delta  v \|_{ \Omega  }^{  2} + \abs{ v } _{g_{h}}^2
-    \]
-\item \label{as:EP2} For $v \in H^{s}( \Omega ) $ and $r = \min \{s,k+1 \} $, the semi-norm $\abs{ \cdot  }_{g_{h}} $ satisfies the following estimate, \[
-    \abs{ \pi _{h}^{e} v } _{g_{h}} \lesssim  h^{r-1} \| v \|_{ r,\Omega  }^{  }.
-    \]
-\footnotetext[1]{\fullcite{gurkan2019stabilized}}
-\end{enumerate}
+    % \footnotetext[1]{\fullcite{Gu2012}}
 
 \end{frame}
 
-\begin{frame}{Other Domain Assumptions}
-  \begin{columns}
-    \begin{column}{0.4\textwidth}
-    \begin{tikzpicture}
-        \coordinate (center) at (0, 0);
 
-        % Reference hexagon vertices
-        \coordinate (A1) at (0:2.5);
-        \coordinate (A2) at (60:2.5);
-        \coordinate (A3) at (120:2.5);
-        \coordinate (A4) at (180:2.5);
-        \coordinate (A5) at (240:2.5);
-        \coordinate (A6) at (300:2.5);
-        \coordinate (A7) at (300:2.5);
+% \begin{frame}{CutCIP Method}
+%     Inspired by Massing2019 \footnotemark[1], do we end up the the following necessarry assumptions;
+% \begin{enumerate}
+%     \item \label{as:EP1} The ghost penalty $g_{h}$ extends the $H^{1}$ norm s.t. \[
+%     \| \Delta v \|_{ \mathcal{T} _{h} }^{ 2 }  \lesssim \| \Delta  v \|_{ \Omega  }^{  2} + \abs{ v } _{g_{h}}^2
+%     \]
+% \item \label{as:EP2} For $v \in H^{s}( \Omega ) $ and $r = \min \{s,k+1 \} $, the semi-norm $\abs{ \cdot  }_{g_{h}} $ satisfies the following estimate, \[
+%     \abs{ \pi _{h}^{e} v } _{g_{h}} \lesssim  h^{r-1} \| v \|_{ r,\Omega  }^{  }.
+%     \]
+% \footnotetext[1]{\fullcite{gurkan2019stabilized}}
+% \end{enumerate}
 
+% \end{frame}
 
-        \fill[green!40] (center) --(A1) -- (A2) -- (A3) -- (A4) -- (A5)  -- cycle;
-        \fill[blue!30] (center) -- (A5)--(A6)-- (A7) -- (A1) -- cycle;
+% \begin{frame}{Other Domain Assumptions}
+%   \begin{columns}
+%     \begin{column}{0.4\textwidth}
+%     \begin{tikzpicture}
+%         \coordinate (center) at (0, 0);
 
-        % Draw the individual edges
-        \draw[dotted, line width=1.5pt] (center) -- (A1);
-        \draw[dotted, line width=1.5pt] (center) -- (A2) --(A1);
-        \draw[dotted, line width=1.5pt] (center) -- (A3);
-        \draw[dotted, line width=1.5pt] (center) -- (A4);
-        \draw (A2) -- (A3);
-        \draw (A3) -- (A4);
-        \draw (A5) -- (A6);
-        \draw[dotted, line width=1.5pt] (A4) -- (A5);
-        \draw[dotted, line width=1.5pt] (center) -- (A5);
-        \draw (center) -- (A6) -- (A1);
-
-        \coordinate (Ti) at (-0,-1.5);
-        \coordinate (Tg) at (0.5,2.2);
-        \node[below] at (Tg) {$\mathcal{T}_{\Gamma }$};
-        \node[below] at (Ti) {$\mathcal{T}_{int }$};
-
-        \coordinate (T0) at (-0,1.2);
-        \coordinate (T1) at (-1.1,-0.4);
-        \node[below] at (T0) {$T$};
-        \node[below] at (T1) {$T'$};
-
-        \coordinate (C1) at (-3,-1.0);
-        \coordinate (C2) at (2.6,0.2);
-        \draw[-, line width=2pt, >=stealth] ($(C2)$) to[bend right=16.9] node[midway,xshift=-2.3cm, yshift=-1.3cm] {$\Gamma $} ($(C1)$);
+%         % Reference hexagon vertices
+%         \coordinate (A1) at (0:2.5);
+%         \coordinate (A2) at (60:2.5);
+%         \coordinate (A3) at (120:2.5);
+%         \coordinate (A4) at (180:2.5);
+%         \coordinate (A5) at (240:2.5);
+%         \coordinate (A6) at (300:2.5);
+%         \coordinate (A7) at (300:2.5);
 
 
-\end{tikzpicture}
-    \end{column}
+%         \fill[green!40] (center) --(A1) -- (A2) -- (A3) -- (A4) -- (A5)  -- cycle;
+%         \fill[blue!30] (center) -- (A5)--(A6)-- (A7) -- (A1) -- cycle;
 
-    \begin{column}{0.6\textwidth}
-      \begin{block}{Assumption: Fat intersection property}
-        For $T \in \mathcal{T}_{\Gamma}$ there is a patch $P$ of $\operatorname{diam} P \lesssim h$ which contains $T$ and an element $T^{\prime}$ with a fat intersection satisfying
-        $$
-        \left|T^{\prime} \cap \Omega\right|_d \geqslant c_s\left|T^{\prime}\right|_d
-        $$
-        for some mesh independent $c_s>0$.
-      \end{block}
-    \end{column}
-  \end{columns}
-\end{frame}
+%         % Draw the individual edges
+%         \draw[dotted, line width=1.5pt] (center) -- (A1);
+%         \draw[dotted, line width=1.5pt] (center) -- (A2) --(A1);
+%         \draw[dotted, line width=1.5pt] (center) -- (A3);
+%         \draw[dotted, line width=1.5pt] (center) -- (A4);
+%         \draw (A2) -- (A3);
+%         \draw (A3) -- (A4);
+%         \draw (A5) -- (A6);
+%         \draw[dotted, line width=1.5pt] (A4) -- (A5);
+%         \draw[dotted, line width=1.5pt] (center) -- (A5);
+%         \draw (center) -- (A6) -- (A1);
+
+%         \coordinate (Ti) at (-0,-1.5);
+%         \coordinate (Tg) at (0.5,2.2);
+%         \node[below] at (Tg) {$\mathcal{T}_{\Gamma }$};
+%         \node[below] at (Ti) {$\mathcal{T}_{int }$};
+
+%         \coordinate (T0) at (-0,1.2);
+%         \coordinate (T1) at (-1.1,-0.4);
+%         \node[below] at (T0) {$T$};
+%         \node[below] at (T1) {$T'$};
+
+%         \coordinate (C1) at (-3,-1.0);
+%         \coordinate (C2) at (2.6,0.2);
+%         \draw[-, line width=2pt, >=stealth] ($(C2)$) to[bend right=16.9] node[midway,xshift=-2.3cm, yshift=-1.3cm] {$\Gamma $} ($(C1)$);
+
+
+% \end{tikzpicture}
+%     \end{column}
+
+%     \begin{column}{0.6\textwidth}
+%       \begin{block}{Assumption: Fat intersection property}
+%         For $T \in \mathcal{T}_{\Gamma}$ there is a patch $P$ of $\operatorname{diam} P \lesssim h$ which contains $T$ and an element $T^{\prime}$ with a fat intersection satisfying
+%         $$
+%         \left|T^{\prime} \cap \Omega\right|_d \geqslant c_s\left|T^{\prime}\right|_d
+%         $$
+%         for some mesh independent $c_s>0$.
+%       \end{block}
+%     \end{column}
+%   \end{columns}
+% \end{frame}
 
 
 
@@ -701,12 +702,12 @@ My master's thesis is dedicated to demonstrating that the relevant properties re
     For any set of positive parameters $\left\{ \gamma _{j} \right\} _{j=1}^{k}$, the ghost penalty defined as \[
     g^{}_{h}( v,w)  := \sum_{j=1}^{k} \gamma _{j} h^{2j-3}_{} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n} w }  ) _{\mathcal{F} _{h}^{g}} \text{ for any } v,w \in V_{h},
     \]
-    satisfies the necessarry Assumptions \footnotemark[2].
+    satisfies the necessarry assumptions for well-posedness \footnotemark[1].
     Here is the set $\mathcal{F} _{h}^{g}$ defined as all facets which belongs to cut cells $\mathcal{T} _{\Gamma }$ sharing a node with interior elements $\mathcal{T} _{int }$ .
 
 \end{block}
 
-\footnotetext[2]{\fullcite{gurkan2019stabilized}}
+\footnotetext[1]{\fullcite{gurkan2019stabilized}}
 
 \end{frame}
 
@@ -901,14 +902,15 @@ Here is $c_{h}( . , .) $ an the nonlinear terms handled in a implicit fashion. T
 \frametitle{The CutCIP Cahn-Hilliard Experiments}
 Implemented using the Gridap FEM framework written in Julia \footnotemark[1].
 
+
 \begin{block}{Simulation parameters}
     \begin{itemize}
-        \item Physical domain $\Omega$  is a 4 circles of radius $R=1$ with distance $d=0.999$, i.e. they are touching!
-        \item Inital data is $u_0 = random(-1,1)$ in $\Omega $.
-        \item Backgroundmesh with size ($L\times L$ ) for $L=2$ and $n=128$.
-        \item Polynomial order $k=2$ .
-        \item Physical parameter $\varepsilon  = \frac{1}{30}$.
-        \item Time-step $\tau = \varepsilon ^{2} \frac{1}{10} $ for the interval $ 0\le t \le 10^3 \tau $.
+        \item Physical domain $\Omega$  is a 4 discs of radius $R=1$ with distance $d=0.999$, i.e. they are touching!
+        \item Inital data is $u_0 = random(-1,1)$ in physical domain $\Omega $.
+        % \item Backgroundmesh with size ($L\times L$ ) for $L=2$ and $n=128$.
+        % \item Polynomial order $k=2$ .
+        % \item Physical parameter $\varepsilon  = \frac{1}{30}$.
+        % \item Time-step $\tau = \varepsilon ^{2} \frac{1}{10} $ for the interval $ 0\le t \le 10^3 \tau $.
     \end{itemize}
 \end{block}
 
