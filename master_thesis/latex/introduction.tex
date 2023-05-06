@@ -1,4 +1,18 @@
 \section{Introduction}\label{sec:introduction}
+
+\subsection{The importance of Cahn-Hilliard}%
+\label{sub:the_importance_of_cahn_hilliard}
+
+The first Cahn-Hilliard paper appeared when computing evolving free energy of two-component incompressible fluids and, thus, have been crucial in the theory of irreversible thermodynamics
+\cite{cahn1958free, cahn1959free, falk1992cahn}.
+
+I Like material science \cite{chen2002phase}.
+Cahn Hilliard appears in a lot of applications such as in image inpainting, chemical engineering and biology \cite{bressloff2014stochastic} thus, and comes in many forms \cite{miranville2017cahn}.
+
+\subsection{The equations}%
+\label{sub:the_equations}
+
+
 The goal of the thesis implement an modern unfitted finite element method (FEM) to solve the Cahn-Hilliard equation. The plan is to first derive the stability and well-posedness for the method for the fourth order Biharmonic equation. Once this framework is established will we aim for solving the Chan-Hilliard equation using well known techniques for time-discretization and nonlinear problems.
 
 We can describe the Cahn-Hilliard problem in this formulation. Let $\Omega  $ be a domain with boundary $\Gamma $. Assume that $c: \Omega  \to \left[ 0,1 \right] $ and let $h_{1},h_{2}:\Omega  \to \mathbb{R} $.
@@ -19,8 +33,6 @@ where $f( c) $ is a nonlinear functional. First of all, a simplified training pr
 \partial _{n} \Delta u  & = h_{2} \quad \text{ on } \Gamma
     \end{split}
 \]
-Such problems are often associated with the Cahn-Hilliard model
-for phase separation \cite{cahnhilliard1957} .
 
 
 
@@ -31,6 +43,10 @@ for phase separation \cite{cahnhilliard1957} .
 \end{enumerate}
 
 
+\subsection{Numerical Methods to solve the problem}%
+\label{sub:numerical_methods_to_solve_the_problem}
+
+
 \subsection{FEM}
 
 First signs of finite element was in 1941 when Hrennikoff used the method solve problems in linear elasticity \cite{hrennikoff1941solution}. It then took offspring to applications in aerospace application in the 50's when it was formalized the method
@@ -39,13 +55,23 @@ could solve dynamical problems on complex structures as a competitor to the fini
 useful found a great
 variety of applications in multi-physics problems because of its simplicity based on the abstract mathematical generalisation of both functions spaces and computational domains.
 
+CIP formulation of the Cahn-Hilliard was presented in \cite{wells2006discontinuous} which avoids high derivatives along boundaries, thus no need for global $C^{1}$ elements.
+
 
 \subsection{CutFEM}%
 \label{sub:cutfem}
 The goal of this thesis is to make a foundation of a numerical framework, which later can be developed to handle moving domains. We will use CutFEM method \cite{burman2015cutfem}.
 Alternatives to smooth boundaries is isogeometric analysis, which is based on NURBS, and does in fact handle complex geometries quite well \cite{hughes2005isogeometric}.
 
+Mixed CutFEM formulation of Cahn-Hilliard \cite{karatzas2021reduced} and a mixed Hybrid High-Order method \cite{chave2016hybrid}. Isogeometric formulation of Cahn-Hilliard \cite{kastner2016isogeometric, gomez2008isogeometric} and unfitted versions \cite{zhao2017variational}. Isogeoemtric formulation on moving
+surfaces \cite{zimmermann2019isogeometric}. Virtual $C^{1}$  elements has also been considered \cite{antonietti2016c}.
 
 
+
+\subsection{ODE integrators}%
+\label{sub:ode_integrators}
+
+Introduced unconditionally stable, second order accurate, numerically dissipative with parameters $\alpha$ and $ \beta $,  Newmans Method \cite{newmark1959method}
+Improved versions of the Newmark method by introducing the numerically dissipative parameters such as the Hilber method and the Bossak Method \cite{hilber1977improved, wood1980alpha}. Combing these ideas the Generalized $\alpha $ method from which all the other methods can be derived \cite{chung1993time}.
 
 
