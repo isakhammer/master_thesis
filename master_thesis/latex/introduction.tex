@@ -9,36 +9,42 @@ as well \cite{bosch2015fractional, eyre1993systems, toth2016phase, miranville201
 the phase-field model, which is a mathematical framework to model transitions and interface dynamics in materials and fluid dynamics \cite{steinbach2009phase, chen2002phase}.
 From this has the equation found many interesting applications for a big variety of problems. To mention a few, we have
 multiphase fluid dynamical problems \cite{badalassi2003computation, li2016lattice, kim2012phase, shen2010phase}, solidification of binary or multicomponent alloys \cite{kim1999phase, echebarria2004quantitative}, and continuum modelling of fracture dynamics in
-materials \cite{kuhn2010continuum, li2015phase}. Perhaps an unexpected application is that CH can be used to for in painting when recovering damaged parts of an image \cite{bertozzi2006inpainting, burger2009cahn, bosch2015fractional, brkic2020image}.
-CH has also shown be be essential in many areas of biology and medicine. There is a ongoing discussion about the existence of that the lipids on a bio-membrane accumulates into so-called lipid rafts, which serve as a rigid platform for proteins with
+materials \cite{kuhn2010continuum, li2015phase}. Perhaps an unexpected application is that CH can be used to for in painting when recovering damaged parts of an image \cite{bertozzi2006inpainting, burger2009cahn, bosch2015fractional, brkic2020image}
+and modelling the origin of the irregular structure in the Saturn's rings \cite{tremaine2003origin}.
+CH has also shown be be essential in many areas of biology and medicine. From a macroscopic point of view is that CH is a great tool to model tumor growth, wound healing and brain tumors \cite{agosti2017cahn, cristini2009nonlinear}.
+On the microscopic level on the bio membrane is there a ongoing hypothesis about the existence of the accumulation of lipids into so-called lipid rafts which serve as a rigid platform for proteins with
 special properties such as signalling and intercellular trafficking \cite{ levental2020lipid, hancock2006lipid, munro2003lipid, simons1997functional}. It turns out that the hypothesis can tested by modelling the problem as a separation problem using
-CH \cite{miller2020divide, garcke2016coupled, yushutin2019computational}
+CH \cite{miller2020divide, garcke2016coupled, yushutin2019computational}.
+
+\subsection{The Equation}%
+\label{sub:the_equations}
+
+We can describe the Cahn-Hilliard problem in this formulation. Let $\Omega  $ be a domain with boundary $\Gamma $. Assume that $u: \Omega  \to \mathbb{R}  $ and let $g_{1},g_{2}:\Omega  \to \mathbb{R} $.
 
 
-% \subsection{The equations}%
-% \label{sub:the_equations}
+\[
+    \begin{split}
+\partial _{t} u &= \Delta ( f(c) +  \Delta c)     \quad  \text{in } \Omega \\
+\partial _{n} u & = g_{1} \quad \text{ on } \Gamma  \\
+\partial _{n} \Delta u  & = g_{2} \quad \text{ on } \Gamma
+    \end{split}
+\]
+where $f( u) $ is a nonlinear functional.
 
+\subsection{Numerical Methods}%
+\label{sub:numerical_methods}
 
-% The goal of the thesis implement an modern unfitted finite element method (FEM) to solve the Cahn-Hilliard equation. The plan is to first derive the stability and well-posedness for the method for the fourth order Biharmonic equation. Once this framework is established will we aim for solving the Chan-Hilliard equation using well known techniques for time-discretization and nonlinear problems.
+The goal of the thesis implement an modern unfitted finite element method (FEM) to solve the Cahn-Hilliard equation. The plan is to first derive the stability and well-posedness for the method for the fourth order Biharmonic equation,
+\[
+    \begin{split}
+\Delta ^2 u & = f \quad  \text{in } \Omega \\
+\partial _{n} u & = g_{1} \quad \text{ on } \Gamma  \\
+\partial _{n} \Delta u  & = g_{2} \quad \text{ on } \Gamma
+    \end{split}
+\]
 
-% We can describe the Cahn-Hilliard problem in this formulation. Let $\Omega  $ be a domain with boundary $\Gamma $. Assume that $c: \Omega  \to \left[ 0,1 \right] $ and let $h_{1},h_{2}:\Omega  \to \mathbb{R} $.
+Once this framework is established will we aim for solving the Chan-Hilliard equation using well known techniques for time-discretization and nonlinear problems.
 
-
-% \[
-%     \begin{split}
-% \partial _{t} c &= \Delta ( f(c) \Delta c)     \quad  \text{in } \Omega \\
-% \partial _{n} c & = h_{1} \quad \text{ on } \Gamma  \\
-% \partial _{n} \Delta c  & = h_{2} \quad \text{ on } \Gamma
-%     \end{split}
-% \]
-% where $f( c) $ is a nonlinear functional. First of all, a simplified training problem is the so-called biharmonic problem.
-% \[
-%     \begin{split}
-% \Delta ^2 u & = f \quad  \text{in } \Omega \\
-% \partial _{n} u & = h_{1} \quad \text{ on } \Gamma  \\
-% \partial _{n} \Delta u  & = h_{2} \quad \text{ on } \Gamma
-%     \end{split}
-% \]
 
 
 
@@ -79,5 +85,7 @@ CH \cite{miller2020divide, garcke2016coupled, yushutin2019computational}
 
 % Introduced unconditionally stable, second order accurate, numerically dissipative with parameters $\alpha$ and $ \beta $,  Newmans Method \cite{newmark1959method}
 % Improved versions of the Newmark method by introducing the numerically dissipative parameters such as the Hilber method and the Bossak Method \cite{hilber1977improved, wood1980alpha}. Combing these ideas the Generalized $\alpha $ method from which all the other methods can be derived \cite{chung1993time}.
+
+
 
 
