@@ -16,19 +16,59 @@ On the microscopic level on the bio membrane is there a ongoing hypothesis about
 special properties such as signalling and intercellular trafficking \cite{ levental2020lipid, hancock2006lipid, munro2003lipid, simons1997functional}. It turns out that the hypothesis can tested by modelling the problem as a separation problem using
 CH \cite{miller2020divide, garcke2016coupled, yushutin2019computational}.
 
-\subsection{The Equation}%
+\subsection{The Cahn Hilliard Equation}%
 \label{sub:the_equations}
 
-We can describe the Cahn-Hilliard equation comes in many variants depending on its application \cite{miranville2017cahn}. Let $\Omega  $ be a domain with boundary $\Gamma $. Assume that $u: \Omega  \to \mathbb{R}  $ and let $g_{1},g_{2}:\Omega  \to \mathbb{R} $.
+% \todo[inline]{ Derivation of the Cahn-Hilliard equation from its energy functional. }
+The Cahn-Hilliard equation comes in many variants depending on its application, but we will in this report on the binary mixture version \cite{miranville2017cahn}. Let $\Omega \subset  \mathbb{R} ^{d} $ be a compact set for $d=2,3$ with boundary
+$\Gamma $. We define the time duration parameter $T \in  [0,\infty) $ and the
+so-called unknown phase-field function as the
+mapping $u: \left[ 0,T \right] \times \Omega  \to \left[ -1,1 \right]  $, which is denoted as the local difference of a binary mixture of two concentrations $c_{A}, c_{B} \in \left[ 0,1\right] $ s.t. $u = c_{A} -c_{B}$ and $c_{A} + c_{B} = 1$. Remark that if there exist a
+local point so $u$ has the extreme value $-1$, then it implies that the particular point has $100\%$ concentration $c_{A}$ and vice-versa for $c_{B}$. On the other hand, if $u$ is zero it implies that the mixture is $50\% - 50\%$.
 
-\[
+First of all, to require local mass conservation we may enforce the continuity equation, that is \[
+\partial _{t} u + \nabla \cdot J = 0,
+\]
+where $J$ denotes the mass flux governed by the dynamics of $u$. Hence, this naturally leads the no-mass flux and the Neumann boundary conditions:
+\begin{equation}
+\label{eq:conservation}
     \begin{split}
-\partial _{t} u &= \Delta ( f(c) +  \Delta c)     \quad  \text{in } \Omega \\
-\partial _{n} u & = g_{1} \quad \text{ on } \Gamma  \\
-\partial _{n} \Delta u  & = g_{2} \quad \text{ on } \Gamma
+J \cdot n & = 0 \text{ on } \Gamma \times \left[ 0,T \right]\\
+\partial _{n} u & = 0 \text{ on } \Gamma \times \left[ 0,T \right]
+    \end{split}
+\end{equation}
+We can easily observe that we now have a global mass conservation, \[
+\frac{d}{dt} \int_{\Omega }^{} u dx = \int_{\Omega }^{}  \partial _{t} u dx=  -\int_{\Omega   }^{} \nabla \cdot J   dx   =  -\int_{\Gamma  }^{} J \cdot n    dS  = 0.
+\]
+Hence, for an initial function $ u( x,0) =  u_{0}$ must this conservation law hold, \[
+\int_{\Omega }^{} u ( x,t)  dx = \int_{\Omega }^{} u_{0} dx.
+\]
+
+For a isotropic
+binary mixture nonuniform, the standard Ginzburg-Landay free energy functional is given by \[
+E( u)  = \int_{\Omega }^{} \frac{\varepsilon ^2}{2} \abs{ \nabla u } ^2 + F( u) dx
+\]
+The nonlinear function $F( u) $ is denoted as the (Helmholtz) free energy density associated with the interaction dynamics between the components and thus comes in many forms depending on the thermodynamic properties, see \cite{miranville2017cahn}.
+However, we will in this article assume that $F( u) = ( 1 / 4 ) ( 1- u^2) ^{4} $.
+It is natural to seek a law of evolution with respect to time on the form \[
+\partial _{t} u = - d E( u)
+\]
+Here is the $\text{grad}_{0}$  operator denoted as the Gateaux differential where the functions $\forall v \in  C^{\infty}_{0}$ satisfies the conservation laws \eqref{eq:conservation}. Hence, it can be shown we have a Hilbert space $H$ of functions so \[
+\left< \text{grad}_{0} E( u) , v \right> = \lim_{\theta \to 0} \frac{1}{\theta } ( E( u + \theta  v) - E( u)  ) = ( -\Delta ( F'( c) - \varepsilon ^2 \Delta u ), v )_{H^{-1}}
+\]
+Hence we have $\text{grad}_{0} E( u) =  -\Delta ( F'( c) - \varepsilon ^2 \Delta u ) $. Thus we finally have the strong form Cahn-Hilliard, that is, \[
+    \begin{split}
+\partial _{t} u & = \Delta ( F'( c) - \varepsilon ^2 \Delta u ) \quad \text{ in } \Omega  \\
+\partial _{n} u &= 0 \quad \text{ on } \Gamma  \\
+\partial _{n} \Delta u &= 0 \quad \text{ on } \Gamma  \\
     \end{split}
 \]
-where $f( u) $ is a nonlinear functional.
+
+For details, see \cite[Ch 3. Mathematical derivation]{lee2014physical}.
+
+
+
+
 \todo[inline]{ Add a paragraph to describe the strong form of this problem and its boundary conditions. (Maybe a short derivation based on Energy functional?) }
 
 \subsection{Numerical Methods}%
