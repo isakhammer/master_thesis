@@ -34,8 +34,9 @@ The nonlinear function $F( u) $ is denoted as the (Helmholtz) free energy densit
 However, we will in this article assume that $F( u) = ( 1 / 4 ) ( 1- u^2) ^{4} $.
 We choose to define the chemical potential $\mu $ as the variational derivative,
 \[
-\mu = \frac{ \delta E( u) }{ \delta  u} = F'( u)  - \varepsilon ^{2} \Delta c .
+\mu = \frac{ \delta E( u) }{ \delta  u} = f( u)  - \varepsilon ^{2} \Delta c .
 \]
+where we used the notation $f( u) = F'( u) $.
 First of all, to require local mass conservation we may enforce the continuity equation, that is \[
 \partial _{t} u + \nabla \cdot \mathcal{J}  = 0,
 \]
@@ -47,16 +48,15 @@ where $J$ denotes the flux governed by the physical dynamics. Hence, this natura
 \partial _{n} u & = 0 \text{ on } \Gamma
     \end{split}
 \end{equation}
-
-Let us define the flux to be proportional to the gradient of the chemical energy, then is  $\mathcal{J} = - M  \nabla \mu  $.
+ A well accepted law for the flux  is to proportional to the gradient of the chemical energy, $\mathcal{J} = - M  \nabla \mu  $ for a parameter $M$.
 Thus, we finally have the strong form Cahn-Hilliard equation. Let $ u( x,0) =  u_{0}$ then is the dynamics on the form,
 
 \begin{equation}
 \label{eq:strongch}
     \begin{split}
-\partial _{t} u & = \Delta ( F'( c) - \varepsilon ^2 \Delta u ) \quad \text{in } \Omega  \\
-\partial _{n} u &= 0 \quad \text{ on } \Gamma  \\
-\partial _{n} \Delta u &= 0 \quad \text{ on } \Gamma  \\
+\partial _{t} u  = \Delta ( f( u)  - \varepsilon ^2 \Delta u ) &\quad \text{ in } \Omega  \\
+\partial _{n} u = 0 \quad &\text{ on } \Gamma  \\
+\partial _{n}(f( u)  - \varepsilon ^2 \Delta u )  = 0 \quad &\text{ on } \Gamma  \\
     \end{split}
 \end{equation}
 
@@ -66,11 +66,13 @@ Based on these laws and the boundary conditions, it becomes evident that the ene
 \frac{d}{dt} E( u)  \le  0 \text{ and }\frac{d}{dt} \int_{\Omega }^{}  u dx = 0.
     \end{split}
 \]
-Remark that the computation of the inequality does utilize the assumption of $M$ to be constant.
+Remark that the computation of the inequality does utilize the assumption of $M$ to be constant and both equations require $\partial _{n} \Delta u  = 0$.
 For details see \cite[Equation 17 ]{lee2014physical} and see \cite[Equation 1.7]{garcke2020weak}.
 This is useful since we expect $E( u( \cdot , t_{2}) ) \le  E( u( \cdot , t_{1}) ) $ for $0 < t_{1} < t_{2} $ and that the global mass is constant, \[
 \int_{\Omega }^{} u ( x,t)  dx = \int_{\Omega }^{} u_{0}(x)  dx.
 \]
+These properties are a theoretical key to prove existence, uniqueness and behaviour of the problem, and at least for our choice of $F( u) $ is the problem very mature mathematically. For instance, see \cite{abels2007convergence, cherfils2011cahn,
+elliott1986cahn}.
 
 \subsection{Numerical Methods}%
 \label{sub:numerical_methods}
