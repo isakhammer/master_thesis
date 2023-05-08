@@ -79,13 +79,8 @@ elliott1986cahn}.
 \label{sub:numerical_methods}
 
 \todo[inline]{ Describe the most common ways to solve this problem. FVM? FDM? FEM? One paragraph}
-
-First signs of finite element was in 1941 when Hrennikoff used the method solve problems in linear elasticity \cite{hrennikoff1941solution}. It then took offspring to applications in aerospace application in the 50's when it was formalized the method
-could solve dynamical problems on complex structures as a competitor to the finite difference method
-\cite{argyris1960energy, turner1956stiffness, liu2022eighty}. To expect good numerical results does he finite element methods requires a lot of DOFs and thus did the popularity climb with the rise of the supercomputers. Thus it has proven to be
-useful found a great variety of applications in multi-physics problems because of its simplicity based on the abstract mathematical generalisation of both functions spaces and computational domains.
-
 \todo[inline]{ Describe why we ended up with a finite element. What methods are used in FEM? Methods to handle the non-linearities? Methods for time discretization? Methods to handle smooth geometries? Methods to handle moving domains?}
+
 CIP formulation of the Cahn-Hilliard was presented in \cite{wells2006discontinuous} which avoids high derivatives along boundaries, thus no need for global $C^{1}$ elements.
 
 Alternatives to smooth boundaries is isogeometric analysis, which is based on NURBS, and does in fact handle complex geometries quite well \cite{hughes2005isogeometric}.
@@ -104,7 +99,10 @@ Improved versions of the Newmark method by introducing the numerically dissipati
 % \subsection{ODE integrators}%
 % \label{sub:ode_integrators}
 
-
+% First signs of finite element was in 1941 when Hrennikoff used the method solve problems in linear elasticity \cite{hrennikoff1941solution}. It then took offspring to applications in aerospace application in the 50's when it was formalized the method
+% could solve dynamical problems on complex structures as a competitor to the finite difference method
+% \cite{argyris1960energy, turner1956stiffness, liu2022eighty}. To expect good numerical results does he finite element methods requires a lot of DOFs and thus did the popularity climb with the rise of the supercomputers. Thus it has proven to be
+% useful found a great variety of applications in multi-physics problems because of its simplicity based on the abstract mathematical generalisation of both functions spaces and computational domains.
 
 \subsection{Outline of the report}%
 \label{sub:outline_of_the_report}
