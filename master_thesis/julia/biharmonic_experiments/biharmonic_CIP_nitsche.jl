@@ -261,17 +261,19 @@ function main()
     # %% Manufactured solution
     L, m, r = (1, 1, 1)
     u_ex(x) = (x[1]^2 + x[2]^2  - 1)^2*sin(2π*x[1])*cos(2π*x[2])
+    circle = true
+
     # u_ex(x) = 100*sin(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
     # u_ex(x) = 100*cos(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
+    # circle = false
     exact_sol = Solver.man_sol(u_ex)
-    circle = true
     solver_config = Solver.Config(exact_sol, circle)
 
     resultdir= "figures/biharmonic_CIP_nitsche/"*string(Dates.now())
     println(resultdir)
     mkpath(resultdir)
 
-    orders = [2,3,4]
+    orders = [2]
     # ns = [2^2, 2^3, 2^4, 2^5]
     ns = [2^2, 2^3, 2^4, 2^5, 2^6, 2^7]
     dirname = resultdir
@@ -280,5 +282,5 @@ function main()
 end
 
 
-# main()
+main()
 

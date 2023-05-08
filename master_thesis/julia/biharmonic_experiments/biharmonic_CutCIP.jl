@@ -57,9 +57,6 @@ module Solver
         # Set up interpolation mesh and function spaces
         Ω_act = Triangulation(cutgeo, ACTIVE)
 
-        # Set up interpolation mesh and function spaces
-        Ω_act = Triangulation(cutgeo, ACTIVE)
-
         # Construct function spaces
         V = TestFESpace(Ω_act, ReferenceFE(lagrangian, Float64, order), conformity=:H1)
         U = TrialFESpace(V)
@@ -274,8 +271,7 @@ function main()
     println(resultdir)
     mkpath(resultdir)
 
-    ns = [2^2, 2^3, 2^4, 2^5, 2^6, 2^7]
-    # ns = [2^2, 2^3, 2^4, 2^5, 2^6]
+    ns = [2^3, 2^4, 2^5, 2^6, 2^7, 2^8]
 
     @time convergence_analysis( order=2, ns=ns,  dirname=resultdir, u_ex=u_ex,)
 end
