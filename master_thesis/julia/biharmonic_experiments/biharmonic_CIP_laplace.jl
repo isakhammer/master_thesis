@@ -258,12 +258,12 @@ end
 function main()
 
     # %% Manufactured solution
-    L, m, r = (1, 1, 1)
+    L, m, r = (3.5, 1, 1)
     # u_ex(x) = (x[1]^2 + x[2]^2  - 1)^2*sin(2π*x[1])*cos(2π*x[2])
-    # u_ex(x) = 100*sin(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
-    u_ex(x) = 100*cos(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
+    u_ex(x) = 100*sin(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
+    # u_ex(x) = 100*cos(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
     exact_sol = Solver.man_sol(u_ex)
-    circle = false
+    circle = true
     solver_config = Solver.Config(exact_sol, circle)
 
     resultdir= "figures/biharmonic_CIP_nitsche/"*string(Dates.now())
