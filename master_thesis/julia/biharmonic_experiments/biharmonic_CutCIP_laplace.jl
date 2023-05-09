@@ -266,13 +266,13 @@ function translation_test(; dirname, u_ex )
     x0 = 0
     x1 = 0.5
     L = 1.11 + x1
-    n=2^5
+    n=2^6
     xs = LinRange(x0, x1, iterations)
 
     cond_numbers = Float64[]
 
     # EXPERIMENT WITH GHOST PENALTIES
-    println("\nTranslation test from x = $x0 to $x1;  iterations $iterations;  L = $L")
+    println("\nTranslation test from x = $x0 to $x1;  iterations $iterations;  L = $L, n=$n")
     for xi in xs
         sol = Solver.run( n=n, u_ex=u_ex, dirname=dirname,
                          grid_translation=xi, L=L, ghost_penalty=true)
@@ -284,7 +284,7 @@ function translation_test(; dirname, u_ex )
     Plots.savefig(p, dirname*"/ghost_cond.png")
 
     # EXPERIMENT WITH NO GHOST PENALTIES
-    println("\nTranslation no ghost penalty test from x = $x0 to $x1;  iterations $iterations;  L = $L")
+    println("\nTranslation no ghost penalty test from x = $x0 to $x1;  iterations $iterations;  L = $L, n=$n")
     cond_numbers = Float64[]
     for xi in xs
         sol = Solver.run( n=n, u_ex=u_ex, dirname=dirname,
