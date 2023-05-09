@@ -33,21 +33,24 @@ module Solver
     end
 
 
-    function run(; order, n, u_ex, dirname)
+    function run(; n, u_ex, dirname, L=1.11, grid_translation=0.0, ghost_penalty=true)
 
-        println("sim order ", order, " n ", n)
+        order = 2
         u_ex, f, ∇u_ex, ∇Δu_ex = man_sol(u_ex)
 
         # Background model
-        L = 1.11
-        domain = (-L, L, -L, L)
-        pmin = Point(-L, -L)
-        pmax = Point(L, L)
+        pmin = Point(-L+ grid_translation, -L)
+        pmax = Point(L + grid_translation, L)
+        bgorigin = ( pmin + pmax )/2
+
+        R  = 1.0
+        println("Sim: order=$order, n=$n, bg LxL=$(round(L, digits=2))x$(round(L, digits=2)), bgorigin=($(round(bgorigin[1], digits=2)),$(round(bgorigin[2], digits=2))), disk R=$(round(R, digits=1))")
+
+        # Background model
         partition = (n,n)
         bgmodel = CartesianDiscreteModel(pmin, pmax, partition)
 
         # Implicit geometry
-        R  = 1.0
         geo = disk(R)
 
         # Cut the background model
@@ -87,6 +90,11 @@ module Solver
         γg1 = 10/2
         γg2 = 0.1
 
+        if ghost_penalty != true
+            γg1 = 0.0
+            γg2 = 0.0
+        end
+
         # Mesh size
         h = L/n
 
@@ -119,16 +127,9 @@ module Solver
                 + ∫(g_1⊙(-(n_Γ⋅∇∇(v)⋅n_Γ) + (γ/h)*∇(v)⋅n_Γ)) * dΓ
                )
 
-        # Define of ghost penalties
-        if order >= 2
-            # g(u,v) = h^(-2)*(∫( (γg0/h)*jump(u)*jump(v)) * dFg +
-            #                   ∫( (γg1*h)*jump(n_Fg⋅∇(u))*jump(n_Fg⋅∇(v)) ) * dFg +
-            #                   ∫( (γg2*h^3)*jump_nn(u,n_Fg)*jump_nn(v,n_Fg) ) * dFg)
-            g(u,v) = h^(-2)*( ∫( (γg1*h)*jump(n_Fg⋅∇(u))*jump(n_Fg⋅∇(v)) ) * dFg +
-                              ∫( (γg2*h^3)*jump_nn(u,n_Fg)*jump_nn(v,n_Fg) ) * dFg)
-        else
-            println("Not supported order:", order)
-        end
+
+        g(u,v) = h^(-2)*( ∫( (γg1*h)*jump(n_Fg⋅∇(u))*jump(n_Fg⋅∇(v)) ) * dFg +
+                         ∫( (γg2*h^3)*jump_nn(u,n_Fg)*jump_nn(v,n_Fg) ) * dFg)
 
         A(u,v) = a(u,v) + g(u,v)
 
@@ -224,13 +225,13 @@ function generate_figures(;ns, el2s, eh1s, ehs_energy, cond_numbers, ndofs, dirn
 
 
     # Save the plot as a .png file using the GR backend
-    # Plots.gr()
-    Plots.pgfplotsx()
+    Plots.gr()
+    # Plots.pgfplotsx()
     Plots.savefig(p, filename*"_plot.png")
-    Plots.savefig(p, filename*"_plot.tex")
+    # Plots.savefig(p, filename*"_plot.tex")
 end
 
-function convergence_analysis(;order,  ns, dirname, u_ex)
+function convergence_analysis(; ns, dirname, u_ex)
 
     el2s = Float64[]
     eh1s = Float64[]
@@ -238,9 +239,10 @@ function convergence_analysis(;order,  ns, dirname, u_ex)
     cond_numbers = Float64[]
     ndofs = Float64[]
 
+    println("Convergence test", ns)
     for n in ns
 
-        sol = Solver.run( order=order, n=n, u_ex=u_ex, dirname=dirname)
+        sol = Solver.run(n=n, u_ex=u_ex, dirname=dirname)
 
         push!(el2s, sol.el2)
         push!(eh1s, sol.eh1)
@@ -253,19 +255,44 @@ function convergence_analysis(;order,  ns, dirname, u_ex)
 end
 
 
+function translation_test(; order=2,  dirname, u_ex )
+    iterations = 50
+    x0 = 0
+    x1 = 0.5
+    L = 1.11 + x1
+    n=2^5
+    xs = LinRange(x0, x1, iterations)
+
+    cond_numbers = Float64[]
+
+    # Experiment with no ghost penalties
+    println("\nTranslation test from x = $x0 to $x1;  iterations $iterations;  L = $L")
+    for xi in xs
+        sol = Solver.run( n=n, u_ex=u_ex, dirname=dirname, grid_translation=xi, L=L)
+        push!(cond_numbers, sol.cond_number)
+    end
+
+    Plots.gr()
+    p = Plots.plot(xs, cond_numbers, yscale=:log10, minorgrid=true)
+    Plots.savefig(p, dirname*"/ghost_cond.png")
+
+    # Experiment with no ghost penalties
+    println("\nTranslation no ghost penalty test from x = $x0 to $x1;  iterations $iterations;  L = $L")
+    cond_numbers = Float64[]
+    for xi in xs
+        sol = Solver.run( n=n, u_ex=u_ex, dirname=dirname, grid_translation=xi, L=L, ghost_penalty=false)
+        push!(cond_numbers, sol.cond_number)
+    end
+
+    Plots.gr()
+    p = Plots.plot(xs, cond_numbers, yscale=:log10, minorgrid=true)
+    Plots.savefig(p, dirname*"/standard_cond.png")
+end
 function main()
 
     # %% Manufactured solution
     L, m, r = (1, 1, 1)
-
-    # Examples that works badly
-    # u_ex(x) = sin(2π*x[1])*cos(2π*x[2])
-    # u_ex(x) = 100*sin(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
-    # u_ex(x) = 100*cos(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
-
-    # Good examples
-    u_ex(x) = (x[1]^2 + x[2]^2  - 1)^2*sin(2π*x[1])*cos(2π*x[2])
-    # u_ex(x) = (x[1]^2 + x[2]^2  - 1)^2
+    u_ex(x) = (x[1]^2 + x[2]^2  - 1)^2*100*cos(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
 
     resultdir= "figures/biharmonic_CutCIP/"*string(Dates.now())
     println(resultdir)
@@ -273,8 +300,9 @@ function main()
 
     ns = [2^3, 2^4, 2^5, 2^6, 2^7, 2^8]
 
-    @time convergence_analysis( order=2, ns=ns,  dirname=resultdir, u_ex=u_ex,)
-end
+    @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex)
+    @time translation_test(order=2, dirname=resultdir, u_ex=u_ex )
 
+end
 
 main()
