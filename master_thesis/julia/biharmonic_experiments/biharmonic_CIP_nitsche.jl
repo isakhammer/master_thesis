@@ -264,7 +264,7 @@ function main()
     # circle = true
 
     # u_ex(x) = 100*sin(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
-    # u_ex(x) = 100*cos(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
+    u_ex(x) = 100*cos(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
     circle = false
     exact_sol = Solver.man_sol(u_ex)
     solver_config = Solver.Config(exact_sol, circle)
