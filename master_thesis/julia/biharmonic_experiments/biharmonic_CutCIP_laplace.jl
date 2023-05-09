@@ -33,21 +33,22 @@ module Solver
     end
 
 
-    function run(; order, n, u_ex, dirname)
+    function run(; n, u_ex, dirname, L=1.11, grid_translation=0.0, ghost_penalty=true)
 
-        println("sim order ", order, " n ", n)
+        order = 2
         u_ex, f, ∇u_ex, ∇Δu_ex = man_sol(u_ex)
 
         # Background model
-        L = 1.11
-        domain = (-L, L, -L, L)
-        pmin = Point(-L, -L)
-        pmax = Point(L, L)
+        pmin = Point(-L+ grid_translation, -L)
+        pmax = Point(L + grid_translation, L)
+        bgorigin = ( pmin + pmax )/2
+
+        R  = 1.0
+        println("Sim: order=$order, n=$n, bg LxL=$(round(L, digits=2))x$(round(L, digits=2)), bgorigin=($(round(bgorigin[1], digits=2)),$(round(bgorigin[2], digits=2))), disk R=$(round(R, digits=1))")
+
+        # Background model
         partition = (n,n)
         bgmodel = CartesianDiscreteModel(pmin, pmax, partition)
-
-        # Implicit geometry
-        R  = 1.0
         geo = disk(R)
 
         # Cut the background model
@@ -161,8 +162,6 @@ module Solver
 
         vtkdirname =dirname*"/order_"*string( order )*"_n_"*string(n)
         mkpath(vtkdirname)
-        # dirname = vtkdirname * "order_" * string(order) * "_n_" * string(n)
-
 
         # Write out models and computational domains for inspection
         writevtk(bgmodel,   vtkdirname*"/model")
@@ -229,10 +228,10 @@ function generate_figures(;ns, el2s, eh1s, ehs_energy, cond_numbers, ndofs, dirn
 
 
     # Save the plot as a .png file using the GR backend
-    # Plots.gr()
-    # Plots.savefig(p, filename*"_plot.png")
-    Plots.pgfplotsx()
-    Plots.savefig(p, filename*"_plot.tex")
+    Plots.gr()
+    Plots.savefig(p, filename*"_plot.png")
+    # Plots.pgfplotsx()
+    # Plots.savefig(p, filename*"_plot.tex")
 end
 
 function convergence_analysis(;order,  ns, dirname, u_ex)
@@ -245,7 +244,7 @@ function convergence_analysis(;order,  ns, dirname, u_ex)
 
     for n in ns
 
-        sol = Solver.run( order=order, n=n, u_ex=u_ex, dirname=dirname)
+        sol = Solver.run(n=n, u_ex=u_ex, dirname=dirname)
 
         push!(el2s, sol.el2)
         push!(eh1s, sol.eh1)
@@ -257,6 +256,41 @@ function convergence_analysis(;order,  ns, dirname, u_ex)
                      cond_numbers=cond_numbers, ndofs=ndofs, dirname=dirname)
 end
 
+function translation_test(; dirname, u_ex )
+    iterations = 50
+    x0 = 0
+    x1 = 0.5
+    L = 1.11 + x1
+    n=2^5
+    xs = LinRange(x0, x1, iterations)
+
+    cond_numbers = Float64[]
+
+    # EXPERIMENT WITH GHOST PENALTIES
+    println("\nTranslation test from x = $x0 to $x1;  iterations $iterations;  L = $L")
+    for xi in xs
+        sol = Solver.run( n=n, u_ex=u_ex, dirname=dirname,
+                         grid_translation=xi, L=L, ghost_penalty=true)
+        push!(cond_numbers, sol.cond_number)
+    end
+
+    Plots.gr()
+    p = Plots.plot(xs, cond_numbers, yscale=:log10, minorgrid=true)
+    Plots.savefig(p, dirname*"/ghost_cond.png")
+
+    # EXPERIMENT WITH NO GHOST PENALTIES
+    println("\nTranslation no ghost penalty test from x = $x0 to $x1;  iterations $iterations;  L = $L")
+    cond_numbers = Float64[]
+    for xi in xs
+        sol = Solver.run( n=n, u_ex=u_ex, dirname=dirname,
+                         grid_translation=xi, L=L, ghost_penalty=false)
+        push!(cond_numbers, sol.cond_number)
+    end
+
+    Plots.gr()
+    p = Plots.plot(xs, cond_numbers, yscale=:log10, minorgrid=true)
+    Plots.savefig(p, dirname*"/standard_cond.png")
+end
 
 function main()
 
@@ -280,6 +314,7 @@ function main()
     # ns = [2^2, 2^3, 2^4, 2^5, 2^6]
 
     @time convergence_analysis( order=2, ns=ns,  dirname=resultdir, u_ex=u_ex,)
+    @time translation_test(dirname=resultdir, u_ex=u_ex )
 end
 
 

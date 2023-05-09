@@ -90,7 +90,7 @@ module Solver
         γg1 = 10/2
         γg2 = 0.1
 
-        if ghost_penalty != true
+        if ghost_penalty == false
             γg1 = 0.0
             γg2 = 0.0
         end
@@ -255,7 +255,7 @@ function convergence_analysis(; ns, dirname, u_ex)
 end
 
 
-function translation_test(; order=2,  dirname, u_ex )
+function translation_test(; dirname, u_ex )
     iterations = 50
     x0 = 0
     x1 = 0.5
@@ -265,10 +265,11 @@ function translation_test(; order=2,  dirname, u_ex )
 
     cond_numbers = Float64[]
 
-    # Experiment with no ghost penalties
+    # EXPERIMENT WITH GHOST PENALTIES
     println("\nTranslation test from x = $x0 to $x1;  iterations $iterations;  L = $L")
     for xi in xs
-        sol = Solver.run( n=n, u_ex=u_ex, dirname=dirname, grid_translation=xi, L=L)
+        sol = Solver.run( n=n, u_ex=u_ex, dirname=dirname,
+                         grid_translation=xi, L=L, ghost_penalty=true)
         push!(cond_numbers, sol.cond_number)
     end
 
@@ -276,11 +277,12 @@ function translation_test(; order=2,  dirname, u_ex )
     p = Plots.plot(xs, cond_numbers, yscale=:log10, minorgrid=true)
     Plots.savefig(p, dirname*"/ghost_cond.png")
 
-    # Experiment with no ghost penalties
+    # EXPERIMENT WITH NO GHOST PENALTIES
     println("\nTranslation no ghost penalty test from x = $x0 to $x1;  iterations $iterations;  L = $L")
     cond_numbers = Float64[]
     for xi in xs
-        sol = Solver.run( n=n, u_ex=u_ex, dirname=dirname, grid_translation=xi, L=L, ghost_penalty=false)
+        sol = Solver.run( n=n, u_ex=u_ex, dirname=dirname,
+                         grid_translation=xi, L=L, ghost_penalty=false)
         push!(cond_numbers, sol.cond_number)
     end
 
@@ -288,6 +290,8 @@ function translation_test(; order=2,  dirname, u_ex )
     p = Plots.plot(xs, cond_numbers, yscale=:log10, minorgrid=true)
     Plots.savefig(p, dirname*"/standard_cond.png")
 end
+
+
 function main()
 
     # %% Manufactured solution
@@ -301,7 +305,7 @@ function main()
     ns = [2^3, 2^4, 2^5, 2^6, 2^7, 2^8]
 
     @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex)
-    @time translation_test(order=2, dirname=resultdir, u_ex=u_ex )
+    @time translation_test(dirname=resultdir, u_ex=u_ex )
 
 end
 
