@@ -88,6 +88,11 @@ module Solver
         γg1 = 10/2
         γg2 = 0.1
 
+        if ghost_penalty == false
+            γg1 = 0.0
+            γg2 = 0.0
+        end
+
         # Mesh size
         h = L/n
 
@@ -234,7 +239,7 @@ function generate_figures(;ns, el2s, eh1s, ehs_energy, cond_numbers, ndofs, dirn
     # Plots.savefig(p, filename*"_plot.tex")
 end
 
-function convergence_analysis(;order,  ns, dirname, u_ex)
+function convergence_analysis(; ns, dirname, u_ex)
 
     el2s = Float64[]
     eh1s = Float64[]
@@ -313,7 +318,7 @@ function main()
     ns = [2^2, 2^3, 2^4, 2^5, 2^6, 2^7]
     # ns = [2^2, 2^3, 2^4, 2^5, 2^6]
 
-    @time convergence_analysis( order=2, ns=ns,  dirname=resultdir, u_ex=u_ex,)
+    @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex,)
     @time translation_test(dirname=resultdir, u_ex=u_ex )
 end
 
