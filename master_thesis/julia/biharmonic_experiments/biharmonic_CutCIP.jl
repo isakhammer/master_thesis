@@ -298,7 +298,7 @@ function translation_test(; dirname, u_ex )
         return results
     end
 
-    function create_plot_from_results(results, δs, dirname)
+    function create_plot_from_results(results, δs, dirname, prefix)
         function sci_str(number)
             if number == 0
                 return "\$ 0.0 \\cdot 10^{0} \$"
@@ -352,24 +352,21 @@ function translation_test(; dirname, u_ex )
         Plots.xlabel!(p4, L"$\delta$")
         Plots.ylabel!(p4, L"e_ah")
 
-        Plots.savefig(p1, dirname*"/cond_trans.png")
-        Plots.savefig(p2, dirname*"/l2_trans.png")
-        Plots.savefig(p3, dirname*"/h1_trans.png")
-        Plots.savefig(p4, dirname*"/ah_trans.png")
+        Plots.savefig(p1, dirname*"/$prefix"*"cond_trans.png")
+        Plots.savefig(p2, dirname*"/$prefix"*"l2_trans.png")
+        Plots.savefig(p3, dirname*"/$prefix"*"h1_trans.png")
+        Plots.savefig(p4, dirname*"/$prefix"*"ah_trans.png")
         return
     end
 
-    # No penlaty check
+    # No penalty check
     param_list = [
         ((10., 5., 0.1), "blue"),
         ((10., 0., 0.), "red")
     ]
 
-    plotdir = dirname*"/no_penalty"
-    mkpath(plotdir)
     results = run_simulations(param_list, δs, L, n)
-    create_plot_from_results(results, δs, plotdir)
-
+    create_plot_from_results(results, δs, dirname, "no_penalty")
 
     # Base params
     σ = [10^6, 10^5, 10^4, 10^3, 10^2, 10^-2, 10^-3, 10^-4, 10^-5, 10^-6]
@@ -388,10 +385,8 @@ function translation_test(; dirname, u_ex )
                   ((10., 5., 0.1 * σ[10]), "lime"),
                  ]
 
-    plotdir = dirname*"/parameter_sweep_g2"
-    mkpath(plotdir)
     results = run_simulations(param_list, δs, L, n)
-    create_plot_from_results(results, δs, plotdir)
+    create_plot_from_results(results, δs, dirname, "sweep_g2")
 
     # Parameter Sweep γg1
     param_list = [
@@ -407,10 +402,8 @@ function translation_test(; dirname, u_ex )
                   ((10., 5. * σ[10], 0.1), "lime"),
                  ]
 
-    plotdir = dirname*"/parameter_sweep_g1"
-    mkpath(plotdir)
     results = run_simulations(param_list, δs, L, n)
-    create_plot_from_results(results, δs, plotdir)
+    create_plot_from_results(results, δs, dirname, "sweep_g1")
 
     # Parameter Sweep γg1 and γg2
     param_list = [
@@ -426,10 +419,8 @@ function translation_test(; dirname, u_ex )
                   ((10., 5.0*σ[10], 0.1 * σ[10]), "lime"),
                  ]
 
-    plotdir = dirname*"/parameter_sweep_g1_g2"
-    mkpath(plotdir)
     results = run_simulations(param_list, δs, L, n)
-    create_plot_from_results(results, δs, plotdir)
+    create_plot_from_results(results, δs, dirname, "sweep_g1_g2")
 
 end
 
