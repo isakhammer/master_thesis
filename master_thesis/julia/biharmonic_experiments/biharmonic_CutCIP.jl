@@ -33,14 +33,16 @@ module Solver
     end
 
 
-    function run(; n, u_ex, dirname, L=1.11, grid_translation=0.0, ghost_penalty=true)
+    function run(; n, u_ex, dirname, L=1.11, δ=0.0, ghost_penalty=true, γ=10, γg1=5, γg2=0.1)
 
         order = 2
         u_ex, f, ∇u_ex, ∇Δu_ex = man_sol(u_ex)
 
-        # Background model
-        pmin = Point(-L+ grid_translation, -L)
-        pmax = Point(L + grid_translation, L)
+        # Background model (translated)
+        θ_δ = 45
+        r_δ = δ*Point(cos(θ_δ),sin(θ_δ))
+        pmin = Point(-L, -L) + r_δ
+        pmax = Point(L , L) + r_δ
         bgorigin = ( pmin + pmax )/2
 
         R  = 1.0
@@ -310,8 +312,8 @@ function main()
 
     ns = [2^3, 2^4, 2^5, 2^6, 2^7, 2^8]
 
-    # @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex)
-    @time translation_test(dirname=resultdir, u_ex=u_ex )
+    @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex)
+    # @time translation_test(dirname=resultdir, u_ex=u_ex )
 
 end
 
