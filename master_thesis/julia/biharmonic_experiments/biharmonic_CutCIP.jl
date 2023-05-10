@@ -248,8 +248,18 @@ function convergence_analysis(; ns, dirname, u_ex)
 end
 
 
+# Custom struct to hold parameters, color, and data
+struct SimulationData
+    params::Tuple{Float64, Float64, Float64}
+    color::String
+    cond_numbers::Vector{Float64}
+    el2s::Vector{Float64}
+    eh1s::Vector{Float64}
+    ehs_energy::Vector{Float64}
+end
+
 function translation_test(; dirname, u_ex )
-    iterations = 20
+    iterations = 5
     δ1 = 0
     δ2 = 0.2
     L = 1.11 + δ2
@@ -274,42 +284,55 @@ function translation_test(; dirname, u_ex )
         end
         cond_numbers = [number > 1e23 ? 1e23 : number for number in cond_numbers] #ceiling cond numbers
         return cond_numbers, el2s, eh1s, ehs_energy
-
     end
 
-    function sci_str(number)
-        if number == 0
-            return "\$ 0.0 \\cdot 10^{0} \$"
-        else
-            exp = round(log10(abs(number)))
-            mantissa = number / 10^exp
-            return @sprintf("\$%.1f \\cdot 10^{%d}\$", mantissa, exp)
+    function run_simulations(param_list, δs, L, n)
+        results = Vector{SimulationData}()
+
+        for (params, color) in param_list
+            γ, γg1, γg2 = params
+            cond_numbers, el2s, eh1s, ehs_energy = translation_solve(δs=δs, L=L, n=n, γ=γ, γg1=γg1, γg2=γg2)
+            push!(results, SimulationData(params, color, cond_numbers, el2s, eh1s, ehs_energy))
         end
+
+        return results
     end
 
-    # Create plot
-    Plots.gr()
-    p = Plots.plot(legend=:outertopright,legendtitle=L"(\gamma, \gamma_1, \gamma_2)", yscale=:log10, minorgrid=false)
+    function create_plot_from_results(results, δs)
+        function sci_str(number)
+            if number == 0
+                return "\$ 0.0 \\cdot 10^{0} \$"
+            else
+                exp = round(log10(abs(number)))
+                mantissa = number / 10^exp
+                return @sprintf("\$%.1f \\cdot 10^{%d}\$", mantissa, exp)
+            end
+        end
+        Plots.gr()
+        p = Plots.plot(legend=:outertopright, legendtitle=L"(\gamma, \gamma_1, \gamma_2)", yscale=:log10, minorgrid=false)
 
-    # First plot
-    γ, γg1, γg2 = (10., 5., 0.1)
-    cond_numbers, el2s, eh1s, ehs_energy = translation_solve(δs=δs, L=L, n=n, γ=γ, γg1=γg1, γg2=γg2)
-    Plots.plot!(p, δs, cond_numbers, label=L" %$(sci_str(γ)), %$(sci_str(γg1)), %$( sci_str(γg2)   ) ")
-    Plots.scatter!(p, δs, cond_numbers, primary=false, markerstrokealpha=0.4, markersize=3)
+        for sim_data in results
+            γ, γg1, γg2 = sim_data.params
+            Plots.plot!(p, δs, sim_data.cond_numbers, label=L" %$(sci_str(γ)), %$(sci_str(γg1)), %$( sci_str(γg2) ) ", color=sim_data.color)
+            Plots.scatter!(p, δs, sim_data.cond_numbers, primary=false, markerstrokealpha=0.4, markersize=3, color=sim_data.color)
+        end
 
-    # Second plot
-    γ, γg1, γg2 = (10., 0, 0)
-    cond_numbers, el2s, eh1s, ehs_energy = translation_solve(δs=δs, L=L, n=n, γ=γ, γg1=γg1, γg2=γg2)
-    Plots.plot!(p, δs, cond_numbers, label=L" %$(sci_str(γ)), %$(sci_str(γg1)), %$( sci_str(γg2)   ) ")
-    Plots.scatter!(p, δs, cond_numbers, primary=false, markerstrokealpha=0.4, markersize=3)
+        Plots.xlabel!(p, L"$\delta$")
+        Plots.ylabel!(p, L"$\kappa(A)$")
+        Plots.ylims!(p, (1e5, 1e25)) # Set the y-axis range
 
-    # End config  plot
-    Plots.xlabel!(p, L"$\delta$")
-    Plots.ylabel!(p, L"$\kappa(A)$")
-    Plots.ylims!(p, (1e5, 1e25)) # Set the y-axis range
+        return p
+    end
 
-    Plots.savefig(p, dirname*"/g$(γ)_no_ghost_translation_test.png")
+    # Usage:
+    param_list = [
+        ((10., 5., 0.1), "blue"),
+        ((10., 0., 0.), "red")
+    ] # Add more parameter tuples and colors as needed
 
+    results = run_simulations(param_list, δs, L, n)
+    plot = create_plot_from_results(results, δs)
+    Plots.savefig(plot, dirname*"/condition_numbers_simulation.png")
 
 end
 
