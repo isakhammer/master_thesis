@@ -298,7 +298,7 @@ function translation_test(; dirname, u_ex )
         return results
     end
 
-    function create_plot_from_results(results, δs)
+    function create_plot_from_results(results, δs, dirname)
         function sci_str(number)
             if number == 0
                 return "\$ 0.0 \\cdot 10^{0} \$"
@@ -308,20 +308,55 @@ function translation_test(; dirname, u_ex )
                 return @sprintf("\$%.1f \\cdot 10^{%d}\$", mantissa, exp)
             end
         end
+
         Plots.gr()
-        p = Plots.plot(legend=:outertopright, legendtitle=L"(\gamma, \gamma_1, \gamma_2)", yscale=:log10, minorgrid=false)
+
+        # Plot condition numbers
+        p1 = Plots.plot(legend=:outertopright, legendtitle=L"(\gamma, \gamma_1, \gamma_2)", yscale=:log10, minorgrid=false)
+
+        # Plot L2 error
+        p2 = Plots.plot(legend=:outertopright, legendtitle=L"(\gamma, \gamma_1, \gamma_2)", yscale=:log2, minorgrid=false)
+
+        # Plot H1 error
+        p3 = Plots.plot(legend=:outertopright, legendtitle=L"(\gamma, \gamma_1, \gamma_2)", yscale=:log2, minorgrid=false)
+
+        # Plot Energy error
+        p4 = Plots.plot(legend=:outertopright, legendtitle=L"(\gamma, \gamma_1, \gamma_2)", yscale=:log2, minorgrid=false)
 
         for sim_data in results
             γ, γg1, γg2 = sim_data.params
-            Plots.plot!(p, δs, sim_data.cond_numbers, label=L" %$(sci_str(γ)), %$(sci_str(γg1)), %$( sci_str(γg2) ) ", color=sim_data.color)
-            Plots.scatter!(p, δs, sim_data.cond_numbers, primary=false, markerstrokealpha=0.4, markersize=3, color=sim_data.color)
+            label_text = L" %$(sci_str(γ)), %$(sci_str(γg1)), %$( sci_str(γg2) ) "
+            Plots.plot!(p1, δs, sim_data.cond_numbers, label=label_text, color=sim_data.color)
+            Plots.scatter!(p1, δs, sim_data.cond_numbers, primary=false, markerstrokealpha=0.4, markersize=3, color=sim_data.color)
+
+            Plots.plot!(p2, δs, sim_data.el2s, label=label_text, color=sim_data.color)
+            Plots.scatter!(p2, δs, sim_data.el2s, primary=false, markerstrokealpha=0.4, markersize=3, color=sim_data.color)
+
+            Plots.plot!(p3, δs, sim_data.eh1s, label=label_text, color=sim_data.color)
+            Plots.scatter!(p3, δs, sim_data.eh1s, primary=false, markerstrokealpha=0.4, markersize=3, color=sim_data.color)
+
+            Plots.plot!(p4, δs, sim_data.ehs_energy, label=label_text, color=sim_data.color)
+            Plots.scatter!(p4, δs, sim_data.ehs_energy, primary=false, markerstrokealpha=0.4, markersize=3, color=sim_data.color)
         end
 
-        Plots.xlabel!(p, L"$\delta$")
-        Plots.ylabel!(p, L"$\kappa(A)$")
-        Plots.ylims!(p, (1e5, 1e25)) # Set the y-axis range
+        Plots.xlabel!(p1, L"$\delta$")
+        Plots.ylabel!(p1, L"$\kappa(A)$")
+        Plots.ylims!(p1, (1e5, 1e25))
 
-        return p
+        Plots.xlabel!(p2, L"$\delta$")
+        Plots.ylabel!(p2, L"el2")
+
+        Plots.xlabel!(p3, L"$\delta$")
+        Plots.ylabel!(p3, L"eh1")
+
+        Plots.xlabel!(p4, L"$\delta$")
+        Plots.ylabel!(p4, L"e_ah")
+
+        Plots.savefig(p1, dirname*"/cond_trans.png")
+        Plots.savefig(p2, dirname*"/l2_trans.png")
+        Plots.savefig(p3, dirname*"/h1_trans.png")
+        Plots.savefig(p4, dirname*"/ah_trans.png")
+        return
     end
 
     # Usage:
@@ -331,8 +366,7 @@ function translation_test(; dirname, u_ex )
     ] # Add more parameter tuples and colors as needed
 
     results = run_simulations(param_list, δs, L, n)
-    plot = create_plot_from_results(results, δs)
-    Plots.savefig(plot, dirname*"/condition_numbers_simulation.png")
+    create_plot_from_results(results, δs, dirname)
 
 end
 
