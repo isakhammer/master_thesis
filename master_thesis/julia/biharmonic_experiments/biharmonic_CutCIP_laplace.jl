@@ -257,9 +257,9 @@ end
 
 
 function translation_test(; dirname, u_ex )
-    iterations = 5
+    iterations = 100
     δ1 = 0
-    δ2 = 0.2
+    δ2 = 0.5
     L = 1.11 + δ2
     n=2^6
     δs = LinRange(δ1, δ2, iterations)
@@ -315,21 +315,19 @@ function translation_test(; dirname, u_ex )
         # Merge L2 error, H1 error, and Energy error into one plot
         p2 = Plots.plot(legend=:outertopright, legendtitle=L"(\gamma, \gamma_1, \gamma_2)", yscale=:log10, minorgrid=false)
 
-        linestyles = [:solid, :dash, :dot]
-
         for sim_data in results
             γ, γg1, γg2 = sim_data.params
             label_text = L" %$(sci_str(γ)), %$(sci_str(γg1)), %$( sci_str(γg2) ) "
             Plots.plot!(p1, δs, sim_data.cond_numbers, label=label_text, color=sim_data.color)
             Plots.scatter!(p1, δs, sim_data.cond_numbers, primary=false, markerstrokealpha=0.4, markersize=1, color=sim_data.color)
 
-            Plots.plot!(p2, δs, sim_data.el2s, label=label_text, color=sim_data.color, linestyle=linestyles[1])
+            Plots.plot!(p2, δs, sim_data.el2s, label=label_text, color=sim_data.color, linestyle=:solid)
             Plots.scatter!(p2, δs, sim_data.el2s, primary=false, markerstrokealpha=0.4, markersize=1, color=sim_data.color)
 
-            Plots.plot!(p2, δs, sim_data.eh1s, label=nothing, color=sim_data.color, linestyle=linestyles[2])
+            Plots.plot!(p2, δs, sim_data.eh1s, label=nothing, color=sim_data.color, linestyle=:dash)
             Plots.scatter!(p2, δs, sim_data.eh1s, primary=false, markerstrokealpha=0.4, markersize=1, color=sim_data.color)
 
-            Plots.plot!(p2, δs, sim_data.ehs_energy, label=nothing, color=sim_data.color, linestyle=linestyles[3])
+            Plots.plot!(p2, δs, sim_data.ehs_energy, label=nothing, color=sim_data.color, linestyle=:dot)
             Plots.scatter!(p2, δs, sim_data.ehs_energy, primary=false, markerstrokealpha=0.4, markersize=1, color=sim_data.color)
 
         end
@@ -339,11 +337,10 @@ function translation_test(; dirname, u_ex )
         Plots.ylims!(p1, (1e5, 1e25))
 
         Plots.xlabel!(p2, L"$\delta$")
-        Plots.ylabel!(p2, L"errors")
+        Plots.ylabel!(p2, L"$\Vert e \Vert_{L^2,solid} $, $\Vert e \Vert_{H^1,dash} $, $\Vert e \Vert_{ah,*,dot}$")
 
         Plots.savefig(p1, dirname*"/$prefix"*"_cond_trans.png")
         Plots.savefig(p2, dirname*"/$prefix"*"_merged_errors.png")
-        return
     end
 
     # No penlaty check
