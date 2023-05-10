@@ -292,7 +292,8 @@ function translation_test(; dirname, u_ex )
     Plots.ylabel!(p, L"\kappa(A)")
     Plots.ylims!(p, (1e5, 1e25)) # Set the y-axis range
 
-    Plots.savefig(p, dirname*"/translation_test.png")
+    Plots.savefig(p, dirname*"/g$(γ)_no_ghost_translation_test.png")
+
 
 end
 
