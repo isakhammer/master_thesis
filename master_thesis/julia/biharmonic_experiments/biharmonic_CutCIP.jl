@@ -327,16 +327,16 @@ function translation_test(; dirname, u_ex )
             γ, γg1, γg2 = sim_data.params
             label_text = L" %$(sci_str(γ)), %$(sci_str(γg1)), %$( sci_str(γg2) ) "
             Plots.plot!(p1, δs, sim_data.cond_numbers, label=label_text, color=sim_data.color)
-            Plots.scatter!(p1, δs, sim_data.cond_numbers, primary=false, markerstrokealpha=0.4, markersize=3, color=sim_data.color)
+            Plots.scatter!(p1, δs, sim_data.cond_numbers, primary=false, markerstrokealpha=0.4, markersize=1, color=sim_data.color)
 
             Plots.plot!(p2, δs, sim_data.el2s, label=label_text, color=sim_data.color)
-            Plots.scatter!(p2, δs, sim_data.el2s, primary=false, markerstrokealpha=0.4, markersize=3, color=sim_data.color)
+            Plots.scatter!(p2, δs, sim_data.el2s, primary=false, markerstrokealpha=0.4, markersize=1, color=sim_data.color)
 
             Plots.plot!(p3, δs, sim_data.eh1s, label=label_text, color=sim_data.color)
-            Plots.scatter!(p3, δs, sim_data.eh1s, primary=false, markerstrokealpha=0.4, markersize=3, color=sim_data.color)
+            Plots.scatter!(p3, δs, sim_data.eh1s, primary=false, markerstrokealpha=0.4, markersize=1, color=sim_data.color)
 
             Plots.plot!(p4, δs, sim_data.ehs_energy, label=label_text, color=sim_data.color)
-            Plots.scatter!(p4, δs, sim_data.ehs_energy, primary=false, markerstrokealpha=0.4, markersize=3, color=sim_data.color)
+            Plots.scatter!(p4, δs, sim_data.ehs_energy, primary=false, markerstrokealpha=0.4, markersize=1, color=sim_data.color)
         end
 
         Plots.xlabel!(p1, L"$\delta$")
@@ -352,10 +352,10 @@ function translation_test(; dirname, u_ex )
         Plots.xlabel!(p4, L"$\delta$")
         Plots.ylabel!(p4, L"e_ah")
 
-        Plots.savefig(p1, dirname*"/$prefix"*"cond_trans.png")
-        Plots.savefig(p2, dirname*"/$prefix"*"l2_trans.png")
-        Plots.savefig(p3, dirname*"/$prefix"*"h1_trans.png")
-        Plots.savefig(p4, dirname*"/$prefix"*"ah_trans.png")
+        Plots.savefig(p1, dirname*"/$prefix"*"_cond_trans.png")
+        Plots.savefig(p2, dirname*"/$prefix"*"_l2_trans.png")
+        Plots.savefig(p3, dirname*"/$prefix"*"_h1_trans.png")
+        Plots.savefig(p4, dirname*"/$prefix"*"_ah_trans.png")
         return
     end
 
@@ -436,7 +436,7 @@ function main()
 
     ns = [2^3, 2^4, 2^5, 2^6, 2^7]
 
-    # @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex)
+    @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex)
     @time translation_test(dirname=resultdir, u_ex=u_ex )
 
 end
