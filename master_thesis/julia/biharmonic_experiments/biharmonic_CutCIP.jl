@@ -315,13 +315,13 @@ function translation_test(; dirname, u_ex )
         p1 = Plots.plot(legend=:outertopright, legendtitle=L"(\gamma, \gamma_1, \gamma_2)", yscale=:log10, minorgrid=false)
 
         # Plot L2 error
-        p2 = Plots.plot(legend=:outertopright, legendtitle=L"(\gamma, \gamma_1, \gamma_2)", yscale=:log2, minorgrid=false)
+        p2 = Plots.plot(legend=:outertopright, legendtitle=L"(\gamma, \gamma_1, \gamma_2)", yscale=:log10, minorgrid=false)
 
         # Plot H1 error
-        p3 = Plots.plot(legend=:outertopright, legendtitle=L"(\gamma, \gamma_1, \gamma_2)", yscale=:log2, minorgrid=false)
+        p3 = Plots.plot(legend=:outertopright, legendtitle=L"(\gamma, \gamma_1, \gamma_2)", yscale=:log10, minorgrid=false)
 
         # Plot Energy error
-        p4 = Plots.plot(legend=:outertopright, legendtitle=L"(\gamma, \gamma_1, \gamma_2)", yscale=:log2, minorgrid=false)
+        p4 = Plots.plot(legend=:outertopright, legendtitle=L"(\gamma, \gamma_1, \gamma_2)", yscale=:log10, minorgrid=false)
 
         for sim_data in results
             γ, γg1, γg2 = sim_data.params
