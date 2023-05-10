@@ -40,7 +40,7 @@ module Solver
         u_ex, f, ∇u_ex, ∇Δu_ex = man_sol(u_ex)
 
         # Background model (translated)
-        θ_δ = 45
+        θ_δ = 0*( π/4 )
         r_δ = δ*Point(cos(θ_δ),sin(θ_δ))
         pmin = Point(-L, -L) + r_δ
         pmax = Point(L , L) + r_δ
@@ -359,14 +359,77 @@ function translation_test(; dirname, u_ex )
         return
     end
 
-    # Usage:
+    # No penlaty check
     param_list = [
         ((10., 5., 0.1), "blue"),
         ((10., 0., 0.), "red")
-    ] # Add more parameter tuples and colors as needed
+    ]
 
+    plotdir = dirname*"/no_penalty"
+    mkpath(plotdir)
     results = run_simulations(param_list, δs, L, n)
-    create_plot_from_results(results, δs, dirname)
+    create_plot_from_results(results, δs, plotdir)
+
+
+    # Base params
+    σ = [10^6, 10^5, 10^4, 10^3, 10^2, 10^-2, 10^-3, 10^-4, 10^-5, 10^-6]
+
+    # Parameter Sweep γg2
+    param_list = [
+                  ((10., 5., 0.1 * σ[1]), "blue"),
+                  ((10., 5., 0.1 * σ[2]), "red"),
+                  ((10., 5., 0.1 * σ[3]), "green"),
+                  ((10., 5., 0.1 * σ[4]), "purple"),
+                  ((10., 5., 0.1 * σ[5]), "orange"),
+                  ((10., 5., 0.1 * σ[6]), "cyan"),
+                  ((10., 5., 0.1 * σ[7]), "brown"),
+                  ((10., 5., 0.1 * σ[8]), "magenta"),
+                  ((10., 5., 0.1 * σ[9]), "pink"),
+                  ((10., 5., 0.1 * σ[10]), "lime"),
+                 ]
+
+    plotdir = dirname*"/parameter_sweep_g2"
+    mkpath(plotdir)
+    results = run_simulations(param_list, δs, L, n)
+    create_plot_from_results(results, δs, plotdir)
+
+    # Parameter Sweep γg1
+    param_list = [
+                  ((10., 5. * σ[1] , 0.1), "blue"),
+                  ((10., 5. * σ[2] , 0.1), "red"),
+                  ((10., 5. * σ[3] , 0.1), "green"),
+                  ((10., 5. * σ[4] , 0.1), "purple"),
+                  ((10., 5. * σ[5] , 0.1), "orange"),
+                  ((10., 5. * σ[6] , 0.1), "cyan"),
+                  ((10., 5. * σ[7] , 0.1), "brown"),
+                  ((10., 5. * σ[8] , 0.1), "magenta"),
+                  ((10., 5. * σ[9] , 0.1), "pink"),
+                  ((10., 5. * σ[10], 0.1), "lime"),
+                 ]
+
+    plotdir = dirname*"/parameter_sweep_g1"
+    mkpath(plotdir)
+    results = run_simulations(param_list, δs, L, n)
+    create_plot_from_results(results, δs, plotdir)
+
+    # Parameter Sweep γg1 and γg2
+    param_list = [
+                  ((10., 5.0*σ[1] , 0.1 * σ[1] ), "blue"),
+                  ((10., 5.0*σ[2] , 0.1 * σ[2] ), "red"),
+                  ((10., 5.0*σ[3] , 0.1 * σ[3] ), "green"),
+                  ((10., 5.0*σ[4] , 0.1 * σ[4] ), "purple"),
+                  ((10., 5.0*σ[5] , 0.1 * σ[5] ), "orange"),
+                  ((10., 5.0*σ[6] , 0.1 * σ[6] ), "cyan"),
+                  ((10., 5.0*σ[7] , 0.1 * σ[7] ), "brown"),
+                  ((10., 5.0*σ[8] , 0.1 * σ[8] ), "magenta"),
+                  ((10., 5.0*σ[9] , 0.1 * σ[9] ), "pink"),
+                  ((10., 5.0*σ[10], 0.1 * σ[10]), "lime"),
+                 ]
+
+    plotdir = dirname*"/parameter_sweep_g1_g2"
+    mkpath(plotdir)
+    results = run_simulations(param_list, δs, L, n)
+    create_plot_from_results(results, δs, plotdir)
 
 end
 
