@@ -33,7 +33,7 @@ module Solver
     end
 
 
-    function run(; n, u_ex, dirname, L=1.11, δ=0.0, ghost_penalty=true, γ=10, γg1=5, γg2=0.1)
+    function run(; n, u_ex, dirname, L=1.11, δ=0.0, γ=10, γg1=5, γg2=0.1)
 
         order = 2
         u_ex, f, ∇u_ex, ∇Δu_ex = man_sol(u_ex)
@@ -46,7 +46,7 @@ module Solver
         bgorigin = ( pmin + pmax )/2
 
         R  = 1.0
-        println("Sim: order=$order, n=$n, bg LxL=$(round(L, digits=2))x$(round(L, digits=2)), bgorigin=($(round(bgorigin[1], digits=2)),$(round(bgorigin[2], digits=2))), disk R=$(round(R, digits=1))")
+        println("Sim: order=$order, n=$n, bg (L,L)=($(round(L, digits=2)),$(round(L, digits=2))), bgorigin=($(round(bgorigin[1], digits=2)),$(round(bgorigin[2], digits=2))), disk R=$(round(R, digits=1))")
 
         # Background model
         partition = (n,n)
@@ -86,16 +86,6 @@ module Solver
 
         # Define weak form
         γ = 10*(order*(order - 1)/2)
-
-        # Ghost penalty parameter
-        # γg0 = γ
-        γg1 = 10/2
-        γg2 = 0.1
-
-        if ghost_penalty == false
-            γg1 = 0.0
-            γg2 = 0.0
-        end
 
         # Mesh size
         h = L/n
@@ -157,7 +147,7 @@ module Solver
 
         eh1 = sqrt(sum( ∫( e⊙e + ∇(e)⊙∇(e) )dΩ ))
 
-        vtkdirname =dirname*"/gp$(Int64(ghost_penalty))_order_"*string( order )*"_n_"*string(n)
+        vtkdirname =dirname*"/g_$(γ)_g1_$(γg1)_g2_$(γg2)_order_$(order)_n_$n"
         mkpath(vtkdirname)
 
         # Write out models and computational domains for inspection
@@ -233,7 +223,7 @@ function generate_figures(;ns, el2s, eh1s, ehs_energy, cond_numbers, ndofs, dirn
     # Plots.savefig(p, filename*"_plot.tex")
 end
 
-function convergence_analysis(; ns, dirname, u_ex, ghost_penalty=true)
+function convergence_analysis(; ns, dirname, u_ex)
 
     el2s = Float64[]
     eh1s = Float64[]
@@ -244,7 +234,7 @@ function convergence_analysis(; ns, dirname, u_ex, ghost_penalty=true)
     println("Convergence test", ns)
     for n in ns
 
-        sol = Solver.run(n=n, u_ex=u_ex, dirname=dirname, ghost_penalty=ghost_penalty)
+        sol = Solver.run(n=n, u_ex=u_ex, dirname=dirname)
 
         push!(el2s, sol.el2)
         push!(eh1s, sol.eh1)
@@ -258,42 +248,48 @@ end
 
 
 function translation_test(; dirname, u_ex )
-    iterations = 100
-    x0 = 0
-    x1 = 0.2
-    L = 1.11 + x1
+    iterations = 20
+    δ1 = 0
+    δ2 = 0.2
+    L = 1.11 + δ2
     n=2^6
-    xs = LinRange(x0, x1, iterations)
+    δs = LinRange(δ1, δ2, iterations)
 
-    cond_numbers_gp = Float64[]
 
-    # EXPERIMENT WITH GHOST PENALTIES
-    println("\nTranslation test from x = $x0 to $x1;  iterations $iterations;  L = $L, n=$n")
-    for xi in xs
-        sol = Solver.run( n=n, u_ex=u_ex, dirname=dirname,
-                         grid_translation=xi, L=L, ghost_penalty=true)
-        push!(cond_numbers_gp, sol.cond_number)
+    function translation_solve(;δs, L, n, γ, γg1, γg2)
+        println("\nTranslation $δ1 to $δ2;  iterations $(length(δs)); L = $L, n=$n, γ=$γ, γg1=$γg1, γg2=$γg2")
+
+        el2s = Float64[]
+        eh1s = Float64[]
+        ehs_energy = Float64[]
+        cond_numbers = Float64[]
+        ndofs = Float64[]
+        for δi in δs
+            sol = Solver.run( n=n, u_ex=u_ex, dirname=dirname,
+                             δ=δi,γ=γ, γg1=γg1, γg2=γg2, L=L)
+            push!(el2s, sol.el2)
+            push!(eh1s, sol.eh1)
+            push!(ehs_energy, sol.eh_energy)
+            push!(cond_numbers, sol.cond_number)
+            push!(ndofs, sol.ndof)
+        end
+        cond_numbers = [number > 1e23 ? 1e23 : number for number in cond_numbers] #ceiling cond numbers
+        return cond_numbers
     end
 
 
-    # EXPERIMENT WITH NO GHOST PENALTIES
-    println("\nTranslation no ghost penalty test from x = $x0 to $x1;  iterations $iterations;  L = $L, n=$n")
-    cond_numbers = Float64[]
-    for xi in xs
-        sol = Solver.run( n=n, u_ex=u_ex, dirname=dirname,
-                         grid_translation=xi, L=L, ghost_penalty=false)
-        push!(cond_numbers, sol.cond_number)
-    end
-
-    cond_numbers = [number > 1e23 ? 1e23 : number for number in cond_numbers] #ceiling cond numbers
+    γ, γg1, γg2 = (10., 5., 0.1)
+    cond_numbers_gp = translation_solve(δs=δs, L=L, n=n, γ=γ, γg1=γg1, γg2=γg2)
+    γ, γg1, γg2 = (10., 0., 0.)
+    cond_numbers = translation_solve(δs=δs, L=L, n=n, γ=γ, γg1=γg1, γg2=γg2)
 
     Plots.gr()
-    p = Plots.plot(xs, cond_numbers_gp, yscale=:log10, legend=:bottomright, label="Ghost Penalty", minorgrid=false)
-    Plots.scatter!(p, xs, cond_numbers_gp, primary=false, markerstrokealpha=0.4, markersize=3)
-    Plots.plot!(p, xs, cond_numbers, label="No Ghost Penalty")
-    Plots.scatter!(p, xs, cond_numbers, primary=false, markerstrokealpha=0.4, markersize=3)
-    Plots.xlabel!(p, "Translation")
-    Plots.ylabel!(p, "Condition number")
+    p = Plots.plot(δs, cond_numbers_gp, yscale=:log10, legend=:bottomright, label="Ghost Penalty", minorgrid=false)
+    Plots.scatter!(p, δs, cond_numbers_gp, primary=false, markerstrokealpha=0.4, markersize=3)
+    Plots.plot!(p, δs, cond_numbers, label="No Ghost Penalty")
+    Plots.scatter!(p, δs, cond_numbers, primary=false, markerstrokealpha=0.4, markersize=3)
+    Plots.xlabel!(p, L"\delta")
+    Plots.ylabel!(p, L"\kappa(A)")
     Plots.ylims!(p, (1e5, 1e25)) # Set the y-axis range
 
     Plots.savefig(p, dirname*"/translation_test.png")
@@ -313,7 +309,7 @@ function main()
     ns = [2^3, 2^4, 2^5, 2^6, 2^7, 2^8]
 
     @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex)
-    # @time translation_test(dirname=resultdir, u_ex=u_ex )
+    @time translation_test(dirname=resultdir, u_ex=u_ex )
 
 end
 
