@@ -1,4 +1,5 @@
 using Dates
+using Printf
 import Plots
 
 using LaTeXStrings
@@ -263,7 +264,6 @@ function translation_test(; dirname, u_ex )
         eh1s = Float64[]
         ehs_energy = Float64[]
         cond_numbers = Float64[]
-        ndofs = Float64[]
         for δi in δs
             sol = Solver.run( n=n, u_ex=u_ex, dirname=dirname,
                              δ=δi,γ=γ, γg1=γg1, γg2=γg2, L=L)
@@ -271,25 +271,41 @@ function translation_test(; dirname, u_ex )
             push!(eh1s, sol.eh1)
             push!(ehs_energy, sol.eh_energy)
             push!(cond_numbers, sol.cond_number)
-            push!(ndofs, sol.ndof)
         end
         cond_numbers = [number > 1e23 ? 1e23 : number for number in cond_numbers] #ceiling cond numbers
-        return cond_numbers
+        return cond_numbers, el2s, eh1s, ehs_energy
+
     end
 
+    function sci_str(number)
+        if number == 0
+            return "\$ 0.0 \\cdot 10^{0} \$"
+        else
+            exp = round(log10(abs(number)))
+            mantissa = number / 10^exp
+            return @sprintf("\$%.1f \\cdot 10^{%d}\$", mantissa, exp)
+        end
+    end
 
-    γ, γg1, γg2 = (10., 5., 0.1)
-    cond_numbers_gp = translation_solve(δs=δs, L=L, n=n, γ=γ, γg1=γg1, γg2=γg2)
-    γ, γg1, γg2 = (10., 0., 0.)
-    cond_numbers = translation_solve(δs=δs, L=L, n=n, γ=γ, γg1=γg1, γg2=γg2)
-
+    # Create plot
     Plots.gr()
-    p = Plots.plot(δs, cond_numbers_gp, yscale=:log10, legend=:bottomright, label="Ghost Penalty", minorgrid=false)
-    Plots.scatter!(p, δs, cond_numbers_gp, primary=false, markerstrokealpha=0.4, markersize=3)
-    Plots.plot!(p, δs, cond_numbers, label="No Ghost Penalty")
+    p = Plots.plot(legend=:outertopright,legendtitle=L"(\gamma, \gamma_1, \gamma_2)", yscale=:log10, minorgrid=false)
+
+    # First plot
+    γ, γg1, γg2 = (10., 5., 0.1)
+    cond_numbers, el2s, eh1s, ehs_energy = translation_solve(δs=δs, L=L, n=n, γ=γ, γg1=γg1, γg2=γg2)
+    Plots.plot!(p, δs, cond_numbers, label=L" %$(sci_str(γ)), %$(sci_str(γg1)), %$( sci_str(γg2)   ) ")
     Plots.scatter!(p, δs, cond_numbers, primary=false, markerstrokealpha=0.4, markersize=3)
-    Plots.xlabel!(p, L"\delta")
-    Plots.ylabel!(p, L"\kappa(A)")
+
+    # Second plot
+    γ, γg1, γg2 = (10., 0, 0)
+    cond_numbers, el2s, eh1s, ehs_energy = translation_solve(δs=δs, L=L, n=n, γ=γ, γg1=γg1, γg2=γg2)
+    Plots.plot!(p, δs, cond_numbers, label=L" %$(sci_str(γ)), %$(sci_str(γg1)), %$( sci_str(γg2)   ) ")
+    Plots.scatter!(p, δs, cond_numbers, primary=false, markerstrokealpha=0.4, markersize=3)
+
+    # End config  plot
+    Plots.xlabel!(p, L"$\delta$")
+    Plots.ylabel!(p, L"$\kappa(A)$")
     Plots.ylims!(p, (1e5, 1e25)) # Set the y-axis range
 
     Plots.savefig(p, dirname*"/g$(γ)_no_ghost_translation_test.png")
@@ -307,9 +323,9 @@ function main()
     println(resultdir)
     mkpath(resultdir)
 
-    ns = [2^3, 2^4, 2^5, 2^6, 2^7, 2^8]
+    ns = [2^3, 2^4, 2^5, 2^6, 2^7]
 
-    @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex)
+    # @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex)
     @time translation_test(dirname=resultdir, u_ex=u_ex )
 
 end
