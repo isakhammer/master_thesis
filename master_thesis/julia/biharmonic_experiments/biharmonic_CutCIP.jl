@@ -135,11 +135,11 @@ module Solver
 
 
         # Assemble of system
-        op = AffineFEOperator(a, l, U, V)
+        op = AffineFEOperator(A, l, U, V)
         uh = solve(op)
-        A =  get_matrix(op)
-        ndof = size(A)[1]
-        cond_number = ( 1/sqrt(ndof) )*cond(A,Inf)
+        A_mat =  get_matrix(op)
+        ndof = size(A_mat)[1]
+        cond_number = ( 1/sqrt(ndof) )*cond(A_mat,Inf)
 
         u_inter = interpolate(u_ex, V) # remove?
         e = u_inter - uh
@@ -256,41 +256,46 @@ end
 
 
 function translation_test(; dirname, u_ex )
-    iterations = 50
+    iterations = 100
     x0 = 0
-    x1 = 0.5
+    x1 = 0.2
     L = 1.11 + x1
-    n=2^5
+    n=2^6
     xs = LinRange(x0, x1, iterations)
 
-    cond_numbers = Float64[]
+    cond_numbers_gp = Float64[]
 
     # EXPERIMENT WITH GHOST PENALTIES
-    println("\nTranslation test from x = $x0 to $x1;  iterations $iterations;  L = $L")
+    println("\nTranslation test from x = $x0 to $x1;  iterations $iterations;  L = $L, n=$n")
     for xi in xs
         sol = Solver.run( n=n, u_ex=u_ex, dirname=dirname,
                          grid_translation=xi, L=L, ghost_penalty=true)
-        push!(cond_numbers, sol.cond_number)
+        push!(cond_numbers_gp, sol.cond_number)
     end
 
-    Plots.gr()
-    p = Plots.plot(xs, cond_numbers, yscale=:log10, minorgrid=true)
-    Plots.savefig(p, dirname*"/ghost_cond.png")
 
     # EXPERIMENT WITH NO GHOST PENALTIES
-    println("\nTranslation no ghost penalty test from x = $x0 to $x1;  iterations $iterations;  L = $L")
+    println("\nTranslation no ghost penalty test from x = $x0 to $x1;  iterations $iterations;  L = $L, n=$n")
     cond_numbers = Float64[]
     for xi in xs
         sol = Solver.run( n=n, u_ex=u_ex, dirname=dirname,
                          grid_translation=xi, L=L, ghost_penalty=false)
         push!(cond_numbers, sol.cond_number)
     end
+    cond_numbers = [number > 1e25 ? 1e25 : number for number in cond_numbers] #ceiling cond numbers
 
     Plots.gr()
-    p = Plots.plot(xs, cond_numbers, yscale=:log10, minorgrid=true)
-    Plots.savefig(p, dirname*"/standard_cond.png")
-end
+    p = Plots.plot(xs, cond_numbers_gp, yscale=:log10, legend=:bottomright, label="Ghost Penalty", minorgrid=false)
+    Plots.scatter!(p, xs, cond_numbers_gp, primary=false, markerstrokealpha=0.4, markersize=3)
+    Plots.plot!(p, xs, cond_numbers, label="No Ghost Penalty")
+    Plots.scatter!(p, xs, cond_numbers, primary=false, markerstrokealpha=0.4, markersize=3)
+    Plots.xlabel!(p, "Translation")
+    Plots.ylabel!(p, "Condition number")
+    Plots.ylims!(p, (1e5, 1e25)) # Set the y-axis range
 
+    Plots.savefig(p, dirname*"/translation_test.png")
+
+end
 
 function main()
 
@@ -304,7 +309,7 @@ function main()
 
     ns = [2^3, 2^4, 2^5, 2^6, 2^7, 2^8]
 
-    @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex)
+    # @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex)
     @time translation_test(dirname=resultdir, u_ex=u_ex )
 
 end
