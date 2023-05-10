@@ -282,7 +282,8 @@ function translation_test(; dirname, u_ex )
                          grid_translation=xi, L=L, ghost_penalty=false)
         push!(cond_numbers, sol.cond_number)
     end
-    cond_numbers = [number > 1e25 ? 1e25 : number for number in cond_numbers] #ceiling cond numbers
+
+    cond_numbers = [number > 1e23 ? 1e23 : number for number in cond_numbers] #ceiling cond numbers
 
     Plots.gr()
     p = Plots.plot(xs, cond_numbers_gp, yscale=:log10, legend=:bottomright, label="Ghost Penalty", minorgrid=false)
