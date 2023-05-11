@@ -267,8 +267,8 @@ function main()
 
     ns = [2^3, 2^4, 2^5, 2^6, 2^7, 2^8]
 
-    # @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex)
-    @time TranslationTest.penalty_test(dirname=resultdir, u_ex=u_ex, run_solver=Solver.run, iterations=5)
+    @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex)
+    # @time TranslationTest.penalty_test(dirname=resultdir, u_ex=u_ex, run_solver=Solver.run, iterations=5)
 end
 
 main()
