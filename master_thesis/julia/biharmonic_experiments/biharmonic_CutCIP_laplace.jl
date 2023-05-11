@@ -2,6 +2,12 @@ using Dates
 using Printf
 import Plots
 
+Plots.pgfplotsx()
+endfix=".tex"
+
+# Plots.gr()
+# endfix=".png"
+
 using LaTeXStrings
 using Latexify
 using PrettyTables
@@ -215,12 +221,7 @@ function generate_figures(;ns, el2s, eh1s, ehs_energy, cond_numbers, ndofs, dirn
     Plots.plot!(p, xscale=:log2, yscale=:log2, minorgrid=true)
     Plots.plot!(p, legendfontsize=14)  # Adjust the value 12 to your desired font size
 
-
-    # Save the plot as a .png file using the GR backend
-    Plots.gr()
-    # Plots.pgfplotsx()
-    Plots.savefig(p, filename*"_plot.png")
-    # Plots.savefig(p, filename*"_plot.tex")
+    Plots.savefig(p, filename*"_plot"*endfix)
 end
 
 function convergence_analysis(; ns, dirname, u_ex)
@@ -269,13 +270,13 @@ function sci_str(number)
 end
 
 function translation_test(; dirname, u_ex )
-    N_it = 10
+    iterations = 100
     δ1 = 0
     L = 1.11
     n=2^6
     h = L/n
     δ2 = 2*sqrt(2)*h
-    δs = LinRange(δ1, δ2, N_it)
+    δs = LinRange(δ1, δ2, iterations)
 
     function translation_solve(;δs, L, n, γ, γg1, γg2)
         println("\nTranslation $δ1 to $δ2;  iterations $(length(δs)); L = $L, n=$n, γ=$γ, γg1=$γg1, γg2=$γg2")
@@ -338,7 +339,7 @@ function translation_test(; dirname, u_ex )
             push!(results, SimulationData(params, color, cond_numbers, el2s, eh1s, ehs_energy))
         end
 
-        Plots.gr()
+        # Plots.gr()
 
         hs = 1 .// ns
 
@@ -366,15 +367,14 @@ function translation_test(; dirname, u_ex )
         Plots.xlabel!(p2, L"$h$")
         Plots.ylabel!(p2, L"$\Vert e \Vert_{L^2,solid} $, $\Vert e \Vert_{H^1,dash} $, $\Vert e \Vert_{ah,*,dot}$")
 
-        Plots.savefig(p1, dirname*"/$prefix"*"_cond_conv.png")
-        Plots.savefig(p2, dirname*"/$prefix"*"_merged_errors_conv.png")
+        Plots.savefig(p1, dirname*"/$prefix"*"_cond_conv"*endfix)
+        Plots.savefig(p2, dirname*"/$prefix"*"_errors_conv"*endfix)
 
     end
 
 
     function create_plot_from_results(results, δs, dirname, prefix)
 
-        Plots.gr()
 
         # Plot condition numbers
         p1 = Plots.plot(legend=:outertopright, legendtitle=L"(\gamma, \gamma_1, \gamma_2)", yscale=:log10, minorgrid=false)
@@ -401,10 +401,9 @@ function translation_test(; dirname, u_ex )
         Plots.ylabel!(p2, L"$\Vert e \Vert_{L^2,solid} $, $\Vert e \Vert_{H^1,dash} $, $\Vert e \Vert_{ah,*,dot}$")
 
         Plots.pgfplotsx()
-        Plots.savefig(p1, dirname*"/$prefix"*"_cond_trans.tex")
-        Plots.savefig(p2, dirname*"/$prefix"*"_errors.tex")
-        # Plots.savefig(p1, dirname*"/$prefix"*"_cond_trans.png")
-        # Plots.savefig(p2, dirname*"/$prefix"*"_errors.png")
+        Plots.savefig(p1, dirname*"/$prefix"*"_cond_trans"*endfix)
+        Plots.savefig(p2, dirname*"/$prefix"*"_errors_trans"*endfix)
+
     end
 
     # No penlaty check
@@ -493,9 +492,9 @@ function main()
     println(resultdir)
     mkpath(resultdir)
 
-    ns = [2^3, 2^4, 2^5, 2^6, 2^7]
+    ns = [2^3, 2^4, 2^5, 2^6, 2^7, 2^8]
 
-    # @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex)
+    @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex)
     @time translation_test(dirname=resultdir, u_ex=u_ex )
 
 end
