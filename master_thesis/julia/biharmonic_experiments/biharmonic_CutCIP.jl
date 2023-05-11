@@ -259,7 +259,7 @@ struct SimulationData
 end
 
 function translation_test(; dirname, u_ex )
-    iterations = 100
+    iterations = 50
     δ1 = 0
     δ2 = 0.5
     L = 1.11 + δ2
@@ -321,16 +321,16 @@ function translation_test(; dirname, u_ex )
             γ, γg1, γg2 = sim_data.params
             label_text = L" %$(sci_str(γ)), %$(sci_str(γg1)), %$( sci_str(γg2) ) "
             Plots.plot!(p1, δs, sim_data.cond_numbers, label=label_text, color=sim_data.color)
-            Plots.scatter!(p1, δs, sim_data.cond_numbers, primary=false, markerstrokealpha=0.4, markersize=1, color=sim_data.color)
+            # Plots.scatter!(p1, δs, sim_data.cond_numbers, primary=false, markerstrokealpha=0.4, markersize=1, color=sim_data.color)
 
             Plots.plot!(p2, δs, sim_data.el2s, label=label_text, color=sim_data.color, linestyle=:solid)
-            Plots.scatter!(p2, δs, sim_data.el2s, primary=false, markerstrokealpha=0.4, markersize=1, color=sim_data.color)
+            # Plots.scatter!(p2, δs, sim_data.el2s, primary=false, markerstrokealpha=0.4, markersize=1, color=sim_data.color)
 
             Plots.plot!(p2, δs, sim_data.eh1s, label=nothing, color=sim_data.color, linestyle=:dash)
-            Plots.scatter!(p2, δs, sim_data.eh1s, primary=false, markerstrokealpha=0.4, markersize=1, color=sim_data.color)
+            # Plots.scatter!(p2, δs, sim_data.eh1s, primary=false, markerstrokealpha=0.4, markersize=1, color=sim_data.color)
 
             Plots.plot!(p2, δs, sim_data.ehs_energy, label=nothing, color=sim_data.color, linestyle=:dot)
-            Plots.scatter!(p2, δs, sim_data.ehs_energy, primary=false, markerstrokealpha=0.4, markersize=1, color=sim_data.color)
+            # Plots.scatter!(p2, δs, sim_data.ehs_energy, primary=false, markerstrokealpha=0.4, markersize=1, color=sim_data.color)
 
         end
 
@@ -423,7 +423,7 @@ function main()
 
     ns = [2^3, 2^4, 2^5, 2^6, 2^7]
 
-    @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex)
+    # @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex)
     @time translation_test(dirname=resultdir, u_ex=u_ex )
 
 end
