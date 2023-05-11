@@ -258,14 +258,24 @@ struct SimulationData
 end
 
 
-function translation_test(; dirname, u_ex )
-    iterations = 100
-    δ1 = 0
-    δ2 = 0.5
-    L = 1.11 + δ2
-    n=2^6
-    δs = LinRange(δ1, δ2, iterations)
+function sci_str(number)
+    if number == 0
+        return "\$ 0.0 \\cdot 10^{0} \$"
+    else
+        exp = round(log10(abs(number)))
+        mantissa = number / 10^exp
+        return @sprintf("\$%.1f \\cdot 10^{%d}\$", mantissa, exp)
+    end
+end
 
+function translation_test(; dirname, u_ex )
+    N_it = 10
+    δ1 = 0
+    L = 1.11
+    n=2^6
+    h = L/n
+    δ2 = 2*sqrt(2)*h
+    δs = LinRange(δ1, δ2, N_it)
 
     function translation_solve(;δs, L, n, γ, γg1, γg2)
         println("\nTranslation $δ1 to $δ2;  iterations $(length(δs)); L = $L, n=$n, γ=$γ, γg1=$γg1, γg2=$γg2")
@@ -298,16 +308,71 @@ function translation_test(; dirname, u_ex )
         return results
     end
 
-    function create_plot_from_results(results, δs, dirname, prefix)
-        function sci_str(number)
-            if number == 0
-                return "\$ 0.0 \\cdot 10^{0} \$"
-            else
-                exp = round(log10(abs(number)))
-                mantissa = number / 10^exp
-                return @sprintf("\$%.1f \\cdot 10^{%d}\$", mantissa, exp)
-            end
+    function convergence_solve(;ns, γ, γg1, γg2)
+        println("\n Convergence $ns, n=$n, γ=$γ, γg1=$γg1, γg2=$γg2")
+
+        el2s = Float64[]
+        eh1s = Float64[]
+        ehs_energy = Float64[]
+        cond_numbers = Float64[]
+        for ni in ns
+            sol = Solver.run( n=ni, u_ex=u_ex,
+                             γ=γ, γg1=γg1, γg2=γg2)
+            push!(el2s, sol.el2)
+            push!(eh1s, sol.eh1)
+            push!(ehs_energy, sol.eh_energy)
+            push!(cond_numbers, sol.cond_number)
         end
+        cond_numbers = [number > 1e23 ? 1e23 : number for number in cond_numbers] #ceiling cond numbers
+        return cond_numbers, el2s, eh1s, ehs_energy
+    end
+
+    function run_convergence(param_list, dirname, prefix)
+        ns = [2^3, 2^4, 2^5, 2^6, 2^7]
+
+        # Compute results
+        results = Vector{SimulationData}()
+        for (params, color) in param_list
+            γ, γg1, γg2 = params
+            cond_numbers, el2s, eh1s, ehs_energy = convergence_solve(ns=ns, γ=γ, γg1=γg1, γg2=γg2)
+            push!(results, SimulationData(params, color, cond_numbers, el2s, eh1s, ehs_energy))
+        end
+
+        Plots.gr()
+
+        hs = 1 .// ns
+
+        # Plot condition numbers
+        p1 = Plots.plot(legend=:outertopright, legendtitle=L"(\gamma, \gamma_1, \gamma_2)", yscale=:log10, xscale=:log2, minorgrid=false)
+
+        # Merge L2 error, H1 error, and Energy error into one plot
+        p2 = Plots.plot(legend=:outertopright, legendtitle=L"(\gamma, \gamma_1, \gamma_2)", yscale=:log2, xscale=:log2, minorgrid=false)
+
+        for sim_data in results
+            γ, γg1, γg2 = sim_data.params
+            label_text = L" %$(sci_str(γ)), %$(sci_str(γg1)), %$( sci_str(γg2) ) "
+            Plots.plot!(p1, hs, sim_data.cond_numbers, label=label_text, color=sim_data.color)
+
+            Plots.plot!(p2, hs, sim_data.el2s, label=label_text, color=sim_data.color, linestyle=:solid)
+            Plots.plot!(p2, hs, sim_data.eh1s, label=nothing, color=sim_data.color, linestyle=:dash)
+            Plots.plot!(p2, hs, sim_data.ehs_energy, label=nothing, color=sim_data.color, linestyle=:dot)
+
+        end
+
+        Plots.xlabel!(p1, L"$h$")
+        Plots.ylabel!(p1, L"$\kappa(A)$")
+        Plots.ylims!(p1, (1e5, 1e25))
+
+        Plots.xlabel!(p2, L"$h$")
+        Plots.ylabel!(p2, L"$\Vert e \Vert_{L^2,solid} $, $\Vert e \Vert_{H^1,dash} $, $\Vert e \Vert_{ah,*,dot}$")
+
+        Plots.savefig(p1, dirname*"/$prefix"*"_cond_conv.png")
+        Plots.savefig(p2, dirname*"/$prefix"*"_merged_errors_conv.png")
+
+    end
+
+
+    function create_plot_from_results(results, δs, dirname, prefix)
 
         Plots.gr()
 
@@ -321,16 +386,10 @@ function translation_test(; dirname, u_ex )
             γ, γg1, γg2 = sim_data.params
             label_text = L" %$(sci_str(γ)), %$(sci_str(γg1)), %$( sci_str(γg2) ) "
             Plots.plot!(p1, δs, sim_data.cond_numbers, label=label_text, color=sim_data.color)
-            Plots.scatter!(p1, δs, sim_data.cond_numbers, primary=false, markerstrokealpha=0.4, markersize=1, color=sim_data.color)
 
             Plots.plot!(p2, δs, sim_data.el2s, label=label_text, color=sim_data.color, linestyle=:solid)
-            Plots.scatter!(p2, δs, sim_data.el2s, primary=false, markerstrokealpha=0.4, markersize=1, color=sim_data.color)
-
             Plots.plot!(p2, δs, sim_data.eh1s, label=nothing, color=sim_data.color, linestyle=:dash)
-            Plots.scatter!(p2, δs, sim_data.eh1s, primary=false, markerstrokealpha=0.4, markersize=1, color=sim_data.color)
-
             Plots.plot!(p2, δs, sim_data.ehs_energy, label=nothing, color=sim_data.color, linestyle=:dot)
-            Plots.scatter!(p2, δs, sim_data.ehs_energy, primary=false, markerstrokealpha=0.4, markersize=1, color=sim_data.color)
 
         end
 
@@ -341,8 +400,11 @@ function translation_test(; dirname, u_ex )
         Plots.xlabel!(p2, L"$\delta$")
         Plots.ylabel!(p2, L"$\Vert e \Vert_{L^2,solid} $, $\Vert e \Vert_{H^1,dash} $, $\Vert e \Vert_{ah,*,dot}$")
 
-        Plots.savefig(p1, dirname*"/$prefix"*"_cond_trans.png")
-        Plots.savefig(p2, dirname*"/$prefix"*"_merged_errors.png")
+        Plots.pgfplotsx()
+        Plots.savefig(p1, dirname*"/$prefix"*"_cond_trans.tex")
+        Plots.savefig(p2, dirname*"/$prefix"*"_errors.tex")
+        # Plots.savefig(p1, dirname*"/$prefix"*"_cond_trans.png")
+        # Plots.savefig(p2, dirname*"/$prefix"*"_errors.png")
     end
 
     # No penlaty check
@@ -352,7 +414,12 @@ function translation_test(; dirname, u_ex )
     ]
 
     results = run_simulations(param_list, δs, L, n)
-    create_plot_from_results(results, δs, dirname, "no_penalty")
+
+    prefix = "no_penalty"
+    create_plot_from_results(results, δs, dirname, prefix)
+    run_convergence(param_list, dirname, prefix)
+
+    return
 
     # Base params
     σ = [10^6, 10^5, 10^4, 10^3, 10^2, 10^-2, 10^-3, 10^-4, 10^-5, 10^-6]
@@ -372,7 +439,9 @@ function translation_test(; dirname, u_ex )
                  ]
 
     results = run_simulations(param_list, δs, L, n)
-    create_plot_from_results(results, δs, dirname, "sweep_g2")
+    prefix = "sweep_g2"
+    create_plot_from_results(results, δs, dirname, prefix)
+    run_convergence(param_list, dirname, prefix)
 
     # Parameter Sweep γg1
     param_list = [
@@ -389,7 +458,9 @@ function translation_test(; dirname, u_ex )
                  ]
 
     results = run_simulations(param_list, δs, L, n)
-    create_plot_from_results(results, δs, dirname, "sweep_g1")
+    prefix = "sweep_g1"
+    create_plot_from_results(results, δs, dirname, prefix)
+    run_convergence(param_list, dirname, prefix)
 
     # Parameter Sweep γg1 and γg2
     param_list = [
@@ -406,7 +477,9 @@ function translation_test(; dirname, u_ex )
                  ]
 
     results = run_simulations(param_list, δs, L, n)
-    create_plot_from_results(results, δs, dirname, "sweep_g1_g2")
+    prefix = "sweep_g1_g2"
+    create_plot_from_results(results, δs, dirname, prefix)
+    run_convergence(param_list, dirname, prefix)
 
 end
 
@@ -422,7 +495,7 @@ function main()
 
     ns = [2^3, 2^4, 2^5, 2^6, 2^7]
 
-    @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex)
+    # @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex)
     @time translation_test(dirname=resultdir, u_ex=u_ex )
 
 end
