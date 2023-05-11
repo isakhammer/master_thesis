@@ -263,7 +263,7 @@ function main()
     u_ex(x) = 100*sin(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
     # u_ex(x) = 100*cos(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
     exact_sol = Solver.man_sol(u_ex)
-    circle = true
+    circle = false
     solver_config = Solver.Config(exact_sol, circle)
 
     resultdir= "figures/biharmonic_CIP_nitsche/"*string(Dates.now())
