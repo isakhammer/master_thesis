@@ -34,13 +34,13 @@ module Solver
     end
 
 
-    function run(; n, u_ex, dirname, L=1.11, δ=0.0, γ=10, γg1=5, γg2=0.1)
+    function run(; n, u_ex, dirname=nothing, L=1.11, δ=0.0, γ=10, γg1=5, γg2=0.1)
 
         order = 2
         u_ex, f, ∇u_ex, ∇Δu_ex = man_sol(u_ex)
 
         # Background model (translated)
-        θ_δ = 0*( π/4 )
+        θ_δ =  π/4
         r_δ = δ*Point(cos(θ_δ),sin(θ_δ))
         pmin = Point(-L, -L) + r_δ
         pmax = Point(L , L) + r_δ
@@ -145,18 +145,20 @@ module Solver
 
         eh1 = sqrt(sum( ∫( e⊙e + ∇(e)⊙∇(e) )dΩ ))
 
-        vtkdirname =dirname*"/g_$(γ)_g1_$(γg1)_g2_$(γg2)_order_$(order)_n_$n"
-        mkpath(vtkdirname)
+        if dirname != nothing
+            vtkdirname =dirname*"/g_$(γ)_g1_$(γg1)_g2_$(γg2)_order_$(order)_n_$n"
+            mkpath(vtkdirname)
 
-        # Write out models and computational domains for inspection
-        writevtk(bgmodel,   vtkdirname*"/model")
-        writevtk(Ω,         vtkdirname*"/Omega")
-        writevtk(Ω_act,     vtkdirname*"/Omega_act")
-        writevtk(Λ,         vtkdirname*"/Lambda")
-        writevtk(Γ,         vtkdirname*"/Gamma")
-        writevtk(Fg,        vtkdirname*"/Fg")
-        writevtk(Λ,         vtkdirname*"/jumps",      cellfields=["jump_u"=>jump(uh)])
-        writevtk(Ω,         vtkdirname*"/sol",        cellfields=["e"=>e, "uh"=>uh, "u"=>u_inter])
+            # Write out models and computational domains for inspection
+            writevtk(bgmodel,   vtkdirname*"/model")
+            writevtk(Ω,         vtkdirname*"/Omega")
+            writevtk(Ω_act,     vtkdirname*"/Omega_act")
+            writevtk(Λ,         vtkdirname*"/Lambda")
+            writevtk(Γ,         vtkdirname*"/Gamma")
+            writevtk(Fg,        vtkdirname*"/Fg")
+            writevtk(Λ,         vtkdirname*"/jumps",      cellfields=["jump_u"=>jump(uh)])
+            writevtk(Ω,         vtkdirname*"/sol",        cellfields=["e"=>e, "uh"=>uh, "u"=>u_inter])
+        end
 
         sol = Solution( el2=el2, eh1=eh1, eh_energy=eh_energy,
                         cond_number=cond_number, ndof=ndof)
