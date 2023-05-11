@@ -2,9 +2,11 @@ using Dates
 using Printf
 import Plots
 
+# default_size = (800, 600)
+default_size = (400, 300)
+
 Plots.pgfplotsx()
 endfix=".tex"
-
 # Plots.gr()
 # endfix=".png"
 
@@ -205,7 +207,7 @@ function generate_figures(;ns, el2s, eh1s, ehs_energy, cond_numbers, ndofs, dirn
         pretty_table(io, data, header=minimal_header, backend=:text, formatters=formatters)
     end
     # Initial plot with the first data series
-    p = Plots.plot(hs, el2s, label=L"\Vert e \Vert_{L^2}", legend=:bottomright, xscale=:log2, yscale=:log2, minorgrid=true)
+    p = Plots.plot(hs, el2s, label=L"\Vert e \Vert_{L^2}", size=default_size, legend=:outertopright, xscale=:log2, yscale=:log2, minorgrid=true)
     Plots.scatter!(p, hs, el2s, primary=false)
 
     # Add the second data series
@@ -218,6 +220,7 @@ function generate_figures(;ns, el2s, eh1s, ehs_energy, cond_numbers, ndofs, dirn
 
     # Configs
     Plots.xlabel!(p, "h")
+    Plots.ylabel!(p, L"\Vert e \Vert_{}")
     Plots.plot!(p, xscale=:log2, yscale=:log2, minorgrid=true)
     Plots.plot!(p, legendfontsize=14)  # Adjust the value 12 to your desired font size
 
@@ -270,12 +273,12 @@ function sci_str(number)
 end
 
 function translation_test(; dirname, u_ex )
-    iterations = 100
+    iterations = 1000
     δ1 = 0
     L = 1.11
-    n=2^6
+    n = 2^4
     h = L/n
-    δ2 = 2*sqrt(2)*h
+    δ2 = sqrt(2)*h
     δs = LinRange(δ1, δ2, iterations)
 
     function translation_solve(;δs, L, n, γ, γg1, γg2)
@@ -344,10 +347,10 @@ function translation_test(; dirname, u_ex )
         hs = 1 .// ns
 
         # Plot condition numbers
-        p1 = Plots.plot(legend=:outertopright, legendtitle=L"(\gamma, \gamma_1, \gamma_2)", yscale=:log10, xscale=:log2, minorgrid=false)
+        p1 = Plots.plot(legend=:outertopright, size=default_size, legendtitle=L"(\gamma, \gamma_1, \gamma_2)", yscale=:log10, xscale=:log2, minorgrid=false)
 
         # Merge L2 error, H1 error, and Energy error into one plot
-        p2 = Plots.plot(legend=:outertopright, legendtitle=L"(\gamma, \gamma_1, \gamma_2)", yscale=:log2, xscale=:log2, minorgrid=false)
+        p2 = Plots.plot(legend=:outertopright, size=default_size,legendtitle=L"(\gamma, \gamma_1, \gamma_2)", yscale=:log2, xscale=:log2, minorgrid=false)
 
         for sim_data in results
             γ, γg1, γg2 = sim_data.params
@@ -377,10 +380,10 @@ function translation_test(; dirname, u_ex )
 
 
         # Plot condition numbers
-        p1 = Plots.plot(legend=:outertopright, legendtitle=L"(\gamma, \gamma_1, \gamma_2)", yscale=:log10, minorgrid=false)
+        p1 = Plots.plot(legend=:outertopright, size=default_size, legendtitle=L"(\gamma, \gamma_1, \gamma_2)", yscale=:log10, minorgrid=false)
 
         # Merge L2 error, H1 error, and Energy error into one plot
-        p2 = Plots.plot(legend=:outertopright, legendtitle=L"(\gamma, \gamma_1, \gamma_2)", yscale=:log10, minorgrid=false)
+        p2 = Plots.plot(legend=:outertopright, size=default_size,legendtitle=L"(\gamma, \gamma_1, \gamma_2)", yscale=:log10, minorgrid=false)
 
         for sim_data in results
             γ, γg1, γg2 = sim_data.params
