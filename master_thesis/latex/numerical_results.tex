@@ -68,3 +68,18 @@
     \label{fig:combined}
 \end{figure}
 
+In this section, we present the numerical results of the convergence analysis for a numerical method applied to a square grid with a length of 1. The grid is discretized with $n=2^6$ grid points. The analysis is based on a manufactured solution, which is given by the expression:
+
+\[
+u_{\text{ex}}(x) = 100 \sin\left(\frac{m(2\pi)}{L}x_1\right)\cos\left(\frac{r(2\pi)}{L}x_2\right)
+\]
+
+Here, $L$, $m$, and $r$ are constants representing the length of the square grid, the spatial frequency in the $x_1$ direction, and the spatial frequency in the $x_2$ direction, respectively.
+
+The convergence analysis involves evaluating the errors in different norms as well as studying the condition number of the system. Table \ref{table:CutFEM_error1} presents the results of the convergence analysis for the numerical method. The column labeled "$n$" corresponds to the number of grid points, while the columns labeled "$\Vert e \Vert_{L^2}$," "$\Vert e \Vert_{H^1}$," and "$\Vert e \Vert_{a_h,}$" represent the errors in the $L^2$, $H^1$, and energy ($\Vert e \Vert_{a_h,}$) norms, respectively. The column labeled "EOC" denotes the experimental order of convergence. The last two columns provide the condition number of the system and the number of degrees of freedom (ndofs), respectively.
+
+Figure \ref{fig:CutFEM_error1} displays a plot illustrating the error convergence in the $L^2$, $H^1$, and energy norms for the CutCIP method (Laplace) with second-order accuracy.
+
+Additionally, we compare the results with and without the ghost penalty in two different tests: a translation test and a convergence test. The translation test examines the evolution of the condition number and error number, as shown in Figure \ref{fig:combined}. The convergence test also investigates the condition number and error number, and its results are presented in Figure \ref{fig:combined}.
+
+Overall, these numerical results provide insights into the performance and accuracy of the numerical method, showcasing the convergence behavior and the impact of the ghost penalty on the solution.
