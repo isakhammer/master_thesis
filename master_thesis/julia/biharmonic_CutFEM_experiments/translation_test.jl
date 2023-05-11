@@ -1,11 +1,26 @@
 module TranslationTest
 
+    using Printf
     using LaTeXStrings
     using Latexify
     import Plots
 
-    # default_size = (800, 600)
-    default_size = (400, 300)
+    struct Solver
+        u_ex
+        run_solver
+    end
+
+    struct SimulationData
+        params::Tuple{Float64, Float64, Float64}
+        color::String
+        cond_numbers::Vector{Float64}
+        el2s::Vector{Float64}
+        eh1s::Vector{Float64}
+        ehs_energy::Vector{Float64}
+    end
+
+    default_size = (800, 600)
+    # default_size = (400, 300)
 
     # Plots.pgfplotsx()
     # endfix=".tex"
@@ -23,16 +38,16 @@ module TranslationTest
         end
     end
 
-    function translation_solve(;δs, L, n, γ, γg1, γg2)
-        println("\nTranslation $δ1 to $δ2;  iterations $(length(δs)); L = $L, n=$n, γ=$γ, γg1=$γg1, γg2=$γg2")
+    function translation_solve(solver; δs, L, n, γ, γg1, γg2)
+        println("\nTranslation 0 to $(δs[end]);  iterations $(length(δs)); L = $L, n=$n, γ=$γ, γg1=$γg1, γg2=$γg2")
 
         el2s = Float64[]
         eh1s = Float64[]
         ehs_energy = Float64[]
         cond_numbers = Float64[]
         for δi in δs
-            sol = Solver.run( n=n, u_ex=u_ex, dirname=dirname,
-                             δ=δi,γ=γ, γg1=γg1, γg2=γg2, L=L)
+            sol = solver.run_solver( n=n, u_ex=solver.u_ex, dirname=nothing,
+                                    δ=δi,γ=γ, γg1=γg1, γg2=γg2, L=L)
             push!(el2s, sol.el2)
             push!(eh1s, sol.eh1)
             push!(ehs_energy, sol.eh_energy)
@@ -42,28 +57,17 @@ module TranslationTest
         return cond_numbers, el2s, eh1s, ehs_energy
     end
 
-    function run_simulations(param_list, δs, L, n)
-        results = Vector{SimulationData}()
 
-        for (params, color) in param_list
-            γ, γg1, γg2 = params
-            cond_numbers, el2s, eh1s, ehs_energy = translation_solve(δs=δs, L=L, n=n, γ=γ, γg1=γg1, γg2=γg2)
-            push!(results, SimulationData(params, color, cond_numbers, el2s, eh1s, ehs_energy))
-        end
-
-        return results
-    end
-
-    function convergence_solve(;ns, γ, γg1, γg2)
-        println("\n Convergence $ns, n=$n, γ=$γ, γg1=$γg1, γg2=$γg2")
+    function convergence_solve(solver ;ns, γ, γg1, γg2)
+        println("\n Convergence $ns, γ=$γ, γg1=$γg1, γg2=$γg2")
 
         el2s = Float64[]
         eh1s = Float64[]
         ehs_energy = Float64[]
         cond_numbers = Float64[]
         for ni in ns
-            sol = Solver.run( n=ni, u_ex=u_ex,
-                             γ=γ, γg1=γg1, γg2=γg2)
+            sol = solver.run_solver(n=ni, u_ex=solver.u_ex, dirname=nothing,
+                                    γ=γ, γg1=γg1, γg2=γg2)
             push!(el2s, sol.el2)
             push!(eh1s, sol.eh1)
             push!(ehs_energy, sol.eh_energy)
@@ -73,14 +77,14 @@ module TranslationTest
         return cond_numbers, el2s, eh1s, ehs_energy
     end
 
-    function run_convergence(param_list, dirname, prefix)
+    function run_convergence(solver, param_list, dirname, prefix)
         ns = [2^3, 2^4, 2^5, 2^6, 2^7]
 
         # Compute results
         results = Vector{SimulationData}()
         for (params, color) in param_list
             γ, γg1, γg2 = params
-            cond_numbers, el2s, eh1s, ehs_energy = convergence_solve(ns=ns, γ=γ, γg1=γg1, γg2=γg2)
+            cond_numbers, el2s, eh1s, ehs_energy = convergence_solve(solver, ns=ns, γ=γ, γg1=γg1, γg2=γg2)
             push!(results, SimulationData(params, color, cond_numbers, el2s, eh1s, ehs_energy))
         end
 
@@ -118,8 +122,20 @@ module TranslationTest
     end
 
 
-    function create_plot_from_results(results, δs, dirname, prefix)
+    function translation_test(solver, param_list, δs, dirname, prefix)
 
+        function run_simulations(solver, param_list, δs, L=1.11, n=2^4)
+            results = Vector{SimulationData}()
+
+            for (params, color) in param_list
+                γ, γg1, γg2 = params
+                cond_numbers, el2s, eh1s, ehs_energy = translation_solve(solver, δs=δs, L=L, n=n, γ=γ, γg1=γg1, γg2=γg2)
+                push!(results, SimulationData(params, color, cond_numbers, el2s, eh1s, ehs_energy))
+            end
+            return results
+        end
+
+        results = run_simulations(solver, param_list, δs)
 
         # Plot condition numbers
         p1 = Plots.plot(legend=:outertopright, size=default_size, legendtitle=L"(\gamma, \gamma_1, \gamma_2)", yscale=:log10, minorgrid=false)
@@ -145,14 +161,14 @@ module TranslationTest
         Plots.xlabel!(p2, L"$\delta$")
         Plots.ylabel!(p2, L"$\Vert e \Vert_{L^2,solid} $, $\Vert e \Vert_{H^1,dash} $, $\Vert e \Vert_{ah,*,dot}$")
 
-        Plots.pgfplotsx()
         Plots.savefig(p1, dirname*"/$prefix"*"_cond_trans"*endfix)
         Plots.savefig(p2, dirname*"/$prefix"*"_errors_trans"*endfix)
 
     end
 
-    function translation_test(; dirname, u_ex )
-        iterations = 1000
+    function penalty_test(; dirname, u_ex, run_solver, iterations=5)
+        solver = Solver(u_ex, run_solver)
+
         δ1 = 0
         L = 1.11
         n = 2^4
@@ -167,75 +183,9 @@ module TranslationTest
             ((10., 0., 0.), "red")
         ]
 
-        results = run_simulations(param_list, δs, L, n)
-
         prefix = "no_penalty"
-        create_plot_from_results(results, δs, dirname, prefix)
-        run_convergence(param_list, dirname, prefix)
-
-
-    end
-
-    function parameter_sweep()
-        # Base params
-        σ = [10^6, 10^5, 10^4, 10^3, 10^2, 10^-2, 10^-3, 10^-4, 10^-5, 10^-6]
-
-        # Parameter Sweep γg2
-        param_list = [
-                      ((10., 5., 0.1 * σ[1]), "blue"),
-                      ((10., 5., 0.1 * σ[2]), "red"),
-                      ((10., 5., 0.1 * σ[3]), "green"),
-                      ((10., 5., 0.1 * σ[4]), "purple"),
-                      ((10., 5., 0.1 * σ[5]), "orange"),
-                      ((10., 5., 0.1 * σ[6]), "cyan"),
-                      ((10., 5., 0.1 * σ[7]), "brown"),
-                      ((10., 5., 0.1 * σ[8]), "magenta"),
-                      ((10., 5., 0.1 * σ[9]), "pink"),
-                      ((10., 5., 0.1 * σ[10]), "lime"),
-                     ]
-
-        results = run_simulations(param_list, δs, L, n)
-        prefix = "sweep_g2"
-        create_plot_from_results(results, δs, dirname, prefix)
-        run_convergence(param_list, dirname, prefix)
-
-        # Parameter Sweep γg1
-        param_list = [
-                      ((10., 5. * σ[1] , 0.1), "blue"),
-                      ((10., 5. * σ[2] , 0.1), "red"),
-                      ((10., 5. * σ[3] , 0.1), "green"),
-                      ((10., 5. * σ[4] , 0.1), "purple"),
-                      ((10., 5. * σ[5] , 0.1), "orange"),
-                      ((10., 5. * σ[6] , 0.1), "cyan"),
-                      ((10., 5. * σ[7] , 0.1), "brown"),
-                      ((10., 5. * σ[8] , 0.1), "magenta"),
-                      ((10., 5. * σ[9] , 0.1), "pink"),
-                      ((10., 5. * σ[10], 0.1), "lime"),
-                     ]
-
-        results = run_simulations(param_list, δs, L, n)
-        prefix = "sweep_g1"
-        create_plot_from_results(results, δs, dirname, prefix)
-        run_convergence(param_list, dirname, prefix)
-
-        # Parameter Sweep γg1 and γg2
-        param_list = [
-                      ((10., 5.0*σ[1] , 0.1 * σ[1] ), "blue"),
-                      ((10., 5.0*σ[2] , 0.1 * σ[2] ), "red"),
-                      ((10., 5.0*σ[3] , 0.1 * σ[3] ), "green"),
-                      ((10., 5.0*σ[4] , 0.1 * σ[4] ), "purple"),
-                      ((10., 5.0*σ[5] , 0.1 * σ[5] ), "orange"),
-                      ((10., 5.0*σ[6] , 0.1 * σ[6] ), "cyan"),
-                      ((10., 5.0*σ[7] , 0.1 * σ[7] ), "brown"),
-                      ((10., 5.0*σ[8] , 0.1 * σ[8] ), "magenta"),
-                      ((10., 5.0*σ[9] , 0.1 * σ[9] ), "pink"),
-                      ((10., 5.0*σ[10], 0.1 * σ[10]), "lime"),
-                     ]
-
-        results = run_simulations(param_list, δs, L, n)
-        prefix = "sweep_g1_g2"
-        create_plot_from_results(results, δs, dirname, prefix)
-        run_convergence(param_list, dirname, prefix)
+        translation_test(solver, param_list, δs, dirname, prefix)
+        run_convergence(solver, param_list, dirname, prefix)
 
     end
 

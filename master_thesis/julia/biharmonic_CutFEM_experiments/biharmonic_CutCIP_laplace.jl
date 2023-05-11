@@ -1,14 +1,15 @@
+include("translation_test.jl")
+
 using Dates
-using Printf
 import Plots
 
 # default_size = (800, 600)
 default_size = (400, 300)
 
-Plots.pgfplotsx()
-endfix=".tex"
-# Plots.gr()
-# endfix=".png"
+# Plots.pgfplotsx()
+# endfix=".tex"
+Plots.gr()
+endfix=".png"
 
 using LaTeXStrings
 using Latexify
@@ -263,9 +264,8 @@ function main()
     mkpath(resultdir)
 
     ns = [2^3, 2^4, 2^5, 2^6, 2^7, 2^8]
-
     @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex)
-    # @time translation_test(dirname=resultdir, u_ex=u_ex )
+    # @time TranslationTest.penalty_test(dirname=resultdir, u_ex=u_ex, run_solver=Solver.run, iterations=5)
 
 end
 

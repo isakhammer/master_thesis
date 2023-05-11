@@ -1,3 +1,4 @@
+include("translation_test.jl")
 using Dates
 using Printf
 import Plots
@@ -42,7 +43,7 @@ module Solver
     end
 
 
-    function run(; n, u_ex, dirname, L=1.11, δ=0.0, γ=10, γg1=5, γg2=0.1)
+    function run(; n, u_ex, dirname=nothing, L=1.11, δ=0.0, γ=10, γg1=5, γg2=0.1)
 
         order = 2
         u_ex, f, ∇u_ex, ∇Δu_ex = man_sol(u_ex)
@@ -156,18 +157,20 @@ module Solver
 
         eh1 = sqrt(sum( ∫( e⊙e + ∇(e)⊙∇(e) )dΩ ))
 
-        vtkdirname =dirname*"/g_$(γ)_g1_$(γg1)_g2_$(γg2)_order_$(order)_n_$n"
-        mkpath(vtkdirname)
+        if dirname != nothing
+            vtkdirname =dirname*"/g_$(γ)_g1_$(γg1)_g2_$(γg2)_order_$(order)_n_$n"
+            mkpath(vtkdirname)
 
-        # Write out models and computational domains for inspection
-        writevtk(bgmodel,   vtkdirname*"/model")
-        writevtk(Ω,         vtkdirname*"/Omega")
-        writevtk(Ω_act,     vtkdirname*"/Omega_act")
-        writevtk(Λ,         vtkdirname*"/Lambda")
-        writevtk(Γ,         vtkdirname*"/Gamma")
-        writevtk(Fg,        vtkdirname*"/Fg")
-        writevtk(Λ,         vtkdirname*"/jumps",      cellfields=["jump_u"=>jump(uh)])
-        writevtk(Ω,         vtkdirname*"/sol",        cellfields=["e"=>e, "uh"=>uh, "u"=>u_inter])
+            # Write out models and computational domains for inspection
+            writevtk(bgmodel,   vtkdirname*"/model")
+            writevtk(Ω,         vtkdirname*"/Omega")
+            writevtk(Ω_act,     vtkdirname*"/Omega_act")
+            writevtk(Λ,         vtkdirname*"/Lambda")
+            writevtk(Γ,         vtkdirname*"/Gamma")
+            writevtk(Fg,        vtkdirname*"/Fg")
+            writevtk(Λ,         vtkdirname*"/jumps",      cellfields=["jump_u"=>jump(uh)])
+            writevtk(Ω,         vtkdirname*"/sol",        cellfields=["e"=>e, "uh"=>uh, "u"=>u_inter])
+        end
 
         sol = Solution( el2=el2, eh1=eh1, eh_energy=eh_energy,
                         cond_number=cond_number, ndof=ndof)
@@ -264,8 +267,8 @@ function main()
 
     ns = [2^3, 2^4, 2^5, 2^6, 2^7, 2^8]
 
-    @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex)
-
+    # @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex)
+    @time TranslationTest.penalty_test(dirname=resultdir, u_ex=u_ex, run_solver=Solver.run, iterations=5)
 end
 
 main()
