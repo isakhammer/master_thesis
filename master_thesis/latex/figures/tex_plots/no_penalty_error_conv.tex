@@ -1,4 +1,3 @@
-
 % Recommended preamble:
 % \usetikzlibrary{arrows.meta}
 % \usetikzlibrary{backgrounds}
@@ -22,31 +21,75 @@
 % }
 
 \begin{tikzpicture}[/tikz/background rectangle/.style={fill={rgb,1:red,1.0;green,1.0;blue,1.0}, fill opacity={1.0}, draw opacity={1.0}}, show background rectangle]
-\begin{axis}[point meta max={nan}, point meta min={nan}, legend cell align={left}, legend columns={1}, title={}, title style={at={{(0.5,1)}}, anchor={south}, font={{\fontsize{14 pt}{18.2 pt}\selectfont}}, color={rgb,1:red,0.0;green,0.0;blue,0.0}, draw opacity={1.0}, rotate={0.0}, align={center}}, legend style={color={rgb,1:red,0.0;green,0.0;blue,0.0}, draw opacity={1.0}, line width={1}, solid, fill={rgb,1:red,1.0;green,1.0;blue,1.0}, fill opacity={1.0}, text opacity={1.0}, font={{\fontsize{8 pt}{10.4 pt}\selectfont}}, text={rgb,1:red,0.0;green,0.0;blue,0.0}, cells={anchor={center}}, at={(1.02, 1)}, anchor={north west}}, axis background/.style={fill={rgb,1:red,1.0;green,1.0;blue,1.0}, opacity={1.0}}, anchor={north west}, xshift={1.0mm}, yshift={-1.0mm}, width={145.4mm}, height={99.6mm}, scaled x ticks={false}, xlabel={$\delta$}, x tick style={color={rgb,1:red,0.0;green,0.0;blue,0.0}, opacity={1.0}}, x tick label style={color={rgb,1:red,0.0;green,0.0;blue,0.0}, opacity={1.0}, rotate={0}}, xlabel style={at={(ticklabel cs:0.5)}, anchor=near ticklabel, at={{(ticklabel cs:0.5)}}, anchor={near ticklabel}, font={{\fontsize{11 pt}{14.3 pt}\selectfont}}, color={rgb,1:red,0.0;green,0.0;blue,0.0}, draw opacity={1.0}, rotate={0.0}}, xmajorgrids={true}, xmin={-0.001471665988344504}, xmax={0.05052719893316125}, xticklabels={{$0.00$,$0.01$,$0.02$,$0.03$,$0.04$,$0.05$}}, xtick={{0.0,0.010000000000000002,0.020000000000000004,0.030000000000000006,0.04000000000000001,0.05000000000000001}}, xtick align={inside}, xticklabel style={font={{\fontsize{8 pt}{10.4 pt}\selectfont}}, color={rgb,1:red,0.0;green,0.0;blue,0.0}, draw opacity={1.0}, rotate={0.0}}, x grid style={color={rgb,1:red,0.0;green,0.0;blue,0.0}, draw opacity={0.1}, line width={0.5}, solid}, axis x line*={left}, x axis line style={color={rgb,1:red,0.0;green,0.0;blue,0.0}, draw opacity={1.0}, line width={1}, solid}, scaled y ticks={false}, ylabel={$\kappa(A)$}, y tick style={color={rgb,1:red,0.0;green,0.0;blue,0.0}, opacity={1.0}}, y tick label style={color={rgb,1:red,0.0;green,0.0;blue,0.0}, opacity={1.0}, rotate={0}}, ylabel style={at={(ticklabel cs:0.5)}, anchor=near ticklabel, at={{(ticklabel cs:0.5)}}, anchor={near ticklabel}, font={{\fontsize{11 pt}{14.3 pt}\selectfont}}, color={rgb,1:red,0.0;green,0.0;blue,0.0}, draw opacity={1.0}, rotate={0.0}}, ymode={log}, log basis y={10}, ymajorgrids={true}, ymin={100000.0}, ymax={1.0e25}, yticklabels={{$10^{5}$,$10^{10}$,$10^{15}$,$10^{20}$,$10^{25}$}}, ytick={{100000.0,1.0e10,1.0e15,1.0e20,1.0e25}}, ytick align={inside}, yticklabel style={font={{\fontsize{8 pt}{10.4 pt}\selectfont}}, color={rgb,1:red,0.0;green,0.0;blue,0.0}, draw opacity={1.0}, rotate={0.0}}, y grid style={color={rgb,1:red,0.0;green,0.0;blue,0.0}, draw opacity={0.1}, line width={0.5}, solid}, axis y line*={left}, y axis line style={color={rgb,1:red,0.0;green,0.0;blue,0.0}, draw opacity={1.0}, line width={1}, solid}, colorbar={false}]
+\begin{axis}[point meta max={nan}, point meta min={nan}, legend cell align={left}, legend columns={1}, title={}, title style={at={{(0.5,1)}}, anchor={south}, font={{\fontsize{14 pt}{18.2 pt}\selectfont}}, color={rgb,1:red,0.0;green,0.0;blue,0.0}, draw opacity={1.0}, rotate={0.0}, align={center}}, legend style={color={rgb,1:red,0.0;green,0.0;blue,0.0}, draw opacity={1.0}, line width={1}, solid, fill={rgb,1:red,1.0;green,1.0;blue,1.0}, fill opacity={1.0}, text opacity={1.0}, font={{\fontsize{8 pt}{10.4 pt}\selectfont}}, text={rgb,1:red,0.0;green,0.0;blue,0.0}, cells={anchor={center}}, at={(1.02, 1)}, anchor={north west}}, axis background/.style={fill={rgb,1:red,1.0;green,1.0;blue,1.0}, opacity={1.0}}, anchor={north west}, xshift={1.0mm}, yshift={-1.0mm}, width={145.4mm}, height={99.6mm}, scaled x ticks={false}, xlabel={$h$}, x tick style={color={rgb,1:red,0.0;green,0.0;blue,0.0}, opacity={1.0}}, x tick label style={color={rgb,1:red,0.0;green,0.0;blue,0.0}, opacity={1.0}, rotate={0}}, xlabel style={at={(ticklabel cs:0.5)}, anchor=near ticklabel, at={{(ticklabel cs:0.5)}}, anchor={near ticklabel}, font={{\fontsize{11 pt}{14.3 pt}\selectfont}}, color={rgb,1:red,0.0;green,0.0;blue,0.0}, draw opacity={1.0}, rotate={0.0}}, xmode={log}, log basis x={2}, xmajorgrids={true}, xmin={0.0071889660205068364}, xmax={0.13584185781575728}, xticklabels={{$2^{-6}$,$2^{-4}$}}, xtick={{0.015625,0.0625}}, xtick align={inside}, xticklabel style={font={{\fontsize{8 pt}{10.4 pt}\selectfont}}, color={rgb,1:red,0.0;green,0.0;blue,0.0}, draw opacity={1.0}, rotate={0.0}}, x grid style={color={rgb,1:red,0.0;green,0.0;blue,0.0}, draw opacity={0.1}, line width={0.5}, solid}, axis x line*={left}, x axis line style={color={rgb,1:red,0.0;green,0.0;blue,0.0}, draw opacity={1.0}, line width={1}, solid}, scaled y ticks={false}, ylabel={$\Vert e \Vert_{L^2,solid} $, $\Vert e \Vert_{H^1,dash} $, $\Vert e \Vert_{ah,*,dot}$}, y tick style={color={rgb,1:red,0.0;green,0.0;blue,0.0}, opacity={1.0}}, y tick label style={color={rgb,1:red,0.0;green,0.0;blue,0.0}, opacity={1.0}, rotate={0}}, ylabel style={at={(ticklabel cs:0.5)}, anchor=near ticklabel, at={{(ticklabel cs:0.5)}}, anchor={near ticklabel}, font={{\fontsize{11 pt}{14.3 pt}\selectfont}}, color={rgb,1:red,0.0;green,0.0;blue,0.0}, draw opacity={1.0}, rotate={0.0}}, ymode={log}, log basis y={2}, ymajorgrids={true}, ymin={0.035222707312254}, ymax={4966.784325040246}, yticklabels={{$2^{0}$,$2^{8}$}}, ytick={{1.0,256.0}}, ytick align={inside}, yticklabel style={font={{\fontsize{8 pt}{10.4 pt}\selectfont}}, color={rgb,1:red,0.0;green,0.0;blue,0.0}, draw opacity={1.0}, rotate={0.0}}, y grid style={color={rgb,1:red,0.0;green,0.0;blue,0.0}, draw opacity={0.1}, line width={0.5}, solid}, axis y line*={left}, y axis line style={color={rgb,1:red,0.0;green,0.0;blue,0.0}, draw opacity={1.0}, line width={1}, solid}, colorbar={false}]
     [\addlegendimage{empty legend}] \addlegendentry[font={{\fontsize{11 pt}{14.3 pt}\selectfont}}, text={rgb,1:red,0.0;green,0.0;blue,0.0}] {\hspace{-.6cm}{\textbf{$(\gamma, \gamma_1, \gamma_2)$}}}
-    \addplot[color={rgb,1:red,0.0;green,0.0;blue,1.0}, name path={d224c932-a57b-4b2d-b00b-6e21c1ac3de3}, draw opacity={1.0}, line width={1}, solid]
+    \addplot[color={rgb,1:red,0.0;green,0.0;blue,1.0}, name path={d75fd04b-fa7b-40d5-925e-5d389c673476}, draw opacity={1.0}, line width={1}, solid]
         table[row sep={\\}]
         {
             \\
-            0.0  1.2679162841962957e8  \\
-            0.012263883236204186  1.2718633259851372e8  \\
-            0.024527766472408372  1.2693944203837477e8  \\
-            0.03679164970861256  1.271863190038903e8  \\
-            0.049055532944816745  1.2679162950937325e8  \\
+            0.125  16.34842746444951  \\
+            0.0625  3.6963996701551864  \\
+            0.03125  0.832182235270678  \\
+            0.015625  0.22689359881799284  \\
+            0.0078125  0.049893466171725895  \\
         }
         ;
     \addlegendentry { $1.0 \cdot 10^{1}$, $0.5 \cdot 10^{1}$, $1.0 \cdot 10^{-1}$ }
-    \addplot[color={rgb,1:red,1.0;green,0.0;blue,0.0}, name path={7adea5c0-5395-462d-ae7d-265324150fe4}, draw opacity={1.0}, line width={1}, solid]
+    \addplot[color={rgb,1:red,0.0;green,0.0;blue,1.0}, name path={83510fc8-71b9-43a7-8e29-7858ff508099}, draw opacity={1.0}, line width={1}, dashed, forget plot]
         table[row sep={\\}]
         {
             \\
-            0.0  4.6399601211603455e10  \\
-            0.012263883236204186  4.93225235137952e12  \\
-            0.024527766472408372  4.09594540313553e12  \\
-            0.03679164970861256  4.93225240700152e12  \\
-            0.049055532944816745  4.639960117645048e10  \\
+            0.125  133.63863186431385  \\
+            0.0625  31.494956792924192  \\
+            0.03125  7.391091604884702  \\
+            0.015625  1.8115670140035576  \\
+            0.0078125  0.43974840251135394  \\
+        }
+        ;
+    \addplot[color={rgb,1:red,0.0;green,0.0;blue,1.0}, name path={7e270904-0631-4169-8e55-281998d4631e}, draw opacity={1.0}, line width={1}, dotted, forget plot]
+        table[row sep={\\}]
+        {
+            \\
+            0.125  3550.926954471599  \\
+            0.0625  1033.8788564955153  \\
+            0.03125  291.62518463147273  \\
+            0.015625  80.25236932142877  \\
+            0.0078125  25.95463804360027  \\
+        }
+        ;
+    \addplot[color={rgb,1:red,1.0;green,0.0;blue,0.0}, name path={b4b941b2-6b03-4713-93b7-c4a35b58c048}, draw opacity={1.0}, line width={1}, solid]
+        table[row sep={\\}]
+        {
+            \\
+            0.125  11.675160426868874  \\
+            0.0625  3.0310075980218545  \\
+            0.03125  0.785117037888616  \\
+            0.015625  0.22179524786759885  \\
+            0.0078125  0.04926702036032627  \\
         }
         ;
     \addlegendentry { $1.0 \cdot 10^{1}$, $ 0.0 \cdot 10^{0} $, $ 0.0 \cdot 10^{0} $ }
+    \addplot[color={rgb,1:red,1.0;green,0.0;blue,0.0}, name path={289ccf37-65a0-435a-bd96-db6115e0f889}, draw opacity={1.0}, line width={1}, dashed, forget plot]
+        table[row sep={\\}]
+        {
+            \\
+            0.125  110.97495251333412  \\
+            0.0625  27.425544131416416  \\
+            0.03125  6.816491784603148  \\
+            0.015625  1.7161738801520496  \\
+            0.0078125  0.42689977409580526  \\
+        }
+        ;
+    \addplot[color={rgb,1:red,1.0;green,0.0;blue,0.0}, name path={a3ee6f8b-19ef-4836-a893-cfb3e47b573f}, draw opacity={1.0}, line width={1}, dotted, forget plot]
+        table[row sep={\\}]
+        {
+            \\
+            0.125  3502.409729589457  \\
+            0.0625  1001.3809339450683  \\
+            0.03125  330.88972441337853  \\
+            0.015625  83.26742393508408  \\
+            0.0078125  29.738439170431377  \\
+        }
+        ;
 \end{axis}
 \end{tikzpicture}

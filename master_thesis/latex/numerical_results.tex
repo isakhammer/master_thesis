@@ -22,27 +22,27 @@
 
 \begin{figure}[h!]
     \centering
-    \input{figures/tex_plots/conv.tex}
+    \input{figures/tex_plots/conv_plot.tex}
     \caption{The plot presents the error in $L^2$, $H^1$ the energy norm ($\Vert e \Vert_{a_h,*}$) with order 2 of the CutCIP method (Laplace).}
     \label{fig:CutFEM_error1}
 \end{figure}
 
 \begin{figure}[h!]
     \centering
-    \begin{subfigure}{0.49\textwidth}
+    \begin{subfigure}{\textwidth}
         \centering
         \input{figures/tex_plots/no_penalty_cond_trans.tex}
         \caption{Evolution of condition number}
         \label{subfig:cond}
     \end{subfigure}
     \hfill
-    \begin{subfigure}{0.49\textwidth}
+    \begin{subfigure}{\textwidth}
         \centering
         \input{figures/tex_plots/no_penalty_error_trans.tex}
         \caption{Evolution of error number}
         \label{subfig:error}
     \end{subfigure}
-    \caption{Comparison of translation test results with and without ghost penalty.}
+    \caption{Comparison of translation from with $500$ steps from test results with and without ghost penalty.}
     \label{fig:combined}
 \end{figure}
 
@@ -83,3 +83,8 @@ Figure \ref{fig:CutFEM_error1} displays a plot illustrating the error convergenc
 Additionally, we compare the results with and without the ghost penalty in two different tests: a translation test and a convergence test. The translation test examines the evolution of the condition number and error number, as shown in Figure \ref{fig:combined}. The convergence test also investigates the condition number and error number, and its results are presented in Figure \ref{fig:combined}.
 
 Overall, these numerical results provide insights into the performance and accuracy of the numerical method, showcasing the convergence behavior and the impact of the ghost penalty on the solution.
+
+
+
+
+
