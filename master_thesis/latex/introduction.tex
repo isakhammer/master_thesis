@@ -75,7 +75,7 @@ references, see \cite{abels2007convergence, cherfils2011cahn, elliott1986cahn}.
 \label{sub:numerical_methods}
 
 One of the key challenges with the CH problem is that it involves fourth order spatial derivatives. It has for simple domains successfully been implemented using finite difference methods (FDM)  \cite{furihata2001stable,
-cheng2019energy} and Spectral models \cite{liu2003phase, he2009class}. However, these methods are generally constrained to simple domains (with some notable exceptions \cite{li2013conservative, shen2009efficient, feng2009fourier}).
+cheng2019energy} and Spectral Methods \cite{liu2003phase, he2009class}. However, these methods are generally constrained to simple domains (with some notable exceptions \cite{li2013conservative, shen2009efficient, feng2009fourier}).
 
 As a further evolution to address the CH problem, it is common to consider a corresponding biharmonic (BH) problem as a numerical testbed in the spatial direction. This problem is defined as follows, \[
 \begin{split}
@@ -93,14 +93,16 @@ To avoid the need for global $C^1$ continuity has it been research on two famili
 % Paragraph of CIP
 The first involves the Continuous Interior Penalty (CIP) methods, which use the standard weak formulation but penalize the discontinuity of the derivative between elements as a form of regularization. The method has it been design several interesting
 stable variants, that is \cite{brenner2012, brenner2012quadratic, brenner2012quadratic_kirk, mu2014weak, georgoulis2009discontinuous}.
-The CIP formulation has also then been extended to solve CH \cite{wells2006discontinuous}.
+The CIP formulation has also then been adapted to solve CH \cite{wells2006discontinuous}.
 
 % Paragraph of Mixed
-Alternatives to smooth boundaries is isogeometric analysis, which is based on NURBS, and does in fact handle complex geometries quite well \cite{hughes2005isogeometric}.
+A another popular variant is to rewrite the BH problem in a mixed formulation as a system of second-order problems.
+
 
 % Paragraph of time integration
 
 % Paragraph of isogeometric analysis
+Alternatives to smooth boundaries is isogeometric analysis, which is based on NURBS, and does in fact handle complex geometries quite well \cite{hughes2005isogeometric}.
 Mixed CutFEM formulation of Cahn-Hilliard \cite{karatzas2021reduced} and a mixed Hybrid High-Order method \cite{chave2016hybrid}. Isogeometric formulation of Cahn-Hilliard \cite{kastner2016isogeometric, gomez2008isogeometric} and unfitted versions \cite{zhao2017variational}. Isogeoemtric formulation on moving
 surfaces \cite{zimmermann2019isogeometric}. Virtual $C^{1}$  elements has also been considered \cite{antonietti2016c}.
 
