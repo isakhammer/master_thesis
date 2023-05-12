@@ -27,47 +27,39 @@
     \label{fig:CutFEM_error1}
 \end{figure}
 
-\begin{figure}[h!]
+\begin{figure}
     \centering
-    \begin{subfigure}{\textwidth}
-        \centering
-        \input{figures/tex_plots/no_penalty_cond_trans.tex}
-        \caption{Evolution of condition number}
+    \subfloat[Evolution of condition number]{
         \label{subfig:cond}
-    \end{subfigure}
+        \input{figures/tex_plots/no_penalty_cond_trans.tex}
+    }
     \hfill
-    \begin{subfigure}{\textwidth}
-        \centering
-        \input{figures/tex_plots/no_penalty_error_trans.tex}
-        \caption{Evolution of error number}
+    \subfloat[Evolution of error number]{
         \label{subfig:error}
-    \end{subfigure}
+        \input{figures/tex_plots/no_penalty_error_trans.tex}
+    }
     \caption{Comparison of translation of circle with radius $R=1$ from with $1000$ steps for $n=2^4$, $L=1.11$ and $h=\frac{L}{n}$ s.t. $\delta \in  [0, \sqrt{2} h]  $. Here is the test specifically for without ghost penalty, $\gamma _{1} =
     \gamma_2=0 $ and with ghost penalty, $ \gamma _{1} = 5 $ and $\gamma _{2} = 0.1$.}
-
     \label{fig:combined}
 \end{figure}
 
 
 
-
-\begin{figure}[h!]
+\begin{figure}
     \centering
-    \begin{subfigure}{0.49\textwidth}
+    \subfloat[Evolution of condition number]{
         \centering
+        \label{subfig:cond_conv}
         \input{figures/tex_plots/no_penalty_cond_conv.tex}
-        \caption{Evolution of condition number}
-        \label{subfig:cond}
-    \end{subfigure}
+    }
     \hfill
-    \begin{subfigure}{0.49\textwidth}
+    \subfloat[Evolution of error number]{
         \centering
+        \label{subfig:error_conv}
         \input{figures/tex_plots/no_penalty_error_conv.tex}
-        \caption{Evolution of error number}
-        \label{subfig:error}
-    \end{subfigure}
+    }
     \caption{Comparison of convergence test results with and without ghost penalty.}
-    \label{fig:combined}
+    \label{fig:combined_conv}
 \end{figure}
 
 In this section, we present the numerical results of the convergence analysis for a numerical method applied to a square grid with a length of 1. The grid is discretized with $n=2^6$ grid points. The analysis is based on a manufactured solution, which is given by the expression:
