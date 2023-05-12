@@ -77,8 +77,22 @@ references, see \cite{abels2007convergence, cherfils2011cahn, elliott1986cahn}.
 One of the key challenges with the CH problem is that it involves fourth order spatial derivatives. It has for simple domains successfully been implemented using finite difference methods (FDM)  \cite{furihata2001stable,
 cheng2019energy} and Spectral models \cite{liu2003phase, he2009class}. However, these methods are generally constrained to simple domains (with some notable exceptions \cite{li2013conservative, shen2009efficient, feng2009fourier}).
 
-Early FEM methods for CH was proposed in \cite{elliott1987numerical, elliott1986cahn} utilizing global $C^{1}$ and $C^{2}$ in one spatial dimension, but later is has been shown that making $C^{1}$ (or higher order) elements are very challenging to make in higher dimensions.
-CIP formulation of the Cahn-Hilliard was presented in \cite{wells2006discontinuous} which avoids high derivatives along boundaries, thus no need for global $C^{1}$ elements.
+Early FEM methods for CH was proposed in \cite{elliott1987numerical, elliott1986cahn} utilizing global $C^{1}$ and $C^{2}$ in one spatial dimension, but later is has been shown that making $C^{1}$ (or higher order) elements are far from trivial and
+lead to requiring a high polynomial degree or     For
+reference, see \cite{kapl2021family}.
+
+Continuous Interior Penalty method  formulation of the CH was presented in \cite{wells2006discontinuous} which avoids high derivatives along boundaries, thus no need for global $C^{1}$ elements.
+
+As a further development of to solve the CH problem is the following biharmonic (BH) problem been considered as a numerical framework for testing method for fourth order spatial problems with boundary conditions similar to the CH problem. \[
+\begin{split}
+    \Delta ^2 u & = f( x) \quad \text{in }  \Omega, \\
+    \partial _{n} u & = g_{1} \quad \text{on } \Gamma,   \\
+    \partial _{n} \Delta  u & = g_{2}, \quad \text{on } \Gamma.   \\
+\end{split}
+\]
+Generally for FEM has there been a lot of research of this problem since it is likely to provide a nice spatial framework before moving onto solving the nonlinear equations.
+Specifically for the CIP method has it been design several interesting stable variants, that is \cite{brenner2012, brenner2012quadratic, brenner2012quadratic_kirk, mu2014weak}.
+
 
 Alternatives to smooth boundaries is isogeometric analysis, which is based on NURBS, and does in fact handle complex geometries quite well \cite{hughes2005isogeometric}.
 
