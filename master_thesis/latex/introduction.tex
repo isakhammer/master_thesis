@@ -77,29 +77,34 @@ references, see \cite{abels2007convergence, cherfils2011cahn, elliott1986cahn}.
 One of the key challenges with the CH problem is that it involves fourth order spatial derivatives. It has for simple domains successfully been implemented using finite difference methods (FDM)  \cite{furihata2001stable,
 cheng2019energy} and Spectral models \cite{liu2003phase, he2009class}. However, these methods are generally constrained to simple domains (with some notable exceptions \cite{li2013conservative, shen2009efficient, feng2009fourier}).
 
-Early FEM methods for CH was proposed in \cite{elliott1987numerical, elliott1986cahn} utilizing global $C^{1}$ and $C^{2}$ in one spatial dimension, but later is has been shown that making $C^{1}$ (or higher order) elements are far from trivial and
-lead to requiring a high polynomial degree or     For
-reference, see \cite{kapl2021family}.
-
-Continuous Interior Penalty method  formulation of the CH was presented in \cite{wells2006discontinuous} which avoids high derivatives along boundaries, thus no need for global $C^{1}$ elements.
-
-As a further development of to solve the CH problem is the following biharmonic (BH) problem been considered as a numerical framework for testing method for fourth order spatial problems with boundary conditions similar to the CH problem. \[
+As a further evolution to address the CH problem, it is common to consider a corresponding biharmonic (BH) problem as a numerical testbed in the spatial direction. This problem is defined as follows, \[
 \begin{split}
     \Delta ^2 u & = f( x) \quad \text{in }  \Omega, \\
     \partial _{n} u & = g_{1} \quad \text{on } \Gamma,   \\
-    \partial _{n} \Delta  u & = g_{2}, \quad \text{on } \Gamma.   \\
+    \partial _{n} \Delta  u & = g_{2} \quad \text{on } \Gamma.   \\
 \end{split}
 \]
-Generally for FEM has there been a lot of research of this problem since it is likely to provide a nice spatial framework before moving onto solving the nonlinear equations.
-Specifically for the CIP method has it been design several interesting stable variants, that is \cite{brenner2012, brenner2012quadratic, brenner2012quadratic_kirk, mu2014weak}.
+Generally is this problem since it is likely to provide a nice spatial-integration framework before moving onto solving the non-linearities and time-integration.
 
+The early Finite Element Methods (FEM) for CH was proposed in \cite{elliott1987numerical, elliott1986cahn} utilizing global $C^{1}$ and $C^{2}$ in one spatial dimension, but later is has been shown that making $C^{1}$ (or higher order) elements are far from trivial. For
+reference, see \cite{kapl2021family, percell1976cubic, argyris1968tuba}.
 
+To avoid the need for global $C^1$ continuity has it been research on two families of methods.
+% Paragraph of CIP
+The first involves the Continuous Interior Penalty (CIP) methods, which use the standard weak formulation but penalize the discontinuity of the derivative between elements as a form of regularization. The method has it been design several interesting
+stable variants, that is \cite{brenner2012, brenner2012quadratic, brenner2012quadratic_kirk, mu2014weak, georgoulis2009discontinuous}.
+The CIP formulation has also then been extended to solve CH \cite{wells2006discontinuous}.
+
+% Paragraph of Mixed
 Alternatives to smooth boundaries is isogeometric analysis, which is based on NURBS, and does in fact handle complex geometries quite well \cite{hughes2005isogeometric}.
 
+% Paragraph of time integration
+
+% Paragraph of isogeometric analysis
 Mixed CutFEM formulation of Cahn-Hilliard \cite{karatzas2021reduced} and a mixed Hybrid High-Order method \cite{chave2016hybrid}. Isogeometric formulation of Cahn-Hilliard \cite{kastner2016isogeometric, gomez2008isogeometric} and unfitted versions \cite{zhao2017variational}. Isogeoemtric formulation on moving
 surfaces \cite{zimmermann2019isogeometric}. Virtual $C^{1}$  elements has also been considered \cite{antonietti2016c}.
 
-
+% Paragraph of CutFEM
 
 % Introduced unconditionally stable, second order accurate, numerically dissipative with parameters $\alpha$ and $ \beta $,  Newmans Method \cite{newmark1959method}
 % Improved versions of the Newmark method by introducing the numerically dissipative parameters such as the Hilber method and the Bossak Method \cite{hilber1977improved, wood1980alpha}. Combing these ideas the Generalized $\alpha $ method from which all the other methods can be derived \cite{chung1993time}.
