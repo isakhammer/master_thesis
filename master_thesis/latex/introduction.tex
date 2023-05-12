@@ -95,11 +95,12 @@ The first involves the Continuous Interior Penalty (CIP) methods, which use the 
 stable variants, that is \cite{brenner2012, brenner2012quadratic, brenner2012quadratic_kirk, mu2014weak, georgoulis2009discontinuous}.
 The CIP formulation has also then been adapted to solve CH \cite{wells2006discontinuous}.
 A advantage of this method is that it is symmetric and is closely related to the family of discontinuous Galerkin methods, hence, the method is well known in terms of numerical analysis \cite{di2011mathematical}.
-
 A another popular variant is to rewrite the BH problem in a mixed formulation as a system of second-order problems \cite{falk1978approximation, ciarlet1974mixed, gudi2008mixed, cheng2000some} and is utilizing the general saddle point theory for mixed FEM methods \cite{john2016finite}.
-It is also successfully adapted to the CH problem \cite{feng2004error}.
+This methods is also successfully adapted to the CH problem \cite{feng2004error}.
 
-% Paragraph of time integration
+% \todo[inline]{ Add more applications to the CH problem.}
+% \todo[inline]{ Add paragraph to time integration. $\alpha method $ etc. Maybe discuss in later papers? }
+% \todo[inline]{  Discuss problems that appear on smooth domains and introduce isogeometric elements. virtual elements and CutFEM. }
 
 % Paragraph of isogeometric analysis
 Alternatives to smooth boundaries is isogeometric analysis, which is based on NURBS, and does in fact handle complex geometries quite well \cite{hughes2005isogeometric}.
@@ -107,30 +108,14 @@ Mixed CutFEM formulation of Cahn-Hilliard \cite{karatzas2021reduced} and a mixed
 surfaces \cite{zimmermann2019isogeometric}. Virtual $C^{1}$  elements has also been considered \cite{antonietti2016c}.
 
 % Paragraph of CutFEM
-
-CutFEM for mixed formulation \cite{cai2023nitsche}.
-
-% Introduced unconditionally stable, second order accurate, numerically dissipative with parameters $\alpha$ and $ \beta $,  Newmans Method \cite{newmark1959method}
-% Improved versions of the Newmark method by introducing the numerically dissipative parameters such as the Hilber method and the Bossak Method \cite{hilber1977improved, wood1980alpha}. Combing these ideas the Generalized $\alpha $ method from which all the other methods can be derived \cite{chung1993time}.
-
-% \subsection{CutFEM}%
-% \label{sub:cutfem}
-% The goal of this thesis is to make a foundation of a numerical framework, which later can be developed to handle moving domains. We will use CutFEM method \cite{burman2015cutfem}.
-
-% \subsection{ODE integrators}%
-% \label{sub:ode_integrators}
-
-% First signs of finite element was in 1941 when Hrennikoff used the method solve problems in linear elasticity \cite{hrennikoff1941solution}. It then took offspring to applications in aerospace application in the 50's when it was formalized the method
-% could solve dynamical problems on complex structures as a competitor to the finite difference method
-% \cite{argyris1960energy, turner1956stiffness, liu2022eighty}. To expect good numerical results does he finite element methods requires a lot of DOFs and thus did the popularity climb with the rise of the supercomputers. Thus it has proven to be
-% useful found a great variety of applications in multi-physics problems because of its simplicity based on the abstract mathematical generalisation of both functions spaces and computational domains.
+Lately is has been introduced CutFEM for mixed formulation \cite{cai2023nitsche} and CIP formulation \cite{chen2023arbitrary}.
 
 \subsection{Outline of the report}%
 \label{sub:outline_of_the_report}
 \todo[inline]{ Describe the workflow of this method. }
 
 
-The goal of the thesis implement an modern unfitted finite element method (FEM) to solve the Cahn-Hilliard equation. The plan is to first derive the stability and well-posedness for the method for the fourth order Biharmonic equation,
+The goal of the thesis implement an CIP method that utilize the CutFEM to solve the CH on smooth domains. The plan is to first derive the stability and well-posedness for the method for the fourth order Biharmonic equation,
 \[
     \begin{split}
 \Delta ^2 u & = f \quad  \text{in } \Omega \\
