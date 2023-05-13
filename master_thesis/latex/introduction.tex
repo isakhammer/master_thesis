@@ -103,18 +103,17 @@ ciarlet1974mixed, gudi2008mixed, cheng2000some}. This approach also leverages th
 FEM methods which is providing a mathematical framework to ensure numerical stability \cite{john2016finite}.
 Moreover, this approach adapts well to the CH problem \cite{wells2006discontinuous,feng2004error} and some methods even apply a so-called convex splitting scheme approach in a way that preserves the convexity of the energy functional making the
 system easier to solve \cite{diegel2015analysis, brenner2018robust}.
-A combination of this methods, that is the DG and mixed formulation for the CH problem, has recently also been considered \cite{chave2016hybrid, medina2022stabilized}.
+A combination of these methods, that is the DG and mixed formulation for the CH problem, has recently also been considered \cite{chave2016hybrid, medina2022stabilized}.
 
 % Paragraph of isogeometric analysis
 Creating a high quality mesh in 2- and 3 dimensional for realistic problems is a challenging task that can take a reasonable time in the simulation workflow and is hard to scale properly on distributed platforms and thus not that suitable for moving
-domains or very complex meshes. A interesting class to approach the problem is the so-called unfitted finite element methods which is utilizing a background mesh and does not align with the physical boundary.
+domains, very complex meshes or smooth boundaries. A interesting class to approach the problem is the so-called unfitted finite element methods which is utilizing a background mesh and does not align with the physical boundary.
 This greatly reduce the need to generate unstructured mesh, and makes it very applicable for parallelization and moving domains
 since it is avoiding the need of remeshing entirely.
 One of the unfitted FEM methods are the cut finite element method (CutFEM) where the focus is to penalize the cut cells weakly by adding a additional ghost penalty term to ensure stability and well-posedness \cite{burman2015cutfem}. This has been successfully implemented for the BH problem for the
-mixed formulation \cite{cai2023nitsche} and specifically for the CH problem has the mixed formulation \cite{karatzas2021reduced} and the CIP formulation \cite{chen2023arbitrary} been considered.
+mixed formulation \cite{cai2023nitsche} and the CIP formulation \cite{chen2023arbitrary}, however, they both method considering a interface problem between two domains. Specifically for the CH problem has the mixed formulation \cite{karatzas2021reduced} shown to be successful.
  Aggregated unfitted finite element method is a close relative to CutFEM and has also shown to
 be promising \cite{verdugo2019distributed, badia2018aggregated}.
-
 
 % Describe isogeometric analysis and virtial elements methods as alternatives.
 Alternatives to smooth boundaries is isogeometric analysis, which is based on NURBS, and does in fact handle complex geometries quite well \cite{hughes2005isogeometric}.
@@ -124,7 +123,6 @@ surfaces \cite{zimmermann2019isogeometric}. Virtual $C^{1}$  elements has also b
 
 \subsection{Outline of the report}%
 \label{sub:outline_of_the_report}
-\todo[inline]{ Describe the workflow of this method. }
 
 In this report is an novel stabilized cut continuous interior penalty method (CutCIP) that utilize the CutFEM framework, to handle complex domains, and the CIP formulation, for its elegant formulation to handle fourth order spatial derivatives, to solve
 the CH problem. We will name the cut continuous interior penalty method (CutCIP) method. In the first section  prove that the method is stable and has optimal
