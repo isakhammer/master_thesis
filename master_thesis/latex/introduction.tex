@@ -109,11 +109,12 @@ A combination of these methods, that is the DG and mixed formulation for the CH 
 Creating a high quality mesh in 2- and 3 dimensional for realistic problems is a challenging task that can take a reasonable time in the simulation workflow and is hard to scale properly on distributed platforms and thus not that suitable for moving
 domains, very complex meshes or smooth boundaries. A interesting class to approach the problem is the so-called unfitted finite element methods which is utilizing a background mesh and does not align with the physical boundary.
 This greatly reduce the need to generate unstructured mesh, and makes it very applicable for parallelization and moving domains
-since it is avoiding the need of remeshing entirely.
-One of the unfitted FEM methods are the cut finite element method (CutFEM) where the focus is to penalize the cut cells weakly by adding a additional ghost penalty term to ensure stability and well-posedness \cite{burman2015cutfem}. This has been successfully implemented for the BH problem for the
+since it is avoiding the need of remeshing entirely. However, without taking attention to the so-called cut cells, which is the elements that is intersecting with boundary, the method quickly leads to instability and ill-conditioning.
+One of the methods to counter this is the cut finite element method (CutFEM) where the focus is to penalize the cut-cells weakly by adding a additional ghost penalty term to ensure stability and well-posedness \cite{burman2015cutfem}. This has been successfully implemented for the BH problem for the
 mixed formulation \cite{cai2023nitsche} and the CIP formulation \cite{chen2023arbitrary}, however, they both method considering a interface problem between two domains. Specifically for the CH problem has the mixed formulation \cite{karatzas2021reduced} shown to be successful.
- Aggregated unfitted finite element method is a close relative to CutFEM and has also shown to
-be promising \cite{verdugo2019distributed, badia2018aggregated}.
+ Aggregated unfitted finite element method (AgFEM) is a close relative to CutFEM and has also shown to
+be promising \cite{badia2018aggregated, badia2022linking}. The method is an alternative way to ghost penalty which is instead applying a so-called cell aggregation with respect to a cut-cell if ( assuming each cell has enough support with interior elements) and,
+thus, the badly cut cells are removed and avoiding ill-conditioning.
 
 % Describe isogeometric analysis and virtial elements methods as alternatives.
 Alternatives to smooth boundaries is isogeometric analysis, which is based on NURBS, and does in fact handle complex geometries quite well \cite{hughes2005isogeometric}.
