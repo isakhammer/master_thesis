@@ -92,11 +92,17 @@ reference, see \cite{kapl2021family, percell1976cubic, argyris1968tuba}.
 To avoid the need for global $C^1$ continuity has it been research on two families of methods.
 % Paragraph of CIP
 The first involves the Continuous Interior Penalty (CIP) methods, which use the standard weak formulation but penalize the discontinuity of the derivative between elements as a form of regularization. The method has it been design several interesting
-stable variants, that is \cite{brenner2012, brenner2012quadratic, brenner2012quadratic_kirk, mu2014weak, georgoulis2009discontinuous}.
-The CIP formulation has also then been adapted to solve CH \cite{wells2006discontinuous}.
-A advantage of this method is that it is symmetric and is closely related to the family of discontinuous Galerkin methods, hence, the method is well known in terms of numerical analysis \cite{di2011mathematical}.
-A another popular variant is to rewrite the BH problem in a mixed formulation as a system of second-order problems \cite{falk1978approximation, ciarlet1974mixed, gudi2008mixed, cheng2000some} and is utilizing the general saddle point theory for mixed FEM methods \cite{john2016finite}.
-This methods is also successfully adapted to the CH problem \cite{feng2004error}.
+stable variants for the BH problem, that is \cite{brenner2012, brenner2012quadratic, brenner2012quadratic_kirk, mu2014weak, georgoulis2009discontinuous}.
+This method is advantageous due to its symmetry and relationship with discontinuous Galerkin methods \cite{di2011mathematical}, which are renowned for their natural way to handle inhomogeneous boundary conditions, flexibility with unstructured meshes, efficient parallelization, and strong stability. This connection lends robust stability analysis tools, making the method highly suitable for intricate computational problems.
+The CIP formulation has also then been adapted to solve CH by utilizing the implicit-explicit (IMEX) time integration schemes, where the stiff part is treated implicitly (such as backward Euler) and the nonlinear part explicitly (such as the forward
+Euler or explicit Runge-Kutta) \cite{wells2006discontinuous, feng2007fully}.
+
+
+A another popular variant is to rewrite the BH problem in a mixed formulation as a system of second-order problems. This strategy not only broadens the problem's flexibility but also provides a more natural means to incorporate boundary conditions,
+see \cite{falk1978approximation,
+ciarlet1974mixed, gudi2008mixed, cheng2000some}. This approach also leverages the general saddle point theory for mixed
+FEM methods which is providing a mathematical framework to ensure numerical stability \cite{john2016finite}.
+Moreover, this approach adapts well to the CH problem \cite{feng2004error} and some methods even apply a so-called convex splitting scheme approach in a way that preserves the convexity of the energy functional making the system easier to solve \cite{diegel2015analysis, brenner2018robust}.
 
 % \todo[inline]{ Add more applications to the CH problem.}
 % \todo[inline]{ Add paragraph to time integration. $\alpha method $ etc. Maybe discuss in later papers? }
