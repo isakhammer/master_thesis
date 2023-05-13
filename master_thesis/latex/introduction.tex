@@ -89,7 +89,15 @@ Generally is this problem since it is likely to provide a nice spatial-integrati
 The early Finite Element Methods (FEM) for CH was proposed in \cite{elliott1987numerical, elliott1986cahn} utilizing global $C^{1}$ and $C^{2}$ in one spatial dimension, but later is has been shown that making $C^{1}$ (or higher order) elements are far from trivial. For
 reference, see \cite{kapl2021family, percell1976cubic, argyris1968tuba}.
 
-To avoid the need for global $C^1$ continuity has it been research on two families of methods.
+% Describe isogeometric analysis and virtial elements methods as alternatives.
+There exist several promising alternative methods that guarantee $C^{1}$ continuity, and these have shown potential for solving the Cahn-Hilliard (CH) problem. A notable mention is isogeometric analysis (IGA), a technique that leverages Non-Uniform
+Rational B-Splines (NURBS) to efficiently handle complex geometries and smooth boundaries without the need for mesh refinement. This makes it a desirable alternative for problems dealing with intricate and smooth domains
+\cite{hughes2005isogeometric}. Specifically for the CH problem has IGA successfully been implemented \cite{kastner2016isogeometric, gomez2008isogeometric}. Recent restults has shown that investigations on unfitted versions of IGA
+\cite{zhao2017variational} and its applicability to moving surfaces \cite{zimmermann2019isogeometric} also is possible.
+Another rising method is the virtual finite element method (VFEM), that has applied so-scalled virtual $C^{1}$ elements to handle the continuity requirement \cite{antonietti2016c}.
+
+An alternative approach is to avoid global $C^1$ continuity. As a result, this strategy has led to the development of two distinct families of methods for solving the CH problem.
+
 % Paragraph of CIP
 The first involves the Continuous Interior Penalty (CIP) methods, which use the standard weak formulation but penalize the discontinuity of the derivative between elements as a form of regularization. The method has it been design several interesting
 stable variants for the BH problem, that is \cite{brenner2012, brenner2012quadratic, brenner2012quadratic_kirk, mu2014weak, georgoulis2009discontinuous}.
@@ -114,12 +122,8 @@ One of the methods to counter this is the cut finite element method (CutFEM) whe
 mixed formulation \cite{cai2023nitsche} and the CIP formulation \cite{chen2023arbitrary}, however, they both method considering a interface problem between two domains. Specifically for the CH problem has the mixed formulation \cite{karatzas2021reduced} shown to be successful.
  Aggregated unfitted finite element method (AgFEM) is a close relative to CutFEM and has also shown to
 be promising \cite{badia2018aggregated, badia2022linking}. The method is an alternative way to ghost penalty which is instead applying a so-called cell aggregation with respect to a cut-cell if ( assuming each cell has enough support with interior elements) and,
-thus, the badly cut cells are removed and avoiding ill-conditioning.
+thus, the badly cut cells are removed ensuring robustness and well posedness.
 
-% Describe isogeometric analysis and virtial elements methods as alternatives.
-Alternatives to smooth boundaries is isogeometric analysis, which is based on NURBS, and does in fact handle complex geometries quite well \cite{hughes2005isogeometric}.
- Isogeometric formulation of Cahn-Hilliard \cite{kastner2016isogeometric, gomez2008isogeometric} and unfitted versions \cite{zhao2017variational}. Isogeometric formulation on moving
-surfaces \cite{zimmermann2019isogeometric}. Virtual $C^{1}$  elements has also been considered \cite{antonietti2016c}.
 
 
 \subsection{Outline of the report}%
