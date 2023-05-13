@@ -2,15 +2,15 @@
 
 
 The first application of the Cahn-Hilliard (CH) problem appeared when modelling phase separation of two-component incompressible fluids \cite{cahn1958free, cahn1959free, cahn1961spinodal}, but was quickly generalized to handle multi-component system
-as well \cite{bosch2015fractional, eyre1993systems, toth2016phase, miranville2017cahn}. In engineering, CH is the key component in
-the phase-field model, which is a mathematical framework to model transitions and interface dynamics in materials and fluid dynamics \cite{steinbach2009phase, chen2002phase}.
-From this has the equation found many interesting applications for a big variety of problems. To mention a few, we have
-multiphase fluid dynamical problems \cite{badalassi2003computation, li2016lattice, kim2012phase, shen2010phase}, solidification of binary or multicomponent alloys \cite{kim1999phase, echebarria2004quantitative}, and continuum modelling of fracture dynamics in
-materials \cite{kuhn2010continuum, li2015phase}. Perhaps an unexpected application is that CH can be used to for in painting when recovering damaged parts of an image \cite{bertozzi2006inpainting, burger2009cahn, bosch2015fractional, brkic2020image}
-and modelling the origin of the irregular structure in the Saturn's rings \cite{tremaine2003origin}.
-CH has also shown be be essential in many areas of biology and medicine. From a macroscopic point of view is that CH is a great tool to model tumor growth, wound healing and brain tumors \cite{agosti2017cahn, cristini2009nonlinear}.
-On the microscopic level on the bio membrane is there a ongoing hypothesis about the existence of the accumulation of lipids into so-called lipid rafts which serve as a rigid platform for proteins with
-special properties such as signalling and intercellular trafficking \cite{ levental2020lipid, hancock2006lipid, munro2003lipid, simons1997functional}. It turns out that the hypothesis can tested by modelling the problem as a separation problem using
+as well \cite{bosch2015fractional, eyre1993systems, toth2016phase, miranville2017cahn}. In engineering, CH is the critical component in
+the phase-field model, a mathematical framework to model transitions and interface dynamics in materials and fluid dynamics \cite{steinbach2009phase, chen2002phase}.
+From this, the equation found many interesting applications for a wide variety of problems. To mention a few, we have
+multiphase fluid dynamical problems \cite{badalassi2003computation, li2016lattice, kim2012phase, shen2010phase}, solidification of binary or multi-component alloys \cite{kim1999phase, echebarria2004quantitative}, and continuum modelling of fracture dynamics in
+materials \cite{kuhn2010continuum, li2015phase}. Perhaps an unexpected application is that CH can be used for in painting when recovering damaged parts of an image \cite{bertozzi2006inpainting, burger2009cahn, bosch2015fractional, brkic2020image}
+and modelling the origin of the irregular structure in Saturn's rings \cite{tremaine2003origin}.
+CH is also essential in many areas of biology and medicine. For example, from a macroscopic viewpoint, CH is a great tool to model tumour growth, wound healing and brain tumours \cite{agosti2017cahn, cristini2009nonlinear}.
+On the microscopic level on the biomembrane, there is an ongoing debate about the existence of the accumulation of lipids into so-called lipid rafts, which serve as a rigid platform for proteins with
+special properties such as signalling and intercellular trafficking \cite{ levental2020lipid, hancock2006lipid, munro2003lipid, simons1997functional}. It turns out that the hypothesis can be tested by modelling the problem as a separation problem using
 CH \cite{miller2020divide, garcke2016coupled, yushutin2019computational}.
 
 \subsection{The Cahn Hilliard Problem}%
@@ -20,11 +20,10 @@ CH \cite{miller2020divide, garcke2016coupled, yushutin2019computational}.
 The CH problem comes in many variants depending on its application, but we will in this report on the binary mixture version \cite{miranville2017cahn}. Let $\Omega \subset  \mathbb{R} ^{d} $ be a compact set for $d=2,3$ with boundary
 $\Gamma $. We define the time duration parameter $T \in  [0,\infty) $ and the
 so-called unknown phase-field function as the
-mapping $u: \left[ 0,T \right] \times \Omega  \to \left[ -1,1 \right]  $, which is denoted as the local difference of a binary mixture of two concentrations $c_{A}, c_{B} \in \left[ 0,1\right] $ s.t. $u = c_{A} -c_{B}$ and $c_{A} + c_{B} = 1$. Remark that if there exist a
-local point so $u$ has the extreme value $-1$, then it implies that the particular point has $100\%$ concentration $c_{A}$ and vice-versa for $c_{B}$. On the other hand, if $u$ is zero it implies that the mixture is $50\% - 50\%$.
+mapping $u: \left[ 0, T \right] \times \Omega  \to \left[ -1,1 \right]  $, which is denoted as the local difference of a binary mixture of two concentrations $c_{A}, c_{B} \in \left[ 0,1\right] $ s.t. $u = c_{A} -c_{B}$ and $c_{A} + c_{B} = 1$. Remark that if a local point exists so $u$ has the extreme value $-1$, then it implies that the particular point has $100\%$ concentration $c_{A}$ and vice-versa for $c_{B}$. On the other hand, if $u$ is zero, it implies that the mixture is $50\% - 50\%$.
 
-For a isotropic
-binary mixture nonuniform, the standard Ginzburg-Landay free energy functional is given by \[
+For an isotropic
+binary mixture non-uniform, the standard Ginzburg-Landay free energy functional is given by \[
 E( u)  = \int_{\Omega }^{} \frac{\varepsilon ^2}{2} \abs{ \nabla u } ^2 + F( u) dx
 \]
 The nonlinear function $F( u) $ is denoted as the (Helmholtz) free energy density associated with the interaction dynamics between the components and thus comes in many forms depending on the thermodynamic properties, see \cite{miranville2017cahn}.
@@ -34,10 +33,10 @@ We choose to define the chemical potential $\mu $ as the variational derivative,
 \mu = \frac{ \delta E( u) }{ \delta  u} = f( u)  - \varepsilon ^{2} \Delta c .
 \]
 where we used the notation $f( u) = F'( u) $.
-First of all, to require local mass conservation we may enforce the continuity equation, that is \[
+First of all, to require local mass conservation, we may enforce the continuity equation, that is \[
 \partial _{t} u + \nabla \cdot \mathcal{J}  = 0,
 \]
-where $J$ denotes the flux governed by the physical dynamics. Hence, this naturally leads the no-flux and the Neumann boundary conditions,
+where $J$ denotes the flux governed by the physical dynamics. Hence, this naturally leads to the no-flux and the Neumann boundary conditions,
 \begin{equation}
 \label{eq:conservation}
     \begin{split}
@@ -45,7 +44,7 @@ where $J$ denotes the flux governed by the physical dynamics. Hence, this natura
 \partial _{n} u & = 0 \text{ on } \Gamma
     \end{split}
 \end{equation}
- A well accepted law for the flux  is to proportional to the gradient of the chemical energy, $\mathcal{J} = - M  \nabla \mu  $ for a parameter $M$.
+ A well-accepted law for the flux is that it is proportional to the chemical energy gradient, $\mathcal{J} = - M  \nabla \mu  $ for a parameter $M$.
 Thus, we finally have the strong form Cahn-Hilliard equation. Let $ u( x,0) =  u_{0}$ then is the dynamics on the form,
 
 \begin{equation}
@@ -63,18 +62,18 @@ Based on these laws and the boundary conditions, it becomes evident that the ene
 \frac{d}{dt} E( u)  \le  0 \text{ and }\frac{d}{dt} \int_{\Omega }^{}  u dx = 0.
     \end{split}
 \]
-Remark that the computation of the inequality does utilize the assumption of $M$ to be constant and both equations require the no-flux boundary condition, $\mathcal{J} \cdot n = 0$.
+Remark that the inequality computation utilizes the assumption of $M$ to be constant, and both equations require the no-flux boundary condition, $\mathcal{J} \cdot n = 0$.
 For details, see \cite[Equation 17 ]{lee2014physical} and \cite[Equation 1.7]{garcke2020weak}.
 This is useful since we expect $E( u( \cdot , t_{2}) ) \le  E( u( \cdot , t_{1}) ) $ for $0 < t_{1} < t_{2} $ and that the global mass is conserved, \[
 \int_{\Omega }^{} u ( x,t)  dx = \int_{\Omega }^{} u_{0}(x)  dx.
 \]
-The properties under consideration serve as a theoretical foundation for establishing the existence, uniqueness, and long-term behavior of the CH problem. Consequently, these properties are well-comprehended from a mathematical standpoint. For
+The properties under consideration serve as a theoretical foundation for establishing the existence, uniqueness, and long-term behaviour of the CH problem. Consequently, these properties are well-comprehended from a mathematical standpoint. For
 references, see \cite{abels2007convergence, cherfils2011cahn, elliott1986cahn}.
 
 \subsection{Numerical Methods}%
 \label{sub:numerical_methods}
 
-One of the key challenges with the CH problem is that it involves fourth order spatial derivatives. It has for simple domains successfully been implemented using Finite Difference Methods \cite{furihata2001stable,
+One of the key challenges with the CH problem is that it involves fourth-order spatial derivatives. It has, for simple domains, successfully been implemented using Finite Difference Methods \cite{furihata2001stable,
 cheng2019energy} and Spectral Methods \cite{liu2003phase, he2009class}. However, these methods are generally constrained to simple domains (with some notable exceptions \cite{li2013conservative, shen2009efficient, feng2009fourier}).
 
 As a further evolution to address the CH problem, it is common to consider a corresponding biharmonic (BH) problem as a numerical testbed in the spatial direction. This problem is defined as follows, \[
@@ -84,52 +83,49 @@ As a further evolution to address the CH problem, it is common to consider a cor
     \partial _{n} \Delta  u & = g_{2} \quad \text{on } \Gamma.   \\
 \end{split}
 \]
-Generally is this problem since it is likely to provide a nice spatial-integration framework before moving onto solving the non-linearities and time-integration.
+Generally is this problem since it is likely to provide a proper spatial-integration framework before moving on to solving the non-linearities and time-integration.
 
-The early Finite Element Methods (FEM) for CH was proposed in \cite{elliott1987numerical, elliott1986cahn} utilizing global $C^{1}$ and $C^{2}$ in one spatial dimension, but later is has been shown that making $C^{1}$ (or higher order) elements are far from trivial. For
+The early Finite Element Methods (FEM) for CH were proposed in \cite{elliott1987numerical, elliott1986cahn} utilizing global $C^{1}$ and $C^{2}$ in one spatial dimension, but later it has been shown that making $C^{1}$ (or higher order) elements are far from trivial. For
 reference, see \cite{kapl2021family, percell1976cubic, argyris1968tuba}.
 
-% Describe isogeometric analysis and virtial elements methods as alternatives.
+% Describe the isogeometric analysis and virtual elements methods as alternatives.
 There exist several promising alternative methods that guarantee $C^{1}$ continuity, and these have shown potential for solving the Cahn-Hilliard (CH) problem. A notable mention is isogeometric analysis (IGA), a technique that leverages Non-Uniform
-Rational B-Splines (NURBS) to efficiently handle complex geometries and smooth boundaries without the need for mesh refinement. This makes it a desirable alternative for problems dealing with intricate and smooth domains
-\cite{hughes2005isogeometric}. Specifically for the CH problem has IGA successfully been implemented \cite{kastner2016isogeometric, gomez2008isogeometric}. Recent restults has shown that investigations on unfitted versions of IGA
+Rational B-Splines (NURBS) to efficiently handle complex geometries and smooth boundaries without the need for mesh refinement. Thus, IGA makes a desirable alternative for problems dealing with intricate and smooth domains
+\cite{hughes2005isogeometric}. Specifically for the CH problem, has IGA successfully been implemented \cite{kastner2016isogeometric, gomez2008isogeometric}. Recent results have shown that investigations on unfitted versions of IGA
 \cite{zhao2017variational} and its applicability to moving surfaces \cite{zimmermann2019isogeometric} also is possible.
-Another rising method is the virtual finite element method (VFEM), that has applied so-scalled virtual $C^{1}$ elements to handle the continuity requirement \cite{antonietti2016c}.
+Another rising method is the virtual finite element method (VFEM), which has applied so-called virtual $C^{1}$ elements to handle the continuity requirement \cite{antonietti2016c}.
 
 An alternative approach is to avoid global $C^1$ continuity. As a result, this strategy has led to the development of two distinct families of methods for solving the CH problem.
-
 % Paragraph of CIP
-The first involves the Continuous Interior Penalty (CIP) methods, which use the standard weak formulation but penalize the discontinuity of the derivative between elements as a form of regularization. The method has it been design several interesting
+The first involves the Continuous Interior Penalty (CIP) methods, which uses the standard weak formulation but penalizes the discontinuity of the derivative between elements as a form of regularization. The method has been designed for several interesting
 stable variants for the BH problem, that is \cite{brenner2012, brenner2012quadratic, brenner2012quadratic_kirk, mu2014weak, georgoulis2009discontinuous}.
-This method is advantageous due to its symmetry and relationship with discontinuous Galerkin (DG) methods \cite{di2011mathematical}, which are renowned for their natural way to handle inhomogeneous boundary conditions, flexibility with unstructured meshes, efficient parallelization, and strong stability. This connection lends robust stability analysis tools, making the method highly suitable for intricate computational problems.
-The CIP formulation has also then been adapted to solve CH applying the Newton-Raphson scheme to handle the non-linearities \cite{wells2006discontinuous} or utilizing an implicit-explicit (IMEX) time integration schemes, where the stiff part is treated implicitly (such as backward Euler) and the nonlinear part explicitly (such as the forward
+This method is advantageous due to its symmetry and relationship with discontinuous Galerkin (DG) methods \cite{di2011mathematical}, renowned for their natural way of handling inhomogeneous boundary conditions, flexibility with unstructured meshes, efficient parallelization, and strong stability. This connection lends robust stability analysis tools, making the method highly suitable for intricate computational problems.
+The CIP formulation has also then been adapted to solve CH by applying the Newton-Raphson scheme to handle the non-linearities \cite{wells2006discontinuous} or utilizing an implicit-explicit (IMEX) time integration scheme, where the stiff part is treated implicitly (such as backward Euler) and the nonlinear part explicitly (such as the forward
 Euler or explicit Runge-Kutta) \cite{ feng2007fully}.
 
-A another popular variant is to rewrite the BH problem in a mixed formulation as a system of second-order problems. This strategy not only broadens the problem's flexibility but also provides a more natural means to incorporate boundary conditions,
+Another popular variant is to rewrite the BH problem as a system of second-order problems in a mixed formulation. This strategy not only broadens the problem's flexibility but also provides a more natural means to incorporate boundary conditions,
 see \cite{falk1978approximation,
 ciarlet1974mixed, gudi2008mixed, cheng2000some}. This approach also leverages the general saddle point theory for mixed
-FEM methods which is providing a mathematical framework to ensure numerical stability \cite{john2016finite}.
-Moreover, this approach adapts well to the CH problem \cite{wells2006discontinuous,feng2004error} and some methods even apply a so-called convex splitting scheme approach in a way that preserves the convexity of the energy functional making the
+FEM methods, which provide a mathematical framework to ensure numerical stability \cite{john2016finite}.
+Moreover, this approach adapts well to the CH problem \cite{wells2006discontinuous,feng2004error}, and some methods even apply a so-called convex splitting scheme approach in a way that preserves the convexity of the energy functional, making the
 system easier to solve \cite{diegel2015analysis, brenner2018robust}.
-A combination of these methods, that is the DG and mixed formulation for the CH problem, has recently also been considered \cite{chave2016hybrid, medina2022stabilized}.
+A combination of these methods, the DG and mixed formulation for the CH problem, has recently been considered \cite{chave2016hybrid, medina2022stabilized}.
 
-% Paragraph of isogeometric analysis
-Creating a high quality mesh in 2- and 3 dimensional for realistic problems is a challenging task that can take a reasonable time in the simulation workflow and is hard to scale properly on distributed platforms and thus not that suitable for moving
-domains, very complex meshes or smooth boundaries. A interesting class to approach the problem is the so-called unfitted finite element methods which is utilizing a background mesh and does not align with the physical boundary.
-This greatly reduce the need to generate unstructured mesh, and makes it very applicable for parallelization and moving domains
-since it is avoiding the need of remeshing entirely. However, without taking attention to the so-called cut cells, which is the elements that is intersecting with boundary, the method quickly leads to instability and ill-conditioning.
-One of the methods to counter this is the cut finite element method (CutFEM) where the focus is to penalize the cut-cells weakly by adding a additional ghost penalty term to ensure stability and well-posedness \cite{burman2015cutfem}. This has been successfully implemented for the BH problem for the
-mixed formulation \cite{cai2023nitsche} and the CIP formulation \cite{chen2023arbitrary}, however, they both method considering a interface problem between two domains. Specifically for the CH problem has the mixed formulation \cite{karatzas2021reduced} shown to be successful.
+Creating a high-quality mesh in 2- and 3-dimensional for realistic problems is a challenging task that can take a reasonable time in the simulation workflow and is hard to scale properly on distributed platforms and thus not that suitable for moving
+domains, very complex meshes or smooth boundaries. An interesting class to approach the problem is the so-called unfitted finite element method, which utilizes a background mesh and does not align with the physical boundary.
+This greatly reduces the need to generate an unstructured mesh and makes it very applicable for parallelization and moving domains
+since it avoids the need of remeshing entirely. However, without paying attention to the so-called cut cells, which are the elements intersecting with the boundary, the method quickly leads to instability and ill-conditioning.
+One of the methods to counter this is the cut finite element method (CutFEM), where the focus is to penalize the cut-cells weakly by adding an additional ghost penalty term to ensure stability and well-posedness \cite{burman2015cutfem}. This has been successfully implemented for the BH problem for the
+mixed formulation \cite{cai2023nitsche} and the CIP formulation \cite{chen2023arbitrary}. However,  both implementations are considering an interface problem between two domains. Specifically for the CH problem, the mixed formulation \cite{karatzas2021reduced} has been shown to be successful.
  Aggregated unfitted finite element method (AgFEM) is a close relative to CutFEM and has also shown to
-be promising \cite{badia2018aggregated, badia2022linking}. The method is an alternative way to ghost penalty which is instead applying a so-called cell aggregation with respect to a cut-cell if ( assuming each cell has enough support with interior elements) and,
-thus, the badly cut cells are removed ensuring robustness and well posedness.
+be promising \cite{badia2018aggregated, badia2022linking}. The method is an alternative way to the ghost penalty, which instead applies a so-called cell aggregation with respect to a cut cell ( assuming each cell has enough support with interior elements) and,
+thus, the badly cut cells are removed, ensuring robustness and well-posedness.
 
 
 
 \subsection{Outline of the report}%
 \label{sub:outline_of_the_report}
 
-In this report is an novel stabilized cut continuous interior penalty method (CutCIP) that utilize the CutFEM framework, to handle complex domains, and the CIP formulation, for its elegant formulation to handle fourth order spatial derivatives, to solve
-the CH problem. We will name the cut continuous interior penalty method (CutCIP) method. In the first section  prove that the method is stable and has optimal
+This report is a novel stabilized cut continuous interior penalty method (CutCIP) that utilizes the CutFEM framework to handle complex domains and the CIP formulation for its elegant formulation to handle fourth-order spatial derivatives, to solve
+the CH problem. We will name the cut continuous interior penalty method (CutCIP) method. In the first section prove that the method is stable and has optimal
 convergence for the BH problem, and then extend the method to handle the CH problem. We will then provide numerical examples.
-
