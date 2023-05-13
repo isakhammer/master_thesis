@@ -1,7 +1,7 @@
 \section{Introduction}\label{sec:introduction}
 
 
-The first application of the Cahn-Hilliard equation (CH) appeared when modelling phase separation of two-component incompressible fluids \cite{cahn1958free, cahn1959free, cahn1961spinodal}, but was quickly generalized to handle multi-component system
+The first application of the Cahn-Hilliard (CH) problem appeared when modelling phase separation of two-component incompressible fluids \cite{cahn1958free, cahn1959free, cahn1961spinodal}, but was quickly generalized to handle multi-component system
 as well \cite{bosch2015fractional, eyre1993systems, toth2016phase, miranville2017cahn}. In engineering, CH is the key component in
 the phase-field model, which is a mathematical framework to model transitions and interface dynamics in materials and fluid dynamics \cite{steinbach2009phase, chen2002phase}.
 From this has the equation found many interesting applications for a big variety of problems. To mention a few, we have
@@ -13,11 +13,11 @@ On the microscopic level on the bio membrane is there a ongoing hypothesis about
 special properties such as signalling and intercellular trafficking \cite{ levental2020lipid, hancock2006lipid, munro2003lipid, simons1997functional}. It turns out that the hypothesis can tested by modelling the problem as a separation problem using
 CH \cite{miller2020divide, garcke2016coupled, yushutin2019computational}.
 
-\subsection{The Cahn Hilliard Equation}%
+\subsection{The Cahn Hilliard Problem}%
 \label{sub:the_equations}
 
 % \todo[inline]{ Derivation of the Cahn-Hilliard equation from its energy functional. }
-The Cahn-Hilliard equation comes in many variants depending on its application, but we will in this report on the binary mixture version \cite{miranville2017cahn}. Let $\Omega \subset  \mathbb{R} ^{d} $ be a compact set for $d=2,3$ with boundary
+The CH problem comes in many variants depending on its application, but we will in this report on the binary mixture version \cite{miranville2017cahn}. Let $\Omega \subset  \mathbb{R} ^{d} $ be a compact set for $d=2,3$ with boundary
 $\Gamma $. We define the time duration parameter $T \in  [0,\infty) $ and the
 so-called unknown phase-field function as the
 mapping $u: \left[ 0,T \right] \times \Omega  \to \left[ -1,1 \right]  $, which is denoted as the local difference of a binary mixture of two concentrations $c_{A}, c_{B} \in \left[ 0,1\right] $ s.t. $u = c_{A} -c_{B}$ and $c_{A} + c_{B} = 1$. Remark that if there exist a
@@ -74,7 +74,7 @@ references, see \cite{abels2007convergence, cherfils2011cahn, elliott1986cahn}.
 \subsection{Numerical Methods}%
 \label{sub:numerical_methods}
 
-One of the key challenges with the CH problem is that it involves fourth order spatial derivatives. It has for simple domains successfully been implemented using finite difference methods (FDM)  \cite{furihata2001stable,
+One of the key challenges with the CH problem is that it involves fourth order spatial derivatives. It has for simple domains successfully been implemented using Finite Difference Methods \cite{furihata2001stable,
 cheng2019energy} and Spectral Methods \cite{liu2003phase, he2009class}. However, these methods are generally constrained to simple domains (with some notable exceptions \cite{li2013conservative, shen2009efficient, feng2009fourier}).
 
 As a further evolution to address the CH problem, it is common to consider a corresponding biharmonic (BH) problem as a numerical testbed in the spatial direction. This problem is defined as follows, \[
@@ -105,7 +105,7 @@ Moreover, this approach adapts well to the CH problem \cite{wells2006discontinuo
 
 % Paragraph of isogeometric analysis
 Alternatives to smooth boundaries is isogeometric analysis, which is based on NURBS, and does in fact handle complex geometries quite well \cite{hughes2005isogeometric}.
-Mixed CutFEM formulation of Cahn-Hilliard \cite{karatzas2021reduced} and a mixed Hybrid High-Order method \cite{chave2016hybrid}. Isogeometric formulation of Cahn-Hilliard \cite{kastner2016isogeometric, gomez2008isogeometric} and unfitted versions \cite{zhao2017variational}. Isogeoemtric formulation on moving
+Mixed CutFEM formulation  \cite{karatzas2021reduced} and a mixed Hybrid High-Order method \cite{chave2016hybrid} of CH problem. Isogeometric formulation of Cahn-Hilliard \cite{kastner2016isogeometric, gomez2008isogeometric} and unfitted versions \cite{zhao2017variational}. Isogeoemtric formulation on moving
 surfaces \cite{zimmermann2019isogeometric}. Virtual $C^{1}$  elements has also been considered \cite{antonietti2016c}.
 
 % Paragraph of CutFEM
