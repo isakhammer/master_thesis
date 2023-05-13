@@ -95,18 +95,13 @@ The first involves the Continuous Interior Penalty (CIP) methods, which use the 
 stable variants for the BH problem, that is \cite{brenner2012, brenner2012quadratic, brenner2012quadratic_kirk, mu2014weak, georgoulis2009discontinuous}.
 This method is advantageous due to its symmetry and relationship with discontinuous Galerkin methods \cite{di2011mathematical}, which are renowned for their natural way to handle inhomogeneous boundary conditions, flexibility with unstructured meshes, efficient parallelization, and strong stability. This connection lends robust stability analysis tools, making the method highly suitable for intricate computational problems.
 The CIP formulation has also then been adapted to solve CH applying the Newton-Raphson scheme to handle the non-linearities \cite{wells2006discontinuous} or utilizing an implicit-explicit (IMEX) time integration schemes, where the stiff part is treated implicitly (such as backward Euler) and the nonlinear part explicitly (such as the forward
-Euler or explicit Runge-Kutta) \cite{ feng2007fully} .
-
+Euler or explicit Runge-Kutta) \cite{ feng2007fully}.
 
 A another popular variant is to rewrite the BH problem in a mixed formulation as a system of second-order problems. This strategy not only broadens the problem's flexibility but also provides a more natural means to incorporate boundary conditions,
 see \cite{falk1978approximation,
 ciarlet1974mixed, gudi2008mixed, cheng2000some}. This approach also leverages the general saddle point theory for mixed
 FEM methods which is providing a mathematical framework to ensure numerical stability \cite{john2016finite}.
 Moreover, this approach adapts well to the CH problem \cite{wells2006discontinuous,feng2004error} and some methods even apply a so-called convex splitting scheme approach in a way that preserves the convexity of the energy functional making the system easier to solve \cite{diegel2015analysis, brenner2018robust}.
-
-% \todo[inline]{ Add more applications to the CH problem.}
-% \todo[inline]{ Add paragraph to time integration. $\alpha method $ etc. Maybe discuss in later papers? }
-% \todo[inline]{  Discuss problems that appear on smooth domains and introduce isogeometric elements. virtual elements and CutFEM. }
 
 % Paragraph of isogeometric analysis
 Alternatives to smooth boundaries is isogeometric analysis, which is based on NURBS, and does in fact handle complex geometries quite well \cite{hughes2005isogeometric}.
@@ -120,17 +115,6 @@ Lately is has been introduced CutFEM for mixed formulation \cite{cai2023nitsche}
 \label{sub:outline_of_the_report}
 \todo[inline]{ Describe the workflow of this method. }
 
+In this report is an novel CIP method that utilize the CutFEM to solve the CH on solve domains. We will name the cut continuous interior penalty method (CutCIP) method. In the first section  prove that the method is stable and has optimal
+convergence for the BH problem, and then extend the method to handle the CH problem. We will then provide numerical examples.
 
-The goal of the thesis implement an CIP method that utilize the CutFEM to solve the CH on smooth domains. The plan is to first derive the stability and well-posedness for the method for the fourth order Biharmonic equation,
-\[
-    \begin{split}
-\Delta ^2 u & = f \quad  \text{in } \Omega \\
-\partial _{n} u & = g_{1} \quad \text{ on } \Gamma  \\
-\partial _{n} \Delta u  & = g_{2} \quad \text{ on } \Gamma
-    \end{split}
-\]
-\begin{enumerate}[label=(\alph*)]
-    \item Derive an unfitted cut continuous interior penalty method (CutCIP) for the biharmonic equation and show that the method is well-posed.
-    \item Implement a time discretization scheme of an linear Cahn-Hilliard equation.
-    \item Implement nonlinear iteration methods for the (nonlinear) Cahn-Hilliard Equation.
-\end{enumerate}
