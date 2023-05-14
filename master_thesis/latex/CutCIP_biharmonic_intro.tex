@@ -3,47 +3,63 @@
 \section{Cut Continuous Interior Penalty Method for the Biharmonic Problem}%
 \label{sec:cutcip_biharmonic_problem}
 
+\subsection{Notation}%
+\label{sub:notation}
+
+We will in this report assume $\Omega $ to be a compact and open set in $\mathbb{R} ^{d}$. Let $p \in \mathbb{R} $, $ 1 \le  p \le  \infty$. We define the space $L^{p}\left( \Omega  \right) $ to be the set of all measurable functions $f: \Omega  \mapsto \mathbb{R} $ such that
+$\left\lvert f \right\rvert ^{p}$ is Lebesgue measurable, i.e,
+
+\begin{equation*}
+    L^{p}\left( \Omega  \right) = \left\{ f: \Omega \mapsto \mathbb{R}  \mid \int_{\Omega }^{} \left\lvert f \right\rvert ^{p} d \Omega  < \infty  \right\}
+.\end{equation*}
+Let $u \in L^{p}\left( \Omega  \right) $. We define the integral norm of order $p$ to be \[
+\| u \|_{ L^{p}\left( \Omega  \right)  }^{  }  = \left( \int_{\Omega }^{} \left\lvert u \right\rvert ^{p} dx  \right) ^{\frac{1}{p}}.
+\]
+Since $p=2$ is frequently used in this report, we also define for convenience a compact notation $\| u \|_{ \Omega  }^{  }  = \| u \|_{ L^{2}\left( \Omega  \right)  }^{  } $ .  We say that $L^{2}\left( \Omega  \right) $ is a Hilbert space if it is equipped with a inner
+product of two functions $u,v \in L^{2}\left( \Omega  \right) $ such that
+\[
+\left( u,v \right) _{\Omega } = \left( u,v \right) _{L^2\left( \Omega  \right) } = \int_{\Omega }^{} u  v dx.
+\]
+
+We now use this notation for derivatives
+\footnote{In literature is often $D^{\alpha } f$ commonly used, but later in the report is this notation reserved for the Hessian operator. Therefore, we then the notation $\partial ^{\alpha } f$ in this report.} so
+\begin{equation}
+\label{eq:mixed_derivative}
+\partial ^{\alpha  } f = \frac{\partial ^{\left\lvert \alpha  \right\rvert } f}{ \partial ^{\alpha _{1} } x_{1} \partial ^{\alpha _{2}} x_{2}  }, \quad \text{where } \alpha=\left( \alpha _{1}, \alpha _{2} \right) \text{ and } f \in C^{\left\lvert \alpha  \right\rvert }
+\left( \Omega  \right)
+.\end{equation}
+
+For $d$ dimensions of order $k$ we define the multi-index $\alpha  = ( \alpha _{1}, \ldots, \alpha _{d})  $ with the absolute value $\abs{ \alpha  } = \sum_{i}^{}  \alpha _{i} = k $ s.t.
+\[
+\partial ^{\alpha} f = \frac{\partial ^{ \alpha_{1}  }  } {\partial^{} x_{1}^{\alpha _{1}}  } \ldots \frac{\partial ^{ \alpha_{d}  }  } {\partial^{} x_{d}^{\alpha _{d}}  } f
+\]
+
+  Let $m\ge 0$ be an integer and let $1 \le  p \le  \infty$ be a real number. Then we define the Sobolev space
+\[
+H^{m}\left( \Omega  \right) = \left\{ u \in L^{2}\left( \Omega  \right)  \mid  \partial ^{\alpha } u \in L^{2}\left( \Omega  \right)  \forall \alpha : \left\lvert \alpha  \right\rvert  \le m \right\}.
+\]
+
+Equipped with the inner product is $H^{m}\left( \Omega  \right) $  denoted as a Hilbert space, that is, for $u,v \in H^{m}\left( \Omega  \right) $, \[
+    \left( u,v \right) _{H^{m}\left( \Omega   \right) } = \sum_{\left\lvert \alpha  \right\rvert  \le  m}^{}  \int_{\Omega }^{} \partial ^{\alpha } u \partial ^{\alpha } v dx.
+\]
+Similarly, the norm is is denoted as, \[
+\| u \|_{ H^{m}\left( \Omega  \right)  }^{  }  = \left( \| u \|_{ L^{2}\left( \Omega  \right)    } + \sum_{k = 1}^{m}  \left\lvert u \right\rvert ^{2} _{  H^{k}\left( \Omega  \right) }\right) ^{\frac{1}{2}},
+\]
+where the seminorm is defined such that, \[
+\left\lvert u \right\rvert _{H^{k}\left( \Omega  \right) } = \left( \sum_{\left\lvert \alpha  \right\rvert  = k}^{} \| \partial ^{\alpha }u \|_{ \Omega  }^{ 2 }  \right).
+\]
+We will often denote the shorthand notation $ \| u \|_{ k, \Omega  }^{  } = \| u \|_{ H^{k}( \Omega)  }^{  } $ and $ \abs{ u }_{ k, \Omega  }^{  }  = \abs{ u }_{ H^{k}( \Omega)  }^{  }$.
+
+% For convenience, we also entitle the notation for compact support, that is,
+% \[
+% H^{m}_{0} ( \Omega ) = \left\{ \text{completion of }C_{0}^{\infty}\left( \Omega  \right) \text{ w.r.t. } \| \cdot  \|_{H^{m}\left( \Omega  \right)   }^{  }  \right\}.
+% \]
+
+
 \subsection{Weak formulation}%
 \label{sub:weak_formulation}
 
-
-    Let $\Omega \subseteq    \mathbb{R} ^d$ be a physical mesh, $\Gamma  $ be a $C^2$ boundary  illustrated at Figure \ref{fig:domain_construction}. Assume we have the function $\alpha: \Omega \to \mathbb{R} $. We define the strong biharmonic problem to be on the form
-
-\begin{equation}
-    \label{eq:Bi_strong}
-\begin{split}
-    \Delta^2  u  + \alpha  u  & = f( x)  \quad \text{in } \Omega,   \\
-    \partial _{n} u & = g_{1}(x)   \quad \text{on } \Gamma ,  \\
-    \partial _{n} \Delta  u & = g_2(x)  \quad \text{on } \Gamma  .  \\
-\end{split}
-\end{equation}
-
-The goal is to write the problem on a weak form.
-Let $u \in H^{4}( \Omega ) $ be a solution of the strong problem and $v \in H^{2}( \Omega ) $ be a test function. We argue that this holds,
-    \[
-        \begin{split}
-(\Delta ^2u,v )_{\Omega } & = ( \partial _{n} \Delta u, v)_{\Gamma } - ( \nabla ( \Delta u) , \nabla v) _{\Gamma } \\
-&= ( D^2u, D^2v)_{\Omega } + ( \partial _{n} \Delta u ,v)_{\Gamma } - ( \partial _{nn} u, \partial _{n}v)_{\Gamma } - ( \partial _{tn} u, \partial _{t} v)_{\Gamma }.        \\
-        \end{split}
-    \]
-    Define the space $V_{g} = \left\{ u \in H^{2}( \Omega ) :  \partial _{n}u  \mid _{\Gamma } = g_1(x )  \right \} $ and $V = H^2( \Omega ) $.
-    % By applying the boundary conditions can we see that $( \partial _{n} \Delta u, v)_\Gamma   = ( g,v)_{\Gamma }$ which occurs naturally. However, the Neumann boundary condition can be imposed by assuming $u \in V_{0}$ and
-    %  as a consequence is the following terms $ ( \partial _{nn} u, \partial _{n}v)_{\Gamma }
-    % = 0$   and $( \partial _{tn} u, \partial _{t}v)_{\Gamma } = 0$. This follows from the fact that that the Neumann boundary condition is homogeneous s.t. $\partial _{n} v = 0$ and $\partial _{t} (\partial _{n}u) = 0 $.
-    % \todo[inline]{ But what if the Neumann conditions is not homogeneous? And why is it necessary to include it in the function space when it comes in "naturally"?  }
-    Let $u,v \in V$ then is it natural to define an general bilinear form  \[
-    a( u,v) = ( \alpha u,v)_{\Omega } +  ( D^2u, D^2v)_{\Omega }   .
-    \]
-    where $\alpha >0$ and a corresponding linear form $l: V \to \mathbb{R} $,
-    \[
-    l( v) = ( f ,v)_{\Omega  } -  ( g_{2},v)_{\Gamma } .
-    \]
-    We define the weak problem is to find a $u \in  V_{g}$ s.t. \[
-    a( u,v) = l(v) \quad  \forall v \in V_{}
-    \]
-
-
-
+Let $\Omega = \mathcal{T} _{h} \subseteq    \mathbb{R} ^d$ be a polygonal mesh and $\Gamma  $ be its boundary.
 
 
 
