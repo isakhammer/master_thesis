@@ -144,7 +144,7 @@ Let $\Omega = \mathcal{T} _{h} \subseteq    \mathbb{R} ^d$ be a polygonal mesh a
 \subsection{Initial discrete formulation}%
 \label{sub:initial_discrete_formulation}
 
-We want to make a CutFEM version of the CIP problem. Let $\widetilde{\mathcal{T}_{h} } $ be a shape-regular and quasi-uniform background mesh. Let us denote the active set $\mathcal{T} _{h} \subseteq \widetilde{\mathcal{T}_{h}}$ which intersects the interior of the active domain $\Omega $, that is  \[
+We want to make a CutFEM version of the CIP problem. Let $\widetilde{\mathcal{T}_{h} } $ be a shape-regular and quasi-uniform background mesh. Let us denote the active set $\mathcal{T} _{h} \subseteq \widetilde{\mathcal{T}}_{h}$ which intersects the interior of the active domain $\Omega $, that is  \[
 \mathcal{T} _{h} = \left\{ T \in \widetilde{\mathcal{T} }_{h}  \mid  T \cap (\Omega \setminus \Gamma ) \neq \emptyset    \right\} .
 \]
 With a corresponding set of interior facets, \[
@@ -157,7 +157,7 @@ For convenience, will we define also the interior of the active set as $\mathcal
 \[
 \mathcal{T} _{int} = \left\{ T \in \mathcal{T} _{h}   \mid  T \cap  Int(\Omega ) \neq \emptyset  \right\}.
 \]
-Hence, we have that the active set is the union of the interior and cut elements, $\mathcal{T} _{h} = \mathcal{T} _{int} \cap \mathcal{T} _{\Gamma }$. For an illustration, see figure.
+Hence, we have that the active set is the union of the interior and cut elements, $\mathcal{T} _{h} = \mathcal{T} _{int} \cap \mathcal{T} _{\Gamma }$. For an illustration, see Figure \ref{fig:background_mesh}.
 
 
 \begin{figure}\centering
@@ -270,18 +270,11 @@ Hence, we have that the active set is the union of the interior and cut elements
 \label{fig:background_mesh}
 \end{figure}
 
-
-
-
-
 We denote the $C^{0}$ polynomial space of order $k$ as
 \[
 V_{h} = \left\{ v \in C^{0}\left( \Omega  \right): v_{T} = v | _{T} \in \mathcal{P} ^{k}\left( T \right), \forall T \in
 \mathcal{T}_{h}    \right\}
 \]
-
-
-
 
 Here we present the CutCIP. The bilinear form $a_{h}:  V_{h}\times  V_{h} \to \mathbb{R} $ and the linear form $l_{h}: V_{h} \to \mathbb{R} $  is defined as,
 
@@ -294,6 +287,9 @@ a_{h} \left( u, v \right)   =&
  l_{h}( v_{h}) & =  \left( f, v \right) _{\Omega } - ( g_{2},  v )_{\Gamma } -  ( g_{1}, \Delta  v  )_{\Gamma }  + \frac{\gamma }{h} ( g_{2}, \partial _{n} v  )_{\Gamma }
 \end{split}
 \end{equation*}
+
+\todo[inline]{ Do the derivation. See \cite{georgoulis2009discontinuous}. }
+
 
 To make sure the problem is stabilized will we add ghost-penalty $g_{h}: V_{h} \times  V_{h} \to \mathbb{R} $. That is, we define the discrete problem to find a $u \in V_{h}$ s.t. \[
 A_{h}( u ,v ) := a_{h}( u, v)  + g_{h}( u,v) = l_{h} ( v) \quad  \forall v \in  V_{h}.
