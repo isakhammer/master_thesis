@@ -1,0 +1,266 @@
+
+\newpage
+\subsection{Constructing Ghost Penalties}%
+\label{sec:constructing_ghost_penalties}
+
+We have the following assumptions for the ghost penalty.
+\begin{enumerate}[label=\textbf{EP\arabic*}]
+    \item \label{as:EP1} The ghost penalty $g_{h}$ extends the $H^{1}$ norm s.t. \[
+    \| D^2v \|_{ \mathcal{T} _{h} }^{ 2 }  \lesssim \| D^2 v \|_{ \Omega  }^{  2} + \abs{ v } _{g_{h}}^2
+    \]
+\item \label{as:EP2} For $v \in H^{s}( \Omega ) $ and $r = \min \{s,k+1 \} $, the semi-norm $\abs{ \cdot  }_{g_{h}} $ satisfies the following estimate, \[
+    \abs{ \pi _{h}^{e} v } _{g_{h}} \lesssim  h^{r-1} \| v \|_{ r,\Omega  }^{  }.
+    \]
+\end{enumerate}
+
+
+We will construct face-based ghost penalties.
+
+\begin{lemma}
+    Let $T_{1},T_{2 } \in  \mathcal{T} _{h}$ be two elements sharing a common face $F$. Then for $v \in V_{h}$  we have \[
+    \| v \|_{ T_{1} }^{  }  \lesssim \| v \|_{ T_{2} }^{  } \sum_{0\le j\le k}  {h^{2j +1}}^{} ( \jump{ \partial _{n}^{j} v }, \jump{ \partial ^{j}_{n} v }    )_{F}
+    \]
+
+\end{lemma}
+\begin{proof}
+    See \cite[Lemma 2.19]{gurkan2019stabilized}.
+\end{proof}
+The goal in this chapter is to engineer an ghost penalty which fulfills these assumptions.
+We denote the multi-index $\alpha  = ( \alpha _{1}, \ldots, \alpha _{d})  $ of order $\abs{ \alpha  } = \sum_{i}^{}  \alpha _{i} = k $   and the normal vectors $n^{\alpha } = n_{1}^{\alpha _{1}} \ldots n_{d}^{\alpha _{d}}$.
+Recall the notation for the derivates $D^{\alpha } v$ , that is \[
+D ^{0} v  = v, \quad   D ^{1}v  = \nabla v \text{ and }  D ^{2} v  = J(\nabla v) = Hess(v).
+\]
+\todo[inline]{ But $\alpha = ( \alpha _{1}, \ldots, \alpha _{d}) $ cannot be a scalar? Ex. How can $D^{\alpha } = D^{1}$ be a consistent notation.  }
+where $J$ is the Jacobian operator. Remark that equivalent element-wise is the following, \[
+\left[ \nabla v \right] _{i} = \partial_{x_{i}} v, \quad  \left[ D^2 v \right] _{i,j} = \partial_{x_{i}x_{j}} v,
+\]
+Let us introduce the notation \[
+\partial _{n}^{j} v = \sum_{\abs{ \alpha  } =j }^{k} \frac{D ^{\alpha }v( x) n^{\alpha }}{\alpha !}, \quad \abs{ \alpha  } = \sum_{j}^{d} \alpha_{i}
+\]
+An useful result that may help us design ghost penalty is the following estimate.
+
+\begin{lemma}
+    \label{lemma:bi_local_facet_estimate}
+    Let $T_{1}, T_{2} \in  \mathcal{T} _{h} $ share a common facet $F \in \mathcal{F}_{h} $. Then for $v_{} \in  V_{h}$  does this hold \[
+    \| v \|_{ T_{1} }^{  2}  \lesssim  \| v \|_{ T_{2} }^{2  }  + \sum_{j=0}^{k}  h^{2j +1} ( \jump{ \partial _{n}^{j} v}, \jump{ \partial _{n}^{j} v}    )_{F}
+    \]
+        Here is $k$ the polynomial degree.
+\end{lemma}
+
+\begin{proof}
+    For a detailed proof, see \cite{gurkan2019stabilized}.
+\end{proof}
+
+We will now introduce the so-called ghost penalty faces, that is, \[
+\mathcal{F} ^{g}_{h} = \left\{ F\in \mathcal{F} _{h} : T^{+}\cap \Gamma \neq \emptyset  \vee T^{-}\cap \Gamma \neq \emptyset  \right\}.
+\]
+This set is simply all facets that belong to all elements of the active mesh $\mathcal{T} _{h}$  intersected with $\Gamma $, i.e., all triangles to the cut cells $\mathcal{T} _{\Gamma }$. For an illustration, see Figure \ref{fig:illustration_F_g}.
+
+
+
+
+\begin{proposition}
+    \label{prop:hessian_change}
+    The following identity holds for $j=0,1,2$.
+    $$\partial ^{j}_{n} (D^2v) = D^2 ( \partial ^{j}_{n} v)  $$
+\end{proposition}
+
+\begin{proof}
+        Recall that $\left[ D^2 v \right]_{i,j} = \partial _{x_{i}x_{j}} v $. We will compute each index individually.
+    \begin{enumerate}[label=\arabic*)]
+        \item $j = 0$ is trivially true.
+        \item Let $j=1$. We can then easily see that, \[
+        \partial ^{}_{n} ( \partial _{x_{i} x_{j}} v)  = \nabla  ( \partial _{x_{i} x_{j}} v)   n = \partial _{x_{i} x_{j}} (\nabla  v) n =\partial _{x_{i} x_{j}} (\partial _{n} v)
+        \]
+        Hence, $\partial _{n} (D^2v) = D^2( \partial _{n}v)$.
+        \item Let $j=2$. Similarly can we see that, \[
+                \begin{split}
+                \partial^{2} _{n} (\partial _{x_{i} x_{j}} v) & = n^{T}  D^2(\partial _{x_{i} x_{j}} v) n = n^{T}  J( \nabla (\partial _{x_{i} x_{j}}v) ) n \\
+                & =  n^{T}  J(\partial _{x_{i} x_{j}}(\nabla v) ) n = \partial _{x_{i} x_{j}} n^{T} J(\nabla v) n
+                \end{split}
+            \]
+            Thus, taking account for all elements in the matrix we get $\partial^{2} _{n} (D^2v) = D^2( \partial^{2} _{n}v)$.
+    \end{enumerate}
+    Proof is complete.
+
+\end{proof}
+
+
+
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \coordinate (center) at (0, 0);
+
+        % Reference hexagon vertices
+        \coordinate (A1) at (0:2.5);
+        \coordinate (A2) at (60:2.5);
+        \coordinate (A3) at (120:2.5);
+        \coordinate (A4) at (180:2.5);
+        \coordinate (A5) at (240:2.5);
+        \coordinate (A6) at (300:2.5);
+        \coordinate (A7) at (300:2.5);
+
+
+        \fill[green!30] (center) --(A1) -- (A2) -- (A3) -- (A4)  -- cycle;
+        \fill[blue!30] (center) -- (A4) --(A5)--(A6)-- (A7) -- (A1) -- cycle;
+
+        % Draw the individual edges
+        \draw[dotted, line width=1.5pt] (center) -- (A1) -- (A2);
+        \draw[dotted, line width=1.5pt] (center) -- (A2) -- (A3);
+        \draw[dotted, line width=1.5pt] (center) -- (A3) -- (A4) -- (center);
+        \draw (A4) -- (A5);
+        \draw (center) -- (A5) -- (A6) ;
+        \draw (center) -- (A6) -- (A1);
+
+
+        \begin{scope}[shift={(2.5,0)}]
+            % Shifted
+            \coordinate (center) at (0, 0);
+
+            % Reference hexagon vertices
+            \coordinate (B1) at (0:2.5);
+            \coordinate (B2) at (60:2.5);
+            \coordinate (B3) at (120:2.5);
+            \coordinate (B5) at (240:2.5);
+            \coordinate (B6) at (300:2.5);
+
+            \fill[green!30] (center) --(B6) -- (B1) -- (B2) --(B3) -- cycle;
+            \fill[blue!30] (center) -- (B5) --(B6) -- cycle;
+
+
+            % Draw the individual edges
+            \draw[dotted, line width=1.5pt] (center) -- (B1) -- (B2);
+            \draw[dotted, line width=1.5pt] (center) -- (B2) -- (B3)--(center);
+            \draw (center) -- (B5) -- (B6);
+            \draw[dotted, line width=1.5pt] (center) -- (B6) -- (B1);
+        \end{scope}
+
+        \coordinate (C1) at (-3,0);
+        \coordinate (C2) at (5.2,-0.5);
+        \draw[-, line width=2pt, >=stealth] ($(C2)$) to[bend right] node[midway, yshift=-0.3cm] {$\Gamma $} ($(C1)$);
+
+        \coordinate (Ti) at (-0,-1.0);
+        \coordinate (Tg) at (3.0,2.0);
+        \node[below] at (Tg) {$\mathcal{T}_{\Gamma }$};
+        \node[below] at (Ti) {$\mathcal{T}_{int }$};
+
+\end{tikzpicture}
+
+\caption{Illustration of $\mathcal{F} _{h}^{g}$ denoted as the dotted lines. The set is defined as all facets which belongs to cut cells $\mathcal{T} _{\Gamma }$ .  }
+\label{fig:illustration_F_g}
+\end{figure}
+
+
+
+
+
+\begin{lemma}
+    \label{lemma:bi_inv_gh_lemma}
+    Assume \ref{as:s2} and \ref{as:s3}.
+    For $v \in  V_{h}$ it holds that
+        \begin{align}
+            \label{eq:bi_inv_gh_1}
+        \| v \|_{ \mathcal{T} _{h} }^{ 2 }  & \lesssim  \| v \|_{ \Omega  }^{ 2 }  + \sum_{j=0}^{k} h^{2j+1} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n} v}    )_{\mathcal{F}_{h}^{g}}\\
+            \label{eq:bi_inv_gh_2}
+        \| D ^2 v \|_{ \mathcal{T} _{h} }^{ 2 }  & \lesssim  \| D^2 v \|_{ \Omega  }^{ 2 }  + \sum_{j=0}^{k} h^{2j-3} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n}v }    )_{\mathcal{F}_{h}^{g}}
+        \end{align}
+        Here is $k$ the polynomial degree.
+\end{lemma}
+
+\begin{proof}
+    We will dive the proof in two parts where we first prove \eqref{eq:bi_inv_gh_1} and then in the second part prove \eqref{eq:bi_inv_gh_2}.
+    \begin{enumerate}[label=\arabic*)]
+        \item
+            First of all, notice that there is a patch $P(T) $ consisting of $\left\{ T_{i} \right\}_{i=1}^{l} $ mesh elements s.t. each pair $ \left\{ T_{i}, T_{i+1} \right\} $ share a facet $F_{i}$ and the last element $T_{l}$ has a so-called "fat"
+            intersection according to Assumption \ref{as:s3}.
+
+            Let us define the following norm \[
+            g_{F_{i}}^{L^{2}}( v,v)  = \sum_{j=0}^{k} h^{2j+1}( \jump{ \partial ^{j}_{n}v }, \jump{ \partial ^{j}_{n}v }    )_{F_{i} }
+            \]
+            where $F_{i} \in  \mathcal{F} ^{g}_{h}$ and polynomial degree $ k$. Using Lemma \ref{lemma:bi_local_facet_estimate} can we see that \[
+            \| v \|_{ T_{i} }^{  } \lesssim \| v \|_{ T_{i+1} }^{ 2 } + g_{F_{i}}^{L^{2}}( v,v).
+            \]
+    Consequently, using induction over each pair $\left\{ T_{i}, T_{i+1} \right\} $ with a corresponding $F_{i}$, we obtain
+            \[
+                \begin{split}
+            \| v \|_{ T_{1} }^{2  }  & \le  C \| v \|_{ T_{2} }^{ 2 } + g_{F_{1}}^{L^{2}}( v,v)\\
+              & \le  C( C( \| v \|_{ T_{3} }^{ 2 } + g_{F_{2}}^{L^{2}}( v,v) ) + g_{F_{1}}^{L^{2}}( v,v) )\\
+              & \lesssim    \| v \|_{ T_{l} }^{ 2 }  + \sum_{i=1}^{l-1} g_{F_{i}}^{L^{2}}( v,v)  \\
+              & \lesssim    \| v \|_{ T_{l} \cap \Omega  }^{ 2 }  + \sum_{i=1}^{l-1} g_{F_{i}}^{L^{2}}( v,v)
+                \end{split}
+            \]
+            Here the last steps arise from the fact that $\|  v \|_{ T_{l} }^{  } \lesssim  \|  v \|_{ T_{l} \cap \Omega  }^{  }  $, which is a consequence of the Assumption \ref{as:s3}.
+Summation over the intersected triangles $\mathcal{T} _{\Gamma }$ implies,
+            \[
+                    \| v \|_{ \mathcal{T} _{\Gamma } }^{2  } \lesssim \| v \|_{ \mathcal{T} _{\Gamma}\cap \Omega  }^{2  }+ \sum_{i=1}^{l-1} g_{F_{l}}^{L^{2}}( v,v) \\
+                     = \| v \|_{ \mathcal{T}_{\Gamma } \cap \Omega   }^{ 2 }  + \sum_{j=0}^{k} h^{2j+1} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n}v }    )_{\mathcal{F}_{h}^{g}}
+        \]
+        And as a trivial extension this now also holds for the active mesh $\mathcal{T} _{h}$ , that is, \[
+                    \| v \|_{ \mathcal{T} _{h } }^{2  } \lesssim  \| v \|_{ \mathcal{T}_{h } \cap \Omega   }^{ 2 }  + \sum_{j=0}^{k} h^{2j+1} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n}v }    )_{\mathcal{F}_{h}^{g}}.
+        \]
+        Hence, \eqref{eq:bi_inv_gh_1} holds and the first part of the proof is complete.
+
+    \item We will simply start by replacing $v$  by $D^2 v$ and use the Proposition \ref{prop:hessian_change}.
+        \[
+            \begin{split}
+                    \| D^2 v \|_{ \mathcal{T} _{h} }^{2  }&  \lesssim \| D^2 v \|_{ \Omega  }^{ 2 }  + \sum_{j=0}^{k} h^{2j+1} ( \jump{   \partial ^{j}_{n} D^2 v }, \jump{  \partial ^{j}_{n} D^2 v}    )_{\mathcal{F}_{h}^{g}} \\
+                    &=  \| D^2 v \|_{ \Omega  }^{ 2 }  + \sum_{j=0}^{k} h^{2j+1} ( \jump{   D^2 \partial ^{j}_{n}  v }, \jump{  D^2 \partial ^{j}_{n}  v}    )_{\mathcal{F}_{h}^{g}}
+            \end{split}
+        \]
+        Remark that $\|  D^2 v \|_{ T_{l} }^{  } \lesssim  \|  D^2 v \|_{ T_{l} \cap \Omega  }^{  }  $ also holds based on Assumption \ref{as:s3}.
+        Thus, it remains to show that \[
+        \sum_{j=0}^{k} h^{2j+1} ( \jump{   D^2 \partial ^{j}_{n}  v }, \jump{  D^2 \partial ^{j}_{n}  v}    )_{\mathcal{F}_{h}^{g}} \lesssim  \sum_{j=0}^{k} h^{2j-3} ( \jump{    \partial ^{j}_{n}  v }, \jump{  \partial ^{j}_{n}  v}
+        )_{\mathcal{F}_{h}^{g}}.
+        \]
+        Let us denote the tangential operator $P_{F} := I - n_{} \oplus n_{} $, where $n_{}\oplus n_{}$ is an outer product of the normals on a facet $F$. We apply this so we can to decompose the Hessian evaluated on the facet  s.t. \[
+        D^2 v  \mid _{F} = ( \partial _{n_{}n_{}}v)n_{} + P_{F} D^2 v .
+        \]
+        \todo[inline]{ Need to find a better version for $ (\partial _{n_{}n_{}}v)n_{}$  }
+        Recall from basic finite element theory that $\| D^2v \|_{F  }^{ 2 }\le h^{-2} \| \nabla v \|_{ F }^{ 2 } \le h^{-4} \| v \|_{ F }^{2  }    $.
+        That is, applying the decomposition we get the following estimates \[
+        \| \jump{ P_{F}   D^2 \partial _{n}^{j} v }\|_{ F }^{ 2 } = \| P_{F} D^2 \jump{ \partial _{n}^{j} v }   \|_{ F  }^{ 2} \lesssim h^{-4} \|  \jump{ \partial ^{j}_{n} v }   \|_{ F }^{  2}.
+        \]
+        Thus, using this on the decomposition can we admit that
+         \[
+             \begin{split}
+            h^{2j +1} \| \jump{D^2 \partial ^{j}_{n}  v}  \|_{ F }^{2  } & \lesssim h^{2j +1} \|  \partial _{nn}  \jump{ \partial ^{j}_{n}  v }     n  \|_{ F }^{2  } + h^{2j +1} \| P_{F} D^2 \jump{ \partial ^{j}_{n}  v }       \|_{ F }^{2  } \\
+            & \lesssim  h^{2j +1 } \|  \jump{ \partial ^{j+2}_{n} v }      \|_{F  }^{ 2 } + h^{2j -3}  \| \jump{ \partial ^{j}_{n}v }   \|_{ F }^{ 2 }
+             \end{split}
+        \]
+        \todo[inline]{ Check last argument! }
+
+        Thus, fulfilling \eqref{eq:bi_inv_gh_2}.
+        \[
+            \begin{split}
+         \sum_{j=0}^{k} h^{2j+1} ( \jump{   D^2 \partial ^{j}_{n}  v }, \jump{  D^2 \partial ^{j}_{n}  v}    )_{\mathcal{F}_{h}^{g}} = \sum_{j=0}^{k} h^{2j+1}  \|\jump{   D^2 \partial ^{j}_{n}  v }  \|_{\mathcal{F} _{h}^{g}  }^{2  }
+            \end{split}
+        \]
+        \todo[inline]{TODO: Finish this proof. }
+
+    \end{enumerate}
+
+\end{proof}
+
+
+
+Finally, we now have the tools we need to construct an candidate for the ghost penalty for which satisfies all assumptions.
+
+\begin{proposition}[Face-based ghost penalty]
+    For any set of positive parameters $\left\{ \gamma _{j} \right\} _{j=0}^{k}$, the ghost penalty defined as \[
+    g^{}_{h}( v,w)  := \sum_{j=0}^{k} \sum_{F \in \mathcal{F} _{h}^{g}}^{} \gamma _{j} h^{2j-3}_{F} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n} w }  ) _{F} \text{ for any } v,w \in V_{h},
+    \]
+    satisfies the Assumption \ref{as:EP1} and \ref{as:EP2}.
+\end{proposition}
+
+\begin{proof}
+    First of all, from it is clear that \[
+        \begin{split}
+    % \| v \|_{ \mathcal{T} _{h} }^{  } & \lesssim \|  v \|_{ \Omega   }^{  } + \abs{ v } _{g_{h}} \\
+    \| D^2v \|_{ \mathcal{T} _{h} }^{  } & \lesssim \| D^2 v \|_{ \Omega   }^{  } + \abs{ v } _{g_{h}}
+        \end{split}
+    \]
+    Thus, the Assumption \ref{as:EP1} is satisfied.
+
+    For \ref{as:EP2} we.
+\end{proof}
