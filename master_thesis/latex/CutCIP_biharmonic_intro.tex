@@ -5,69 +5,6 @@
 
 
 
-\begin{figure}
-    \centering
-    % First TikZ picture
-    \begin{minipage}{0.45\textwidth}
-        \centering
-        \begin{tikzpicture}
-            \draw[fill=blue!30] (0.2, 0.2) circle (1.5cm);
-            % Background mesh
-            \foreach \i in {-2.5, -1.5, ..., 2.5} {
-                \draw[line width=0.1pt, shift={(-2.5,\i)}] (0,0) -- (5,0);
-                \draw[line width=0.1pt, shift={(\i,-2.5)}] (0,0) -- (0,5);
-            }
-            % Labels
-            \node[below right] at (0.4,0.5) {$\Omega $};
-            \node[below right] at (-1.5,1.5) {$\Gamma $};
-            % \draw[blue, thick] (-2.5, -2.5) rectangle (2.5, 2.5);
-        \end{tikzpicture}
-    \end{minipage}
-    \hfill
-    % Second TikZ picture
-    \begin{minipage}{0.45\textwidth}
-        \centering
-        \begin{tikzpicture}
-            % FIGURE OF FITTED MESH
-            % Boundary points
-            \foreach \i in {0, 45, ..., 315} {
-                \coordinate (boundary-\i) at (\i:1.5cm);
-            }
-            % Interior points
-            \coordinate (interior-1) at (0.75, 0);
-            \coordinate (interior-2) at (-0.75, 0);
-            \coordinate (interior-3) at (0, 0.75);
-            \coordinate (interior-4) at (0, -0.75);
-
-            % Create a cycle connecting all the boundary points
-            \fill[blue!30] (boundary-0) -- (boundary-45) -- (boundary-90) -- (boundary-135) -- (boundary-180) -- (boundary-225) -- (boundary-270) -- (boundary-315) -- cycle;
-
-            % Labels
-            \node[below right] at (0.4,0.7) {$\Omega $};
-            \node[below right] at (-1.5,1.7) {$\Gamma $};
-
-            % Triangulation (manually specified)
-            \draw[line width=0.1pt] (boundary-0) -- (boundary-45) -- (interior-1) -- cycle;
-            \draw[line width=0.1pt] (boundary-45) -- (boundary-90) -- (interior-3) -- cycle;
-            \draw[line width=0.1pt] (boundary-90) -- (boundary-135) -- (interior-3) -- cycle;
-            \draw[line width=0.1pt] (boundary-135) -- (boundary-180) -- (interior-2) -- cycle;
-            \draw[line width=0.1pt] (boundary-180) -- (boundary-225) -- (interior-2) -- cycle;
-            \draw[line width=0.1pt] (boundary-225) -- (boundary-270) -- (interior-4) -- cycle;
-            \draw[line width=0.1pt] (boundary-270) -- (boundary-315) -- (interior-4) -- cycle;
-            \draw[line width=0.1pt] (boundary-315) -- (boundary-0) -- (interior-1) -- cycle;
-
-            % Triangulation between interior points
-            \draw[line width=0.1pt] (interior-1) -- (interior-2) -- (interior-3) -- cycle;
-            \draw[line width=0.1pt] (interior-1) -- (interior-2) -- (interior-4) -- cycle;
-
-            % \draw[blue, thick] (-2.5, -2.5) rectangle (2.5, 2.5);
-
-        \end{tikzpicture}
-    \end{minipage}
-\caption{Mesh comparison: unfitted mesh (left) adheres to domain and boundary, while fitted mesh (right) employs a triangular mesh for polygonal approximation of the circular domain.}
-\label{fig:domain_mesh}
-\end{figure}
-
 
 \todo[inline]{ Fix triangulation. }
 
@@ -83,23 +20,6 @@ Mixed formulation of the biharmonic problem has been discussed here \cite{cai202
 \subsection{Weak formulation}%
 \label{sub:weak_formulation}
 
-    \begin{figure}[htpb!]
-        \centering
-        \begin{tikzpicture}
-            % Circle
-            \draw (0.0,0.0) circle (1.5cm);
-            \fill[blue!30] (0.0,0.0) circle (1.5cm);
-
-            \draw[->, line width=1.0pt] ({1.5*cos(45)}, { 1.5*sin(45) }) -- ({ 2.5*cos(45)  }, { 2.5*sin(45)  }) node[ above left] {$n $};
-            \draw[->, line width=1.0pt] ({1.5*cos(45)}, { 1.5*sin(45) }) -- ({ 1.5*cos(45) - 1.5*sin(45) }, { 1.5*sin(45) + 1.5*cos(45) }) node[ above right] {$t $};
-
-            % Labels
-            \node[below right] at (0.5,0.5) {$\Omega$};
-            \node[below right] at (-1.5,-1.5) {$\Gamma  = \partial \Omega$};
-        \end{tikzpicture}
-        \caption{ Illustration of an domain $\Omega $, the boundary $\Gamma $. The normal vector $n$  and the corresponding tangent vector.   }
-        \label{fig:domain_construction}
-    \end{figure}
 
 
     Let $\Omega \subseteq    \mathbb{R} ^d$ be a physical mesh, $\Gamma  $ be a $C^2$ boundary  illustrated at Figure \ref{fig:domain_construction}. Assume we have the function $\alpha: \Omega \to \mathbb{R} $. We define the strong biharmonic problem to be on the form

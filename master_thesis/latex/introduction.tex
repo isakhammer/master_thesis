@@ -18,9 +18,29 @@ CH \cite{miller2020divide, garcke2016coupled, yushutin2019computational}.
 
 % \todo[inline]{ Derivation of the Cahn-Hilliard equation from its energy functional. }
 The CH problem comes in many variants depending on its application, but we will in this report on the binary mixture version \cite{miranville2017cahn}. Let $\Omega \subset  \mathbb{R} ^{d} $ be a compact set for $d=2,3$ with boundary
-$\Gamma $. We define the time duration parameter $T \in  [0,\infty) $ and the
+$\Gamma $,  see Figure \ref{fig:domain_construction}. We define the time duration parameter $T \in  [0,\infty) $ and the
 so-called unknown phase-field function as the
 mapping $u: \left[ 0, T \right] \times \Omega  \to \left[ -1,1 \right]  $, which is denoted as the local difference of a binary mixture of two concentrations $c_{A}, c_{B} \in \left[ 0,1\right] $ s.t. $u = c_{A} -c_{B}$ and $c_{A} + c_{B} = 1$. Remark that if a local point exists so $u$ has the extreme value $-1$, then it implies that the particular point has $100\%$ concentration $c_{A}$ and vice-versa for $c_{B}$. On the other hand, if $u$ is zero, it implies that the mixture is $50\% - 50\%$.
+
+\begin{figure}[htpb!]
+    \centering
+    \begin{tikzpicture}
+        % Define points for square
+        \coordinate (A) at (-1.5,-1.5);
+        \coordinate (B) at (1.0,0.0);
+        \coordinate (C) at (1.5,1.5);
+        \coordinate (D) at (-1.5,1.5);
+
+        \filldraw[fill=blue!30,draw=black] (A) to[out=0,in=-90] (B) to[out=90,in=0] (C) to[out=180,in=90] (D) to[out=-90,in=180] cycle;
+\draw[->, line width=1.0pt] ({1.8*cos(90)}, { 1.8*sin(90) }) -- ({ 2.5*cos(85)  }, { 2.5*sin(85)  }) node[below left, xshift=-0.2cm] {$n $};
+
+        \node at (0,0) {$\Omega$};
+        \node at (2,1.7) {$\Gamma$};
+
+    \end{tikzpicture}
+    \caption{Illustration of the physical domain $\Omega$, the boundary $\Gamma$ and the corresponding normal vector $n$.}
+    \label{fig:domain_construction}
+\end{figure}
 
 For an isotropic
 binary mixture non-uniform, the standard Ginzburg-Landay free energy functional is given by \[
@@ -111,8 +131,72 @@ Moreover, this approach adapts well to the CH problem \cite{wells2006discontinuo
 system easier to solve \cite{diegel2015analysis, brenner2018robust}.
 A combination of these methods, the DG and mixed formulation for the CH problem, has recently been considered \cite{chave2016hybrid, medina2022stabilized}.
 
+\begin{figure}
+    \centering
+    % First TikZ picture
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \begin{tikzpicture}
+            \draw[fill=blue!30] (0.2, 0.2) circle (1.5cm);
+            % Background mesh
+            \foreach \i in {-2.5, -1.5, ..., 2.5} {
+                \draw[line width=0.1pt, shift={(-2.5,\i)}] (0,0) -- (5,0);
+                \draw[line width=0.1pt, shift={(\i,-2.5)}] (0,0) -- (0,5);
+            }
+            % Labels
+            \node[below right] at (0.4,0.5) {$\Omega $};
+            \node[below right] at (-1.5,1.5) {$\Gamma $};
+            % \draw[blue, thick] (-2.5, -2.5) rectangle (2.5, 2.5);
+        \end{tikzpicture}
+    \end{minipage}
+    \hfill
+    % Second TikZ picture
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \begin{tikzpicture}
+            % FIGURE OF FITTED MESH
+            % Boundary points
+            \foreach \i in {0, 45, ..., 315} {
+                \coordinate (boundary-\i) at (\i:1.5cm);
+            }
+            % Interior points
+            \coordinate (interior-1) at (0.75, 0);
+            \coordinate (interior-2) at (-0.75, 0);
+            \coordinate (interior-3) at (0, 0.75);
+            \coordinate (interior-4) at (0, -0.75);
+
+            % Create a cycle connecting all the boundary points
+            \fill[blue!30] (boundary-0) -- (boundary-45) -- (boundary-90) -- (boundary-135) -- (boundary-180) -- (boundary-225) -- (boundary-270) -- (boundary-315) -- cycle;
+
+            % Labels
+            \node[below right] at (0.4,0.7) {$\Omega $};
+            \node[below right] at (-1.5,1.7) {$\Gamma $};
+
+            % Triangulation (manually specified)
+            \draw[line width=0.1pt] (boundary-0) -- (boundary-45) -- (interior-1) -- cycle;
+            \draw[line width=0.1pt] (boundary-45) -- (boundary-90) -- (interior-3) -- cycle;
+            \draw[line width=0.1pt] (boundary-90) -- (boundary-135) -- (interior-3) -- cycle;
+            \draw[line width=0.1pt] (boundary-135) -- (boundary-180) -- (interior-2) -- cycle;
+            \draw[line width=0.1pt] (boundary-180) -- (boundary-225) -- (interior-2) -- cycle;
+            \draw[line width=0.1pt] (boundary-225) -- (boundary-270) -- (interior-4) -- cycle;
+            \draw[line width=0.1pt] (boundary-270) -- (boundary-315) -- (interior-4) -- cycle;
+            \draw[line width=0.1pt] (boundary-315) -- (boundary-0) -- (interior-1) -- cycle;
+
+            % Triangulation between interior points
+            \draw[line width=0.1pt] (interior-1) -- (interior-2) -- (interior-3) -- cycle;
+            \draw[line width=0.1pt] (interior-1) -- (interior-2) -- (interior-4) -- cycle;
+
+            % \draw[blue, thick] (-2.5, -2.5) rectangle (2.5, 2.5);
+
+        \end{tikzpicture}
+    \end{minipage}
+\caption{Mesh comparison: unfitted mesh (left) adheres to domain and boundary, while fitted mesh (right) employs a triangular mesh for polygonal approximation of the circular domain.}
+\label{fig:domain_mesh}
+\end{figure}
+
 Creating a high-quality mesh in 2- and 3-dimensional for realistic problems is a challenging task that can take a reasonable time in the simulation workflow and is hard to scale properly on distributed platforms and thus not that suitable for moving
-domains, very complex meshes or smooth boundaries. An interesting class to approach the problem is the so-called unfitted finite element method, which utilizes a background mesh and does not align with the physical boundary.
+domains, very complex meshes or smooth boundaries. An interesting class to approach the problem is the so-called unfitted finite element method, which utilizes a background mesh and does not align with the physical boundary. For an illustration
+see Figure \ref{fig:domain_mesh}.
 This greatly reduces the need to generate an unstructured mesh and makes it very applicable for parallelization and moving domains
 since it avoids the need of remeshing entirely. However, without paying attention to the so-called cut cells, which are the elements intersecting with the boundary, the method quickly leads to instability and ill-conditioning.
 One of the methods to counter this is the cut finite element method (CutFEM), where the focus is to penalize the cut-cells weakly by adding an additional ghost penalty term to ensure stability and well-posedness \cite{burman2015cutfem}. This has been successfully implemented for the BH problem for the
