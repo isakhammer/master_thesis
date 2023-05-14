@@ -61,10 +61,12 @@ In this report will we assume that a mesh $\mathcal{T}_{h} $ is conform, shape r
  The fact that the mesh is conform makes is a useful property since the interface between mesh elements has come into contact in the sense
 that it is either a vertex or a facet. This with the combination of shape regularity and quasi-uniformity has been a major key to prove important inequalities in broken Sobolev spaces \cite[Chapter 1.4.1]{pietro2012}. Hence, the assumptions are very handy when proving convergence.
 
+ \todo[inline]{ Remove introduction of unfitted mesh until later }
 Questions arise when we want to allow for complex geometries where some physical domain $\Omega $ has a smooth boundary $\Gamma $ and, thus, cannot be fully covered of a fitted mesh. This motivates us to define a so-called unfitted mesh.
  Let a background domain $\widetilde{\Omega } \subset \mathbb{R} ^{d} $ have a corresponding mesh $\widetilde{\mathcal{T} _{h}}$.
 Assume that the physical domain is the set $\Omega\subset   \widetilde{\Omega }  $ with the corresponding smooth boundary $\Gamma$. We define the unfitted mesh or the active mesh as the triangulation that intersects the interior of $\Omega$, i.e., the intersection $\widetilde{\mathcal{T}_{h} } \cap
  \Omega^{int }     $ where $ \Omega ^{int} = \Omega \setminus \Gamma  $.
+
 
 Let $\mathcal{T}_{h}  = \left\{ T \right\} $ be a mesh of $\Omega \subset  \mathbb{R} ^d $ consisting of polygons $T \in \mathbb{R} ^{d}$.
 The set of all facets is the union of external and internal facets, $\mathcal{F} _{h} = \mathcal{F} ^{ext}_{h} \cup \mathcal{F} _{h}^{int} $, where each are defined like this:
@@ -111,7 +113,7 @@ We define the mean as $\mean{ v} |_{F} = v    $ and the jump as $\jump{v}|_{F} =
 \node[above right] at (Tp) {$T^{+}$ };
 \node[below right] at (e) {$F$ };
 
-\draw [|->, thick] (start) -- (end);
+\draw [->, thick] (start) -- (end);
 % \node[above right] at (A) {A };
 % \node[below right] at (B) {B};
 % \node[above right] at (C) {C };
@@ -119,7 +121,7 @@ We define the mean as $\mean{ v} |_{F} = v    $ and the jump as $\jump{v}|_{F} =
 \node[below right] at (end) {$n$};
 \end{tikzpicture}
 
-\caption{Facet $F \in \mathcal{F}_h $ shared by the triangles $T^{+}, T^{-} \in \mathcal{T}_{h} $ and the normal unit vector $n$.  }
+\caption{Facet $F \in \mathcal{F}_h^{int} $ shared by the triangles $T^{+}, T^{-} \in \mathcal{T}_{h} $ and the normal unit vector $n$.  }
     \label{fig:normal}
 \end{figure}
 
