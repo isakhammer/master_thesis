@@ -1,13 +1,7 @@
 
 \newpage
-\section{CutCIP Biharmonic problem}%
+\section{Cut Continuous Interior Penalty Method for the Biharmonic Problem}%
 \label{sec:cutcip_biharmonic_problem}
-
-\begin{figure}[h!]
-\centering
-\end{figure}
-
-
 
 
 
@@ -81,8 +75,6 @@
 A crucial advantage of CutFEM is its ability to handle unfitted meshes, as illustrated in Figure 1, where the mesh does not conform to the domain boundary $\Gamma$. The biharmonic equation, which is a fourth-order PDE, arises in numerous applications, such as thin plate bending, and is relevant to the Cahn-Hilliard problem. The Cahn-Hilliard equation describes phase separation in binary alloys and is characterized by a fourth-order term, making it a suitable candidate for the application of CutFEM.
 
 In contrast to the unfitted mesh in Figure \ref{fig:domain_mesh}, Figure \ref{fig:domain_mesh} shows examples of fitted meshes, where the mesh conforms to the domain boundary. However, generating such meshes for complex geometries can be cumbersome and time-consuming. CutFEM offers a more flexible approach, enabling us to work with standard meshes and focus on the PDEs' discretization and the imposition of boundary conditions.
-
-Continuous interior penalty was first used for parabolic and elliptic problems \cite{douglas2008interior, arnold1982interior}. It was later applied to biharmonic problems.
 
 For the CutFEM formulation we impose the Neumann boundary condition similarly to the Nitsche's method \cite{nitsche1971variationsprinzip}.
 Mixed formulation of the biharmonic problem has been discussed here \cite{cai2023nitsche,burman2020cut}.
