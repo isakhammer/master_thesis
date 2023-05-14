@@ -314,8 +314,9 @@ a_{h} \left( u, v \right)   =&
  l_{h}( v_{h}) & =  \left( f, v \right) _{\Omega } - ( g_{2},  v )_{\Gamma } -  ( g_{1}, \Delta  v  )_{\Gamma }  + \frac{\gamma }{h} ( g_{2}, \partial _{n} v  )_{\Gamma }
 \end{split}
 \end{equation*}
+which is inspired by See \cite[Equation 3.4]{feng2007fully}.
 
-\todo[inline]{ Do the derivation. See \cite{georgoulis2009discontinuous}. }
+\todo[inline]{ Do the derivation. See \cite[Equation]{feng2007fully} for inspiration. }
 
 Similarly the linear form is defined as
  \[
@@ -450,11 +451,12 @@ and for $v \in V + V_{h}$ we get, \[
 \| v \|_{A_{h},*  }^{  2}  & = \| v \|_{ a_{h},* }^{ 2 } + \abs{ v } _{g_{h}}^{2}
     \end{split}
 \]
-\[
-    \begin{split}
-\| v \|_{ a_{h}, * }^{  2} & =\| v \|_{ a_{h} }^{ 2 } +  \| h^{\frac{1}{2}} \mean{ \partial _{nn} v }   \|_{\mathcal{F} _{h}^{} \cap \Omega   }^{  2} +  \| h^{\frac{1}{2}} \partial _{nn} v    \|_{ \Gamma }^{  2}  \\
-    \end{split}
-\]
+
+Inspired from \cite[Equation 3.5]{feng2007fully} we have,
+\begin{equation}
+ \|v\|_{a_{h}} ^{2}= \sum_{K \in \mathcal{T}_h}\|\Delta v\|_K^2+\sum_{c \in \mathcal{E}^J}\left(h_c^3 \abs{  \left\{\partial_n \Delta v\right\}}_c^2 + h_c^{-3}  \abs{ \jump{ v } }_e^2\right)\right + \sum_{e \in \mathcal{E}}\left(h_e \abs{ \mean{
+ \Delta v } } _e^2+h_e^{-1}\abs{ \jump{ \partial_n v } }   _c^2\right) . \\
+\end{equation}
 \begin{remark}
 Note that it holds that $\mathcal{T} _{h} \cap  \Omega   = \Omega  $ and $\mathcal{T} _{h} \cap  \Gamma  = \Gamma $. Depending on context, we choose the best suitable notation.
 \end{remark}
