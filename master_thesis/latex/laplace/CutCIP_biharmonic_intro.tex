@@ -316,23 +316,7 @@ a_{h} \left( u, v \right)   =&
 \end{equation*}
 
 \todo[inline]{ Do the derivation. See \cite{georgoulis2009discontinuous}. }
-\red{
-\begin{equation}
-\begin{split}
-a_{h} \left( u, v \right)   =&   \left( \alpha  u, v \right) _{\mathcal{T} _{h} \cap \Omega }   +  \left( D^2 u, D^2v \right) _{\mathcal{T} _{h} \cap \Omega} \\
- & +
-  \left( \mean{  \partial _{n n} u }, \jump{ \partial _{n }v} \right)_{\mathcal{F}_{h}^{} \cap \Omega}  +
- \left( \mean{ \partial _{n n} v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}^{} \cap \Omega} \\
- & + ( \partial _{nn} u, \partial _{n} v)_{\Gamma } + ( \partial _{nn} v, \partial _{n} u)_{\Gamma }
- \\
- & + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v_{}   }   \right)_{\mathcal{F}_{h}^{} \cap \Omega} +  \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v_{}      \right)_{\Gamma } \\
-\end{split}
-.
-\end{equation}
- \[
-l_{h}( v) =  ( f,v)_{\mathcal{T} _{h} \cap \Omega } - (g_{2},v) - ( g_{1}, \partial _{nn}v) _{\Gamma } + \frac{\gamma }{h}  ( g_{1}, \partial _{n} v)   .
-\]
-}
+
 Similarly the linear form is defined as
  \[
 l_{h}( v) =  ( f,v)_{\mathcal{T} _{h} \cap \Omega } - (g_{2},v) - ( g_{1}, \partial _{nn}v) _{\Gamma } + \frac{\gamma }{h}  ( g_{1}, \partial _{n} v)   .
@@ -460,26 +444,17 @@ We define the underlying norms for $ v \in V_{h} $ as
         \label{eq:bi_Ah_norm}
 \| v \|_{A_{h}  }^{  2}  & = \| v \|_{ a_{h} }^{ 2 } + \abs{ v } _{g_{h}}^{2}
     \end{align}
-
-    \red{
-    \[
-        \| v \|_{ a_{h} }^{ 2 }  =   \alpha \|   v \|_{ \mathcal{T} _{h} \cap \Omega  }^{ 2}  + \| D^2 v \|_{\mathcal{T} _{h} \cap \Omega   }^{ 2 } + \gamma \| h^{-\frac{1}{2}} \jump{ \partial _{n} v }   \|_{ \mathcal{F}_{h}^{}\cap \Omega    }^{ 2 }
-        + \gamma \| h^{-\frac{1}{2}}  \partial _{n} v    \|_{ \Gamma   }^{ 2 }, \\
-    \]
-}
 and for $v \in V + V_{h}$ we get, \[
     \begin{split}
 \| v \|_{ a_{h}, * }^{  2} & =\| v \|_{ a_{h} }^{ 2 } +  \| h^{\frac{1}{2}} \mean{ \Delta  v }   \|_{\mathcal{F} _{h}^{} \cap \Omega   }^{  2} +  \| h^{\frac{1}{2}} \Delta  v    \|_{ \Gamma }^{  2}  \\
 \| v \|_{A_{h},*  }^{  2}  & = \| v \|_{ a_{h},* }^{ 2 } + \abs{ v } _{g_{h}}^{2}
     \end{split}
 \]
-\red{
 \[
     \begin{split}
 \| v \|_{ a_{h}, * }^{  2} & =\| v \|_{ a_{h} }^{ 2 } +  \| h^{\frac{1}{2}} \mean{ \partial _{nn} v }   \|_{\mathcal{F} _{h}^{} \cap \Omega   }^{  2} +  \| h^{\frac{1}{2}} \partial _{nn} v    \|_{ \Gamma }^{  2}  \\
     \end{split}
 \]
-}
 \begin{remark}
 Note that it holds that $\mathcal{T} _{h} \cap  \Omega   = \Omega  $ and $\mathcal{T} _{h} \cap  \Gamma  = \Gamma $. Depending on context, we choose the best suitable notation.
 \end{remark}
@@ -552,7 +527,6 @@ Similarly for the Poisson problem will we have the following assumptions for the
     \abs{ T' \cap \Omega  } _{d} \ge \abs{ T' } _{d}$.
 \end{enumerate}
 
-\red{
 From basic theory we have the following inverse estimate for $ v \in \mathcal{P}^{k}( T)$ s.t. \[
      \| \partial _{nn}  v \|_{F   }^{ }  \lesssim  \| h_{T}^{-\frac{1}{2}} D ^2 v \|_{ T }^{  },
 \]
@@ -576,7 +550,6 @@ In fact, combining the inequalities we get the identity,
 \label{eq:bi_identity}
 h\| \partial _{nn}  v \|_{ \mathcal{F}_h \cap \Omega    }^{2 } + h\| \partial _{nn} v \|_{ \mathcal{T} _{h} \cap \Gamma  }^{2  } \lesssim \| D^2 v \|_{ \mathcal{T} _{h}  }^{2  }.
 \end{equation}
-}
 
 We may introduce our first assumption on the ghost penalty.
 \begin{assumption}[EP1]
@@ -584,11 +557,6 @@ We may introduce our first assumption on the ghost penalty.
     The ghost penalty $g_{h}$ extends the $H^{1}$ norm s.t. \[
     \| \Delta  v \|_{ \mathcal{T} _{h} }^{ 2 } \lesssim  \| \Delta  v \|_{ \Omega  }^{ 2 } + \abs{ v } _{g_{h}}^{2}.
     \]
-    \red{
-    The ghost penalty $g_{h}$ extends the $H^{1}$ norm s.t. \[
-    \| D^2 v \|_{ \mathcal{T} _{h} }^{ 2 } \lesssim  \| D^2 v \|_{ \Omega  }^{ 2 } + \abs{ v } _{g_{h}}^{2}.
-    \]
-}
 \end{assumption}
 Combing the results we get the following convenient corollary.
 
@@ -611,66 +579,8 @@ Combing the results we get the following convenient corollary.
     \]
 \end{lemma}
 
-
 \begin{proof}
-    Let $v \in V^{h}$.
-    Observe that \[
-    A_{h}( v,v) = a_{h}( v,v)  + \abs{ v }_{g_{h}}^{2}
-    \]
-    Thus, since the second term already is part of the $\| \cdot  \|_{ A_{h} }^{  } $ norm is a good start to focus on the $a_{h}$ term, that is,
-    \[
-    \begin{split}
-       a_{h}( v,v) &=   \|\ |\alpha|^{\frac{1}{2}} \cdot v  \|_{   \Omega   }^{2} + \| D^2v \|_{   \Omega  }^{2  } + 2 ( \mean{ \partial _{nn} v }, \jump{ \partial _{n} v }    )_{\mathcal{F} ^{}_{h} \cap \Omega }  + 2 (  \partial _{nn} v ,
-       \partial _{n} v  )_{\Gamma } \\
-                   & \quad+ \frac{\gamma }{h}  \|  \jump{ \partial _{n} v }\|_{\mathcal{F} _{h}^{}  }^{ 2 } + \frac{\gamma }{h}  \| \partial _{n} v \|_{ \Gamma  }^{ 2 }
-    \end{split}
-    \]
-    We will first focus on the symmetry terms. Using Cauchy-Schwarz we observe that \[
-        \begin{split}
-    ( \mean{ \partial _{nn} v }  , \jump{ \partial _{n} v }  )_{\mathcal{F}^{}_{h}\cap \Omega  } & \ge - \| h^{\frac{1}{2}}\mean{ \partial _{nn} v }   \|_{ \mathcal{F}^{}_{h}\cap \Omega   }^{  }  \|h^{-\frac{1}{2}} \jump{ \partial _{n} v }   \|_{
-    \mathcal{F}^{}_{h}\cap \Omega   }^{  } \\
-    (  \partial _{nn} v   ,  \partial _{n} v   )_{\Gamma   } & \ge - \| h^{\frac{1}{2}} \partial _{nn} v    \|_{ \Gamma    }^{  }  \|h^{-\frac{1}{2}}  \partial _{n} v    \|_{ \Gamma    }^{  }
-        \end{split}
-    \]
-    Using inverse-inequalities \eqref{eq:bi_cut_inverse_1} and \eqref{eq:bi_cut_inverse_2} and the Corollary \ref{cor:bi_inverse_thm} can we easily observe that \[
-        \begin{split}
-     \| \mean{ \partial _{nn}v } \|_{ \mathcal{T}_{h} \cap \Omega    }^{  2} & \le C_{1} \| D^2 v \|_{ \mathcal{T}_{h}   }^{2  } \le  C  (\| D^2 v \|_{ \Omega  }^{ 2 }  + \abs{ v } _{ g_{h} }^{2  } )  \\
-     \|  \partial _{nn}v  \|_{ \Gamma     }^{ 2 } & \le C_{2} \| D^2 v \|_{ \mathcal{T} _{h}  }^{2  } \le C  (\| D^2 v \|_{ \Omega  }^{ 2 }  + \abs{ v } _{ g_{h} }^{2  } )
-        \end{split}
-    \]
-    Thus, by applying Youngs $\varepsilon $-inequality, $2ab \le  \varepsilon^{-1} a^{2} + \varepsilon b^{2} $, is it natural to see that,
-    \[
-        \begin{split}
-- C_{1}^{\frac{1}{2}} \| D^2 v    \|_{ \mathcal{T} _{h}   }^{  }  \|h^{-\frac{1}{2}} \jump{ \partial _{n} v }   \|_{ \mathcal{F}^{}_{h}\cap \Omega   }^{  }
-& \ge - \frac{1}{\varepsilon } C  (\| D^2 v \|_{ \Omega  }^{ 2 }  + \abs{ v } _{ g_{h} }^{2  } ) -  \varepsilon \|h^{-\frac{1}{2}} \jump{ \partial _{n} v }   \|_{ \mathcal{F}^{}_{h}\cap \Omega   }^{2  } \\
-- C_{2}^{\frac{1}{2}}  \| D^2 v \|_{ \mathcal{T} _{h} }^{  } \| h^{-\frac{1}{2}}  \partial _{n} v    \|_{ \Gamma    }^{  }
-& \ge - \frac{1}{\varepsilon } C  (\| D^2 v \|_{ \Omega  }^{ 2 }  + \abs{ v } _{ g_{h} }^{2  } ) -  \varepsilon \|h^{-\frac{1}{2}}  \partial _{n} v    \|_{ \Gamma    }^{2  } \\
-        \end{split}
-    \]
-    Combining these ideas do we end up with the following inequality,
-    \[
-    \begin{split}
-       a_{h}( v,v)  \ge& \     \|\ |\alpha|^{\frac{1}{2}} \  v  \|_{   \Omega   }^{2} +\| D^2v  \|_{   \Omega   }^{2} -  \frac{1}{\varepsilon } 4C  (\| D^2 v \|_{ \Omega  }^{ 2 }  + \abs{ v } _{ g_{h} }^{2  } )  \\
-                       & + (\gamma - 2\varepsilon  )\left( \|h^{-\frac{1}{2}}  \jump{ \partial _{n} v }\|_{\mathcal{F} _{h}^{} \cap \Omega   }^{ 2 } + \| h^{-\frac{1}{2}} \partial _{n} v \|_{ \Gamma  }^{ 2} \right)        \\
-    \end{split}
-    \]
-    This inequality is useful, since if we apply it on the $\| \cdot  \|_{ A_{h} }^{  } $ we have a extra ghost penalty term s.t.,
-
-    \[
-        \begin{split}
-     A_{h}( v,v) & = a( v,v) + \abs{ v }_{g_{h}}^{2} \\
-     &\ge  \   \| \ |\alpha|^{\frac{1}{2}} \  v  \|_{   \Omega   }^{2} + (1  - \frac{1}{\varepsilon } 4C)  (\| D^2 v \|_{ \Omega  }^{ 2 }  + \abs{ v } _{ g_{h} }^{2  } )  \\
-                       & + (\gamma - 2\varepsilon  )\left( \|h^{-\frac{1}{2}}  \jump{ \partial _{n} v }\|_{\mathcal{F} _{h}^{}\cap \Omega   }^{ 2 } + \| h^{-\frac{1}{2}} \partial _{n} v \|_{ \Gamma  }^{ 2} \right)        .
-        \end{split}
-    \]
-    Setting $\varepsilon = 8C$ and $C=\frac{\gamma }{32} $ we simplify the problem to \[
-        \begin{split}
-           A_{h}( v,v)  \ge& \   \| \ |\alpha|^{\frac{1}{2}} \    v  \|_{  \Omega   }^{2} + \frac{1}{2}  (\| D^2 v \|_{ \Omega  }^{ 2 }  + \abs{ v } _{ g_{h} }^{2  } )  \\
-                       & + \frac{\gamma }{2}\left( \|h^{-\frac{1}{2}}  \jump{ \partial _{n} v }\|_{\mathcal{F} _{h}^{}\cap \Omega   }^{ 2 } + \| h^{-\frac{1}{2}} \partial _{n} v \|_{ \Gamma  }^{ 2} \right) \\
-                        \gtrsim & \  \| v \|_{ A_{h} }^{2  }
-        \end{split}
-    \]
-    Hence, proof is complete.
+    Insert proof
 \end{proof}
 
 \begin{lemma}
@@ -688,100 +598,7 @@ Combing the results we get the following convenient corollary.
 \end{lemma}
 
 \begin{proof}
-    We will divide the proof in two steps.
-    \begin{enumerate}[label=\arabic*)]
-        \item The goal is to prove the inequality \eqref{eq:bi_A_h_bounded}. \[
-                \abs{ A_{h}( v ,w ) } \lesssim   \abs{a_{h}( v, w) }   + \abs{g_{h}( v,w)  }          \]
-                By assumption is the ghost penalty $g_{h}$ positive semi-definite, thus, it fulfills the Cauchy-Schwartz inequality \[
-                \abs{ g_{h}(v,w ) } \lesssim \abs{ v } _{g_{h}}\abs{ w }_{g_{h}}
-                \]
-                Hence, by definition is $\abs{ g_{h}(v,w ) } \lesssim \| v \|_{ A_{h} }^{  } \| w \|_{ A_{h} }^{  } $. Now it remains to show that the bilinear term $ a_{h}$ is bounded.
-                \begin{equation}
-                    \begin{split}
-                        \abs{ a_{h} \left( v, w \right) }   \le  &   \abs{\left( \alpha  v, w \right) _{\mathcal{T} _{h} \cap \Omega }  }    +  \abs{\left( D^2 v, D^2w \right) _{\mathcal{T} _{h} \cap \Omega}  }  \\
-                                                     & + \abs{\left( \mean{  \partial _{n n} v }, \jump{ \partial _{n }w} \right)_{\mathcal{F}_{h}^{} \cap \Omega}  }   +
-                                                     \abs{\left( \mean{ \partial _{nn } v }, \jump{ \partial _{n}w }      \right)_{\mathcal{F}_{h}^{} \cap \Omega}  } \\
-                                                     & + \abs{\left(  \partial _{n n} v ,  \partial _{n }w \right)_{\Gamma }}     +
-                                                     \abs{\left(  \partial _{n n} w ,  \partial _{n}v       \right)_{\Gamma }  }
-                                                     \\
-                                                     & + \frac{\gamma }{h} \abs{ \left( \jump{ \partial _{n} v}, \jump{ \partial _{n} w   }   \right)_{\mathcal{F}_{h}^{} \cap \Omega}  } + \frac{\gamma }{h} \abs{ \left(  \partial _{n} v,  \partial _{n} w
-                                                     \right)_{\Gamma }  }
-                    \end{split}
-                \end{equation}
-                The strategy is to bound each term individually using Cauchy-Schwartz. We can easily see that $\abs{\left( \alpha  v, w \right) _{\mathcal{T} _{h} \cap \Omega }  }   \lesssim \| v \|_{a_{h}  }^{  } \| w \|_{ a_{h} }^{  } $ and that
-                $\abs{\left( D^2 v, D^2w \right) _{\mathcal{T} _{h} \cap \Omega}  } \lesssim \| v \|_{a_{h}  }^{  } \| w \|_{ a_{h} }^{  } $ using Cauchy Schwartz. For the symmetric terms we also apply the inverse inequality
-                \eqref{eq:bi_cut_inverse_2}.
-                \[
-                    \begin{split}
-                    \abs{\left( \mean{ \partial _{n n} v }, \jump{ \partial _{n}w }      \right)_{\mathcal{F}_{h}^{} \cap \Omega}  } & \lesssim  \|\mean{ \partial _{n n} v }  \|_{ \mathcal{F}_{h}^{} \cap \Omega}^{  }\|\jump{ \partial _{n} w }  \|_{
-                    \mathcal{F}_{h}^{} \cap \Omega}^{  } \\
-                    & \lesssim  \|h^{\frac{1}{2}} \partial _{n n} v  \|_{ \mathcal{F}_{h}^{} \cap \Omega}^{  }\| h^{-\frac{1}{2}} \jump{ \partial _{n} w }     \|_{\mathcal{F}_{h}^{} \cap \Omega}^{  } \\
-                    & \lesssim  \| v \|_{A_{h}  }^{  } \|w    \|_{ a_{h}}^{  }
-                    \end{split}
-                \]
-                Here we used the Corollary \ref{cor:bi_inverse_thm} s.t.  $\|h^{\frac{1}{2}} \partial _{n n}  v \|_{\mathcal{F}_{h}^{} \cap \Omega} \lesssim \| v \|_{ A_{h}  }^{  }  $.
-              The boundedness interior penalty  inequality is showed in this manner, \[
-             \frac{\gamma }{h} \abs{ \left( \jump{ \partial _{n} v}, \jump{ \partial _{n} w   }   \right)_{\mathcal{F}_{h}^{} \cap \Omega}  }  \lesssim  \|h^{-\frac{1}{2}} \jump{ \partial _{n} v}  \|_{ \mathcal{F}_{h}^{} \cap \Omega }^{  }
-             \|h^{-\frac{1}{2}} \jump{ \partial _{n} w}  \|_{ \mathcal{F}_{h}^{} \cap \Omega }^{  }  \lesssim  \| v  \|_{ a_{h} }^{  }
-             \| w  \|_{ a_{h} }^{  }.
-             \]
-              Now it remains to handle boundary terms. \[
-                \abs{ ( \partial _{nn} v, \partial _{n} w)_{\Gamma } }  \lesssim \| h^{\frac{1}{2}}\partial _{nn} v \|_{\Gamma   }^{  } \| h^{-\frac{1}{2}} \partial _{n}w \|_{\Gamma   }^{  }  \lesssim \|  v \|_{A_{h}  }^{  } \| w \|_{ a_{h}   }^{  }
-             \]
-             Again, here we used the Corollary \ref{cor:bi_inverse_thm}.
-             Finally, using the definition of the norm is it easily to see that,
-             \[
-\frac{\gamma }{h} \abs{ \left(  \partial _{n} v,  \partial _{n} w \right)_{\Gamma }  } \lesssim \gamma  \| h^{-\frac{1}{2}} \partial _{n} v \|_{  \Gamma }^{  } \| h^{-\frac{1}{2}} \partial _{n} w \|_{\Gamma   }^{  } \lesssim \| v \|_{ a_{h} }^{  }
-\| w \|_{ a_{h} }^{  } .
-             \]
-
-             Obviously is $\| v \|_{a_{h}  }^{  } \lesssim \| v \|_{A_{h}  }^{  }$. Hence, we have showed that all terms in $a_{h}$ is bounded in the $\|\cdot   \|_{A_{h}  }^{  } $ norm.
-         \item The goal is to prove \eqref{eq:bi_a_h_bounded} using many of the same ideas as in the first part. Let $v \in V_{h} +V $ and $v \in V_{h}$. Next step is to show that the bilinear term $ a_{h}$ is bounded.
-                \begin{equation}
-                    \begin{split}
-                        \abs{ a_{h} \left( v, w \right) }   \le  &   \abs{\left( \alpha  v, w \right) _{\mathcal{T} _{h} \cap \Omega }  }    +  \abs{\left( D^2 v, D^2w \right) _{\mathcal{T} _{h} \cap \Omega}  }  \\
-                                                     & + \abs{\left( \mean{  \partial _{n n} v }, \jump{ \partial _{n }w} \right)_{\mathcal{F}_{h}^{} \cap \Omega}  }   + \abs{\left( \mean{ \partial _{nn } w }, \jump{ \partial _{n}v }
-                                                     \right)_{\mathcal{F}_{h}^{} \cap \Omega}  } \\
-                                                     & + \abs{\left(  \partial _{n n} v ,  \partial _{n }w \right)_{\Gamma }}     +
-                                                     \abs{\left(  \partial _{n n} w ,  \partial _{n}v       \right)_{\Gamma }  }
-                                                     \\
-                                                     & + \frac{\gamma }{h} \abs{ \left( \jump{ \partial _{n} v}, \jump{ \partial _{n} w   }   \right)_{\mathcal{F}_{h}^{} \cap \Omega}  } + \frac{\gamma }{h} \abs{ \left(  \partial _{n} v,  \partial _{n} w
-                                                     \right)_{\Gamma }  }
-                    \end{split}
-                \end{equation}
-                     We can easily observe from the first part that this must holds, \[
-    \abs{\left( \alpha  v, w \right) _{\mathcal{T} _{h} \cap \Omega }  }    +  \abs{\left( D^2 v, D^2w \right) _{\mathcal{T} _{h} \cap \Omega}  } \lesssim \| v \|_{ a_{h},* }^{  } \| w \|_{A_{h}  }^{  }.
-    \]
-    And for the symmetric interior terms,
-    \[
-        \begin{split}
-            \abs{\left( \mean{  \partial _{n n} v }, \jump{ \partial _{n }w} \right)_{\mathcal{F}_{h}^{} \cap \Omega}  } &\lesssim \| h^{\frac{1}{2}}\mean{ \partial _{nn}v }   \|_{ \mathcal{F}_{h}^{} \cap \Omega  }^{  } \| h^{-\frac{1}{2}}\jump{ \partial _{n }w}
-    \|_{\mathcal{F}_{h}^{} \cap \Omega  }^{  } \lesssim \| v  \|_{ a_{h},*  }^{  }\|  w \|_{A_{h}  }^{  }, \\
-            \abs{\left( \mean{  \partial _{n n} w }, \jump{ \partial _{n }v} \right)_{\mathcal{F}_{h}^{} \cap \Omega}  } &\lesssim \| h^{\frac{1}{2}}\mean{ \partial _{nn}w }   \|_{ \mathcal{F}_{h}^{} \cap \Omega  }^{  } \| h^{-\frac{1}{2}}\jump{ \partial _{n }v}
-    \|_{\mathcal{F}_{h}^{} \cap \Omega  }^{  } \lesssim \| w  \|_{A_{h}  }^{  }\|  v \|_{ a_{h},*  }^{  }.
-        \end{split}
-    \]
-    Remark that for $\| h^{\frac{1}{2}} \mean{ \partial _{nn} v }   \|_{\mathcal{F}^{} _{h} \cap \Omega   }^{  } $ is the norm incorporated in the definition of $\| \cdot  \|_{ a_{h},* }^{  } $, but for $\| h^{\frac{1}{2}} \mean{ \partial _{nn} w }   \|_{
-    \mathcal{F}_{h}^{}\cap \Omega   }^{  } $ was the Corollary \ref{cor:bi_inverse_thm} applied. The jump terms $\|h^{-\frac{1}{2}} \jump{\partial _{n} v  }   \|_{\mathcal{F}^{}_{h}\cap \Omega    }^{  } $
-is incorporated in the $\| \cdot  \|_{ a_{h} }^{  } $ norm, thus, this also holds, \[
-\frac{\gamma }{h}\abs{  ( \jump{ \partial _{n} v }  , \jump{\partial _{n} w }  )_{\mathcal{F}^{} _{h} \cap \Omega } } \lesssim \| h^{-\frac{1}{2}} \jump{\partial _{n} v },      \|_{ \mathcal{F}^{} _{h}\cap \Omega   }^{  }     \|
-h^{-\frac{1}{2}} \jump{\partial _{n} w } \|_{\mathcal{F}^{} _{h}\cap \Omega
-}^{  } \lesssim \| v \|_{ a_{h},* }^{  } \| w \|_{ A_{h} }^{  }
-\]
-Finally, the boundary terms, \[
-    \begin{split}
-( \partial _{nn} v, \partial _{n} w)_\Gamma & \lesssim \| h^{\frac{1}{2}} \partial _{nn} v \|_{ \Gamma   }^{  }  \|h^{-\frac{1}{2}} \partial _{n} w \|_{ \Gamma   }^{  } \lesssim \| v \|_{ a_{h},* }^{  } \| w \|_{ A_{h} }^{  }   , \\
-( \partial _{nn} w, \partial _{n} v)_\Gamma & \lesssim \| h^{\frac{1}{2}} \partial _{nn} w \|_{ \Gamma   }^{  }  \|h^{-\frac{1}{2}} \partial _{n} v \|_{ \Gamma   }^{  } \lesssim \| w \|_{ A_{h} }^{  } \| v \|_{ a_{h},* }^{  }   , \\
-    \end{split}
-\]
-and \[
-\frac{\gamma }{h} \abs{ (  \partial _{n} v, \partial _{n}w)_{\mathcal{F}^{} _{h} \cap \Omega }   }\lesssim \| h^{- \frac{1}{2}} \partial _{n} v \|_{ \Gamma   }^{  }  \| h^{-\frac{1}{2}} \partial _{n} w \|_{ \Gamma   }^{  } \lesssim \| v \|_{ a_{h},*
-}^{  } \| w \|_{ A_{h}  }^{  },
-\]
-where we just applied the definition of the norms $\| \cdot  \|_{a_{h}  }^{  } $ and $\| \cdot  \|_{a_{h},*  }^{  } $. We have now shown that every term is bounded.
-
-    \end{enumerate}
-    Hence, the proof is complete.
+    Insert proof
 \end{proof}
 
     % \todo[inline]{ Why is not $\| \mean{ \partial _{nn} v}   \|_{\mathcal{F}_h^{}  }^{  } \lesssim \|  \partial _{nn} v   \|_{ \mathcal{F}^{} }^{  }  $ interesting for $v \in V + V_h$, but is often used for $v \in V$?  Ex. the mean is conserved in the $\|
