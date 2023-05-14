@@ -16,8 +16,7 @@ CH \cite{miller2020divide, garcke2016coupled, yushutin2019computational}.
 \subsection{The Cahn Hilliard Problem}%
 \label{sub:the_equations}
 
-% \todo[inline]{ Derivation of the Cahn-Hilliard equation from its energy functional. }
-The CH problem comes in many variants depending on its application, but we will in this report on the binary mixture version \cite{miranville2017cahn}. Let $\Omega \subset  \mathbb{R} ^{d} $ be a compact set for $d=2,3$ with boundary
+The CH problem comes in many variants depending on its application, but we will in this report on the binary mixture version \cite{miranville2017cahn}. Let $\Omega \subset  \mathbb{R} ^{d} $ be a compact set for $d=2,3$ with a sufficiently smooth boundary
 $\Gamma $,  see Figure \ref{fig:domain_construction}. We define the time duration parameter $T \in  [0,\infty) $ and the
 so-called unknown phase-field function as the
 mapping $u: \left[ 0, T \right] \times \Omega  \to \left[ -1,1 \right]  $, which is denoted as the local difference of a binary mixture of two concentrations $c_{A}, c_{B} \in \left[ 0,1\right] $ s.t. $u = c_{A} -c_{B}$ and $c_{A} + c_{B} = 1$. Remark that if a local point exists so $u$ has the extreme value $-1$, then it implies that the particular point has $100\%$ concentration $c_{A}$ and vice-versa for $c_{B}$. On the other hand, if $u$ is zero, it implies that the mixture is $50\% - 50\%$.
@@ -38,7 +37,7 @@ mapping $u: \left[ 0, T \right] \times \Omega  \to \left[ -1,1 \right]  $, which
         \node at (2,1.7) {$\Gamma$};
 
     \end{tikzpicture}
-    \caption{Illustration of the physical domain $\Omega$, the boundary $\Gamma$ and the corresponding normal vector $n$.}
+    \caption{Illustration of the physical domain $\Omega$ for $d=2$ , the boundary $\Gamma$ and the corresponding normal vector $n$.}
     \label{fig:domain_construction}
 \end{figure}
 
@@ -96,14 +95,17 @@ references, see \cite{abels2007convergence, cherfils2011cahn, elliott1986cahn}.
 One of the key challenges with the CH problem is that it involves fourth-order spatial derivatives. It has, for simple domains, successfully been implemented using Finite Difference Methods \cite{furihata2001stable,
 cheng2019energy} and Spectral Methods \cite{liu2003phase, he2009class}. However, these methods are generally constrained to simple domains (with some notable exceptions \cite{li2013conservative, shen2009efficient, feng2009fourier}).
 
-As a further evolution to address the CH problem, it is common to consider a corresponding biharmonic (BH) problem as a numerical testbed in the spatial direction. This problem is defined as follows, \[
+As a further evolution to address the CH problem, it is common to consider a corresponding biharmonic (BH) problem as a numerical testbed in the spatial direction. This problem is defined as follows,
+\begin{equation}
+\label{eq:BH-problem}
 \begin{split}
-    \Delta ^2 u & = f( x) \quad \text{in }  \Omega, \\
-    \partial _{n} u & = g_{1} \quad \text{on } \Gamma,   \\
-    \partial _{n} \Delta  u & = g_{2} \quad \text{on } \Gamma.   \\
+    \alpha u + \Delta ^2 u  & = f( x) \quad \text{in }  \Omega, \\
+    \partial _{n} u & = g_{1}( x)  \quad \text{on } \Gamma,   \\
+    \partial _{n} \Delta  u & = g_{2}( x)  \quad \text{on } \Gamma.   \\
 \end{split}
-\]
-Generally is this problem since it is likely to provide a proper spatial-integration framework before moving on to solving the non-linearities and time-integration.
+\end{equation}
+Here is the functions a mapping $f,g_{1} ,g_{2}: \Omega  \to \mathbb{R} $ and the constant $\alpha  $ is a real number s.t. $\alpha >0$.
+The BH problem holds relevance since it is provide a proper spatial-integration test framework prior to moving on solving the non-linearities and time-integration.
 
 The early Finite Element Methods (FEM) for CH were proposed in \cite{elliott1987numerical, elliott1986cahn} utilizing global $C^{1}$ and $C^{2}$ in one spatial dimension, but later it has been shown that making $C^{1}$ (or higher order) elements are far from trivial. For
 reference, see \cite{kapl2021family, percell1976cubic, argyris1968tuba}.
