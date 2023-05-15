@@ -86,7 +86,6 @@ This set is simply all facets that belong to all elements of the active mesh $\m
 \end{proof}
 
 
-
 \begin{figure}
     \centering
     \begin{tikzpicture}
@@ -102,13 +101,14 @@ This set is simply all facets that belong to all elements of the active mesh $\m
         \coordinate (A7) at (300:2.5);
 
 
-        \fill[green!30] (center) --(A1) -- (A2) -- (A3) -- (A4)  -- cycle;
+        \fill[green!40] (center) --(A1) -- (A2) -- (A3) -- (A4)  -- cycle;
         \fill[blue!30] (center) -- (A4) --(A5)--(A6)-- (A7) -- (A1) -- cycle;
 
         % Draw the individual edges
-        \draw[dotted, line width=1.5pt] (center) -- (A1) -- (A2);
-        \draw[dotted, line width=1.5pt] (center) -- (A2) -- (A3);
+        \draw[dotted, line width=1.5pt] (center) -- (A1);
+        \draw[dotted, line width=1.5pt] (center) -- (A2);
         \draw[dotted, line width=1.5pt] (center) -- (A3) -- (A4) -- (center);
+        \draw (A2) -- (A3);
         \draw (A4) -- (A5);
         \draw (center) -- (A5) -- (A6) ;
         \draw (center) -- (A6) -- (A1);
@@ -125,29 +125,44 @@ This set is simply all facets that belong to all elements of the active mesh $\m
             \coordinate (B5) at (240:2.5);
             \coordinate (B6) at (300:2.5);
 
-            \fill[green!30] (center) --(B6) -- (B1) -- (B2) --(B3) -- cycle;
+            \fill[green!40] (center) --(B6) -- (B1) -- (B2) --(B3) -- cycle;
             \fill[blue!30] (center) -- (B5) --(B6) -- cycle;
 
 
             % Draw the individual edges
-            \draw[dotted, line width=1.5pt] (center) -- (B1) -- (B2);
-            \draw[dotted, line width=1.5pt] (center) -- (B2) -- (B3)--(center);
-            \draw (center) -- (B5) -- (B6);
+            \draw[dotted, line width=1.5pt] (center) -- (B2);
+            \draw[dotted, line width=1.5pt] (center) -- (B3); % double
+            \draw[dotted, line width=1.5pt] (center) -- (B1);
+            \draw (B1) -- (B2);
+            \draw (B2) -- (B3);
+            \draw (B5) -- (B6);
             \draw[dotted, line width=1.5pt] (center) -- (B6) -- (B1);
         \end{scope}
 
-        \coordinate (C1) at (-3,0);
-        \coordinate (C2) at (5.2,-0.5);
-        \draw[-, line width=2pt, >=stealth] ($(C2)$) to[bend right] node[midway, yshift=-0.3cm] {$\Gamma $} ($(C1)$);
 
         \coordinate (Ti) at (-0,-1.0);
         \coordinate (Tg) at (3.0,2.0);
         \node[below] at (Tg) {$\mathcal{T}_{\Gamma }$};
         \node[below] at (Ti) {$\mathcal{T}_{int }$};
 
+        \coordinate (C1) at (-3,0);
+        \coordinate (C2) at (5.2,-0.5);
+        \draw[-, line width=2pt, >=stealth] ($(C2)$) to[bend right] node[midway, yshift=-0.3cm] {$\Gamma $} ($(C1)$);
+
+        \begin{scope}[shift={(6.0,1.7)}]
+            \draw[dotted, line width=1.5pt] (-1.5,0) -- (-1,0);
+            \node[anchor=west] at (-1.0,0) {$\mathcal{F}_h^g$};
+        \end{scope}
+
+        % Symbol visualization
+        % \draw[dotted, line width=1.5pt] (3.4,3.1) -- (3.9,3.1);
+        % \node[anchor=west] at (4.0,3.1) {$\mathcal{F}_h^g$};
+        %% Legend
+        \draw (4.4,1.3) rectangle (5.8,2.1); % Legend box
+
 \end{tikzpicture}
 
-\caption{Illustration of $\mathcal{F} _{h}^{g}$ denoted as the dotted lines. The set is defined as all facets which belongs to cut cells $\mathcal{T} _{\Gamma }$ .  }
+\caption{Illustration of $\mathcal{F} _{h}^{g}$ denoted as the dotted lines. The set is defined as all facets which belongs to cut cells $\mathcal{T} _{\Gamma }$ sharing a node with interior elements $\mathcal{T} _{int }$ .  }
 \label{fig:illustration_F_g}
 \end{figure}
 
