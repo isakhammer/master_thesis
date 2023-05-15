@@ -302,9 +302,116 @@ Similarly the linear form is defined as
  \[
 l_{h}( v) =  ( f,v)_{\mathcal{T} _{h} \cap \Omega } - (g_{2},v) - ( g_{1}, \partial _{nn}v) _{\Gamma } + \frac{\gamma }{h}  ( g_{1}, \partial _{n} v)   .
 \]
-To make sure the problem is stabilized will we add a ghost-penalty. That is, we define the discrete problem to find a $u_{h} \in V_{h}$ s.t. \[
+To make sure the problem is stabilized will we add a ghost-penalty $g_{h}: V_{h} \times  V_{h} \to \mathbb{R} $. That is, we define the discrete problem to find a $u_{h} \in V_{h}$ s.t. \[
 A_{h}( u_{h} ,v ) := a_{h}( u_{h}, v)  + g_{h}( u_{h},v) = l_{h} ( v) \quad  \forall v \in  V_{h}.
 \]
+Keep in mind that in contrast to the standard CIP methods, this method is defined on an unfitted mesh. As we will see, the analysis is the ghost penalty a method to ensure numerical stability on cut cell $\mathcal{T} _{\Gamma }$. The main reason why
+this numerical instability is happening for a unfitted mesh is that when a cell is badly cut, see examples in Figure \ref{fig:intersection-example}.
+In other words, when a cell is "badly cut," it means that it is intersected by the boundary $\Gamma$ in such a way that only a very small part of the cell lies inside or outside the domain. This can lead to a very poor condition number of the local system matrix corresponding to such a cell, causing numerical instability.
+
+The ghost penalty stabilization technique is designed to tackle this issue. Essentially, this approach introduces additional terms into the finite element method that penalize jumps in the discrete solution and its gradients across cell interfaces,
+typically the cut-cells. This penalty not only improves the conditioning of the system matrix, but also enhances the robustness of the method with respect to the location of the boundary inside each cell. However, to make this possible is to assume a
+so-called fat-intersection property which will be relevant in section \textbf{TODO: Add section to ghost penalty}.
+
+\begin{figure}[htbp]
+    \centering
+    \begin{minipage}{0.4\textwidth}
+        \centering
+        \begin{tikzpicture}
+            \coordinate (center) at (0, 0);
+
+            % Reference hexagon vertices
+            \coordinate (A1) at (0:2.5);
+            \coordinate (A2) at (60:2.5);
+            \coordinate (A3) at (120:2.5);
+            \coordinate (A4) at (180:2.5);
+            \coordinate (A5) at (240:2.5);
+            \coordinate (A6) at (300:2.5);
+            \coordinate (A7) at (300:2.5);
+
+
+            \fill[green!40] (center) --(A1) -- (A2) -- (A3) -- (A4) -- (A5)  -- cycle;
+            \fill[blue!30] (center) -- (A5)--(A6)-- (A7) -- (A1) -- cycle;
+
+            % Draw the individual edges
+            \draw (center) -- (A1);
+            \draw (center) -- (A2) --(A1);
+            \draw (center) -- (A3);
+            \draw (center) -- (A4);
+            \draw (A2) -- (A3);
+            \draw (A3) -- (A4);
+            \draw (A5) -- (A6);
+            \draw (A4) -- (A5);
+            \draw (center) -- (A5);
+            \draw (center) -- (A6) -- (A1);
+
+            \coordinate (Ti) at (-0,-1.5);
+            \coordinate (Tg) at (0.5,2.2);
+            \node[below] at (Tg) {$\mathcal{T}_{\Gamma }$};
+            \node[below] at (Ti) {$\mathcal{T}_{int }$};
+
+            \coordinate (T0) at (-0,1.2);
+            \coordinate (T1) at (-1.1,-0.4);
+            % \node[below] at (T0) {$T$};
+            % \node[below] at (T1) {$T'$};
+
+            \coordinate (C1) at (-3,-1.0);
+            \coordinate (C2) at (2.6,0.2);
+            \draw[-, line width=2pt, >=stealth] ($(C2)$) to[bend right=16.9] node[midway,xshift=-2.3cm, yshift=-1.3cm] {$\Gamma $} ($(C1)$);
+
+
+        \end{tikzpicture}
+    \end{minipage}
+    \hspace{1cm}
+    \begin{minipage}{0.4\textwidth}
+        \centering
+        \begin{tikzpicture}
+            \coordinate (center) at (0, 0);
+
+            % Reference hexagon vertices
+            \coordinate (A1) at (0:2.5);
+            \coordinate (A2) at (60:2.5);
+            \coordinate (A3) at (120:2.5);
+            \coordinate (A4) at (180:2.5);
+            \coordinate (A5) at (240:2.5);
+            \coordinate (A6) at (300:2.5);
+            \coordinate (A7) at (300:2.5);
+
+
+            \fill[green!40] (center) --(A1) -- (A2) -- (A3) -- (A4) -- cycle;
+            \fill[blue!30] (center) (A4) -- (A5)--(A6)-- (A7) -- (A1) -- cycle;
+
+            % Draw the individual edges
+            \draw (center) -- (A1);
+            \draw (center) -- (A2) --(A1);
+            \draw (center) -- (A3);
+            \draw (center) -- (A4);
+            \draw (A2) -- (A3);
+            \draw (A3) -- (A4);
+            \draw (A5) -- (A6);
+            \draw (A4) -- (A5);
+            \draw (center) -- (A5);
+            \draw (center) -- (A6) -- (A1);
+
+            \coordinate (Ti) at (-0,-1.5);
+            \coordinate (Tg) at (0.5,2.2);
+            \node[below] at (Tg) {$\mathcal{T}_{\Gamma }$};
+            \node[below] at (Ti) {$\mathcal{T}_{int }$};
+
+            \coordinate (T0) at (-0,1.2);
+            \coordinate (T1) at (-1.1,-0.4);
+            \node[below] at (T0) {$T$};
+
+            \coordinate (C1) at (-3,0.1);
+            \coordinate (C2) at (2.6,0.2);
+            \draw[-, line width=2pt, >=stealth] ($(C2)$) to[bend right=0.9] node[midway,xshift=-2.5cm, yshift=-0.5cm] {$\Gamma $} ($(C1)$);
+
+        \end{tikzpicture}
+    \end{minipage}
+        \caption{Two examples of bad cut cells. At some point it is even hard to distinguish between interior and cut cells.}
+        \label{fig:intersection-example}
+\end{figure}
+
 We define the underlying norms for $ v \in V_{h} $ as
     \begin{align}
         \label{eq:bi_ah_norm}
