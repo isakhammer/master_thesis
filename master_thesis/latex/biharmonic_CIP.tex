@@ -412,6 +412,35 @@ a_{h} \left( w, v \right)   =&
 \end{split}
 \end{equation*}
 
+\subsection{Continuous Interior Penalty formulations on a fitted mesh }%
+\label{sub:cip_formulations}
+
+We denote the $C^{0}$ polynomial space of order $k$ as
+\[
+V_{h} = \left\{ v \in C^{0}\left( \Omega  \right): v_{T} = v | _{T} \in \mathcal{P} ^{k}\left( T \right), \forall T \in
+\mathcal{T}_{h}    \right\}
+\]
+We have two formulations.
+
+Here we present the CutCIP. The bilinear form $a_{h}:  V_{h}\times  V_{h} \to \mathbb{R} $ and the linear form $l_{h}: V_{h} \to \mathbb{R} $  is defined as,
+
+\begin{equation*}
+\begin{split}
+a_{h}^{L} \left( u, v \right)   =&
+    \left( \alpha  u, v \right) _{\Omega }   +  \left( \Delta  u, \Delta v \right) _{\mathcal{T} _{h} \cap \Omega } \\
+ & + \left( \mean{  \Delta  u }, \jump{ \partial _{n }v} \right)_{\mathcal{F}_{h} \cap \Omega  }  + \left( \mean{ \Delta  v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h} \cap \Omega }  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h}\cap \Omega } \\
+ & + \left(   \Delta  u ,  \partial _{n }v \right)_{\Gamma   }  + \left(  \Delta  v ,  \partial _{n}u       \right)_{\Gamma  }  + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{ \Gamma } \\
+ l^{L}_{h}( v_{h}) & =  \left( f, v \right) _{\Omega } - ( g_{2},  v )_{\Gamma } -  ( g_{1}, \Delta  v  )_{\Gamma }  + \frac{\gamma }{h} ( g_{2}, \partial _{n} v  )_{\Gamma }
+\end{split}
+\end{equation*}
+which is inspired by See \cite[Equation 3.4]{feng2007fully}.
+
+Inspired from \cite[Equation 3.5]{feng2007fully} we have,
+\begin{equation*}
+\|v\|_{a_{h}} ^{2}  = \alpha  \|v\|_{ \mathcal{T}_{h} \cap \Omega  }^2 + \|\Delta v\|_{ \mathcal{T}_{h} \cap \Omega  }^2 + \overbrace{h^3   \| \left\{\partial_n \Delta v\right\} \| _{\mathcal{F}_{h} \cap \Omega  }^2 }^{ remove?}
++ h^{-1} \| \jump{ \partial_n v } \|_{ \mathcal{F}_{h}^{} \cap \Omega   }^{2} + h^{-1} \|  \partial_n v  \|_{ \Gamma    }^{2}
+\end{equation*}
+
 
 \subsection{Note on the Biharmonic Mixed Formulation}%
 \label{subsec:biharmonic_mixed_formulation}
