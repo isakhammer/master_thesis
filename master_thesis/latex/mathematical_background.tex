@@ -160,28 +160,24 @@ if $ \jump{ v }   = 0 \text{ for }  F \in \mathcal{F}^{int}_{h}$.
 \subsection{Useful inverse estimates}%
 \label{sub:useful_inverse_estimates}
 
-
-\begin{lemma}[Local inverse estimate]
-    \label{lemma:local_inverse_estimates}
-    Let $v \in \mathcal{P}^{k} ( T)  $ for an element in $\mathcal{T}_{h} $ and let $F \in \mathcal{F}_{T} := \left\{ F_{h} \in \mathcal{F} _{h} : F \cap \partial T \right\}  $. Then is \[
-    \| \partial _{n} v \|_{ F   }^{  } \le  C_{I} h_{T}^{-\frac{1}{2}} \| \nabla v \|_{  T}^{  }
-    \]
-    Here does the constant $C_{I}>0$ depend on the dimension $d$, shape regularity of $\mathcal{T}_{h} $ and the degree $k$.
-\end{lemma}
-
-\begin{proof}
-    TODO: Find proof
-\end{proof}
-
-\begin{lemma}[Cauchy-Schwarz inequality]
-    \label{lemma:cauchy-schwarz}
+Some useful inequalities.
+\begin{enumerate}[label=(\roman*)]
+    \item Cauchy-Schwarz inequality
     \[
      \| ab \|_{  }^{  }  \le \| a \|_{  }^{  } \| b \|_{  }^{  }
     \]
-\end{lemma}
-
-\begin{lemma}[General inverse inequality ]
-    \label{lemma:inverse-inequality}
+    \item Youngs $\varepsilon $-inequality
+        \[
+            2ab \le \varepsilon a^2+ b^2 \frac{1}{\varepsilon }
+        \]
+    \item  First order inverse inequality  \[
+    \| \partial _{n} v \|_{ F   }^{  } \le  C_{I} h_{}^{-\frac{1}{2}} \| \nabla v \|_{  T}^{  }
+    \]
+    \item Second order inverse inequality
+        \[
+            \frac{1}{h}\| \partial _{nn}  v_{h} \|_{F   }^{2  }  \le C_{j} \| D ^2 v_{h} \|_{ \mathcal{T} _{h} }^{ 2 }   \\
+        \]
+    \item General inverse inequality.
     Let $\alpha = ( \alpha _{1}, \ldots, \alpha _{N}) $ and $\beta = ( \beta _{1}, \ldots, \beta _{N} ) $.
     Assume $u \in H^{\abs{ \beta  }  }( T) $. The following inverse inequalities hold.
     \[
@@ -193,28 +189,8 @@ if $ \jump{ v }   = 0 \text{ for }  F \in \mathcal{F}^{int}_{h}$.
     For a full triangle we have \[
     \| v \|_{ \partial T }^{  } \lesssim h_{T}^{-\frac{1}{2}} \| v \|_{ T }^{  } + h_{T}^{\frac{1}{2}} \| \nabla v \|_{ T }^{  }
     \]
-\end{lemma}
-\todo[inline]{ Generalize full inequality equation. }
+\end{enumerate}
 
-
-\begin{lemma}[Second order global inverse inequality]
-    \[
-     \frac{1}{h}\| \partial _{nn}  v_{h} \|_{\mathcal{F}_{h}   }^{2  }  \le C_{j} \| D ^2 v_{h} \|_{ \mathcal{T} _{h} }^{ 2 }   \\
-    \]
-
-\end{lemma}
-\begin{proof}
-    TODO: find proof
-\end{proof}
-\begin{lemma}[Youngs $\varepsilon $-inequality ]
-    \label{lemma:youngs_epsilon}
-   \[
-     2ab \le \varepsilon a^2+ b^2 \frac{1}{\varepsilon }
-   \]
-\end{lemma}
-\begin{proof}
-    TODO: find proof
-\end{proof}
 
 
 
