@@ -1,6 +1,7 @@
 
-\section{Cut Continuous Interior Penalty Method for the Biharmonic Problem}%
-\label{sec:cutcip_biharmonic_problem}
+
+\section{Mathematical Background}%
+\label{sec:mathematical_background}
 
 \subsection{Notation}%
 \label{sub:notation}
@@ -180,6 +181,15 @@ a_{h}^{L} \left( u, v \right)   =&
 \end{equation*}
 which is inspired by See \cite[Equation 3.4]{feng2007fully}.
 
+Inspired from \cite[Equation 3.5]{feng2007fully} we have,
+\begin{equation*}
+\|v\|_{a_{h}} ^{2}  = \alpha  \|v\|_{ \mathcal{T}_{h} \cap \Omega  }^2 + \|\Delta v\|_{ \mathcal{T}_{h} \cap \Omega  }^2 + \overbrace{h^3   \| \left\{\partial_n \Delta v\right\} \| _{\mathcal{F}_{h} \cap \Omega  }^2 }^{ remove?}
++ h^{-1} \| \jump{ \partial_n v } \|_{ \mathcal{F}_{h}^{} \cap \Omega   }^{2} + h^{-1} \|  \partial_n v  \|_{ \Gamma    }^{2}
+\end{equation*}
+
+
+\section{Cut Continuous Interior Penalty Method for the Biharmonic Problem}%
+\label{sec:cutcip_biharmonic_problem}
 
 \subsection{ CutCIP formulation}%
 \label{sub:initial_discrete_formulation}
@@ -439,12 +449,6 @@ and for $v \in V + V_{h}$ we get, \[
 \| v \|_{A_{h},*  }^{  2}  & = \| v \|_{ a_{h},* }^{ 2 } + \abs{ v } _{g_{h}}^{2}
     \end{split}
 \]
-
-Inspired from \cite[Equation 3.5]{feng2007fully} we have,
-\begin{equation*}
-\|v\|_{a_{h}} ^{2}  = \alpha  \|v\|_{ \mathcal{T}_{h} \cap \Omega  }^2 + \|\Delta v\|_{ \mathcal{T}_{h} \cap \Omega  }^2 + \overbrace{h^3   \| \left\{\partial_n \Delta v\right\} \| _{\mathcal{F}_{h} \cap \Omega  }^2 }^{ remove?}
-+ h^{-1} \| \jump{ \partial_n v } \|_{ \mathcal{F}_{h}^{} \cap \Omega   }^{2} + h^{-1} \|  \partial_n v  \|_{ \Gamma    }^{2}
-\end{equation*}
 
 and
 \begin{equation*}
