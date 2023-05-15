@@ -1,179 +1,79 @@
 
-\newpage
 \section{Mathematical Background}%
-\label{sec:background_}
+\label{sec:mathematical_background}
 
-\subsection{Hilbert Spaces}%
-\label{ssub:hilbert_spaces}
+\subsection{Notation}%
+\label{sub:notation}
 
-We will in this report assume $\Omega $ to be a compact and open set in $\mathbb{R} ^{d}$.
-
-\begin{definition}
-Let $p \in \mathbb{R} $, $ 1 \le  p \le  \infty$. We define the space $L^{p}\left( \Omega  \right) $ to be the set of all measurable functions $f: \Omega  \mapsto \mathbb{R} $ such that
+We will in this report assume $\Omega $ to be a compact and open set in $\mathbb{R} ^{d}$. Let $p \in \mathbb{R} $, $ 1 \le  p \le  \infty$. We define the space $L^{p}\left( \Omega  \right) $ to be the set of all measurable functions $f: \Omega  \mapsto \mathbb{R} $ such that
 $\left\lvert f \right\rvert ^{p}$ is Lebesgue measurable, i.e,
 
 \begin{equation*}
     L^{p}\left( \Omega  \right) = \left\{ f: \Omega \mapsto \mathbb{R}  \mid \int_{\Omega }^{} \left\lvert f \right\rvert ^{p} d \Omega  < \infty  \right\}
 .\end{equation*}
-The set of locally integrable functions for any compact subset $K \subseteq \text{Interior}\left( \Omega  \right) $ is defined as
-
-\begin{equation*}
-    L_{loc}^{1}\left( \Omega  \right)  = \left\{ f: f \in L^{1}\left( \Omega  \right)  \quad \forall K   \right\}.
-\end{equation*}
-\end{definition}
-
-
 Let $u \in L^{p}\left( \Omega  \right) $. We define the integral norm of order $p$ to be \[
 \| u \|_{ L^{p}\left( \Omega  \right)  }^{  }  = \left( \int_{\Omega }^{} \left\lvert u \right\rvert ^{p} dx  \right) ^{\frac{1}{p}}.
 \]
-
-
-
 Since $p=2$ is frequently used in this report, we also define for convenience a compact notation $\| u \|_{ \Omega  }^{  }  = \| u \|_{ L^{2}\left( \Omega  \right)  }^{  } $ .  We say that $L^{2}\left( \Omega  \right) $ is a Hilbert space if it is equipped with a inner
-product of two functions $u,v \in L^{2}\left( \Omega  \right) $ such that
-\[
+product of two functions $u,v \in L^{2}\left( \Omega  \right) $ s.t.
+    $
 \left( u,v \right) _{\Omega } = \left( u,v \right) _{L^2\left( \Omega  \right) } = \int_{\Omega }^{} u  v dx.
-\]
-
-
-We will now establish a notion of the weak derivative, but first are we going to characterize some useful definitions of continuity. The space $C^{k}\left( \Omega  \right) $ for $k\ge 0$ denotes the set of functions whose derivatives, up to order of
-$k$ , is continuous in $\Omega $. Note that we often use the shorthand notation $ C^{0} = C\left( \Omega  \right)  = C^{0}\left( \Omega  \right) $.
-From this, let $C^{\infty}\left( \Omega  \right) $ be the set of infinitely differentiable functions in $\Omega $. Furthermore, we then denote the space $C^{\infty}_{0}\left( \Omega  \right)$ as the space of all functions, $u \in C^{\infty}\left( \Omega
-\right) $, vanishing outside of any compact subset of $\Omega $. Let $u,v \in  C^{1}\left( \Omega  \right) $ and the define boundary $\Gamma  = \partial \Omega $ with a corresponding outer normal vector $n$. It is well known that this partial
-integration formula holds \cite{manzoni2021optimal},
-
-\[
-\int_{\Omega }^{} \nabla u \cdot v dx = \int_{\Gamma }^{} u\cdot v n ds - \int_{\Omega }^{} u \cdot \nabla v dx.
-\]
-We now use this notation for derivatives
-\footnote{In literature is often $D^{\alpha } f$ commonly used, but later in the report is this notation reserved for the Hessian operator. Therefore, we then the notation $\partial ^{\alpha } f$ in this report.} so
+$
+We now use this notation for derivatives,
 \begin{equation}
 \label{eq:mixed_derivative}
-\partial ^{\alpha  } f = \frac{\partial ^{\left\lvert \alpha  \right\rvert } f}{ \partial ^{\alpha _{1} } x_{1} \partial ^{\alpha _{2}} x_{2}  }, \quad \text{where } \alpha=\left( \alpha _{1}, \alpha _{2} \right) \text{ and } f \in C^{\left\lvert \alpha  \right\rvert }
+\partial ^{\alpha  } f = \frac{\partial ^{\left\lvert \alpha  \right\rvert } f}{ \partial ^{\alpha _{1} } x_{1} \partial ^{\alpha _{2}} x_{2}  }, \quad \text{for } \alpha=\left( \alpha _{1}, \alpha _{2} \right) \text{ and } f \in C^{\left\lvert \alpha  \right\rvert }
 \left( \Omega  \right)
 .\end{equation}
-
 For $d$ dimensions of order $k$ we define the multi-index $\alpha  = ( \alpha _{1}, \ldots, \alpha _{d})  $ with the absolute value $\abs{ \alpha  } = \sum_{i}^{}  \alpha _{i} = k $ s.t.
 \[
 \partial ^{\alpha} f = \frac{\partial ^{ \alpha_{1}  }  } {\partial^{} x_{1}^{\alpha _{1}}  } \ldots \frac{\partial ^{ \alpha_{d}  }  } {\partial^{} x_{d}^{\alpha _{d}}  } f
 \]
 
-Finally, let $u \in  L^{1}_{loc}\left( \Omega  \right) $. We call the function $w \in L_{loc}^{1}\left( \Omega  \right) $ the $\alpha $-th weak derivative of $u$  if \[
-\int_{\Omega }^{} w \varphi  dx = \left( -1 \right) ^{\left\lvert \alpha  \right\rvert } \int_{\Omega }^{} u \cdot \partial ^{\alpha } \varphi dx, \quad \forall \varphi \in  C_{0}^{\infty}\left( \Omega  \right).
-\]
-
-We are now able to construct the Sobolev space,
-
-\begin{definition}[Sobolev space]
-    \label{def:sobolev_spaces}
-
   Let $m\ge 0$ be an integer and let $1 \le  p \le  \infty$ be a real number. Then we define the Sobolev space
 \[
 H^{m}\left( \Omega  \right) = \left\{ u \in L^{2}\left( \Omega  \right)  \mid  \partial ^{\alpha } u \in L^{2}\left( \Omega  \right)  \forall \alpha : \left\lvert \alpha  \right\rvert  \le m \right\}.
 \]
-
-Thus, $H^{m}( \Omega ) $ is spanned by functions with derivatives of order up to $m$ in $L^{2}( \Omega ) $.
-\end{definition}
-
 Equipped with the inner product is $H^{m}\left( \Omega  \right) $  denoted as a Hilbert space, that is, for $u,v \in H^{m}\left( \Omega  \right) $, \[
     \left( u,v \right) _{H^{m}\left( \Omega   \right) } = \sum_{\left\lvert \alpha  \right\rvert  \le  m}^{}  \int_{\Omega }^{} \partial ^{\alpha } u \partial ^{\alpha } v dx.
 \]
-Similarly, the norm is is denoted as, \[
-\| u \|_{ H^{m}\left( \Omega  \right)  }^{  }  = \left( \| u \|_{ L^{2}\left( \Omega  \right)    } + \sum_{k = 1}^{m}  \left\lvert u \right\rvert ^{2} _{  H^{k}\left( \Omega  \right) }\right) ^{\frac{1}{2}},
-\]
-where the seminorm is defined such that, \[
-\left\lvert u \right\rvert _{H^{k}\left( \Omega  \right) } = \left( \sum_{\left\lvert \alpha  \right\rvert  = k}^{} \| \partial ^{\alpha }u \|_{ \Omega  }^{ 2 }  \right).
-\]
+Similarly, the norm is is denoted as,
+$
+\| u \|_{ H^{m}\left( \Omega  \right)  }^{2  }  =  \| u \|_{ L^{2}\left( \Omega  \right)    }^{2} + \sum_{k = 1}^{m}  \left\lvert u \right\rvert ^{2} _{  H^{k}\left( \Omega  \right) },
+$
+where the seminorm is defined such that, $ \left\lvert u \right\rvert _{H^{k}( \Omega  ) }^{2} =  \sum_{\left\lvert \alpha  \right\rvert  = k}^{} \| \partial ^{\alpha }u \|_{ \Omega  }^{ 2 }  .
+$
 We will often denote the shorthand notation $ \| u \|_{ k, \Omega  }^{  } = \| u \|_{ H^{k}( \Omega)  }^{  } $ and $ \abs{ u }_{ k, \Omega  }^{  }  = \abs{ u }_{ H^{k}( \Omega)  }^{  }$.
-
-For convenience, we also entitle the notation for compact support, that is,
-\[
-H^{m}_{0} \left( \Omega  \right) = \left\{ \text{completion of }C_{0}^{\infty}\left( \Omega  \right) \text{ w.r.t. } \| \cdot  \|_{H^{m}\left( \Omega  \right)   }^{  }  \right\}.
-\]
-
-\todo[inline]{ Write definitions considering $H^{\frac{1}{2}}( \Gamma ) $  }
-
-
 
 \subsection{Computational Domains}%
 \label{sub:computational_domain}
-Assume that $\Omega \subset \mathbb{R} ^{d} $ is a compact set.
-A key element in finite element methods is to be able to discretize the domain $\Omega $ properly. Even though there exists methods handling complex geometries will we still restrict ourself some key assumptions.
-
-First of all, if $\Omega $ has a smooth boundary, then it can be very difficult to fully discretize unless we are introducing nonlinear functions on the boundary, thus, in standard methods a key assumption is that the set $\Omega $ is a polyhedra \cite[Assumption
-1.7]{pietro2012}. This is useful since a polyhedra can be fully covered by a collection of polyhedra and, hence, motivating us to define a fitted mesh .
-
-\begin{definition}[Mesh]
-   Assume that some $\Omega \subset \mathbb{R} ^{d} $ is a polyhedra.
-    We define a (general) mesh $\mathcal{T} $ of the domain $\Omega $ to be a collection of disjoint polyhedra $\left\{ T \right\}  $ forming a partition of $\Omega $ s.t.\[
-    \overline{\Omega } = \bigcup _{T \in \mathcal{T} } T
-    \]
-    We say that each $T \in  \mathcal{T} $ is a mesh element or an element.
-\end{definition}
-
-\begin{definition}[Fitted mesh]
-   Assume that the set $\Omega \subset \mathbb{R} ^{d} $ is our physical domain.
-   We say that the mesh is fitted if $\Omega $ can be fully covered using a general mesh.
-\end{definition}
-
-\begin{definition}[Mesh size]
-We define the mesh size to is the maximum diameter $h $ of any polyhedra in the mesh $\mathcal{T} = \left\{ T \right\}  $, that is,
-
-\begin{equation}
-\begin{split}
-    h _{T} & = diam\left( T \right)   = \max_{x_1, x_{2} \in T} dist(x_{1}, x_{2}),  \\
-    h_{max} &= \max_{T \in \mathcal{T} }  h_{T} := h,
-\end{split}
-.\end{equation}
-We denote $\mathcal{T} _{h}$ to be a mesh $\mathcal{T} $ with size $h$.
-\end{definition}
-
-\begin{definition}[Conform mesh]
-Let $\mathcal{T}_{h} $ be a mesh of $\Omega $. We say a mesh is conform if $T_{1} \neq T_{2 }$  then $T_{1} \cap T_{2} \neq \emptyset  $ for all $T_{1}, T_{2} \in \mathcal{T}_{h}$. This means that each $T$ share either a vertex or a facet.
-\end{definition}
-
-\begin{definition}[Shape regular and quasi-uniform]
-Let $\mathcal{T}_{h} $ be a mesh of $\Omega $ .
+Assume that $\Omega \subset \mathbb{R} ^{d} $ is a compact set with a boundary  $\Gamma $. In standard FEM methods a key assumption is that the set $\Omega $ is a polyhedra. This is useful since a polyhedra can be fully covered by a collection of polyhedra and, hence, motivating us to define a fitted mesh.
+We define a fitted mesh $\mathcal{T} $ of the domain $\Omega $ to be a collection of disjoint polyhedra $\left\{ T \right\}  $ forming a partition of $\Omega $ s.t $\overline{\Omega } = \bigcup _{T \in \mathcal{T} } T $, for illustration see Figure
+\ref{fig:domain_mesh}.
+Here we say that each $T \in  \mathcal{T} $ is a mesh element or an element.
+The mesh size is defined as the maximum diameter $h := h_{max} $ of any polyhedra in the mesh $\mathcal{T} = \left\{ T \right\}  $, that is, $ h_{max} = \max_{T \in \mathcal{T} }  h_{T}$ s.t.
+    $h _{T}  = diam\left( T \right)   = \max_{x_1, x_{2} \in T} dist(x_{1}, x_{2})$
+Hence, motivating us to use the notation $\mathcal{T} _{h}$ for a mesh $\mathcal{T} $ with size $h$.
+ A mesh is conform if $T_{1} \neq T_{2 }$  then $T_{1} \cap T_{2} \neq \emptyset  $ for all $T_{1}, T_{2} \in \mathcal{T}_{h}$. This means that each $T$ share either a vertex or a facet.
 Let the chunkiness parameter $c_{T} := h_{T}/r_{T}$, where $r_{T}$  is the largest ball that be inscribed inside a element $T \in \mathcal{T}_{h} $.
-We say that a mesh is shape regular if $c_{T}\le  c$ is independent of $T$  and $h$. We also say that the mesh is quasi-uniform only if it is shape regular and $h_{max} \le  c h_{min}$.
-\end{definition}
-
-\begin{assumption}
-Assume that any mesh $\mathcal{T}_{h} $ is conform, shape regular and quasi-uniform.
-\end{assumption}
-
-We will generally assume that a mesh $\mathcal{T}_{h} $ is conform, shape regular and quasi-uniform unless specified.
+A mesh is said to be shape regular if $c_{T}\le  c$ is independent of $T$  and $h$. We also say that the mesh is quasi-uniform only if it is shape regular and $h_{max} \le  c h_{min}$.
+In this report will we assume that a mesh $\mathcal{T}_{h} $ is conform, shape regular and quasi-uniform unless specified.
  The fact that the mesh is conform makes is a useful property since the interface between mesh elements has come into contact in the sense
-that it is either a vertex or a facet. This with the combination of shape regularity and quasi-uniformity has been a major key to prove important inequalities in broken Sobolev spaces \cite[Chapter 1.4.1]{pietro2012}. Hence, the assumptions are
-very handy when proving convergence.
+that it is either a vertex or a facet. This with the combination of shape regularity and quasi-uniformity has been a major key to prove important inequalities in broken Sobolev spaces \cite[Chapter 1.4.1]{pietro2012}. Hence, the assumptions are very handy when proving convergence.
 
-Questions arise when we want to allow for complex geometries where some physical domain $\Omega $ has a smooth boundary $\Gamma $ and, thus, cannot be fully covered of a fitted mesh. This motivates us to define a so-called unfitted mesh. In this
-report is  to solve the problems on a unfitted mesh.
-
-\begin{definition}[ Unfitted mesh]
+ \todo[inline]{ Remove introduction of unfitted mesh until later }
+Questions arise when we want to allow for complex geometries where some physical domain $\Omega $ has a smooth boundary $\Gamma $ and, thus, cannot be fully covered of a fitted mesh. This motivates us to define a so-called unfitted mesh.
  Let a background domain $\widetilde{\Omega } \subset \mathbb{R} ^{d} $ have a corresponding mesh $\widetilde{\mathcal{T} _{h}}$.
-Assume that the set $\Omega\subset   \widetilde{\Omega }  $ is a physical domain with a corresponding smooth boundary $\Gamma$. We define the unfitted mesh as the mesh that intersects the interior of $\Omega$, i.e., the intersection $\widetilde{\mathcal{T}_{h} } \cap
- \Omega^{\circ }     $ where $ \Omega ^{\circ } = \Omega \setminus \Gamma  $.
-\end{definition}
+Assume that the physical domain is the set $\Omega\subset   \widetilde{\Omega }  $ with the corresponding smooth boundary $\Gamma$. We define the unfitted mesh or the active mesh as the triangulation that intersects the interior of $\Omega$, i.e., the intersection $\widetilde{\mathcal{T}_{h} } \cap
+ Int(\Omega )     $ where $ Int( \Omega )  = \Omega \setminus \Gamma  $.
 
-\todo[inline]{ Maybe illustrate using figures. Check \cite[Fig 2.5]{pietro2012}  }
 
-\begin{definition}[Facets]
 Let $\mathcal{T}_{h}  = \left\{ T \right\} $ be a mesh of $\Omega \subset  \mathbb{R} ^d $ consisting of polygons $T \in \mathbb{R} ^{d}$.
 The set of all facets is the union of external and internal facets, $\mathcal{F} _{h} = \mathcal{F} ^{ext}_{h} \cup \mathcal{F} _{h}^{int} $, where each are defined like this:
-\begin{enumerate}[label=\arabic*)]
-    \item We denote the set of interior facets as \[
-            \mathcal{F}^{int} _{h} = \left\{ F=T^{+}\cap T^{-}  \mid  T^{+}, T^{-} \in \mathcal{T}_{h}  \right\}
-\]
-\item We denote the set of exterior facets as
 \[
-            \mathcal{F}^{ext} _{h} = \left\{ F= \partial T \cap \partial \Omega    \mid  T  \in \mathcal{T}_{h}  \right\}
+            \mathcal{F}^{int} _{h}  = \left\{ F=T^{+}\cap T^{-}  \mid  T^{+}, T^{-} \in \mathcal{T}_{h}  \right\} \text{ and }
+            \mathcal{F}^{ext} _{h}  = \left\{ F= \partial T \cap \partial \Omega    \mid  T  \in \mathcal{T}_{h}  \right\}.
 \]
-\end{enumerate}
-\end{definition}
-
-
-\begin{definition}[Normal vector ]
 Let $\mathcal{T}_{h} $ be a mesh of $\Omega $ equipped with the facets $\mathcal{F}_{h} $. We will define the following normal vectors
 \begin{enumerate}[label=\arabic*)]
     \item We define $n \mid _{T}$ to be unit outward normal on $\partial T$ for each $T \in \mathcal{T}_{h} $
@@ -181,10 +81,8 @@ Let $\mathcal{T}_{h} $ be a mesh of $\Omega $ equipped with the facets $\mathcal
  \item For all $F \in F^{ext}_{h}$ we define the facet normal $n \mid _{F} = n \mid _{T} $ to the unit outward normal.
 \end{enumerate}
 Keep in mind that in many that we often will simply use the notation $n = n \mid _{T}$ in most cases.
-\end{definition}
 
-\begin{definition}[Jump and average]
-    Let $v\in L^2( \Omega ) $ be a scalar function on $\Omega$ with a corresponding shape regular and quasi-uniform mesh $\mathcal{T}_{h} $. We will use the following definitions
+    Let $v\in L^2( \Omega ) $ be a scalar function on $\Omega$ with a corresponding shape regular and quasi-uniform mesh $\mathcal{T}_{h} $. We will use the following definitions.
     \begin{enumerate}[label=\arabic*)]
         \item Let $F \in \mathcal{F}^{int} _{h}$ and $v^{\pm}| _{F} = \lim_{t\to 0} v( x \pm tn)   $ for $x \in F$. We define the mean as $\mean{ v} |_{F} = \frac{1}{2} (v^{+}_{F} + v^{-}_{F})   $ and the jump as $\jump{v}|_{F} =  v^{+}_{F} - v^{-}_{F} $.
         \item Let $F \in \mathcal{F}^{ext} _{h}$ and let $ v( x) =  v(x)|_{F} $ for  $x \in F$.
@@ -192,8 +90,8 @@ We define the mean as $\mean{ v} |_{F} = v    $ and the jump as $\jump{v}|_{F} =
 
     \end{enumerate}
     To simplify will we use the notation $\mean{ v } = \mean{ v } \mid _{F}    $ and $\jump{ v } = \jump{ v } \mid _{F}    $ for all $F \in \mathcal{F} _{h}$.
+    Remark that if we have to functions $u,v \in L^2( \mathcal{T}_{h} ) $, then the following identity holds $  \jump{ uv }    = \jump{ u }   \mean{ v }    + \mean{ u }  \jump{ v }$.
 
-\end{definition}
 
 \begin{figure}[!h]
 \centering
@@ -215,7 +113,7 @@ We define the mean as $\mean{ v} |_{F} = v    $ and the jump as $\jump{v}|_{F} =
 \node[above right] at (Tp) {$T^{+}$ };
 \node[below right] at (e) {$F$ };
 
-\draw [|->, thick] (start) -- (end);
+\draw [->, thick] (start) -- (end);
 % \node[above right] at (A) {A };
 % \node[below right] at (B) {B};
 % \node[above right] at (C) {C };
@@ -223,35 +121,18 @@ We define the mean as $\mean{ v} |_{F} = v    $ and the jump as $\jump{v}|_{F} =
 \node[below right] at (end) {$n$};
 \end{tikzpicture}
 
-\caption{Facet $F \in \mathcal{F}_h $ shared by the triangles $T^{+}, T^{-} \in \mathcal{T}_{h} $ and the normal unit vector $n$.  }
+\caption{Facet $F \in \mathcal{F}_h^{int} $ shared by the triangles $T^{+}, T^{-} \in \mathcal{T}_{h} $ and the normal unit vector $n$.  }
     \label{fig:normal}
 \end{figure}
 
-\begin{lemma}[Magic formula]
-    \label{lemma:magic_formula}
-    Let $u,v \in L^2( \mathcal{T}_{h} ) $ then this hold,
-    $  \jump{ uv }    = \jump{ u }   \mean{ v }    + \mean{ u }  \jump{ v }     $.
-\end{lemma}
-\begin{proof}
-    The proof is quite straight forward.
-    \[
-        \begin{split}
-    \jump{ uv }   & = u^{+}v^{+} - u^{-}v^{-} \\
-     & =  \frac{1}{2}(v^{+} + v^{-})( u^{+} - u^{-})+ \frac{1}{2}(u^{+} + u^{-})( v^{+} - v^{-})   \\
-     & =  \jump{ u }   \mean{ v }    + \mean{ u }  \jump{ v }
-        \end{split}
-    \]
-\end{proof}
 
 
 \subsection{Broken Sobolev spaces}%
 \label{sub:broken_sobolev_spaces}
 
-In this work will we compute norms on discontinuous elements, thus, it will be necessary to define broken Sobolev spaces. What we know is that if $T$ is a polyhedra, then the definition of $H^{m}( T)$ is covered by definition
-\ref{def:sobolev_spaces}. We will now precisely define it for a collection of polyhedra $\mathcal{T}_{h}$.
+In this work will we compute norms on discontinuous elements, thus, it will be necessary to define broken Sobolev spaces.
 
-\begin{definition}[Broken Sobolev spaces]
-Let $\mathcal{T}_{h} $ be a mesh of some domain $\Omega  $ and some integer $m\le n$. Then we define the broken Sobolev space to be \[
+Let $\mathcal{T}_{h} $ be a mesh and some integer $m\le n$. Then we define the broken Sobolev space to be \[
 H^{m}( \mathcal{T}_{h} ) := \left\{ v \in L^2( \Omega )  \mid \ v|_{T} \in H^{m}( T) \quad     \forall T \in  \mathcal{T} \right\}
 \]
 and similarly for the facets $\mathcal{F}_{h} $, that is
@@ -261,32 +142,20 @@ and similarly for the facets $\mathcal{F}_{h} $, that is
         H^{m}( \mathcal{F}_{h} ) &:= \left\{ v \in L^2( \mathcal{F}_{h}  )  \mid   \ v|_{F} \in H^{m}( F)  \quad  \forall F \in  \mathcal{F}_{h}   \right\}
     \end{split}
 \]
-\todo[inline]{ I am not happy with $L^2( \mathcal{F} _{h}) $ definition. }
-\end{definition}
 This motivates us to define broken Sobolev norms and inner products using a summation over mesh elements. That is,
 \[
- \| v \|_{H^{m}( \mathcal{T} ) }^{2} = \sum_{T \in  \mathcal{T}_{h} }^{} \| v  \|_{ H^{m}( T ) }^{2  } \quad \text{ and } \quad
- (v ,w )_{H^{m}( \mathcal{T} ) }^{} = \sum_{T \in \mathcal{T} _{h}}^{} (v ,w )_{ H^{m}( T ) }^{  } .
+ \| v \|_{H^{m}( \mathcal{T}_{h} ) }^{2} = \sum_{T \in  \mathcal{T}_{h} }^{} \| v  \|_{ H^{m}( T ) }^{2  } \quad \text{ and } \quad
+ (v ,w )_{H^{m}( \mathcal{T}_{h} ) }^{} = \sum_{T \in \mathcal{T} _{h}}^{} (v ,w )_{ H^{m}( T ) }^{  } .
 \]
-We often use the more compact notation in $L^{2}$  $\| v \|_{\mathcal{T}_{h}} =  \| v \|_{L^{2}( \mathcal{T}_{h} ) }$ and  $(v ,w )_{ \mathcal{T} }^{} = (v ,w )_{L^2( \mathcal{T} ) }^{} $.
-
+As expected we use the notation,  $\| v \|_{\mathcal{T}_{h}} =  \| v \|_{L^{2}( \mathcal{T}_{h} ) }$ and  $(v ,w )_{ \mathcal{T}_{h} }^{} = (v ,w )_{L^2( \mathcal{T} ) }^{} $.
 That is,
 \[
  \| v \|_{H^{m}( \mathcal{F}_{h} ) }^{2} = \sum_{F \in  \mathcal{F}_{h} }^{} \| v  \|_{ H^{m}( F ) }^{2  } \quad \text{ and } \quad
  (v ,w )_{H^{m}( \mathcal{F} ) }^{} = \sum_{T \in \mathcal{F} _{h}}^{} (v ,w )_{ H^{m}( F ) }^{  } .
 \]
-And again, we often use the more compact notation $\| v \|_{\mathcal{F}_{h}} =  \| v \|_{L^{2}( \mathcal{F}_{h} ) }$ and  $(v ,w )_{ \mathcal{F} }^{} = (v ,w )_{L^2( \mathcal{F}_{h} ) }^{} $.
-
-
-A very useful lemma when working on estimates on broken Sobolev spaces is that a if a function is continuous, then the jump between the mesh elements is zero.
-\begin{lemma}
-    A function $ v \in  H^{1}( \mathcal{T}_{h} ) $ belongs to $ H^{1}( \Omega )  $ if and only if \[
-    \jump{ v }   = 0, \quad F \in \mathcal{F}^{int}_{h}
-    \]
-\end{lemma}
-\begin{proof}
-    See \cite[Lemma 1.23]{pietro2012}.
-\end{proof}
+And again, we often use the more compact notation $\| v \|_{\mathcal{F}_{h}} =  \| v \|_{L^{2}( \mathcal{F}_{h} ) }$ and  $(v ,w )_{ \mathcal{F}_{h} }^{} = (v ,w )_{L^2( \mathcal{F}_{h} ) }^{} $.
+A very useful lemma when working on estimates on broken Sobolev spaces is that a if a function is continuous, then the jump between the mesh elements is zero. A function $ v \in  H^{1}( \mathcal{T}_{h} ) $ belongs to $ H^{1}( \Omega )  $ if and only
+if $ \jump{ v }   = 0 \text{ for }  F \in \mathcal{F}^{int}_{h}$.
 
 
 
