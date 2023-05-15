@@ -154,20 +154,34 @@ That is,
  (v ,w )_{H^{m}( \mathcal{F} ) }^{} = \sum_{T \in \mathcal{F} _{h}}^{} (v ,w )_{ H^{m}( F ) }^{  } .
 \]
 And again, we often use the more compact notation $\| v \|_{\mathcal{F}_{h}} =  \| v \|_{L^{2}( \mathcal{F}_{h} ) }$ and  $(v ,w )_{ \mathcal{F}_{h} }^{} = (v ,w )_{L^2( \mathcal{F}_{h} ) }^{} $.
-A very useful lemma when working on estimates on broken Sobolev spaces is that a if a function is continuous, then the jump between the mesh elements is zero. A function $ v \in  H^{1}( \mathcal{T}_{h} ) $ belongs to $ H^{1}( \Omega )  $ if and only if $ \jump{ v }   = 0, \quad F \in \mathcal{F}^{int}_{h}$.
+A very useful lemma when working on estimates on broken Sobolev spaces is that a if a function is continuous, then the jump between the mesh elements is zero. A function $ v \in  H^{1}( \mathcal{T}_{h} ) $ belongs to $ H^{1}( \Omega )  $ if and only
+if $ \jump{ v }   = 0 \text{ for }  F \in \mathcal{F}^{int}_{h}$.
+
+\subsection{Continuous Interior Penalty formulations on a fitted mesh }%
+\label{sub:cip_formulations}
+
+We denote the $C^{0}$ polynomial space of order $k$ as
+\[
+V_{h} = \left\{ v \in C^{0}\left( \Omega  \right): v_{T} = v | _{T} \in \mathcal{P} ^{k}\left( T \right), \forall T \in
+\mathcal{T}_{h}    \right\}
+\]
+We have two formulations.
+
+Here we present the CutCIP. The bilinear form $a_{h}:  V_{h}\times  V_{h} \to \mathbb{R} $ and the linear form $l_{h}: V_{h} \to \mathbb{R} $  is defined as,
+
+\begin{equation*}
+\begin{split}
+a_{h}^{L} \left( u, v \right)   =&
+    \left( \alpha  u, v \right) _{\Omega }   +  \left( \Delta  u, \Delta v \right) _{\mathcal{T} _{h} \cap \Omega } \\
+ & + \left( \mean{  \Delta  u }, \jump{ \partial _{n }v} \right)_{\mathcal{F}_{h} \cap \Omega  }  + \left( \mean{ \Delta  v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h} \cap \Omega }  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h}\cap \Omega } \\
+ & + \left(   \Delta  u ,  \partial _{n }v \right)_{\Gamma   }  + \left(  \Delta  v ,  \partial _{n}u       \right)_{\Gamma  }  + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{ \Gamma } \\
+ l^{L}_{h}( v_{h}) & =  \left( f, v \right) _{\Omega } - ( g_{2},  v )_{\Gamma } -  ( g_{1}, \Delta  v  )_{\Gamma }  + \frac{\gamma }{h} ( g_{2}, \partial _{n} v  )_{\Gamma }
+\end{split}
+\end{equation*}
+which is inspired by See \cite[Equation 3.4]{feng2007fully}.
 
 
-
-
-
-\subsection{Continuous Interior Penalty Method }%
-\label{sub:weak_formulation}
-
-
-
-
-
-\subsection{Initial discrete formulation}%
+\subsection{ CutCIP formulation}%
 \label{sub:initial_discrete_formulation}
 
 Let the $\Omega  \subset \mathbb{R} ^{d} $ be a physical domain with a smooth boundary $\Gamma  $ of class $C^{2}$ .
@@ -296,32 +310,6 @@ Hence, we have that the active set is the union of the interior and cut elements
 \caption{Illustration of the background mesh $\widetilde{T}_{h}$, the active set $\mathcal{T} _{h}$, the cut cells $\mathcal{T} _{\Gamma }$ and the interior of the active set $\mathcal{T} _{int}$ }
 \label{fig:background_mesh}
 \end{figure}
-
-We denote the $C^{0}$ polynomial space of order $k$ as
-\[
-V_{h} = \left\{ v \in C^{0}\left( \Omega  \right): v_{T} = v | _{T} \in \mathcal{P} ^{k}\left( T \right), \forall T \in
-\mathcal{T}_{h}    \right\}
-\]
-
-Here we present the CutCIP. The bilinear form $a_{h}:  V_{h}\times  V_{h} \to \mathbb{R} $ and the linear form $l_{h}: V_{h} \to \mathbb{R} $  is defined as,
-
-\begin{equation*}
-\begin{split}
-a_{h} \left( u, v \right)   =&
-    \left( \alpha  u, v \right) _{\Omega }   +  \left( \Delta  u, \Delta v \right) _{\mathcal{T} _{h} \cap \Omega } \\
- & + \left( \mean{  \Delta  u }, \jump{ \partial _{n }v} \right)_{\mathcal{F}_{h} \cap \Omega  }  + \left( \mean{ \Delta  v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h} \cap \Omega }  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h}\cap \Omega } \\
- & + \left(   \Delta  u ,  \partial _{n }v \right)_{\Gamma   }  + \left(  \Delta  v ,  \partial _{n}u       \right)_{\Gamma  }  + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{ \Gamma } \\
- l_{h}( v_{h}) & =  \left( f, v \right) _{\Omega } - ( g_{2},  v )_{\Gamma } -  ( g_{1}, \Delta  v  )_{\Gamma }  + \frac{\gamma }{h} ( g_{2}, \partial _{n} v  )_{\Gamma }
-\end{split}
-\end{equation*}
-which is inspired by See \cite[Equation 3.4]{feng2007fully}.
-
-\todo[inline]{ Do the derivation. See \cite[Equation]{feng2007fully} for inspiration. }
-
-Similarly the linear form is defined as
- \[
-l_{h}( v) =  ( f,v)_{\mathcal{T} _{h} \cap \Omega } - (g_{2},v) - ( g_{1}, \partial _{nn}v) _{\Gamma } + \frac{\gamma }{h}  ( g_{1}, \partial _{n} v)   .
-\]
 
 
 To make sure the problem is stabilized will we add ghost-penalty $g_{h}: V_{h} \times  V_{h} \to \mathbb{R} $. That is, we define the discrete problem to find a $u \in V_{h}$ s.t. \[
