@@ -293,7 +293,7 @@ Hence, we have that the active set is the union of the interior and cut elements
         \end{tikzpicture}
 }
 
-\caption{Illustration of the background mesh $\widetilde{T}_{h} $, the active set $\mathcal{T} _{h}$, the cut cells $\mathcal{T} _{\Gamma }$ and the interior of the active set $\mathcal{T} _{int}$ }
+\caption{Illustration of the background mesh $\widetilde{T}_{h}$, the active set $\mathcal{T} _{h}$, the cut cells $\mathcal{T} _{\Gamma }$ and the interior of the active set $\mathcal{T} _{int}$ }
 \label{fig:background_mesh}
 \end{figure}
 
@@ -453,10 +453,16 @@ and for $v \in V + V_{h}$ we get, \[
 \]
 
 Inspired from \cite[Equation 3.5]{feng2007fully} we have,
-\begin{equation}
-\|v\|_{a_{h}} ^{2}= \|\Delta v\|_{ \mathcal{T}_{h} }^2 + h^3   \| \left\{\partial_n \Delta v\right\} \| _{\mathcal{F}_{h} }^2 + h^{-3} \| \jump{ v } \|_{\mathcal{F}_{h} }^{2}
-+ h \| \mean{ \Delta v } \|_{ \mathcal{F}_{h}^{ext}   }^{2  } + h^{-1} \| \jump{ \partial_n v } \|_{ \mathcal{F}_{h}^{ext}  }^{2  }    \right) . \\
-\end{equation}
+\begin{equation*}
+\|v\|_{a_{h}} ^{2}  = \alpha  \|v\|_{ \mathcal{T}_{h} \cap \Omega  }^2 + \|\Delta v\|_{ \mathcal{T}_{h} \cap \Omega  }^2 + \overbrace{h^3   \| \left\{\partial_n \Delta v\right\} \| _{\mathcal{F}_{h} \cap \Omega  }^2 }^{ remove?}
++ h^{-1} \| \jump{ \partial_n v } \|_{ \mathcal{F}_{h}^{} \cap \Omega   }^{2} + h^{-1} \|  \partial_n v  \|_{ \Gamma    }^{2}
+\end{equation*}
+
+and
+\begin{equation*}
+\|v\|_{a_{h}} ^{2}  = \| v \|_{ a_{h} }^{ 2 } +   h \| \mean{ \Delta v } \|_{ \mathcal{F}_{h}^{} \cap \Omega     }^{2  } + +   h \| \Delta v  \|_{ \Gamma }^{2  }
+\end{equation*}
+
 \begin{remark}
 Note that it holds that $\mathcal{T} _{h} \cap  \Omega   = \Omega  $ and $\mathcal{T} _{h} \cap  \Gamma  = \Gamma $. Depending on context, we choose the best suitable notation.
 \end{remark}
@@ -602,6 +608,7 @@ Combing the results we get the following convenient corollary.
 \begin{proof}
     Insert proof
 \end{proof}
+
 
     % \todo[inline]{ Why is not $\| \mean{ \partial _{nn} v}   \|_{\mathcal{F}_h^{}  }^{  } \lesssim \|  \partial _{nn} v   \|_{ \mathcal{F}^{} }^{  }  $ interesting for $v \in V + V_h$, but is often used for $v \in V$?  Ex. the mean is conserved in the $\|
     % \cdot \|_{a_h,*}$ norm}
