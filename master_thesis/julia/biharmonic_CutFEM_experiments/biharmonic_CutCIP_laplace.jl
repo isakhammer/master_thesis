@@ -171,7 +171,7 @@ module Solver
             mkpath(vtkdirname)
 
             # Write out models and computational domains for inspection
-            writevtk(bgmodel,   vtkdirname*"/model")
+            writevtk(bgmodel,   vtkdirname*"/bgmodel")
             writevtk(Ω,         vtkdirname*"/Omega")
             writevtk(Ω_act,     vtkdirname*"/Omega_act")
             writevtk(Λ,         vtkdirname*"/Lambda")
