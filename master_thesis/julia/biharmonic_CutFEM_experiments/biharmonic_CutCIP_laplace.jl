@@ -67,9 +67,10 @@ module Solver
         new_geo=true
         if new_geo == true
             ϵ_L = 10^-1
-            # geo = quadrilateral(x0=pmin, d1=pmax, d2=pmax)
-
-            geo = AnalyticalGeometry(x-> x[1] - ( L - ϵ_L ))
+            # geo1 = disk(0.8*R,x0=Point(1,0),name="disk1")
+            # geo2 = disk(0.8*R,x0=Point(0,0),name="disk2")
+            # geo = union( geo1,geo2 )
+            geo = AnalyticalGeometry(x->.4*x[1]^2+1.3*x[2]^2-0.2)
         else
             geo = disk(R)
         end
@@ -268,15 +269,15 @@ end
 function main()
 
     # %% Manufactured solution
-    L, m, r = (1, 7, 7)
+    L, m, r = (1, 1, 1)
     u_ex(x) = sin(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
 
     resultdir= "figures/biharmonic_CutCIP_laplace/"*string(Dates.now())
     println(resultdir)
     mkpath(resultdir)
 
-    ns = [2^3, 2^4, 2^5, 2^6, 2^7]
-    @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex,  L=1.11, δ=0.0, γ=10, γg1=5, γg2=0.01)
+    ns = [2^3, 2^4, 2^5, 2^6, 2^7, 2^8]
+    @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex,  L=2.11, δ=0.0, γ=10, γg1=5, γg2=0.01)
     # @time TranslationTest.penalty_test(dirname=resultdir, u_ex=u_ex, run_solver=Solver.run, iterations=5)
 
 end
