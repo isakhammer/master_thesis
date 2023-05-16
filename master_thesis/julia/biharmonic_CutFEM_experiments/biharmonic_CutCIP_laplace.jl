@@ -45,6 +45,9 @@ module Solver
 
     function run(; n, u_ex, dirname=nothing, L=1.11, δ=0.0, γ=10, γg1=5, γg2=0.1)
 
+        # Mesh size
+        h = L/n
+
         order = 2
         u_ex, f, ∇u_ex, ∇Δu_ex = man_sol(u_ex)
 
@@ -91,8 +94,6 @@ module Solver
         n_Λ = get_normal_vector(Λ)
         n_Fg = get_normal_vector(Fg)
 
-        # Mesh size
-        h = L/n
 
         function mean_n(u,n)
             return 0.5*( u.plus⋅n.plus + u.minus⋅n.minus )
@@ -228,7 +229,7 @@ function generate_figures(;ns, el2s, eh1s, ehs_energy, cond_numbers, ndofs, dirn
     Plots.savefig(p, filename*"_plot"*endfix)
 end
 
-function convergence_analysis(; ns, dirname, u_ex)
+function convergence_analysis(; ns, dirname, u_ex, L=1.11, δ=0.0, γ=10, γg1=5, γg2=0.1)
 
     el2s = Float64[]
     eh1s = Float64[]
@@ -239,7 +240,7 @@ function convergence_analysis(; ns, dirname, u_ex)
     println("Convergence test", ns)
     for n in ns
 
-        sol = Solver.run(n=n, u_ex=u_ex, dirname=dirname)
+        sol = Solver.run(; n, u_ex, dirname, L=L, δ=δ, γ=γ, γg1=γg1, γg2=γg2)
 
         push!(el2s, sol.el2)
         push!(eh1s, sol.eh1)
@@ -256,15 +257,15 @@ end
 function main()
 
     # %% Manufactured solution
-    L, m, r = (1, 1, 1)
-    u_ex(x) = 100*sin(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
+    L, m, r = (1, 7, 7)
+    u_ex(x) = sin(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
 
     resultdir= "figures/biharmonic_CutCIP_laplace/"*string(Dates.now())
     println(resultdir)
     mkpath(resultdir)
 
     ns = [2^3, 2^4, 2^5, 2^6, 2^7, 2^8]
-    @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex)
+    @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex,  L=1.11, δ=0.0, γ=10, γg1=5, γg2=0.01)
     # @time TranslationTest.penalty_test(dirname=resultdir, u_ex=u_ex, run_solver=Solver.run, iterations=5)
 
 end
