@@ -67,6 +67,8 @@ module Solver
         new_geo=true
         if new_geo == true
             ϵ_L = 10^-1
+            # geo = quadrilateral(x0=pmin, d1=pmax, d2=pmax)
+
             geo = AnalyticalGeometry(x-> x[1] - ( L - ϵ_L ))
         else
             geo = disk(R)
