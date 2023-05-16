@@ -59,11 +59,20 @@ module Solver
         bgorigin = ( pmin + pmax )/2
 
         R  = 1.0
-        println("Sim: order=$order, n=$n, bg (L,L)=($(round(L, digits=2)),$(round(L, digits=2))), bgorigin=($(round(bgorigin[1], digits=2)),$(round(bgorigin[2], digits=2))), disk R=$(round(R, digits=1))")
+
         # Background model
         partition = (n,n)
         bgmodel = CartesianDiscreteModel(pmin, pmax, partition)
-        geo = disk(R)
+
+        new_geo=true
+        if new_geo == true
+            ϵ_L = 10^-1
+            geo = AnalyticalGeometry(x-> x[1] - ( L - ϵ_L ))
+        else
+            geo = disk(R)
+        end
+        println("Sim: order=$order, n=$n, bg (L,L)=($(round(L, digits=2)),$(round(L, digits=2))), bgorigin=($(round(bgorigin[1], digits=2)),$(round(bgorigin[2], digits=2))), disk R=$(round(R, digits=1))")
+
 
         # Cut the background model
         cutgeo = cut(bgmodel, geo)
@@ -264,7 +273,7 @@ function main()
     println(resultdir)
     mkpath(resultdir)
 
-    ns = [2^3, 2^4, 2^5, 2^6, 2^7, 2^8]
+    ns = [2^3, 2^4, 2^5, 2^6, 2^7]
     @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex,  L=1.11, δ=0.0, γ=10, γg1=5, γg2=0.01)
     # @time TranslationTest.penalty_test(dirname=resultdir, u_ex=u_ex, run_solver=Solver.run, iterations=5)
 
