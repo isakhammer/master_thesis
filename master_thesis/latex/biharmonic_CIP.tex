@@ -69,6 +69,7 @@ As the author knows the exact Laplace formulation \eqref{eq:cip_laplace_form} is
 Hessian formulation. Hence, in this master report will we (because of time limitations) focus on the Hessian formulation for the analysis. However, for the numerical results will will both be presented.
 \end{remark}
 
+\todo[inline]{ Write some notes about energy norms, well-posedness and a priori estimates.}
 
 
 \subsection{  Construction for Hessian CIP}%
@@ -202,9 +203,7 @@ $\mathcal{T}_{h} $. Using Greens Theorem is it obvious that \(
 \).
 The main difference here is that we straight away do a new iteration of the Greens theorem.
 \begin{equation*}
-    \begin{split}
-( \nabla ( \Delta u ) , \nabla v ) _{T } & =  + ( \partial _{n}v , \Delta v)_{\partial T} - ( \Delta u, \Delta v ) _{T}
-\end{split}
+( \nabla ( \Delta u ) , \nabla v ) _{T }  =  + ( \partial _{n}v , \Delta v)_{\partial T} - ( \Delta u, \Delta v ) _{T}
 .\end{equation*}
 
 Hence, we have a local identity s.t. \[
@@ -238,7 +237,6 @@ Hence, we end up with the identity,
 Finally, can we construct the Laplace CIP formulation. Let $u,v \in V_{h}$, then can we write the following statement.
 
 \begin{equation}
-    \label{eq:cip_laplace_form}
     \begin{split}
         a_{h}^{L} \left( u, v \right)   =&
         \left( \alpha  u, v \right) _{\Omega }   +  \left( \Delta  u, \Delta v \right) _{ \Omega } \\
@@ -251,6 +249,7 @@ Finally, can we construct the Laplace CIP formulation. Let $u,v \in V_{h}$, then
 
 Similarly, as in the previous section, is the boundary condition $g_{1}$ imposed weakly using the Nitsche's method, hence, the regularization term.
 
+\todo[inline]{ Write som remarks about regularity.}
 
 
 
@@ -294,6 +293,8 @@ procedure.
 For more information about the biharmonic mixed formulation, see \cite{babuvska1980analysis,cai2023nitsche}.
 However, in this master thesis is the focus on solving the biharmonic equation avoiding the mixed formulation using the CIP formulation, which does in fact handle the downsides with the SPP problem.
 
+
 % A well known and mature application for SPP is the well known Stokes equation, hence, a good place to start \cite{john2016finite, knabner2003numerical}.
+
 
 
