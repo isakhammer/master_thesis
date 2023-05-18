@@ -211,12 +211,23 @@ Hence, we have a local identity s.t. \[
 ( \Delta ^2 u, v ) _{T} = ( \Delta u, \Delta v) +  ( \partial _{n} \Delta u, v)_{\partial T} - ( \partial _{n} v, \Delta u) _{\partial T}
 \]
 Now, doing a summation over all elements we get \[
-( \Delta ^2 u, v ) _{\Omega } = \sum_{T \in \mathcal{T}_{h} }^{}  ( \Delta u, \Delta v)_{T}
-+  ( \partial _{n} \Delta u, v)_{\partial T} - ( \partial _{n} v, \Delta u) _{\partial T}
+    \begin{split}
+( \Delta ^2 u, v ) _{\Omega } & = \sum_{T \in \mathcal{T}_{h} }^{}  ( \Delta u, \Delta v)_{T}
++  ( \partial _{n} \Delta u, v)_{\partial T} - ( \partial _{n} v, \Delta u) _{\partial T} \\
+ & =   ( \Delta u, \Delta v)_{\mathcal{T} _{h}} +  \sum_{F \in \mathcal{F}_{h}^{ext} }^{}
+  ( \partial _{n} \Delta u, v)_{ F} - ( \partial _{n} v, \Delta u) _{F} \\
+  &   \quad + \sum_{F \in \mathcal{F}_{h}^{int} }^{} \underbrace{( ( \partial _{n^{+}} \Delta u, v)_{ F} + ( \partial _{n^{-}} \Delta u, v)_{ F} )}_{(I)}  - \underbrace{( ( \partial _{n^{+}} v, \Delta u) _{F} + ( \partial _{n^{-}} v, \Delta u) _{F}
+  )}_{(II)}   \\
+    \end{split}
 \]
 
-
-
+Now, analysing is it easy to see that \[
+\begin{split}
+    (I) & = ( \partial _{n^{+}} \Delta u, v)_{ F} + ( \partial _{n^{-}} \Delta u, v)_{ F}  = \int_{}^{} \left[ \partial _{n} \Delta u \cdot  v \right] =  (  \mean{ \partial _{n^{+}} \Delta u } , \underbrace{\jump{v  }}_{ = 0}      )_{ F} + (  \underbrace{\jump{ \partial _{n}
+    \Delta u }}_{=0}  , \mean{v  }     )_{ F} \\
+    (II) &=  \\
+\end{split} .
+\]
 
 
 \subsection{Note on the Biharmonic Mixed Formulation}%
