@@ -89,9 +89,9 @@ We can expand the second terms in the following way.
 \begin{equation*}
     \begin{split}
 ( \nabla ( \Delta u ) , \nabla v ) _{T } & = \sum_{i = 1}^{ d}  ( \Delta  \partial _{x_{i}} u, \partial _{x_{i}}v ) _{T }  = \sum_{i = 1}^{d}  ( \nabla \cdot ( \nabla \partial _{x_{i}} u ) , \partial _{x_{i}} v )_{T }  \\
-&= \sum_{i = 1}^{d}  ( \partial_n  \partial _{x_{i}} u, \nabla  \partial _{x_{i}} v ) _{\Gamma } -   ( \nabla \partial _{x_{i}} u, \nabla \partial _{x_{i}} v )_{\Omega }
-= (  \partial_n\nabla u, \nabla v ) _{\Gamma  } - ( D^2 u, D^2v ) _{\Omega } \\
-&= ( \partial _{nn} u, \partial _{n} v  )_{\Gamma  }   + ( \partial _{nt} u, \partial _{t} v ) _{\Gamma  } - ( D^2u, D^2v ) _{\Omega } .
+&= \sum_{i = 1}^{d}  ( \partial_n  \partial _{x_{i}} u, \nabla  \partial _{x_{i}} v ) _{\partial T } -   ( \nabla \partial _{x_{i}} u, \nabla \partial _{x_{i}} v )_{T }
+= (  \partial_n\nabla u, \nabla v ) _{\partial_{n} T  } - ( D^2 u, D^2v ) _{T } \\
+&= ( \partial _{nn} u, \partial _{n} v  )_{\partial T  }   + ( \partial _{nt} u, \partial _{t} v ) _{\partial T  } - ( D^2u, D^2v ) _{T } .
     \end{split}
 .\end{equation*}
 Hence, the boundary condition of $\Delta u$ is integrated into the formulation.  It can be denoted that $D^2$ is the Hessian matrix operator s.t.
