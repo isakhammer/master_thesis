@@ -5,7 +5,6 @@
 
 Recall the biharmonic problem.
 Let $\Omega \subseteq    \mathbb{R} ^d$ be a bounded polygonal domain and $\Gamma $ be its corresponding boundary. Let the biharmonic problem BH have the form,
-
 \begin{equation}
 \label{eq:bi_problem}
 \begin{split}
@@ -65,39 +64,34 @@ The Hessian formulation is well investigated by Susanne Brenner in several paper
 \cite{feng2007fully, georgoulis2009discontinuous}.
 
 \begin{remark}
+
 As the author knows the exact Laplace formulation \eqref{eq:cip_laplace_form} is not found in the literature, but it is expected to have the same well-posedness and convergence properties as the
 Hessian formulation. Hence, in this master report will we (because of time limitations) focus on the Hessian formulation for the analysis. However, for the numerical results will will both be presented.
 \end{remark}
 
+% The corresponding norms are.
+% \begin{equation*}
+% \|v\|_{a_{h}} ^{2}  = \alpha  \|v\|_{  \Omega  }^2 + \|\Delta v\|_{ \Omega  }^2
+% + h^{-1} \| \jump{ \partial_n v } \|_{ \mathcal{F}_{h}^{}    }^{2} + h^{-1} \|  \partial_n v  \|_{ \Gamma    }^{2}
+% \end{equation*}
 
 
-\subsection{  Weak form biharmonic equation in $H^{4}( \Omega  ) $}%
+
+\subsection{  Construction for Hessian CIP}%
 \label{sub:continious_weak_form_of_biharmonic_equation}
 
-The goal is to find a useful full weak formulation of \eqref{eq:bi_problem}. Now, let the solution space be on the form,
-\begin{equation*}
-V = \left\{ v \in H^2( \Omega  ) : \partial _{n} v = g_{1}    \text{ on }
-\Gamma   \right\}.
-\end{equation*}
-Let $u,v \in  V$, then the derivation of the general weak form is,
-\[
-\begin{split}
-\left( \Delta ^2 u,v \right) _{\Omega }  &  = \left( \partial _{n} \Delta u, v \right) _{\Gamma  } - \left( \nabla \left( \Delta  u \right) , \nabla v \right) _{\Omega }  \\
-\end{split}
-\]
-In fact, the simplest formulation has the form,
-\[
-  \left( \nabla \left( \Delta u \right) , \nabla v \right) _{\Omega } =   \left( \Delta u, \partial _{n} v \right) _{\Gamma  } - \left( \Delta u, \Delta v \right)_{\Omega },
-\]
-A major issue with this formulation is that we do not have boundary condition for $\Delta u$. Instead, we can expand the term in the following fashion.
+Assume $u \in H^{4}( \Omega ) $ and $V = \left\{ v \in H^{1}( \Omega )  \mid  v \mid _{T} \in H^{m}( T) \ \forall T \in \mathcal{T} _{h}   \right\} $. We will start constructing a local theory for a triangle $K$ and then extend it to the full mesh
+$\mathcal{T}_{h} $. Using Greens Theorem is it obvious that \(
+\left( \Delta ^2 u,v \right) _{T }   = \left( \partial _{n} \Delta u, v \right) _{\partial T  } - \left( \nabla \left( \Delta  u \right) , \nabla v \right) _{T }  \\
+\).
 
+We can expand the second terms in the following way.
 \begin{equation*}
     \begin{split}
-\left( \nabla \left( \Delta u \right) , \nabla v \right) _{\Omega } & = \sum_{i = 1}^{ d}  \left( \Delta  \partial _{x_{i}} u, \partial _{x_{i}}v \right) _{\Omega }  \\
-&= \sum_{i = 1}^{d}  \left( \nabla \cdot \left( \nabla \partial _{x_{i}} u \right) , \partial _{x_{i}} v \right)_{\Omega }  \\
-&= \sum_{i = 1}^{d}  \left( \partial_n  \partial _{x_{i}} u, \nabla  \partial _{x_{i}} v \right) _{\Gamma } -   \left( \nabla \partial _{x_{i}} u, \nabla \partial _{x_{i}} v \right)_{\Omega }  \\
-&= \left(  \partial_n\nabla u, \nabla v \right) _{\Gamma  } - \left( D^2 u, D^2v \right) _{\Omega } \\
-&= \left( \partial _{nn} u, \partial _{n} v  \right)_{\Gamma  }   + \left( \partial _{nt} u, \partial _{t} v \right) _{\Gamma  } - \left( D^2u, D^2v \right) _{\Omega } .
+( \nabla ( \Delta u ) , \nabla v ) _{T } & = \sum_{i = 1}^{ d}  ( \Delta  \partial _{x_{i}} u, \partial _{x_{i}}v ) _{T }  = \sum_{i = 1}^{d}  ( \nabla \cdot ( \nabla \partial _{x_{i}} u ) , \partial _{x_{i}} v )_{T }  \\
+&= \sum_{i = 1}^{d}  ( \partial_n  \partial _{x_{i}} u, \nabla  \partial _{x_{i}} v ) _{\Gamma } -   ( \nabla \partial _{x_{i}} u, \nabla \partial _{x_{i}} v )_{\Omega }
+= (  \partial_n\nabla u, \nabla v ) _{\Gamma  } - ( D^2 u, D^2v ) _{\Omega } \\
+&= ( \partial _{nn} u, \partial _{n} v  )_{\Gamma  }   + ( \partial _{nt} u, \partial _{t} v ) _{\Gamma  } - ( D^2u, D^2v ) _{\Omega } .
     \end{split}
 .\end{equation*}
 Hence, the boundary condition of $\Delta u$ is integrated into the formulation.  It can be denoted that $D^2$ is the Hessian matrix operator s.t.
@@ -337,10 +331,16 @@ a_{h}^{L} \left( u, v \right)   =&
 \end{equation*}
 which is inspired by See \cite[Equation 3.4]{feng2007fully}.
 
-\begin{equation*}
-\|v\|_{a_{h}} ^{2}  = \alpha  \|v\|_{  \Omega  }^2 + \|\Delta v\|_{ \Omega  }^2
-+ h^{-1} \| \jump{ \partial_n v } \|_{ \mathcal{F}_{h}^{}    }^{2} + h^{-1} \|  \partial_n v  \|_{ \Gamma    }^{2}
-\end{equation*}
+
+\subsection{Construction of Laplacian CIP}%
+\label{sub:construction_of_laplacian_cip}
+
+In fact, the simplest formulation has the form,
+\[
+  \left( \nabla \left( \Delta u \right) , \nabla v \right) _{\Omega } =   \left( \Delta u, \partial _{n} v \right) _{\Gamma  } - \left( \Delta u, \Delta v \right)_{\Omega },
+\]
+A major issue with this formulation is that we do not have boundary condition for $\Delta u$. Instead, we can expand the term in the following fashion.
+
 
 
 \subsection{Note on the Biharmonic Mixed Formulation}%
