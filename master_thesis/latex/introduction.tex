@@ -275,11 +275,13 @@ domains, very complex meshes or smooth boundaries. An interesting class to appro
 see Figure \ref{fig:domain_mesh}.
 This greatly reduces the need to generate an unstructured mesh and makes it very applicable for parallelization and moving domains
 since it avoids the need of remeshing entirely. However, without paying attention to the so-called cut cells, which are the elements intersecting with the boundary, the method quickly leads to instability and ill-conditioning.
-One of the methods to counter this is the cut finite element method (CutFEM), where the focus is to penalize the cut-cells weakly by adding an additional ghost penalty term to ensure stability and well-posedness \cite{burman2015cutfem}. This has been successfully implemented for the BH problem for the
-mixed formulation \cite{cai2023nitsche} and the CIP formulation \cite{chen2023arbitrary}. However,  both implementations are considering an interface problem between two domains. Specifically for the CH problem, the mixed formulation \cite{karatzas2021reduced} has been shown to be successful.
+One of the methods to counter this is the cut finite element method (CutFEM), where the focus is to penalize the cut-cells weakly by adding an additional ghost penalty term to ensure stability and well-posedness \cite{burman2015cutfem}. Notably, there exist related methods, sometimes considered equivalent, named Extended FEM and Trace FEM \cite{cai2021nitsche,zonca2018unfitted}.
+This has been successfully implemented for the BH problem for the
+mixed formulation \cite{cai2023nitsche} and the CIP formulation \cite{chen2023arbitrary, cai2021nitsche}. However,  both implementations are considering an interface problem between two domains. Specifically for the CH problem, the mixed formulation \cite{karatzas2021reduced} has been shown to be successful.
  Aggregated unfitted finite element method (AgFEM) is a close relative to CutFEM and has also shown to
 be promising \cite{badia2018aggregated, badia2022linking}. The method is an alternative way to the ghost penalty, which instead applies a so-called cell aggregation with respect to a cut cell ( assuming each cell has enough support with interior elements) and,
 thus, the badly cut cells are removed, ensuring robustness and well-posedness.
+
 
 
 
