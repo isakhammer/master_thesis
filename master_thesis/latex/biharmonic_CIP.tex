@@ -82,21 +82,18 @@ Hessian formulation. Hence, in this master report will we (because of time limit
 
 Assume $u \in H^{4}( \Omega ) $ and $V = \left\{ v \in H^{1}( \Omega )  \mid  v \mid _{T} \in H^{m}( T) \ \forall T \in \mathcal{T} _{h}   \right\} $. We will start constructing a local theory for a triangle $K$ and then extend it to the full mesh
 $\mathcal{T}_{h} $. Using Greens Theorem is it obvious that \(
-\left( \Delta ^2 u,v \right) _{T }   = \left( \partial _{n} \Delta u, v \right) _{\partial T  } - \left( \nabla \left( \Delta  u \right) , \nabla v \right) _{T }  \\
+\left( \Delta ^2 u,v \right) _{T }   = \left( \partial _{n} \Delta u, v \right) _{\partial T  } - \left( \nabla \left( \Delta  u \right) , \nabla v \right) _{T }
 \).
-
-We can expand the second terms in the following way.
+We can expand the second term in the following way.
 \begin{equation*}
     \begin{split}
 ( \nabla ( \Delta u ) , \nabla v ) _{T } & = \sum_{i = 1}^{ d}  ( \Delta  \partial _{x_{i}} u, \partial _{x_{i}}v ) _{T }  = \sum_{i = 1}^{d}  ( \nabla \cdot ( \nabla \partial _{x_{i}} u ) , \partial _{x_{i}} v )_{T }  \\
 &= \sum_{i = 1}^{d}  ( \partial_n  \partial _{x_{i}} u, \nabla  \partial _{x_{i}} v ) _{\partial T } -   ( \nabla \partial _{x_{i}} u, \nabla \partial _{x_{i}} v )_{T }
 = (  \partial_n\nabla u, \nabla v ) _{\partial_{} T  } - ( D^2 u, D^2v ) _{T } \\
-% &= ( \partial _{nn} u, \partial _{n} v  )_{\partial T  }   + ( \partial _{nt} u, \partial _{t} v ) _{\partial T  } - ( D^2u, D^2v ) _{T } .
     \end{split}
 .\end{equation*}
 Hence, the boundary condition of $\Delta u$ is integrated into the formulation.  It can be denoted that $D^2$ is the Hessian matrix operator. Also remark that we apply the notation
 $( D^2u, D^2v )_{\Omega } = \int_{\Omega }^{} D^{2}u : D^2v  dx$ for the inner product $D^2u:D^2v$. We may also recall that the two times directional derivative is the identity $\partial _{nn} u = n \cdot  D^2 u \cdot  n$.
-
 Let $t_{i}$ for $i= 1,\ldots,d$  be the surface tangential vector basis for an facet in the set $\partial_{}T$.
 Given that $u$ is evaluated only on $\partial T$ can we write
 $\nabla u = \left( \nabla u \cdot n \right) n + \sum_i^{d-1} \left( \nabla u \cdot t_i \right) t_i$ s.t.
@@ -107,86 +104,12 @@ $\nabla u = \left( \nabla u \cdot n \right) n + \sum_i^{d-1} \left( \nabla u \cd
     \end{split}
 \]
 Here we used that $n\cdot n = 1$ and $t_{i} \cdot t_{i} = 1 \ \forall i$, which holds since every facet in $\partial T$ is flat.
-
-
-Thus, we now have a weak form identity,
-\begin{equation}
-\label{eq:weak_form_identity}
-\left( \Delta ^2 u, v \right) _{ \Omega } = \left( D^2u, D^2v \right) _{\Omega} +   \left( \partial _{n} \Delta u, v  \right) _{\Gamma  }  - (\partial _{nn} u, \partial _{n} v )_{\Gamma  } - \left( \partial _{nt} u, \partial _{t}v
-\right) _{\Gamma  }
-.\end{equation}
-
-Using weak form identity \eqref{eq:weak_form_identity} and the boundary conditions stated in the strong form \eqref{eq:bi_problem} can we write
-
-\begin{equation}
-\begin{split}
-\left( \Delta ^2 u, v \right) _{ \Omega } & = \left( D^2u, D^2v \right) _{\Omega} +   \underbrace{\left( \partial _{n} \Delta u, v  \right) _{\Gamma  }}_{ = \left( g_{2},v \right) _{\Gamma  }}   - \underbrace{(\partial _{nn} u, \partial
-    _{n} v )_{\Gamma  }}_{ = 0}  - \underbrace{\left( \partial _{nt} u, \partial _{t}v \right) _{\Gamma  }}_{ = 0} \\
-    &= \left( D^2u, D^2v \right) _{\Omega } + \left( g_{2},v \right) _{\Gamma  }  \\
-\end{split}
-.\end{equation}
-\todo[inline]{ Is it a way to prove $\partial _{nn} u = 0$ and $\partial _{nt} u = 0$ on $\Gamma  $? }
-
-Finally, we can define the following bilinear functional $a:V\times V \to  \mathbb{R} $ and the linear functional $F: V \to \mathbb{R} $ s.t.
-\begin{equation}
-\label{eq:weak_formulation}
-\begin{split}
-a\left( u,v \right) & =    \left( D ^2 u , D ^2 v\right)_{\Omega }  +
-\alpha \left( u, v \right)_{\Omega }   , \\
-l\left( v \right) & = \left( f,v \right)_{\Omega } - \left(g_{2},v \right)_{\partial \Omega }.
-\end{split}
-\end{equation}
-
-Thus, we have now the necessary definitions to define the biharmonic problem.
-
-We define the biharmonic problem to solve for $u \in V  $ s.t.
-\begin{equation}
-    \label{eq:bi_weak1}
-a\left( u,v \right) = l(v)\quad \forall v \in
-V,
-\end{equation}
-where $ V = \left\{ v \in H^2\left( \Omega  \right) : \partial _{n} v = g_{1}  \text{ on }
-\Gamma   \right\}$.
-
-Remark that the problem the solution is only unique for $\alpha  > 0$. However, for $\alpha  = 0$ is it necessary to apply the solvability condition,
-\begin{equation*}
- \int_{\Omega }^{} f dx = \int_{\Gamma  }^{} g ds
-.\end{equation*}
-This condition easily arise when using the substitution $v=1$ in \eqref{eq:bi_weak1}. To handle this, can we extended the solution space \[
-V^{*} = \begin{cases}
-    V \quad & \alpha  > 0 \\
-    \left\{ v \in V: \int_{\Omega }^{} v dx  = 0\right\} \quad & \alpha  = 0,
-\end{cases}
+Adding all these calculations together we have the following identity,
+\[
+( \Delta ^2 u, v) _{T}   = ( D^2 u, D^2v)_{T } + ( \partial _{n}  \Delta u, v )_{\partial T} -( \partial _{n} ( \partial_{n}u ), \partial _{n} v  )_{\partial T}-\sum_{i=1}^{d-1} ( \partial _{n} ( \partial_{t_{i}}u ), \partial _{t_{i}} v  )_{\partial T}
 \]
-However, we will from now generally assume that $\alpha >0$.
-Thus, the unique solution in $v \in V^{*}$ belongs to $H^{3 }(\Omega ) $ and we get the following
-elliptic regularity estimate \cite{gu2012c0},
-\begin{equation*}
-\label{eq:bi_harmonic_ellitpic_regularity}
-\left| u \right| _{H^{3 }\left( \Omega  \right) }  \le C_{\Omega } \left( \| f \|_{  L^{2}( \Omega ) }^{  } + ( 1 + \alpha  ^{\frac{1}{2}}
-) \cdot \| w  \|_{ H^{4}\left( \Omega  \right)  }^{  }    \right) \quad w\in H^{4}\left( \Omega  \right).
-\end{equation*}
 
-Finally, we can define the complete weak formulation of the biharmonic problem.
-We define the biharmonic problem to find $u \in V^*  $ s.t.
-\begin{equation}
-a\left( u,v \right) = l(v)\quad \forall v \in
-V^* .
-\end{equation}
-
-\subsection{Constructing Continuous Interior Penalty Method}%
-\label{sub:constructing_continious_interior_penalty_method}
-
- Let us assume that $u,v \in
-H^{4}\left( T  \right) $. Using that the weak form identity \eqref{eq:weak_form_identity} also holds for a triangle $T$ can we write
-\begin{equation}
-\label{eq:bi_basic_dg}
-\left( \Delta  ^{2} u,v \right) _{T} =  \left( D^2u,D^2v \right) _{T } - \left(\partial _{nt} u, \partial _{t}v
-\right)_{\partial T} - \left(\partial _{nn} u, \partial _{n}v \right)_{\partial T} + \left(\partial _{n} \Delta  u,v
-\right)_{\partial T}
-.\end{equation}
-For global continuity, let  $v \in V =  \left\{ v \in H^{1}\left( \Omega  \right): v_{T} \in  H^{4}\left( T \right), \ \forall T \in
-\mathcal{T}_{h}    \right\} $ and $u \in  H^{4}\left( \Omega  \right) $ such that,
+For global continuity we add all the triangles in the mesh $\mathcal{T} _{h}$.
 
 \begin{equation}
 \label{eq:bi_basic_dg2}
