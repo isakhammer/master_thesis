@@ -115,17 +115,11 @@ For global continuity we add all the triangles in the mesh $\mathcal{T} _{h}$.
 \label{eq:bi_basic_dg2}
 \left( \Delta  ^{2} u,v \right) _{\Omega } = \sum_{T \in  \mathcal{T} _{h}}^{}  ( D^2 u, D^2v)_{T } + ( \partial _{n}  \Delta u, v )_{\partial T} -( \partial _{n} ( \partial_{n}u ), \partial _{n} v  )_{\partial T}-\sum_{i=1}^{d-1} ( \partial _{n} ( \partial_{t_{i}}u ), \partial _{t_{i}} v  )_{\partial T}
 \end{equation}
-However, by integrating over exterior facets $\mathcal{F} _{h}^{ext}$ and interior facets $\mathcal{F} _{h}^{int}$ we will get e more suitable formulation wichi makes it easier to penalize.
-
-% Recall that any jump over a interior facet $F \subset \mathcal{F} _{h}^{int}   $, visualized in Figure \ref{fig:normal}, is defined as $\jump{ a } =    a^{+} - a^{-} $
-% and likewise for the mean, $\mean{ a  } = \frac{1}{2}(   a^{+}
-% + a^{-})$.    The equivalence of \eqref{eq:bi_basic_dg2} and \eqref{eq:bi_basic_dg_full_1} comes from the following argumentation.
+However, by integrating over exterior facets $\mathcal{F} _{h}^{ext}$ and interior facets $\mathcal{F} _{h}^{int}$ we will get e more suitable formulation which makes it easier to penalize discontinuities.
 
 \begin{equation*}
     \begin{split}
- \left( \Delta  ^{2} u,v \right) _{\Omega } & =\sum_{T\in \mathcal{T} _{h}}^{} \left( D^2u,D^2v \right) _{T } - \left(\partial _{nt} u, \partial _{t}v
-\right)_{\partial T} - \left(\partial _{nn} u, \partial _{n}v \right)_{\partial T} + \left(\partial _{n} \Delta  u,v
-\right)_{\partial T} \\
+ ( \Delta  ^{2} u,v ) _{\Omega } & =\sum_{T\in \mathcal{T} _{h}}^{} ( D^2u,D^2v ) _{T } + (\partial _{n} \Delta  u,v)_{\partial T} - (\partial _{nn} u, \partial _{n}v )_{\partial T}  - \sum_{i=1}^{d-1} ( \partial _{n} ( \partial_{t_{i}}u ), \partial _{t_{i}} v  )_{\partial T}   \\
 &= \sum_{T\in \mathcal{T} _{h}}^{} \left( D^2u,D^2v \right) _{T } \\
 &  \quad + \sum_{F \in \mathcal{F}_{h}^{ext} }^{} \underbrace{\left( \partial _{n} \Delta  u, v  \right)_{F}}_{= \left( g_{2},v \right)_{F} }  -  \left(
 \partial _{nt} u, \partial _{t} v \right) _{F}  - \underbrace{( \partial _{nn} u, \partial _{n} v )_{F}}_{ = 0}    \\
