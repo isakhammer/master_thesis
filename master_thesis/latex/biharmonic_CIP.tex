@@ -113,28 +113,13 @@ For global continuity we add all the triangles in the mesh $\mathcal{T} _{h}$.
 
 \begin{equation}
 \label{eq:bi_basic_dg2}
-\left( \Delta  ^{2} u,v \right) _{\Omega } = \sum_{T \in  \mathcal{T} _{h}}^{}  \left( D^2u,D^2v \right) _{T } - \left(\partial _{nt} u, \partial _{t}v
-\right)_{\partial T} - \left(\partial _{nn} u, \partial _{n}v \right)_{\partial T} + \left(\partial _{n} \Delta  u,v
-\right)_{\partial T}.
+\left( \Delta  ^{2} u,v \right) _{\Omega } = \sum_{T \in  \mathcal{T} _{h}}^{}  ( D^2 u, D^2v)_{T } + ( \partial _{n}  \Delta u, v )_{\partial T} -( \partial _{n} ( \partial_{n}u ), \partial _{n} v  )_{\partial T}-\sum_{i=1}^{d-1} ( \partial _{n} ( \partial_{t_{i}}u ), \partial _{t_{i}} v  )_{\partial T}
 \end{equation}
-However, this expression can be written to distinguish integrating over triangles $\mathcal{T} _{h}$ , integrating over exterior facets $\mathcal{F} _{h}^{ext}$ and then integrate interior facets $\mathcal{F} _{h}^{int}$.
+However, by integrating over exterior facets $\mathcal{F} _{h}^{ext}$ and interior facets $\mathcal{F} _{h}^{int}$ we will get e more suitable formulation wichi makes it easier to penalize.
 
-\begin{equation}
-\label{eq:bi_basic_dg_full_1}
-\begin{split}
-\left( \Delta  ^{2} u, v \right) _{\Omega } =& \sum_{T \in  \mathcal{T} _{h}}^{} \left( D^2u, D^2v \right)_{T}    \\
-& + \sum_{F \in \mathcal{F}_{h}^{ext}}  \left(\partial _{n} \Delta u, v  \right) _{F} - \left(\partial _{nt} u, \partial _{t} v \right) _{F}-
-\left( \partial _{nn} u, \partial _{n} v \right)_{F}  \\
-& + \sum_{F \in \mathcal{F}_{h}  ^{int}}^{} \left(\partial _{nn} u , \jump{ \partial _{n} v }
-\right)_{F} \\
-& = \sum_{T \in  \mathcal{T} _{h}}^{} \left( D^2u, D^2v \right)_{T} + \sum_{F \in
-\mathcal{F} ^{ext}_{h}}^{} \left(g_{2}, v  \right) _{F}
-  + \sum_{F \in \mathcal{F}_{h}  ^{int}}^{} \left( \partial _{nn} u , \jump{ \partial_{n} v } \right)_{F}
-\end{split}
-\end{equation}
-Keep in mind that any jump over a interior facet $F \subset \mathcal{F} _{h}^{int}   $, visualized in figure \ref{fig:normal}, is defined as $\jump{ a } =    a^{+} - a^{-} $
-and likewise for the mean, $\mean{ a  } = \frac{1}{2}(   a^{+}
-+ a^{-})$.    The equivalence of \eqref{eq:bi_basic_dg2} and \eqref{eq:bi_basic_dg_full_1} comes from the following argumentation.
+% Recall that any jump over a interior facet $F \subset \mathcal{F} _{h}^{int}   $, visualized in Figure \ref{fig:normal}, is defined as $\jump{ a } =    a^{+} - a^{-} $
+% and likewise for the mean, $\mean{ a  } = \frac{1}{2}(   a^{+}
+% + a^{-})$.    The equivalence of \eqref{eq:bi_basic_dg2} and \eqref{eq:bi_basic_dg_full_1} comes from the following argumentation.
 
 \begin{equation*}
     \begin{split}
@@ -143,7 +128,7 @@ and likewise for the mean, $\mean{ a  } = \frac{1}{2}(   a^{+}
 \right)_{\partial T} \\
 &= \sum_{T\in \mathcal{T} _{h}}^{} \left( D^2u,D^2v \right) _{T } \\
 &  \quad + \sum_{F \in \mathcal{F}_{h}^{ext} }^{} \underbrace{\left( \partial _{n} \Delta  u, v  \right)_{F}}_{= \left( g_{2},v \right)_{F} }  -  \left(
-\partial _{nt} u, \partial _{t} v \right) _{F}  - \underbrace{\left( \partial _{nn} u, \partial _{n} v \right)_{F}}_{ = 0}    \\
+\partial _{nt} u, \partial _{t} v \right) _{F}  - \underbrace{( \partial _{nn} u, \partial _{n} v )_{F}}_{ = 0}    \\
 & \quad  + \sum_{F \in \mathcal{F} _{h}^{int}}^{} \underbrace{\left( \left(\partial _{n^{+}} \Delta  u^{+}
         ,v^{+}\right)_{F}
 + \left(\partial _{n^{-}} \Delta  u^{+} ,v^{-}\right)_{F}  \right)}_{(I)} \\
@@ -185,8 +170,16 @@ Where integration over all interior facets $ \forall F \in \mathcal{F}_{h}^{int}
 Observe that the cancellations in the term $(I)$ appears of the continuity of $v\in V $ and $u\in H^{4}( \Omega ) $ which makes the jumps zero. For the second term $(II)$ does the terms become zero cancelled because the tangential
 derivative at the facet has no jump. However, The third term $(III)$  is fairly interesting since the discontinuity in
 normal vector for $v \in V$ is a jump, while the second term is still continuous. It can also be raised that $\mean{
-\partial _{nn} u } = \partial _{nn} u  $ holds by the continuity of $H^{4}( \Omega  ) $. Hence,
-\eqref{eq:bi_basic_dg2} and \eqref{eq:bi_basic_dg_full_1} is equivalent.
+\partial _{nn} u } = \partial _{nn} u  $ holds by the continuity of $H^{4}( \Omega  ) $. Hence, we have the following identity.
+
+\begin{equation}
+\label{eq:bi_basic_dg_full_1}
+\begin{split}
+\left( \Delta  ^{2} u, v \right) _{\Omega }  = \sum_{T \in  \mathcal{T} _{h}}^{} \left( D^2u, D^2v \right)_{T} + \sum_{F \in
+\mathcal{F} ^{ext}_{h}}^{} \left(g_{2}, v  \right) _{F}
+  + \sum_{F \in \mathcal{F}_{h}  ^{int}}^{} \left( \partial _{nn} u , \jump{ \partial_{n} v } \right)_{F}
+\end{split}
+\end{equation}
 
 \subsection{Formulation of the Continuous Interior Penalty Method}%
 \label{sub:formulation_of_continious_interior_penalty_method}
