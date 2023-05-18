@@ -90,13 +90,26 @@ We can expand the second terms in the following way.
     \begin{split}
 ( \nabla ( \Delta u ) , \nabla v ) _{T } & = \sum_{i = 1}^{ d}  ( \Delta  \partial _{x_{i}} u, \partial _{x_{i}}v ) _{T }  = \sum_{i = 1}^{d}  ( \nabla \cdot ( \nabla \partial _{x_{i}} u ) , \partial _{x_{i}} v )_{T }  \\
 &= \sum_{i = 1}^{d}  ( \partial_n  \partial _{x_{i}} u, \nabla  \partial _{x_{i}} v ) _{\partial T } -   ( \nabla \partial _{x_{i}} u, \nabla \partial _{x_{i}} v )_{T }
-= (  \partial_n\nabla u, \nabla v ) _{\partial_{n} T  } - ( D^2 u, D^2v ) _{T } \\
-&= ( \partial _{nn} u, \partial _{n} v  )_{\partial T  }   + ( \partial _{nt} u, \partial _{t} v ) _{\partial T  } - ( D^2u, D^2v ) _{T } .
+= (  \partial_n\nabla u, \nabla v ) _{\partial_{} T  } - ( D^2 u, D^2v ) _{T } \\
+% &= ( \partial _{nn} u, \partial _{n} v  )_{\partial T  }   + ( \partial _{nt} u, \partial _{t} v ) _{\partial T  } - ( D^2u, D^2v ) _{T } .
     \end{split}
 .\end{equation*}
-Hence, the boundary condition of $\Delta u$ is integrated into the formulation.  It can be denoted that $D^2$ is the Hessian matrix operator s.t.
-$$( D^2u, D^2v )_{\Omega } = \int_{\Omega }^{} D^{2}u : D^2v  dx,$$
-where $D^2u:D^2v$ is the inner product and similarly for $\partial _{nn} u = n\cdot D^2 u \cdot n$. Thus, we now have a weak form identity,
+Hence, the boundary condition of $\Delta u$ is integrated into the formulation.  It can be denoted that $D^2$ is the Hessian matrix operator. Also remark that we apply the notation
+$( D^2u, D^2v )_{\Omega } = \int_{\Omega }^{} D^{2}u : D^2v  dx$ for the inner product $D^2u:D^2v$. We may also recall that the two times directional derivative is the identity $\partial _{nn} u = n \cdot  D^2 u \cdot  n$.
+
+Let $t_{i}$ for $i= 1,\ldots,d$  be the surface tangential vector basis for an facet in the set $\partial_{}T$.
+Given that $u$ is evaluated only on $\partial T$ can we write
+$\nabla u = \left( \nabla u \cdot n \right) n + \sum_i^{d-1} \left( \nabla u \cdot t_i \right) t_i$ s.t.
+\[
+    \begin{split}
+(  \partial_n\nabla u, \nabla v ) _{\partial_{} T  } & =  ( \partial _{n} ( \partial_{n}u \cdot n), \partial _{n} v \cdot n )_{\partial T}   +\sum_{i=1}^{d-1} ( \partial _{n} ( \partial_{t_{i}}u \cdot t_{i}), \partial _{t_{i}} v \cdot t_{i} )_{\partial T} \\
+& =  ( \partial _{n} ( \partial_{n}u ), \partial _{n} v  )_{\partial T}+\sum_{i=1}^{d-1} ( \partial _{n} ( \partial_{t_{i}}u ), \partial _{t_{i}} v  )_{\partial T}
+    \end{split}
+\]
+Here we used that $n\cdot n = 1$ and $t_{i} \cdot t_{i} = 1 \ \forall i$, which holds since every facet in $\partial T$ is flat.
+
+
+Thus, we now have a weak form identity,
 \begin{equation}
 \label{eq:weak_form_identity}
 \left( \Delta ^2 u, v \right) _{ \Omega } = \left( D^2u, D^2v \right) _{\Omega} +   \left( \partial _{n} \Delta u, v  \right) _{\Gamma  }  - (\partial _{nn} u, \partial _{n} v )_{\Gamma  } - \left( \partial _{nt} u, \partial _{t}v
