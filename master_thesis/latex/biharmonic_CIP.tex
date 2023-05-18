@@ -36,12 +36,12 @@ formulation we will investigate two formulations of the forms $a_{h}$ and $l_{h}
     \item The first problem is the Hessian problem formulation, that is,
 \begin{equation}
 \begin{split}
-a_{h}^{H} \left( w, v \right)   =&
-    \left( \alpha  w, v \right) _{\Omega }   +  \left( D^2 w, D^2v \right) _{\mathcal{T} _{h}} \\
+a_{h}^{H} \left( u, v \right)   =&
+    \left( \alpha  u, v \right) _{\Omega }   +  \left( D^2 u, D^2v \right) _{\mathcal{T} _{h}} \\
  & +
-  \left( \mean{  \partial _{n n} w }, \jump{ \partial _{n }v} \right)_{\mathcal{F}_{h}}  +
- \left( \mean{ \partial _{n n} v }, \jump{ \partial _{n}w }      \right)_{\mathcal{F}_{h}}  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} w}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h}} \\
- l_{h}^{H}( v_{h}) & =  \left( f, v \right) _{\Omega }  - \left(g_{2}, v  \right) _{\Gamma }
+  \left( \mean{  \partial _{n n} u }, \jump{ \partial _{n }u} \right)_{\mathcal{F}_{h}}  +
+ \left( \mean{ \partial _{n n} v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}}  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h}} \\
+ l_{h}^{H}( v_{h}) & =  \left( f, v \right) _{\Omega }  - \left(g_{2}, v  \right) _{\Gamma } - ( g_{1}, \partial _{nn} v)_{\Gamma } +  \frac{\gamma }{h} ( g_{1} , \partial _{n} v)_{\Gamma }
 \end{split}
 \end{equation}
 
@@ -198,58 +198,6 @@ imposed to zero. Thus, the penalty parameter $\gamma$  is the same interior and 
 a good choice for most applications.
 \end{remark}
 
-\subsection{Formulation of the Continuous Interior Penalty Method}%
-\label{sub:formulation_of_continious_interior_penalty_method}
-
-We can finally start defining the fully discrete formulation. Let the basis be a $\mathcal{P}_{2} $ Lagrange finite element space so,
-\[
-V_{h} = \left\{ v \in C^{0}\left( \Omega  \right): v_{T} = v | _{T} \in \mathcal{P} _{2}\left( T \right), \forall T \in
-\mathcal{T}_{h}    \right\}
-\]
-and
-\[
-V_{h}^{*} = \begin{cases}
-    V_{h} & \text{ if } \alpha  > 0 \\
-    \left\{ v \in V_{h}: \int_{\Omega }^{} v dx   = 0   \right\} &  \text{ if } \alpha   = 0
-\end{cases}
-\]
-Now, if we choose $u \in V_{h}$, then we must take account that the jump is discrete.
- Finally, the CIP formulation can be stated as follows.
-The discretized numerical problem is to solve $w \in V_{h}^{*}$ such that
-\begin{equation}
-\label{eq:CP_A_F}
-a_{h}( w, v )   = l_{h}( v), \quad \forall v \in V_{h}^{*}  .
-\end{equation}
-where
-\begin{equation}
-\label{eq:CP_A_h_1}
-\begin{split}
-a_{h} ( w, v )   =&
-    \left( \alpha  w, v \right) _{\Omega } + \sum_{T \in \mathcal{T} _{h}}^{} \left( D^2 w, D^2v \right) _{T} \\
- & + \sum_{F \in \mathcal{F}_{h} }^{}
-  \left( \mean{  \partial _{n n} w }, \jump{ \partial _{n }v} \right)_{F}  +
- \left( \mean{ \partial _{n n} v }, \jump{ \partial _{n}w }      \right)_{F}   + \frac{\gamma}{h}  \left( \jump{ \partial _{n} w}, \jump{ \partial _{n} v   }   \right)_{F}
-\end{split}
-\end{equation}
-and
-\begin{equation}
-\label{eq:CP_F_h}
-l_{h}( v )  = \left( f, v \right) _{\Omega } +  \sum_ {F \in \mathcal{F}_{h} ^{ext}}^{} - \left(g_{2}, v  \right) _{F}.
-\end{equation}
-Notice that the regulation term determined by respectively a global tuning parameter $\gamma >0 $. Another key component to the formulation
-in \eqref{eq:CP_A_h_1} after introduction of $ w, v \in V^{*}_{h}$  is that we expanded $\left( \partial _{nn}w, \jump{ \partial _{n} v }  \right)_{F} \to \left( \mean{ \partial _{nn}w }  , \jump{ \partial _{n} v }  \right)_{F} $ since we can longer not guarantee a
-continuous jump. For symmetric purposes we also added $ \left( \mean{ \partial _{nn} v}  , \jump{ \partial _{n} w }  \right)_{F} $. For convenience will we introduce the compact notation of \eqref{eq:CP_A_h_1} and \eqref{eq:CP_F_h};
-
-\begin{equation*}
-\begin{split}
-a_{h} \left( w, v \right)   =&
-    \left( \alpha  w, v \right) _{\Omega }   +  \left( D^2 w, D^2v \right) _{\mathcal{T} _{h}} \\
- & +
-  \left( \mean{  \partial _{n n} w }, \jump{ \partial _{n }v} \right)_{\mathcal{F}_{h}}  +
- \left( \mean{ \partial _{n n} v }, \jump{ \partial _{n}w }      \right)_{\mathcal{F}_{h}}  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} w}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h}} \\
- l_{h}( v_{h}) & =  \left( f, v \right) _{\Omega }  - \left(g_{2}, v  \right) _{\Gamma }
-\end{split}
-\end{equation*}
 
 \subsection{ Laplace Continuous Interior Penalty formulations }%
 \label{sub:cip_formulations}
