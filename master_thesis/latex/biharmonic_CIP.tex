@@ -52,7 +52,7 @@ a_{h}^{H} \left( u, v \right)   =&
             a_{h}^{L} \left( u, v \right)   =&
             \left( \alpha  u, v \right) _{\Omega }   +  \left( \Delta  u, \Delta v \right) _{ \Omega } \\
                                              & + \left( \mean{  \Delta  u }, \jump{ \partial _{n }v} \right)_{\mathcal{F}_{h}  }  + \left( \mean{ \Delta  v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}  }  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h} } \\
-                                             % & + \left(   \Delta  u ,  \partial _{n }v \right)_{\Gamma   }  + \left(  \Delta  v ,  \partial _{n}u       \right)_{\Gamma  }  + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{ \Gamma } \\
+                                             & + \left(   \Delta  u ,  \partial _{n }v \right)_{\Gamma   }  + \left(  \Delta  v ,  \partial _{n}u       \right)_{\Gamma  }  + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{ \Gamma } \\
                                              l^{L}_{h}( v_{h}) & =  \left( f, v \right) _{\Omega } - ( g_{2},  v )_{\Gamma } -  ( g_{1}, \Delta  v  )_{\Gamma }  + \frac{\gamma }{h} ( g_{2}, \partial _{n} v  )_{\Gamma }
                                          \end{split}
                                      \end{equation}
@@ -196,7 +196,7 @@ a good choice for most applications.
 \subsection{Construction of Laplacian CIP}%
 \label{sub:construction_of_laplacian_cip}
 
- Again, assume $u \in H^{4}( \Omega ) $ and $V = \left\{ v \in H^{1}( \Omega )  \mid  v \mid _{T} \in H^{m}( T) \ \forall T \in \mathcal{T} _{h}   \right\} $. Similarly, we start constructing a local theory for a triangle $T$ and then extend it to the full mesh
+ Again, assume $u \in H^{4}( \Omega ) $ and $ v \in  V = \left\{ v \in H^{1}( \Omega )  \mid  v \mid _{T} \in H^{m}( T) \ \forall T \in \mathcal{T} _{h}   \right\} $. Similarly, we start constructing a local theory for a triangle $T$ and then extend it to the full mesh
 $\mathcal{T}_{h} $. Using Greens Theorem is it obvious that \(
 \left( \Delta ^2 u,v \right) _{T }   = ( \partial _{n} \Delta u, v ) _{\partial T  } - ( \nabla \left( \Delta  u \right) , \nabla v ) _{T }
 \).
@@ -215,19 +215,41 @@ Now, doing a summation over all elements we get \[
 ( \Delta ^2 u, v ) _{\Omega } & = \sum_{T \in \mathcal{T}_{h} }^{}  ( \Delta u, \Delta v)_{T}
 +  ( \partial _{n} \Delta u, v)_{\partial T} - ( \partial _{n} v, \Delta u) _{\partial T} \\
  & =   ( \Delta u, \Delta v)_{\mathcal{T} _{h}} +  \sum_{F \in \mathcal{F}_{h}^{ext} }^{}
-  ( \partial _{n} \Delta u, v)_{ F} - ( \partial _{n} v, \Delta u) _{F} \\
+  \overbrace{( \partial _{n} \Delta u, v)_{ F}}^{=( g_{2},v)_{F} }  - ( \partial _{n} v, \Delta u) _{F} \\
   &   \quad + \sum_{F \in \mathcal{F}_{h}^{int} }^{} \underbrace{( ( \partial _{n^{+}} \Delta u, v)_{ F} + ( \partial _{n^{-}} \Delta u, v)_{ F} )}_{(I)}  - \underbrace{( ( \partial _{n^{+}} v, \Delta u) _{F} + ( \partial _{n^{-}} v, \Delta u) _{F}
   )}_{(II)}   \\
     \end{split}
 \]
 
-Now, analysing is it easy to see that \[
+Now, decomposing the terms as utilizing the regularity of $u$ and $v$ is it easy to see that.    \[
 \begin{split}
-    (I) & = ( \partial _{n^{+}} \Delta u, v)_{ F} + ( \partial _{n^{-}} \Delta u, v)_{ F}  = \int_{}^{} \left[ \partial _{n} \Delta u \cdot  v \right] =  (  \mean{ \partial _{n^{+}} \Delta u } , \underbrace{\jump{v  }}_{ = 0}      )_{ F} + (  \underbrace{\jump{ \partial _{n}
+    (I) & = ( \partial _{n^{+}} \Delta u, v)_{ F} + ( \partial _{n^{-}} \Delta u, v)_{ F}  = \int_{F}^{} \left[ \partial _{n} \Delta u \cdot  v \right] =  (  \mean{ \partial _{n^{+}} \Delta u } , \underbrace{\jump{v  }}_{ = 0}      )_{ F} + (  \underbrace{\jump{ \partial _{n}
     \Delta u }}_{=0}  , \mean{v  }     )_{ F} \\
-    (II) &=  \\
+    (II) &=  ( \partial _{n^{+}} v, \Delta u) _{F} + ( \partial _{n^{-}} v, \Delta u) _{F} = \int_{F}^{} \jump{ \partial _{n} v, \Delta u } =  ( \underbrace{\jump{ \partial _{n} v}}_{ \neq 0 } , \mean{ \Delta u })_{F}  + ( \mean{ \partial _{n} v}, \underbrace{\jump{ \Delta u
+    }}_{=0} )_{F}
 \end{split} .
 \]
+
+Hence, we end up with the identity,
+\[
+( \Delta ^2 u, v ) _{\Omega } = ( \Delta u, \Delta v)_{\mathcal{T} _{h} }  +  ( \jump{ \partial _{n} v} , \mean{ \Delta u })_{\mathcal{F}_{h} }  + ( g_{2} , v )_{\Gamma } - ( \partial _{n} v, \Delta u)_{\Gamma }.
+\]
+
+Finally, can we construct the Laplace CIP formulation. Let $u,v \in V_{h}$, then can we write the following statement.
+
+\begin{equation}
+    \label{eq:cip_laplace_form}
+    \begin{split}
+        a_{h}^{L} \left( u, v \right)   =&
+        \left( \alpha  u, v \right) _{\Omega }   +  \left( \Delta  u, \Delta v \right) _{ \Omega } \\
+                                         & + \left( \mean{  \Delta  u }, \jump{ \partial _{n }v} \right)_{\mathcal{F}_{h}  }  + \left( \mean{ \Delta  v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}  }  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h} } \\
+                                         & + \left(   \Delta  u ,  \partial _{n }v \right)_{\Gamma   }  + \left(  \Delta  v ,  \partial _{n}u       \right)_{\Gamma  }  + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{ \Gamma } \\
+        l^{L}_{h}( v_{h}) & =  \left( f, v \right) _{\Omega } - ( g_{2},  v )_{\Gamma } -  ( g_{1}, \Delta  v  )_{\Gamma }  + \frac{\gamma }{h} ( g_{2}, \partial _{n} v  )_{\Gamma }
+    \end{split}
+\end{equation}
+
+
+
 
 
 \subsection{Note on the Biharmonic Mixed Formulation}%
