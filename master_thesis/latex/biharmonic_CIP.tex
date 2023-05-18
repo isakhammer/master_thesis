@@ -15,14 +15,14 @@ Let $\Omega \subseteq    \mathbb{R} ^d$ be a bounded polygonal domain and $\Gamm
 \label{eq:bi_problem}
 \begin{split}
     \Delta^2  u  + \alpha  u  & = f( x)  \quad \text{in } \Omega,   \\
-    \partial _{n} u & = g_{1}  \quad \text{on } \partial \Omega,  \\
-    \partial _{n} \Delta  u & = g_{2}  \quad \text{on } \partial \Omega .  \\
+    \partial _{n} u & = g_{1}(x)   \quad \text{on } \partial \Omega,  \\
+    \partial _{n} \Delta  u & = g_{2}( x)   \quad \text{on } \partial \Omega .  \\
 \end{split}
 \end{equation}
-Here is $\Delta ^2 = \Delta  \left( \Delta  \right) $ the biharmonic operator, also known as the bilaplacian. We will assume for the strong form that $u \in H^{4}\left( \Omega  \right) $, $\alpha  \in  \mathbb{R} $ and $f, \in L^{2}\left( \Omega  \right)
+Here is $\Delta ^2 = \Delta  \left( \Delta  \right) $ the biharmonic operator, also known as the bilaplacian. We will assume for the strong form that $u \in H^{4}\left( \Omega  \right) $, $\alpha  \in  \mathbb{R} $ and $f \in L^{2}\left( \Omega  \right)
 $. The functions $g_{1},g_{2}: \Omega  \to \mathbb{R}$ are denoted as boundary conditions.
 
-\subsection{  Weak form biharmonic equation in $H^{4}\left( \Omega  \right) $}%
+\subsection{  Weak form biharmonic equation in $H^{4}( \Omega  ) $}%
 \label{sub:continious_weak_form_of_biharmonic_equation}
 
 The goal is to find a useful full weak formulation of \eqref{eq:bi_problem}. Now, let the solution space be on the form,
@@ -212,7 +212,6 @@ normal vector for $v \in V$ is a jump, while the second term is still continuous
 \subsection{Formulation of the Continuous Interior Penalty Method}%
 \label{sub:formulation_of_continious_interior_penalty_method}
 
-
 We can finally start defining the fully discrete formulation. Let the basis be a $\mathcal{P}_{2} $ Lagrange finite element space so,
 \[
 V_{h} = \left\{ v \in C^{0}\left( \Omega  \right): v_{T} = v | _{T} \in \mathcal{P} _{2}\left( T \right), \forall T \in
@@ -290,7 +289,7 @@ a_{h}^{L} \left( u, v \right)   =&
 which is inspired by See \cite[Equation 3.4]{feng2007fully}.
 
 \begin{equation*}
-\|v\|_{a_{h}} ^{2}  = \alpha  \|v\|_{  \Omega  }^2 + \|\Delta v\|_{ \Omega  }^2 + \overbrace{h^3   \| \left\{\partial_n \Delta v\right\} \| _{\mathcal{F}_{h}   }^2 }^{ remove?}
+\|v\|_{a_{h}} ^{2}  = \alpha  \|v\|_{  \Omega  }^2 + \|\Delta v\|_{ \Omega  }^2
 + h^{-1} \| \jump{ \partial_n v } \|_{ \mathcal{F}_{h}^{}    }^{2} + h^{-1} \|  \partial_n v  \|_{ \Gamma    }^{2}
 \end{equation*}
 
