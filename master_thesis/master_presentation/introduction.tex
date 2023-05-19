@@ -1,136 +1,674 @@
-	\section{Introduction}
+\section{Introduction}
 
-\begin{frame}{I will present a method to solve PDE's on an unfitted mesh}
-            % Column 1
-    \begin{figure}
-        \centering
-        \includegraphics[width=10cm]{figures/transformed_mesh_unfitted.png}
-    \end{figure}
 
-    \begin{block}{}
-        \begin{itemize}
-            \item Fairly new class of methods! 5-10 years old.
-            \item Can handle smooth boundaries and complex geometries!
-            \item Possible to apply moving domains without re-meshing!
-        \end{itemize}
+\begin{frame}{Introducing Myself}
+    \begin{columns}
+        % Column 1
+        \begin{column}{0.5\textwidth}
+            \begin{itemize}
+                \item Isak Hammer, 27 year old, Lofoten
+                \item Graduate student in Industrial Mathematics
+                \item Research Focus: Numerical methods for Partial Differential Equations (PDEs).
+            \end{itemize}
+        \end{column}
+
+        % Column 2
+        \begin{column}{0.5\textwidth}
+            \begin{figure}
+                \centering
+                \includegraphics[width=0.7\textwidth]{figures/isak.jpg}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Importance and Motivation of the Cahn Hilliard Equation}
+    \begin{columns}
+        % Column 1
+        \begin{column}{0.5\textwidth}
+            \begin{itemize}
+                \item Thermodynamically modelling of a two-component liquid separation\footnotemark[1].
+            \item Modelling of so-called lipid rafts in biological membrane dynamics \footnotemark[2].
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{itemize}
+                \item Droplet dynamics, i.e., coalescence, breakup and movement by coupling with Navier-Stokes \footnotemark[3].
+            \end{itemize}
+        \end{column}
+    \end{columns}
+    \footnotetext[1]{\fullcite{cahn1959free}}
+    \footnotetext[2]{\fullcite{yushutin2019computational}}
+    \footnotetext[3]{\fullcite{zimmermann2019calculation}}
+\end{frame}
+
+\begin{frame}
+    \begin{block}{The Cahn Hilliard Equation}
+        The general Cahn Hilliard Equation  has the form $u( x, t): \Omega \times [0,T] \mapsto [-1,1]   $ s.t.
+            \[
+            \begin{split}
+                 u_t+\Delta\left(\varepsilon \Delta u-\frac{1}{\varepsilon} f(u)\right)&=0 \quad \text{in } \Omega \\
+\partial_n u=\partial_n \Delta u& =0 \quad \text{on } \Gamma  \\
+ u & =u_0 \quad \text{on } \Omega
+            \end{split}
+            \]
+where $f(s)=F^{\prime}(s)$ and $F(s)=\frac{1}{4}\left(s^2-1\right)^2$ and $\Omega \subset \mathbf{R}^d, d=2,3$, is a bounded domain.
+\end{block}
+
+\begin{block}{Challenges}
+    \begin{enumerate}
+        \item Highly nonlinear and stiff. Often practical applications require $\varepsilon \ll 1$.
+        \item 4th order system.
+        % \item Conservation of mass and the Neumann conditions conditions.
+    \end{enumerate}
+\end{block}
+
+\end{frame}
+
+\begin{frame}
+    \begin{block}{Why Finite Element Method (FEM)}
+        \begin{enumerate}
+            \item \textbf{Robust mathematical framework}
+            \item \textbf{Can easily handle complex geometries}
+            \item \textbf{High flexibility of basis functions}
+            \item \textbf{Other: } Supports adaptive refinements, easily adaptable to multi-physics problems ++ .
+        \end{enumerate}
     \end{block}
 \end{frame}
 
-    \begin{frame}{Maybe I should introduce myself}
-        \begin{columns}
-            % Column 1
-            \begin{column}{0.5\textwidth}
-                \begin{itemize}
-                    \item Isak Hammer, 27 year old, Lofoten
-                    \item Graduate student in Industrial Mathematics
-                    \item Department of Mathematical Sciences (IMF)
-                    \item Specialization in
-                        \begin{enumerate}
-                            \item Finite element methods
-                                \begin{enumerate}
-                                    \item Writing master thesis on unfitted methods for Cahn-Hilliard.
-                                \end{enumerate}
-                            \item Optimal control problems for PDEs
-                                \begin{enumerate}
-                                    \item Side projects on biomembrane dynamics
-                                \end{enumerate}
-                        \end{enumerate}
-                    % \item Robotics engineer
-                \end{itemize}
-            \end{column}
+% \begin{frame}
+%     \begin{block}{Strategy to solve the Cahn-Hilliard problem on smooth domains}
+%         \begin{enumerate}
+%             \item Solve the biharmonic problem $\Delta ^2 u = f$ for polygonal domains.
+%             \item Modify the method to handle smooth domains.
+%             \item Utilize the time integration to handle non-linearity.
+%         \end{enumerate}
+%     \end{block}
+% \end{frame}
 
-            % Column 2
-            \begin{column}{0.5\textwidth}
-                \begin{figure}
-                    \centering
-                    \includegraphics[width=0.7\textwidth]{figures/isak.jpg}
-                \end{figure}
-            \end{column}
-        \end{columns}
-    \end{frame}
-\begin{frame}{Master student for one the CFD groups at IMF}
-            % Column 1
-    \begin{figure}
+% \begin{frame}
+%     \begin{block}{Strategy to solve the Cahn-Hilliard problem on smooth domains}
+%         \begin{enumerate}
+%             \item First find a suitable method to solve an 4th order PDE for polygonal domains.
+%             \item Modify the problem formulation to take account for smooth domains.
+%             \item Utilize the time integration to handle nonlinearity.
+% \item \textcolor{red}{Make the time-steps small enough or implement adaptivity time schemes.}
+%         \end{enumerate}
+%     \end{block}
+% \end{frame}
+
+
+% \begin{frame}
+% \begin{columns}
+% \column{0.55\textwidth}
+% \begin{block}{The Biharmonic Problem}
+% Let $\Omega \subseteq \mathbb{R} ^d$ be a bounded domain with boundary $\Gamma $ . Let the biharmonic problem have the form s.t. $u:\Omega \mapsto \mathbb{R} $,
+% \begin{equation}
+% \label{eq:bi_problem}
+% \begin{split}
+% \Delta^2 u + \alpha u & = f( x) \quad \text{in } \Omega, \\
+% \partial_{n} u & = g_{1} \quad \text{on } \Gamma , \\
+% \partial_{n} \Delta u & = g_{2} \quad \text{on } \Gamma . \\
+% \end{split}
+% \end{equation}
+% Here is $\Delta ^2 = \Delta \left( \Delta \right) $ the biharmonic operator. The functions $g_{1},g_{2}: \Omega \to \mathbb{R}$ are denoted as boundary conditions.
+% \end{block}
+
+% \column{0.45\textwidth}
+% \begin{figure}[htpb!]
+%     \centering
+%     \begin{tikzpicture}
+%         % Circle
+%         \draw (0.0,0.0) circle (1.5cm);
+%         \fill[blue!30] (0.0,0.0) circle (1.5cm);
+
+%         \draw[->, line width=1.0pt] ({1.5*cos(65)}, { 1.5*sin(65) }) -- ({ 2.5*cos(65)  }, { 2.5*sin(65)  }) node[ above left] {$n $};
+%         % \draw[->, line width=1.0pt] ({1.5*cos(45)}, { 1.5*sin(45) }) -- ({ 1.5*cos(45) - 1.5*sin(45) }, { 1.5*sin(45) + 1.5*cos(45) }) node[ above right] {$t $};
+
+%         % Labels
+%         \node[below right] at (0.5,0.5) {$\Omega$};
+%         \node[below right] at (-1.5,-1.2) {$\Gamma$};
+%     \end{tikzpicture}
+%     \caption{ Illustration of the domain $\Omega $, the boundary $\Gamma $ and the normal vector $n$. }
+%     \label{fig:domain_construction}
+% \end{figure}
+% \end{columns}
+
+% \end{frame}
+
+\begin{frame}
+    \frametitle{The Biharmonic Problem (on a polygon)}
+    \begin{columns}
+        \column{0.55\textwidth}
+        \begin{block}{}
+            Let $\Omega \approx \Omega_{h} = \mathcal{T}_{h}$ be a bounded \textcolor{red}{polygonal} domain with boundary $\Gamma $ . Let the biharmonic problem have the form s.t. $u:\Omega \mapsto \mathbb{R} $,
+            \begin{equation}
+                \label{eq:bi_problem}
+                \begin{split}
+                    \Delta^2 u + \alpha u & = f( x) \quad \text{in } \Omega, \\
+                    \partial_{n} u & = 0 \quad \text{on } \Gamma , \\
+                    \partial_{n} \Delta u & = 0 \quad \text{on } \Gamma . \\
+                \end{split}
+            \end{equation}
+            Here is $\Delta ^2 = \Delta \left( \Delta \right) $ the biharmonic operator.
+        \end{block}
+
+        \column{0.45\textwidth}
+        \begin{figure}[htpb!]
+            \centering
+            \begin{tikzpicture}
+                % FIGURE OF FITTED MESH
+                % Boundary points
+                \foreach \i in {0, 45, ..., 315} {
+                    \coordinate (boundary-\i) at (\i:1.5cm);
+                }
+                % Interior points
+                \coordinate (interior-1) at (0.75, 0);
+                \coordinate (interior-2) at (-0.75, 0);
+                \coordinate (interior-3) at (0, 0.75);
+                \coordinate (interior-4) at (0, -0.75);
+
+                % Create a cycle connecting all the boundary points
+                \fill[blue!30] (boundary-0) -- (boundary-45) -- (boundary-90) -- (boundary-135) -- (boundary-180) -- (boundary-225) -- (boundary-270) -- (boundary-315) -- cycle;
+
+                % Labels
+                \node[below right] at (0.4,0.7) {$\Omega $};
+                \node[below right] at (-1.5,1.7) {$\Gamma $};
+
+                % Triangulation (manually specified)
+                \draw[line width=0.1pt] (boundary-0) -- (boundary-45) -- (interior-1) -- cycle;
+                \draw[line width=0.1pt] (boundary-45) -- (boundary-90) -- (interior-3) -- cycle;
+                \draw[line width=0.1pt] (boundary-90) -- (boundary-135) -- (interior-3) -- cycle;
+                \draw[line width=0.1pt] (boundary-135) -- (boundary-180) -- (interior-2) -- cycle;
+                \draw[line width=0.1pt] (boundary-180) -- (boundary-225) -- (interior-2) -- cycle;
+                \draw[line width=0.1pt] (boundary-225) -- (boundary-270) -- (interior-4) -- cycle;
+                \draw[line width=0.1pt] (boundary-270) -- (boundary-315) -- (interior-4) -- cycle;
+                \draw[line width=0.1pt] (boundary-315) -- (boundary-0) -- (interior-1) -- cycle;
+
+                % Triangulation between interior points
+                \draw[line width=0.1pt] (interior-1) -- (interior-2) -- (interior-3) -- cycle;
+                \draw[line width=0.1pt] (interior-1) -- (interior-2) -- (interior-4) -- cycle;
+
+                \draw[->, line width=1.0pt] ({1.4*cos(65)}, { 1.4*sin(65) }) -- ({ 2.4*cos(65)  }, { 2.4*sin(65)  }) node[ above left] {$n $};
+
+            \end{tikzpicture}
+            \caption{ Illustration of the mesh $\Omega_{h} $, the boundary $\Gamma $ and the normal vector $n$. }
+            \label{fig:domain_construction}
+        \end{figure}
+    \end{columns}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{ $C^0$ Interior Penalty Method (CIP) for the Biharmonic Problem }
+
+\begin{block}{}
+The proposed numerical scheme is to find an  $w \in V_{h}$ .t.
+\begin{equation*}
+\label{eq:CP_A_F}
+a_{h}( w, v )   = l_{h}( v) = ( f,v)_{\Omega } , \quad \forall v \in V_{h}  .
+\end{equation*}
+where
+\begin{equation*}
+\begin{split}
+a_{h} \left( w, v \right)   =&
+    \left( \alpha  w, v \right) _{\Omega }   +  \left( \Delta  w, \Delta v \right) _{\Omega } \\
+ & +
+  \left( \mean{  \Delta  w }, \jump{ \partial _{n }v} \right)_{\mathcal{F}_{h}}  +
+ \left( \mean{ \Delta  v }, \jump{ \partial _{n}w }      \right)_{\mathcal{F}_{h}}  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} w}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h}}
+ % l_{h}( v_{h}) & =  \left( f, v \right) _{\Omega }
+\end{split}
+\end{equation*}
+
+Which is inspired from Brenner2012 \footnotemark[1]
+\end{block}
+
+\footnotetext[1]{\fullcite{brenner2012}}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Cut Finite Element Method (CutFEM)}
+
+\begin{block}{Unfitted mesh vs fitted mesh}
+    CutFEM is a numerical method for solving partial differential equations (PDEs) using an unfitted mesh.
+
+\begin{figure}
+    \centering
+    % First TikZ picture
+    \begin{minipage}{0.45\textwidth}
         \centering
-        \includegraphics[width=10cm]{figures/AndreMassing.png}
-    \end{figure}
+        \begin{tikzpicture}[scale=0.80]
+            \draw[fill=blue!30] (0.2, 0.2) circle (1.5cm);
+            % Background mesh
+            \foreach \i in {-2.5, -1.5, ..., 2.5} {
+                \draw[line width=0.1pt, shift={(-2.5,\i)}] (0,0) -- (5,0);
+                \draw[line width=0.1pt, shift={(\i,-2.5)}] (0,0) -- (0,5);
+            }
+            % Labels
+            \node[below right] at (0.4,0.5) {$\Omega $};
+            \node[below right] at (-1.5,1.5) {$\Gamma $};
+            % \draw[blue, thick] (-2.5, -2.5) rectangle (2.5, 2.5);
+        \end{tikzpicture}
+    \end{minipage}
+    \hfill
+    % Second TikZ picture
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \begin{tikzpicture}[scale=1.0]
+            % FIGURE OF UNFITTED MESH
+            % Boundary points
+            \foreach \i in {0, 45, ..., 315} {
+                \coordinate (boundary-\i) at (\i:1.5cm);
+            }
+            % Interior points
+            \coordinate (interior-1) at (0.75, 0);
+            \coordinate (interior-2) at (-0.75, 0);
+            \coordinate (interior-3) at (0, 0.75);
+            \coordinate (interior-4) at (0, -0.75);
 
+            % Create a cycle connecting all the boundary points
+            \fill[blue!30] (boundary-0) -- (boundary-45) -- (boundary-90) -- (boundary-135) -- (boundary-180) -- (boundary-225) -- (boundary-270) -- (boundary-315) -- cycle;
+
+            % Labels
+            \node[below right] at (0.4,0.7) {$\Omega $};
+            \node[below right] at (-1.5,1.7) {$\Gamma $};
+
+            % Triangulation (manually specified)
+            \draw[line width=0.1pt] (boundary-0) -- (boundary-45) -- (interior-1) -- cycle;
+            \draw[line width=0.1pt] (boundary-45) -- (boundary-90) -- (interior-3) -- cycle;
+            \draw[line width=0.1pt] (boundary-90) -- (boundary-135) -- (interior-3) -- cycle;
+            \draw[line width=0.1pt] (boundary-135) -- (boundary-180) -- (interior-2) -- cycle;
+            \draw[line width=0.1pt] (boundary-180) -- (boundary-225) -- (interior-2) -- cycle;
+            \draw[line width=0.1pt] (boundary-225) -- (boundary-270) -- (interior-4) -- cycle;
+            \draw[line width=0.1pt] (boundary-270) -- (boundary-315) -- (interior-4) -- cycle;
+            \draw[line width=0.1pt] (boundary-315) -- (boundary-0) -- (interior-1) -- cycle;
+
+            % Triangulation between interior points
+            \draw[line width=0.1pt] (interior-1) -- (interior-2) -- (interior-3) -- cycle;
+            \draw[line width=0.1pt] (interior-1) -- (interior-2) -- (interior-4) -- cycle;
+
+            % \draw[blue, thick] (-2.5, -2.5) rectangle (2.5, 2.5);
+
+        \end{tikzpicture}
+    \end{minipage}
+
+
+    % \caption{Mesh comparison: unfitted mesh (left) adheres to domain and boundary, while fitted mesh (right) employs a triangular mesh for polygonal approximation of the circular domain.}
+    \label{fig:domain_mesh}
+    \end{figure}
+\end{block}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Cut Finite Element Method}
+Background Mesh
     \begin{block}{}
-        \begin{itemize}
-            \item Research aligned towards biophysics problems
-            \item $1 $ Postdoc
-            \item $2 $ PhD candidates
-            \item $1 $ Master's student
-        \end{itemize}
+        \begin{tikzpicture}[scale=1.0]
+
+            \fill[yellow!30] (-2.5,2.5) -- (2.5,2.5) -- (2.5,-2.5) -- (-2.5,-2.5) -- cycle;
+
+            \draw (0.1, 0.1) circle (1.5cm);
+            % Background mesh
+            \foreach \i in {-2.5, -2, ..., 2.5} {
+                \draw[line width=0.1pt, shift={(-2.5,\i)}] (0,0) -- (5,0);
+                \draw[line width=0.1pt, shift={(\i,-2.5)}] (0,0) -- (0,5);
+            }
+
+
+            % Labels
+            \node[below right] at (2.5,2.5) {$\widetilde{\mathcal{T}}_{h}$};
+        \end{tikzpicture}
     \end{block}
 \end{frame}
 
-    \begin{frame}{Introduction}
-        \begin{columns}
-            % Column 1
-            \begin{column}{0.5\textwidth}
-                \begin{itemize}
-                    \item Offshore apprentice for 2 years
-                    \item Worked with downhole electric instruments find reservoir properties
-                        \begin{enumerate}
-                            \item Reservoir permeability and pressure
-                            \item Geological characteristics as rock dating, porosity etc.
-                        \end{enumerate}
-                \end{itemize}
-            \end{column}
+\begin{frame}
+    \frametitle{Cut Finite Element Method}
+    Active Mesh
+    \begin{block}{}
+        \begin{tikzpicture}[scale=1.0]
 
-            % Column 2
-            \begin{column}{0.5\textwidth}
-                \begin{figure}
-                    \centering
-                    \includegraphics[width=1.0\textwidth]{figures/offshore.jpg}
-                \end{figure}
-            \end{column}
-        \end{columns}
-    \end{frame}
+            % POTENTIAL ACTIVE MESH
+            \fill[orange!30] (2,2) -- (2,-1.5) --(-1.5,-1.5) -- (-1.5,2) -- cycle;
+
+            % ELEMENTS WITH NO INTERSECTION
+            % lower left
+            \fill[white] (-1.5,-1.5) rectangle (-1.0,-1.0);
+            \fill[white] (-1.5,2.0) rectangle (-1.0,1.5);
+            \fill[white] (-1.0,2.0) rectangle (-0.5,1.5);
+            \fill[white] (2,2) rectangle (1.5,1.5);
+            \fill[white] (1.5,2) rectangle (1.0,1.5);
+            \fill[white] (2,1.5) rectangle (1.5,1.0);
+            \fill[white] (1.5,-1) rectangle (2,-1.5);
+            \fill[white] (1.5,-0.5) rectangle (2,-1.0);
+
+            % CUT ELEMENTS
+            \fill[orange!30] (-0.5,2.0) rectangle (1.0,1.5);
+            \fill[orange!30] (-1.5,1.5) rectangle (0.0,1.0);
+            \fill[orange!30] (0.5,1.5) rectangle (1.5,1.0);
+            \fill[orange!30] (-1.5,1.0) rectangle (-1.0,-1.0);
+            \fill[orange!30] (-1.0,-0.5) rectangle (-0.5,-1.5);
+            \fill[orange!30] (-0.5,-1.5) rectangle (1.5,-1.0);
+            \fill[orange!30] (1.5,-1) rectangle (1.0,-0.0);
+            \fill[orange!30] (1.5,-0.5) rectangle (2.0,1.0);
+            \fill[orange!30] (1.0,0.5) rectangle (1.5,1.0);
+
+            \draw (0.1, 0.1) circle (1.5cm);
+            % Background mesh
+            \foreach \i in {-2.5, -2, ..., 2.5} {
+                \draw[line width=0.1pt, shift={(-2.5,\i)}] (0,0) -- (5,0);
+                \draw[line width=0.1pt, shift={(\i,-2.5)}] (0,0) -- (0,5);
+            }
+
+
+            % Labels
+            % \node[below right] at (2.5,2.5) {$\widetilde{\mathcal{T}}_{h}$};
+            % \node[below right] at (0.4,0.5) {$\mathcal{T}_{int}$};
+            \node[below right] at (-0.5,0.5) {$\mathcal{T}_{h }$};
+        \end{tikzpicture}
+    \end{block}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Cut Finite Element Method}
+    Interior Mesh and Cut Cells
+    \begin{block}{}
+        \begin{tikzpicture}[scale=1]
+
+            % POTENTIAL ACTIVE MESH
+            \fill[blue!30] (2,2) -- (2,-1.5) --(-1.5,-1.5) -- (-1.5,2) -- cycle;
+
+            % ELEMENTS WITH NO INTERSECTION
+            % lower left
+            \fill[white] (-1.5,-1.5) rectangle (-1.0,-1.0);
+            \fill[white] (-1.5,2.0) rectangle (-1.0,1.5);
+            \fill[white] (-1.0,2.0) rectangle (-0.5,1.5);
+            \fill[white] (2,2) rectangle (1.5,1.5);
+            \fill[white] (1.5,2) rectangle (1.0,1.5);
+            \fill[white] (2,1.5) rectangle (1.5,1.0);
+            \fill[white] (1.5,-1) rectangle (2,-1.5);
+            \fill[white] (1.5,-0.5) rectangle (2,-1.0);
+
+            % CUT ELEMENTS
+            \fill[green!40] (-0.5,2.0) rectangle (1.0,1.5);
+            \fill[green!40] (-1.5,1.5) rectangle (0.0,1.0);
+            \fill[green!40] (0.5,1.5) rectangle (1.5,1.0);
+            \fill[green!40] (-1.5,1.0) rectangle (-1.0,-1.0);
+            \fill[green!40] (-1.0,-0.5) rectangle (-0.5,-1.5);
+            \fill[green!40] (-0.5,-1.5) rectangle (1.5,-1.0);
+            \fill[green!40] (1.5,-1) rectangle (1.0,-0.0);
+            \fill[green!40] (1.5,-0.5) rectangle (2.0,1.0);
+            \fill[green!40] (1.0,0.5) rectangle (1.5,1.0);
+
+            \draw (0.1, 0.1) circle (1.5cm);
+            % Background mesh
+            \foreach \i in {-2.5, -2, ..., 2.5} {
+                \draw[line width=0.1pt, shift={(-2.5,\i)}] (0,0) -- (5,0);
+                \draw[line width=0.1pt, shift={(\i,-2.5)}] (0,0) -- (0,5);
+            }
+
+
+            % Labels
+            \node[below right] at (0.4,0.5) {$\mathcal{T}_{int}$};
+            \node[below right] at (-1.5,0.5) {$\mathcal{T}_{\Gamma }$};
+        \end{tikzpicture}
+    \end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Cut Finite Element Method}
+
+A recent and promising numerical technique for PDEs, has gained significant momentum in the past decade \footnotemark[1]\footnotemark[2].
+
+\begin{block}{}
+    \begin{itemize}
+        \item  Complex domains and moving domains efficiently.
+        \item Utilizing so-called ghost penalties to ensure well-posedness.
+        % \item Dividing the computational domains into \textbf{background} , \textbf{active}, \textbf{cut}  and \textbf{interior} mesh.
+    \end{itemize}
+\end{block}
+\footnotetext[1]{\fullcite{burman2015cutfem}}
+\footnotetext[2]{\fullcite{gurkan2019stabilized}}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{ Cut $C^0$ Interior Penalty Method (CutCIP) }
+
+\begin{block}{}
+The discretized numerical problem is to solve $w \in V_{h}$ such that
+\begin{equation*}
+\label{eq:CP_A_F}
+A( w, v )  = a_{h}( w,v) + \textcolor{red}{g_{h}( w,v)}  = l_{h}( v), \quad \forall v \in V_{h}  .
+\end{equation*}
+
+Where the additional bilinear term $g_{h}( w,v) : V_{h} \times V_{h} \to  \mathbb{R} $ is the so-called \textbf{ghost penalty}, which does the numerical regularization to ensure stability on cut cells.
+
+\end{block}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{ Cut $C^0$ Interior Penalty Method}
+
+My master's thesis is dedicated to demonstrating that the relevant properties remain valid for CutCIP formulation still holds.
+
+    \begin{block}{Well-posedness }
+         The discrete bilinear form $a_{h}$ is wellposed on $V_{h}$ if this holds; \[
+             \begin{split}
+                 (Coercivity) \quad  A( v,v) &  \gtrsim  \| v \|_{A }^{ 2 } \quad  \forall v \in  V_{h} \\
+            (Boundedness) \quad A( v,w) & \lesssim  \| v \|_{A }^{  }\| w \|_{a_{h} }^{  } \quad  \forall v,w \in  V_{h}
+             \end{split}
+        \]
+    \end{block}
+
+    % \begin{block}{A Priori Estimates }
+
+    %      Let $u$ be the solution to the strong problem with the corresponding discrete solution $u_{h}$ with polynomical order $k\ge 2$ .
+    %     Then does it exist  $l = \min_{} ( 2, k)  $ s.t.
+% \[
+    %     \| u - u_{h} \|_{a_{h}  }^{  } \lesssim  h^{l-1} \| u \|_{ H^{l} ( \Omega ) }^{  }
+% \]
+    % \end{block}
+    % \footnotetext[1]{\fullcite{Gu2012}}
+\end{frame}
 
 
 
-    \begin{frame}{Introduction}
-        \begin{columns}
-            % Column 1
-            \begin{column}{0.5\textwidth}
-                \begin{itemize}
-                    \item Robotics Engineer for 2 years
-                    \item  Revolve NTNU
-                    \item Autonomous Systems
-                        \begin{enumerate}
-                            \item Vehicle Dynamics
-                            \item Nonlinear MPC and trajectory optimization
-                            \item Unknown path planning
-                            \item Linux, C++, and Python \\
-                             (Casadi, acados, ROS, Docker etc)
-                        \end{enumerate}
-                \end{itemize}
-            \end{column}
+\begin{frame}
+\frametitle{ Cut $C^0$ Interior Penalty Method Results }
+% \frametitle{Manufactured Solution}
 
-            % Column 2
-            \begin{column}{0.5\textwidth}
-                \begin{figure}
-                    \centering
-                    \includegraphics[width=1.0\textwidth]{figures/atmos.jpg}
-                \end{figure}
-            \end{column}
-        \end{columns}
-    \end{frame}
 
-    \begin{frame}{Introduction}
-            % Column 2
-                \begin{figure}
-                    \centering
-                    \includegraphics[width=0.65 \textwidth]{figures/revolve.jpg}
-                \end{figure}
-    \end{frame}
+\begin{block}{Manufactured solution}
+    In the experiments will we only consider polynomial order $k=2$.
+We consider the manufactured solution:
+$$
+u_{ex}(\mathbf{x}) = \left(x_1^2 + x_2^2 - 1\right)^2 \cos(2\pi x_1) \cos(2\pi x_2)
+$$
+where $\mathbf{x}=(x_1,x_2)$ and $\Omega=\{(x_1,x_2): x_1^2 + x_2^2 \le  1\}$.
+This manufactured solution can be used to test the accuracy of numerical methods for solving the above differential equation.
+\end{block}
+\end{frame}
 
-    \begin{frame}{Introduction}
-                \begin{figure}
-                    \centering
-                    \includegraphics[width=0.90 \textwidth]{figures/revolve_video.png}
-                \end{figure}
-            Live demonstration of the system: \href{https://www.youtube.com/watch?v=_2T3MFnWG7A&t=44s&ab_channel=RevolveNTNU}{here}
-    \end{frame}
+
+\begin{frame}
+\frametitle{ Cut $C^0$ Interior penalty method (CutCIP) Results }
+\resizebox{\textwidth}{!}{
+\begin{tabular}{rrrrrrrrr}
+    \hline\hline
+    \textbf{$n$} & \textbf{$\Vert e \Vert_{L^2}$} & \textbf{EOC} & \textbf{$ \Vert e \Vert_{H^1}$} & \textbf{EOC} & \textbf{$\Vert e \Vert_{ a_h,* }$} & \textbf{EOC} & \textbf{Cond number} & \textbf{ndofs} \\\hline
+    4 & 2.4E+00 &  & 3.3E+00 &  & 6.2E+01 &  & 8.7E+04 & 8.1E+01 \\
+    8 & 3.6E-01 & 2.72 & 1.1E+00 & 1.60 & 3.9E+01 & 0.68 & 5.1E+05 & 2.4E+02 \\
+    16 & 2.2E-02 & 4.06 & 2.5E-01 & 2.12 & 1.4E+01 & 1.51 & 3.7E+06 & 8.3E+02 \\
+    32 & 5.6E-03 & 1.97 & 6.0E-02 & 2.04 & 3.6E+00 & 1.93 & 2.8E+07 & 3.0E+03 \\
+    64 & 1.4E-03 & 2.00 & 1.5E-02 & 2.02 & 9.2E-01 & 1.96 & 2.1E+08 & 1.1E+04 \\
+    128 & 3.5E-04 & 2.00 & 3.7E-03 & 2.01 & 2.4E-01 & 1.94 & 1.7E+09 & 4.3E+04 \\\hline\hline
+  \end{tabular}
+}
+\end{frame}
+
+
+
+
+
+
+\begin{frame}
+\frametitle{ Cut $C^0$ Interior penalty method (CutCIP) Results }
+
+\begin{figure}[h!]
+    \centering
+    \resizebox{0.6\textwidth}{!}{\input{conv_plot}}
+    \caption{The plot presents the $L^2$ and $H^1$ error norms and the error in the energy norm ($\Vert e \Vert_{a_h,*}$).}
+    \label{fig:CutFEM_error1}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{The Cahn Hilliard Equation}
+    \begin{columns}
+        % Left column
+        \begin{column}{0.5\textwidth}
+            \begin{block}{Recall}
+                The problem has the form $u( x, t): \Omega \times [0,T] \mapsto [-1,1]$ s.t.
+                \[
+                \begin{split}
+                    u_t+\Delta\left(\varepsilon \Delta u-\frac{1}{\varepsilon} f(u)\right)&=0 \quad \text{in } \Omega \\
+                    \partial_n u=\partial_n \Delta u& =0 \quad \text{on } \Gamma  \\
+                    u & =u_0 \quad \text{on } \Omega
+                \end{split}
+                \]
+                where $f(u)$ is a nonlinear function.
+            \end{block}
+        \end{column}
+        % Right column
+        \begin{column}{0.5\textwidth}
+            \begin{block}{Plan forward}
+                \begin{enumerate}
+                    \item We have now a tool to solve the $\Delta ( \Delta u) $ operator
+                    \item Will utilize the time-iteration scheme to solve non-linearity
+                \end{enumerate}
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{The CutCIP Cahn-Hilliard Formulation}
+
+
+Drawing upon the concepts delineated in Feng\footnotemark[1], the most efficient approach to address the nonlinear term is by employing an implicit-explicit (IMEX) scheme.
+
+\begin{block}{IMEX method on the CutCIP formulation}
+    Let $u^{m}_{h} \in V_{h}$ for the timesteps $m=0,1,\ldots,M$. Let $u_{h}^{0} = u_{0}$ be the initial timestep, then is.
+\[
+(\overline{\partial}  _{t} u_{h}^m, v_h ) + \varepsilon A (u_{h}^{m}, v_h )+\frac{1}{\varepsilon} c_h ( u_{h}^{m-1}, v_h)=0 \quad \forall v_h \in V_h^m .
+\]
+Here is $c_{h}( . , .) $ an the nonlinear terms handled in a implicit fashion. The $ \overline{\partial}  _{t}$ operator is simply a finite difference scheme in time-dimension.
+
+\end{block}
+
+\footnotetext[1]{\fullcite{feng2007fully}}
+\end{frame}
+
+\begin{frame}
+\frametitle{The CutCIP Cahn-Hilliard Experiments}
+Implemented using the Gridap FEM framework written in Julia \footnotemark[1].
+
+
+\begin{block}{Simulation parameters}
+    \begin{itemize}
+        \item Physical domain $\Omega$  is a 4 discs of radius $R=1$ with distance $d=0.999$, i.e. they are touching!
+        \item Inital data is $u_0 = random(-1,1)$ in physical domain $\Omega $.
+        % \item Backgroundmesh with size ($L\times L$ ) for $L=2$ and $n=128$.
+        % \item Polynomial order $k=2$ .
+        % \item Physical parameter $\varepsilon  = \frac{1}{30}$.
+        % \item Time-step $\tau = \varepsilon ^{2} \frac{1}{10} $ for the interval $ 0\le t \le 10^3 \tau $.
+    \end{itemize}
+\end{block}
+
+\footnotetext[1]{\fullcite{badia2020gridap}}
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{The CutCIP Cahn-Hilliard Experiments}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{CH-example/0.png}
+    \caption{Iteration 0}
+    \label{fig:your_image_label}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{The CutCIP Cahn-Hilliard Experiments}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{CH-example/1.png}
+    \caption{Iteration 1}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{The CutCIP Cahn-Hilliard Experiments}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{CH-example/10.png}
+    \caption{Iteration 10}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{The CutCIP Cahn-Hilliard Experiments}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{CH-example/50.png}
+    \caption{Iteration 50}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{The CutCIP Cahn-Hilliard Experiments}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{CH-example/200.png}
+    \caption{Iteration 200}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{The CutCIP Cahn-Hilliard Experiments}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{CH-example/1000.png}
+    \caption{Iteration 1000}
+\end{figure}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Further work}
+\begin{enumerate}
+    \item Adaptive time steps.
+    \item Further numerical validation.
+    \item Extend the method to handle moving domains.
+
+\end{enumerate}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Questions?}
+\end{frame}
+
+

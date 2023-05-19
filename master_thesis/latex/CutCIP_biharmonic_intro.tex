@@ -1,228 +1,16 @@
 
-\newpage
-\section{CutCIP Biharmonic problem}%
+\section{Cut Continuous Interior Penalty Method for the Biharmonic Problem}%
 \label{sec:cutcip_biharmonic_problem}
 
-\begin{figure}[h!]
-\centering
-\begin{tikzpicture}[scale=0.80]
-    \draw[fill=blue!30] (0.1, 0.1) circle (1.5cm);
-    % Background mesh
-    \foreach \i in {-2.5, -2, ..., 2.5} {
-        \draw[line width=0.1pt, shift={(-2.5,\i)}] (0,0) -- (5,0);
-        \draw[line width=0.1pt, shift={(\i,-2.5)}] (0,0) -- (0,5);
-    }
-    % Labels
-    \node[below right] at (0.4,0.5) {$\Omega $};
-    \node[below right] at (-1.5,1.5) {$\Gamma $};
-\end{tikzpicture}
-\caption{An illustration of a unfitted mesh.}
-\label{fig:domain_unfitted_mesh}
-\end{figure}
 
-\begin{figure}
-    \centering
-    % First TikZ picture
-    \begin{minipage}{0.45\textwidth}
-        \centering
-        \begin{tikzpicture}
-            % Circle
-            % \draw (0, 0) circle (1.5cm);
+Questions arise when we want to allow for complex geometries where some physical domain $\Omega $ has a smooth boundary $\Gamma $ and, thus, cannot be fully covered of a fitted mesh. This motivated us to define a unfitted finite element method.
 
-            % Fitted mesh (crude triangular mesh)
-            \foreach \i in {0, 30, ..., 330} {
-                \draw[fill=red!30] (0, 0) -- (\i:1.5cm) -- (\i+30:1.5cm) -- cycle;
-            }
-
-            % Mesh nodes
-            \foreach \i in {0, 30, ..., 330} {
-                \fill[black] (\i:1.5cm) circle (2pt);
-            }
-            \fill[black] (0, 0) circle (2pt);
-        \end{tikzpicture}
-    \end{minipage}
-    \hfill
-    % Second TikZ picture
-    \begin{minipage}{0.45\textwidth}
-        \centering
-        \begin{tikzpicture}
-            % Boundary points
-            \foreach \i in {0, 45, ..., 315} {
-                \coordinate (boundary-\i) at (\i:1.5cm);
-            }
-            % Interior points
-            \coordinate (interior-1) at (0.75, 0);
-            \coordinate (interior-2) at (-0.75, 0);
-            \coordinate (interior-3) at (0, 0.75);
-
-            % Create a cycle connecting all the boundary points
-            \fill[red!30] (boundary-0) -- (boundary-45) -- (boundary-90) -- (boundary-135) -- (boundary-180) -- (boundary-225) -- (boundary-270) -- (boundary-315) -- cycle;
-
-            \foreach \i in {0, 45, ..., 315} {
-                \fill[black] (\i:1.5cm) circle (2pt);
-            }
-
-
-            \fill[black] (interior-1) circle (2pt);
-            \fill[black] (interior-2) circle (2pt);
-            \fill[black] (interior-3) circle (2pt);
-
-
-            % Triangulation (manually specified)
-            \draw (boundary-0) -- (boundary-45) -- (interior-1) -- cycle;
-            \draw (boundary-45) -- (boundary-90) -- (interior-3) -- cycle;
-            \draw (boundary-90) -- (boundary-135) -- (interior-3) -- cycle;
-            \draw (boundary-135) -- (boundary-180) -- (interior-2) -- cycle;
-            \draw (boundary-180) -- (boundary-225) -- (interior-2) -- cycle;
-            \draw (boundary-225) -- (boundary-270) -- (interior-2) -- cycle;
-            \draw (boundary-270) -- (boundary-315) -- (interior-1) -- cycle;
-            \draw (boundary-315) -- (boundary-0) -- (interior-1) -- cycle;
-
-            % Triangulation between interior points
-            \draw (interior-1) -- (interior-2) -- (interior-3) -- cycle;
-        \end{tikzpicture}
-    \end{minipage}
-\caption{Examples of different triangulations for a fitted mesh for a circle.}
-\label{fig:domain_fitted_mesh}
-\end{figure}
-
-
-% \begin{tikzpicture}
-%     % Boundary points
-%     \foreach \i in {0, 45, ..., 315} {
-%         \coordinate (boundary-\i) at (\i:1.5cm);
-%     }
-%     % Interior points
-%     \coordinate (interior-1) at (0.75, 0);
-%     \coordinate (interior-2) at (-0.75, 0);
-%     \coordinate (interior-3) at (0, 0.75);
-
-%     % Create a cycle connecting all the boundary points
-%     \fill[red!30] (boundary-0) -- (boundary-45) -- (boundary-90) -- (boundary-135) -- (boundary-180) -- (boundary-225) -- (boundary-270) -- (boundary-315) -- cycle;
-
-%     \foreach \i in {0, 45, ..., 315} {
-%         \fill[black] (\i:1.5cm) circle (2pt);
-%     }
-
-%     \fill[black] (interior-1) circle (2pt);
-%     \fill[black] (interior-2) circle (2pt);
-%     \fill[black] (interior-3) circle (2pt);
-
-%     % Triangulation (manually specified)
-%     \draw (boundary-0) -- (boundary-45) -- (interior-1) -- cycle;
-%     \draw (boundary-45) -- (boundary-90) -- (interior-3) -- cycle;
-%     \draw (boundary-90) -- (boundary-135) -- (interior-3) -- cycle;
-%     \draw (boundary-135) -- (boundary-180) -- (interior-2) -- cycle;
-%     \draw (boundary-180) -- (boundary-225) -- (interior-2) -- cycle;
-%     \draw (boundary-225) -- (boundary-270) -- (interior-2) -- cycle;
-%     \draw (boundary-270) -- (boundary-315) -- (interior-1) -- cycle;
-%     \draw (boundary-315) -- (boundary-0) -- (interior-1) -- cycle;
-
-%     % Triangulation between interior points
-%     \draw (interior-1) -- (interior-2) -- (interior-3) -- cycle;
-
-%     % Draw a square around the circle
-%     \draw[blue] (-2.0cm, -2.0cm) rectangle (3.5cm, 2.0cm);
-
-%     % Define rectangle node coordinates
-%     \foreach \x [evaluate=\x as \xx using int(10*\x)] in {-2.0, -1.0, ..., 3.5} {
-%       \foreach \y [evaluate=\y as \yy using int(10*\y)] in {-2.0, 2.0} {
-%         \coordinate (rect-\xx-\yy) at (\x, \y);
-%         \fill[black] (\x, \y) circle (2pt);
-%       }
-%     }
-%     \foreach \y [evaluate=\y as \yy using int(10*\y)] in {-1.0, 0, 1.0} {
-%       \foreach \x [evaluate=\x as \xx using int(10*\x)] in {-2.0, 2.3, 3.5} {
-%         \coordinate (rect-\xx-\yy) at (\x, \y);
-%         \fill[black] (\x, \y) circle (2pt);
-%       }
-%     }
-
-%     % Draw triangulation using \rect-\x-\y notation for x = 2.3 and x = 3.5
-%     % \draw (rect-23-20) -- (rect-35-20) -- (rect-23-0) -- cycle;
-%     % \draw (rect-23-10) -- (rect-35-10) -- (rect-23-0) -- cycle;
-%     % \draw (rect-23-0) -- (rect-35-0) -- (rect-23-10) -- cycle;
-%     % \draw (rect-23-10) -- (rect-35-10) -- (rect-23-20) -- cycle;
-%     % \draw (rect-23-20) -- (rect-35-20) -- (rect-35-10) -- cycle;
-
-% \end{tikzpicture}
-% \todo[inline]{ Fix triangulation. }
-
-A crucial advantage of CutFEM is its ability to handle unfitted meshes, as illustrated in Figure 1, where the mesh does not conform to the domain boundary $\Gamma$. The biharmonic equation, which is a fourth-order PDE, arises in numerous applications, such as thin plate bending, and is relevant to the Cahn-Hilliard problem. The Cahn-Hilliard equation describes phase separation in binary alloys and is characterized by a fourth-order term, making it a suitable candidate for the application of CutFEM.
-
-In contrast to the unfitted mesh in Figure \ref{fig:domain_unfitted_mesh}, Figure \ref{fig:domain_fitted_mesh} shows examples of fitted meshes, where the mesh conforms to the domain boundary. However, generating such meshes for complex geometries can be cumbersome and time-consuming. CutFEM offers a more flexible approach, enabling us to work with standard meshes and focus on the PDEs' discretization and the imposition of boundary conditions.
-
-Continuous interior penalty was first used for parabolic and elliptic problems \cite{douglas2008interior, arnold1982interior}. It was later applied to biharmonic problems.
-
-For the CutFEM formulation we impose the Neumann boundary condition similarly to the Nitsche's method \cite{nitsche1971variationsprinzip}.
-Mixed formulation of the biharmonic problem has been discussed here \cite{cai2023nitsche,burman2020cut}.
-
-
-\subsection{Weak formulation}%
-\label{sub:weak_formulation}
-
-    \begin{figure}[htpb!]
-        \centering
-        \begin{tikzpicture}
-            % Circle
-            \draw (0.0,0.0) circle (1.5cm);
-            \fill[blue!30] (0.0,0.0) circle (1.5cm);
-
-            \draw[->, line width=1.0pt] ({1.5*cos(45)}, { 1.5*sin(45) }) -- ({ 2.5*cos(45)  }, { 2.5*sin(45)  }) node[ above left] {$n $};
-            \draw[->, line width=1.0pt] ({1.5*cos(45)}, { 1.5*sin(45) }) -- ({ 1.5*cos(45) - 1.5*sin(45) }, { 1.5*sin(45) + 1.5*cos(45) }) node[ above right] {$t $};
-
-            % Labels
-            \node[below right] at (0.5,0.5) {$\Omega$};
-            \node[below right] at (-1.5,-1.5) {$\Gamma  = \partial \Omega$};
-        \end{tikzpicture}
-        \caption{ Illustration of an domain $\Omega $, the boundary $\Gamma $. The normal vector $n$  and the corresponding tangent vector.   }
-        \label{fig:domain_construction}
-    \end{figure}
-
-
-    Let $\Omega \subseteq    \mathbb{R} ^d$ be a physical mesh, $\Gamma  $ be a $C^2$ boundary  illustrated at Figure \ref{fig:domain_construction}. Assume we have the function $\alpha: \Omega \to \mathbb{R} $. We define the strong biharmonic problem to be on the form
-
-\begin{equation}
-    \label{eq:Bi_strong}
-\begin{split}
-    \Delta^2  u  + \alpha  u  & = f( x)  \quad \text{in } \Omega,   \\
-    \partial _{n} u & = g_{1}(x)   \quad \text{on } \Gamma ,  \\
-    \partial _{n} \Delta  u & = g_2(x)  \quad \text{on } \Gamma  .  \\
-\end{split}
-\end{equation}
-
-The goal is to write the problem on a weak form.
-Let $u \in H^{4}( \Omega ) $ be a solution of the strong problem and $v \in H^{2}( \Omega ) $ be a test function. We argue that this holds,
-    \[
-        \begin{split}
-(\Delta ^2u,v )_{\Omega } & = ( \partial _{n} \Delta u, v)_{\Gamma } - ( \nabla ( \Delta u) , \nabla v) _{\Gamma } \\
-&= ( D^2u, D^2v)_{\Omega } + ( \partial _{n} \Delta u ,v)_{\Gamma } - ( \partial _{nn} u, \partial _{n}v)_{\Gamma } - ( \partial _{tn} u, \partial _{t} v)_{\Gamma }.        \\
-        \end{split}
-    \]
-    Define the space $V_{g} = \left\{ u \in H^{2}( \Omega ) :  \partial _{n}u  \mid _{\Gamma } = g_1(x )  \right \} $ and $V = H^2( \Omega ) $.
-    % By applying the boundary conditions can we see that $( \partial _{n} \Delta u, v)_\Gamma   = ( g,v)_{\Gamma }$ which occurs naturally. However, the Neumann boundary condition can be imposed by assuming $u \in V_{0}$ and
-    %  as a consequence is the following terms $ ( \partial _{nn} u, \partial _{n}v)_{\Gamma }
-    % = 0$   and $( \partial _{tn} u, \partial _{t}v)_{\Gamma } = 0$. This follows from the fact that that the Neumann boundary condition is homogeneous s.t. $\partial _{n} v = 0$ and $\partial _{t} (\partial _{n}u) = 0 $.
-    % \todo[inline]{ But what if the Neumann conditions is not homogeneous? And why is it necessary to include it in the function space when it comes in "naturally"?  }
-    Let $u,v \in V$ then is it natural to define an general bilinear form  \[
-    a( u,v) = ( \alpha u,v)_{\Omega } +  ( D^2u, D^2v)_{\Omega }   .
-    \]
-    where $\alpha >0$ and a corresponding linear form $l: V \to \mathbb{R} $,
-    \[
-    l( v) = ( f ,v)_{\Omega  } -  ( g_{2},v)_{\Gamma } .
-    \]
-    We define the weak problem is to find a $u \in  V_{g}$ s.t. \[
-    a( u,v) = l(v) \quad  \forall v \in V_{}
-    \]
+\subsection{Unfitted Mesh}%
+\label{sub:unfitted_mesh}
 
 
 
-
-
-
-
-\subsection{Initial discrete formulation}%
-\label{sub:initial_discrete_formulation}
+Let $\Omega = \mathcal{T} _{h} \subseteq    \mathbb{R} ^d$ be a physical domain and $\Gamma  $ be a sufficiently smooth boundary in $C^2$ .
 
 We want to make a CutFEM version of the CIP problem. Let $\widetilde{\mathcal{T}_{h} } $ be a shape-regular and quasi-uniform background mesh. Let us denote the active set $\mathcal{T} _{h} \subseteq \widetilde{\mathcal{T}_{h}}$ which intersects the interior of the active domain $\Omega $, that is  \[
 \mathcal{T} _{h} = \left\{ T \in \widetilde{\mathcal{T} }_{h}  \mid  T \cap (\Omega \setminus \Gamma ) \neq \emptyset    \right\} .
@@ -237,7 +25,7 @@ For convenience, will we define also the interior of the active set as $\mathcal
 \[
 \mathcal{T} _{int} = \left\{ T \in \mathcal{T} _{h}   \mid  T \cap  Int(\Omega ) \neq \emptyset  \right\}.
 \]
-Hence, we have that the active set is the union of the interior and cut elements, $\mathcal{T} _{h} = \mathcal{T} _{int} \cap \mathcal{T} _{\Gamma }$. For an illustration, see figure.
+Hence, we have that the active set is the union of the interior and cut elements, $\mathcal{T} _{h} = \mathcal{T} _{int} \cap \mathcal{T} _{\Gamma }$. For an illustration, see Figure \ref{fig:background_mesh}.
 
 
 \begin{figure}\centering
@@ -352,7 +140,8 @@ Hence, we have that the active set is the union of the interior and cut elements
 
 
 
-
+\subsection{ Cut Continuous Interior Penalty Method }%
+\label{sub:cut_cip_method}
 
 We denote the $C^{0}$ polynomial space of order $k$ as
 \[
@@ -382,9 +171,116 @@ Similarly the linear form is defined as
  \[
 l_{h}( v) =  ( f,v)_{\mathcal{T} _{h} \cap \Omega } - (g_{2},v) - ( g_{1}, \partial _{nn}v) _{\Gamma } + \frac{\gamma }{h}  ( g_{1}, \partial _{n} v)   .
 \]
-To make sure the problem is stabilized will we add a ghost-penalty. That is, we define the discrete problem to find a $u_{h} \in V_{h}$ s.t. \[
+To make sure the problem is stabilized will we add a ghost-penalty $g_{h}: V_{h} \times  V_{h} \to \mathbb{R} $. That is, we define the discrete problem to find a $u_{h} \in V_{h}$ s.t. \[
 A_{h}( u_{h} ,v ) := a_{h}( u_{h}, v)  + g_{h}( u_{h},v) = l_{h} ( v) \quad  \forall v \in  V_{h}.
 \]
+Keep in mind that in contrast to the standard CIP methods, this method is defined on an unfitted mesh. As we will see, the analysis is the ghost penalty a method to ensure numerical stability on cut cell $\mathcal{T} _{\Gamma }$. The main reason why
+this numerical instability is happening for a unfitted mesh is that when a cell is badly cut, see examples in Figure \ref{fig:intersection-example}.
+In other words, when a cell is "badly cut," it means that it is intersected by the boundary $\Gamma$ in such a way that only a very small part of the cell lies inside or outside the domain. This can lead to a very poor condition number of the local system matrix corresponding to such a cell, causing numerical instability.
+
+The ghost penalty stabilization technique is designed to tackle this issue. Essentially, this approach introduces additional terms into the finite element method that penalize jumps in the discrete solution and its gradients across cell interfaces,
+typically the cut-cells. This penalty not only improves the conditioning of the system matrix, but also enhances the robustness of the method with respect to the location of the boundary inside each cell. However, to make this possible is to assume a
+so-called fat-intersection property which will be relevant in section \textbf{TODO: Add section to ghost penalty}.
+
+\begin{figure}[htbp]
+    \centering
+    \begin{minipage}{0.4\textwidth}
+        \centering
+        \begin{tikzpicture}
+            \coordinate (center) at (0, 0);
+
+            % Reference hexagon vertices
+            \coordinate (A1) at (0:2.5);
+            \coordinate (A2) at (60:2.5);
+            \coordinate (A3) at (120:2.5);
+            \coordinate (A4) at (180:2.5);
+            \coordinate (A5) at (240:2.5);
+            \coordinate (A6) at (300:2.5);
+            \coordinate (A7) at (300:2.5);
+
+
+            \fill[green!40] (center) --(A1) -- (A2) -- (A3) -- (A4) -- (A5)  -- cycle;
+            \fill[blue!30] (center) -- (A5)--(A6)-- (A7) -- (A1) -- cycle;
+
+            % Draw the individual edges
+            \draw (center) -- (A1);
+            \draw (center) -- (A2) --(A1);
+            \draw (center) -- (A3);
+            \draw (center) -- (A4);
+            \draw (A2) -- (A3);
+            \draw (A3) -- (A4);
+            \draw (A5) -- (A6);
+            \draw (A4) -- (A5);
+            \draw (center) -- (A5);
+            \draw (center) -- (A6) -- (A1);
+
+            \coordinate (Ti) at (-0,-1.5);
+            \coordinate (Tg) at (0.5,2.2);
+            \node[below] at (Tg) {$\mathcal{T}_{\Gamma }$};
+            \node[below] at (Ti) {$\mathcal{T}_{int }$};
+
+            \coordinate (T0) at (-0,1.2);
+            \coordinate (T1) at (-1.1,-0.4);
+            % \node[below] at (T0) {$T$};
+            % \node[below] at (T1) {$T'$};
+
+            \coordinate (C1) at (-3,-1.0);
+            \coordinate (C2) at (2.6,0.2);
+            \draw[-, line width=2pt, >=stealth] ($(C2)$) to[bend right=16.9] node[midway,xshift=-2.3cm, yshift=-1.3cm] {$\Gamma $} ($(C1)$);
+
+
+        \end{tikzpicture}
+    \end{minipage}
+    \hspace{1cm}
+    \begin{minipage}{0.4\textwidth}
+        \centering
+        \begin{tikzpicture}
+            \coordinate (center) at (0, 0);
+
+            % Reference hexagon vertices
+            \coordinate (A1) at (0:2.5);
+            \coordinate (A2) at (60:2.5);
+            \coordinate (A3) at (120:2.5);
+            \coordinate (A4) at (180:2.5);
+            \coordinate (A5) at (240:2.5);
+            \coordinate (A6) at (300:2.5);
+            \coordinate (A7) at (300:2.5);
+
+
+            \fill[green!40] (center) --(A1) -- (A2) -- (A3) -- (A4) -- cycle;
+            \fill[blue!30] (center) (A4) -- (A5)--(A6)-- (A7) -- (A1) -- cycle;
+
+            % Draw the individual edges
+            \draw (center) -- (A1);
+            \draw (center) -- (A2) --(A1);
+            \draw (center) -- (A3);
+            \draw (center) -- (A4);
+            \draw (A2) -- (A3);
+            \draw (A3) -- (A4);
+            \draw (A5) -- (A6);
+            \draw (A4) -- (A5);
+            \draw (center) -- (A5);
+            \draw (center) -- (A6) -- (A1);
+
+            \coordinate (Ti) at (-0,-1.5);
+            \coordinate (Tg) at (0.5,2.2);
+            \node[below] at (Tg) {$\mathcal{T}_{\Gamma }$};
+            \node[below] at (Ti) {$\mathcal{T}_{int }$};
+
+            \coordinate (T0) at (-0,1.2);
+            \coordinate (T1) at (-1.1,-0.4);
+            \node[below] at (T0) {$T$};
+
+            \coordinate (C1) at (-3,0.1);
+            \coordinate (C2) at (2.6,0.2);
+            \draw[-, line width=2pt, >=stealth] ($(C2)$) to[bend right=0.9] node[midway,xshift=-2.5cm, yshift=-0.5cm] {$\Gamma $} ($(C1)$);
+
+        \end{tikzpicture}
+    \end{minipage}
+        \caption{Two examples of bad cut cells. At some point it is even hard to distinguish between interior and cut cells.}
+        \label{fig:intersection-example}
+\end{figure}
+
 We define the underlying norms for $ v \in V_{h} $ as
     \begin{align}
         \label{eq:bi_ah_norm}
@@ -644,8 +540,6 @@ where we just applied the definition of the norms $\| \cdot  \|_{a_{h}  }^{  } $
     Hence, the proof is complete.
 \end{proof}
 
-    % \todo[inline]{ Why is not $\| \mean{ \partial _{nn} v}   \|_{\mathcal{F}_h^{}  }^{  } \lesssim \|  \partial _{nn} v   \|_{ \mathcal{F}^{} }^{  }  $ interesting for $v \in V + V_h$, but is often used for $v \in V$?  Ex. the mean is conserved in the $\|
-    % \cdot \|_{a_h,*}$ norm}
 
 
 

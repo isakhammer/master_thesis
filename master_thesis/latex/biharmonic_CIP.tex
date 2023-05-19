@@ -1,327 +1,135 @@
 
 \newpage
-\section{CIP biharmonic problem }%
+\section{Continuous Interior Penalty biharmonic problem }%
 \label{sec:CIP_biharmonic_problem}
 
-
-
-
-\subsection{Strong form of the biharmonic problem}%
-\label{sub:strong_form_of_the_biharmonic_equation}
-
-Let $\Omega \subseteq    \mathbb{R} ^d$ be a bounded polygonal domain and $\Gamma $ be its corresponding boundary. Let the biharmonic problem have the form,
-
+Recall the biharmonic problem.
+Let $\Omega \subseteq    \mathbb{R} ^d$ be a bounded polygonal domain and $\Gamma $ be its corresponding boundary. Let the biharmonic problem BH have the form,
 \begin{equation}
 \label{eq:bi_problem}
 \begin{split}
     \Delta^2  u  + \alpha  u  & = f( x)  \quad \text{in } \Omega,   \\
-    \partial _{n} u & = g_{1}  \quad \text{on } \partial \Omega,  \\
-    \partial _{n} \Delta  u & = g_{2}  \quad \text{on } \partial \Omega .  \\
+    \partial _{n} u & = g_{1}(x)   \quad \text{on } \partial \Omega,  \\
+    \partial _{n} \Delta  u & = g_{2}( x)   \quad \text{on } \partial \Omega .  \\
 \end{split}
 \end{equation}
-Here is $\Delta ^2 = \Delta  \left( \Delta  \right) $ the biharmonic operator, also known as the bilaplacian. We will assume for the strong form that $u \in H^{4}\left( \Omega  \right) $, $\alpha  \in  \mathbb{R} $ and $f, \in L^{2}\left( \Omega  \right)
-$. The functions $g_{1},g_{2}: \Omega  \to \mathbb{R}$ are denoted as boundary conditions.
+Here is $\Delta ^2 = \Delta  \left( \Delta  \right) $ the biharmonic operator, also known as the bilaplacian. We will assume for the strong form that $u \in H^{4}\left( \Omega  \right) $, $\alpha  \in  \mathbb{R} $ and $f \in L^{2}\left( \Omega  \right)
+$. The functions $g_{1},g_{2}: \Omega  \to \mathbb{R}$ are denoted as boundary conditions similar to the CH problem.
 
-\subsection{  Weak form biharmonic equation in $H^{4}\left( \Omega  \right) $}%
+\begin{remark}
+It is worth noting that the BH problem is closely related to the Kirchhoff's plate problem by changing the boundary conditions s.t. $u = \partial _{n } u = 0$ on $\Gamma $, which is in the literature known as so-called clamped boundary conditions.
+Many of the papers we refer to may consider clamped boundary condition and not the CH boundary conditions. The main difference relies on if the problem is treated with homogeneous or non-homogeneous boundary conditions and if the discrete space is
+imposing the Dirichlet and Neumann conditions strongly in the discrete solution space or weakly using the Nitsche's method \cite{nitsche1971variationsprinzip}.
+\end{remark}
+
+
+\subsection{Continuous Interior Penalty formulations}%
+\label{sub:continuous_interior_penalty_formulations}
+
+We define the two relevant CIP formulations for the \eqref{eq:bi_problem} as follows. Let $$V_{h} = \left\{ v \in C^{0}\left( \Omega  \right): v_{T} = v | _{T} \in \mathcal{P} _{2}\left( T \right), \forall T \in
+\mathcal{T}_{h}    \right\}$$
+
+The general idea is to construct a bilinear problem $a_{h}: V_{h} \times  V_{h} = \mathbb{R} $ and $l_{h}: V^{h} \to \mathbb{R} $ s.t. there exists an $u \in V_{h}$ s.t. $a_{h}( u_{h}, v_{h}) = l_{h}( v) $ for all $v \in V_{h}$. For the CIP
+formulation we will investigate two formulations of the forms $a_{h}$ and $l_{h}$.
+
+\begin{enumerate}[label=\arabic*)]
+    \item The first problem is the Hessian problem formulation, that is,
+\begin{equation}
+\begin{split}
+a_{h}^{H} \left( u, v \right)   =&
+    \left( \alpha  u, v \right) _{\Omega }   +  \left( D^2 u, D^2v \right) _{\mathcal{T} _{h}} \\
+ & +
+  \left( \mean{  \partial _{n n} u }, \jump{ \partial _{n }u} \right)_{\mathcal{F}_{h}}  +
+ \left( \mean{ \partial _{n n} v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}}  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h}} \\
+ l_{h}^{H}( v_{h}) & =  \left( f, v \right) _{\Omega }  - \left(g_{2}, v  \right) _{\Gamma } - ( g_{1}, \partial _{nn} v)_{\Gamma } +  \frac{\gamma }{h} ( g_{1} , \partial _{n} v)_{\Gamma }
+\end{split}
+\end{equation}
+
+\item The Laplace formulation is
+    \begin{equation}
+    \label{eq:cip_laplace_form}
+        \begin{split}
+            a_{h}^{L} \left( u, v \right)   =&
+            \left( \alpha  u, v \right) _{\Omega }   +  \left( \Delta  u, \Delta v \right) _{ \Omega } \\
+                                             & + \left( \mean{  \Delta  u }, \jump{ \partial _{n }v} \right)_{\mathcal{F}_{h}  }  + \left( \mean{ \Delta  v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}  }  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h} } \\
+                                             & + \left(   \Delta  u ,  \partial _{n }v \right)_{\Gamma   }  + \left(  \Delta  v ,  \partial _{n}u       \right)_{\Gamma  }  + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{ \Gamma } \\
+                                             l^{L}_{h}( v_{h}) & =  \left( f, v \right) _{\Omega } - ( g_{2},  v )_{\Gamma } -  ( g_{1}, \Delta  v  )_{\Gamma }  + \frac{\gamma }{h} ( g_{1}, \partial _{n} v  )_{\Gamma }
+                                         \end{split}
+                                     \end{equation}
+
+\end{enumerate}
+
+
+The Hessian formulation is well investigated by Susanne Brenner in several papers for \cite{brenner2012, brenner2012quadratic, brenner2012quadratic_kirk} with a corresponding analysis. Similarly, variants of the Laplace formulation can be found here
+\cite{feng2007fully, georgoulis2009discontinuous}.
+
+\begin{remark}
+
+As the author knows the exact Laplace formulation \eqref{eq:cip_laplace_form} is not found in the literature, but it is expected to have the same well-posedness and convergence properties as the
+Hessian formulation. Hence, in this master report will we (because of time limitations) focus on the Hessian formulation for the analysis. However, for the numerical results will will both be presented.
+\end{remark}
+
+\todo[inline]{ Write some notes about energy norms, well-posedness and a priori estimates.}
+
+
+\subsection{  Construction for Hessian CIP}%
 \label{sub:continious_weak_form_of_biharmonic_equation}
 
-\begin{figure}
-  \centering
-  \begin{minipage}[b]{0.45\textwidth}
-    \centering
-    \begin{tikzpicture}
-      % Draw x-axis
-      \draw[->, thick] (0,0) -- (4,0) node[right] {$x$};
-      % Draw y-axis
-      \draw[->, thick] (0,0) -- (0,3) node[above] {$y$};
-
-      % Draw nodes at center, A, B, and C with arbitrary y-values
-      \foreach \x/\y in {0/2.5, 1/1.7, 2/2.5, 3/1.2} {
-        \fill (\x,\y) circle (2pt); % Filled nodes with y-values
-        \fill (\x,0) circle (2pt); % Filled circles on x-axis
-      }
-
-      % Draw linear interpolation between points
-      \draw[blue, thick] (0,2.5) -- (1,1.7) -- (2,2.5) -- (3,1.2);
-
-      \draw[red, thick] (0,2.5) .. controls (0.5,0.5) and (0.5,3) .. (1,1.7) .. controls (1.5,0) and (1.5,6) .. (2,2.5) .. controls (2.5,1) and (2.5,3.5) .. (3,1.2);
-      \node at (1,0.5) [above] {$\jump{ u_{h} } = 0$};
-
-      \draw (3.2,2.8) rectangle (4.8,3.8); % Legend box
-      \draw[blue, thick] (3.4,3.5) -- (3.9,3.5); % Blue line for u_h
-      \draw[red, thick] (3.4,3.1) -- (3.9,3.1); % Red line for u
-      \node[anchor=west] at (4.0,3.5) {$u_h$}; % Label for u_h
-      \node[anchor=west] at (4.0,3.1) {$u$}; % Label for u
-
-    \end{tikzpicture}
-    \caption{Illustration of global $C^{0}$ continuous elements using $P^{1}$.}
-    \label{fig:CG_P1_ements}
-  \end{minipage}
-  \hfill
-  \begin{minipage}[b]{0.45\textwidth}
-    \centering
-    \begin{tikzpicture}
-      % Draw x-axis
-      \draw[->, thick] (0,0) -- (4,0) node[right] {$x$};
-      % Draw y-axis
-      \draw[->, thick] (0,0) -- (0,3) node[above] {$y$};
-
-      % Draw nodes at center, A, B, and C with arbitrary y-values
-      \foreach \x/\y in {0/2.5, 1/1.7, 2/2.5, 3/1.2} {
-        \fill (\x,\y) circle (2pt); % Filled nodes with y-values
-        \fill (\x,0) circle (2pt); % Filled circles on x-axis
-      }
-
-      % Draw discontinuous interpolation between points
-      \draw[blue, thick] (0,1.9) -- (1,1.9);
-      \draw[blue, thick] (1,1.3) -- (2,3.4);
-      \draw[blue, thick] (2,2.5) -- (3,1.5);
-
-      % Draw dotted lines between discontinuous interpolations
-      \draw[blue, thick, dotted] (1,1.9) -- (1,1.3);
-      \draw[blue, thick, dotted] (2,3.4) -- (2,2.5);
-
-      \node at (1,0.5) [above] {$\jump{ u_{h} } \neq 0$};
-
-      \draw[red, thick] (0,2.5) .. controls (0.5,0.5) and (0.5,3) .. (1,1.7) .. controls (1.5,0) and (1.5,6) .. (2,2.5) .. controls (2.5,1) and (2.5,3.5) .. (3,1.2);
-
-      \draw (3.2,2.8) rectangle (4.8,3.8); % Legend box
-      \draw[blue, thick] (3.4,3.5) -- (3.9,3.5); % Blue line for u_h
-      \draw[red, thick] (3.4,3.1) -- (3.9,3.1); % Red line for u
-      \node[anchor=west] at (4.0,3.5) {$u_h$}; % Label for u_h
-      \node[anchor=west] at (4.0,3.1) {$u$}; % Label for u
-
-    \end{tikzpicture}
-    \caption{Illustration of locally discontinuous elements using $P^{1}$.}
-    \label{fig:DG_P1_ements}
-  \end{minipage}
-\end{figure}
-
-\begin{figure}
-  \centering
-  \begin{minipage}[b]{0.45\textwidth}
-    \centering
-    \begin{tikzpicture}
-        % Draw x-axis
-        \draw[->, thick] (0,0) -- (4,0) node[right] {$x$};
-        % Draw y-axis
-        \draw[->, thick] (0,0) -- (0,3) node[above] {$y$};
-
-        % Draw nodes at center, A, B, and C with arbitrary y-values
-        \foreach \x/\y in {0/2.5, 1/1.7, 2/2.5, 3/1.2} {
-            \fill (\x,\y) circle (2pt); % Filled nodes with y-values
-            \fill (\x,0) circle (2pt); % Filled circles on x-axis
-        }
-
-        % Exact solution
-        \draw[red, thick] (0,2.5) .. controls (0.5,0.5) and (0.5,3) .. (1,1.7) .. controls (1.5,0) and (1.5,6) .. (2,2.5) .. controls (2.5,1) and (2.5,3.5) .. (3,1.2);
-        \node at (1,0.6) [above] {$\jump{ \partial _{n} u_{h} } = 0$};
-        \node at (1,0.7) [below] {$\jump{ u_{h} }   = 0$};
-
-        % Second
-        \draw[blue, thick]
-        (0,2.5) .. controls (0.25,2.1) .. (1,1.7)
-        (1,1.7) .. controls (1.5,1.7) .. (2,2.5)
-        (2,2.5) .. controls (2.5,3.3) .. (3,1.2);
-
-        \draw (3.2,2.8) rectangle (4.8,3.8); % Legend box
-        \draw[blue, thick] (3.4,3.5) -- (3.9,3.5); % Blue line for u_h
-        \draw[red, thick] (3.4,3.1) -- (3.9,3.1); % Red line for u
-        \node[anchor=west] at (4.0,3.5) {$u_h$}; % Label for u_h
-        \node[anchor=west] at (4.0,3.1) {$u$}; % Label for u
-
-    \end{tikzpicture}
-    \caption{Illustration of globally $C^{1}$ continuous elements using $P^{2}$ elements.}
-    \label{fig:C1_P2_ements}
-  \end{minipage}
-  \hfill
-  \begin{minipage}[b]{0.45\textwidth}
-    \centering
-    \begin{tikzpicture}
-        % Draw x-axis
-        \draw[->, thick] (0,0) -- (4,0) node[right] {$x$};
-        % Draw y-axis
-        \draw[->, thick] (0,0) -- (0,3) node[above] {$y$};
-
-        % Draw nodes at center, A, B, and C with arbitrary y-values
-        \foreach \x/\y in {0/2.5, 1/1.7, 2/2.5, 3/1.2} {
-            \fill (\x,\y) circle (2pt); % Filled nodes with y-values
-            \fill (\x,0) circle (2pt); % Filled circles on x-axis
-        }
-
-        % Exact solution
-        \draw[red, thick] (0,2.5) .. controls (0.5,0.5) and (0.5,3) .. (1,1.7) .. controls (1.5,0) and (1.5,6) .. (2,2.5) .. controls (2.5,1) and (2.5,3.5) .. (3,1.2);
-        \node at (1,0.6) [above] {$\jump{ \partial _{n} u_{h} } \neq 0$};
-        \node at (1,0.7) [below] {$\jump{ u_{h} }   = 0$};
-
-        %% Second
-        \draw[blue, thick] (0,2.5) .. controls (0.5,1.2) .. (1,1.7)
-        .. controls (1.7,3.9) .. (2,2.5)
-        .. controls (2.7,1.9) .. (3,1.2); Second
-
-        \draw (3.2,2.8) rectangle (4.8,3.8); % Legend box
-        \draw[blue, thick] (3.4,3.5) -- (3.9,3.5); % Blue line for u_h
-        \draw[red, thick] (3.4,3.1) -- (3.9,3.1); % Red line for u
-        \node[anchor=west] at (4.0,3.5) {$u_h$}; % Label for u_h
-        \node[anchor=west] at (4.0,3.1) {$u$}; % Label for u
-
-    \end{tikzpicture}
-    \caption{Illustration of $C^{0}$ continuous elements and locally $C^1$ using $P^{2}$.}
-    \label{fig:C0_P2_ements}
-  \end{minipage}
-\end{figure}
-
-
-\todo[inline]{ Question? Why do we not use complete DG for biharmonic? }
-
-The goal is to find a useful full weak formulation of \eqref{eq:bi_problem}. Now, let the solution space be on the form,
-\begin{equation*}
-V = \left\{ v \in H^2( \Omega  ) : \partial _{n} v = g_{1}    \text{ on }
-\Gamma   \right\}.
-\end{equation*}
-Let $u,v \in  V$, then the derivation of the general weak form is,
-\[
-\begin{split}
-\left( \Delta ^2 u,v \right) _{\Omega }  &  = \left( \partial _{n} \Delta u, v \right) _{\Gamma  } - \left( \nabla \left( \Delta  u \right) , \nabla v \right) _{\Omega }  \\
-\end{split}
-\]
-In fact, the simplest formulation has the form,
-\[
-  \left( \nabla \left( \Delta u \right) , \nabla v \right) _{\Omega } =   \left( \Delta u, \partial _{n} v \right) _{\Gamma  } - \left( \Delta u, \Delta v \right)_{\Omega },
-\]
-A major issue with this formulation is that we do not have boundary condition for $\Delta u$. Instead, we can expand the term in the following fashion.
-
+Assume $u \in H^{4}( \Omega ) $ and $V = \left\{ v \in H^{1}( \Omega )  \mid  v \mid _{T} \in H^{m}( T) \ \forall T \in \mathcal{T} _{h}   \right\} $. We will start constructing a local theory for a triangle $K$ and then extend it to the full mesh
+$\mathcal{T}_{h} $. Using Greens Theorem is it obvious that \(
+\left( \Delta ^2 u,v \right) _{T }   = \left( \partial _{n} \Delta u, v \right) _{\partial T  } - \left( \nabla \left( \Delta  u \right) , \nabla v \right) _{T }
+\).
+We can expand the second term in the following way.
 \begin{equation*}
     \begin{split}
-\left( \nabla \left( \Delta u \right) , \nabla v \right) _{\Omega } & = \sum_{i = 1}^{ d}  \left( \Delta  \partial _{x_{i}} u, \partial _{x_{i}}v \right) _{\Omega }  \\
-&= \sum_{i = 1}^{d}  \left( \nabla \cdot \left( \nabla \partial _{x_{i}} u \right) , \partial _{x_{i}} v \right)_{\Omega }  \\
-&= \sum_{i = 1}^{d}  \left( \partial_n  \partial _{x_{i}} u, \nabla  \partial _{x_{i}} v \right) _{\Gamma } -   \left( \nabla \partial _{x_{i}} u, \nabla \partial _{x_{i}} v \right)_{\Omega }  \\
-&= \left(  \partial_n\nabla u, \nabla v \right) _{\Gamma  } - \left( D^2 u, D^2v \right) _{\Omega } \\
-&= \left( \partial _{nn} u, \partial _{n} v  \right)_{\Gamma  }   + \left( \partial _{nt} u, \partial _{t} v \right) _{\Gamma  } - \left( D^2u, D^2v \right) _{\Omega } .
+( \nabla ( \Delta u ) , \nabla v ) _{T } & = \sum_{i = 1}^{ d}  ( \Delta  \partial _{x_{i}} u, \partial _{x_{i}}v ) _{T }  = \sum_{i = 1}^{d}  ( \nabla \cdot ( \nabla \partial _{x_{i}} u ) , \partial _{x_{i}} v )_{T }  \\
+&= \sum_{i = 1}^{d}  ( \partial_n  \partial _{x_{i}} u, \nabla  \partial _{x_{i}} v ) _{\partial T } -   ( \nabla \partial _{x_{i}} u, \nabla \partial _{x_{i}} v )_{T }
+= (  \partial_n\nabla u, \nabla v ) _{\partial_{} T  } - ( D^2 u, D^2v ) _{T } \\
     \end{split}
 .\end{equation*}
-Hence, the boundary condition of $\Delta u$ is integrated into the formulation.  It can be denoted that $D^2$ is the Hessian matrix operator s.t.
-$$( D^2u, D^2v )_{\Omega } = \int_{\Omega }^{} D^{2}u : D^2v  dx,$$
-where $D^2u:D^2v$ is the inner product and similarly for $\partial _{nn} u = n\cdot D^2 u \cdot n$. Thus, we now have a weak form identity,
-\begin{equation}
-\label{eq:weak_form_identity}
-\left( \Delta ^2 u, v \right) _{ \Omega } = \left( D^2u, D^2v \right) _{\Omega} +   \left( \partial _{n} \Delta u, v  \right) _{\Gamma  }  - (\partial _{nn} u, \partial _{n} v )_{\Gamma  } - \left( \partial _{nt} u, \partial _{t}v
-\right) _{\Gamma  }
-.\end{equation}
-
-Using weak form identity \eqref{eq:weak_form_identity} and the boundary conditions stated in the strong form \eqref{eq:bi_problem} can we write
-
-\begin{equation}
-\begin{split}
-\left( \Delta ^2 u, v \right) _{ \Omega } & = \left( D^2u, D^2v \right) _{\Omega} +   \underbrace{\left( \partial _{n} \Delta u, v  \right) _{\Gamma  }}_{ = \left( g_{2},v \right) _{\Gamma  }}   - \underbrace{(\partial _{nn} u, \partial
-    _{n} v )_{\Gamma  }}_{ = 0}  - \underbrace{\left( \partial _{nt} u, \partial _{t}v \right) _{\Gamma  }}_{ = 0} \\
-    &= \left( D^2u, D^2v \right) _{\Omega } + \left( g_{2},v \right) _{\Gamma  }  \\
-\end{split}
-.\end{equation}
-\todo[inline]{ Is it a way to prove $\partial _{nn} u = 0$ and $\partial _{nt} u = 0$ on $\Gamma  $? }
-
-Finally, we can define the following bilinear functional $a:V\times V \to  \mathbb{R} $ and the linear functional $F: V \to \mathbb{R} $ s.t.
-\begin{equation}
-\label{eq:weak_formulation}
-\begin{split}
-a\left( u,v \right) & =    \left( D ^2 u , D ^2 v\right)_{\Omega }  +
-\alpha \left( u, v \right)_{\Omega }   , \\
-l\left( v \right) & = \left( f,v \right)_{\Omega } - \left(g_{2},v \right)_{\partial \Omega }.
-\end{split}
-\end{equation}
-
-Thus, we have now the necessary definitions to define the biharmonic problem.
-
-We define the biharmonic problem to solve for $u \in V  $ s.t.
-\begin{equation}
-    \label{eq:bi_weak1}
-a\left( u,v \right) = l(v)\quad \forall v \in
-V,
-\end{equation}
-where $ V = \left\{ v \in H^2\left( \Omega  \right) : \partial _{n} v = g_{1}  \text{ on }
-\Gamma   \right\}$.
-
-Remark that the problem the solution is only unique for $\alpha  > 0$. However, for $\alpha  = 0$ is it necessary to apply the solvability condition,
-\begin{equation*}
- \int_{\Omega }^{} f dx = \int_{\Gamma  }^{} g ds
-.\end{equation*}
-This condition easily arise when using the substitution $v=1$ in \eqref{eq:bi_weak1}. To handle this, can we extended the solution space \[
-V^{*} = \begin{cases}
-    V \quad & \alpha  > 0 \\
-    \left\{ v \in V: \int_{\Omega }^{} v dx  = 0\right\} \quad & \alpha  = 0,
-\end{cases}
+Hence, the boundary condition of $\Delta u$ is integrated into the formulation.  It can be denoted that $D^2$ is the Hessian matrix operator. Also remark that we apply the notation
+$( D^2u, D^2v )_{\Omega } = \int_{\Omega }^{} D^{2}u : D^2v  dx$ for the inner product $D^2u:D^2v$. We may also recall that the two times directional derivative is the identity $\partial _{nn} u = n \cdot  D^2 u \cdot  n$.
+Let $t_{i}$ for $i= 1,\ldots,d$  be the surface tangential vector basis for an facet in the set $\partial_{}T$.
+Given that $u$ is evaluated only on $\partial T$ can we write
+$\nabla u = \left( \nabla u \cdot n \right) n + \sum_i^{d-1} \left( \nabla u \cdot t_i \right) t_i$ s.t.
+\[
+    \begin{split}
+(  \partial_n\nabla u, \nabla v ) _{\partial_{} T  } & =  ( \partial _{n} ( \partial_{n}u \cdot n), \partial _{n} v \cdot n )_{\partial T}   +\sum_{i=1}^{d-1} ( \partial _{n} ( \partial_{t_{i}}u \cdot t_{i}), \partial _{t_{i}} v \cdot t_{i} )_{\partial T} \\
+& =  ( \partial _{nn} u ), \partial _{n} v  )_{\partial T}+\sum_{i=1}^{d-1} ( \partial _{n t_{i}}u , \partial _{t_{i}} v  )_{\partial T}
+    \end{split}
 \]
-However, we will from now generally assume that $\alpha >0$.
-Thus, the unique solution in $v \in V^{*}$ belongs to $H^{3 }(\Omega ) $ and we get the following
-elliptic regularity estimate \cite{gu2012c0},
+Here we used that $n\cdot n = 1$ and $t_{i} \cdot t_{i} = 1 \ \forall i$, which holds since every facet in $\partial T$ is flat.
+We applied the simple relation,
 \begin{equation*}
-\label{eq:bi_harmonic_ellitpic_regularity}
-\left| u \right| _{H^{3 }\left( \Omega  \right) }  \le C_{\Omega } \left( \| f \|_{  L^{2}( \Omega ) }^{  } + ( 1 + \alpha  ^{\frac{1}{2}}
-) \cdot \| w  \|_{ H^{4}\left( \Omega  \right)  }^{  }    \right) \quad w\in H^{4}\left( \Omega  \right).
+    \begin{align*}
+\partial_n (\partial_n u)  & = \nabla (\partial_n u) \cdot n = (D^2 u \cdot n) \cdot n = n^{T} D^2 u \ n = \partial _{nn} u, \\
+\partial_n (\partial_{t_{i}} u)  & = \nabla (\partial_n u) \cdot t_{i} = (D^2 u \cdot n) \cdot n = n^{T} D^2 u \ t_{i} = \partial _{nt_{i}} u.
+    \end{align*}
 \end{equation*}
+Adding all these calculations together we have the following identity,
+\[
+( \Delta ^2 u, v) _{T}   = ( D^2 u, D^2v)_{T } + ( \partial _{n}  \Delta u, v )_{\partial T} -( \partial _{n} ( \partial_{n}u ), \partial _{n} v  )_{\partial T}-\sum_{i=1}^{d-1} ( \partial _{n} ( \partial_{t_{i}}u ), \partial _{t_{i}} v  )_{\partial T}
+\]
 
-Finally, we can define the complete weak formulation of the biharmonic problem.
-We define the biharmonic problem to find $u \in V^*  $ s.t.
-\begin{equation}
-a\left( u,v \right) = l(v)\quad \forall v \in
-V^* .
-\end{equation}
-
-\subsection{Constructing Continuous Interior Penalty Method}%
-\label{sub:constructing_continious_interior_penalty_method}
-
- Let us assume that $u,v \in
-H^{4}\left( T  \right) $. Using that the weak form identity \eqref{eq:weak_form_identity} also holds for a triangle $T$ can we write
-\begin{equation}
-\label{eq:bi_basic_dg}
-\left( \Delta  ^{2} u,v \right) _{T} =  \left( D^2u,D^2v \right) _{T } - \left(\partial _{nt} u, \partial _{t}v
-\right)_{\partial T} - \left(\partial _{nn} u, \partial _{n}v \right)_{\partial T} + \left(\partial _{n} \Delta  u,v
-\right)_{\partial T}
-.\end{equation}
-For global continuity, let  $v \in V =  \left\{ v \in H^{1}\left( \Omega  \right): v_{T} \in  H^{4}\left( T \right), \ \forall T \in
-\mathcal{T}_{h}    \right\} $ and $u \in  H^{4}\left( \Omega  \right) $ such that,
+For global continuity we add all the triangles in the mesh $\mathcal{T} _{h}$.
 
 \begin{equation}
 \label{eq:bi_basic_dg2}
-\left( \Delta  ^{2} u,v \right) _{\Omega } = \sum_{T \in  \mathcal{T} _{h}}^{}  \left( D^2u,D^2v \right) _{T } - \left(\partial _{nt} u, \partial _{t}v
-\right)_{\partial T} - \left(\partial _{nn} u, \partial _{n}v \right)_{\partial T} + \left(\partial _{n} \Delta  u,v
-\right)_{\partial T}.
+\left( \Delta  ^{2} u,v \right) _{\Omega } = \sum_{T \in  \mathcal{T} _{h}}^{}  ( D^2 u, D^2v)_{T } + ( \partial _{n}  \Delta u, v )_{\partial T} -( \partial _{n} ( \partial_{n}u ), \partial _{n} v  )_{\partial T}-\sum_{i=1}^{d-1} ( \partial _{n t_{i}} u , \partial _{t_{i}} v  )_{\partial T}
 \end{equation}
-However, this expression can be written to distinguish integrating over triangles $\mathcal{T} _{h}$ , integrating over exterior facets $\mathcal{F} _{h}^{ext}$ and then integrate interior facets $\mathcal{F} _{h}^{int}$.
-
-\begin{equation}
-\label{eq:bi_basic_dg_full_1}
-\begin{split}
-\left( \Delta  ^{2} u, v \right) _{\Omega } =& \sum_{T \in  \mathcal{T} _{h}}^{} \left( D^2u, D^2v \right)_{T}    \\
-& + \sum_{F \in \mathcal{F}_{h}^{ext}}  \left(\partial _{n} \Delta u, v  \right) _{F} - \left(\partial _{nt} u, \partial _{t} v \right) _{F}-
-\left( \partial _{nn} u, \partial _{n} v \right)_{F}  \\
-& + \sum_{F \in \mathcal{F}_{h}  ^{int}}^{} \left(\partial _{nn} u , \jump{ \partial _{n} v }
-\right)_{F} \\
-& = \sum_{T \in  \mathcal{T} _{h}}^{} \left( D^2u, D^2v \right)_{T} + \sum_{F \in
-\mathcal{F} ^{ext}_{h}}^{} \left(g_{2}, v  \right) _{F}
-  + \sum_{F \in \mathcal{F}_{h}  ^{int}}^{} \left( \partial _{nn} u , \jump{ \partial_{n} v } \right)_{F}
-\end{split}
-\end{equation}
-Keep in mind that any jump over a interior facet $F \subset \mathcal{F} _{h}^{int}   $, visualized in figure \ref{fig:normal}, is defined as $\jump{ a } =    a^{+} - a^{-} $
-and likewise for the mean, $\mean{ a  } = \frac{1}{2}(   a^{+}
-+ a^{-})$.    The equivalence of \eqref{eq:bi_basic_dg2} and \eqref{eq:bi_basic_dg_full_1} comes from the following argumentation.
+However, by integrating over exterior facets $\mathcal{F} _{h}^{ext}$ and interior facets $\mathcal{F} _{h}^{int}$ we will get e more suitable formulation which makes it easier to penalize discontinuities.
 
 \begin{equation*}
     \begin{split}
- \left( \Delta  ^{2} u,v \right) _{\Omega } & =\sum_{T\in \mathcal{T} _{h}}^{} \left( D^2u,D^2v \right) _{T } - \left(\partial _{nt} u, \partial _{t}v
-\right)_{\partial T} - \left(\partial _{nn} u, \partial _{n}v \right)_{\partial T} + \left(\partial _{n} \Delta  u,v
-\right)_{\partial T} \\
-&= \sum_{T\in \mathcal{T} _{h}}^{} \left( D^2u,D^2v \right) _{T } \\
-&  \quad + \sum_{F \in \mathcal{F}_{h}^{ext} }^{} \underbrace{\left( \partial _{n} \Delta  u, v  \right)_{F}}_{= \left( g_{2},v \right)_{F} }  -  \left(
-\partial _{nt} u, \partial _{t} v \right) _{F}  - \underbrace{\left( \partial _{nn} u, \partial _{n} v \right)_{F}}_{ = 0}    \\
-& \quad  + \sum_{F \in \mathcal{F} _{h}^{int}}^{} \underbrace{\left( \left(\partial _{n^{+}} \Delta  u^{+}
-        ,v^{+}\right)_{F}
-+ \left(\partial _{n^{-}} \Delta  u^{+} ,v^{-}\right)_{F}  \right)}_{(I)} \\
- & \quad \quad \quad  \quad +
-\underbrace{\left( \left(\partial _{n^{+}t} u^{+}, \partial_{t} v^{+} \right)_{F} +  \left(\partial _{n^{-}t} u^{-},
-        \partial_{t} v^{-}
-\right)_{F}  \right) }_{(II)} \\
- & \quad \quad \quad  \quad  +
+ ( \Delta  ^{2} u,v ) _{\Omega } & =\sum_{T\in \mathcal{T} _{h}}^{} ( D^2u,D^2v ) _{T } + (\partial _{n} \Delta  u,v)_{\partial T} - (\partial _{nn} u, \partial _{n}v )_{\partial T}  - \sum_{i=1}^{d-1} ( \partial _{nt_{i}}u , \partial _{t_{i}} v  )_{\partial T}   \\
+&= \sum_{T\in \mathcal{T} _{h}}^{} ( D^2u,D^2v ) _{T }  + \sum_{F \in \mathcal{F}_{h}^{ext} }^{}  (\partial _{n} \Delta  u,v)_{F} - (\partial _{nn} u, \partial _{n}v )_{F}  - \sum_{i=1}^{d-1} \underbrace{( \partial _{n t_{i}} u , \partial _{t_{i}} v
+)_{F}}_{ \red{= 0 ???}}     \\
+ \quad  &+ \sum_{F \in \mathcal{F} _{h}^{int}}^{} \underbrace{\left( (\partial _{n^{+}} \Delta  u^{+}
+        ,v^{+} )_{F}
++ \left(\partial _{n^{-}} \Delta  u^{+} ,v^{-}\right)_{F}  \right)}_{(I)}   + \sum_{i=1}^{d-1}\underbrace{( (\partial _{n^{+}t_{i}} u^{+}, \partial_{t_{i}} v^{+} )_{F} +  \left(\partial _{n^{-}t_{i}} u^{-},
+        \partial_{t_{i}} v^{-}
+\right)_{F} ) }_{(II)} \\
+  &\quad \quad \quad  \quad  +
 \underbrace{\left( \left(\partial _{n^{+}n^{+}} u^{+}, v^{+} \right) _{F} + \left(\partial _{n^{-}n^{-}} u^{-}, v^{-}
 \right) _{F} \right) }_{(III)}
     \end{split}
@@ -337,80 +145,109 @@ Where integration over all interior facets $ \forall F \in \mathcal{F}_{h}^{int}
          \int_{F}^{}
          \mean{ \partial _{n} \Delta  u } \underbrace{\jump{ v }}_{= 0}    + \underbrace{\jump{ \partial _{n} \Delta  u
          }}_{= 0}    \mean{ v } = 0 \\
-        (II) &  =     \left(\partial _{n^{+}t} u^{+}, \partial_{t} v^{+}
-        \right)_{F} +  \left(\partial _{n^{-}t} u^{-}, \partial_{t} v^{-}
+        (II) &  =     \left(\partial _{n^{+}t_{i}} u^{+}, \partial_{t_{i}} v^{+}
+        \right)_{F} +  \left(\partial _{n^{-}t_{i}} u^{-}, \partial_{t_{i}} v^{-}
 \right)_{F}   \\
 &  =   \int_{F}^{}
-        \jump{ \partial _{nt} u \cdot  \partial_{t} v } =
+        \jump{ \partial _{nt_{i}} u \cdot  \partial_{t_{i}} v } =
          \int_{F}^{}
-         \mean{ \partial _{nt} u    } \underbrace{\jump{ \partial_{t} v }  }_{= 0}    + \underbrace{\jump{ \partial
-                 _{nt}  u
-         }}_{= 0}    \mean{ \partial _{t}v }  = 0\\
+         \mean{ \partial _{nt_{i}} u    } \underbrace{\jump{ \partial_{t_{i}} v }  }_{= 0}    + \underbrace{\jump{ \partial
+                 _{nt_{i}}  u
+         }}_{= 0}    \mean{ \partial _{t_{i}}v }  = 0\\
         (III) &  =     \left(\partial _{n^{+}n^{+}} u^{+}, \partial_{n^{+}} v^{+} \right)_{F} +  \left(\partial _{n^{-}n^{-}} u^{-}, \partial_{n^{-}} v^{-} \right)_{F}    =    \int_{F}^{} \jump{ \partial _{nn} u \cdot  \partial_{n} v }  \\
         & = \int_{F}^{}
         \mean{ \partial _{nn} u    } \underbrace{\jump{ \partial_{n} v }  }_{\neq 0}    + \underbrace{\jump{ \partial
                  _{nn}  u
-         }}_{= 0}    \mean{ \partial _{n}v }   =  \left( \partial _{nn} u, \jump{ \partial_{n} v } \right)_{F}   \end{split}
+         }}_{= 0}    \mean{ \partial _{n}v }     \end{split}
 .\end{equation*}
-Observe that the cancellations in the term $(I)$ appears of the continuity of $v\in V $ and $u\in H^{4}( \Omega ) $ which makes the jumps zero. For the second term $(II)$ does the terms become zero cancelled because the tangential
-derivative at the facet has no jump. However, The third term $(III)$  is fairly interesting since the discontinuity in
+Observe that the cancellations in the term $(I)$ and term $(II)$  appears of the continuity of $v\in V $ and $u\in H^{4}( \Omega ) $ which makes the jumps and derivative jumps zero. However, The third term $(III)$  is fairly interesting since the discontinuity in
 normal vector for $v \in V$ is a jump, while the second term is still continuous. It can also be raised that $\mean{
-\partial _{nn} u } = \partial _{nn} u  $ holds by the continuity of $H^{4}( \Omega  ) $. Hence,
-\eqref{eq:bi_basic_dg2} and \eqref{eq:bi_basic_dg_full_1} is equivalent.
+\partial _{nn} u } = \partial _{nn} u  $ holds by the continuity of $H^{4}( \Omega  ) $. Hence, we have the following identity.
 
-\subsection{Formulation of the Continuous Interior Penalty Method}%
-\label{sub:formulation_of_continious_interior_penalty_method}
-
-
-We can finally start defining the fully discrete formulation. Let the basis be a $\mathcal{P}_{2} $ Lagrange finite element space so,
-\[
-V_{h} = \left\{ v \in C^{0}\left( \Omega  \right): v_{T} = v | _{T} \in \mathcal{P} _{2}\left( T \right), \forall T \in
-\mathcal{T}_{h}    \right\}
-\]
-and
-\[
-V_{h}^{*} = \begin{cases}
-    V_{h} & \text{ if } \alpha  > 0 \\
-    \left\{ v \in V_{h}: \int_{\Omega }^{} v dx   = 0   \right\} &  \text{ if } \alpha   = 0
-\end{cases}
-\]
-Now, if we choose $u \in V_{h}$, then we must take account that the jump is discrete.
- Finally, the CIP formulation can be stated as follows.
-The discretized numerical problem is to solve $w \in V_{h}^{*}$ such that
 \begin{equation}
-\label{eq:CP_A_F}
-a_{h}( w, v )   = l_{h}( v), \quad \forall v \in V_{h}^{*}  .
-\end{equation}
-where
-\begin{equation}
-\label{eq:CP_A_h_1}
+\label{eq:bi_basic_dg_full_1}
 \begin{split}
-a_{h} ( w, v )   =&
-    \left( \alpha  w, v \right) _{\Omega } + \sum_{T \in \mathcal{T} _{h}}^{} \left( D^2 w, D^2v \right) _{T} \\
- & + \sum_{F \in \mathcal{F}_{h} }^{}
-  \left( \mean{  \partial _{n n} w }, \jump{ \partial _{n }v} \right)_{F}  +
- \left( \mean{ \partial _{n n} v }, \jump{ \partial _{n}w }      \right)_{F}   + \frac{\gamma}{h}  \left( \jump{ \partial _{n} w}, \jump{ \partial _{n} v   }   \right)_{F}
+\left( \Delta  ^{2} u, v \right) _{\Omega }  =  \left( D^2u, D^2v \right)_{\mathcal{T} _{h}} +  \left(g_{2}, v  \right) _{\mathcal{F}^{ext}_{h} }
+  +  ( \mean{ \partial _{nn} u }   , \jump{ \partial_{n} v } )_{\mathcal{F}_{h} }
 \end{split}
 \end{equation}
-and
-\begin{equation}
-\label{eq:CP_F_h}
-l_{h}( v )  = \left( f, v \right) _{\Omega } +  \sum_ {F \in \mathcal{F}_{h} ^{ext}}^{} - \left(g_{2}, v  \right) _{F}.
-\end{equation}
-Notice that the regulation term determined by respectively a global tuning parameter $\gamma >0 $. Another key component to the formulation
-in \eqref{eq:CP_A_h_1} after introduction of $ w, v \in V^{*}_{h}$  is that we expanded $\left( \partial _{nn}w, \jump{ \partial _{n} v }  \right)_{F} \to \left( \mean{ \partial _{nn}w }  , \jump{ \partial _{n} v }  \right)_{F} $ since we can longer not guarantee a
-continuous jump. For symmetric purposes we also added $ \left( \mean{ \partial _{nn} v}  , \jump{ \partial _{n} w }  \right)_{F} $. For convenience will we introduce the compact notation of \eqref{eq:CP_A_h_1} and \eqref{eq:CP_F_h};
 
-\begin{equation*}
+
+We will now assemble the Hessian CIP formulation. Assume $u,v \in V_{h}$, then we have the linear form
+\begin{equation}
 \begin{split}
-a_{h} \left( w, v \right)   =&
-    \left( \alpha  w, v \right) _{\Omega }   +  \left( D^2 w, D^2v \right) _{\mathcal{T} _{h}} \\
+a_{h}^{H} \left( u, v \right)   =&
+    \left( \alpha  u, v \right) _{\Omega }   +  \left( D^2 u, D^2v \right) _{\mathcal{T} _{h}} \\
  & +
-  \left( \mean{  \partial _{n n} w }, \jump{ \partial _{n }v} \right)_{\mathcal{F}_{h}}  +
- \left( \mean{ \partial _{n n} v }, \jump{ \partial _{n}w }      \right)_{\mathcal{F}_{h}}  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} w}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h}} \\
- l_{h}( v_{h}) & =  \left( f, v \right) _{\Omega }  - \left(g_{2}, v  \right) _{\Gamma }
+  \left( \mean{  \partial _{n n} u }, \jump{ \partial _{n }u} \right)_{\mathcal{F}_{h}}  +
+ \left( \mean{ \partial _{n n} v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}}  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h}} \\
+ l_{h}^{H}( v_{h}) & =  \left( f, v \right) _{\Omega }  - \left(g_{2}, v  \right) _{\Gamma } - ( g_{1}, \partial _{nn} v)_{\Gamma } +  \frac{\gamma }{h} ( g_{1} , \partial _{n} v)_{\Gamma }
 \end{split}
-\end{equation*}
+\end{equation}
+Hence, we are finished.
+
+\begin{remark}
+Remark that we imposed the Neumann condition $g_{1}$ using the Nitsche's method and thus imposing a regularisation term \cite{nitsche1971variationsprinzip}. Observe we added n symmetry term $( \mean{ \partial _{n n} v }, \jump{ \partial _{n}u }      )_{\mathcal{F}_{h}}$,
+which is consistent for zero, also involving penalties for the interior facets. Technically is the interior regularisation equivalent to do a Nitsche's method inbetween all interior elements, but with boundary conditions of each triangle weakly
+imposed to zero. Thus, the penalty parameter $\gamma$  is the same interior and exterior elements. From \cite{brenner2012quadratic, brenner2012} is it experimentally shown that $\gamma = 2k ( k-1 ) $ where $k$ is the polynomial order $k\ge 2$ may be
+a good choice for most applications.
+\end{remark}
+
+
+\subsection{Construction of Laplacian CIP}%
+\label{sub:construction_of_laplacian_cip}
+
+ Again, assume $u \in H^{4}( \Omega ) $ and $ v \in  V = \left\{ v \in H^{1}( \Omega )  \mid  v \mid _{T} \in H^{m}( T) \ \forall T \in \mathcal{T} _{h}   \right\} $. Similarly, we start constructing a local theory for a triangle $T$ and then extend it to the full mesh
+$\mathcal{T}_{h} $. Using Greens Theorem is it obvious that \(
+\left( \Delta ^2 u,v \right) _{T }   = ( \partial _{n} \Delta u, v ) _{\partial T  } - ( \nabla \left( \Delta  u \right) , \nabla v ) _{T }
+\).
+The main difference here is that we straight away do a new iteration of the Greens theorem.
+\begin{equation*}
+( \nabla ( \Delta u ) , \nabla v ) _{T }  =  + ( \partial _{n}v , \Delta v)_{\partial T} - ( \Delta u, \Delta v ) _{T}
+.\end{equation*}
+
+Hence, we have a local identity s.t. \[
+( \Delta ^2 u, v ) _{T} = ( \Delta u, \Delta v) +  ( \partial _{n} \Delta u, v)_{\partial T} - ( \partial _{n} v, \Delta u) _{\partial T}
+\]
+Now, doing a summation over all elements we get \[
+    \begin{split}
+( \Delta ^2 u, v ) _{\Omega } & = \sum_{T \in \mathcal{T}_{h} }^{}  ( \Delta u, \Delta v)_{T}
++  ( \partial _{n} \Delta u, v)_{\partial T} - ( \partial _{n} v, \Delta u) _{\partial T} \\
+ & =   ( \Delta u, \Delta v)_{\mathcal{T} _{h}} +  \sum_{F \in \mathcal{F}_{h}^{ext} }^{}
+  \overbrace{( \partial _{n} \Delta u, v)_{ F}}^{=( g_{2},v)_{F} }  - ( \partial _{n} v, \Delta u) _{F} \\
+  &   \quad + \sum_{F \in \mathcal{F}_{h}^{int} }^{} \underbrace{( ( \partial _{n^{+}} \Delta u, v)_{ F} + ( \partial _{n^{-}} \Delta u, v)_{ F} )}_{(I)}  - \underbrace{( ( \partial _{n^{+}} v, \Delta u) _{F} + ( \partial _{n^{-}} v, \Delta u) _{F}
+  )}_{(II)}   \\
+    \end{split}
+\]
+
+Now, decomposing the terms as utilizing the regularity of $u$ and $v$ is it easy to see that.    \[
+\begin{split}
+    (I) & = ( \partial _{n^{+}} \Delta u, v)_{ F} + ( \partial _{n^{-}} \Delta u, v)_{ F}  = \int_{F}^{} \left[ \partial _{n} \Delta u \cdot  v \right] =  (  \mean{ \partial _{n^{+}} \Delta u } , \underbrace{\jump{v  }}_{ = 0}      )_{ F} + (  \underbrace{\jump{ \partial _{n}
+    \Delta u }}_{=0}  , \mean{v  }     )_{ F} \\
+    (II) &=  ( \partial _{n^{+}} v, \Delta u) _{F} + ( \partial _{n^{-}} v, \Delta u) _{F} = \int_{F}^{} \jump{ \partial _{n} v, \Delta u } =  ( \underbrace{\jump{ \partial _{n} v}}_{ \neq 0 } , \mean{ \Delta u })_{F}  + ( \mean{ \partial _{n} v}, \underbrace{\jump{ \Delta u
+    }}_{=0} )_{F}
+\end{split} .
+\]
+
+Hence, we end up with the identity,
+\[
+( \Delta ^2 u, v ) _{\Omega } = ( \Delta u, \Delta v)_{\mathcal{T} _{h} }  +  ( \jump{ \partial _{n} v} , \mean{ \Delta u })_{\mathcal{F}_{h} }  + ( g_{2} , v )_{\Gamma } - ( \partial _{n} v, \Delta u)_{\Gamma }.
+\]
+
+Finally, can we construct the Laplace CIP formulation. Let $u,v \in V_{h}$, then can we write the following statement.
+
+\begin{equation}
+    \begin{split}
+        a_{h}^{L} \left( u, v \right)   =&
+        \left( \alpha  u, v \right) _{\Omega }   +  \left( \Delta  u, \Delta v \right) _{ \Omega } \\
+                                         & + \left( \mean{  \Delta  u }, \jump{ \partial _{n }v} \right)_{\mathcal{F}_{h}  }  + \left( \mean{ \Delta  v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}  }  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h} } \\
+                                         & + \left(   \Delta  u ,  \partial _{n }v \right)_{\Gamma   }  + \left(  \Delta  v ,  \partial _{n}u       \right)_{\Gamma  }  + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{ \Gamma } \\
+        l^{L}_{h}( v_{h}) & =  \left( f, v \right) _{\Omega } - ( g_{2},  v )_{\Gamma } -  ( g_{1}, \Delta  v  )_{\Gamma }  + \frac{\gamma }{h} ( g_{1}, \partial _{n} v  )_{\Gamma }
+    \end{split}
+\end{equation}
+
+
+Similarly, as in the previous section, is the boundary condition $g_{1}$ imposed weakly using the Nitsche's method, hence, the regularization term.
 
 
 \subsection{Note on the Biharmonic Mixed Formulation}%
@@ -430,7 +267,7 @@ The goal is to obtain an useful weak formulation. Using Greens theorem on the fi
 \]
 Similarly for the second equation we obtain
 \[
-( \nabla \sigma , \nabla \varphi  )_{\Omega} - ( \nabla _{n} \sigma ,  \varphi )_{\Gamma } = ( f,\varphi ) _{\Omega}
+( \nabla \sigma , \nabla \varphi  )_{\Omega} - ( \partial _{n} \sigma ,  \varphi )_{\Gamma } = ( f,\varphi ) _{\Omega}
 \]
 Putting it all together we have the following mixed weak formulation; Find $( u, \sigma ) \in H^{1}( \Omega ) \times H^{1}( \Omega )  $ s.t. \[
     \begin{split}
@@ -448,9 +285,13 @@ Hence, we can connect it to the SPP. We want to find $( u,\sigma ) \in V \times 
        b( u, \varphi  )  & = F( \varphi )     \quad \forall \phi \in W
     \end{cases}
 \]
-This is useful since we can now apply standard saddle point theory to do an analysis for the problem. We will see that it is now easier to handle the constraints with the cost of a more challenging time discretization step when applying the formulation to the Cahn-Hilliard Problem.
-A well known and mature application for SPP is the well known Stokes equation \cite{john2016finite, knabner2003numerical}. One of the more classical papers for the biharmonic mixed formulation is and still in active research going on \cite{babuvska1980analysis,cai2023nitsche}.
-
+This is useful since we can now apply standard saddle point theory to do an analysis for the problem. We will see that it is now easier to handle the boundary constraints naturally, but with the cost of a more challenging time discretization
+procedure.
+For more information about the biharmonic mixed formulation, see \cite{babuvska1980analysis,cai2023nitsche}.
 However, in this master thesis is the focus on solving the biharmonic equation avoiding the mixed formulation using the CIP formulation, which does in fact handle the downsides with the SPP problem.
+
+
+% A well known and mature application for SPP is the well known Stokes equation, hence, a good place to start \cite{john2016finite, knabner2003numerical}.
+
 
 

@@ -1,0 +1,84 @@
+
+\newpage
+\section{Numerical results}%
+\label{sec:numerical_results}
+
+
+\begin{table}[h!]
+    \caption{Convergence analysis of the numerical method}
+    \label{table:CutFEM_error1}
+  \begin{tabular}{rrrrrrrrr}
+    \hline\hline
+    \textbf{$n$} & \textbf{$\Vert e \Vert_{L^2}$} & \textbf{EOC} & \textbf{$ \Vert e \Vert_{H^1}$} & \textbf{EOC} & \textbf{$\Vert e \Vert_{ a_h,* }$} & \textbf{EOC} & \textbf{Cond number} & \textbf{ndofs} \\\hline
+    8 & 1.6E+01 &  & 1.3E+02 &  & 3.6E+03 &  & 3.0E+05 & 2.4E+02 \\
+    16 & 3.7E+00 & 2.14 & 3.1E+01 & 2.09 & 1.0E+03 & 1.78 & 2.2E+06 & 8.3E+02 \\
+    32 & 8.3E-01 & 2.15 & 7.4E+00 & 2.09 & 2.9E+02 & 1.83 & 1.6E+07 & 3.0E+03 \\
+    64 & 2.3E-01 & 1.87 & 1.8E+00 & 2.03 & 8.0E+01 & 1.86 & 1.3E+08 & 1.1E+04 \\
+    128 & 5.0E-02 & 2.19 & 4.4E-01 & 2.04 & 2.6E+01 & 1.63 & 1.0E+09 & 4.3E+04 \\
+    256 & 1.3E-02 & 1.92 & 1.1E-01 & 2.01 & 8.4E+00 & 1.63 & 7.9E+09 & 1.7E+05 \\\hline\hline
+  \end{tabular}
+
+\end{table}
+
+\begin{figure}[h!]
+    \centering
+    \input{figures/tex_plots/conv_plot.tex}
+    \caption{The plot presents the error in $L^2$, $H^1$ the energy norm ($\Vert e \Vert_{a_h,*}$) with order 2 of the CutCIP method (Laplace).}
+    \label{fig:CutFEM_error1}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \subfloat[Evolution of condition number]{
+        \label{subfig:cond}
+        \input{figures/tex_plots/no_penalty_cond_trans.tex}
+    }
+    \hfill
+    \subfloat[Evolution of error number]{
+        \label{subfig:error}
+        \input{figures/tex_plots/no_penalty_error_trans.tex}
+    }
+    \caption{Comparison of translation of circle with radius $R=1$ from with $1000$ steps for $n=2^4$, $L=1.11$ and $h=\frac{L}{n}$ s.t. $\delta \in  [0, \sqrt{2} h]  $. Here is the test specifically for without ghost penalty, $\gamma _{1} =
+    \gamma_2=0 $ and with ghost penalty, $ \gamma _{1} = 5 $ and $\gamma _{2} = 0.1$.}
+    \label{fig:combined}
+\end{figure}
+
+
+
+\begin{figure}
+    \centering
+    \subfloat[Evolution of condition number]{
+        \centering
+        \label{subfig:cond_conv}
+        \input{figures/tex_plots/no_penalty_cond_conv.tex}
+    }
+    \hfill
+    \subfloat[Evolution of error number]{
+        \centering
+        \label{subfig:error_conv}
+        \input{figures/tex_plots/no_penalty_error_conv.tex}
+    }
+    \caption{Comparison of convergence test results with and without ghost penalty.}
+    \label{fig:combined_conv}
+\end{figure}
+
+In this section, we present the numerical results of the convergence analysis for a numerical method applied to a square grid with a length of 1. The grid is discretized with $n=2^6$ grid points. The analysis is based on a manufactured solution, which is given by the expression:
+
+\[
+u_{\text{ex}}(x) = 100 \sin\left(\frac{m(2\pi)}{L}x_1\right)\cos\left(\frac{r(2\pi)}{L}x_2\right)
+\]
+
+Here, $L$, $m$, and $r$ are constants representing the length of the square grid, the spatial frequency in the $x_1$ direction, and the spatial frequency in the $x_2$ direction, respectively.
+
+The convergence analysis involves evaluating the errors in different norms as well as studying the condition number of the system. Table \ref{table:CutFEM_error1} presents the results of the convergence analysis for the numerical method. The column labeled "$n$" corresponds to the number of grid points, while the columns labeled "$\Vert e \Vert_{L^2}$," "$\Vert e \Vert_{H^1}$," and "$\Vert e \Vert_{a_h,}$" represent the errors in the $L^2$, $H^1$, and energy ($\Vert e \Vert_{a_h,}$) norms, respectively. The column labeled "EOC" denotes the experimental order of convergence. The last two columns provide the condition number of the system and the number of degrees of freedom (ndofs), respectively.
+
+Figure \ref{fig:CutFEM_error1} displays a plot illustrating the error convergence in the $L^2$, $H^1$, and energy norms for the CutCIP method (Laplace) with second-order accuracy.
+
+Additionally, we compare the results with and without the ghost penalty in two different tests: a translation test and a convergence test. The translation test examines the evolution of the condition number and error number, as shown in Figure \ref{fig:combined}. The convergence test also investigates the condition number and error number, and its results are presented in Figure \ref{fig:combined}.
+
+Overall, these numerical results provide insights into the performance and accuracy of the numerical method, showcasing the convergence behavior and the impact of the ghost penalty on the solution.
+
+
+
+
+
