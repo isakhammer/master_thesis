@@ -143,8 +143,7 @@ module Solver
         ndof = size(A_mat)[1]
         cond_number = ( 1/sqrt(ndof) )*cond(A_mat,Inf)
 
-        u_inter = interpolate(u_ex, V) # remove?
-        e = u_inter - uh
+        e = u_ex - uh
         el2 = sqrt(sum( ∫(e*e)dΩ ))
 
         # TODO: Add α into ∫(e⊙e)*dΩ
@@ -169,7 +168,7 @@ module Solver
             writevtk(Γ,         vtkdirname*"/Gamma")
             writevtk(Fg,        vtkdirname*"/Fg")
             writevtk(Λ,         vtkdirname*"/jumps",      cellfields=["jump_u"=>jump(uh)])
-            writevtk(Ω,         vtkdirname*"/sol",        cellfields=["e"=>e, "uh"=>uh, "u"=>u_inter])
+            writevtk(Ω,         vtkdirname*"/sol",        cellfields=["e"=>e, "uh"=>uh, "u"=>u_ex])
         end
 
         sol = Solution( el2=el2, eh1=eh1, eh_energy=eh_energy,
