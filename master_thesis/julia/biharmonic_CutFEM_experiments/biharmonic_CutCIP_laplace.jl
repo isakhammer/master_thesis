@@ -66,11 +66,12 @@ module Solver
 
         new_geo=true
         if new_geo == true
-            ϵ_L = 10^-1
-            # geo1 = disk(0.8*R,x0=Point(1,0),name="disk1")
-            # geo2 = disk(0.8*R,x0=Point(0,0),name="disk2")
-            # geo = union( geo1,geo2 )
-            geo = AnalyticalGeometry(x->.4*x[1]^2+1.3*x[2]^2-0.2)
+            ϵ_L = ( L/256 )*10^-3
+            geo = square(L=2*( L - ϵ_L ))
+            # geo = square(L=2*(L-ϵ_L ), x0=Point(0,0))
+            # geo = intersect( geo1,geo2 )
+            # geo2 = square(L,x0=Point(ϵ_L,0))
+            # geo = AnalyticalGeometry(x->.4*x[1]^2+1.3*x[2]^2-0.2)
         else
             geo = disk(R)
         end
