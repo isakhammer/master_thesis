@@ -66,11 +66,12 @@ module Solver
 
         new_geo=true
         if new_geo == true
-            ϵ_L = 10^-1
-            # geo1 = disk(0.8*R,x0=Point(1,0),name="disk1")
-            # geo2 = disk(0.8*R,x0=Point(0,0),name="disk2")
-            # geo = union( geo1,geo2 )
-            geo = AnalyticalGeometry(x->.4*x[1]^2+1.3*x[2]^2-0.2)
+            ϵ_L = ( L/256 )*10^-3
+            geo = square(L=2*( L - ϵ_L ))
+            # geo = square(L=2*(L-ϵ_L ), x0=Point(0,0))
+            # geo = intersect( geo1,geo2 )
+            # geo2 = square(L,x0=Point(ϵ_L,0))
+            # geo = AnalyticalGeometry(x->.4*x[1]^2+1.3*x[2]^2-0.2)
         else
             geo = disk(R)
         end
@@ -154,7 +155,7 @@ module Solver
         cond_number = ( 1/sqrt(ndof) )*cond(A_mat,Inf)
 
         u_inter = interpolate(u_ex, V) # remove?
-        e = u_inter - uh
+        e = u_ex - uh
         el2 = sqrt(sum( ∫(e*e)dΩ ))
 
         # TODO: Add α into ∫(e⊙e)*dΩ
@@ -179,7 +180,7 @@ module Solver
             writevtk(Γ,         vtkdirname*"/Gamma")
             writevtk(Fg,        vtkdirname*"/Fg")
             writevtk(Λ,         vtkdirname*"/jumps",      cellfields=["jump_u"=>jump(uh)])
-            writevtk(Ω,         vtkdirname*"/sol",        cellfields=["e"=>e, "uh"=>uh, "u"=>u_inter])
+            writevtk(Ω,         vtkdirname*"/sol",        cellfields=["e"=>e, "uh"=>uh, "u"=>u_ex])
         end
 
         sol = Solution( el2=el2, eh1=eh1, eh_energy=eh_energy,
