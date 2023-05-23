@@ -96,24 +96,22 @@ We define the mean as $\mean{ v} |_{F} = v    $ and the jump as $\jump{v}|_{F} =
 \coordinate (C) at (0,3);
 \coordinate (B) at (4,0);
 \coordinate (D) at (4,4);
+
+\draw (A) -- (B) -- (C) -- cycle;
+\draw (B) -- (C) -- (D) -- cycle;
+\fill[red, opacity=0.5] (A) -- (B) -- (C);
+\fill[blue, opacity=0.5] (B) -- (C) -- (D);
+
 \coordinate (Tm) at (3.5,3.5);
 \coordinate (Tp) at (0.5, 0.5);
 \coordinate (e) at (1.5, 1.5);
 \coordinate (start) at (1.7, 1.7);
 \coordinate (end) at (2.25, 2.4);
-
-\draw (A) -- (B) -- (C) -- cycle;
-\fill[red, opacity=0.5] (A) -- (B) -- (C);
-\fill[blue, opacity=0.5] (B) -- (C) -- (D);
 \node[below left] at (Tm) {$T^{-} $ };
 \node[above right] at (Tp) {$T^{+}$ };
 \node[below right] at (e) {$F$ };
 
 \draw [->, thick] (start) -- (end);
-% \node[above right] at (A) {A };
-% \node[below right] at (B) {B};
-% \node[above right] at (C) {C };
-% \node[below right] at (D) {D};
 \node[below right] at (end) {$n$};
 \end{tikzpicture}
 
