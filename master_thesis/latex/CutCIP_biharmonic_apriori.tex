@@ -4,14 +4,8 @@
 \label{sec:a_priori_estimates}
 
 
-In this section will we do only a brief overview of the important assumptions and definitions required to prove optimal convergence.
-Recall that for $v \in H^{1}( \mathcal{T } _{h}) $ these inequalities holds $\forall T \in \mathcal{T} _{h}$ s.t. \[
-\begin{split}
-    \| v \|_{ \partial T }^{  } &\lesssim h^{-\frac{1}{2}}_{T}\|  v \|_{ T }^{  }+ h^{\frac{1}{2}} \| \nabla v \|_{T  }^{   }  , \\
-    \| v \|_{ \Gamma \cap T }^{  } &\lesssim  h^{-\frac{1}{2}} \| v \|_{T  }^{  }   + h^{\frac{1}{2}}_{T} \| \nabla v \|_{ T }^{  }.
-\end{split}
-\]
-For proof, see \cite[Lemma 4.2]{hansbo2003finite}.
+In this section, we will only briefly overview the important assumptions and definitions and then prove that the ghost penalty does affect the convergence rate specifically for the energy norm.
+However, the discrete solution $C^{0}$ makes it difficult to apply the standard Lagrange interpolation operator. Hence, this motivates us to introduce a method to interpolate a non-smooth function, the so-called Cléments interpolation operator.
 
 \subsubsection{Cléments interpolation}%
 \label{ssub:clement_operator}
@@ -171,84 +165,8 @@ Recall the integral norm notation,
 where we use that $\| u \|_{ T  }^{  } = \| u \|_{ m,0,T  }^{  } $ and similarly $\| u \|_{ 2,T  }^{  } = \| u \|_{ m,2,T  }^{  }  $.
 
 We denote a patch, $\omega \left( T \right) $, as the set of elements in $\mathcal{T} _{h}$  sharing at least one vertex with $T \in \mathcal{T} _{h}$ . And similarly we denote a another patch, $\omega \left( F \right) $, as the set of all elements in $\mathcal{T}_{h} $
-sharing at least one vertex with $F \in  \mathcal{F} _{h}$.
+sharing at least one vertex with $F \in  \mathcal{F} _{h}$. For an example of patches a triangular mesh in 2D, see Figure \ref{fig:example_path}.
 
-% \begin{figure}
-%     \centering
-%     \begin{tikzpicture}
-%         % Define the coordinates
-%         \coordinate (A) at (0,0);
-%         \coordinate (B) at (2,0);
-%         \coordinate (C) at (1,2);
-%         \coordinate (D) at (2.5,2);
-%         \coordinate (F) at (1.5,3);
-%         \coordinate (E) at (-1,2);
-%         \coordinate (G) at (1,-2);
-%         \coordinate (H) at (2.5,-2);
-%         \coordinate (I) at (4,-1);
-
-%         \fill[blue!30] (A) -- (G)-- (H) -- (I)  -- (D) -- (F)-- (E)   -- cycle;
-
-%         % Draw the triangle
-%         \draw (A) -- (G)-- (H) -- (I)  -- (D) -- (F)-- (E)   -- cycle;
-%         \draw (A) -- (C);
-%         \draw (A) -- (B);
-%         \draw (G) -- (B);
-%         \draw (I) -- (B);
-%         \draw (F) -- (C);
-%         \draw (H) -- (B);
-%         \draw (D) -- (C);
-%         \draw (D) -- (B);
-%         \draw (E) -- (C);
-%         \draw[line width=2pt] (B) -- (C);
-%         \node at (1.6,1.3) {$F$};
-%         \node at (-1.6,1.3) {$\omega (F) $};
-
-%     \end{tikzpicture}
-%     \caption{Patch $\omega ( F) $ }
-
-% \end{figure}
-
-
-% \begin{figure}
-%     \centering
-%     \begin{tikzpicture}
-%         % Define the coordinates
-%         \coordinate (A) at (0,0);
-%         \coordinate (B) at (2,0);
-%         \coordinate (C) at (1,2);
-%         \coordinate (D) at (2.5,2);
-%         \coordinate (F) at (1.5,3);
-%         \coordinate (E) at (-1,2);
-%         \coordinate (G) at (1,-2);
-%         \coordinate (H) at (2.5,-2);
-%         \coordinate (I) at (4,-1);
-%         \coordinate (K) at (-2,-0.3);
-
-%         \fill[blue!30] (K) -- (G)-- (H) -- (I)  -- (D) -- (F)-- (E)   -- cycle;
-%         % \fill[red!30] (B) -- (C) -- (A);
-
-%         % Draw the triangle
-%         \draw (A) -- (G)-- (H) -- (I)  -- (D) -- (F)-- (E)   -- cycle;
-%         \draw (A) -- (C);
-%         \draw (A) -- (B);
-%         \draw (G) -- (B);
-%         \draw (I) -- (B);
-%         \draw (F) -- (C);
-%         \draw (H) -- (B);
-%         \draw (D) -- (C);
-%         \draw (D) -- (B);
-%         \draw (E) -- (C);
-%         \draw (K) -- (A);
-%         \draw (K) -- (G);
-%         \draw (K) -- (E);
-%         \draw[line width=2pt] (B) -- (C) -- (A) -- cycle;
-%         \node at (1.0,1.0) {$T$};
-%         \node at (-2.6,1.3) {$\omega (T) $};
-
-%     \end{tikzpicture}
-
-% \end{figure}
 
 \begin{figure}[ht]
     \centering
@@ -331,7 +249,7 @@ sharing at least one vertex with $F \in  \mathcal{F} _{h}$.
     }}%
     \caption{Illustration of patch $\omega ( F) $ on left side and $\omega(T)$ on the rights side.   }
 
-    \label{fig:example}%
+    \label{fig:example_path}%
 \end{figure}
 
 Finally, we have the following lemma
@@ -372,12 +290,19 @@ and if the following conditions for an parameter $l$ is satisfied, it exists err
 
 This result is very useful since it is now sufficient to show that a priori estimates holds given to prove convergence rate.
 
-For further detailed information, please investigate \cite[Chapter 1.6]{ern04}.
+For further detailed information about the Cléments interpolation, please investigate \cite[Chapter 1.6]{ern04}.
 We will use these estimates to compute convergence rate given that Ceas' Lemma holds.
 
 
 \subsubsection{Energy a priori estimates.  }%
 \label{ssub:extension}
+Recall that for $v \in H^{1}( \mathcal{T } _{h}) $ these inequalities holds $\forall T \in \mathcal{T} _{h}$ s.t. \[
+\begin{split}
+    \| v \|_{ \partial T }^{  } &\lesssim h^{-\frac{1}{2}}_{T}\|  v \|_{ T }^{  }+ h^{\frac{1}{2}} \| \nabla v \|_{T  }^{   }  , \\
+    \| v \|_{ \Gamma \cap T }^{  } &\lesssim  h^{-\frac{1}{2}} \| v \|_{T  }^{  }   + h^{\frac{1}{2}}_{T} \| \nabla v \|_{ T }^{  }.
+\end{split}
+\]
+For proof, see \cite[Lemma 4.2]{hansbo2003finite}.
 
 A key idea is to distinguish between the physical space $\Omega $ and the polyhedra consisting of the active mesh $\Omega ^{e}_{h} = \mathcal{T}_{h}$. Thus, to do an
 a priori estimate we find it necessary to define an bounded extension operator satisfying, \[
@@ -485,7 +410,6 @@ Naturally can we see this is the tools we need to construct an estimate for the 
         \end{split}
     \]
     Thus, the proof is complete.
-    \todo[inline]{ Cleanup proof }
 \end{proof}
 
 \begin{lemma}[Weak galerkin orthogonality]
