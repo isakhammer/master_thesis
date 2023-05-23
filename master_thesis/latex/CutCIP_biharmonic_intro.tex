@@ -179,8 +179,8 @@ this numerical instability is happening for a unfitted mesh is that when a cell 
 In other words, when a cell is "badly cut," it means that it is intersected by the boundary $\Gamma$ in such a way that only a very small part of the cell lies inside or outside the domain. This can lead to a very poor condition number of the local system matrix corresponding to such a cell, causing numerical instability.
 
 The ghost penalty stabilization technique is designed to tackle this issue. Essentially, this approach introduces additional terms into the finite element method that penalize jumps in the discrete solution and its gradients across cell interfaces,
-typically the cut-cells. This penalty not only improves the conditioning of the system matrix, but also enhances the robustness of the method with respect to the location of the boundary inside each cell. However, to make this possible is to assume a
-so-called fat-intersection property which will be relevant in section \textbf{TODO: Add section to ghost penalty}.
+typically the cut-cells. This penalty not only improves the conditioning of the system matrix but also enhances the robustness of the method with respect to the location of the boundary inside each cell. However, to make this possible, we assume a
+so-called fat-intersection property, which will be relevant in Section \ref{sec:constructing_ghost_penalties}.
 
 \begin{figure}[htbp]
     \centering
