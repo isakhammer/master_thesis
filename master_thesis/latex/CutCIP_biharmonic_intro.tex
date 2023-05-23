@@ -314,22 +314,21 @@ Similarly for the Poisson problem will we have the following assumptions for the
 \end{enumerate}
 
 
-\begin{figure}
+\begin{figure}[h!]
     \centering
     \begin{tikzpicture}
         \coordinate (center) at (0, 0);
 
         % Reference hexagon vertices
-        \coordinate (A1) at (0:2.5);
-        \coordinate (A2) at (60:2.5);
-        \coordinate (A3) at (120:2.5);
+        \coordinate (A1) at (0:2.3);
+        \coordinate (A2) at (55:2.6);
+        \coordinate (A3) at (125:2.4);
         \coordinate (A4) at (180:2.5);
-        \coordinate (A5) at (240:2.5);
-        \coordinate (A6) at (300:2.5);
-        \coordinate (A7) at (300:2.5);
+        \coordinate (A5) at (235:2.7);
+        \coordinate (A6) at (305:2.6);
 
         \fill[green!40] (center) --(A1) -- (A2) -- (A3) -- (A4) -- (A5)  -- cycle;
-        \fill[blue!30] (center) -- (A5)--(A6)-- (A7) -- (A1) -- cycle;
+        \fill[blue!30] (center) -- (A5)--(A6) -- (A1) -- cycle;
 
         % Draw the individual edges
         \draw (center) -- (A1);
@@ -344,7 +343,7 @@ Similarly for the Poisson problem will we have the following assumptions for the
         \draw (center) -- (A6) -- (A1);
 
         \coordinate (Ti) at (-0,-1.5);
-        \coordinate (Tg) at (0.5,2.2);
+        \coordinate (Tg) at (0.5,2.1);
         \node[below] at (Tg) {$\mathcal{T}_{\Gamma }$};
         \node[below] at (Ti) {$\mathcal{T}_{int }$};
 
