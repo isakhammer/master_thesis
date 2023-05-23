@@ -5,12 +5,10 @@
 
 
 In this section, we will only briefly overview the important assumptions and definitions and then prove that the ghost penalty does affect the convergence rate specifically for the energy norm.
-However, the discrete solution $C^{0}$ makes it difficult to apply the standard Lagrange interpolation operator. Hence, this motivates us to introduce a method to interpolate a non-smooth function, the so-called Cléments interpolation operator.
+However, the $C^{0}$ discrete solution is to rough for the standard Lagrange interpolation operator. Hence, this motivates us to introduce a method to interpolate a non-smooth function, the so-called Cléments interpolation operator.
 
 \subsubsection{Cléments interpolation}%
 \label{ssub:clement_operator}
-
-
 
 \begin{figure}
 \begin{minipage}{.5\linewidth}
@@ -247,8 +245,7 @@ sharing at least one vertex with $F \in  \mathcal{F} _{h}$. For an example of pa
     \end{minipage}
 
     }}%
-    \caption{Illustration of patch $\omega ( F) $ on left side and $\omega(T)$ on the rights side.   }
-
+\caption{Illustration of the patch $\omega ( F) $ on the left-hand side and $\omega(T)$ on the right-hand side.}
     \label{fig:example_path}%
 \end{figure}
 
@@ -274,9 +271,6 @@ and if the following conditions for an parameter $l$ is satisfied, it exists err
 
 \end{lemma}
 
-\todo[inline]{ Why first $C_{h}: L^{1} \to \mathcal{P} ^{k}$ and now
-    $C_{h}: H^{m} \to \mathcal{P} ^{k}$?
-}
 
 \begin{corollary}
     \label{cor:celement_apriori}
@@ -309,7 +303,7 @@ a priori estimate we find it necessary to define an bounded extension operator s
 ( \cdot ) ^{e}: W^{m,q}( \Omega )  \to W^{m,q} ( \Omega ^{e}), \quad \| v^{e} \|_{ m,q,\Omega ^{e}  }^{  } \lesssim \| v \|_{ m,q, \Omega  }^{  }.
 \]
 where $0< m \le \infty$ and $1 \le q \le \infty$.
-\todo[inline]{ The physical space $\Omega $ is a subset of $\Omega ^{e}$, so I do not understand why $\| v^{e} \|_{ m,q,\Omega ^{e}  }^{  } \lesssim \| v \|_{ m,q, \Omega  }^{  } $ should hold.}
+\todo[inline]{ The physical space $\Omega $ is a subset of $\Omega ^{e}$, so I do not understand why $\| v^{e} \|_{ m,q,\Omega ^{e}  }^{  } \lesssim \| v \|_{ m,q, \Omega  }^{  } $ should hold.  I may also make a figure to illustrate $\Omega ^{e}$. }
 
 Now assume that $\Omega _{h}^{e} \subset  \Omega^{e} $. We define an unfitted Cléments interpolator $C_{h}^{e}: H^{r}( \Omega ^{e}_{h}) \to V_{h}$
 s.t.  $C ^{e} _{h} v := C _{h} v^{e} $.
@@ -327,7 +321,7 @@ Naturally can we see this is the tools we need to construct an estimate for the 
 
 \begin{lemma}
     \label{lemma:astar_estimate}
-    Let $u \in H^{s}( \Omega ) $ for $s\ge 3$ be a solution of \eqref{eq:Bi_strong}. Then we have  \[
+    Let $u \in H^{s}( \Omega ) $ for $s\ge 3$ be a exact solution. Then we have  \[
     \|  u - C_{h}u \|_{ a_{h},*  }^{  } \lesssim h^{s(s-2)} \| u \|_{ H^{s}( \Omega )  }^{  }
     \]
 
