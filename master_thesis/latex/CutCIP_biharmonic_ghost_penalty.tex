@@ -30,12 +30,10 @@ We denote the multi-index $\alpha  = ( \alpha _{1}, \ldots, \alpha _{d})  $ of o
 Recall the notation for the derivates $D^{\alpha } v$ , that is \[
 D ^{0} v  = v, \quad   D ^{1}v  = \nabla v \text{ and }  D ^{2} v  = J(\nabla v) = Hess(v).
 \]
-\todo[inline]{ But $\alpha = ( \alpha _{1}, \ldots, \alpha _{d}) $ cannot be a scalar? Ex. How can $D^{\alpha } = D^{1}$ be a consistent notation.  }
-where $J$ is the Jacobian operator. Remark that equivalent element-wise is the following, \[
-\left[ \nabla v \right] _{i} = \partial_{x_{i}} v, \quad  \left[ D^2 v \right] _{i,j} = \partial_{x_{i}x_{j}} v,
-\]
-Let us introduce the notation \[
-\partial _{n}^{j} v = \sum_{\abs{ \alpha  } =j }^{k} \frac{D ^{\alpha }v( x) n^{\alpha }}{\alpha !}, \quad \abs{ \alpha  } = \sum_{j}^{d} \alpha_{i}
+% \todo[inline]{ But $\alpha = ( \alpha _{1}, \ldots, \alpha _{d}) $ cannot be a scalar? Ex. How can $D^{\alpha } = D^{1}$ be a consistent notation.  }
+where $J$ is the Jacobian operator. Remark that is is element-wise denoted as $ \left[ \nabla v \right] _{i} = \partial_{x_{i}} v, \quad  \left[ D^2 v \right] _{i,j} = \partial_{x_{i}x_{j}} v $.
+Hence, from this is it natural to introduce the generalization of the normal derivative, \[
+\partial _{n}^{j} v = \sum_{\abs{ \alpha  } =j }^{k} \frac{D ^{\alpha }v( x) n^{\alpha }}{\alpha !}, \quad \abs{ \alpha  } = \sum_{i=0}^{d} \alpha_{i}.
 \]
 An useful result that may help us design ghost penalty is the following estimate.
 
