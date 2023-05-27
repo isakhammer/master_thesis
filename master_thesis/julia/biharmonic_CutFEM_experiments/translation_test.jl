@@ -21,6 +21,7 @@ module TranslationTest
         el2s::Vector{Float64}
         eh1s::Vector{Float64}
         ehs_energy::Vector{Float64}
+        domains::Vector{Any}
     end
 
     default_size = (800, 600)
@@ -45,7 +46,9 @@ module TranslationTest
         eh1s = Float64[]
         ehs_energy = Float64[]
         cond_numbers = Float64[]
+        domains = Vector{Any}()
         N = length(δs)
+
         for i in 1:N
             if i%10 == 0
                 println("Iteration $i/$N" )
@@ -57,9 +60,10 @@ module TranslationTest
             push!(eh1s, sol.eh1)
             push!(ehs_energy, sol.eh_energy)
             push!(cond_numbers, sol.cond_number)
+            push!(domains, domain)
         end
         cond_numbers = [number > 1e23 ? 1e23 : number for number in cond_numbers] #ceiling cond numbers
-        return cond_numbers, el2s, eh1s, ehs_energy
+        return cond_numbers, el2s, eh1s, ehs_energy, domains
     end
 
 
@@ -70,8 +74,8 @@ module TranslationTest
 
             for (params, color) in param_list
                 γ, γg1, γg2 = params
-                cond_numbers, el2s, eh1s, ehs_energy = translation_solve(solver, δs=δs, L=L, n=n, γ=γ, γg1=γg1, γg2=γg2)
-                push!(results, SimulationData(params, color, cond_numbers, el2s, eh1s, ehs_energy))
+                cond_numbers, el2s, eh1s, ehs_energy, domains = translation_solve(solver, δs=δs, L=L, n=n, γ=γ, γg1=γg1, γg2=γg2)
+                push!(results, SimulationData(params, color, cond_numbers, el2s, eh1s, ehs_energy, domains))
             end
             return results
         end
