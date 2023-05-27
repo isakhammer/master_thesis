@@ -29,7 +29,7 @@ module SolverHessian
         Γ
     end
 
-    function run(; n, u_ex, dirname=nothing, L=2.11, δ=0.0, γ=10, γg1=5, γg2=0.1)
+    function run(; n, u_ex, dirname=nothing, L=2.5, δ=0.0, γ=20, γg1=10, γg2=0.1)
 
         order = 2
         u_ex, f, ∇u_ex, ∇Δu_ex = man_sol(u_ex)

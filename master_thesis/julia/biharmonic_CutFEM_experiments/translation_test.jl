@@ -149,8 +149,8 @@ function main()
 
     # No penalty comparison
     param_list = [
-                  ((10., 5., 0.1), "blue"),
-                  ((10., 0., 0.), "red")
+                  ((20., 10., 0.1), "blue"),
+                  ((20., 0., 0.), "red")
                  ]
 
     # # Make figure env
