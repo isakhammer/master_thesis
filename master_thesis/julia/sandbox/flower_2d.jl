@@ -10,7 +10,7 @@ r0 = 0.5
 r1 = 0.15
 function ls_flower(x)
     theta = atan(x[1], x[2])
-    (x[1]^2 + x[2]^2)^0.5 - r0 - r1*cos(5.0*theta)
+     r0 + r1*cos(5.0*theta) -(x[1]^2 + x[2]^2)^0.5 
 end
 
 flower = AnalyticalGeometry(x-> ls_flower(x))
