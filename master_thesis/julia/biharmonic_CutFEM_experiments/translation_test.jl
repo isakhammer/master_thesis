@@ -119,32 +119,6 @@ module TranslationTest
 
     end
 
-    function penalty_test(; dirname, u_ex, run_solver, iterations=5, latex=false)
-        if latex == true
-            Plots.pgfplotsx()
-            endfix = ".tex"
-        else
-            Plots.gr()
-            endfix = ".png"
-        end
-
-        solver = Solver(u_ex, run_solver)
-        δ1 = 0
-        L = 1.61
-        n = 2^4
-        h = 2*L/n
-        δ2 = 2*sqrt(2)*h
-        δs = LinRange(δ1, δ2, iterations)
-
-        # No penlaty check
-        param_list = [
-            ((10., 5., 0.1), "blue"),
-            ((10., 0., 0.), "red")
-        ]
-
-        prefix = "no_penalty"
-        translation_test(solver, param_list, δs, L, n, dirname, prefix, endfix)
-    end
 
 end
 
@@ -152,16 +126,53 @@ function main()
     L, m, r = (1, 1, 1)
     u_ex(x) = (x[1]^2 + x[2]^2 - 1)^2*sin(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
 
-    iterations = 100
-    latex = false
 
-    resultdir= "figures/translation_test/laplace_"*string(Dates.now())
-    println(resultdir)
-    mkpath(resultdir)
-    TranslationTest.penalty_test(dirname=resultdir, u_ex=u_ex,
-                                 run_solver=SolverLaplace.run,
-                                 iterations=iterations, latex=latex)
+    # Parameters
+    latex = false
+    iterations = 10
+    δ1 = 0
+    L = 1.61
+    n = 2^4
+    h = 2*L/n
+    δ2 = 2*sqrt(2)*h
+    δs = LinRange(δ1, δ2, iterations)
+
+    if latex == true
+        Plots.pgfplotsx()
+        endfix = ".tex"
+    else
+        Plots.gr()
+        endfix = ".png"
+    end
+
+
+    # No penalty comparison
+    param_list = [
+                  ((10., 5., 0.1), "blue"),
+                  ((10., 0., 0.), "red")
+                 ]
+
+    # # Make figure env
+    dirname = "figures/translation_test/laplace_"*string(Dates.now())
+    println(dirname )
+    mkpath(dirname)
+
+    # Construct solver
+    solver = TranslationTest.Solver(u_ex, SolverLaplace.run)
+    prefix = "no_penalty"
+    TranslationTest.translation_test(solver, param_list, δs, L, n, dirname, prefix, endfix)
+
+    # Make figure env
+    dirname = "figures/translation_test/hessian_"*string(Dates.now())
+    println(dirname)
+    mkpath(dirname)
+
+    # Construct solver
+    solver = TranslationTest.Solver(u_ex, SolverHessian.run)
+    prefix = "no_penalty"
+    TranslationTest.translation_test(solver, param_list, δs, L, n, dirname, prefix, endfix)
 end
+
 
 main()
 
