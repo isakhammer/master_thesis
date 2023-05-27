@@ -30,6 +30,7 @@ module TranslationTest
 
 
     function sci_str(number)
+        # Converts float to string of scientific notation
         if number == 0
             return "\$ 0.0 \\cdot 10^{0} \$"
         else
@@ -49,6 +50,7 @@ module TranslationTest
         graphics = Vector{Any}()
         N = length(δs)
 
+        # Run simulation while translating the grid
         for i in 1:N
             if i%10 == 0
                 println("Iteration $i/$N" )
@@ -72,7 +74,6 @@ module TranslationTest
 
         # run simulations
         results = Vector{SimulationData}()
-
         for (params, color) in param_list
             γ, γg1, γg2 = params
             cond_numbers, el2s, eh1s, ehs_energy, graphics = translation_solve(solver, δs=δs, L=L, n=n, γ=γ, γg1=γg1, γg2=γg2)
