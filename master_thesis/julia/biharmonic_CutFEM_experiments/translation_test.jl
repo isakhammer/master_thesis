@@ -132,9 +132,9 @@ function main()
     latex = false
     iterations = 10
     δ1 = 0
-    L = 1.61
+    L = 2.61
     n = 2^4
-    h = 2*L/n
+    h = L/n
     δ2 = 2*sqrt(2)*h
     δs = LinRange(δ1, δ2, iterations)
 

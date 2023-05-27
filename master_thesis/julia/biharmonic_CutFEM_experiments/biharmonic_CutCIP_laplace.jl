@@ -30,10 +30,10 @@ module SolverLaplace
     end
 
 
-    function run(; n, u_ex, dirname=nothing, L=1.11, δ=0.0, γ=10, γg1=5, γg2=0.1)
+    function run(; n, u_ex, dirname=nothing, L=2.11, δ=0.0, γ=10, γg1=5, γg2=0.1)
 
         # Mesh size
-        h = 2*L/n
+        h = L/n
 
         order = 2
         u_ex, f, ∇u_ex, ∇Δu_ex = man_sol(u_ex)
@@ -41,8 +41,8 @@ module SolverLaplace
         # Background model (translated)
         θ_δ =  π/4
         r_δ = δ*Point(cos(θ_δ),sin(θ_δ))
-        pmin = Point(-L, -L) + r_δ
-        pmax = Point(L , L) + r_δ
+        pmin = Point(-L*0.5, -L*0.5) + r_δ
+        pmax = Point(L*0.5 , L*0.5) + r_δ
         bgorigin = ( pmin + pmax )/2
 
         R  = 1.0

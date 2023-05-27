@@ -29,17 +29,20 @@ module SolverHessian
         Γ
     end
 
-    function run(; n, u_ex, dirname=nothing, L=1.11, δ=0.0, γ=10, γg1=5, γg2=0.1)
+    function run(; n, u_ex, dirname=nothing, L=2.11, δ=0.0, γ=10, γg1=5, γg2=0.1)
 
         order = 2
         u_ex, f, ∇u_ex, ∇Δu_ex = man_sol(u_ex)
 
         # Background model (translated)
-        θ_δ = 0*( π/4 )
+        θ_δ =  π/4
         r_δ = δ*Point(cos(θ_δ),sin(θ_δ))
-        pmin = Point(-L, -L) + r_δ
-        pmax = Point(L , L) + r_δ
+        pmin = Point(-L*0.5, -L*0.5) + r_δ
+        pmax = Point(L*0.5 , L*0.5) + r_δ
         bgorigin = ( pmin + pmax )/2
+
+        # Mesh size
+        h = L/n
 
         R  = 1.0
         println("Sim: order=$order, n=$n, bg (L,L)=($(round(L, digits=2)),$(round(L, digits=2))), bgorigin=($(round(bgorigin[1], digits=2)),$(round(bgorigin[2], digits=2))), disk R=$(round(R, digits=1))")
@@ -84,8 +87,6 @@ module SolverHessian
         # Define weak form
         γ = 10*(order*(order - 1)/2)
 
-        # Mesh size
-        h = L/n
 
         function mean_n(u,n)
             return 0.5*( u.plus⋅n.plus + u.minus⋅n.minus )
