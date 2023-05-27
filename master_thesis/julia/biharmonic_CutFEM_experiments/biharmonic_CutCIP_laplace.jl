@@ -4,7 +4,6 @@ module SolverLaplace
     using LinearAlgebra
     using PROPACK
     using GridapEmbedded
-    using GridapGmsh
     using Parameters
     import Gridap: ∇
 
