@@ -25,8 +25,13 @@ module SolverLaplace
         ndof
     end
 
+    @with_kw struct Domain
+        bgmodel
+        Γ
+    end
 
-    function run(; n, u_ex, dirname=nothing, L=1.11, δ=0.0, γ=10, γg1=5, γg2=0.1)
+
+    function run(; n, u_ex, dirname=nothing, L=1.11, δ=0.0, γ=10, γg1=5, γg2=0.1, return_domain=false)
 
         # Mesh size
         h = L/n
@@ -159,7 +164,12 @@ module SolverLaplace
 
         sol = Solution( el2=el2, eh1=eh1, eh_energy=eh_energy,
                         cond_number=cond_number, ndof=ndof)
-        return sol
+        if return_domain
+            domain = Domain(bgmodel, Γ)
+            return sol, domain
+        else
+            return sol
+        end
     end
 
 end # module

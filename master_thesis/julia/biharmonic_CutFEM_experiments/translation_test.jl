@@ -1,6 +1,7 @@
 include("biharmonic_CutCIP_laplace.jl")
 include("biharmonic_CutCIP.jl")
 
+using Dates
 module TranslationTest
 
     using Printf
@@ -50,8 +51,8 @@ module TranslationTest
                 println("Iteration $i/$N" )
             end
             δi = δs[i]
-            sol = solver.run_solver( n=n, u_ex=solver.u_ex, dirname=nothing,
-                                    δ=δi,γ=γ, γg1=γg1, γg2=γg2, L=L)
+            sol, domain = solver.run_solver( n=n, u_ex=solver.u_ex, dirname=nothing,
+                                            δ=δi,γ=γ, γg1=γg1, γg2=γg2, L=L, return_domain=true)
             push!(el2s, sol.el2)
             push!(eh1s, sol.eh1)
             push!(ehs_energy, sol.eh_energy)
