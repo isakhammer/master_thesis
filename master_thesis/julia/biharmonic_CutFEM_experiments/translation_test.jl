@@ -7,6 +7,7 @@ module TranslationTest
     using Printf
     using LaTeXStrings
     using Latexify
+    import Gridap
     import Plots
 
     struct Solver
@@ -21,7 +22,7 @@ module TranslationTest
         el2s::Vector{Float64}
         eh1s::Vector{Float64}
         ehs_energy::Vector{Float64}
-        domains::Vector{Any}
+        graphics::Vector{Any}
     end
 
     default_size = (800, 600)
@@ -46,7 +47,7 @@ module TranslationTest
         eh1s = Float64[]
         ehs_energy = Float64[]
         cond_numbers = Float64[]
-        domains = Vector{Any}()
+        graphics = Vector{Any}()
         N = length(δs)
 
         for i in 1:N
@@ -54,36 +55,31 @@ module TranslationTest
                 println("Iteration $i/$N" )
             end
             δi = δs[i]
-            sol, domain = solver.run_solver( n=n, u_ex=solver.u_ex, dirname=nothing,
-                                            δ=δi,γ=γ, γg1=γg1, γg2=γg2, L=L, return_domain=true)
+            sol, graphic = solver.run_solver( n=n, u_ex=solver.u_ex, dirname=nothing,
+                                            δ=δi,γ=γ, γg1=γg1, γg2=γg2, L=L, return_graphic=true)
             push!(el2s, sol.el2)
             push!(eh1s, sol.eh1)
             push!(ehs_energy, sol.eh_energy)
             push!(cond_numbers, sol.cond_number)
-            push!(domains, domain)
+            push!(graphics, graphic)
         end
         cond_numbers = [number > 1e23 ? 1e23 : number for number in cond_numbers] #ceiling cond numbers
-        return cond_numbers, el2s, eh1s, ehs_energy, domains
+        return cond_numbers, el2s, eh1s, ehs_energy, graphics
     end
 
 
-    function translation_test(solver, param_list, δs, dirname, prefix, endfix)
+    function translation_test(solver, param_list, δs, L, n, dirname, prefix, endfix)
 
-        function run_simulations(solver, param_list, δs, L=1.11, n=2^4)
-            results = Vector{SimulationData}()
+        # run simulations
+        results = Vector{SimulationData}()
 
-            for (params, color) in param_list
-                γ, γg1, γg2 = params
-                cond_numbers, el2s, eh1s, ehs_energy, domains = translation_solve(solver, δs=δs, L=L, n=n, γ=γ, γg1=γg1, γg2=γg2)
-                push!(results, SimulationData(params, color, cond_numbers, el2s, eh1s, ehs_energy, domains))
-            end
-            return results
+        for (params, color) in param_list
+            γ, γg1, γg2 = params
+            cond_numbers, el2s, eh1s, ehs_energy, graphics = translation_solve(solver, δs=δs, L=L, n=n, γ=γ, γg1=γg1, γg2=γg2)
+            push!(results, SimulationData(params, color, cond_numbers, el2s, eh1s, ehs_energy, graphics))
         end
 
-        results = run_simulations(solver, param_list, δs)
-
-
-        # Plot condition numbers
+        # Plot for condition numbers
         p1 = Plots.plot(legend=:outertopright, size=default_size, legendtitle=L"(\gamma, \gamma_1, \gamma_2)", yscale=:log10, minorgrid=false)
 
         # Merge L2 error, H1 error, and Energy error into one plot
@@ -94,10 +90,20 @@ module TranslationTest
             label_text = L" %$(sci_str(γ)), %$(sci_str(γg1)), %$( sci_str(γg2) ) "
             Plots.plot!(p1, δs, sim_data.cond_numbers, label=label_text, color=sim_data.color)
 
-            # println("δs: $δs and el2s: $(sim_data.el2s)")
             Plots.plot!(p2, δs, sim_data.el2s, label=label_text, color=sim_data.color, linestyle=:solid)
             Plots.plot!(p2, δs, sim_data.eh1s, label=nothing, color=sim_data.color, linestyle=:dash)
             Plots.plot!(p2, δs, sim_data.ehs_energy, label=nothing, color=sim_data.color, linestyle=:dot)
+
+            # Plotting moving grid (boundary is standstill)
+            title_text = "gamma-$γ-gamma1-$γg1-gamma2-$γg2"
+            Gridap.writevtk(sim_data.graphics[1].Γ, dirname*"/$title_text-boundary.vtu")
+            Gridap.createpvd(dirname*"/$title_text") do pvd
+                N = length(δs)
+                for i in 1:N
+                    δi = δs[i]
+                    pvd[i] = Gridap.createvtk(sim_data.graphics[i].Ω_bg, dirname*"/$(title_text)_delta_$i.vtu")
+                end
+            end
 
         end
 
@@ -124,10 +130,10 @@ module TranslationTest
 
         solver = Solver(u_ex, run_solver)
         δ1 = 0
-        L = 1.11
+        L = 1.61
         n = 2^4
-        h = L/n
-        δ2 = sqrt(2)*h
+        h = 2*L/n
+        δ2 = 2*sqrt(2)*h
         δs = LinRange(δ1, δ2, iterations)
 
         # No penlaty check
@@ -137,7 +143,7 @@ module TranslationTest
         ]
 
         prefix = "no_penalty"
-        translation_test(solver, param_list, δs, dirname, prefix, endfix)
+        translation_test(solver, param_list, δs, L, n, dirname, prefix, endfix)
     end
 
 end
@@ -146,7 +152,7 @@ function main()
     L, m, r = (1, 1, 1)
     u_ex(x) = (x[1]^2 + x[2]^2 - 1)^2*sin(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
 
-    iterations = 10
+    iterations = 100
     latex = false
 
     resultdir= "figures/translation_test/laplace_"*string(Dates.now())

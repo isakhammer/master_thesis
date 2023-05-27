@@ -1,4 +1,3 @@
-
 module SolverLaplace
     using Gridap
     using LinearAlgebra
@@ -25,16 +24,16 @@ module SolverLaplace
         ndof
     end
 
-    @with_kw struct Domain
-        bgmodel
+    @with_kw struct Graphic
+        Ω_bg
         Γ
     end
 
 
-    function run(; n, u_ex, dirname=nothing, L=1.11, δ=0.0, γ=10, γg1=5, γg2=0.1, return_domain=false)
+    function run(; n, u_ex, dirname=nothing, L=1.11, δ=0.0, γ=10, γg1=5, γg2=0.1, return_graphic=false)
 
         # Mesh size
-        h = L/n
+        h = 2*L/n
 
         order = 2
         u_ex, f, ∇u_ex, ∇Δu_ex = man_sol(u_ex)
@@ -63,6 +62,7 @@ module SolverLaplace
 
         # Set up interpolation mesh and function spaces
         Ω_act = Triangulation(cutgeo, ACTIVE)
+        Ω_bg = Triangulation(bgmodel)
 
         # Construct function spaces
         V = TestFESpace(Ω_act, ReferenceFE(lagrangian, Float64, order), conformity=:H1)
@@ -164,9 +164,9 @@ module SolverLaplace
 
         sol = Solution( el2=el2, eh1=eh1, eh_energy=eh_energy,
                         cond_number=cond_number, ndof=ndof)
-        if return_domain
-            domain = Domain(bgmodel, Γ)
-            return sol, domain
+        if return_graphic
+            graphic = Graphic(Ω_bg, Γ)
+            return sol, graphic
         else
             return sol
         end
