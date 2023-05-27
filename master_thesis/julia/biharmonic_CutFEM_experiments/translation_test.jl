@@ -63,28 +63,6 @@ module TranslationTest
     end
 
 
-    # function convergence_solve(solver ;ns, γ, γg1, γg2)
-        # println("\n Convergence $ns, γ=$γ, γg1=$γg1, γg2=$γg2")
-
-        # el2s = Float64[]
-        # eh1s = Float64[]
-        # ehs_energy = Float64[]
-        # cond_numbers = Float64[]
-        # for ni in ns
-        #     sol = solver.run_solver(n=ni, u_ex=solver.u_ex, dirname=nothing,
-        #                             γ=γ, γg1=γg1, γg2=γg2)
-
-        #     push!(el2s, sol.el2)
-        #     push!(eh1s, sol.eh1)
-        #     push!(ehs_energy, sol.eh_energy)
-        #     push!(cond_numbers, sol.cond_number)
-        # end
-        # cond_numbers = [number > 1e23 ? 1e23 : number for number in cond_numbers] #ceiling cond numbers
-        # return cond_numbers, el2s, eh1s, ehs_energy
-    # end
-
-
-
     function translation_test(solver, param_list, δs, dirname, prefix, endfix)
 
         function run_simulations(solver, param_list, δs, L=1.11, n=2^4)
