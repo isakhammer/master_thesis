@@ -44,8 +44,12 @@ module TranslationTest
         eh1s = Float64[]
         ehs_energy = Float64[]
         cond_numbers = Float64[]
-        for δi in δs
-            println("δi ", δi )
+        N = length(δs)
+        for i in 1:N
+            if i%10 == 0
+                println("Iteration $i/$N" )
+            end
+            δi = δs[i]
             sol = solver.run_solver( n=n, u_ex=solver.u_ex, dirname=nothing,
                                     δ=δi,γ=γ, γg1=γg1, γg2=γg2, L=L)
             push!(el2s, sol.el2)
