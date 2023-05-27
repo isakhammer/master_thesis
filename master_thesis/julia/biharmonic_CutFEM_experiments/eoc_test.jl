@@ -47,6 +47,7 @@ function generate_figures(;ns, el2s, eh1s, ehs_energy, cond_numbers, ndofs, dirn
     open(filename*".txt", "w") do io
         pretty_table(io, data, header=minimal_header, backend=:text, formatters=formatters)
     end
+
     # Initial plot with the first data series
     p = Plots.plot(hs, el2s, label=L"\Vert e \Vert_{L^2}", size=default_size, legend=:outertopright, xscale=:log2, yscale=:log2, minorgrid=true)
     Plots.scatter!(p, hs, el2s, primary=false)
@@ -117,7 +118,6 @@ function main()
         mkpath(resultdir)
         ns = [2^3, 2^4, 2^5, 2^6, 2^7, 2^8]
         @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex, run_solver=SolverHessian.run,  L=2.11, δ=0.0, γ=10, γg1=5, γg2=0.01)
-
     end
 end
 
