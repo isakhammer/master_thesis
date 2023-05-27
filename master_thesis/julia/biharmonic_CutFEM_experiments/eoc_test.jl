@@ -1,5 +1,5 @@
 include("biharmonic_CutCIP_laplace.jl")
-include("biharmonic_CutCIP.jl")
+include("biharmonic_CutCIP_hessian.jl")
 
 using Dates
 import Plots
@@ -80,7 +80,7 @@ function convergence_analysis(; ns, dirname, u_ex, run_solver::Function, L=1.11,
     println("Convergence test", ns)
     for n in ns
 
-        sol = run_solver(; n, u_ex, dirname, L=L, δ=δ, γ=γ, γg1=γg1, γg2=γg2)
+        sol, _ = run_solver(; n, u_ex, dirname, L=L, δ=δ, γ=γ, γg1=γg1, γg2=γg2)
 
         push!(el2s, sol.el2)
         push!(eh1s, sol.eh1)

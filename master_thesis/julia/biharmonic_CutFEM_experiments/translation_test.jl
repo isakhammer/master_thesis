@@ -1,5 +1,5 @@
 include("biharmonic_CutCIP_laplace.jl")
-include("biharmonic_CutCIP.jl")
+include("biharmonic_CutCIP_hessian.jl")
 
 using Dates
 module TranslationTest
@@ -29,7 +29,6 @@ module TranslationTest
     # default_size = (400, 300)
 
 
-
     function sci_str(number)
         if number == 0
             return "\$ 0.0 \\cdot 10^{0} \$"
@@ -56,13 +55,14 @@ module TranslationTest
             end
             δi = δs[i]
             sol, graphic = solver.run_solver( n=n, u_ex=solver.u_ex, dirname=nothing,
-                                            δ=δi,γ=γ, γg1=γg1, γg2=γg2, L=L, return_graphic=true)
+                                            δ=δi,γ=γ, γg1=γg1, γg2=γg2, L=L)
             push!(el2s, sol.el2)
             push!(eh1s, sol.eh1)
             push!(ehs_energy, sol.eh_energy)
             push!(cond_numbers, sol.cond_number)
             push!(graphics, graphic)
         end
+
         cond_numbers = [number > 1e23 ? 1e23 : number for number in cond_numbers] #ceiling cond numbers
         return cond_numbers, el2s, eh1s, ehs_energy, graphics
     end
