@@ -24,8 +24,9 @@ module SolverLaplace
         ndof
     end
 
+    @enum CutFEMType CutFEM AgFEM
 
-    function run(; n, u_ex, dirname=nothing, L=1.11, δ=0.0, γ=10.0)
+    function run(; type::CutFEMType=CutFEM, n, u_ex, dirname=nothing, L=1.11, δ=0.0, γ=10.0, γg1=5, γg2=0.01)
 
         # Mesh size
         h = L/n
@@ -40,20 +41,20 @@ module SolverLaplace
         pmax = Point(L , L) + r_δ
         bgorigin = ( pmin + pmax )/2
 
-        # R  = 1.0
-        # geo = disk(R)
+        R  = 1.0
+        geo = disk(R)
 
         # Background model
         partition = (n,n)
         bgmodel = CartesianDiscreteModel(pmin, pmax, partition)
 
-        r0 = 0.5
-        r1 = 0.15
-        function ls_flower(x)
-            theta = atan(x[1], x[2])
-            (x[1]^2 + x[2]^2)^0.5 - r0 - r1*cos(5.0*theta)
-        end
-        geo = AnalyticalGeometry(x-> ls_flower(x))
+        # r0 = 0.5
+        # r1 = 0.15
+        # function ls_flower(x)
+        #     theta = atan(x[1], x[2])
+        #     (x[1]^2 + x[2]^2)^0.5 - r0 - r1*cos(5.0*theta)
+        # end
+        # geo = AnalyticalGeometry(x-> ls_flower(x))
 
         println("Sim: order=$order, n=$n, bg (L,L)=($(round(L, digits=2)),$(round(L, digits=2))), bgorigin=($(round(bgorigin[1], digits=2)),$(round(bgorigin[2], digits=2)))")
 
@@ -65,13 +66,28 @@ module SolverLaplace
         # Set up interpolation mesh and function spaces
         Ω_act = Triangulation(cutgeo, ACTIVE)
 
-        # Construct AgFEM function spaces
+        # Construct requeste CutFEM function spaces 
         Vstd = TestFESpace(Ω_act, ReferenceFE(lagrangian, Float64, order), conformity=:H1)
-        strategy = AggregateAllCutCells()
-        aggregates = aggregate(strategy, cutgeo)
-        colors = color_aggregates(aggregates, bgmodel)
 
-        V =AgFEMSpace(Vstd, aggregates)
+        if type == AgFEM
+            strategy = AggregateAllCutCells()
+            aggregates = aggregate(strategy, cutgeo)
+            # Prepare color for aggregate coloring
+            colors = color_aggregates(aggregates, bgmodel)
+            V = AgFEMSpace(Vstd, aggregates)
+        else
+            # V = Vstd
+        end
+
+        # println("Checking for strategy ...")
+        # println(strategy)
+        println("Checking for function space ...")
+        println(V)
+        println("Checking for colors ... ")
+        println(colors)
+        # println("Checking for aggregates ... ")
+        # println(aggregates)
+
         U = TrialFESpace(V)
 
         # Set up integration meshes, measures and normals
@@ -129,10 +145,10 @@ module SolverLaplace
 
         g(u,v) = h^(-2)*( ∫( (γg1*h)*jump(n_Fg⋅∇(u))*jump(n_Fg⋅∇(v)) ) * dFg +
                          ∫( (γg2*h^3)*jump_nn(u,n_Fg)*jump_nn(v,n_Fg) ) * dFg)
-
-        # A(u,v) = a_CIP(u,v) + g(u,v)
-        A(u,v) = a_CIP(u,v) 
-
+        
+       
+        # Define final discrete bilinear form
+        A(u,v) = type == CutFEM ? a_CIP(u,v) + g(u,v) : a_CIP(u,v) 
 
         # Assemble of system
         op = AffineFEOperator(A, l, U, V)
@@ -158,10 +174,8 @@ module SolverLaplace
         if dirname != nothing
             vtkdirname =dirname*"/order_$(order)_n_$n"
             mkpath(vtkdirname)
-
             # Write out models and computational domains for inspection
-            # writevtk(bgmodel,   vtkdirname*"/bgmodel")
-            writevtk(Ω_bg,      vtkdirname*"/aggs_on_bg_mesh", celldata=["aggregate"=>aggregates, "color"=>colors])
+            writevtk(bgmodel,   vtkdirname*"/bgmodel")
             writevtk(Ω,         vtkdirname*"/Omega")
             writevtk(Ω_act,     vtkdirname*"/Omega_act")
             writevtk(Λ,         vtkdirname*"/Lambda")
@@ -169,6 +183,9 @@ module SolverLaplace
             writevtk(Fg,        vtkdirname*"/Fg")
             writevtk(Λ,         vtkdirname*"/jumps",           cellfields=["jump_u"=>jump(uh)])
             writevtk(Ω,         vtkdirname*"/sol",             cellfields=["e"=>e, "uh"=>uh, "u"=>u_ex])
+            if type == AgFEM
+                writevtk(Ω_bg,      vtkdirname*"/aggs_on_bg_mesh", celldata=["aggregate"=>aggregates, "color"=>colors])
+            end
         end
 
         sol = Solution( el2=el2, eh1=eh1, eh_energy=eh_energy,
