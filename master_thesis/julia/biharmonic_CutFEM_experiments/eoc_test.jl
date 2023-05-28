@@ -1,7 +1,9 @@
 include("biharmonic_CutCIP_laplace.jl")
 include("biharmonic_CutCIP_hessian.jl")
+using Statistics
 
 using Dates
+using Test
 import Plots
 
 # default_size = (800, 600)
@@ -16,6 +18,20 @@ using LaTeXStrings
 using Latexify
 using PrettyTables
 
+# Function to compute EOC and prepend nothing for each pair of hs and errs
+function compute_eoc(hs::Vector, errs::Vector)
+    eoc = log.(errs[1:end-1] ./ errs[2:end]) ./ log.(hs[1:end-1] ./ hs[2:end])
+    return [nothing; eoc]
+end
+
+# Function to compute EOC for three pairs of hs and errs vectors
+function compute_eoc(hs::Vector, errs1::Vector, errs2::Vector, errs3::Vector)
+    eoc1 = compute_eoc(hs, errs1)
+    eoc2 = compute_eoc(hs, errs2)
+    eoc3 = compute_eoc(hs, errs3)
+    return eoc1, eoc2, eoc3
+end
+
 
 function generate_figures(;ns, el2s, eh1s, ehs_energy, cond_numbers, ndofs, dirname::String)
     filename = dirname*"/conv"
@@ -23,14 +39,8 @@ function generate_figures(;ns, el2s, eh1s, ehs_energy, cond_numbers, ndofs, dirn
     hs = 1 .// ns
     # hs_str =  latexify.(hs)
 
-    compute_eoc(hs, errs) = log.(errs[1:end-1]./errs[2:end])./log.(hs[1:end-1]./hs[2:end])
-    eoc_l2 = compute_eoc(hs, el2s)
-    eoc_eh1 = compute_eoc(hs,eh1s)
-    eoc_eh_energy = compute_eoc(hs,ehs_energy)
+    eoc_l2, eoc_eh1, eoc_eh_energy = compute_eoc(hs, el2s, eh1s, ehs_energy)
 
-    eoc_l2 =  [nothing; eoc_l2]
-    eoc_eh1 =  [nothing; eoc_eh1]
-    eoc_eh_energy =  [nothing; eoc_eh_energy]
     header = [L"$n$", L"$\Vert e \Vert_{L^2}$", "EOC", L"$ \Vert e \Vert_{H^1}$", "EOC", L"$\Vert e \Vert_{ a_h,* }$", "EOC", "Cond number", "ndofs"]
     data = hcat(ns, el2s,  eoc_l2, eh1s, eoc_eh1, ehs_energy, eoc_eh_energy, cond_numbers, ndofs)
 
@@ -38,8 +48,8 @@ function generate_figures(;ns, el2s, eh1s, ehs_energy, cond_numbers, ndofs, dirn
 
     open(filename*".tex", "w") do io
         pretty_table(io, data; header=header, tf = tf_latex_modern, formatters=formatters)
-
     end
+
     minimal_header = ["n", "L2", "EOC", "H1", "EOC", "a_h", "EOC", "cond", "const", "ndofs"]
     data = hcat(ns, el2s,  eoc_l2, eh1s, eoc_eh1, ehs_energy, eoc_eh_energy, cond_numbers, cond_numbers.*hs.^4, ndofs)
     formatters = ( ft_printf("%.0f",[1,10]), ft_printf("%.2f",[3,5,7]), ft_printf("%.1E",[2,4,6,8,9]), ft_nonothing )
@@ -70,7 +80,7 @@ function generate_figures(;ns, el2s, eh1s, ehs_energy, cond_numbers, ndofs, dirn
     Plots.savefig(p, filename*"_plot"*endfix)
 end
 
-function convergence_analysis(; ns, dirname, u_ex, run_solver::Function, L=1.11, δ=0.0, γ=10, γg1=5, γg2=0.1)
+function convergence_analysis(; ns, dirname, u_ex, run_solver::Function, L=1.11, δ=0.0, γ=20, γg1=10, γg2=0.01)
 
     el2s = Float64[]
     eh1s = Float64[]
@@ -91,6 +101,24 @@ function convergence_analysis(; ns, dirname, u_ex, run_solver::Function, L=1.11,
     end
     generate_figures(ns=ns, el2s=el2s, eh1s=eh1s, ehs_energy=ehs_energy,
                      cond_numbers=cond_numbers, ndofs=ndofs, dirname=dirname)
+
+    hs = 1 .//ns
+
+    @testset "EOC tests" begin
+        expected_eoc_l2, expected_eoc_h1, expected_eoc_energy = (2, 2, 1)
+
+        # Compute the mean of all EOC except for the "nothing" value and first one.
+        eoc_l2, eoc_eh1, eoc_eh_energy = compute_eoc(hs, el2s, eh1s, ehs_energy)
+        mean_eoc_l2 = mean(eoc_l2[3:end])
+        mean_eoc_h1 = mean(eoc_eh1[3:end])
+        mean_eoc_energy = mean(eoc_eh_energy[3:end])
+
+        # Check if the computed means are approximately equal to the expected values
+        @test isapprox(mean_eoc_l2, expected_eoc_l2, atol=0.25)
+        @test isapprox(mean_eoc_h1, expected_eoc_h1, atol=0.25)
+        @test isapprox(mean_eoc_energy, expected_eoc_energy, atol=0.25)
+    end
+
 end
 
 
@@ -104,21 +132,24 @@ function main()
     laplace =true
     hessian =true
 
-    if laplace
-        resultdir= "figures/eoc_test/laplace_"*string(Dates.now())
-        println(resultdir)
-        mkpath(resultdir)
-        ns = [2^3, 2^4, 2^5, 2^6, 2^7, 2^8]
-        @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex, run_solver=SolverLaplace.run,  L=2.5, δ=0.0, γ=20, γg1=10, γg2=0.01)
-
+    @testset "Laplace EOC tests" begin
+        if laplace
+            resultdir= "figures/eoc_test/laplace_"*string(Dates.now())
+            println(resultdir)
+            mkpath(resultdir)
+            ns = [2^3, 2^4, 2^5, 2^6, 2^7, 2^8]
+            @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex, run_solver=SolverLaplace.run,  L=2.5, δ=0.0, γ=20, γg1=10, γg2=0.01)
+        end
     end
 
-    if hessian
-        resultdir= "figures/eoc_test/hessian_"*string(Dates.now())
-        println(resultdir)
-        mkpath(resultdir)
-        ns = [2^3, 2^4, 2^5, 2^6, 2^7, 2^8]
-        @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex, run_solver=SolverHessian.run,  L=2.5, δ=0.0, γ=20, γg1=10, γg2=0.01)
+    @testset "Hessian EOC tests" begin
+        if hessian
+            resultdir= "figures/eoc_test/hessian_"*string(Dates.now())
+            println(resultdir)
+            mkpath(resultdir)
+            ns = [2^3, 2^4, 2^5, 2^6, 2^7, 2^8]
+            @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex, run_solver=SolverHessian.run,  L=2.5, δ=0.0, γ=20, γg1=10, γg2=0.01)
+        end
     end
 end
 
