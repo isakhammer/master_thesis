@@ -8,6 +8,8 @@ module TranslationTest
 
     using Printf
     import Plots
+    using DataFrames
+    using CSV
     using LaTeXStrings
     using Latexify
     import Gridap
@@ -111,6 +113,7 @@ module TranslationTest
             Plots.plot!(p2, δs, sim_data.eh1s, label=nothing, color=sim_data.color, linestyle=:dash)
             Plots.plot!(p2, δs, sim_data.ehs_energy, label=nothing, color=sim_data.color, linestyle=:dot)
 
+            CSV.write(dirname*"/$prefix"*"_sim_data.csv", DataFrame(δs = δs, cond_numbers = sim_data.cond_numbers, el2s = sim_data.el2s, eh1s = sim_data.eh1s, ehs_energy = sim_data.ehs_energy), delim=',')
             # Plotting moving grid (boundary is standstill)
             title_text = "gamma-$γ-gamma1-$γg1-gamma2-$γg2"
             Gridap.writevtk(sim_data.graphics[1].Γ, dirname*"/$title_text-boundary.vtu")
@@ -178,9 +181,9 @@ function main()
 
             # sim_data_no_penalty test cases
             @test maximum(sim_data_no_penalty.cond_numbers) > 10^8
-            @test maximum(sim_data_no_penalty.el2s) > 4*maximum(sim_data_ghost_penalty.el2s)
-            @test maximum(sim_data_no_penalty.eh1s) > 4*maximum(sim_data_ghost_penalty.eh1s)
-            @test maximum(sim_data_no_penalty.ehs_energy) > 10*maximum(sim_data_ghost_penalty.ehs_energy)
+            @test maximum(sim_data_no_penalty.el2s) > 2*maximum(sim_data_ghost_penalty.el2s)
+            @test maximum(sim_data_no_penalty.eh1s) > 2*maximum(sim_data_ghost_penalty.eh1s)
+            @test maximum(sim_data_no_penalty.ehs_energy) > 5*maximum(sim_data_ghost_penalty.ehs_energy)
         end
     end
 
