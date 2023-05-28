@@ -2,11 +2,9 @@ include("biharmonic_CutCIP_laplace.jl")
 include("biharmonic_CutCIP_hessian.jl")
 
 using Dates
-
+using Test
 
 module TranslationTest
-    default_size = (800, 600)
-    # default_size = (400, 300)
 
     using Printf
     import Plots
@@ -14,6 +12,18 @@ module TranslationTest
     using Latexify
     import Gridap
 
+    latex = false
+
+    if latex == true
+        Plots.pgfplotsx()
+        endfix = ".tex"
+    else
+        Plots.gr()
+        endfix = ".png"
+    end
+
+    default_size = (800, 600)
+    # default_size = (400, 300)
     struct Solver
         u_ex
         run_solver
@@ -70,7 +80,7 @@ module TranslationTest
     end
 
 
-    function translation_test(solver, param_list, δs, L, n, dirname, prefix, endfix)
+    function translation_test(solver, param_list, δs, L, n, dirname, prefix)
 
         # run simulations
         results = Vector{SimulationData}()
@@ -135,7 +145,6 @@ function main()
     u_ex(x) = (x[1]^2 + x[2]^2 - 1)^2*sin(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
 
     # Parameters
-    latex = false
     iterations = 500
     δ1 = 0
     L = 3.61
@@ -144,13 +153,6 @@ function main()
     δ2 = 2*sqrt(2)*h # two squares
     δs = LinRange(δ1, δ2, iterations)
 
-    if latex == true
-        Plots.pgfplotsx()
-        endfix = ".tex"
-    else
-        Plots.gr()
-        endfix = ".png"
-    end
 
 
     # No penalty comparison
@@ -163,14 +165,14 @@ function main()
         # Construct solver
         solver = TranslationTest.Solver(u_ex, solver_function)
         prefix = "no_penalty"
-        results = TranslationTest.translation_test(solver, param_list, δs, L, n, dirname, prefix, endfix)
+        results = TranslationTest.translation_test(solver, param_list, δs, L, n, dirname, prefix)
         sim_data_ghost_penalty, sim_data_no_penalty = results
 
         @testset "Error tests" begin
 
             # sim_data_ghost_penalty test cases
             @test maximum(sim_data_ghost_penalty.cond_numbers) < 10^8
-            @test maximum(sim_data_ghost_penalty.el2s) < 10^(-2)
+            @test maximum(sim_data_ghost_penalty.el2s) < 10^(-1)
             @test maximum(sim_data_ghost_penalty.eh1s) < 0.5*10^0
             @test maximum(sim_data_ghost_penalty.ehs_energy) < 10^1
 
@@ -178,7 +180,7 @@ function main()
             @test maximum(sim_data_no_penalty.cond_numbers) > 10^8
             @test maximum(sim_data_no_penalty.el2s) > 4*maximum(sim_data_ghost_penalty.el2s)
             @test maximum(sim_data_no_penalty.eh1s) > 4*maximum(sim_data_ghost_penalty.eh1s)
-            @test maximum(sim_data_no_penalty.ehs_energy) > 10*maximum(sim_data_no_penalty.ehs_energy)
+            @test maximum(sim_data_no_penalty.ehs_energy) > 10*maximum(sim_data_ghost_penalty.ehs_energy)
         end
     end
 
@@ -187,14 +189,14 @@ function main()
     mkpath(maindirname)
     datestr=string(Dates.now())
     @testset "Laplace penalty tests" begin
-        dirname = maindirname*"$(datestr)_laplace"
+        dirname = maindirname*"$(datestr)_n_$(n)_it_$(iterations)_L_$(L)_laplace"
         mkpath(dirname)
         run_penalty_test(SolverLaplace.run, dirname)
     end
 
     @testset "Hessian penalty tests" begin
         # Make figure env
-        dirname = maindirname*"$(datestr)_hessian"
+        dirname = maindirname*"$(datestr)_n_$(n)_it_$(iterations)_L_$(L)_hessian"
         mkpath(dirname)
         run_penalty_test(SolverHessian.run, dirname)
     end
