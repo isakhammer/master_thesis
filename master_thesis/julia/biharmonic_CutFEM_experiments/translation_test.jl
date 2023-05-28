@@ -97,7 +97,6 @@ module TranslationTest
 
             label_text = L" %$(sci_str(γ)), %$(sci_str(γg1)), %$( sci_str(γg2) ) "
             Plots.plot!(p1, δs, sim_data.cond_numbers, label=label_text, color=sim_data.color)
-
             Plots.plot!(p2, δs, sim_data.el2s, label=label_text, color=sim_data.color, linestyle=:solid)
             Plots.plot!(p2, δs, sim_data.eh1s, label=nothing, color=sim_data.color, linestyle=:dash)
             Plots.plot!(p2, δs, sim_data.ehs_energy, label=nothing, color=sim_data.color, linestyle=:dot)
@@ -137,12 +136,12 @@ function main()
 
     # Parameters
     latex = false
-    iterations = 100
+    iterations = 500
     δ1 = 0
     L = 3.61
     n = 2^4
     h = L/n
-    δ2 = 2*sqrt(2)*h
+    δ2 = 2*sqrt(2)*h # two squares
     δs = LinRange(δ1, δ2, iterations)
 
     if latex == true
@@ -171,30 +170,31 @@ function main()
 
             # sim_data_ghost_penalty test cases
             @test maximum(sim_data_ghost_penalty.cond_numbers) < 10^8
-            @test maximum(sim_data_ghost_penalty.ehs_energy) < 10^2
-            # @test maximum(sim_data_ghost_penalty.eh1s) < 10^0
-            # @test maximum(sim_data_ghost_penalty.el2s) < 10^(-2)
+            @test maximum(sim_data_ghost_penalty.el2s) < 10^(-2)
+            @test maximum(sim_data_ghost_penalty.eh1s) < 0.5*10^0
+            @test maximum(sim_data_ghost_penalty.ehs_energy) < 10^1
 
             # sim_data_no_penalty test cases
             @test maximum(sim_data_no_penalty.cond_numbers) > 10^8
-            @test maximum(sim_data_no_penalty.ehs_energy) > 10^2
-            # @test maximum(sim_data_no_penalty.eh1s) > 10^0
-            # @test maximum(sim_data_no_penalty.el2s) > 10^(-2)
+            @test maximum(sim_data_no_penalty.el2s) > 4*maximum(sim_data_ghost_penalty.el2s)
+            @test maximum(sim_data_no_penalty.eh1s) > 4*maximum(sim_data_ghost_penalty.eh1s)
+            @test maximum(sim_data_no_penalty.ehs_energy) > 10*maximum(sim_data_no_penalty.ehs_energy)
         end
     end
 
+    maindirname = "figures/translation_test/"
+    println(maindirname )
+    mkpath(maindirname)
+    datestr=string(Dates.now())
     @testset "Laplace penalty tests" begin
-        dirname = "figures/translation_test/laplace_"*string(Dates.now())
-        println(dirname )
+        dirname = maindirname*"$(datestr)_laplace"
         mkpath(dirname)
         run_penalty_test(SolverLaplace.run, dirname)
     end
 
-    return
     @testset "Hessian penalty tests" begin
         # Make figure env
-        dirname = "figures/translation_test/hessian_"*string(Dates.now())
-        println(dirname )
+        dirname = maindirname*"$(datestr)_hessian"
         mkpath(dirname)
         run_penalty_test(SolverHessian.run, dirname)
     end
