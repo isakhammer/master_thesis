@@ -47,7 +47,7 @@ function generate_figures(;ns, el2s, eh1s, ehs_energy, cond_numbers, ndofs, dirn
     pretty_table(data, header=minimal_header, formatters =formatters )
 
     open(filename*".txt", "w") do io
-        pretty_table(io, data, header=minimal_header, backend=:text, formatters=formatters)
+        pretty_table(io, data, header=minimal_header, formatters=formatters)
     end
     # Initial plot with the first data series
     p = Plots.plot(hs, el2s, label=L"\Vert e \Vert_{L^2}", size=default_size, legend=:outertopright, xscale=:log2, yscale=:log2, minorgrid=true)
