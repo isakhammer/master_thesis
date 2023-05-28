@@ -17,11 +17,13 @@ endfix=".png"
 using LaTeXStrings
 using Latexify
 using PrettyTables
+using DataFrames
+using CSV
 
 # Function to compute EOC and prepend nothing for each pair of hs and errs
 function compute_eoc(hs::Vector, errs::Vector)
     eoc = log.(errs[1:end-1] ./ errs[2:end]) ./ log.(hs[1:end-1] ./ hs[2:end])
-    return [nothing; eoc]
+    return [NaN; eoc]
 end
 
 # Function to compute EOC for three pairs of hs and errs vectors
@@ -43,6 +45,10 @@ function generate_figures(;ns, el2s, eh1s, ehs_energy, cond_numbers, ndofs, dirn
 
     header = [L"$n$", L"$\Vert e \Vert_{L^2}$", "EOC", L"$ \Vert e \Vert_{H^1}$", "EOC", L"$\Vert e \Vert_{ a_h,* }$", "EOC", "Cond number", "ndofs"]
     data = hcat(ns, el2s,  eoc_l2, eh1s, eoc_eh1, ehs_energy, eoc_eh_energy, cond_numbers, ndofs)
+
+    # Replace the first element from the eoc columns with NaN
+    df = DataFrame(data, [:ns, :el2s, :eoc_l2, :eh1s, :eoc_eh1, :ehs_energy, :eoc_eh_energy, :cond_numbers, :ndofs])
+    CSV.write("$filename.csv", df)
 
     formatters = (ft_printf("%.0f", [1]), ft_printf("%.2f", [3, 5, 7]), ft_printf("%.1E", [2, 4, 6, 8, 9]), ft_nonothing)
 
@@ -132,23 +138,36 @@ function main()
     laplace =true
     hessian =true
 
+    date_str = string(Dates.now())
+
     @testset "Laplace EOC tests" begin
         if laplace
-            resultdir= "figures/eoc_test/laplace_"*string(Dates.now())
+            ns = [2^3, 2^4, 2^5, 2^6, 2^7, 2^8]
+            L=2.5
+            δ=0.0
+            γ=20
+            γg1=10
+            γg2=0.01
+            resultdir= "figures/eoc_test/$(date_str)_laplace_L_$(L)_g0_$(γ)_yg1_$(γg1)_yg2_$(γg2)"
             println(resultdir)
             mkpath(resultdir)
-            ns = [2^3, 2^4, 2^5, 2^6, 2^7, 2^8]
-            @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex, run_solver=SolverLaplace.run,  L=2.5, δ=0.0, γ=20, γg1=10, γg2=0.01)
+            @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex, run_solver=SolverLaplace.run,  L=L, δ=δ, γ=γ, γg1=γg1, γg2=γg2)
         end
     end
 
     @testset "Hessian EOC tests" begin
         if hessian
-            resultdir= "figures/eoc_test/hessian_"*string(Dates.now())
+            ns = [2^3, 2^4, 2^5, 2^6, 2^7, 2^8]
+            L=2.5
+            δ=0.0
+            γ=20
+            γg1=10
+            γg2=0.01
+
+            resultdir= "figures/eoc_test/$(date_str)_hessian_L_$(L)_g0_$(γ)_yg1_$(γg1)_yg2_$(γg2)"
             println(resultdir)
             mkpath(resultdir)
-            ns = [2^3, 2^4, 2^5, 2^6, 2^7, 2^8]
-            @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex, run_solver=SolverHessian.run,  L=2.5, δ=0.0, γ=20, γg1=10, γg2=0.01)
+            @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex, run_solver=SolverHessian.run,  L=L, δ=δ, γ=γ, γg1=γg1, γg2=γg2)
         end
     end
 end
