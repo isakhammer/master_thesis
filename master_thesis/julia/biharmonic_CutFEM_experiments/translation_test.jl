@@ -2,13 +2,17 @@ include("biharmonic_CutCIP_laplace.jl")
 include("biharmonic_CutCIP_hessian.jl")
 
 using Dates
+
+
 module TranslationTest
+    default_size = (800, 600)
+    # default_size = (400, 300)
 
     using Printf
+    import Plots
     using LaTeXStrings
     using Latexify
     import Gridap
-    import Plots
 
     struct Solver
         u_ex
@@ -25,10 +29,6 @@ module TranslationTest
         graphics::Vector{Any}
     end
 
-    default_size = (800, 600)
-    # default_size = (400, 300)
-
-
     function sci_str(number)
         # Converts float to string of scientific notation
         if number == 0
@@ -41,7 +41,7 @@ module TranslationTest
     end
 
     function translation_solve(solver; δs, L, n, γ, γg1, γg2)
-        println("\nTranslation 0 to $(δs[end]);  iterations $(length(δs)); L = $L, n=$n, γ=$γ, γg1=$γg1, γg2=$γg2")
+        println("Translation 0 to $(δs[end]);  iterations $(length(δs)); L = $L, n=$n, γ=$γ, γg1=$γg1, γg2=$γg2")
 
         el2s = Float64[]
         eh1s = Float64[]
@@ -88,6 +88,13 @@ module TranslationTest
 
         for sim_data in results
             γ, γg1, γg2 = sim_data.params
+            cond_max = maximum(sim_data.cond_numbers)
+            el2_max = maximum(sim_data.el2s)
+            eh1_max = maximum(sim_data.eh1s)
+            eh_energy_max = maximum(sim_data.ehs_energy)
+
+            println("γ, γg1, γg2 = $γ, $γg1, $γg2:  Max (cond, el2, eh1, eh1s, ehs_energy) = $cond_max, $el2_max, $eh1_max, $eh_energy_max")
+
             label_text = L" %$(sci_str(γ)), %$(sci_str(γg1)), %$( sci_str(γg2) ) "
             Plots.plot!(p1, δs, sim_data.cond_numbers, label=label_text, color=sim_data.color)
 
@@ -118,6 +125,7 @@ module TranslationTest
         Plots.savefig(p1, dirname*"/$prefix"*"_cond_trans"*endfix)
         Plots.savefig(p2, dirname*"/$prefix"*"_errors_trans"*endfix)
 
+        return results
     end
 
 
@@ -127,12 +135,11 @@ function main()
     L, m, r = (1, 1, 1)
     u_ex(x) = (x[1]^2 + x[2]^2 - 1)^2*sin(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
 
-
     # Parameters
     latex = false
-    iterations = 10
+    iterations = 100
     δ1 = 0
-    L = 2.61
+    L = 3.61
     n = 2^4
     h = L/n
     δ2 = 2*sqrt(2)*h
@@ -148,32 +155,50 @@ function main()
 
 
     # No penalty comparison
-    param_list = [
-                  ((20., 10., 0.1), "blue"),
-                  ((20., 0., 0.), "red")
-                 ]
+    function run_penalty_test(solver_function, dirname)
+        param_list = [
+                      ((20., 10., 0.1), "blue"),
+                      ((20., 0., 0.), "red")
+                     ]
 
-    # LAPLACE
-    # Make figure env
-    dirname = "figures/translation_test/laplace_"*string(Dates.now())
-    println(dirname )
-    mkpath(dirname)
+        # Construct solver
+        solver = TranslationTest.Solver(u_ex, solver_function)
+        prefix = "no_penalty"
+        results = TranslationTest.translation_test(solver, param_list, δs, L, n, dirname, prefix, endfix)
+        sim_data_ghost_penalty, sim_data_no_penalty = results
 
-    # Construct solver
-    solver = TranslationTest.Solver(u_ex, SolverLaplace.run)
-    prefix = "no_penalty"
-    TranslationTest.translation_test(solver, param_list, δs, L, n, dirname, prefix, endfix)
+        @testset "Error tests" begin
 
-    # HESSIAN
-    # Make figure env
-    dirname = "figures/translation_test/hessian_"*string(Dates.now())
-    println(dirname)
-    mkpath(dirname)
+            # sim_data_ghost_penalty test cases
+            @test maximum(sim_data_ghost_penalty.cond_numbers) < 10^8
+            @test maximum(sim_data_ghost_penalty.ehs_energy) < 10^2
+            # @test maximum(sim_data_ghost_penalty.eh1s) < 10^0
+            # @test maximum(sim_data_ghost_penalty.el2s) < 10^(-2)
 
-    # Construct solver
-    solver = TranslationTest.Solver(u_ex, SolverHessian.run)
-    prefix = "no_penalty"
-    TranslationTest.translation_test(solver, param_list, δs, L, n, dirname, prefix, endfix)
+            # sim_data_no_penalty test cases
+            @test maximum(sim_data_no_penalty.cond_numbers) > 10^8
+            @test maximum(sim_data_no_penalty.ehs_energy) > 10^2
+            # @test maximum(sim_data_no_penalty.eh1s) > 10^0
+            # @test maximum(sim_data_no_penalty.el2s) > 10^(-2)
+        end
+    end
+
+    @testset "Laplace penalty tests" begin
+        dirname = "figures/translation_test/laplace_"*string(Dates.now())
+        println(dirname )
+        mkpath(dirname)
+        run_penalty_test(SolverLaplace.run, dirname)
+    end
+
+    return
+    @testset "Hessian penalty tests" begin
+        # Make figure env
+        dirname = "figures/translation_test/hessian_"*string(Dates.now())
+        println(dirname )
+        mkpath(dirname)
+        run_penalty_test(SolverHessian.run, dirname)
+    end
+
 end
 
 
