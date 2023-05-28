@@ -42,7 +42,7 @@ WORKDIR $JULIA_DIR
 
 # Install necessary packages and run the script
 RUN julia --project=@. -e 'using Pkg; Pkg.instantiate(); Pkg.resolve()'
-RUN julia --project=@. biharmonic_CutFEM_experiments/eoc_test.jl
+RUN julia --project=@. optimize=1 biharmonic_CutFEM_experiments/eoc_test.jl
 
 # Set default command
 # CMD ["julia", "--project=@.", "-e", "include('my_script.jl')"]
