@@ -153,7 +153,8 @@ function main()
                   ((20., 0., 0.), "red")
                  ]
 
-    # # Make figure env
+    # LAPLACE
+    # Make figure env
     dirname = "figures/translation_test/laplace_"*string(Dates.now())
     println(dirname )
     mkpath(dirname)
@@ -163,6 +164,7 @@ function main()
     prefix = "no_penalty"
     TranslationTest.translation_test(solver, param_list, δs, L, n, dirname, prefix, endfix)
 
+    # HESSIAN
     # Make figure env
     dirname = "figures/translation_test/hessian_"*string(Dates.now())
     println(dirname)
