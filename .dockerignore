@@ -1,3 +1,5 @@
 .git
 **/.git
-
+master_thesis/julia/old_scripts/biharmonic_experiments/figures
+master_thesis/julia/old_scripts/cahn_hilliard/CutFEM-cahn-hilliard-results
+master_thesis/julia/biharmonic_CutFEM_experiments/figures
