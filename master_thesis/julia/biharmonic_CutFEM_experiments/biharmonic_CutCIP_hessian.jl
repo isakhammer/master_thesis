@@ -29,7 +29,8 @@ module SolverHessian
         Γ
     end
 
-    function run(; n, u_ex, dirname=nothing, L=2.5, δ=0.0, γ=20, γg1=10, γg2=0.1)
+    function run(; n, u_ex, dirname=nothing, L=2.5, δ=0.0, γ=20, γg1=10, γg2=0.1, geometry="circle")
+
 
         order = 2
         u_ex, f, ∇u_ex, ∇Δu_ex = man_sol(u_ex)
@@ -44,15 +45,19 @@ module SolverHessian
         # Mesh size
         h = L/n
 
-        R  = 1.0
-        println("Sim: order=$order, n=$n, bg (L,L)=($(round(L, digits=2)),$(round(L, digits=2))), bgorigin=($(round(bgorigin[1], digits=2)),$(round(bgorigin[2], digits=2))), disk R=$(round(R, digits=1))")
+        println("Sim: order=$order, n=$n, bg L=$L, bgorigin=($(round(bgorigin[1], digits=2)),$(round(bgorigin[2], digits=2))), geo=$geometry")
 
         # Background model
         partition = (n,n)
         bgmodel = CartesianDiscreteModel(pmin, pmax, partition)
 
         # Implicit geometry
-        geo = disk(R)
+        if geometry == "circle"
+            R  = 1.0
+            geo = disk(R)
+        else
+            error("Not implemented: $geometry")
+        end
 
         # Cut the background model
         cutgeo = cut(bgmodel, geo)
