@@ -122,13 +122,27 @@ function main(; type::SolverLaplace.CutFEMType, order, ns, γ, γg1, γg2)
     # end
 end
 
+function parameter_sweep(; type::SolverLaplace.CutFEMType, order, ns, γs, γg1s, γg2s)
+    L, m, r = (1, 1, 1)
+    u_ex(x) = (x[1]^2 + x[2]^2 - 1)^2*sin(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
 
-ns = [2^3, 2^4, 2^5, 2^6, 2^7, 2^8]
-# ns = [2^4, 2^5, 2^6, 2^7]
+    for γ in γs, γg1 in γg1s, γg2 in γg2s
+        println("Stabilizataion parameters: γ=$(γ), γg1=$(γg1), γg2=$(γg2)")
+        resultdir= "figures/eoc_test/laplace_gamma_$(γ)_gamma_g1_$(γg1)_gamma_g2_$(γg2)"*string(Dates.now())
+        println(resultdir)
+        mkpath(resultdir)
+        @time convergence_analysis(type=type, order=order, ns=ns, dirname=resultdir, u_ex=u_ex, run_solver=SolverLaplace.run,  
+                                    L=1.12, δ=0.0, γ=γ, γg1=γg1, γg2=γg2)
+    end
+end
+
+
+# ns = [2^3, 2^4, 2^5, 2^6, 2^7, 2^8]
+# # ns = [2^4, 2^5, 2^6, 2^7]
 # type=SolverLaplace.AgFEM
-type=SolverLaplace.CutFEM
-order = 2
-γ = 5*order*(order-1)
-γg1=γ
-γg2=0.01
-main(type=type, order=order, ns=ns, γ=γ, γg1=γg1, γg2=γg2)
+# # type=SolverLaplace.CutFEM
+# order = 3
+# γ = 5*order*(order-1)
+# γg1=γ
+# γg2=0.01
+# main(type=type, order=order, ns=ns, γ=γ, γg1=γg1, γg2=γg2)
