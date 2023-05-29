@@ -187,10 +187,10 @@ function main()
         end
     end
 
+    datestr=string(Dates.now())
     maindirname = "figures/translation_test_$(datestr)"
     println(maindirname )
     mkpath(maindirname)
-    datestr=string(Dates.now())
     @testset "Laplace penalty tests" begin
         dirname = "$maindirname/laplace_n_$(n)_it_$(iterations)_L_$(L)"
         mkpath(dirname)
