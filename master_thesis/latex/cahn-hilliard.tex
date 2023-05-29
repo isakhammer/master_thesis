@@ -16,22 +16,75 @@
 \label{sub:the_problem}
 
 Recall the Cahn Hilliard problem is on the form
-\[
+\begin{equation}
+\label{eq:ch_exact}
     \begin{split}
         u_{t} & = \Delta ( \varepsilon  \Delta u - \frac{1}{\varepsilon } f( u) ) = 0 \quad \text{in} \Omega \\
         \partial _{n} u = \partial _{n} \Delta u & = 0 \quad \text{ in } \partial \Omega \\
         u_{0} & = u_{0}   \text{ on } \Omega
     \end{split}
-\]
+\end{equation}
 
-Where $f( s)  = F' ( s)  $ and $F( s)  = \frac{1}{4} ( s^2 - 1)^2 $. $\Omega \subset \mathbb{R} ^{d} $  for $d = 2,3$.
+Where $f( s)  = F' ( s)=s( s^2 -1)  $ and $F( s)  = \frac{1}{4} ( s^2 - 1)^2 $. $\Omega \subset \mathbb{R} ^{d} $  for $d = 2,3$.
 
 
 
-\subsection{Writing the Cahn Hilliard Equation of Weak form}%
+\subsection{ CIP method for the Cahn Hilliard Equation}%
 \label{sub:writing_the_cahn_hilliard_equation_of_weak_form}
 
+Assume that $\Omega  \subset \mathbb{R} ^{d}$ is a polygon.
 Here I should write the Cahn Hilliard equation on weak form.
+
+Here we emphasis that $( \Delta ^2 u, v)_\Omega  = a^{m}( u,v)   $ for any $\forall v \in V_{h}$.
+Hence, it is a great application for the Laplace and Hessian formulations.
+
+\subsection{Weak form of the nonlinear term}%
+\label{sub:derivation_of_the_cahn_hilliard_cip_formulation}
+
+\begin{lemma}[Nonlinear weak form]
+    Let $u \in H^2( \Omega ) $ be the exact solution to \ref{eq:ch_exact} and $v \in V_{h}$, where
+\[
+V_{h} = \left\{ v \in C^{0}( \Omega )   \mid v\in \mathcal{P} ^{k} ( T) \quad \forall T \in \mathcal{T} _{h} \right\}.
+\]
+Then is $( -\Delta f( u) , v)_{\Omega } = c_{h}(u,v )   $ s.t.
+\[
+    c^{m}_{h} ( u,v) = - ( f( u), \Delta v )_{ \Omega } + ( f( \mean{ u }  ), \jump{ \partial _{n} v }   )_{\mathcal{F}_{h} }  \red{- ( f' (  u  )  \partial _{n}u ,  v      )_{\mathcal{F}_{h} ^{ext}}}
+\]
+
+\end{lemma}
+
+\begin{proof}
+  We can easily see that \[
+    \begin{split}
+-(\Delta f( u) , v)_{T } &= -(\nabla f( u), \nabla v  )_{T } + ( \partial _{n}  f( u), v )_{\partial T }.\\
+                    & = -( f( u), \Delta v )_{T} + (f( u), \partial _{n} v  )_{\partial T} + (   f'( u)\partial _{n}u, v )_{\partial T } .
+    \end{split}
+\]
+And by doing the summation of the triangles we get the following.
+\[
+\sum_{T \in  \mathcal{T} _{h} }^{} -(\Delta f( u) , v)_{T } = \sum_{T \in \mathcal{T} _{h}}^{}  -( f( u), \Delta v )_{T} + (f( u), \partial _{n} v  )_{\partial T} + (   f'( u)\partial _{n}u, v )_{\partial T }
+\]
+
+Here we see that \[
+    \begin{split}
+\sum_{T \in \mathcal{T}_{h} }^{} ( f( u) , \partial _{n}v)_{\partial T} & =  \sum_{F \in \mathcal{F}_{h} }^{} \int_{F}^{}  \jump{    f( u) \partial _{n}v}  = \sum_{F}^{} ( \jump{f( u)} , \mean{ \partial _{n}v }  )_{F} + \sum_{F}^{} ( \mean{f( u)}
+, \jump{ \partial _{n}v }  )_{F} \\
+ & =   \sum_{F}^{} ( \mean{f( u)} , \jump{ \partial _{n}v }  )_{F} = \sum_{F}^{} ( f(\mean{ u}) , \jump{ \partial _{n}v }  )_{F}
+    \end{split}
+\]
+
+Here we used that $ \jump{ f( u)  } = 0  $ and $\mean{ f( u)  } = f( u) = f( \mean{ u }  )    $  since $u \in H^2( \Omega ) $. Also remark that $\jump{ \partial _{n}v } \neq 0   $ from $v \in V_{h}$. We can do similar procedure for the other term
+
+\[
+    \begin{split}
+\sum_{T \in \mathcal{T} _{h}}^{} (   f'( u)\partial _{n}u, v )_{\partial T } & = \sum_{F \in \mathcal{F} _{h}}^{} (\mean{ f'( u)\partial _{n}u }  , \jump{ v }   )_{F} +  (\jump{ f'( u)\partial _{n}u }  , \mean{ v }   )_{F} \\
+                                                                             & = \sum_{F \in \mathcal{F} _{h}}^{} (\mean{ f'( u)} \mean{ \partial _{n}u }  , \jump{ v }   )_{F} = \red{\sum_{F \in \mathcal{F} _{h}^{ext}}^{} ( f'( u)  \partial _{n}u   ,  v
+                                                                             )_{F} = 0} \\
+    \end{split}
+\]
+Again, here a similar identities $\jump{  f' ( u) \partial _{n} u} = 0  $ since $u \in H^2( \Omega ) $. Finally, the last term is vanished by $\left[ v \right] = 0 $ on interior facets \red{and on external facets we  imposed the boundary condition $\partial _{n}u =0$ on $\Gamma $}.
+
+\end{proof}
 
 
 \subsection{Implicit Explicit Scheme}%
@@ -40,21 +93,8 @@ Here I should write the Cahn Hilliard equation on weak form.
 
 For the Implicit explicit scheme (IMEX) sceheme we have the following discretization
 \[
-( \overline{\partial } _{t} U^{m}, v   )_{\Omega } + \varepsilon a^{m}_{h}( U^{M} , v) + \frac{1}{\varepsilon } ( P^{m} U^{m-1}, v) _{\Omega } =0, \quad \forall v \in V_{h}^{m}
+( \overline{\partial } _{t} U^{m}, v   )_{\Omega } + \varepsilon a^{m}_{h}( U^{M} , v) + \frac{1}{\varepsilon } ( P^{m} U^{m-1}, v) _{\Omega } =0, \quad \forall v \in V_{h}^{m}.
 \]
-
-Here we emphasis that $( \Delta ^2 u, v)_\Omega  = a^{m}( u,v)   $ for any $\forall v \in V_{h}$. Hence, it is a great application for the Laplace and Hessian formulations. We also have $( -\Delta f( u) , v)_{\Omega } = c_{h}(u,v )   $.
-
-\[
-c^{m}_{h} ( u,v) = - ( f( u), \Delta v )_{ \Omega } + ( f( \mean{ u }  ), \jump{ \partial _{n} u }   )_{\mathcal{F}_{h} } - ( f' ( \mean{ u }  ) \mean{ \partial _{n}u }, \jump{ v }     )_{\mathcal{F}_{h} ^{int}}
-\]
-This comes from the fact that \[
-    \begin{split}
--(\Delta f( u) , v)_{T } &= -(\nabla f( u), \nabla v  )_{T } + ( \partial _{n}  f( u), v )_{\partial T }.\\
-                    & = -( f( u), \Delta v )_{T} + (f( u), \partial _{n} v  )_{\partial T} + (   f'( u)\partial _{n}u, v )_{\partial T } .
-    \end{split}
-\]
-and
 
 
 \subsection{Introduction to numerical methods for Cahn Hilliard}%
