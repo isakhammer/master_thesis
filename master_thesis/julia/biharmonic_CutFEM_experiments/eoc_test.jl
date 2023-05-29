@@ -86,7 +86,7 @@ function generate_figures(;ns, el2s, eh1s, ehs_energy, cond_numbers, ndofs, dirn
     Plots.savefig(p, filename*"_plot"*endfix)
 end
 
-function convergence_analysis(; ns, dirname, u_ex, run_solver::Function, L=1.11, δ=0.0, γ=20, γg1=10, γg2=0.01)
+function convergence_analysis(; ns, dirname, u_ex, run_solver::Function, L=1.11, δ=0.0, γ=20, γg1=10, γg2=0.01, geometry::String="circle")
 
     el2s = Float64[]
     eh1s = Float64[]
@@ -94,10 +94,10 @@ function convergence_analysis(; ns, dirname, u_ex, run_solver::Function, L=1.11,
     cond_numbers = Float64[]
     ndofs = Float64[]
 
-    println("Convergence test", ns)
+    println("Convergence test n = $ns, geo = $geometry" )
     for n in ns
 
-        sol, _ = run_solver(; n, u_ex, dirname, L=L, δ=δ, γ=γ, γg1=γg1, γg2=γg2)
+        sol, _ = run_solver(; n, u_ex, dirname, L=L, δ=δ, γ=γ, γg1=γg1, γg2=γg2, geometry=geometry)
 
         push!(el2s, sol.el2)
         push!(eh1s, sol.eh1)
@@ -130,45 +130,56 @@ end
 
 function main()
 
-    # %% Manufactured solution
-    L, m, r = (2, 1, 1)
-    u_ex(x) = (x[1]^2 + x[2]^2 - 1)^2*sin(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
-
-    # Laplace
-    laplace =true
-    hessian =true
 
     date_str = string(Dates.now())
 
+    maindir = "figures/eoc_test_$(date_str)"
+    # Manufactured solution
+    L, m, r = (2, 1, 1)
+    u_ex(x) = sin(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
+    @testset "Laplace Flower EOC tests" begin
+        ns = [2^3, 2^4, 2^5, 2^6, 2^7, 2^8]
+        L=2.5
+        δ=0.0
+        γ=20
+        γg1=10
+        γg2=0.01
+        geometry ="flower"
+        resultdir= "$maindir/eoc-laplace-$(geometry)-L-$(L)-gamma0-$(γ)-gamma1-$(γg1)-gamma2-$(γg2)"
+        println(resultdir)
+        mkpath(resultdir)
+        @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex, run_solver=SolverLaplace.run,  L=L, δ=δ, γ=γ, γg1=γg1, γg2=γg2, geometry=geometry)
+    end
+
+    # Manufactured solution
+    L, m, r = (2, 1, 1)
+    u_ex(x) = (x[1]^2 + x[2]^2 - 1)^2*sin(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
     @testset "Laplace EOC tests" begin
-        if laplace
-            ns = [2^3, 2^4, 2^5, 2^6, 2^7, 2^8]
-            L=2.5
-            δ=0.0
-            γ=20
-            γg1=10
-            γg2=0.01
-            resultdir= "figures/eoc_test/$(date_str)_laplace_L_$(L)_g0_$(γ)_yg1_$(γg1)_yg2_$(γg2)"
-            println(resultdir)
-            mkpath(resultdir)
-            @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex, run_solver=SolverLaplace.run,  L=L, δ=δ, γ=γ, γg1=γg1, γg2=γg2)
-        end
+        ns = [2^3, 2^4, 2^5, 2^6, 2^7, 2^8]
+        L=2.5
+        δ=0.0
+        γ=20
+        γg1=10
+        γg2=0.01
+        geometry ="circle"
+        resultdir= "$maindir/eoc-laplace-$(geometry)-L-$(L)-gamma0-$(γ)-gamma1-$(γg1)-gamma2-$(γg2)"
+        println(resultdir)
+        mkpath(resultdir)
+        @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex, run_solver=SolverLaplace.run,  L=L, δ=δ, γ=γ, γg1=γg1, γg2=γg2, geometry=geometry)
     end
 
     @testset "Hessian EOC tests" begin
-        if hessian
-            ns = [2^3, 2^4, 2^5, 2^6, 2^7, 2^8]
-            L=2.5
-            δ=0.0
-            γ=20
-            γg1=10
-            γg2=0.01
-
-            resultdir= "figures/eoc_test/$(date_str)_hessian_L_$(L)_g0_$(γ)_yg1_$(γg1)_yg2_$(γg2)"
-            println(resultdir)
-            mkpath(resultdir)
-            @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex, run_solver=SolverHessian.run,  L=L, δ=δ, γ=γ, γg1=γg1, γg2=γg2)
-        end
+        ns = [2^3, 2^4, 2^5, 2^6, 2^7, 2^8]
+        L=2.5
+        δ=0.0
+        γ=20
+        γg1=10
+        γg2=0.01
+        geometry ="circle"
+        resultdir= "$maindir/eoc-hessian-$(geometry)-L-$(L)-gamma0-$(γ)-gamma1-$(γg1)-gamma2-$(γg2)"
+        println(resultdir)
+        mkpath(resultdir)
+        @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex, run_solver=SolverHessian.run,  L=L, δ=δ, γ=γ, γg1=γg1, γg2=γg2)
     end
 end
 

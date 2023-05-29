@@ -113,15 +113,17 @@ module TranslationTest
             Plots.plot!(p2, δs, sim_data.eh1s, label=nothing, color=sim_data.color, linestyle=:dash)
             Plots.plot!(p2, δs, sim_data.ehs_energy, label=nothing, color=sim_data.color, linestyle=:dot)
 
-            CSV.write(dirname*"/$prefix"*"_sim_data.csv", DataFrame(δs = δs, cond_numbers = sim_data.cond_numbers, el2s = sim_data.el2s, eh1s = sim_data.eh1s, ehs_energy = sim_data.ehs_energy), delim=',')
-            # Plotting moving grid (boundary is standstill)
             title_text = "gamma-$γ-gamma1-$γg1-gamma2-$γg2"
-            Gridap.writevtk(sim_data.graphics[1].Γ, dirname*"/$title_text-boundary.vtu")
-            Gridap.createpvd(dirname*"/$title_text") do pvd
+            CSV.write(dirname*"/$(prefix)-$title_text.csv", DataFrame(δs = δs, cond_numbers = sim_data.cond_numbers, el2s = sim_data.el2s, eh1s = sim_data.eh1s, ehs_energy = sim_data.ehs_energy), delim=',')
+            # Plotting moving grid (boundary is standstill)
+            vtkdirname = "$dirname/graphics"
+            mkpath(vtkdirname)
+            Gridap.writevtk(sim_data.graphics[1].Γ, vtkdirname*"/boundary.vtu")
+            Gridap.createpvd(vtkdirname*"/$title_text") do pvd
                 N = length(δs)
                 for i in 1:N
                     δi = δs[i]
-                    pvd[i] = Gridap.createvtk(sim_data.graphics[i].Ω_bg, dirname*"/$(title_text)_delta_$i.vtu")
+                    pvd[i] = Gridap.createvtk(sim_data.graphics[i].Ω_bg, vtkdirname*"/$title_text-delta_$i.vtu")
                 end
             end
 
@@ -167,7 +169,7 @@ function main()
 
         # Construct solver
         solver = TranslationTest.Solver(u_ex, solver_function)
-        prefix = "no_penalty"
+        prefix = "no_penalty_test"
         results = TranslationTest.translation_test(solver, param_list, δs, L, n, dirname, prefix)
         sim_data_ghost_penalty, sim_data_no_penalty = results
 
@@ -187,19 +189,19 @@ function main()
         end
     end
 
-    maindirname = "figures/translation_test/"
+    datestr=string(Dates.now())
+    maindirname = "figures/translation_test_$(datestr)"
     println(maindirname )
     mkpath(maindirname)
-    datestr=string(Dates.now())
     @testset "Laplace penalty tests" begin
-        dirname = maindirname*"$(datestr)_n_$(n)_it_$(iterations)_L_$(L)_laplace"
+        dirname = "$maindirname/laplace_n_$(n)_it_$(iterations)_L_$(L)"
         mkpath(dirname)
         run_penalty_test(SolverLaplace.run, dirname)
     end
 
     @testset "Hessian penalty tests" begin
         # Make figure env
-        dirname = maindirname*"$(datestr)_n_$(n)_it_$(iterations)_L_$(L)_hessian"
+        dirname = "$maindirname/hessian_n_$(n)_it_$(iterations)_L_$(L)"
         mkpath(dirname)
         run_penalty_test(SolverHessian.run, dirname)
     end
