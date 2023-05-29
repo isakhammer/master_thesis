@@ -21,7 +21,7 @@ We will consider General Cahn Hilliard problem is on the form
     \begin{split}
         \partial _{t} u & - \Delta ( \varepsilon  \Delta u - \frac{1}{\varepsilon } f( u) ) =  h(x)  \quad \text{in} \Omega \\
         \partial _{n} u & =  g_{1}(x)  \quad \text{ on } \Gamma \\
-        \partial _{n} \Delta u & = g_{2}(x)  \quad \text{ on } \Gamma  \\
+        \red{ f( u) +}  \partial _{n} \Delta u & = g_{2}(x)  \quad \text{ on } \Gamma  \\
         u(t=0) & = u_{0}   \text{ on } \Omega
     \end{split}
 \end{equation}
@@ -35,41 +35,35 @@ Where $f( s)  = F' ( s)=s( s^2 -1)  $ and $F( s)  = \frac{1}{4} ( s^2 - 1)^2 $. 
 
 Our goal is to write the Cahn Hilliard equation on weak form.
 Assume that $\Omega  \subset \mathbb{R} ^{d}$ is a polygon.
- Let $u \in \left[ 0,T \right] \times H^{4}( \Omega ) $ and $v \in V$ where \[
-V = \left\{ v \in H^{1}( \Omega )   \mid  v \mid _{T} \in H^{m}( T)  \forall T \in \mathcal{T} _{h} \right\}
-\]
-
-Expanding the first Laplace operator can we observe that,
-\[
-- ( \Delta ( \varepsilon  \Delta u - \frac{1}{\varepsilon } f( u) ) ,v )_{\Omega } = (  \varepsilon   \Delta^{2} u ,v )_{\Omega } - \frac{1}{\varepsilon } ( \Delta f( u)  ,v )_{\Omega }.
-\]
-
-
+ Let $u \in \times H^{4}( \Omega ) $ and $v \in V_{h} $ where
 \[
 V_{h} = \left\{ v \in C^{0}( \Omega )   \mid v\in \mathcal{P} ^{k} ( T) \quad \forall T \in \mathcal{T} _{h} \right\}.
 \]
-
-
-\subsection{Weak form of the nonlinear term}%
-\label{sub:derivation_of_the_cahn_hilliard_cip_formulation}
-
-\begin{lemma}[Nonlinear weak form]
-    Let $u \in H^2( \Omega ) $ be the exact solution to \eqref{eq:ch_exact} and $v \in V_{h}$.
-Then is $( -\Delta f( u) , v)_{\Omega } = c_{h}(u,v )   $ s.t.
+Expanding the first Laplace operator can we observe that,
 \[
-    c^{m}_{h} ( u,v) = - ( f( u), \Delta v )_{ \Omega } + ( f( \mean{ u }  ), \jump{ \partial _{n} v }   )_{\mathcal{F}_{h} }  \red{- ( f' (  u  )  \partial _{n}u ,  v      )_{\mathcal{F}_{h} ^{ext}}}
+- ( \Delta ( \varepsilon  \Delta u - \frac{1}{\varepsilon } f( u) ) ,v )_{\Omega } = \varepsilon ( \Delta^{2} u ,v )_{\Omega } - \frac{1}{\varepsilon } ( \Delta f( u)  ,v )_{\Omega }.
+\]
+
+Hence, this makes it natural to associate the biharmonic $( \Delta ^2 u,v)_{\Gamma } $ with bilinear forms $a_h^{L} $ and $a^{H}_{h} $ from Section \ref{sec:CIP_biharmonic_problem}, however, in this section will we only consider $a^{L}$.
+We will now find seek to find a bilinear form of the nonlinear term,
+
+\begin{lemma}[Nonlinear bilinear term]
+    Let $u \in H^2( \Omega ) $ and $v \in V_{h}$ the test function.
+Then can we rewrite the nonlinear term into the bilinear form, $( -\Delta f( u) , v)_{\Omega } = c_{h}(u,v )   $, where
+\[
+    c^{}_{h} ( u,v) = - ( f( u), \Delta v )_{ \Omega } + ( f( \mean{ u }  ), \jump{ \partial _{n} v }   )_{\mathcal{F}_{h} }  \red{- ( f' (  u  )  \partial _{n}u ,  v      )_{\mathcal{F}_{h} ^{ext}}}
 \]
 
 \end{lemma}
 
 \begin{proof}
-  We can easily see that \[
+  We can easily see by doing Greens theorem twice that \[
     \begin{split}
 -(\Delta f( u) , v)_{T } &= -(\nabla f( u), \nabla v  )_{T } + ( \partial _{n}  f( u), v )_{\partial T }.\\
                     & = -( f( u), \Delta v )_{T} + (f( u), \partial _{n} v  )_{\partial T} + (   f'( u)\partial _{n}u, v )_{\partial T } .
     \end{split}
 \]
-And by doing the summation of the triangles we get the following.
+ And summation of the triangles we get the following.
 \[
 \sum_{T \in  \mathcal{T} _{h} }^{} -(\Delta f( u) , v)_{T } = \sum_{T \in \mathcal{T} _{h}}^{}  -( f( u), \Delta v )_{T} + (f( u), \partial _{n} v  )_{\partial T} + (   f'( u)\partial _{n}u, v )_{\partial T }
 \]
@@ -87,13 +81,28 @@ Here we used that $ \jump{ f( u)  } = 0  $ and $\mean{ f( u)  } = f( u) = f( \me
 \[
     \begin{split}
 \sum_{T \in \mathcal{T} _{h}}^{} (   f'( u)\partial _{n}u, v )_{\partial T } & = \sum_{F \in \mathcal{F} _{h}}^{} (\mean{ f'( u)\partial _{n}u }  , \jump{ v }   )_{F} +  (\jump{ f'( u)\partial _{n}u }  , \mean{ v }   )_{F} \\
-                                                                             & = \sum_{F \in \mathcal{F} _{h}}^{} (\mean{ f'( u)} \mean{ \partial _{n}u }  , \jump{ v }   )_{F} = \red{\sum_{F \in \mathcal{F} _{h}^{ext}}^{} ( f'( u)  \partial _{n}u   ,  v
-                                                                             )_{F} = 0} \\
+                                                                             & = \sum_{F \in \mathcal{F} _{h}}^{} (\mean{ f'( u)} \mean{ \partial _{n}u }  , \jump{ v }   )_{F} = \sum_{F \in \mathcal{F} _{h}^{ext}}^{} ( f'( u)  \partial _{n}u   ,  v
+                                                                             )_{F}  \\
     \end{split}
 \]
-Again, here a similar identities $\jump{  f' ( u) \partial _{n} u} = 0  $ since $u \in H^2( \Omega ) $. Finally, the last term is vanished by $\left[ v \right] = 0 $ on interior facets \red{and on external facets we  imposed the boundary condition $\partial _{n}u =0$ on $\Gamma $}.
-
+Again, here a similar identities $\jump{  f' ( u) \partial _{n} u} = 0  $ since $u \in H^2( \Omega ) $. Ultimately, the final term is eliminated by setting $ \jump{v} = 0 $ for internal facets, excluding the exterior facets.
 \end{proof}
+
+Hence, we have a scheme for nonlinear spatial discretization. Let $u \in \left[ 0,T \right] \times V_{h}  $ and $v \in V_{h}$. We define the following CIP discretization
+\begin{equation}
+    \label{eq:cip_ch}
+    \begin{split}
+        a_{h} \left( u, v \right)   =& ( \Delta  u, \Delta v ) _{ \Omega } \\
+                                     & + \left( \mean{  \Delta  u }, \jump{ \partial _{n }v} \right)_{\mathcal{F}_{h}  }  + \left( \mean{ \Delta  v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}  }  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h} } \\
+                                     & + \left(   \Delta  u ,  \partial _{n }v \right)_{\Gamma   }  + \left(  \Delta  v ,  \partial _{n}u       \right)_{\Gamma  }  + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{ \Gamma } \\
+    c^{}_{h} ( u,v) & = - ( f( u), \Delta v )_{ \Omega } + ( f( \mean{ u }  ), \jump{ \partial _{n} v }   )_{\mathcal{F}_{h} }  \red{- ( f' (  u  )  \partial _{n}u ,  v      )_{ \Gamma }} \\
+    l_{h}( v_{}) & =  \left( h, v \right) _{\Omega } - ( g_{2},  v )_{\Gamma } \red{+(f(u),  v )_{\Gamma }} -  ( g_{1}, \Delta  v  )_{\Gamma }  + \frac{\gamma }{h} ( g_{1}, \partial _{n} v  )_{\Gamma }
+    \end{split}
+\end{equation}
+s.t. that the following equation holds.
+\[
+    ( \partial _{t}u, v)_\Omega + a_{h}( u,v) + c_{h}( u,v) - l_{h}(v)  = 0
+\]
 
 
 \subsection{Implicit Explicit Scheme}%
