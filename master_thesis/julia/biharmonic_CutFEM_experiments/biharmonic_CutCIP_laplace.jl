@@ -30,7 +30,7 @@ module SolverLaplace
     end
 
 
-    function run(; n, u_ex, dirname=nothing, L=2.5, δ=0.0, γ=20, γg1=10, γg2=0.1)
+    function run(; n, u_ex, dirname=nothing, L=2.5, δ=0.0, γ=20, γg1=10, γg2=0.1, geometry="circle")
 
         # Mesh size
         h = L/n
@@ -45,20 +45,29 @@ module SolverLaplace
         pmax = Point(L*0.5 , L*0.5) + r_δ
         bgorigin = ( pmin + pmax )/2
 
-        R  = 1.0
 
         # Background model
         partition = (n,n)
         bgmodel = CartesianDiscreteModel(pmin, pmax, partition)
 
-        geo = disk(R)
+        if geometry=="circle"
+            R  = L*0.3
+            geo = disk(R)
+        elseif geometry=="flower"
+            function ls_flower(x)
+                r0, r1 = L*0.3, L*0.1
+                theta = atan(x[1], x[2])
+                r0 + r1*cos(5.0*theta) -(x[1]^2 + x[2]^2)^0.5
+            end
+            # using ! operator to define the interioir
+            geo = !AnalyticalGeometry(x-> ls_flower(x))
+        end
 
-        println("Sim: order=$order, n=$n, bg (L,L)=($(round(L, digits=2)),$(round(L, digits=2))), bgorigin=($(round(bgorigin[1], digits=2)),$(round(bgorigin[2], digits=2))), disk R=$(round(R, digits=1))")
-
+        println("Sim: order=$order, n=$n, bg L=$L, bgorigin=($(round(bgorigin[1], digits=2)),$(round(bgorigin[2], digits=2))), geo=$geometry")
 
         # Cut the background model
         cutgeo = cut(bgmodel, geo)
-        cutgeo_facets = cut_facets(bgmodel,geo)
+        cutgeo_facets = cut_facets(bgmodel, geo)
 
         # Set up interpolation mesh and function spaces
         Ω_act = Triangulation(cutgeo, ACTIVE)

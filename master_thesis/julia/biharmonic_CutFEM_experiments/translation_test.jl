@@ -2,14 +2,30 @@ include("biharmonic_CutCIP_laplace.jl")
 include("biharmonic_CutCIP_hessian.jl")
 
 using Dates
+using Test
+
 module TranslationTest
 
     using Printf
+    import Plots
+    using DataFrames
+    using CSV
     using LaTeXStrings
     using Latexify
     import Gridap
-    import Plots
 
+    latex = false
+
+    if latex == true
+        Plots.pgfplotsx()
+        endfix = ".tex"
+    else
+        Plots.gr()
+        endfix = ".png"
+    end
+
+    default_size = (800, 600)
+    # default_size = (400, 300)
     struct Solver
         u_ex
         run_solver
@@ -25,10 +41,6 @@ module TranslationTest
         graphics::Vector{Any}
     end
 
-    default_size = (800, 600)
-    # default_size = (400, 300)
-
-
     function sci_str(number)
         # Converts float to string of scientific notation
         if number == 0
@@ -41,7 +53,7 @@ module TranslationTest
     end
 
     function translation_solve(solver; δs, L, n, γ, γg1, γg2)
-        println("\nTranslation 0 to $(δs[end]);  iterations $(length(δs)); L = $L, n=$n, γ=$γ, γg1=$γg1, γg2=$γg2")
+        println("Translation 0 to $(δs[end]);  iterations $(length(δs)); L = $L, n=$n, γ=$γ, γg1=$γg1, γg2=$γg2")
 
         el2s = Float64[]
         eh1s = Float64[]
@@ -70,7 +82,7 @@ module TranslationTest
     end
 
 
-    function translation_test(solver, param_list, δs, L, n, dirname, prefix, endfix)
+    function translation_test(solver, param_list, δs, L, n, dirname, prefix)
 
         # run simulations
         results = Vector{SimulationData}()
@@ -88,21 +100,30 @@ module TranslationTest
 
         for sim_data in results
             γ, γg1, γg2 = sim_data.params
+            cond_max = maximum(sim_data.cond_numbers)
+            el2_max = maximum(sim_data.el2s)
+            eh1_max = maximum(sim_data.eh1s)
+            eh_energy_max = maximum(sim_data.ehs_energy)
+
+            println("γ, γg1, γg2 = $γ, $γg1, $γg2:  Max (cond, el2, eh1, eh1s, ehs_energy) = $cond_max, $el2_max, $eh1_max, $eh_energy_max")
+
             label_text = L" %$(sci_str(γ)), %$(sci_str(γg1)), %$( sci_str(γg2) ) "
             Plots.plot!(p1, δs, sim_data.cond_numbers, label=label_text, color=sim_data.color)
-
             Plots.plot!(p2, δs, sim_data.el2s, label=label_text, color=sim_data.color, linestyle=:solid)
             Plots.plot!(p2, δs, sim_data.eh1s, label=nothing, color=sim_data.color, linestyle=:dash)
             Plots.plot!(p2, δs, sim_data.ehs_energy, label=nothing, color=sim_data.color, linestyle=:dot)
 
-            # Plotting moving grid (boundary is standstill)
             title_text = "gamma-$γ-gamma1-$γg1-gamma2-$γg2"
-            Gridap.writevtk(sim_data.graphics[1].Γ, dirname*"/$title_text-boundary.vtu")
-            Gridap.createpvd(dirname*"/$title_text") do pvd
+            CSV.write(dirname*"/$(prefix)-$title_text.csv", DataFrame(δs = δs, cond_numbers = sim_data.cond_numbers, el2s = sim_data.el2s, eh1s = sim_data.eh1s, ehs_energy = sim_data.ehs_energy), delim=',')
+            # Plotting moving grid (boundary is standstill)
+            vtkdirname = "$dirname/graphics"
+            mkpath(vtkdirname)
+            Gridap.writevtk(sim_data.graphics[1].Γ, vtkdirname*"/boundary.vtu")
+            Gridap.createpvd(vtkdirname*"/$title_text") do pvd
                 N = length(δs)
                 for i in 1:N
                     δi = δs[i]
-                    pvd[i] = Gridap.createvtk(sim_data.graphics[i].Ω_bg, dirname*"/$(title_text)_delta_$i.vtu")
+                    pvd[i] = Gridap.createvtk(sim_data.graphics[i].Ω_bg, vtkdirname*"/$title_text-delta_$i.vtu")
                 end
             end
 
@@ -118,6 +139,7 @@ module TranslationTest
         Plots.savefig(p1, dirname*"/$prefix"*"_cond_trans"*endfix)
         Plots.savefig(p2, dirname*"/$prefix"*"_errors_trans"*endfix)
 
+        return results
     end
 
 
@@ -127,53 +149,65 @@ function main()
     L, m, r = (1, 1, 1)
     u_ex(x) = (x[1]^2 + x[2]^2 - 1)^2*sin(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
 
-
     # Parameters
-    latex = false
-    iterations = 10
+    iterations = 100
     δ1 = 0
-    L = 2.61
+    L = 3.61
     n = 2^4
     h = L/n
-    δ2 = 2*sqrt(2)*h
+    δ2 = 2*sqrt(2)*h # two squares
     δs = LinRange(δ1, δ2, iterations)
 
-    if latex == true
-        Plots.pgfplotsx()
-        endfix = ".tex"
-    else
-        Plots.gr()
-        endfix = ".png"
-    end
 
 
     # No penalty comparison
-    param_list = [
-                  ((20., 10., 0.1), "blue"),
-                  ((20., 0., 0.), "red")
-                 ]
+    function run_penalty_test(solver_function, dirname)
+        param_list = [
+                      ((20., 10., 0.1), "blue"),
+                      ((20., 0., 0.), "red")
+                     ]
 
-    # # Make figure env
-    dirname = "figures/translation_test/laplace_"*string(Dates.now())
-    println(dirname )
-    mkpath(dirname)
+        # Construct solver
+        solver = TranslationTest.Solver(u_ex, solver_function)
+        prefix = "no_penalty_test"
+        results = TranslationTest.translation_test(solver, param_list, δs, L, n, dirname, prefix)
+        sim_data_ghost_penalty, sim_data_no_penalty = results
 
-    # Construct solver
-    solver = TranslationTest.Solver(u_ex, SolverLaplace.run)
-    prefix = "no_penalty"
-    TranslationTest.translation_test(solver, param_list, δs, L, n, dirname, prefix, endfix)
+        @testset "Error tests" begin
 
-    # Make figure env
-    dirname = "figures/translation_test/hessian_"*string(Dates.now())
-    println(dirname)
-    mkpath(dirname)
+            # sim_data_ghost_penalty test cases
+            @test maximum(sim_data_ghost_penalty.cond_numbers) < 10^8
+            @test maximum(sim_data_ghost_penalty.el2s) < 10^(-1)
+            @test maximum(sim_data_ghost_penalty.eh1s) < 0.5*10^0
+            @test maximum(sim_data_ghost_penalty.ehs_energy) < 10^1
 
-    # Construct solver
-    solver = TranslationTest.Solver(u_ex, SolverHessian.run)
-    prefix = "no_penalty"
-    TranslationTest.translation_test(solver, param_list, δs, L, n, dirname, prefix, endfix)
+            # sim_data_no_penalty test cases
+            @test maximum(sim_data_no_penalty.cond_numbers) > 10^8
+            # @test maximum(sim_data_no_penalty.el2s) > 2*maximum(sim_data_ghost_penalty.el2s)
+            # @test maximum(sim_data_no_penalty.eh1s) > 2*maximum(sim_data_ghost_penalty.eh1s)
+            @test maximum(sim_data_no_penalty.ehs_energy) > 2*maximum(sim_data_ghost_penalty.ehs_energy)
+        end
+    end
+
+    datestr=string(Dates.now())
+    maindirname = "figures/translation_test_$(datestr)"
+    println(maindirname )
+    mkpath(maindirname)
+    @testset "Laplace penalty tests" begin
+        dirname = "$maindirname/laplace_n_$(n)_it_$(iterations)_L_$(L)"
+        mkpath(dirname)
+        run_penalty_test(SolverLaplace.run, dirname)
+    end
+
+    @testset "Hessian penalty tests" begin
+        # Make figure env
+        dirname = "$maindirname/hessian_n_$(n)_it_$(iterations)_L_$(L)"
+        mkpath(dirname)
+        run_penalty_test(SolverHessian.run, dirname)
+    end
+
 end
 
 
-main()
+@time main()
 

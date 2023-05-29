@@ -1,0 +1,30 @@
+name: Julia tests
+
+on:
+  schedule:
+    - cron: '0 2 */3 * *' # run every three days at 2 AM UTC
+  #push:
+  #  branches: [ master, dev ]
+  #pull_request:
+  #  branches: [ master, dev]
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+
+    - name: Build the Docker image
+      run: docker build . --file dockerfiles/Dockerfile-julia --tag julia-build
+
+    # - name: docker login
+    #   env:
+    #     DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
+    #     DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+    #   run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+
+    # - name: Docker push
+    #   run: docker push isakhammer/julia

@@ -1,0 +1,39 @@
+FROM ubuntu:20.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV HOME_DIR /root
+
+# Essentials
+RUN apt-get update && apt-get install -yq \
+    apt-utils \
+    dialog \
+    apt-transport-https \
+    wget \
+    libasound2 \
+    build-essential \
+    software-properties-common \
+    curl && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN apt-get -y upgrade
+
+RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
+RUN apt-get upgrade -y
+RUN apt-get install -y latexmk
+RUN apt-get install -y texlive-full
+RUN apt-get install -y biber
+
+# Set the working directory
+RUN mkdir -p $HOME_DIR/code
+ENV WORK_DIR $HOME_DIR/code
+WORKDIR $WORK_DIR
+
+# Copy the current directory contents into the container
+COPY . .
+
+ENV LATEX_DIR $WORK_DIR/master_thesis/latex
+WORKDIR $LATEX_DIR
+
+RUN latexmk -pdf main.tex && latexmk -c
+
+
