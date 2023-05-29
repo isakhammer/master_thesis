@@ -1,1 +1,4 @@
-**/graphics
+**/graphics/
+**/*/graphics/
+**/*/*/graphics/
+**/*/*/*/graphics/
