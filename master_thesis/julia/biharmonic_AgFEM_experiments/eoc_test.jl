@@ -70,7 +70,7 @@ function generate_figures(;ns, el2s, eh1s, ehs_energy, cond_numbers, ndofs, dirn
     Plots.savefig(p, filename*"_plot"*endfix)
 end
 
-function convergence_analysis(; type::SolverLaplace.CutFEMType, ns, dirname, u_ex, run_solver::Function, L=1.11, δ=0.0, γ=10.0, γg1=5, γg2=0.01)
+function convergence_analysis(; type::SolverLaplace.CutFEMType, order, ns, dirname, u_ex, run_solver::Function, L=1.11, δ=0.0, γ=10.0, γg1=5, γg2=0.01)
 
     el2s = Float64[]
     eh1s = Float64[]
@@ -81,7 +81,7 @@ function convergence_analysis(; type::SolverLaplace.CutFEMType, ns, dirname, u_e
     println("Convergence test", ns)
     for n in ns
 
-        sol = run_solver(; type, n, u_ex, dirname, L=L, δ=δ, γ=γ, γg1=γg1, γg2=γg2)
+        sol = run_solver(; type, order, n, u_ex, dirname, L=L, δ=δ, γ=γ, γg1=γg1, γg2=γg2)
 
         push!(el2s, sol.el2)
         push!(eh1s, sol.eh1)
@@ -94,7 +94,7 @@ function convergence_analysis(; type::SolverLaplace.CutFEMType, ns, dirname, u_e
 end
 
 
-function main(; type::SolverLaplace.CutFEMType, ns)
+function main(; type::SolverLaplace.CutFEMType, order, ns, γ, γg1, γg2)
     # %% Manufactured solution
     L, m, r = (1, 1, 1)
     u_ex(x) = (x[1]^2 + x[2]^2 - 1)^2*sin(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
@@ -107,7 +107,8 @@ function main(; type::SolverLaplace.CutFEMType, ns)
         resultdir= "figures/eoc_test/laplace_"*string(Dates.now())
         println(resultdir)
         mkpath(resultdir)
-        @time convergence_analysis(type=type, ns=ns, dirname=resultdir, u_ex=u_ex, run_solver=SolverLaplace.run,  L=1.12, δ=0.0, γ=10, γg1=5, γg2=0.01)
+        @time convergence_analysis(type=type, order=order, ns=ns, dirname=resultdir, u_ex=u_ex, run_solver=SolverLaplace.run,  
+                                   L=1.12, δ=0.0, γ=γ, γg1=γg1, γg2=γg2)
 
     end
 
@@ -122,6 +123,12 @@ function main(; type::SolverLaplace.CutFEMType, ns)
 end
 
 
-ns = [2^4, 2^5, 2^6, 2^7, 2^8]
-type=SolverLaplace.AgFEM
-main(type=type, ns=ns)
+ns = [2^3, 2^4, 2^5, 2^6, 2^7, 2^8]
+# ns = [2^4, 2^5, 2^6, 2^7]
+# type=SolverLaplace.AgFEM
+type=SolverLaplace.CutFEM
+order = 2
+γ = 5*order*(order-1)
+γg1=γ
+γg2=0.01
+main(type=type, order=order, ns=ns, γ=γ, γg1=γg1, γg2=γg2)

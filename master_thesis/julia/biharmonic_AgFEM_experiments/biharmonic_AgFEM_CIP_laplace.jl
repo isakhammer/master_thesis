@@ -26,12 +26,11 @@ module SolverLaplace
 
     @enum CutFEMType CutFEM AgFEM
 
-    function run(; type::CutFEMType=CutFEM, n, u_ex, dirname=nothing, L=1.11, δ=0.0, γ=10.0, γg1=5, γg2=0.01)
+    function run(; type::CutFEMType=CutFEM, order, n, u_ex, dirname=nothing, L=1.11, δ=0.0, γ=10.0, γg1=5, γg2=0.01)
 
         # Mesh size
         h = L/n
 
-        order = 2
         u_ex, f, ∇u_ex, ∇Δu_ex = man_sol(u_ex)
 
         # Background model (translated)
@@ -76,17 +75,8 @@ module SolverLaplace
             colors = color_aggregates(aggregates, bgmodel)
             V = AgFEMSpace(Vstd, aggregates)
         else
-            # V = Vstd
+            V = Vstd
         end
-
-        # println("Checking for strategy ...")
-        # println(strategy)
-        println("Checking for function space ...")
-        println(V)
-        println("Checking for colors ... ")
-        println(colors)
-        # println("Checking for aggregates ... ")
-        # println(aggregates)
 
         U = TrialFESpace(V)
 
