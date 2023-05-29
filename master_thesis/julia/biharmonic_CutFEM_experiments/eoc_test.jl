@@ -145,7 +145,7 @@ function main()
         γg1=10
         γg2=0.01
         geometry ="flower"
-        resultdir= "$maindir/eoc_laplace_$(geometry)_L_$(L)_g0_$(γ)_yg1_$(γg1)_yg2_$(γg2)"
+        resultdir= "$maindir/eoc-laplace-$(geometry)-L-$(L)-gamma0-$(γ)-gamma1-$(γg1)-gamma2-$(γg2)"
         println(resultdir)
         mkpath(resultdir)
         @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex, run_solver=SolverLaplace.run,  L=L, δ=δ, γ=γ, γg1=γg1, γg2=γg2, geometry=geometry)
@@ -162,7 +162,7 @@ function main()
         γg1=10
         γg2=0.01
         geometry ="circle"
-        resultdir= "$maindir/eoc_laplace_$(geometry)_L_$(L)_g0_$(γ)_yg1_$(γg1)_yg2_$(γg2)"
+        resultdir= "$maindir/eoc-laplace-$(geometry)-L-$(L)-gamma0-$(γ)-gamma1-$(γg1)-gamma2-$(γg2)"
         println(resultdir)
         mkpath(resultdir)
         @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex, run_solver=SolverLaplace.run,  L=L, δ=δ, γ=γ, γg1=γg1, γg2=γg2, geometry=geometry)
@@ -176,7 +176,7 @@ function main()
         γg1=10
         γg2=0.01
         geometry ="circle"
-        resultdir= "$maindir/eoc_hessian_$(geometry)_L_$(L)_g0_$(γ)_yg1_$(γg1)_yg2_$(γg2)"
+        resultdir= "$maindir/eoc-hessian-$(geometry)-L-$(L)-gamma0-$(γ)-gamma1-$(γg1)-gamma2-$(γg2)"
         println(resultdir)
         mkpath(resultdir)
         @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex, run_solver=SolverHessian.run,  L=L, δ=δ, γ=γ, γg1=γg1, γg2=γg2)
