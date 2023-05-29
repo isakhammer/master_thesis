@@ -1,4 +1,3 @@
-
 module SolverLaplace
     using Gridap
     using LinearAlgebra
@@ -25,8 +24,13 @@ module SolverLaplace
         ndof
     end
 
+    @with_kw struct Graphic
+        Ω_bg
+        Γ
+    end
 
-    function run(; n, u_ex, dirname=nothing, L=1.11, δ=0.0, γ=10, γg1=5, γg2=0.1)
+
+    function run(; n, u_ex, dirname=nothing, L=2.5, δ=0.0, γ=20, γg1=10, γg2=0.1)
 
         # Mesh size
         h = L/n
@@ -37,8 +41,8 @@ module SolverLaplace
         # Background model (translated)
         θ_δ =  π/4
         r_δ = δ*Point(cos(θ_δ),sin(θ_δ))
-        pmin = Point(-L, -L) + r_δ
-        pmax = Point(L , L) + r_δ
+        pmin = Point(-L*0.5, -L*0.5) + r_δ
+        pmax = Point(L*0.5 , L*0.5) + r_δ
         bgorigin = ( pmin + pmax )/2
 
         R  = 1.0
@@ -58,6 +62,7 @@ module SolverLaplace
 
         # Set up interpolation mesh and function spaces
         Ω_act = Triangulation(cutgeo, ACTIVE)
+        Ω_bg = Triangulation(bgmodel)
 
         # Construct function spaces
         V = TestFESpace(Ω_act, ReferenceFE(lagrangian, Float64, order), conformity=:H1)
@@ -93,13 +98,6 @@ module SolverLaplace
         function jump_nn(u,n)
             return ( n.plus⋅ ∇∇(u).plus⋅ n.plus - n.minus ⋅ ∇∇(u).minus ⋅ n.minus )
         end
-
-        # Inner facets
-        # a(u,v) =( ∫( ∇∇(v)⊙∇∇(u) + α⋅(v⊙u) )dΩ
-        #          + ∫(-mean_nn(v,n_Λ)⊙jump(∇(u)⋅n_Λ) - mean_nn(u,n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ
-        #          + ∫(-( n_Γ ⋅ ∇∇(v)⋅ n_Γ )⊙∇(u)⋅n_Γ - ( n_Γ ⋅ ∇∇(u)⋅ n_Γ )⊙∇(v)⋅n_Γ)dΓ
-        #          + ∫((γ/h)⋅jump(∇(u)⋅n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ + ∫((γ/h)⋅ ∇(u)⊙n_Γ⋅∇(v)⊙n_Γ )dΓ
-        #         )
 
         a_CIP(u,v) = ∫(u*v)*dΩ + ( ∫(Δ(v)⊙Δ(u))dΩ
                     + ∫(-mean(Δ(v))⊙jump(∇(u)⋅n_Λ) - mean(Δ(u))⊙jump(∇(v)⋅n_Λ) + (γ/h)⋅jump(∇(u)⋅n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ
@@ -159,7 +157,9 @@ module SolverLaplace
 
         sol = Solution( el2=el2, eh1=eh1, eh_energy=eh_energy,
                         cond_number=cond_number, ndof=ndof)
-        return sol
+
+        graphic = Graphic(Ω_bg, Γ)
+        return sol, graphic
     end
 
 end # module
