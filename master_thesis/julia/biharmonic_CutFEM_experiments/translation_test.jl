@@ -187,19 +187,19 @@ function main()
         end
     end
 
-    maindirname = "figures/translation_test/"
+    maindirname = "figures/translation_test_$(datestr)"
     println(maindirname )
     mkpath(maindirname)
     datestr=string(Dates.now())
     @testset "Laplace penalty tests" begin
-        dirname = maindirname*"$(datestr)_n_$(n)_it_$(iterations)_L_$(L)_laplace"
+        dirname = "$maindirname/laplace_n_$(n)_it_$(iterations)_L_$(L)"
         mkpath(dirname)
         run_penalty_test(SolverLaplace.run, dirname)
     end
 
     @testset "Hessian penalty tests" begin
         # Make figure env
-        dirname = maindirname*"$(datestr)_n_$(n)_it_$(iterations)_L_$(L)_hessian"
+        dirname = "$maindirname/hessian_n_$(n)_it_$(iterations)_L_$(L)"
         mkpath(dirname)
         run_penalty_test(SolverHessian.run, dirname)
     end
