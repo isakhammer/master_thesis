@@ -3,14 +3,58 @@
 \section{Cahn Hilliard equation }%
 \label{sec:cahn_hilliard_equation}
 
-Explain the full discretization scheme including
 
 \begin{itemize}
+    \item Explain the full discretization scheme including Follow \cite{feng2007fully}
     \item CutFEMCIP for spatial discretization
     \item implicit Euler for temporal discretization
     \item linearization of nonlinearity (IMEX)
 \end{itemize}
-Follow \cite{feng2007fully}
+
+
+\subsection{The Problem}%
+\label{sub:the_problem}
+
+Recall the Cahn Hilliard problem is on the form
+\[
+    \begin{split}
+        u_{t} & = \Delta ( \varepsilon  \Delta u - \frac{1}{\varepsilon } f( u) ) = 0 \quad \text{in} \Omega \\
+        \partial _{n} u = \partial _{n} \Delta u & = 0 \quad \text{ in } \partial \Omega \\
+        u_{0} & = u_{0}   \text{ on } \Omega
+    \end{split}
+\]
+
+Where $f( s)  = F' ( s)  $ and $F( s)  = \frac{1}{4} ( s^2 - 1)^2 $. $\Omega \subset \mathbb{R} ^{d} $  for $d = 2,3$.
+
+
+
+\subsection{Writing the Cahn Hilliard Equation of Weak form}%
+\label{sub:writing_the_cahn_hilliard_equation_of_weak_form}
+
+Here I should write the Cahn Hilliard equation on weak form.
+
+
+\subsection{Implicit Explicit Scheme}%
+\label{sub:implicit_explicit_scheme}
+
+
+For the Implicit explicit scheme (IMEX) sceheme we have the following discretization
+\[
+( \overline{\partial } _{t} U^{m}, v   )_{\Omega } + \varepsilon a^{m}_{h}( U^{M} , v) + \frac{1}{\varepsilon } ( P^{m} U^{m-1}, v) _{\Omega } =0, \quad \forall v \in V_{h}^{m}
+\]
+
+Here we emphasis that $( \Delta ^2 u, v)_\Omega  = a^{m}( u,v)   $ for any $\forall v \in V_{h}$. Hence, it is a great application for the Laplace and Hessian formulations. We also have $( -\Delta f( u) , v)_{\Omega } = c_{h}(u,v )   $.
+
+\[
+c^{m}_{h} ( u,v) = - ( f( u), \Delta v )_{ \Omega } + ( f( \mean{ u }  ), \jump{ \partial _{n} u }   )_{\mathcal{F}_{h} } - ( f' ( \mean{ u }  ) \mean{ \partial _{n}u }, \jump{ v }     )_{\mathcal{F}_{h} ^{int}}
+\]
+This comes from the fact that \[
+    \begin{split}
+-(\Delta f( u) , v)_{T } &= -(\nabla f( u), \nabla v  )_{T } + ( \partial _{n}  f( u), v )_{\partial T }.\\
+                    & = -( f( u), \Delta v )_{T} + (f( u), \partial _{n} v  )_{\partial T} + (   f'( u)\partial _{n}u, v )_{\partial T } .
+    \end{split}
+\]
+and
 
 
 \subsection{Introduction to numerical methods for Cahn Hilliard}%
