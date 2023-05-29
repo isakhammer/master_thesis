@@ -15,13 +15,14 @@
 \subsection{The Problem}%
 \label{sub:the_problem}
 
-Recall the Cahn Hilliard problem is on the form
+We will consider General Cahn Hilliard problem is on the form
 \begin{equation}
 \label{eq:ch_exact}
     \begin{split}
-        u_{t} & = \Delta ( \varepsilon  \Delta u - \frac{1}{\varepsilon } f( u) ) = 0 \quad \text{in} \Omega \\
-        \partial _{n} u = \partial _{n} \Delta u & = 0 \quad \text{ in } \partial \Omega \\
-        u_{0} & = u_{0}   \text{ on } \Omega
+        \partial _{t} u & - \Delta ( \varepsilon  \Delta u - \frac{1}{\varepsilon } f( u) ) =  h(x)  \quad \text{in} \Omega \\
+        \partial _{n} u & =  g_{1}(x)  \quad \text{ on } \Gamma \\
+        \partial _{n} \Delta u & = g_{2}(x)  \quad \text{ on } \Gamma  \\
+        u(t=0) & = u_{0}   \text{ on } \Omega
     \end{split}
 \end{equation}
 
@@ -32,20 +33,28 @@ Where $f( s)  = F' ( s)=s( s^2 -1)  $ and $F( s)  = \frac{1}{4} ( s^2 - 1)^2 $. 
 \subsection{ CIP method for the Cahn Hilliard Equation}%
 \label{sub:writing_the_cahn_hilliard_equation_of_weak_form}
 
+Our goal is to write the Cahn Hilliard equation on weak form.
 Assume that $\Omega  \subset \mathbb{R} ^{d}$ is a polygon.
-Here I should write the Cahn Hilliard equation on weak form.
+ Let $u \in \left[ 0,T \right] \times H^{4}( \Omega ) $ and $v \in V$ where \[
+V = \left\{ v \in H^{1}( \Omega )   \mid  v \mid _{T} \in H^{m}( T)  \forall T \in \mathcal{T} _{h} \right\}
+\]
 
-Here we emphasis that $( \Delta ^2 u, v)_\Omega  = a^{m}( u,v)   $ for any $\forall v \in V_{h}$.
-Hence, it is a great application for the Laplace and Hessian formulations.
+Expanding the first Laplace operator can we observe that,
+\[
+- ( \Delta ( \varepsilon  \Delta u - \frac{1}{\varepsilon } f( u) ) ,v )_{\Omega } = (  \varepsilon   \Delta^{2} u ,v )_{\Omega } - \frac{1}{\varepsilon } ( \Delta f( u)  ,v )_{\Omega }.
+\]
+
+
+\[
+V_{h} = \left\{ v \in C^{0}( \Omega )   \mid v\in \mathcal{P} ^{k} ( T) \quad \forall T \in \mathcal{T} _{h} \right\}.
+\]
+
 
 \subsection{Weak form of the nonlinear term}%
 \label{sub:derivation_of_the_cahn_hilliard_cip_formulation}
 
 \begin{lemma}[Nonlinear weak form]
-    Let $u \in H^2( \Omega ) $ be the exact solution to \ref{eq:ch_exact} and $v \in V_{h}$, where
-\[
-V_{h} = \left\{ v \in C^{0}( \Omega )   \mid v\in \mathcal{P} ^{k} ( T) \quad \forall T \in \mathcal{T} _{h} \right\}.
-\]
+    Let $u \in H^2( \Omega ) $ be the exact solution to \eqref{eq:ch_exact} and $v \in V_{h}$.
 Then is $( -\Delta f( u) , v)_{\Omega } = c_{h}(u,v )   $ s.t.
 \[
     c^{m}_{h} ( u,v) = - ( f( u), \Delta v )_{ \Omega } + ( f( \mean{ u }  ), \jump{ \partial _{n} v }   )_{\mathcal{F}_{h} }  \red{- ( f' (  u  )  \partial _{n}u ,  v      )_{\mathcal{F}_{h} ^{ext}}}
