@@ -89,9 +89,6 @@ module SolverHessian
         n_Λ = get_normal_vector(Λ)
         n_Fg = get_normal_vector(Fg)
 
-        # Define weak form
-        γ = 10*(order*(order - 1)/2)
-
 
         function mean_n(u,n)
             return 0.5*( u.plus⋅n.plus + u.minus⋅n.minus )
