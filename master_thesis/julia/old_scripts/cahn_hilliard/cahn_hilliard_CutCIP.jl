@@ -42,11 +42,13 @@ module CH
 
         order=2
 
+        u_ex, f, ∇u_ex, ∇Δu_ex = man_sol(u_ex)
+
         # Background model
-        L = 1.11
-        domain = (-L, L, -L, L)
-        pmin = Point(-L, -L)
-        pmax = Point(L, L)
+        L = 2.11
+        domain = (-L*0.5, L*0.5, -L*0.5, L*0.5)
+        pmin = Point(-L*0.5, -L*0.5)
+        pmax = Point(L*0.5, L*0.5)
         partition = (n,n)
         bgmodel = CartesianDiscreteModel(pmin, pmax, partition)
 
@@ -99,40 +101,58 @@ module CH
         end
 
         # Define weak form
-        γ = 10
+        γ = 20
 
         # Ghost penalty parameter
-        γg1 = 10/2
-        γg2 = 0.1
-
-        # Inner facets
-        a(t,u,v) =( ∫( ∇∇(v)⊙∇∇(u) )dΩ
-                 + ∫(-mean_nn(v,n_Λ)⊙jump(∇(u)⋅n_Λ) - mean_nn(u,n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ
-                 + ∫(-( n_Γ ⋅ ∇∇(v)⋅ n_Γ )⊙∇(u)⋅n_Γ - ( n_Γ ⋅ ∇∇(u)⋅ n_Γ )⊙∇(v)⋅n_Γ)dΓ
-                 + ∫((γ/h)⋅jump(∇(u)⋅n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ + ∫((γ/h)⋅ ∇(u)⊙n_Γ⋅∇(v)⊙n_Γ )dΓ
-                )
-
-
-        u_ex, f, ∇u_ex, ∇Δu_ex = man_sol(u_ex)
+        γg1 = 10
+        γg2 = 0.01
 
         g_1(t) = ∇u_ex(t)⋅n_Γ
         g_2(t) = ∇Δu_ex(t)⋅n_Γ
 
+        # Hessian formulation
+        # a_H(t,u,v) =( ∫( ∇∇(v)⊙∇∇(u) )dΩ
+        #          + ∫(-mean_nn(v,n_Λ)⊙jump(∇(u)⋅n_Λ) - mean_nn(u,n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ
+        #          + ∫(-( n_Γ ⋅ ∇∇(v)⋅ n_Γ )⊙∇(u)⋅n_Γ - ( n_Γ ⋅ ∇∇(u)⋅ n_Γ )⊙∇(v)⋅n_Γ)dΓ
+        #          + ∫((γ/h)⋅jump(∇(u)⋅n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ + ∫((γ/h)⋅ ∇(u)⊙n_Γ⋅∇(v)⊙n_Γ )dΓ
+        #         )
 
-        b(t,v) = (∫( f(t)*v ) * dΩ
-                  +  ∫(-(g_2(t)⋅v))dΓ
-                  + ∫(g_1(t)⊙(-(n_Γ⋅∇∇(v)⋅n_Γ) + (γ/h)*∇(v)⋅n_Γ)) * dΓ
+        # b_H(t,v) = (∫( f(t)*v ) * dΩ
+        #           +  ∫(-(g_2(t)⋅v))dΓ
+        #           + ∫(g_1(t)⊙(-(n_Γ⋅∇∇(v)⋅n_Γ) + (γ/h)*∇(v)⋅n_Γ)) * dΓ
+        #        )
+
+        # # Laplace formulation
+        a_L(t,u,v) =  ( ∫(Δ(v)⊙Δ(u))dΩ
+                    + ∫(-mean(Δ(v))⊙jump(∇(u)⋅n_Λ) - mean(Δ(u))⊙jump(∇(v)⋅n_Λ) + (γ/h)⋅jump(∇(u)⋅n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ
+                    + ∫(-Δ(v)⊙∇(u)⋅n_Γ - Δ(u)⊙∇(v)⋅n_Γ + (γ/h)⋅ ∇(u)⊙n_Γ⋅∇(v)⊙n_Γ )dΓ
+                )
+
+
+        b_L(t,v) = (∫( f(t)*v ) * dΩ
+                    +  ∫(-(g_2(t)⋅v))dΓ
+                    + ∫(g_1(t)⊙(-Δ(v) + (γ/h)*∇(v)⋅n_Γ)) * dΓ
                )
 
-        # # Define of ghost penalties
-        if order != 2
-            println("Not supported order:", order)
-        end
-
+        # Define of ghost penalties
         g(t,u,v) = h^(-2)*( ∫( (γg1*h)*jump(n_Fg⋅∇(u))*jump(n_Fg⋅∇(v)) ) * dFg +
                          ∫( (γg2*h^3)*jump_nn(u,n_Fg)*jump_nn(v,n_Fg) ) * dFg)
 
-        A(t,u,v) = a(t,u,v) + g(t,u,v)
+        A(t,u,v) = a_L(t,u,v) + g(t,u,v)
+        b(t,v) = b_L(t,v)
+        # A(t,u,v) = a_H(t,u,v) + g(t,u,v)
+        # b(t,v) = b_H(t,v)
+
+        method = "laplace"
+        # if method=="laplace"
+        #     A(t,u,v) = a_L(t,u,v) + g(t,u,v)
+        #     b(t,v) = b_L(t,v)
+        # elseif method=="hessian"
+        #     A(t,u,v) = a_H(t,u,v) + g(t,u,v)
+        #     b(t,v) = b_H(t,v)
+        # else
+        #     println("Not supported method: $method")
+        # end
 
         # Initializing linear terms
         m(t, u, v) = ∫( α* u⋅v )dΩ
@@ -157,7 +177,6 @@ module CH
         # solver_method = NLSolver(LUSolver();show_trace=true,method=:newton) #line
 
         # ODE solvers
-
         function ode_solver(ode_method, algebraic_solver, dt)
             if ode_method == "BE"
                 return ThetaMethod(algebraic_solver, dt, 1)
@@ -169,7 +188,6 @@ module CH
         end
 
         solver = ode_solver(ode_method, algebraic_solver, dt)
-
 
         # Inital condition
         t_0 = 0
