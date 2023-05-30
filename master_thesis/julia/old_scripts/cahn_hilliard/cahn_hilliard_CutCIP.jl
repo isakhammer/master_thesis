@@ -16,11 +16,7 @@ module CH
     using Parameters
     import Gridap: ∇
 
-    # α(x) = x[1]^2 + x[2]^2
-    α = 1
-
     function man_sol(u_ex)
-        α = 1
         f(t) = x ->  ∂t(u_ex)(x,t) + Δ(Δ(u_ex(t)))(x)
         ∇u_ex(t) = x ->  ∇(u_ex(t))(x)
         ∇Δu_ex(t) = x ->  ∇(Δ(u_ex(t)))(x)
@@ -41,11 +37,10 @@ module CH
             vtkdirname::String, ode_method::String="BE", u_ex::Union{Function, Nothing}=nothing)
 
         order=2
-
         u_ex, f, ∇u_ex, ∇Δu_ex = man_sol(u_ex)
 
         # Background model
-        L = 2.11
+        L = 2.5
         domain = (-L*0.5, L*0.5, -L*0.5, L*0.5)
         pmin = Point(-L*0.5, -L*0.5)
         pmax = Point(L*0.5, L*0.5)
@@ -140,22 +135,9 @@ module CH
 
         A(t,u,v) = a_L(t,u,v) + g(t,u,v)
         b(t,v) = b_L(t,v)
-        # A(t,u,v) = a_H(t,u,v) + g(t,u,v)
-        # b(t,v) = b_H(t,v)
-
-        method = "laplace"
-        # if method=="laplace"
-        #     A(t,u,v) = a_L(t,u,v) + g(t,u,v)
-        #     b(t,v) = b_L(t,v)
-        # elseif method=="hessian"
-        #     A(t,u,v) = a_H(t,u,v) + g(t,u,v)
-        #     b(t,v) = b_H(t,v)
-        # else
-        #     println("Not supported method: $method")
-        # end
 
         # Initializing linear terms
-        m(t, u, v) = ∫( α* u⋅v )dΩ
+        m(t, u, v) = ∫(u⋅v )dΩ
 
         # Alternative 1 (linear)
         # op1 = TransientAffineFEOperator(m,A,b,U,V)

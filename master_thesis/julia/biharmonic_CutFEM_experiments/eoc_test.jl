@@ -82,7 +82,6 @@ function generate_figures(;ns, el2s, eh1s, ehs_energy, cond_numbers, ndofs, dirn
     Plots.ylabel!(p, L"\Vert e \Vert_{}")
     Plots.plot!(p, xscale=:log2, yscale=:log2, minorgrid=true)
     Plots.plot!(p, legendfontsize=14)  # Adjust the value 12 to your desired font size
-
     Plots.savefig(p, filename*"_plot"*endfix)
 end
 

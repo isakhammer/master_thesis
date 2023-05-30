@@ -216,58 +216,54 @@ end
 
 
 function main_convergence()
-    u_ex(x,t::Real) = sin(t)*(x[1]^2 + x[2]^2 - 1 )^3*sin(x[1])*cos(x[2])
+    u_ex(x,t::Real) = sin(t)*(x[1]^2 + x[2]^2 - 1 )^2*sin(x[1])*cos(x[2])
+    u_ex(x,t::Real) = sin(t)*sin(x[1])*cos(x[2])
     u_ex(t::Real) = x -> u_ex(x,t)
 
 
 
-
     # Easy
-    # n_const = 2^5
-    # dt_const = 2^-4
-    # dts = [2^-3, 2^-4, 2^-5]
-    # ns = [2^4, 2^5, 2^6]
+    mode = "easy"
+    transient, spatial, diagonal = false, true, false
 
-    # Medium
-    n_const = 2^8
-    dt_const = 2^-7
-    dts = [2^-3, 2^-4, 2^-5, 2^-6, 2^-7]
-    ns = [2^4, 2^5, 2^6, 2^7, 2^8]
-    main_dirname= "figures/MEDIUM_convergence_analysis_"*string(Dates.now())
+    if mode == "easy"
+        n_const = 2^6
+        dt_const = 2^-4
+        dts = [2^-3, 2^-4, 2^-5]
+        ns = [2^4, 2^5, 2^6]
+        main_dirname= "figures/easy_convergence_analysis"
+    elseif mode == "medium"
+        # Medium
+        n_const = 2^8
+        dt_const = 2^-7
+        dts = [2^-3, 2^-4, 2^-5, 2^-6, 2^-7]
+        ns = [2^4, 2^5, 2^6, 2^7, 2^8]
+        main_dirname= "figures/medium_convergence_analysis"
+    elseif mode == "hard"
+        n_const = 2^9
+        dt_const = 2^-8
+        dts = [2^-3, 2^-4, 2^-5, 2^-6, 2^-7, 2^-8]
+        ns = [2^4, 2^5, 2^6, 2^7, 2^8, 2^9]
+        main_dirname= "figures/hard_convergence_analysis"
+    end
 
-    # Hard
-    # n_const = 2^9
-    # dt_const = 2^-8
-    # dts = [2^-3, 2^-4, 2^-5, 2^-6, 2^-7, 2^-8]
-    # ns = [2^4, 2^5, 2^6, 2^7, 2^8, 2^9]
-    # main_dirname= "figures/HARD_convergence_analysis_"*string(Dates.now())
+
 
     println(main_dirname)
     mkpath(main_dirname)
-
-    @time convergence_analysis( ns=ns, dts=dts,
-                               main_dirname=main_dirname, u_ex=u_ex, problem="HE", ode_method="BE",
-                               spatial=true, dt_const=dt_const, transient=true, n_const=n_const, diagonal=true)
-
-    @time convergence_analysis( ns=ns, dts=dts,
-                               main_dirname=main_dirname, u_ex=u_ex, problem="HE", ode_method="CN",
-                               spatial=true, dt_const=dt_const, transient=true, n_const=n_const, diagonal=true)
-
-    @time convergence_analysis( ns=ns, dts=dts,
-                               main_dirname=main_dirname, u_ex=u_ex, problem="CH", ode_method="BE",
-                               spatial=true, dt_const=dt_const, transient=true, n_const=n_const, diagonal=true)
+    if isdir(main_dirname)
+        rm(main_dirname; recursive=true)
+        mkdir(main_dirname)
+    end
 
     @time convergence_analysis( ns=ns, dts=dts,
                                main_dirname=main_dirname, u_ex=u_ex, problem="CH", ode_method="CN",
-                               spatial=true, dt_const=dt_const, transient=true, n_const=n_const, diagonal=true)
+                               spatial=spatial, dt_const=dt_const, transient=transient, n_const=n_const, diagonal=diagonal)
 
-    @time convergence_analysis( ns=ns, dts=dts,
-                               main_dirname=main_dirname, u_ex=u_ex, problem="NLCH", ode_method="BE",
-                               spatial=true, dt_const=dt_const, transient=true, n_const=n_const, diagonal=true)
 
-    @time convergence_analysis( ns=ns, dts=dts,
-                               main_dirname=main_dirname, u_ex=u_ex, problem="NLCH", ode_method="CN",
-                               spatial=true, dt_const=dt_const, transient=true, n_const=n_const, diagonal=true)
+    # @time convergence_analysis( ns=ns, dts=dts,
+    #                            main_dirname=main_dirname, u_ex=u_ex, problem="NLCH", ode_method="CN",
+    #                            spatial=spatial, dt_const=dt_const, transient=transient, n_const=n_const, diagonal=diagonal)
 
 end
 
