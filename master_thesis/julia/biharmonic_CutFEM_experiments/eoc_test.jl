@@ -131,19 +131,20 @@ end
 function main()
 
 
-    date_str = string(Dates.now())
-
-    maindir = "figures/eoc_test_$(date_str)"
+    maindir = "figures/eoc_test"
+    if isdir(maindir)
+        rm(maindir; recursive=true)
+        mkdir(maindir)
+    end
     # Manufactured solution
-    L, m, r = (2, 1, 1)
-    u_ex(x) = sin(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
+    l, m, r = (2, 1, 1)
+    u_ex(x) = sin(m*( 2π/l )*x[1])*cos(r*( 2π/l )*x[2])
+
+    γ, γg1, γg2 = 20, 10, 0.1
+    L, δ = 2.5, 0.0
+    ns = [2^3, 2^4, 2^5, 2^6, 2^7, 2^8]
+
     @testset "Laplace Flower EOC tests" begin
-        ns = [2^3, 2^4, 2^5, 2^6, 2^7, 2^8]
-        L=2.5
-        δ=0.0
-        γ=20
-        γg1=10
-        γg2=0.01
         geometry ="flower"
         resultdir= "$maindir/eoc-laplace-$(geometry)-L-$(L)-gamma0-$(γ)-gamma1-$(γg1)-gamma2-$(γg2)"
         println(resultdir)
@@ -152,15 +153,8 @@ function main()
     end
 
     # Manufactured solution
-    L, m, r = (2, 1, 1)
-    u_ex(x) = (x[1]^2 + x[2]^2 - 1)^2*sin(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
+    u_ex(x) = (x[1]^2 + x[2]^2 - 1)^2*sin(m*( 2π/l )*x[1])*cos(r*( 2π/l )*x[2])
     @testset "Laplace EOC tests" begin
-        ns = [2^3, 2^4, 2^5, 2^6, 2^7, 2^8]
-        L=2.5
-        δ=0.0
-        γ=20
-        γg1=10
-        γg2=0.01
         geometry ="circle"
         resultdir= "$maindir/eoc-laplace-$(geometry)-L-$(L)-gamma0-$(γ)-gamma1-$(γg1)-gamma2-$(γg2)"
         println(resultdir)
@@ -169,12 +163,6 @@ function main()
     end
 
     @testset "Hessian EOC tests" begin
-        ns = [2^3, 2^4, 2^5, 2^6, 2^7, 2^8]
-        L=2.5
-        δ=0.0
-        γ=20
-        γg1=10
-        γg2=0.01
         geometry ="circle"
         resultdir= "$maindir/eoc-hessian-$(geometry)-L-$(L)-gamma0-$(γ)-gamma1-$(γg1)-gamma2-$(γg2)"
         println(resultdir)
