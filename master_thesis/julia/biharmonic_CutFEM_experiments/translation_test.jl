@@ -146,8 +146,8 @@ module TranslationTest
 end
 
 function main()
-    L, m, r = (1, 1, 1)
-    u_ex(x) = (x[1]^2 + x[2]^2 - 1)^2*sin(m*( 2π/L )*x[1])*cos(r*( 2π/L )*x[2])
+    l, m, r = (2, 1, 1)
+    u_ex(x) = (x[1]^2 + x[2]^2 - 1)^2*sin(m*( 2π/l )*x[1])*cos(r*( 2π/l )*x[2])
 
     # Parameters
     iterations = 100
@@ -189,19 +189,21 @@ function main()
         end
     end
 
-    datestr=string(Dates.now())
-    maindirname = "figures/translation_test_$(datestr)"
-    println(maindirname )
-    mkpath(maindirname)
+    maindir = "figures/translation_test"
+    if isdir(maindir)
+        rm(maindir; recursive=true)
+        mkdir(maindir)
+    end
+
     @testset "Laplace penalty tests" begin
-        dirname = "$maindirname/laplace_n_$(n)_it_$(iterations)_L_$(L)"
+        dirname = "$maindir/laplace_n_$(n)_it_$(iterations)_L_$(L)"
         mkpath(dirname)
         run_penalty_test(SolverLaplace.run, dirname)
     end
 
     @testset "Hessian penalty tests" begin
         # Make figure env
-        dirname = "$maindirname/hessian_n_$(n)_it_$(iterations)_L_$(L)"
+        dirname = "$maindir/hessian_n_$(n)_it_$(iterations)_L_$(L)"
         mkpath(dirname)
         run_penalty_test(SolverHessian.run, dirname)
     end
