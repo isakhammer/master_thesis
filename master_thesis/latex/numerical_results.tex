@@ -33,18 +33,78 @@ On a square background mesh $L=3.11$ with a circle domain of radius $R=1$.
 
 \begin{table}
 \input{results/eoc-test/eoc-hessian-circle-L-3.11-gamma0-20-gamma1-10-gamma2-0.1/conv.tex}
-\caption{Convergence rates for the Hessian-based method applied to the circular domain with side length $L=3.11$, using parameters $\gamma_0=20$, $\gamma_1=10$, and $\gamma_2=0.1$}
+\caption{Convergence rates for the Hessian-based method applied to the circular domain with side length $L=3.11$, using parameters $\gamma=20$, $\gamma_1=10$, and $\gamma_2=0.1$}
 \end{table}
 
 \begin{table}
 \input{results/eoc-test/eoc-laplace-circle-L-3.11-gamma0-20-gamma1-10-gamma2-0.1/conv.tex}
-\caption{Convergence rates for the Laplacian-based method applied to the circular domain with side length $L=3.11$, using parameters $\gamma_0=20$, $\gamma_1=10$, and $\gamma_2=0.1$}
+\caption{Convergence rates for the Laplacian-based method applied to the circular domain with side length $L=3.11$, using parameters $\gamma=20$, $\gamma_1=10$, and $\gamma_2=0.1$}
 \end{table}
+
+\begin{figure}[h!]
+    \centering
+    \begin{minipage}[b]{0.45\linewidth}
+        \centering
+        \begin{tikzpicture}[scale=0.7]
+            % Domain is blue
+            \fill[blue!30] (0.1, 0.1) circle (1.5cm);
+            \draw[black] (0.1, 0.1) circle (1.5cm);
+            \node at (0.2, 0.2) {$\Omega$};
+
+            % Background mesh
+            \foreach \i in {-2.5, -2, ..., 2.5} {
+                \draw[line width=0.1pt, shift={(-2.5,\i)}, opacity=0.3] (0,0) -- (5,0);
+                \draw[line width=0.1pt, shift={(\i,-2.5)},opacity=0.3] (0,0) -- (0,5);
+            }
+        \end{tikzpicture}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[b]{0.45\linewidth}
+        \centering
+        \begin{tikzpicture}[scale=0.7]
+            % Domain is blue
+            \fill[blue!30] (0.1, 0.1) circle (1.5cm);
+            \draw[black] (0.1, 0.1) circle (1.5cm);
+            \node at (0.2, 0.2) {$\Omega$};
+
+            % Background mesh
+            \foreach \i in {-2.5, -2.25, ..., 2.5} {
+                \draw[line width=0.1pt, shift={(-2.5,\i)}, opacity=0.3] (0,0) -- (5,0);
+                \draw[line width=0.1pt, shift={(\i,-2.5)},opacity=0.3] (0,0) -- (0,5);
+            }
+        \end{tikzpicture}
+    \end{minipage}
+
+    \hfill
+    \begin{minipage}[b]{0.45\linewidth}
+        \centering
+        \begin{tikzpicture}[scale=0.7]
+            % Domain is blue
+            \fill[blue!30] (0.1, 0.1) circle (1.5cm);
+            \draw[black] (0.1, 0.1) circle (1.5cm);
+            \node at (0.2, 0.2) {$\Omega$};
+
+            % Background mesh
+            \foreach \i in {-2.5, -2.375, ..., 2.5} {
+                \draw[line width=0.1pt, shift={(-2.5,\i)}, opacity=0.3] (0,0) -- (5,0);
+                \draw[line width=0.1pt, shift={(\i,-2.5)},opacity=0.3] (0,0) -- (0,5);
+            }
+        \end{tikzpicture}
+    \end{minipage}
+
+    \caption{Background mesh with size $L$ and a circle with radius $R$.}
+\end{figure}
+
+Here we consider the manufactured solution $l,r,m = (2, 1, 1) $ s.t.
+\[
+u_{\text{ex}}(x,y) = \sin\left(\frac{2\pi m}{l}x_1\right)\cos\left(\frac{2\pi r}{l}y\right)
+\]
+on the flower domain for the Laplace equation.
 
 \begin{table}
 \input{results/eoc-test/eoc-laplace-flower-L-3.11-gamma0-20-gamma1-10-gamma2-0.1/conv.tex}
 \caption{
-Convergence rates for the Laplace-based method applied to the flower-shaped domain with side length $L=3.11$, using parameters $\gamma_0=20$, $\gamma_1=10$, and $\gamma_2=0.1$.
+Convergence rates for the Laplace-based method applied to the flower-shaped domain with side length $L=3.11$, using parameters $\gamma=20$, $\gamma_1=10$, and $\gamma_2=0.1$.
 }
 \end{table}
 
