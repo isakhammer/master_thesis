@@ -18,9 +18,12 @@ end
 function translation_plot(sims::Vector{Simulation},dirname)
 
     # Plot for condition numbers
-    p1 = plot(legend=:outertopright, size=default_size, legendtitle=L"(\gamma, \gamma_1, \gamma_2)", yscale=:log10, minorgrid=false)
+    p1 = plot(legend=:outertopright, size=default_size, legendtitle=L"(\gamma, \gamma_1, \gamma_2)",
+              yscale=:log10, minorgrid=false, ymin=0.0)
+
     # Plot for L2 error, H1 error, and Energy error
-    p2 = plot(legend=:outertopright, size=default_size,legendtitle=L"(\gamma, \gamma_1, \gamma_2)", yscale=:log10, minorgrid=false)
+    p2 = plot(legend=:outertopright, size=default_size,legendtitle=L"(\gamma, \gamma_1, \gamma_2)",
+              yscale=:log10, minorgrid=false)
 
     for sim in sims
         γ, γg1, γg2 = sim.param
@@ -62,6 +65,22 @@ translation_plot(sims, dirname)
 
 
 
+println("Laplace Translation Test")
+dirname = "translation-test/laplace-n-16-it-500-L-3.11"
 
+# No penalty simulation
+path1 = "$dirname/no-penalty-test-gamma-20.0-gamma1-0.0-gamma2-0.0.csv"
+param1 = (20,0,0)
+data1 = CSV.read(path1, DataFrame)
+sim1=Simulation(param1, data1, dirname, "blue")
 
+# Penalty simulation
+path2 = "$dirname/no-penalty-test-gamma-20.0-gamma1-10.0-gamma2-0.1.csv"
+param2 = (20,10,0.1)
+data2 = CSV.read(path2, DataFrame)
+sim2=Simulation(param2, data2, dirname, "red")
+
+# Generate plots
+sims = [sim1, sim2]
+translation_plot(sims, dirname)
 
