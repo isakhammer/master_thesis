@@ -40,11 +40,11 @@ function generate_figures(;ns, el2s, eh1s, ehs_energy, cond_numbers, ndofs, dirn
 
     hs = 1 .// ns
 
-    hs_str =  latexify.(hs)
+    hs_str = ["1/$(n)" for n in ns]
 
     eoc_l2, eoc_eh1, eoc_eh_energy = compute_eoc(hs, el2s, eh1s, ehs_energy)
 
-    header = [L"$\frac{h}{L}$", L"$n$", L"$\Vert e \Vert_{L^2}$", "EOC", L"$ \Vert e \Vert_{H^1}$", "EOC", L"$\Vert e \Vert_{ a_h,* }$", "EOC", L"\kappa(A)", "ndofs"]
+    header = [L"$h/L$", L"$n$", L"$\Vert e \Vert_{L^2}$", "EOC", L"$ \Vert e \Vert_{H^1}$", "EOC", L"$\Vert e \Vert_{ a_h,* }$", "EOC", L"\kappa(A)", "ndofs"]
     data = hcat(hs_str, ns, el2s,  eoc_l2, eh1s, eoc_eh1, ehs_energy, eoc_eh_energy, cond_numbers, ndofs)
 
     formatters = (ft_printf("%s", [1]), ft_printf("%.0f", [2]), ft_printf("%.2f", [4, 6, 8]), ft_printf("%.1E", [3, 5, 7, 9, 10]), ft_nonothing)
