@@ -2,40 +2,40 @@
 \subsection{Results}%
 \label{sub:results}
 
-\todo[inline]{Move numerical results/experiments into separate chapter}
+% \todo[inline]{Move numerical results/experiments into separate chapter}
 
 
-Since we have in the analysis assumed that $\Gamma $ is $C^2 $ will we run our test problems on a circle with radius $r=1$ with order $k=2$.
+% Since we have in the analysis assumed that $\Gamma $ is $C^2 $ will we run our test problems on a circle with radius $r=1$ with order $k=2$.
 
-\subsubsection{Test Problem 1}%
-\label{ssub:test_problem_1}
-
-
-We introduce the following manufactured solution $u_{ex}(x,y) = (x^2 + y^2 - 1)^2 \sin(2\pi x) \cos(2\pi y)$. To compute the corresponding functions $f, g_{1}$ and $g_{2}$ did we use algorithmic differentiation. The method was implemented in Julia
-using the FEM package Gridap \cite{verdugo22,julia17}. You can see the corresponding results in Figure \ref{fig:CutFEM_error1} and Table \ref{table:CutFEM_error1}.
+% \subsubsection{Test Problem 1}%
+% \label{ssub:test_problem_1}
 
 
-\begin{table}[h!]
-    \caption{Convergence analysis of the numerical method}
-    \label{table:CutFEM_error1}
-    \begin{tabular}{rrrrrrrrr}
-    \hline\hline
-    \textbf{$n$} & \textbf{$\Vert e \Vert_{L^2}$} & \textbf{EOC} & \textbf{$ \Vert e \Vert_{H^1}$} & \textbf{EOC} & \textbf{$\Vert e \Vert_{ a_h,* }$} & \textbf{EOC} & \textbf{Cond number} & \textbf{ndofs} \\\hline
-    4 & 4.0E-01 &  & 3.6E+00 &  & 3.6E+01 &  & 1.1E+06 & 8.1E+01 \\
-    8 & 1.7E-01 & 1.27 & 1.3E+00 & 1.43 & 2.0E+01 & 0.89 & 3.0E+06 & 2.4E+02 \\
-    16 & 2.4E-02 & 2.77 & 2.9E-01 & 2.19 & 9.2E+00 & 1.09 & 1.2E+08 & 8.3E+02 \\
-    32 & 6.0E-03 & 2.01 & 7.2E-02 & 2.04 & 4.5E+00 & 1.02 & 3.2E+08 & 3.0E+03 \\
-    64 & 2.1E-03 & 1.54 & 1.8E-02 & 1.98 & 2.3E+00 & 1.00 & 4.2E+10 & 1.1E+04 \\
-    128 & 5.2E-04 & 2.00 & 4.5E-03 & 2.01 & 1.1E+00 & 1.00 & 4.4E+11 & 4.3E+04 \\
-    256 & 8.8E-05 & 2.57 & 1.1E-03 & 2.02 & 5.7E-01 & 1.00 & 2.5E+18 & 1.7E+05 \\\hline\hline
-  \end{tabular}
-\end{table}
+% We introduce the following manufactured solution $u_{ex}(x,y) = (x^2 + y^2 - 1)^2 \sin(2\pi x) \cos(2\pi y)$. To compute the corresponding functions $f, g_{1}$ and $g_{2}$ did we use algorithmic differentiation. The method was implemented in Julia
+% using the FEM package Gridap \cite{verdugo22,julia17}. You can see the corresponding results in Figure \ref{fig:CutFEM_error1} and Table \ref{table:CutFEM_error1}.
 
 
-\begin{figure}[h!]
-    \centering
-    \input{figures/CutFEM_order2}
-    \caption{The plot presents the $L^2$ and $H^1$ error norms and the error in the energy norm ($\Vert e \Vert_{a_h,*}$).}
-    \label{fig:CutFEM_error1}
-\end{figure}
+% \begin{table}[h!]
+%     \caption{Convergence analysis of the numerical method}
+%     \label{table:CutFEM_error1}
+%     \begin{tabular}{rrrrrrrrr}
+%     \hline\hline
+%     \textbf{$n$} & \textbf{$\Vert e \Vert_{L^2}$} & \textbf{EOC} & \textbf{$ \Vert e \Vert_{H^1}$} & \textbf{EOC} & \textbf{$\Vert e \Vert_{ a_h,* }$} & \textbf{EOC} & \textbf{Cond number} & \textbf{ndofs} \\\hline
+%     4 & 4.0E-01 &  & 3.6E+00 &  & 3.6E+01 &  & 1.1E+06 & 8.1E+01 \\
+%     8 & 1.7E-01 & 1.27 & 1.3E+00 & 1.43 & 2.0E+01 & 0.89 & 3.0E+06 & 2.4E+02 \\
+%     16 & 2.4E-02 & 2.77 & 2.9E-01 & 2.19 & 9.2E+00 & 1.09 & 1.2E+08 & 8.3E+02 \\
+%     32 & 6.0E-03 & 2.01 & 7.2E-02 & 2.04 & 4.5E+00 & 1.02 & 3.2E+08 & 3.0E+03 \\
+%     64 & 2.1E-03 & 1.54 & 1.8E-02 & 1.98 & 2.3E+00 & 1.00 & 4.2E+10 & 1.1E+04 \\
+%     128 & 5.2E-04 & 2.00 & 4.5E-03 & 2.01 & 1.1E+00 & 1.00 & 4.4E+11 & 4.3E+04 \\
+%     256 & 8.8E-05 & 2.57 & 1.1E-03 & 2.02 & 5.7E-01 & 1.00 & 2.5E+18 & 1.7E+05 \\\hline\hline
+%   \end{tabular}
+% \end{table}
+
+
+% \begin{figure}[h!]
+%     \centering
+%     \input{figures/CutFEM_order2}
+%     \caption{The plot presents the $L^2$ and $H^1$ error norms and the error in the energy norm ($\Vert e \Vert_{a_h,*}$).}
+%     \label{fig:CutFEM_error1}
+% \end{figure}
 
