@@ -51,7 +51,7 @@ module SolverLaplace
         bgmodel = CartesianDiscreteModel(pmin, pmax, partition)
 
         if geometry=="circle"
-            R  = L*0.3
+            R  = 1
             geo = disk(R)
         elseif geometry=="flower"
             function ls_flower(x)

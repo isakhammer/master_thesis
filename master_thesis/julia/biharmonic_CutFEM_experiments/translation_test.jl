@@ -114,7 +114,7 @@ module TranslationTest
             Plots.plot!(p2, δs, sim_data.ehs_energy, label=nothing, color=sim_data.color, linestyle=:dot)
 
             title_text = "gamma-$γ-gamma1-$γg1-gamma2-$γg2"
-            CSV.write(dirname*"/$(prefix)-$title_text.csv", DataFrame(δs = δs, cond_numbers = sim_data.cond_numbers, el2s = sim_data.el2s, eh1s = sim_data.eh1s, ehs_energy = sim_data.ehs_energy), delim=',')
+            CSV.write(dirname*"/$(prefix)-$title_text.csv", DataFrame(deltas = δs, cond_numbers = sim_data.cond_numbers, el2s = sim_data.el2s, eh1s = sim_data.eh1s, ehs_energy = sim_data.ehs_energy), delim=',')
             # Plotting moving grid (boundary is standstill)
             vtkdirname = "$dirname/graphics"
             mkpath(vtkdirname)
@@ -150,9 +150,9 @@ function main()
     u_ex(x) = (x[1]^2 + x[2]^2 - 1)^2*sin(m*( 2π/l )*x[1])*cos(r*( 2π/l )*x[2])
 
     # Parameters
-    iterations = 100
+    iterations = 500
     δ1 = 0
-    L = 3.61
+    L = 3.11
     n = 2^4
     h = L/n
     δ2 = 2*sqrt(2)*h # two squares
@@ -169,7 +169,7 @@ function main()
 
         # Construct solver
         solver = TranslationTest.Solver(u_ex, solver_function)
-        prefix = "no_penalty_test"
+        prefix = "no-penalty-test"
         results = TranslationTest.translation_test(solver, param_list, δs, L, n, dirname, prefix)
         sim_data_ghost_penalty, sim_data_no_penalty = results
 
@@ -189,21 +189,21 @@ function main()
         end
     end
 
-    maindir = "figures/translation_test"
+    maindir = "figures/translation-test"
     if isdir(maindir)
         rm(maindir; recursive=true)
         mkdir(maindir)
     end
 
     @testset "Laplace penalty tests" begin
-        dirname = "$maindir/laplace_n_$(n)_it_$(iterations)_L_$(L)"
+        dirname = "$maindir/laplace-n-$(n)-it-$(iterations)-L-$(L)"
         mkpath(dirname)
         run_penalty_test(SolverLaplace.run, dirname)
     end
 
     @testset "Hessian penalty tests" begin
         # Make figure env
-        dirname = "$maindir/hessian_n_$(n)_it_$(iterations)_L_$(L)"
+        dirname = "$maindir/hessian-n-$(n)-it-$(iterations)-L-$(L)"
         mkpath(dirname)
         run_penalty_test(SolverHessian.run, dirname)
     end

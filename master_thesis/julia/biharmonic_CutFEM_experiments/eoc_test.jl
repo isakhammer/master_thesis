@@ -130,7 +130,7 @@ end
 function main()
 
 
-    maindir = "figures/eoc_test"
+    maindir = "figures/eoc-test"
     if isdir(maindir)
         rm(maindir; recursive=true)
         mkdir(maindir)
@@ -140,7 +140,7 @@ function main()
     u_ex(x) = sin(m*( 2π/l )*x[1])*cos(r*( 2π/l )*x[2])
 
     γ, γg1, γg2 = 20, 10, 0.1
-    L, δ = 2.5, 0.0
+    L, δ = 3.11, 0.0
     ns = [2^3, 2^4, 2^5, 2^6, 2^7, 2^8]
 
     @testset "Laplace Flower EOC tests" begin
@@ -170,4 +170,6 @@ function main()
     end
 end
 
-main()
+@testset "Main" begin
+    main()
+end
