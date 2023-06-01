@@ -8,79 +8,48 @@ using LaTeXStrings
 using Printf
 
 
-struct Simulation
-    param
-    data
-    dirname
-    color
-end
 
-function translation_plot(sims::Vector{Simulation},dirname)
 
-    # Plot for condition numbers
-    p1 = plot(legend=:outertopright, size=default_size, legendtitle=L"(\gamma, \gamma_1, \gamma_2)",
-              yscale=:log10, minorgrid=false, ymin=0.0)
+function generate_plots(data,path)
+    hs = 1 .// data.ns
+    # Initial plot with the first data series
+    p = Plots.plot(hs, data.el2s, label=L"\Vert e \Vert_{L^2}", size=default_size, legend=:outertopright, xscale=:log2, yscale=:log2, minorgrid=true)
+    Plots.scatter!(p, hs, data.el2s, primary=false)
 
-    # Plot for L2 error, H1 error, and Energy error
-    p2 = plot(legend=:outertopright, size=default_size,legendtitle=L"(\gamma, \gamma_1, \gamma_2)",
-              yscale=:log10, minorgrid=false)
+    # Add the second data series
+    Plots.plot!(p, hs, data.eh1s, label=L"\Vert e \Vert_{H^1}")
+    Plots.scatter!(p, hs, data.eh1s, primary=false)
 
-    for sim in sims
-        γ, γg1, γg2 = sim.param
-        label_text = L"(%$(γ), %$(γg1), %$( γg2)) "
+    # Add the third data series
+    Plots.plot!(p, hs, data.ehs_energy, label=L"\Vert e \Vert_{a_{h,*}}")
+    Plots.scatter!(p, hs, data.ehs_energy, primary=false)
 
-        Plots.plot!(p1, sim.data.deltas, sim.data.cond_numbers, label=label_text, color=sim.color)
-        Plots.plot!(p2, sim.data.deltas, sim.data.el2s, label=label_text, color=sim.color, linestyle=:solid)
-        Plots.plot!(p2, sim.data.deltas, sim.data.eh1s, label=nothing, color=sim.color, linestyle=:dash)
-        Plots.plot!(p2, sim.data.deltas, sim.data.ehs_energy, label=nothing, color=sim.color, linestyle=:dot)
+    # Configs
+    Plots.xlabel!(p, "h")
+    Plots.ylabel!(p, L"\Vert e \Vert_{}")
+    Plots.plot!(p, xscale=:log2, yscale=:log2, minorgrid=true)
+    Plots.plot!(p, legendfontsize=14)  # Adjust the value 12 to your desired font size
 
-    end
-    file1 = dirname*"/translation-cond.tex"
-    file2 = dirname*"/translation-error.tex"
-    println("Saved in $file1 and $file2")
-    savefig(p1,file1)
-    savefig(p2,file2)
+    savefig("$path-eoc.tex")
 end
 
 
-
-println("Hessian Translation Test")
-dirname = "translation-test/hessian-n-16-it-500-L-3.11"
-
-# No penalty simulation
-path1 = "$dirname/no-penalty-test-gamma-20.0-gamma1-0.0-gamma2-0.0.csv"
-param1 = (20,0,0)
-data1 = CSV.read(path1, DataFrame)
-sim1=Simulation(param1, data1, dirname, "blue")
-
-# Penalty simulation
-path2 = "$dirname/no-penalty-test-gamma-20.0-gamma1-10.0-gamma2-0.1.csv"
-param2 = (20,10,0.1)
-data2 = CSV.read(path2, DataFrame)
-sim2=Simulation(param2, data2, dirname, "red")
-
-# Generate plots
-sims = [sim1, sim2]
-translation_plot(sims, dirname)
+# Hessian Circle
+dirname = "eoc-test"
+path = "$dirname/eoc-hessian-circle-L-3.11-gamma0-20-gamma1-10-gamma2-0.1/conv"
+param = (20,10,0.1)
+data = CSV.read("$path.csv", DataFrame)
+generate_plots(data, path)
 
 
+# Laplace Circle
+path = "$dirname/eoc-laplace-circle-L-3.11-gamma0-20-gamma1-10-gamma2-0.1/conv"
+param = (20,10,0.1)
+data = CSV.read("$path.csv", DataFrame)
+generate_plots(data, path)
 
-println("Laplace Translation Test")
-dirname = "translation-test/laplace-n-16-it-500-L-3.11"
-
-# No penalty simulation
-path1 = "$dirname/no-penalty-test-gamma-20.0-gamma1-0.0-gamma2-0.0.csv"
-param1 = (20,0,0)
-data1 = CSV.read(path1, DataFrame)
-sim1=Simulation(param1, data1, dirname, "blue")
-
-# Penalty simulation
-path2 = "$dirname/no-penalty-test-gamma-20.0-gamma1-10.0-gamma2-0.1.csv"
-param2 = (20,10,0.1)
-data2 = CSV.read(path2, DataFrame)
-sim2=Simulation(param2, data2, dirname, "red")
-
-# Generate plots
-sims = [sim1, sim2]
-translation_plot(sims, dirname)
-
+# Laplace Flower
+path = "$dirname/eoc-laplace-flower-L-3.11-gamma0-20-gamma1-10-gamma2-0.1/conv"
+param = (20,10,0.1)
+data = CSV.read("$path.csv", DataFrame)
+generate_plots(data, path)
