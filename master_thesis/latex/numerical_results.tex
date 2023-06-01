@@ -124,10 +124,10 @@ u_{\text{ex}}(x,y) = \sin\left(\frac{2\pi m}{l}x_1\right)\cos\left(\frac{2\pi r}
 \]
 on the flower domain for the Laplace equation. Here is the flower domain described as
  Recall the polar coordinates $r = \sqrt{x^2 + y^2}$ and $\theta = atan( x,y) $. Then we define the flower level set function $\phi$ to be on the form
-
-\[
+ \begin{equation}
+ \label{eq:flower}
 \phi(x, y) = r_0 + r_1  cos(5 \theta) - r = 0
-\]
+ \end{equation}
 Here we define the parameters $r_0= 0.3L$ and $ r_1=0.1L$.
 \begin{figure}
     \centering
@@ -160,7 +160,7 @@ Here we define the parameters $r_0= 0.3L$ and $ r_1=0.1L$.
 
   \end{axis}
 \end{tikzpicture}
-\caption{Illustration of the flower domain associated with the level set function $\phi ( x,y) =0$ for $r_{0} = 0.3L$ and $r_{1} = 0.1L$  .}
+\caption{Illustration of the flower domain associated with the level set function \eqref{eq:flower} s.t. $\phi ( x,y) =0$ for $r_{0} = 0.3L$ and $r_{1} = 0.1L$ }
 \end{figure}
 
 \subsubsection{Translation test}%
