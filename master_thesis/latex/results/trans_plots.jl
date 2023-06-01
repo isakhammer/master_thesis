@@ -44,18 +44,18 @@ end
 
 
 
-println("Hessian Translation Test")
-dirname = "translation-test/hessian-n-16-it-500-L-3.11"
+println("Laplace Translation Test")
+dirname = "translation-test/laplace-n-16-it-500-L-2.7"
 
 # No penalty simulation
-path1 = "$dirname/no-penalty-test-gamma-20.0-gamma1-0.0-gamma2-0.0.csv"
-param1 = (20,0,0)
+path1 = "$dirname/no-penalty-test-gamma-20.0-gamma1-10.0-gamma2-1.0.csv"
+param1 = (20,10,1)
 data1 = CSV.read(path1, DataFrame)
 sim1=Simulation(param1, data1, dirname, "blue")
 
 # Penalty simulation
-path2 = "$dirname/no-penalty-test-gamma-20.0-gamma1-10.0-gamma2-0.1.csv"
-param2 = (20,10,0.1)
+path2 = "$dirname/no-penalty-test-gamma-20.0-gamma1-0.0-gamma2-0.0.csv"
+param2 = (20,0,0)
 data2 = CSV.read(path2, DataFrame)
 sim2=Simulation(param2, data2, dirname, "red")
 
@@ -64,21 +64,25 @@ sims = [sim1, sim2]
 translation_plot(sims, dirname)
 
 
-
-println("Laplace Translation Test")
-dirname = "translation-test/laplace-n-16-it-500-L-3.11"
+println("Hessian Translation Test")
+dirname = "translation-test/hessian-n-16-it-500-L-2.7"
 
 # No penalty simulation
-path1 = "$dirname/no-penalty-test-gamma-20.0-gamma1-0.0-gamma2-0.0.csv"
-param1 = (20,0,0)
+path1 = "$dirname/no-penalty-test-gamma-20.0-gamma1-10.0-gamma2-1.0.csv"
+param1 = (20,10,1)
 data1 = CSV.read(path1, DataFrame)
 sim1=Simulation(param1, data1, dirname, "blue")
 
 # Penalty simulation
-path2 = "$dirname/no-penalty-test-gamma-20.0-gamma1-10.0-gamma2-0.1.csv"
-param2 = (20,10,0.1)
+path2 = "$dirname/no-penalty-test-gamma-20.0-gamma1-0.0-gamma2-0.0.csv"
+param2 = (20,0,0)
 data2 = CSV.read(path2, DataFrame)
 sim2=Simulation(param2, data2, dirname, "red")
+
+# Generate plots
+sims = [sim1, sim2]
+translation_plot(sims, dirname)
+
 
 # Generate plots
 sims = [sim1, sim2]

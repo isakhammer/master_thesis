@@ -133,10 +133,10 @@ on the flower domain for the Laplace equation.
 
         \coordinate (p0) at (0.1, 0.1);  % the origin of the circle
 
-        \draw[black,line width=0.8pt, opacity=1.0 ] (0.1, 0.1) circle (0.9cm);
-        \draw[black,line width=0.8pt, opacity=0.7 ] (0.4535, 0.4535) circle (0.9cm);
-        \draw[black,line width=0.8pt, opacity=0.3 ] (0.807, 0.807) circle (0.9cm);
-        \draw[black,line width=0.8pt, opacity=0.2 ] (1.16, 1.16) circle (0.9cm);
+        \draw[black,line width=0.8pt, opacity=1.0 ] (0.1, 0.1) circle (1.1cm);
+        \draw[black,line width=0.8pt, opacity=0.7 ] (0.4535, 0.4535) circle (1.1cm);
+        \draw[black,line width=0.8pt, opacity=0.3 ] (0.807, 0.807) circle (1.1cm);
+        \draw[black,line width=0.8pt, opacity=0.2 ] (1.16, 1.16) circle (1.1cm);
 
         % Drawing points
         \fill[black] (p0) circle (2pt);
@@ -144,7 +144,7 @@ on the flower domain for the Laplace equation.
         \pgfmathsetmacro{\pOneY}{0.1 + 1.5*sqrt(2)*0.5}
         \coordinate (p1) at (\pOneX, \pOneY);
 
-        \draw[->, thick] (p0) -- (p1) node[above] {$\delta$};
+        \draw[->, thick] (p0) -- (p1) node[midway,below] {$\delta$};
         % Background mesh
         \foreach \i in {-2.5, -2, ..., 2.5} {
             \draw[line width=0.1pt, shift={(-2.5,\i)}, opacity=0.2] (0,0) -- (5,0);
@@ -152,7 +152,7 @@ on the flower domain for the Laplace equation.
         }
 
     \end{tikzpicture}
-    \caption{Illustration of the translation test with translation $\delta = 2 \sqrt{2}h  $ }
+    \caption{Illustration of the translation test with translation $\delta$ from  $(0,2 \sqrt{2}h)  $ }
 \end{figure}
 
 
@@ -160,11 +160,11 @@ on the flower domain for the Laplace equation.
 \centering
 
 \subfloat[]{%
-\input{"results/translation-test/hessian-n-16-it-500-L-3.11/translation-error.tex"}
+\input{"results/translation-test/hessian-n-16-it-500-L-2.7/translation-cond.tex"}
 }
 
 \subfloat[]{%
-\input{"results/translation-test/hessian-n-16-it-500-L-3.11/translation-cond.tex"}
+\input{"results/translation-test/hessian-n-16-it-500-L-2.7/translation-error.tex"}
 }
 
 
@@ -176,11 +176,11 @@ on the flower domain for the Laplace equation.
 \centering
 
 \subfloat[]{%
-\input{"results/translation-test/laplace-n-16-it-500-L-3.11/translation-error.tex"}
+\input{"results/translation-test/laplace-n-16-it-500-L-2.7/translation-cond.tex"}
 }
 
 \subfloat[]{%
-\input{"results/translation-test/laplace-n-16-it-500-L-3.11/translation-cond.tex"}
+\input{"results/translation-test/laplace-n-16-it-500-L-2.7/translation-error.tex"}
 }
 
 
