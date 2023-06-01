@@ -1,6 +1,6 @@
 using Plots
 pgfplotsx()
-default_size = (500, 300)
+default_size = (600, 200)
 
 using CSV
 using DataFrames
@@ -35,6 +35,10 @@ function translation_plot(sims::Vector{Simulation},dirname)
         Plots.plot!(p2, sim.data.deltas, sim.data.ehs_energy, label=nothing, color=sim.color, linestyle=:dot)
 
     end
+
+    scatter!(p1, [[0]], [[10^0]], color=:transparent, label=nothing, markersize=0.001)
+    scatter!(p2, [[0]], [[10^-2]], color=:transparent, label=nothing, markersize=0.001)
+
     file1 = dirname*"/translation-cond.tex"
     file2 = dirname*"/translation-error.tex"
     println("Saved in $file1 and $file2")
