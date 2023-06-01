@@ -44,17 +44,8 @@ function generate_figures(;ns, el2s, eh1s, ehs_energy, cond_numbers, ndofs, dirn
 
     eoc_l2, eoc_eh1, eoc_eh_energy = compute_eoc(hs, el2s, eh1s, ehs_energy)
 
-    header = [L"$h/L$", L"$n$", L"$\Vert e \Vert_{L^2}$", "EOC", L"$ \Vert e \Vert_{H^1}$", "EOC", L"$\Vert e \Vert_{ a_h,* }$", "EOC", L"\kappa(A)", "ndofs"]
     data = hcat(hs_str, ns, el2s,  eoc_l2, eh1s, eoc_eh1, ehs_energy, eoc_eh_energy, cond_numbers, ndofs)
-
     formatters = (ft_printf("%s", [1]), ft_printf("%.0f", [2]), ft_printf("%.2f", [4, 6, 8]), ft_printf("%.1E", [3, 5, 7, 9, 10]), ft_nonothing)
-
-    filename_tex = filename*".tex"
-    open(filename_tex, "w") do io
-        pretty_table(io, data; header=header, tf = tf_latex_modern, formatters=formatters)
-    end
-    run(`sed -i '1d;$d' $filename_tex`) #removes \begin{table} and \end{table} env
-
     minimal_header = ["h","n", "L2", "EOC", "H1", "EOC", "a_h", "EOC", "cond",  "ndofs"]
     pretty_table(data, header=minimal_header, formatters =formatters )
     open(filename*".txt", "w") do io
@@ -62,29 +53,9 @@ function generate_figures(;ns, el2s, eh1s, ehs_energy, cond_numbers, ndofs, dirn
     end
 
     # Producing a CSV file
-    CSV.write(filename*".csv", DataFrame(ns=ns, el2s=el2s,  eoc_l2=eoc_l2,
-                                         eh1s=eh1s, eoc_eh1=eoc_eh1,
-                                         ehs_energy=ehs_energy, eoc_eh_energy=eoc_eh_energy,
+    CSV.write(filename*".csv", DataFrame(ns=ns, el2s=el2s, eh1s=eh1s, ehs_energy=ehs_energy,
                                          cond_numbers=cond_numbers, ndofs=ndofs), delim=',')
 
-    # Initial plot with the first data series
-    p = Plots.plot(hs, el2s, label=L"\Vert e \Vert_{L^2}", size=default_size, legend=:outertopright, xscale=:log2, yscale=:log2, minorgrid=true)
-    Plots.scatter!(p, hs, el2s, primary=false)
-
-    # Add the second data series
-    Plots.plot!(p, hs, eh1s, label=L"\Vert e \Vert_{H^1}")
-    Plots.scatter!(p, hs, eh1s, primary=false)
-
-    # Add the third data series
-    Plots.plot!(p, hs, ehs_energy, label=L"\Vert e \Vert_{a_{h,*}}")
-    Plots.scatter!(p, hs, ehs_energy, primary=false)
-
-    # Configs
-    Plots.xlabel!(p, "h")
-    Plots.ylabel!(p, L"\Vert e \Vert_{}")
-    Plots.plot!(p, xscale=:log2, yscale=:log2, minorgrid=true)
-    Plots.plot!(p, legendfontsize=14)  # Adjust the value 12 to your desired font size
-    Plots.savefig(p, filename*"_plot"*endfix)
 end
 
 function convergence_analysis(; ns, dirname, u_ex, run_solver::Function, L=1.11, δ=0.0, γ=20, γg1=10, γg2=0.01, geometry::String="circle")
