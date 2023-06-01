@@ -112,9 +112,9 @@ function main()
     l, m, r = (2, 1, 1)
     u_ex(x) = sin(m*( 2π/l )*x[1])*cos(r*( 2π/l )*x[2])
 
-    γ, γg1, γg2 = 20, 10, 0.1
-    L, δ = 3.11, 0.0
-    ns = [2^3, 2^4, 2^5, 2^6, 2^7, 2^8]
+    γ, γg1, γg2 = 20, 10, 1
+    L, δ = 2.7, 0.0
+    ns = [2^3, 2^4, 2^5, 2^6, 2^7, 2^8, 2^9]
 
     @testset "Laplace Flower EOC tests" begin
         geometry ="flower"
