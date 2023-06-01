@@ -152,19 +152,18 @@ function main()
     # Parameters
     iterations = 500
     δ1 = 0
-    L = 3.11
+    L = 2.7
     n = 2^4
     h = L/n
     δ2 = 2*sqrt(2)*h # two squares
     δs = LinRange(δ1, δ2, iterations)
 
 
-
     # No penalty comparison
     function run_penalty_test(solver_function, dirname)
         param_list = [
-                      ((20., 10., 0.1), "blue"),
-                      ((20., 0., 0.), "red")
+                      ((20, 10, 1), "blue"),
+                      ((20, 0, 0), "red")
                      ]
 
         # Construct solver
