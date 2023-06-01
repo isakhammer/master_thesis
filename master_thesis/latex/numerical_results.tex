@@ -124,8 +124,36 @@ u_{\text{ex}}(x,y) = \sin\left(\frac{2\pi m}{l}x_1\right)\cos\left(\frac{2\pi r}
 \]
 on the flower domain for the Laplace equation.
 
+\begin{figure}
 
+    \begin{tikzpicture}[scale=0.9]
 
+        % Domain is blue
+        % \fill[blue!30] (0.1, 0.1) circle (1.5cm);
+
+        \coordinate (p0) at (0.1, 0.1);  % the origin of the circle
+
+        \draw[black,line width=0.8pt, opacity=1.0 ] (0.1, 0.1) circle (0.9cm);
+        \draw[black,line width=0.8pt, opacity=0.7 ] (0.4535, 0.4535) circle (0.9cm);
+        \draw[black,line width=0.8pt, opacity=0.3 ] (0.807, 0.807) circle (0.9cm);
+        \draw[black,line width=0.8pt, opacity=0.2 ] (1.16, 1.16) circle (0.9cm);
+
+        % Drawing points
+        \fill[black] (p0) circle (2pt);
+        \pgfmathsetmacro{\pOneX}{0.1 + 1.5*sqrt(2)*0.5}
+        \pgfmathsetmacro{\pOneY}{0.1 + 1.5*sqrt(2)*0.5}
+        \coordinate (p1) at (\pOneX, \pOneY);
+
+        \draw[->, thick] (p0) -- (p1) node[above] {$\delta$};
+        % Background mesh
+        \foreach \i in {-2.5, -2, ..., 2.5} {
+            \draw[line width=0.1pt, shift={(-2.5,\i)}, opacity=0.2] (0,0) -- (5,0);
+            \draw[line width=0.1pt, shift={(\i,-2.5)},opacity=0.2] (0,0) -- (0,5);
+        }
+
+    \end{tikzpicture}
+    \caption{Illustration of the translation test}
+\end{figure}
 
 
 \begin{figure}[htp]
