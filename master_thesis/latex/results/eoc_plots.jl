@@ -1,6 +1,6 @@
 using Plots
 pgfplotsx()
-default_size = (500, 300)
+default_size = (600, 250)
 
 using CSV
 using DataFrames
@@ -27,7 +27,7 @@ end
 
 
 function generate_plots(data,path)
-    hs = 1 .// data.ns
+    hs = 2 ./ data.ns
     # Initial plot with the first data series
     p = Plots.plot(hs, data.el2s, label=L"\Vert e \Vert_{L^2}", size=default_size, legend=:outertopright, xscale=:log2, yscale=:log2, minorgrid=true)
     Plots.scatter!(p, hs, data.el2s, primary=false)
@@ -39,12 +39,10 @@ function generate_plots(data,path)
     # Add the third data series
     Plots.plot!(p, hs, data.ehs_energy, label=L"\Vert e \Vert_{a_{h,*}}")
     Plots.scatter!(p, hs, data.ehs_energy, primary=false)
-
     # Configs
     Plots.xlabel!(p, "h")
-    Plots.ylabel!(p, L"\Vert e \Vert_{}")
-    Plots.plot!(p, xscale=:log2, yscale=:log2, minorgrid=true)
-    Plots.plot!(p, legendfontsize=14)  # Adjust the value 12 to your desired font size
+    Plots.plot!(p, minorgrid=false)
+    Plots.plot!(p, legendfontsize=12)  # Adjust the value 12 to your desired font size
 
     savefig("$path-plot.tex")
 

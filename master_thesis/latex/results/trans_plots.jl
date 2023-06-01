@@ -38,6 +38,11 @@ function translation_plot(sims::Vector{Simulation},dirname)
 
     scatter!(p1, [[0]], [[10^0]], color=:transparent, label=nothing, markersize=0.001)
     scatter!(p2, [[0]], [[10^-2]], color=:transparent, label=nothing, markersize=0.001)
+    plot!(p2,[0], [1], linestyle = :dot, label = L"\Vert e \Vert_{a_h,*}", color = "black")
+    plot!(p2,[0], [1], linestyle = :dash, label = L"\Vert e \Vert_{H^1}", color = "black")
+    plot!(p2,[0], [1], linestyle = :solid, label = L"\Vert e \Vert_{L^2}", color = "black")
+    plot!(p2, legendfontsize=12)  # Adjust the value 12 to your desired font size
+    plot!(p1, legendfontsize=12)  # Adjust the value 12 to your desired font size
 
     file1 = dirname*"/translation-cond.tex"
     file2 = dirname*"/translation-error.tex"
