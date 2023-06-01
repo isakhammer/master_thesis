@@ -62,7 +62,7 @@ function generate_figures(;ns, el2s, eh1s, ehs_energy, cond_numbers, ndofs, dirn
     end
 
     # Producing a CSV file
-    CSV.write(filename*".csv", DataFrame(hs_str=hs_str, ns=ns, el2s=el2s,  eoc_l2=eoc_l2,
+    CSV.write(filename*".csv", DataFrame(ns=ns, el2s=el2s,  eoc_l2=eoc_l2,
                                          eh1s=eh1s, eoc_eh1=eoc_eh1,
                                          ehs_energy=ehs_energy, eoc_eh_energy=eoc_eh_energy,
                                          cond_numbers=cond_numbers, ndofs=ndofs), delim=',')
