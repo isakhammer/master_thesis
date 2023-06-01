@@ -30,7 +30,7 @@ function generate_plots(data,path)
     Plots.plot!(p, xscale=:log2, yscale=:log2, minorgrid=true)
     Plots.plot!(p, legendfontsize=14)  # Adjust the value 12 to your desired font size
 
-    savefig("$path-eoc.tex")
+    savefig("$path-plot.tex")
 end
 
 
