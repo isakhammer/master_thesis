@@ -129,14 +129,17 @@ on the flower domain for the Laplace equation. Here is the flower domain describ
 \phi(x, y) = r_0 + r_1  cos(5 \theta) - r = 0
 \]
 Here we define the parameters $r_0= 0.3L$ and $ r_1=0.1L$.
+\begin{figure}
+    \centering
 \begin{tikzpicture}
-  \def\rZero{0.3} % Define r_0
-  \def\rOne{0.1} % Define r_1
+  \def\rZero{0.6} % Define r_0
+  \def\rOne{0.2} % Define r_1
   \begin{axis}[
     xmin=-1, xmax=1,
     ymin=-1, ymax=1,
     axis lines=center,
     axis equal,
+    hide axis,  % This will hide the axis
     % xlabel={$x$},
     % ylabel={$y$},
     % grid=both,
@@ -144,9 +147,21 @@ Here we define the parameters $r_0= 0.3L$ and $ r_1=0.1L$.
     domain=0:2*pi,
     samples=200
   ]
-  \addplot[thick, parametric, smooth] ({(\rZero + \rOne*cos(5*deg(x)))*cos(deg(x))}, {(\rZero + \rOne*cos(5*deg(x)))*sin(deg(x))});
+
+  \addplot[thick, parametric, smooth, fill=blue!30] ({(\rZero + \rOne*cos(5*deg(x)))*sin(deg(x))} , {(\rZero + \rOne*cos(5*deg(x)))*cos(deg(x))});
+  \node at (0.1, 0.1) {$\Omega$};
+  \node at (0.6, 0.6) {$\phi( x,y ) = 0 $};
+
+  % Background mesh
+  \foreach \i in {-1, -0.75, ..., 1} {
+      \addplot[ thin, opacity=0.3, forget plot] coordinates {(\i,-1) (\i,1)};
+      \addplot[ thin, opacity=0.3, forget plot] coordinates {(-1,\i) (1,\i)};
+  }
+
   \end{axis}
 \end{tikzpicture}
+\caption{Illustration of the flower domain associated with the level set function $\phi ( x,y) =0$ for $r_{0} = 0.3L$ and $r_{1} = 0.1L$  .}
+\end{figure}
 
 \subsubsection{Translation test}%
 \label{ssub:translation_test}
