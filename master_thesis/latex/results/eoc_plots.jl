@@ -64,20 +64,20 @@ end
 
 # Hessian Circle
 dirname = "eoc-test"
-path = "$dirname/eoc-hessian-circle-L-3.11-gamma0-20-gamma1-10-gamma2-0.1/conv"
-param = (20,10,0.1)
+config="L-2.7-gamma0-20-gamma1-10-gamma2-1"
+param = (20,10,1)
+
+path = "$dirname/eoc-hessian-circle-$config/conv"
 data = CSV.read("$path.csv", DataFrame)
 generate_plots(data, path)
 
 
 # Laplace Circle
-path = "$dirname/eoc-laplace-circle-L-3.11-gamma0-20-gamma1-10-gamma2-0.1/conv"
-param = (20,10,0.1)
+path = "$dirname/eoc-laplace-circle-$config/conv"
 data = CSV.read("$path.csv", DataFrame)
 generate_plots(data, path)
 
 # Laplace Flower
-path = "$dirname/eoc-laplace-flower-L-3.11-gamma0-20-gamma1-10-gamma2-0.1/conv"
-param = (20,10,0.1)
+path = "$dirname/eoc-laplace-flower-$config/conv"
 data = CSV.read("$path.csv", DataFrame)
 generate_plots(data, path)
