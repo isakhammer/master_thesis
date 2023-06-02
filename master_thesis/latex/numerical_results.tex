@@ -3,18 +3,24 @@
 \section{Numerical results}%
 \label{sec:numerical_results}
 
+To validate the proposed CutCIP method for the biharmonic problem will we investigate several numerical results both for the Laplace and Hessian formulation. From the theoretical optimal a priori estimates presented in presented in Theorem \ref{thm:apriori_result} will we provide several
+examples where it holds: circular domain and a flower domain. We also demonstrate the effect ghost penalty of stabilization by translating the domain to trigger badly cut cells. Finally, we provide numerical validation of the expected convergence for
+the Cahn-Hilliard problem.
+
+We propose the following penalty parameters $\gamma , \gamma _{g1}, \gamma _{g2} = 20,10, 0.1$.It is worth noting from the results provided in \cite{brenner2012, brenner2012quadratic_kirk,
+brenner2012quadratic} is it well known that the main requirement for the CIP formulation is that $\gamma = 5( k -1)\frac{k}{2}  $.
+
+
 
 \subsection{ Convergence study for the CutCIP method for the Biharmonic Problem  }%
 \label{sub:numerical_results_for_cutcip_biharmonic_equation}
 
-To verify the optimal order
 
-
+sub
 \begin{itemize}
     \item EOC Test on circle and its configuration
         \begin{enumerate}[label=\arabic*)]
-            \item Penalty parameters $\gamma , \gamma _{g1}, \gamma _{g2} = 20,10, 0.1$
-            \item Background mesh $L = 3.11$ and circle $R=1$, flower $r0, r1 = L0.3, L0.1$
+            \item Background mesh $L = 3.11$ and circle $R=1$, flower $r_0, r_1 = 0.3L, 0.1L$
         \end{enumerate}
     \item Translation
         \begin{enumerate}[label=\arabic*)]
@@ -30,7 +36,7 @@ In this section will we provide a numerical study of the methods studied in Sect
 
 Here we consider the manufactured solution $l,r,m = (2, 1, 1) $ s.t.
 \[
-u_{\text{ex}}(x,y) = (x^2- y^2 -1) \sin\left(\frac{2\pi m}{l}x_1\right)\cos\left(\frac{2\pi r}{l}y\right)
+u_{\text{ex}}(x,y) = (x^2- y^2 -1) \sin\left(\frac{2\pi m}{l}x\right)\cos\left(\frac{2\pi r}{l}y\right)
 \]
 On a square background mesh $L=3.11$ with a circle domain of radius $R=1$.
 
