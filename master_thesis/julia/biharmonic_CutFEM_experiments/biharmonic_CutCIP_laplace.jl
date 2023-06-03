@@ -133,7 +133,7 @@ module SolverLaplace
         uh = solve(op)
         A_mat =  get_matrix(op)
         ndof = size(A_mat)[1]
-        cond_number = ( 1/sqrt(ndof) )*cond(A_mat,Inf)
+        cond_number = cond(A_mat,Inf)
 
         u_inter = interpolate(u_ex, V) # remove?
         e = u_ex - uh

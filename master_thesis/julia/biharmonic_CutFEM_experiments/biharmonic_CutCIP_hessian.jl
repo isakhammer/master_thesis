@@ -131,7 +131,7 @@ module SolverHessian
         uh = solve(op)
         A_mat =  get_matrix(op)
         ndof = size(A_mat)[1]
-        cond_number = ( 1/sqrt(ndof) )*cond(A_mat,Inf)
+        cond_number = cond(A_mat,Inf)
 
         e = u_ex - uh
         el2 = sqrt(sum( ∫(e*e)dΩ ))
