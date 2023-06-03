@@ -76,8 +76,9 @@ For an illustration of the flower domain, see Figure \ref{fig:flower}.
 \end{figure}
 
 
-We want to test spatial convergence for the method by doing a numerous of mesh refinements. Let $ \widetilde{\mathcal{T}_{h}^{k} }$ be the associated regular square mesh of the background domain $\widetilde{\Omega }$ with the mesh size  $h =L /h $ for the refinements
-$n \in \left\{ 2^{3+k} \right\}_{k=0}^{6}$, for the circular domain is this illustrated in the Figure \ref{fig:refinement}.
+We want to test spatial convergence for the method by doing a numerous of mesh refinements. Let $ \widetilde{\mathcal{T}}_{h}^{k} $ be the associated regular square mesh of the background domain $\widetilde{\Omega }$ with the mesh size  $h^{k} = L/2^{3+k} $
+for the side length $L=2.7$ and refinements
+$k=0, \ldots, 6$. For the circular domain is this illustrated in the Figure \ref{fig:refinement}.
 
 \begin{figure}[h!]
     \centering
@@ -133,9 +134,13 @@ $n \in \left\{ 2^{3+k} \right\}_{k=0}^{6}$, for the circular domain is this illu
 
         \end{tikzpicture}
 }
-    \caption{Illustration of the domain $\Omega $ defined as a circle with radius $R$. The background mesh is a square domain with side lengths $L$ with three refinements of the mesh size $h$.}
+    \caption{Illustration of the domain $\Omega $ defined as a circle with radius $R$. The regular square background mesh $ \widetilde{\mathcal{T}}_{h}^{k} $ with side lengths $L$ with three refinements of the mesh size $h^{k}$.}
     \label{fig:refinement}
 \end{figure}
+
+On each mesh $\widetilde{\mathcal{T}}^{k}_{h}  $ we compute a numerical solution $u_{h}^{k}$, hence, motivating us to define the convergence rate. Let $u $ be the exact solution, then do we define the so-called Experimental Order of Convergence (EOC) as \[
+EOC( k) =  \frac{\log \left(  \frac{E^{k-1}}{E^{k}} \right)}{\log \left(  \frac{h^{k-1}}{h^{k}} \right)}, \quad    k>0
+\]
 
 First we consider the manufactured solution $l,r,m = (2, 1, 1) $ s.t.
 \[
