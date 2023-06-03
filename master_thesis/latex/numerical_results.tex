@@ -4,11 +4,28 @@
 \label{sec:numerical_results}
 
 To validate the proposed CutCIP method for the biharmonic problem will we investigate several numerical results both for the Laplace and Hessian formulation. From the theoretical optimal a priori estimates presented in presented in Theorem \ref{thm:apriori_result} will we provide several
-examples where it holds: circular domain and a flower domain. We also demonstrate the effect ghost penalty of stabilization by translating the domain to trigger badly cut cells. Finally, we provide numerical validation of the expected convergence for
+examples where it holds: circular domain and a flower domain.
+% Hva: Verify the robustness of the CutCIP method for the biharmonic equation and its theoreitical a prioiri estimates
+% Hvorfor: Very important to ensure stability, convergence
+% Hvordan: Sjekke kondisjonstall , sjekke EOC
+% Skriv ned definisjonene av EOC, condisjonstall, og at den er bounded
+
+% \begin{figure}[h!]
+%     \centering
+%     % \includesvg[width=0.5\textwidth]{results/eoc-test/eoc-hessian-circle-L-2.7-gamma0-20-gamma1-10-gamma2-1/example.svg}
+
+%     \includesvg[width=0.7\textwidth]{example.svg}
+%     % \centerline{\includesvg[inkscapelatex=false,width=0.75\columnwidth]{results/eoc-test/eoc-hessian-circle-L-2.7-gamma0-20-gamma1-10-gamma2-1/example.svg}}
+%     % \includesvg[width=\textwidth]{p}
+%     \caption{Put your caption here.}
+%     \label{fig:example}
+% \end{figure}
+
+We also demonstrate the effect ghost penalty of stabilization by translating the domain to trigger badly cut cells. Finally, we provide numerical validation of the expected convergence for
 the Cahn-Hilliard problem.
 
-We propose the following penalty parameters $\gamma , \gamma _{g1}, \gamma _{g2} = 20,10, 0.1$.It is worth noting from the results provided in \cite{brenner2012, brenner2012quadratic_kirk,
-brenner2012quadratic} is it well known that the main requirement for the CIP formulation is that $\gamma = 5( k -1)\frac{k}{2}  $.
+We propose the following penalty parameters $\gamma , \gamma _{g1}, \gamma _{g2} = 20,10, 1$.It is worth noting from the results provided in \cite{brenner2012, brenner2012quadratic_kirk,
+brenner2012quadratic} is it well known that the main requirement for the CIP formulation is that $\gamma = 5( k -1)\frac{k}{2}$.
 
 
 
