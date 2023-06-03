@@ -3,6 +3,7 @@
 \section{Numerical results}%
 \label{sec:numerical_results}
 
+
 To validate the proposed CutCIP method for the biharmonic problem will we investigate several numerical results both for the Laplace and Hessian formulation. From the theoretical optimal a priori estimates presented in presented in Theorem \ref{thm:apriori_result} will we provide several
 examples where it holds: circular domain and a flower domain.
 % Hva: Verify the robustness of the CutCIP method for the biharmonic equation and its theoreitical a prioiri estimates
@@ -31,63 +32,55 @@ brenner2012quadratic} is it well known that the main requirement for the CIP for
 
 \subsection{ Convergence study for the CutCIP method for the Biharmonic Problem  }%
 \label{sub:numerical_results_for_cutcip_biharmonic_equation}
+For the convergence study will we consider a square background domain $\widetilde{\Omega} $ with side lengths $L$ and a physical domain $\Omega \subset \widetilde{\Omega}$ on the form $\Omega  = \left\{ ( x,y)  \mid \phi ( x,y) \le 0    \right\} $,
+where $\phi: \mathbb{R} ^2 \to \mathbb{R}  $ is a given level set function. We will consider two cases; a disk described by $\phi( x,y) = x^{ 2} - y^{2} -1  $ and a flower shaped domain,
+\begin{equation}
+\label{eq:flower}
+\phi ( x,y) =\sqrt{x^{2} + y^{2}} - r_{0} - r_{1}\cos(\atantwo(y,x)) \text{ where }  r_{0} = 0.3L  \text{ and } \ r_{1} = 0.1L .
+\end{equation}
+For an illustration of the flower domain, see Figure \ref{fig:flower}.
 
+\begin{figure}[h!]
+    \centering
+\begin{tikzpicture}
+  \def\rZero{0.6} % Define r_0
+  \def\rOne{0.2} % Define r_1
+  \begin{axis}[
+    xmin=-1, xmax=1,
+    ymin=-1, ymax=1,
+    axis lines=center,
+    axis equal,
+    hide axis,  % This will hide the axis
+    % xlabel={$x$},
+    % ylabel={$y$},
+    % grid=both,
+    % minor tick num=1,
+    domain=0:2*pi,
+    samples=200
+  ]
 
-sub
-\begin{itemize}
-    \item EOC Test on circle and its configuration
-        \begin{enumerate}[label=\arabic*)]
-            \item Background mesh $L = 3.11$ and circle $R=1$, flower $r_0, r_1 = 0.3L, 0.1L$
-        \end{enumerate}
-    \item Translation
-        \begin{enumerate}[label=\arabic*)]
-            \item Background mesh $L = 3.11$ and $R=1$
-        \end{enumerate}
-\end{itemize}
+  \addplot[thick, parametric, smooth, fill=blue!30] ({(\rZero + \rOne*cos(5*deg(x)))*sin(deg(x))} , {(\rZero + \rOne*cos(5*deg(x)))*cos(deg(x))});
+  \node at (0.1, 0.1) {$\Omega$};
+  \node at (0.6, 0.6) {$\phi( x,y ) = 0 $};
 
+  % Background mesh
+  \foreach \i in {-1, -0.75, ..., 1} {
+      \addplot[ thin, opacity=0.3, forget plot] coordinates {(\i,-1) (\i,1)};
+      \addplot[ thin, opacity=0.3, forget plot] coordinates {(-1,\i) (1,\i)};
+  }
 
-In this section will we provide a numerical study of the methods studied in Section \ref{sec:cutcip_biharmonic_problem}.
-
-\subsubsection{EOC test}%
-\label{ssub:eoc_test}
-
-Here we consider the manufactured solution $l,r,m = (2, 1, 1) $ s.t.
-\[
-u_{\text{ex}}(x,y) = (x^2- y^2 -1) \sin\left(\frac{2\pi m}{l}x\right)\cos\left(\frac{2\pi r}{l}y\right)
-\]
-On a square background mesh $L=3.11$ with a circle domain of radius $R=1$.
-
-\begin{table}
-\input{results/eoc-test/eoc-hessian-circle-L-2.7-gamma0-20-gamma1-10-gamma2-1/conv-table.tex}
-
-\caption{Convergence rates for the Hessian-based method applied to the circular domain with side length $L=2.7$, using parameters $\gamma=20$, $\gamma_1=10$, and $\gamma_2=0.1$}
-\end{table}
-\begin{figure}
-\input{results/eoc-test/eoc-hessian-circle-L-2.7-gamma0-20-gamma1-10-gamma2-1/conv-plot.tex}
-\caption{Convergence rates for the Hessian-based method applied to the circular domain with side length $L=2.7$, using parameters $\gamma=20$, $\gamma_1=10$, and $\gamma_2=0.1$}
+  \end{axis}
+\end{tikzpicture}
+\caption{Illustration of the flower domain associated with the level set function \eqref{eq:flower}.}
+    \label{fig:flower}
 \end{figure}
 
-\begin{table}
-\input{results/eoc-test/eoc-laplace-circle-L-2.7-gamma0-20-gamma1-10-gamma2-1/conv-table.tex}
-\caption{Convergence rates for the Laplacian-based method applied to the circular domain with side length $L=2.7$, using parameters $\gamma=20$, $\gamma_1=10$, and $\gamma_2=0.1$}
-\end{table}
-\begin{figure}
-\input{results/eoc-test/eoc-laplace-circle-L-2.7-gamma0-20-gamma1-10-gamma2-1/conv-plot.tex}
-\caption{Convergence rates for the Laplacian-based method applied to the circular domain with side length $L=2.7$, using parameters $\gamma=20$, $\gamma_1=10$, and $\gamma_2=0.1$}
-\end{figure}
 
+We want to test spatial convergence for the method by doing a numerous of mesh refinements. Let $ \widetilde{\mathcal{T}_{h}^{k} }$ be the associated regular square mesh of the background domain $\widetilde{\Omega }$ with the mesh size  $h =L /h $ for the refinements
+$n \in \left\{ 2^{3+k} \right\}_{k=0}^{6}$, for the circular domain is this illustrated in the Figure \ref{fig:refinement}.
 
-
-\begin{table}
-\input{results/eoc-test/eoc-laplace-flower-L-2.7-gamma0-20-gamma1-10-gamma2-1/conv-table.tex}
-\caption{Convergence rates for the Laplacian-based method applied to the Flower domain with side length $L=2.7$, using parameters $\gamma=20$, $\gamma_1=10$, and $\gamma_2=1$}
-\end{table}
-\begin{figure}
-\input{results/eoc-test/eoc-laplace-flower-L-2.7-gamma0-20-gamma1-10-gamma2-1/conv-plot.tex}
-\caption{Convergence rates for the Laplacian-based method applied to the Flower domain with side length $L=2.7$, using parameters $\gamma=20$, $\gamma_1=10$, and $\gamma_2=1$}
-\end{figure}
-
-\begin{figure}\centering
+\begin{figure}[h!]
+    \centering
 \subfloat[]{\label{sub:fig:refine_a}
         \begin{tikzpicture}[scale=0.9]
 
@@ -141,53 +134,58 @@ On a square background mesh $L=3.11$ with a circle domain of radius $R=1$.
         \end{tikzpicture}
 }
     \caption{Illustration of the domain $\Omega $ defined as a circle with radius $R$. The background mesh is a square domain with side lengths $L$ with three refinements of the mesh size $h$.}
+    \label{fig:refinement}
 \end{figure}
 
-
-Here we consider the manufactured solution $l,r,m = (2, 1, 1) $ s.t.
+First we consider the manufactured solution $l,r,m = (2, 1, 1) $ s.t.
 \[
-u_{\text{ex}}(x,y) = \sin\left(\frac{2\pi m}{l}x_1\right)\cos\left(\frac{2\pi r}{l}y\right)
+u(x,y) = (x^2- y^2 -1) \sin\left(\frac{2\pi m}{l}x\right)\cos\left(\frac{2\pi r}{l}y\right)
 \]
-on the flower domain for the Laplace equation. Here is the flower domain described as
- Recall the polar coordinates $r = \sqrt{x^2 + y^2}$ and $\theta = atan( x,y) $. Then we define the flower level set function $\phi$ to be on the form
- \begin{equation}
- \label{eq:flower}
-\phi(x, y) = r_0 + r_1  cos(5 \theta) - r = 0
- \end{equation}
-Here we define the parameters $r_0= 0.3L$ and $ r_1=0.1L$.
+on the circular domain.
+
+\begin{table}
+\input{results/eoc-test/eoc-hessian-circle-L-2.7-gamma0-20-gamma1-10-gamma2-1/conv-table.tex}
+
+\caption{Convergence rates for the Hessian-based method applied to the circular domain with side length $L=2.7$, using parameters $\gamma=20$, $\gamma_1=10$, and $\gamma_2=0.1$}
+\end{table}
 \begin{figure}
-    \centering
-\begin{tikzpicture}
-  \def\rZero{0.6} % Define r_0
-  \def\rOne{0.2} % Define r_1
-  \begin{axis}[
-    xmin=-1, xmax=1,
-    ymin=-1, ymax=1,
-    axis lines=center,
-    axis equal,
-    hide axis,  % This will hide the axis
-    % xlabel={$x$},
-    % ylabel={$y$},
-    % grid=both,
-    % minor tick num=1,
-    domain=0:2*pi,
-    samples=200
-  ]
-
-  \addplot[thick, parametric, smooth, fill=blue!30] ({(\rZero + \rOne*cos(5*deg(x)))*sin(deg(x))} , {(\rZero + \rOne*cos(5*deg(x)))*cos(deg(x))});
-  \node at (0.1, 0.1) {$\Omega$};
-  \node at (0.6, 0.6) {$\phi( x,y ) = 0 $};
-
-  % Background mesh
-  \foreach \i in {-1, -0.75, ..., 1} {
-      \addplot[ thin, opacity=0.3, forget plot] coordinates {(\i,-1) (\i,1)};
-      \addplot[ thin, opacity=0.3, forget plot] coordinates {(-1,\i) (1,\i)};
-  }
-
-  \end{axis}
-\end{tikzpicture}
-\caption{Illustration of the flower domain associated with the level set function \eqref{eq:flower} s.t. $\phi ( x,y) =0$ for $r_{0} = 0.3L$ and $r_{1} = 0.1L$ }
+\input{results/eoc-test/eoc-hessian-circle-L-2.7-gamma0-20-gamma1-10-gamma2-1/conv-plot.tex}
+\caption{Convergence rates for the Hessian-based method applied to the circular domain with side length $L=2.7$, using parameters $\gamma=20$, $\gamma_1=10$, and $\gamma_2=0.1$}
 \end{figure}
+
+\begin{table}
+\input{results/eoc-test/eoc-laplace-circle-L-2.7-gamma0-20-gamma1-10-gamma2-1/conv-table.tex}
+\caption{Convergence rates for the Laplacian-based method applied to the circular domain with side length $L=2.7$, using parameters $\gamma=20$, $\gamma_1=10$, and $\gamma_2=0.1$}
+\end{table}
+\begin{figure}
+\input{results/eoc-test/eoc-laplace-circle-L-2.7-gamma0-20-gamma1-10-gamma2-1/conv-plot.tex}
+\caption{Convergence rates for the Laplacian-based method applied to the circular domain with side length $L=2.7$, using parameters $\gamma=20$, $\gamma_1=10$, and $\gamma_2=0.1$}
+\end{figure}
+
+
+
+\begin{table}
+\input{results/eoc-test/eoc-laplace-flower-L-2.7-gamma0-20-gamma1-10-gamma2-1/conv-table.tex}
+\caption{Convergence rates for the Laplacian-based method applied to the Flower domain with side length $L=2.7$, using parameters $\gamma=20$, $\gamma_1=10$, and $\gamma_2=1$}
+\end{table}
+\begin{figure}
+\input{results/eoc-test/eoc-laplace-flower-L-2.7-gamma0-20-gamma1-10-gamma2-1/conv-plot.tex}
+\caption{Convergence rates for the Laplacian-based method applied to the Flower domain with side length $L=2.7$, using parameters $\gamma=20$, $\gamma_1=10$, and $\gamma_2=1$}
+\end{figure}
+
+
+
+% Here we consider the manufactured solution $l,r,m = (2, 1, 1) $ s.t.
+% \[
+% u_{\text{ex}}(x,y) = \sin\left(\frac{2\pi m}{l}x_1\right)\cos\left(\frac{2\pi r}{l}y\right)
+% \]
+% on the flower domain for the Laplace equation. Here is the flower domain described as
+%  Recall the polar coordinates $r = \sqrt{x^2 + y^2}$ and $\theta = atan( x,y) $. Then we define the flower level set function $\phi$ to be on the form
+%  \begin{equation}
+%  \label{eq:flower}
+% \phi(x, y) = r_0 + r_1  cos(5 \theta) - r = 0
+%  \end{equation}
+Here we define the parameters $r_0= 0.3L$ and $ r_1=0.1L$.
 
 \subsubsection{Translation test}%
 \label{ssub:translation_test}
