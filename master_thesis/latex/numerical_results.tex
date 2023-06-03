@@ -158,13 +158,14 @@ Remark that this notation is not to be confused with Sobolev norms.
 Also recall the definition of the matrix norm, \[
 \| A  \|_{p  }^{  }  = \max_{U \in \mathbb{R} ^{N} \setminus 0} \frac{\| AU \|_{ p }^{  } }{\| U \|_{p}^{  } } \text{ for } A \in \mathbb{R} ^{N\times N}.
 \]
-Assume that $A $ is invertible, then we define the condition number s.t., \[
-\kappa ( A) = \| A  \|_{ 2 }^{  } \| A ^{-1} \|_{ 2 }  .
+Assume that $A $ is invertible, then we define the condition number for a matrix in $l^{p}  $ norm defined s.t., \[
+\kappa_{p} ( A) = \| A  \|_{ p }^{  } \| A ^{-1} \|_{ p }  .
 \]
-From linear algebra is a well known result that $ \| A \|_{ \infty }^{  }  \le \| A \|_{2  }^{  } \le \sqrt{N}  \| A \|_{\infty  }^{  }  $, hence, we can bound the condition number applying the $l^{\infty}$ norm,
+Because of the connection of $l^{2}$ norms of a matrix and its eigenvalues is $k_{2}( A) $ preferred in general numerical analysis. However, from linear algebra is a well known result that $ \| A \|_{ \infty }^{  }  \le \| A \|_{2  }^{  } \le \sqrt{N}  \| A \|_{\infty  }^{  }  $, hence, we can bound the condition number applying the $l^{\infty}$ norm,
 \[
-\| A \|_{ \infty }^{  }\| A^{-1} \|_{ \infty }^{  } \le  \kappa ( A) \le N \| A \|_{ \infty }^{  }\| A^{-1} \|_{ \infty }^{  }   .
+\kappa_{\infty} ( A) \le  \kappa_{2} ( A) \le N \kappa _{\infty}(A)    .
 \]
+Thus, since these norms are equivalent will we in this report focus on $ \kappa_{\infty}( A)  $.
 \begin{remark}
  The $l^{\infty}$ is computed as the maximum absolute row sum of the matrix. For a sparse matrix, you only need to calculate the sum for the non-zero elements in each row, so computing the infinity norm can be very efficient for a sparse matrix. The
  $l^{2}$ norm, on the other hand, is not so straightforward to calculate. For a matrix A, is the $l^{2}$ -norm is the square root of the maximum eigenvalue of $A^T  A$. Computing this generally involves performing Singular Value Decomposition (SVD)
