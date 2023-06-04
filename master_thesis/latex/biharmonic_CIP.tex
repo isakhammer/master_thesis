@@ -89,7 +89,17 @@ We can expand the second term in the following way.
 .\end{equation*}
 Hence, the boundary condition of $\Delta u$ is integrated into the formulation.  It can be denoted that $D^2$ is the Hessian matrix operator. Also remark that we apply the notation
 $( D^2u, D^2v )_{\Omega } = \int_{\Omega }^{} D^{2}u : D^2v  dx$ for the inner product $D^2u:D^2v$. We may also recall that the two times directional derivative is the identity $\partial _{nn} u = n \cdot  D^2 u \cdot  n$.
-Let $t_{i}$ for $i= 1,\ldots,d$  be the surface tangential vector basis for an facet in the set $\partial_{}T$.
+
+We want to decompose the evaluation of $\nabla  u $ on the boundary $\partial T$ in the tangential and normal direction. Pick a facet  $F \in \partial T$, then we define the following decomposition of linear transformation $\nabla u = P_{F}\nabla u  + Q_{F}  \nabla u  $ s.t. the
+orthogonality, $
+P_{F} \nabla u  \cdot Q_{F}  \nabla u = 0$, holds. The normal projection matrix is defined as $Q_{F}(x) = n \otimes n $ and the tangential decomposition follows from $ P_{F} = I - Q_{F} = I - n \otimes n  =  \sum_{i=1}^{d-1} t_{i} \otimes t_i$, which
+is a orthonormal basis $t_{i}$, $i = 1, \ldots, d-1$ for the space orthogonal to the outer normal vector $n$ on a facet $F$. Let $ a_{1}, a_{2}, a_{3} \in R^{d}$ be any vectors, then it is well known that the following identity holds $ ( a_{1} \otimes a_{2}  ) a_{3} = ( a_{2}\cdot  a_{3}) a_{1} $. Hence, we have \[
+    \begin{split}
+   P_{F} \nabla u & =  (n \cdot \nabla u)n \\
+   Q_{F} \nabla u & =   \nabla u  - (n \cdot \nabla u)n =  \sum_{ i =1 }^{d-1} ( t_{i}\cdot  \nabla u ) t_{i}
+    \end{split}
+\]
+
 Given that $u$ is evaluated only on $\partial T$ can we write
 $\nabla u = \left( \nabla u \cdot n \right) n + \sum_i^{d-1} \left( \nabla u \cdot t_i \right) t_i$ s.t.
 \[
