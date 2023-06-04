@@ -154,7 +154,12 @@ Where integration over all interior facets $ \forall F \in \mathcal{F}_{h}^{int}
             \int_{F}^{}
             \mean{ \partial _{n} \Delta  u } \underbrace{\jump{ v }}_{= 0}    + \underbrace{\jump{ \partial _{n} \Delta  u
             }}_{= 0}    \mean{ v } = 0 \\
-            (II) &  =     \left(\partial _{n^{+}t_{i}} u^{+}, \partial_{t_{i}} v^{+}
+            (II) &  =     \left(\partial _{n^{+}n^{+}} u^{+}, \partial_{n^{+}} v^{+} \right)_{F} +  \left(\partial _{n^{-}n^{-}} u^{-}, \partial_{n^{-}} v^{-} \right)_{F}    \\
+                 &= \int_{F}^{} \jump{ \partial _{nn} u \cdot  \partial_{n} v }   = \int_{F}^{}
+                       \mean{ \partial _{nn} u    } \underbrace{\jump{ \partial_{n} v }  }_{\neq 0}    + \underbrace{\jump{ \partial
+                               _{nn}  u
+                       }}_{= 0}    \mean{ \partial _{n}v } \\
+            (III) &  =     \left(\partial _{n^{+}t_{i}} u^{+}, \partial_{t_{i}} v^{+}
                 \right)_{F} +  \left(\partial _{n^{-}t_{i}} u^{-}, \partial_{t_{i}} v^{-}
                 \right)_{F}   \\
                  &  =   \int_{F}^{}
@@ -162,16 +167,10 @@ Where integration over all interior facets $ \forall F \in \mathcal{F}_{h}^{int}
                  \int_{F}^{}
                  \mean{ \partial _{nt_{i}} u    } \underbrace{\jump{ \partial_{t_{i}} v }  }_{= 0}    + \underbrace{\jump{ \partial
                          _{nt_{i}}  u
-                 }}_{= 0}    \mean{ \partial _{t_{i}}v }  = 0\\
-                 (III) &  =     \left(\partial _{n^{+}n^{+}} u^{+}, \partial_{n^{+}} v^{+} \right)_{F} +  \left(\partial _{n^{-}n^{-}} u^{-}, \partial_{n^{-}} v^{-} \right)_{F}    =    \int_{F}^{} \jump{ \partial _{nn} u \cdot  \partial_{n} v }  \\
-                       & = \int_{F}^{}
-                       \mean{ \partial _{nn} u    } \underbrace{\jump{ \partial_{n} v }  }_{\neq 0}    + \underbrace{\jump{ \partial
-                               _{nn}  u
-                       }}_{= 0}    \mean{ \partial _{n}v }
+                 }}_{= 0}    \mean{ \partial _{t_{i}}v }  = 0
                    \end{split}
 .\end{equation*}
-Observe that the cancellations in the term $(I)$ and term $(II)$  appears of the continuity of $v\in V $ and $u\in H^{4}( \Omega ) $ which makes the jumps and derivative jumps zero. However, The third term $(III)$  is fairly interesting since the discontinuity in
-normal vector for $v \in V$ is a jump, while the second term is still continuous. It can also be raised that $\mean{
+Observe that the cancellations in the term $(I)$ and term $(III)$  appears of the continuity of $v\in V $ and $u\in H^{4}( \Omega ) $ which makes the jumps and derivative jumps zero. On the other hand, the second term $(II)$  is does not vanish since the discontinuity in normal vector for $v \in V$ is a jump. It can also be raised that $\mean{
 \partial _{nn} u } = \partial _{nn} u  $ holds by the continuity of $H^{4}( \Omega  ) $. Hence, we have the following identity.
 
 \begin{equation}
