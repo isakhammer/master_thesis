@@ -1,6 +1,6 @@
 using Plots
 pgfplotsx()
-default_size = (600, 250)
+default_size = (300, 300)
 
 using CSV
 using YAML
@@ -28,23 +28,28 @@ end
 
 function generate_plots(data,path)
     hs = 2 ./ data.ns
-    # Initial plot with the first data series
-    p = Plots.plot(hs, data.el2s, label=L"\Vert e \Vert_{L^2}", size=default_size, legend=:outertopright, xscale=:log2, yscale=:log2, minorgrid=true)
-    Plots.scatter!(p, hs, data.el2s, primary=false)
 
-    # Add the second data series
-    Plots.plot!(p, hs, data.eh1s, label=L"\Vert e \Vert_{H^1}")
-    Plots.scatter!(p, hs, data.eh1s, primary=false)
+    # Set up an empty plot with the desired properties
+    p = Plots.plot(size=default_size, legend=:outertopright, xscale=:log2, yscale=:log2, minorgrid=true)
 
-    # Add the third data series
+    # Add the energy data series
     Plots.plot!(p, hs, data.ehs_energy, label=L"\Vert e \Vert_{a_{h,*}}")
     Plots.scatter!(p, hs, data.ehs_energy, primary=false)
 
+    # Add the L2 data series
+    Plots.plot!(p, hs, data.el2s, label=L"\Vert e \Vert_{L^2}")
+    Plots.scatter!(p, hs, data.el2s, primary=false)
+
+    # Add the H1 data series
+    Plots.plot!(p, hs, data.eh1s, label=L"\Vert e \Vert_{H^1}")
+    Plots.scatter!(p, hs, data.eh1s, primary=false)
+
 
     # Add the third data series
-    # C=100
-    # Plots.plot!(p, hs, C*hs.^1, label=L"Conv 1")
-    # Plots.plot!(p, hs, C*hs.^2, label=L"Conv 1")
+    hs_hat =  1 ./ ( 2 .^(1:11) )
+    println(hs_hat)
+    Plots.plot!(p, hs_hat, 300*hs_hat.^1, color="grey", label=L"Ch^1")
+    Plots.plot!(p, hs_hat, 100*hs_hat.^2, color="black", label=L"Ch^2")
 
     # Configs
     Plots.xlabel!(p, "h")

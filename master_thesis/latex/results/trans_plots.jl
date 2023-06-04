@@ -30,9 +30,9 @@ function translation_plot(sims::Vector{Simulation},dirname)
         label_text = L"(%$(γ), %$(γg1), %$( γg2)) "
 
         Plots.plot!(p1, sim.data.deltas, sim.data.cond_numbers, label=label_text, color=sim.color)
-        Plots.plot!(p2, sim.data.deltas, sim.data.el2s, label=label_text, color=sim.color, linestyle=:solid)
-        Plots.plot!(p2, sim.data.deltas, sim.data.eh1s, label=nothing, color=sim.color, linestyle=:dash)
         Plots.plot!(p2, sim.data.deltas, sim.data.ehs_energy, label=nothing, color=sim.color, linestyle=:dot)
+        Plots.plot!(p2, sim.data.deltas, sim.data.eh1s, label=nothing, color=sim.color, linestyle=:dash)
+        Plots.plot!(p2, sim.data.deltas, sim.data.el2s, label=label_text, color=sim.color, linestyle=:solid)
 
     end
 
