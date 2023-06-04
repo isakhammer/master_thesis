@@ -199,11 +199,11 @@ We did the following convergence tests.
 
 \begin{figure}[h!]
 \centering
-\subfloat[Hessian]{\input{results/eoc-test/eoc-hessian-circle-L-2.7-gamma0-20-gamma1-10-gamma2-1/conv-plot.tex}}
+\subfloat[Hessian]{\input{results/eoc-test/eoc-hessian-circle/conv-plot.tex}}
 
 \bigskip
 
-\subfloat[Laplace]{\input{results/eoc-test/eoc-laplace-circle-L-2.7-gamma0-20-gamma1-10-gamma2-1/conv-plot.tex}}
+\subfloat[Laplace]{\input{results/eoc-test/eoc-laplace-circle/conv-plot.tex}}
 
 \caption{ Convergence plots for the Hessian and the Laplacian method applied to the circular domain with side length $L=2.7$, using parameters $\gamma=20$, $\gamma_1=10$ and $\gamma_2=1$.}
 \label{fig:conv_hes_lap}
@@ -214,39 +214,27 @@ We did the following convergence tests.
 \begin{table}
 \begin{minipage}{1.0\textwidth}
     \centering
-    \subfloat[Hessian]{\input{results/eoc-test/eoc-hessian-circle-L-2.7-gamma0-20-gamma1-10-gamma2-1/conv-table.tex}}
+    \subfloat[Hessian]{\input{results/eoc-test/eoc-hessian-circle/conv-table.tex}}
 \end{minipage}%
 
 % You may include a third table below, or comment/delete the \bigskip and third minipage block if you don't need it.
 \bigskip
 \begin{minipage}{1.0\textwidth}
     \centering
-    \subfloat[Laplace]{\input{results/eoc-test/eoc-laplace-circle-L-2.7-gamma0-20-gamma1-10-gamma2-1/conv-table.tex}}
+    \subfloat[Laplace]{\input{results/eoc-test/eoc-laplace-circle/conv-table.tex}}
 \end{minipage}
 \caption{EOC results for the Hessian and the Laplacian method applied to the circular domain with side length $L=2.7$, using parameters $\gamma=20$, $\gamma_1=10$ and $\gamma_2=1$.}
 \label{tab:conv_hes_lap}
 \end{table}
 
 
-\begin{table} \input{results/eoc-test/eoc-laplace-flower-L-2.7-gamma0-20-gamma1-10-gamma2-1/conv-table.tex}
+\begin{table} \input{results/eoc-test/eoc-laplace-flower/conv-table.tex}
 \caption{Convergence rates for the Laplacian-based method applied to the Flower domain with side length $L=2.7$, using parameters $\gamma=20$, $\gamma_1=10$, and $\gamma_2=1$}
 \end{table}
 \begin{figure}
-\input{results/eoc-test/eoc-laplace-flower-L-2.7-gamma0-20-gamma1-10-gamma2-1/conv-plot.tex}
+\input{results/eoc-test/eoc-laplace-flower/conv-plot.tex}
 \caption{Convergence rates for the Laplacian-based method applied to the Flower domain with side length $L=2.7$, using parameters $\gamma=20$, $\gamma_1=10$, and $\gamma_2=1$}
 \end{figure}
-
-% Here we consider the manufactured solution $l,r,m = (2, 1, 1) $ s.t.
-% \[
-% u_{\text{ex}}(x,y) = \sin\left(\frac{2\pi m}{l}x_1\right)\cos\left(\frac{2\pi r}{l}y\right)
-% \]
-% on the flower domain for the Laplace equation. Here is the flower domain described as
-%  Recall the polar coordinates $r = \sqrt{x^2 + y^2}$ and $\theta = atan( x,y) $. Then we define the flower level set function $\phi$ to be on the form
-%  \begin{equation}
-%  \label{eq:flower}
-% \phi(x, y) = r_0 + r_1  cos(5 \theta) - r = 0
-%  \end{equation}
-Here we define the parameters $r_0= 0.3L$ and $ r_1=0.1L$.
 
 \subsubsection{Translation test}%
 \label{ssub:translation_test}
@@ -291,11 +279,11 @@ Here we have the translation test $\delta $ from $0$ to $2 \sqrt{2}h $.
 \centering
 
 \subfloat[]{%
-\input{"results/translation-test/hessian-n-16-it-500-L-2.7/translation-cond.tex"}
+\input{"results/translation-test/hessian_no_penalty/translation-cond.tex"}
 }
 
 \subfloat[]{%
-\input{"results/translation-test/hessian-n-16-it-500-L-2.7/translation-error.tex"}
+\input{"results/translation-test/hessian_no_penalty/translation-error.tex"}
 }
 
 
@@ -307,11 +295,11 @@ Here we have the translation test $\delta $ from $0$ to $2 \sqrt{2}h $.
 \centering
 
 \subfloat[]{%
-\input{"results/translation-test/laplace-n-16-it-500-L-2.7/translation-cond.tex"}
+\input{"results/translation-test/laplace_no_penalty/translation-cond.tex"}
 }
 
 \subfloat[]{%
-\input{"results/translation-test/laplace-n-16-it-500-L-2.7/translation-error.tex"}
+\input{"results/translation-test/laplace_no_penalty/translation-error.tex"}
 }
 
 
