@@ -161,7 +161,14 @@ Also recall the definition of the matrix norm, \[
 Assume that $A $ is invertible, then we define the condition number for a matrix in $l^{p}  $ norm defined s.t., \[
 \kappa_{p} ( A) = \| A  \|_{ p }^{  } \| A ^{-1} \|_{ p }  .
 \]
-Because of the connection of $l^{2}$ norms of a matrix and its eigenvalues is $k_{2}( A) $ preferred in general numerical analysis. However, from linear algebra is a well known result that $ \| A \|_{ \infty }^{  }  \le \| A \|_{2  }^{  } \le \sqrt{N}  \| A \|_{\infty  }^{  }  $, hence, we can bound the condition number applying the $l^{\infty}$ norm,
+Because of the connection of $l^{2}$ norms of a matrix and its eigenvalues is $k_{2}( A) $ preferred in most cases numerical analysis. However, from linear algebra is a well known result that $ \| A \|_{ \infty }^{  }  \le \| A \|_{2  }^{  } \le
+\sqrt{N}  \| A \|_{\infty  }^{  }  $ \footnote{
+    The identity naturally appears from the standard inequality $\| v \|_{ \infty }^{  } \le  \| v \|_{\infty  }^{  } \le \sqrt{N}  \| v \|_{ \infty }^{  }   $ for $v \in R^{N}$, which simply comes from the fact that  $ \| v \|_{\infty  }^{ 2 } = \max_{i} \abs{ v_{i} }^{2} \le \sum_{i}^{n}   \abs{ v_{i} }^{2} = \| v \|_{ 2 }^{2  } \le N      \max_{i} \abs{ v_{i} }^{2} = N \| v \|_{
+    \infty}^{ 2 }$. Now let $A\in \mathbb{R} ^{N \times N}$ be any matrix. We can then deduce that $ \| A \|_{ 2 }^{  } = \max_{v \in \mathbb{R} ^{N}} \frac{\| Av \|_{2  }^{  }}{\| v \|_{ 2 }^{  } } \ge \max_{v \in \mathbb{R} ^{N}}
+    \frac{\| Av \|_{ \infty  }^{  }}{ \sqrt{N} \| v \|_{ \infty}^{  } } = \frac{1}{ \sqrt{N} } \| A \|_{ \infty }^{  }    $ and $ \| A \|_{ 2 }^{  } = \max_{v \in \mathbb{R} ^{N}} \frac{\| Av \|_{2  }^{  }}{\| v \|_{ 2 }^{  } } \le  \max_{v \in \mathbb{R} ^{N}}
+    \frac{\sqrt{N} \| Av \|_{ \infty  }^{  }}{  \| v \|_{ \infty}^{  } } =  \sqrt{N} \| A \|_{ \infty }^{  }    $. Hence, the identity is proven.
+
+}, hence, we can bound the condition number applying the $l^{\infty}$ norm,
 \[
 \kappa_{\infty} ( A) \le  \kappa_{2} ( A) \le N \kappa _{\infty}(A)    .
 \]
