@@ -88,17 +88,19 @@ We can expand the second term in the following way.
     \end{split}
 .\end{equation*}
 Hence, the boundary condition of $\Delta u$ is integrated into the formulation.  It can be denoted that $D^2$ is the Hessian matrix operator. Also remark that we apply the notation
-$( D^2u, D^2v )_{\Omega } = \int_{\Omega }^{} D^{2}u : D^2v  dx$ for the inner product $D^2u:D^2v$. We may also recall that the two times directional derivative is the identity $\partial _{nn} u = n \cdot  D^2 u \cdot  n$.
+$( D^2u, D^2v )_{\Omega } = \int_{\Omega }^{} D^{2}u : D^2v  dx$ for the inner product $D^2u:D^2v$.
 
 We want to decompose the evaluation of $\nabla  u $ on the boundary $\partial T$ in the tangential and normal direction. Pick a facet  $F \in \partial T$, then we define the following decomposition of linear transformation $\nabla u = P_{F}\nabla u  + Q_{F}  \nabla u  $ s.t. the
 orthogonality, $
 P_{F} \nabla u  \cdot Q_{F}  \nabla u = 0$, holds. The normal projection matrix is defined as $Q_{F}(x) = n \otimes n $ and the tangential decomposition follows from $ P_{F} = I - Q_{F} = I - n \otimes n  =  \sum_{i=1}^{d-1} t_{i} \otimes t_i$, which
-is a orthonormal basis $t_{i}$, $i = 1, \ldots, d-1$ for the space orthogonal to the outer normal vector $n$ on a facet $F$. Let $ a_{1}, a_{2}, a_{3} \in R^{d}$ be any vectors, then it is well known that the following identity holds $ ( a_{1} \otimes a_{2}  ) a_{3} = ( a_{2}\cdot  a_{3}) a_{1} $. Hence, we have \[
+is a orthonormal basis $t_{i}$, $i = 1, \ldots, d-1$ for the space orthogonal to the outer normal vector $n$ on a facet $F$. Let $ a_{1}, a_{2}, a_{3} \in R^{d}$ be any vectors, then it is well known that the following identity holds $ ( a_{1} \otimes a_{2}  ) a_{3} = ( a_{2}\cdot  a_{3}) a_{1} $. Hence, we have
+\begin{equation}
+\label{eq:projection}
     \begin{split}
    P_{F} \nabla u & =  (n \cdot \nabla u)n \\
    Q_{F} \nabla u & =   \nabla u  - (n \cdot \nabla u)n =  \sum_{ i =1 }^{d-1} ( t_{i}\cdot  \nabla u ) t_{i}
     \end{split}
-\]
+\end{equation}
 
 Given that $u$ is evaluated only on $\partial T$ can we write
 $\nabla u = \left( \nabla u \cdot n \right) n + \sum_i^{d-1} \left( \nabla u \cdot t_i \right) t_i$ s.t.
@@ -108,13 +110,14 @@ $\nabla u = \left( \nabla u \cdot n \right) n + \sum_i^{d-1} \left( \nabla u \cd
 & =  ( \partial _{nn} u ), \partial _{n} v  )_{\partial T}+\sum_{i=1}^{d-1} ( \partial _{n t_{i}}u , \partial _{t_{i}} v  )_{\partial T}
     \end{split}
 \]
-Here we used that $n^{T}\cdot n = 1$ and $t_{i}^{T} \cdot t_{i} = 1 \ \forall i$, which holds since every facet in $\partial T$ is flat.
+Here we used that $n^{T}\cdot n = 1$ and $t_{i}^{T} \cdot t_{i} = 1 \ \forall i$.
 We applied the simple relation,
     \begin{align*}
 \partial_n (\partial_n u)  & = \nabla (\partial_n u) \cdot n = (D^2 u \cdot n) \cdot n = n^{T} D^2 u \ n = \partial _{nn} u, \\
-\partial_n (\partial_{t_{i}} u)  & = \nabla (\partial_n u) \cdot t_{i} = (D^2 u \cdot t_i) \cdot n = n^{T} D^2 u \ t_{i} = \partial _{nt_{i}} u.
+\partial_n (\partial_{t_{i}} u)  & = \nabla (\partial_n u) \cdot t_{i} = (D^2 u \cdot t_i) \cdot n = n^{T} D^2 u \ t_{i} = \partial _{t_{i}n} u.
     \end{align*}
-Adding all these calculations together we have the following identity,
+We may also deduce the relationship $\partial _{nt_{i}} u = \partial _{t_{i}n}u$ which arise from the fact that $n^{T} D^2u \ t_{i} = ( n^{T} D^2u \ v )^T = t_{i}^{T}  D^2u \  n$, where we utilized the symmetry $D^2u = ( D^2u) ^{T} $.
+Adding all these calculations together we have the following local identity,
 \[
 ( \Delta ^2 u, v) _{T}   = ( D^2 u, D^2v)_{T } + ( \partial _{n}  \Delta u, v )_{\partial T} -( \partial _{n} ( \partial_{n}u ), \partial _{n} v  )_{\partial T}-\sum_{i=1}^{d-1} ( \partial _{n} ( \partial_{t_{i}}u ), \partial _{t_{i}} v  )_{\partial T}
 \]
@@ -125,20 +128,21 @@ For global continuity we add all the triangles in the mesh $\mathcal{T} _{h}$.
 \label{eq:bi_basic_dg2}
 \left( \Delta  ^{2} u,v \right) _{\Omega } = \sum_{T \in  \mathcal{T} _{h}}^{}  ( D^2 u, D^2v)_{T } + ( \partial _{n}  \Delta u, v )_{\partial T} -( \partial _{n} ( \partial_{n}u ), \partial _{n} v  )_{\partial T}-\sum_{i=1}^{d-1} ( \partial _{n t_{i}} u , \partial _{t_{i}} v  )_{\partial T}
 \end{equation}
-However, by integrating over exterior facets $\mathcal{F} _{h}^{ext}$ and interior facets $\mathcal{F} _{h}^{int}$ we will get e more suitable formulation which makes it easier to penalize discontinuities.
+Our goal is to simplify the equation above so we can take account for discontinuities of the derivatives.
+By integrating over exterior facets $\mathcal{F} _{h}^{ext}$ and interior facets $\mathcal{F} _{h}^{int}$ we will get e more suitable formulation which makes it easier to control the jumps between the elements, hence makes it possible to penalize discontinuities.
 
 \begin{equation*}
     \begin{split}
- ( \Delta  ^{2} u,v ) _{\Omega }  =&\sum_{T\in \mathcal{T} _{h}}^{} ( D^2u,D^2v ) _{T }  + (\partial _{n} \Delta  u,v)_{\partial T} - (\partial _{nn} u, \partial _{n}v )_{\partial T}  - \sum_{i=1}^{d-1} ( \partial _{nt_{i}}u , \partial _{t_{i}} v  )_{\partial T}   \\
-= &\sum_{T\in \mathcal{T} _{h}}^{} ( D^2u,D^2v ) _{T }  + \sum_{F \in \mathcal{F}_{h}^{ext} }^{}  (\partial _{n} \Delta  u,v)_{F} - (\partial _{nn} u, \partial _{n}v )_{F}  - \sum_{i=1}^{d-1} \underbrace{( \partial _{n t_{i}} u , \partial _{t_{i}} v
-)_{F}}_{ \red{= 0 ???}}     \\
+ ( \Delta  ^{2} u,v ) _{\Omega }  =&\sum_{T\in \mathcal{T} _{h}}^{} ( D^2u,D^2v ) _{T }  + (\partial _{n} \Delta  u,v)_{\partial T} - (\partial _{nn} u, \partial _{n}v )_{\partial T}  - \sum_{i=1}^{d-1} ( \partial _{t_{i}n}u , \partial _{t_{i}} v  )_{\partial T}   \\
+= &\sum_{T\in \mathcal{T} _{h}}^{} ( D^2u,D^2v ) _{T }  + \sum_{F \in \mathcal{F}_{h}^{ext} }^{}  (\partial _{n} \Delta  u,v)_{F} - (\partial _{nn} u, \partial _{n}v )_{F}  - \sum_{i=1}^{d-1} ( \underbrace{\partial _{ t_{i}n} u }_{  \partial_{ t_{i} } g_{1},  }, \partial _{t_{i}} v
+)_{F}     \\
    &  + \sum_{F \in \mathcal{F} _{h}^{int}}^{} \underbrace{\left( (\partial _{n^{+}} \Delta  u^{+}
         ,v^{+} )_{F}
 + \left(\partial _{n^{-}} \Delta  u^{+} ,v^{-}\right)_{F}  \right)}_{(I)}    \\
     &\quad \quad  +
 \underbrace{\left( \left(\partial _{n^{+}n^{+}} u^{+}, v^{+} \right) _{F} + \left(\partial _{n^{-}n^{-}} u^{-}, v^{-}
 \right) _{F} \right) }_{(II)} \\
-   &  \quad \quad + \sum_{i=1}^{d-1}\underbrace{( (\partial _{n^{+}t_{i}} u^{+}, \partial_{t_{i}} v^{+} )_{F} +  \left(\partial _{n^{-}t_{i}} u^{-},
+   &  \quad \quad - \sum_{i=1}^{d-1}\underbrace{( (\partial _{n^{+}t_{i}} u^{+}, \partial_{t_{i}} v^{+} )_{F} +  \left(\partial _{n^{-}t_{i}} u^{-},
         \partial_{t_{i}} v^{-}
 \right)_{F} ) }_{(III)} \\
     \end{split}
@@ -171,8 +175,15 @@ Where integration over all interior facets $ \forall F \in \mathcal{F}_{h}^{int}
                    \end{split}
 .\end{equation*}
 Observe that the cancellations in the term $(I)$ and term $(III)$  appears of the continuity of $v\in V $ and $u\in H^{4}( \Omega ) $ which makes the jumps and derivative jumps zero. On the other hand, the second term $(II)$  is does not vanish since the discontinuity in normal vector for $v \in V$ is a jump. It can also be raised that $\mean{
-\partial _{nn} u } = \partial _{nn} u  $ holds by the continuity of $H^{4}( \Omega  ) $. Hence, we have the following identity.
-
+\partial _{nn} u } = \partial _{nn} u  $ holds by the continuity of $H^{4}( \Omega  ) $.
+Remark that we can simplify the exterior boundary integral term by first adding $t_{i}t_{i}^{T}=1$ and then apply \eqref{eq:projection},
+\[
+    \begin{split}
+\sum_{{i} =1}^{d-1} (\partial _{t_{i}} g_{1} , \partial _{t_{i}} v )_{F } & =\sum_{{i} =1}^{d-1} ( t_{i}^{T} \nabla  g_{1} \ t_{i} , t_{i}^{T} \nabla  v \ t_{i} )_{F } \\
+                                                                          & = ( (I - n  \otimes n ) \nabla _{} g_{1}  , (I - n  \otimes n ) \nabla  v  )_{F },  \quad F \in \mathcal{F} ^{ext}_{h}
+    \end{split}
+\]
+Hence, we have the following identity.
 \begin{equation}
 \label{eq:bi_basic_dg_full_1}
 \begin{split}
@@ -180,6 +191,10 @@ Observe that the cancellations in the term $(I)$ and term $(III)$  appears of th
   +  ( \mean{ \partial _{nn} u }   , \jump{ \partial_{n} v } )_{\mathcal{F}_{h} }
 \end{split}
 \end{equation}
+
+
+
+
 
 
 We will now assemble the Hessian CIP formulation. Assume $u,v \in V_{h}$, then we have the linear form
