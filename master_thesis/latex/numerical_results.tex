@@ -172,14 +172,22 @@ Thus, since these norms are equivalent will we in this report focus on $ \kappa_
  or power iteration, which can be quite expensive operations, particularly for large matrices.
 \end{remark}
 
+We did the following convergence tests.
 \begin{itemize}
     \item \textbf{Convergence on Circe domain}
-        First we consider the manufactured solution $l,r,m = (2, 1, 1) $ s.t.
+        First we consider the manufactured solution s.t.
         \[
-            u(x,y) = (x^2- y^2 -1) \sin\left(\frac{2\pi m}{l}x\right)\cos\left(\frac{2\pi r}{l}y\right)
+            u(x,y) = (x^2+ y^2 -1) \sin\left( \pi x \right)\cos\left(\pi y\right)
         \]
-        on the circular domain. The result can be shown on the in Figure \ref{fig:conv_hes_lap} and Table \ref{tab:conv_hes_lap}.
-    \item \textbf{Convergence on Circe domain}
+        The result can be shown on the in Figure \ref{fig:conv_hes_lap} and Table \ref{tab:conv_hes_lap}. Here we observe that for we get optimal convergence for $\| \cdot  \|_{a_{h},*  }^{  } $ and the $ \| \cdot  \|_{L^{2}( \Omega )   }^{  } $
+        norm.
+    \item \textbf{Convergence on flower domain}
+        First we consider the manufactured solution s.t.
+        \[
+            u(x,y) = (x^2+ y^2 -1) \sin\left( \pi x \right)\cos\left(\pi y\right)
+        \]
+        The result can be shown on the in Figure \ref{fig:conv_hes_lap} and Table \ref{tab:conv_hes_lap}. Here we observe that for we get optimal convergence for $\| \cdot  \|_{a_{h},*  }^{  } $ and the $ \| \cdot  \|_{L^{2}( \Omega )   }^{  } $
+        norm.
 \end{itemize}
 
 \begin{figure}[h!]
