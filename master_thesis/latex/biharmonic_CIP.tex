@@ -114,8 +114,8 @@ $\nabla u = \left( n^{T} \nabla u   \right) n + \sum_i^{d-1} \left( t_i^{T} \nab
 Here we used that $n^{T} n = 1$ and $t_{i}^{T} t_{i} = 1$.
 We applied the simple relation,
     \begin{align*}
-\partial_n (\partial_n u)  & = \nabla (\partial_n u) \cdot n = (D^2 u \cdot n) \cdot n = n^{T} D^2 u \ n = \partial _{nn} u, \\
-\partial_n (\partial_{t_{i}} u)  & = \nabla (\partial_n u) \cdot t_{i} = (D^2 u \cdot t_i) \cdot n = n^{T} D^2 u \ t_{i} = \partial _{t_{i}n} u.
+\partial_n (\partial_n u)  & = n^T \nabla (\partial_n u)  = n ^T (D^2 u \ n)  = n^{T} D^2 u \ n = \partial _{nn} u, \\
+\partial_n (\partial_{t_{i}} u)  & = t_{i}^T \nabla (\partial_n u)  = t_i^T (D^2 u \ n )   = n^{T} D^2 u \ t_{i} = \partial _{n t_{i}} u.
     \end{align*}
 We may also deduce the relationship $\partial _{nt_{i}} u = \partial _{t_{i}n}u$ which arise from the fact that $n^{T} D^2u \ t_{i} = ( n^{T} D^2u \ v )^T = t_{i}^{T}  D^2u \  n$, where we utilized the symmetry $D^2u = ( D^2u) ^{T} $.
 Adding all these calculations together we have the following local identity,
@@ -135,7 +135,7 @@ By integrating over exterior facets $\mathcal{F} _{h}^{ext}$ and interior facets
 \begin{equation*}
     \begin{split}
  ( \Delta  ^{2} u,v ) _{\Omega }  =&\sum_{T\in \mathcal{T} _{h}}^{} ( D^2u,D^2v ) _{T }  + (\partial _{n} \Delta  u,v)_{\partial T} - (\partial _{nn} u, \partial _{n}v )_{\partial T}  - \sum_{i=1}^{d-1} ( \partial _{t_{i}n}u , \partial _{t_{i}} v  )_{\partial T}   \\
-= &\sum_{T\in \mathcal{T} _{h}}^{} ( D^2u,D^2v ) _{T }  + \sum_{F \in \mathcal{F}_{h}^{ext} }^{}  (\partial _{n} \Delta  u,v)_{F} - (\partial _{nn} u, \partial _{n}v )_{F}  - \sum_{i=1}^{d-1} ( \underbrace{\partial _{ t_{i}n} u }_{  \partial_{ t_{i} } g_{1},  }, \partial _{t_{i}} v
+= &\sum_{T\in \mathcal{T} _{h}}^{} ( D^2u,D^2v ) _{T }  + \sum_{F \in \mathcal{F}_{h}^{ext} }^{}  (\partial _{n} \Delta  u,v)_{F} - (\underbrace{\partial _{nn} u}_{ \partial _{n} g_{1}} , \partial _{n}v )_{F}  - \sum_{i=1}^{d-1} ( \underbrace{\partial _{ t_{i}n} u }_{  \partial_{ t_{i} } g_{1},  }, \partial _{t_{i}} v
 )_{F}     \\
    &  + \sum_{F \in \mathcal{F} _{h}^{int}}^{} \underbrace{\left( (\partial _{n^{+}} \Delta  u^{+}
         ,v^{+} )_{F}
@@ -177,24 +177,27 @@ Where integration over all interior facets $ \forall F \in \mathcal{F}_{h}^{int}
 .\end{equation*}
 Observe that the cancellations in the term $(I)$ and term $(III)$  appears of the continuity of $v\in V $ and $u\in H^{4}( \Omega ) $ which makes the jumps and derivative jumps zero. On the other hand, the second term $(II)$  is does not vanish since the discontinuity in normal vector for $v \in V$ is a jump. It can also be raised that $\mean{
 \partial _{nn} u } = \partial _{nn} u  $ holds by the continuity of $H^{4}( \Omega  ) $.
-Remark that we can simplify the exterior boundary integral term for each $F \in \mathcal{F} ^{ext}_{h}$ by first adding $t_{i}t_{i}^{T}=1$ and then apply \eqref{eq:projection},
-\[
-    \begin{split}
-\sum_{{i} =1}^{d-1} (\partial _{t_{i}} g_{1} , \partial _{t_{i}} v )_{F } & =\sum_{{i} =1}^{d-1} ( t_{i}^{T} \nabla  g_{1} \ t_{i} , t_{i}^{T} \nabla  v \ t_{i} )_{F } \\
-                                                                          & = ( (I - n  \otimes n ) \nabla _{} g_{1}  , (I - n  \otimes n ) \nabla  v  )_{F }
-    \end{split}
-\]
+
+% \red{
+% Remark that we can simplify the exterior boundary integral terms for each $F \in \mathcal{F} ^{ext}_{h}$ using $t_{i}t_{i}^{T}=1$ and $ n^{T} n = 1$, then apply \eqref{eq:projection}},
+% \[
+% \red{
+%     \begin{split}
+% ( \partial _{n} g_{1}, \partial _{n} v)_{F} + \sum_{{i} =1}^{d-1} (\partial _{t_{i}} g_{1} , \partial _{t_{i}} v )_{F } & =( n^{T} \nabla  g_{1}n , n^{T}\nabla  v n)_{F} + \sum_{{i} =1}^{d-1} ( t_{i}^{T} \nabla  g_{1} \ t_{i} , t_{i}^{T} \nabla  v \ t_{i} )_{F } \\
+%                                                                           & = ( (I - n  \otimes n ) \nabla _{} g_{1}  , (I - n  \otimes n ) \nabla  v  )_{F }
+%     \end{split}
+% }
+% \]
 Hence, we have the following identity.
 \begin{equation}
 \label{eq:bi_basic_dg_full_1}
+\red{
 \begin{split}
-\left( \Delta  ^{2} u, v \right) _{\Omega }  =&   \left( D^2u, D^2v \right)_{\mathcal{T} _{h}} +  \left(g_{2}, v  \right) _{\mathcal{F}^{ext}_{h} }  -  ( \mean{ \partial _{nn} u }   , \jump{ \partial_{n} v } )_{\mathcal{F}_{h} }\\ & -( (I - n  \otimes n ) \nabla _{} g_{1}  , (I - n  \otimes n ) \nabla  v  )_{ \mathcal{F}^{ext} _{h}  }
+    \left( \Delta  ^{2} u, v \right) _{\Omega }  =&   \left( D^2u, D^2v \right)_{\mathcal{T} _{h}} +  \left(g_{2}, v  \right) _{\mathcal{F}^{ext}_{h} }  -  ( \mean{ \partial _{nn} u }   , \jump{ \partial_{n} v } )_{\mathcal{F}_{h}^{int} } \\
+                                                  & - ( \partial _{n} g_{1} , \partial _{n} v)_{\mathcal{F}^{ext}_{h} } - \sum_{i =1  }^{d-1} ( \partial   _{t_{i}} g_{1}  ,  \partial   _{t_{i}}  v  )_{ \mathcal{F}^{ext} _{h}  }
 \end{split}
+}
 \end{equation}
-
-
-
-
 
 
 We will now assemble the Hessian CIP formulation. Assume $u,v \in V_{h}$, then we have the linear form
