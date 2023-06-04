@@ -129,17 +129,18 @@ However, by integrating over exterior facets $\mathcal{F} _{h}^{ext}$ and interi
 
 \begin{equation*}
     \begin{split}
- ( \Delta  ^{2} u,v ) _{\Omega } & =\sum_{T\in \mathcal{T} _{h}}^{} ( D^2u,D^2v ) _{T } + (\partial _{n} \Delta  u,v)_{\partial T} - (\partial _{nn} u, \partial _{n}v )_{\partial T}  - \sum_{i=1}^{d-1} ( \partial _{nt_{i}}u , \partial _{t_{i}} v  )_{\partial T}   \\
-&= \sum_{T\in \mathcal{T} _{h}}^{} ( D^2u,D^2v ) _{T }  + \sum_{F \in \mathcal{F}_{h}^{ext} }^{}  (\partial _{n} \Delta  u,v)_{F} - (\partial _{nn} u, \partial _{n}v )_{F}  - \sum_{i=1}^{d-1} \underbrace{( \partial _{n t_{i}} u , \partial _{t_{i}} v
+ ( \Delta  ^{2} u,v ) _{\Omega }  =&\sum_{T\in \mathcal{T} _{h}}^{} ( D^2u,D^2v ) _{T }  + (\partial _{n} \Delta  u,v)_{\partial T} - (\partial _{nn} u, \partial _{n}v )_{\partial T}  - \sum_{i=1}^{d-1} ( \partial _{nt_{i}}u , \partial _{t_{i}} v  )_{\partial T}   \\
+= &\sum_{T\in \mathcal{T} _{h}}^{} ( D^2u,D^2v ) _{T }  + \sum_{F \in \mathcal{F}_{h}^{ext} }^{}  (\partial _{n} \Delta  u,v)_{F} - (\partial _{nn} u, \partial _{n}v )_{F}  - \sum_{i=1}^{d-1} \underbrace{( \partial _{n t_{i}} u , \partial _{t_{i}} v
 )_{F}}_{ \red{= 0 ???}}     \\
- \quad  &+ \sum_{F \in \mathcal{F} _{h}^{int}}^{} \underbrace{\left( (\partial _{n^{+}} \Delta  u^{+}
+   &  + \sum_{F \in \mathcal{F} _{h}^{int}}^{} \underbrace{\left( (\partial _{n^{+}} \Delta  u^{+}
         ,v^{+} )_{F}
-+ \left(\partial _{n^{-}} \Delta  u^{+} ,v^{-}\right)_{F}  \right)}_{(I)}   + \sum_{i=1}^{d-1}\underbrace{( (\partial _{n^{+}t_{i}} u^{+}, \partial_{t_{i}} v^{+} )_{F} +  \left(\partial _{n^{-}t_{i}} u^{-},
-        \partial_{t_{i}} v^{-}
-\right)_{F} ) }_{(II)} \\
-  &\quad \quad \quad  \quad  +
++ \left(\partial _{n^{-}} \Delta  u^{+} ,v^{-}\right)_{F}  \right)}_{(I)}    \\
+    &\quad \quad  +
 \underbrace{\left( \left(\partial _{n^{+}n^{+}} u^{+}, v^{+} \right) _{F} + \left(\partial _{n^{-}n^{-}} u^{-}, v^{-}
-\right) _{F} \right) }_{(III)}
+\right) _{F} \right) }_{(II)} \\
+   &  \quad \quad + \sum_{i=1}^{d-1}\underbrace{( (\partial _{n^{+}t_{i}} u^{+}, \partial_{t_{i}} v^{+} )_{F} +  \left(\partial _{n^{-}t_{i}} u^{-},
+        \partial_{t_{i}} v^{-}
+\right)_{F} ) }_{(III)} \\
     \end{split}
 .\end{equation*}
 
@@ -148,25 +149,26 @@ Where integration over all interior facets $ \forall F \in \mathcal{F}_{h}^{int}
     \begin{split}
         (I) &  =    \left(\partial _{n^{+}} \Delta  u^{+} ,v^{+}\right)_{F} +
         \left(\partial _{n^{-}} \Delta  u^{-} ,v^{-}\right)_{F}  \\
-        & =   \int_{F}^{}
-        \jump{ \partial _{n} \Delta  u \cdot v } =
-         \int_{F}^{}
-         \mean{ \partial _{n} \Delta  u } \underbrace{\jump{ v }}_{= 0}    + \underbrace{\jump{ \partial _{n} \Delta  u
-         }}_{= 0}    \mean{ v } = 0 \\
-        (II) &  =     \left(\partial _{n^{+}t_{i}} u^{+}, \partial_{t_{i}} v^{+}
-        \right)_{F} +  \left(\partial _{n^{-}t_{i}} u^{-}, \partial_{t_{i}} v^{-}
-\right)_{F}   \\
-&  =   \int_{F}^{}
-        \jump{ \partial _{nt_{i}} u \cdot  \partial_{t_{i}} v } =
-         \int_{F}^{}
-         \mean{ \partial _{nt_{i}} u    } \underbrace{\jump{ \partial_{t_{i}} v }  }_{= 0}    + \underbrace{\jump{ \partial
-                 _{nt_{i}}  u
-         }}_{= 0}    \mean{ \partial _{t_{i}}v }  = 0\\
-        (III) &  =     \left(\partial _{n^{+}n^{+}} u^{+}, \partial_{n^{+}} v^{+} \right)_{F} +  \left(\partial _{n^{-}n^{-}} u^{-}, \partial_{n^{-}} v^{-} \right)_{F}    =    \int_{F}^{} \jump{ \partial _{nn} u \cdot  \partial_{n} v }  \\
-        & = \int_{F}^{}
-        \mean{ \partial _{nn} u    } \underbrace{\jump{ \partial_{n} v }  }_{\neq 0}    + \underbrace{\jump{ \partial
-                 _{nn}  u
-         }}_{= 0}    \mean{ \partial _{n}v }     \end{split}
+            & =   \int_{F}^{}
+            \jump{ \partial _{n} \Delta  u \cdot v } =
+            \int_{F}^{}
+            \mean{ \partial _{n} \Delta  u } \underbrace{\jump{ v }}_{= 0}    + \underbrace{\jump{ \partial _{n} \Delta  u
+            }}_{= 0}    \mean{ v } = 0 \\
+            (II) &  =     \left(\partial _{n^{+}t_{i}} u^{+}, \partial_{t_{i}} v^{+}
+                \right)_{F} +  \left(\partial _{n^{-}t_{i}} u^{-}, \partial_{t_{i}} v^{-}
+                \right)_{F}   \\
+                 &  =   \int_{F}^{}
+                 \jump{ \partial _{nt_{i}} u \cdot  \partial_{t_{i}} v } =
+                 \int_{F}^{}
+                 \mean{ \partial _{nt_{i}} u    } \underbrace{\jump{ \partial_{t_{i}} v }  }_{= 0}    + \underbrace{\jump{ \partial
+                         _{nt_{i}}  u
+                 }}_{= 0}    \mean{ \partial _{t_{i}}v }  = 0\\
+                 (III) &  =     \left(\partial _{n^{+}n^{+}} u^{+}, \partial_{n^{+}} v^{+} \right)_{F} +  \left(\partial _{n^{-}n^{-}} u^{-}, \partial_{n^{-}} v^{-} \right)_{F}    =    \int_{F}^{} \jump{ \partial _{nn} u \cdot  \partial_{n} v }  \\
+                       & = \int_{F}^{}
+                       \mean{ \partial _{nn} u    } \underbrace{\jump{ \partial_{n} v }  }_{\neq 0}    + \underbrace{\jump{ \partial
+                               _{nn}  u
+                       }}_{= 0}    \mean{ \partial _{n}v }
+                   \end{split}
 .\end{equation*}
 Observe that the cancellations in the term $(I)$ and term $(II)$  appears of the continuity of $v\in V $ and $u\in H^{4}( \Omega ) $ which makes the jumps and derivative jumps zero. However, The third term $(III)$  is fairly interesting since the discontinuity in
 normal vector for $v \in V$ is a jump, while the second term is still continuous. It can also be raised that $\mean{
