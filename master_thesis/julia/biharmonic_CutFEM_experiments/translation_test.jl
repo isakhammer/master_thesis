@@ -146,7 +146,7 @@ module TranslationTest
 end
 
 function main()
-    l, m, r = (2, 1, 1)
+    l, m, r = (1, 1, 1)
     u_ex(x) = (x[1]^2 + x[2]^2 - 1)^2*sin(m*( 2π/l )*x[1])*cos(r*( 2π/l )*x[2])
 
     # Parameters
@@ -162,7 +162,7 @@ function main()
     # No penalty comparison
     function run_penalty_test(solver_function, dirname)
         param_list = [
-                      ((20, 10, 1), "blue"),
+                      ((20, 10, 0.5), "blue"),
                       ((20, 0, 0), "red")
                      ]
 
