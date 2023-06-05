@@ -150,7 +150,7 @@ module SolverLaplace
         eh1 = sqrt(sum( ∫( e⊙e + ∇(e)⊙∇(e) )dΩ ))
 
         if dirname != nothing
-            vtkdirname =dirname*"/g_$(γ)_g1_$(γg1)_g2_$(γg2)_order_$(order)_n_$n"
+            vtkdirname =dirname*"/graphics/g_$(γ)_g1_$(γg1)_g2_$(γg2)_order_$(order)_n_$n"
             mkpath(vtkdirname)
 
             # Write out models and computational domains for inspection
