@@ -25,8 +25,10 @@ module SolverLaplace
     end
 
     @enum CutFEMType CutFEM AgFEM
+    @enum GeometryType circle flower
 
-    function run(; type::CutFEMType=CutFEM, order, n, u_ex, dirname=nothing, L=1.11, δ=0.0, γ=10.0, γg1=5, γg2=0.01)
+    function run(; type::CutFEMType=CutFEM, geometry::GeometryType=circle,
+                 order, n, u_ex, dirname=nothing, L=1.11, δ=0.0, γ=10.0, γg1=5, γg2=0.01)
 
         # Mesh size
         h = L/n
@@ -40,20 +42,23 @@ module SolverLaplace
         pmax = Point(L , L) + r_δ
         bgorigin = ( pmin + pmax )/2
 
-        R  = 1.0
-        geo = disk(R)
+        if geometry == circle
+            R  = 1.0
+            geo = disk(R)
+        else
+            r0 = 0.7
+            r1 = 0.3
+            function ls_flower(x)
+                theta = atan(x[1], x[2])
+                (x[1]^2 + x[2]^2)^0.5 - r0 - r1*cos(5.0*theta)
+            end
+            geo = AnalyticalGeometry(x-> ls_flower(x))
+        end
 
         # Background model
         partition = (n,n)
         bgmodel = CartesianDiscreteModel(pmin, pmax, partition)
 
-        # r0 = 0.5
-        # r1 = 0.15
-        # function ls_flower(x)
-        #     theta = atan(x[1], x[2])
-        #     (x[1]^2 + x[2]^2)^0.5 - r0 - r1*cos(5.0*theta)
-        # end
-        # geo = AnalyticalGeometry(x-> ls_flower(x))
 
         println("Sim: order=$order, n=$n, bg (L,L)=($(round(L, digits=2)),$(round(L, digits=2))), bgorigin=($(round(bgorigin[1], digits=2)),$(round(bgorigin[2], digits=2)))")
 
@@ -70,6 +75,9 @@ module SolverLaplace
 
         if type == AgFEM
             strategy = AggregateAllCutCells()
+            # treshold = 0.5
+            # println("Aggreating all cells with treshold < $(treshold) ")
+            # strategy = AggregateCutCellsByThreshold(treshold)
             aggregates = aggregate(strategy, cutgeo)
             # Prepare color for aggregate coloring
             colors = color_aggregates(aggregates, bgmodel)
@@ -173,6 +181,7 @@ module SolverLaplace
             writevtk(Fg,        vtkdirname*"/Fg")
             writevtk(Λ,         vtkdirname*"/jumps",           cellfields=["jump_u"=>jump(uh)])
             writevtk(Ω,         vtkdirname*"/sol",             cellfields=["e"=>e, "uh"=>uh, "u"=>u_ex])
+            writevtk(Ω_act,         vtkdirname*"/sol_act",             cellfields=["e"=>e, "uh"=>uh, "u"=>u_ex])
             if type == AgFEM
                 writevtk(Ω_bg,      vtkdirname*"/aggs_on_bg_mesh", celldata=["aggregate"=>aggregates, "color"=>colors])
             end
