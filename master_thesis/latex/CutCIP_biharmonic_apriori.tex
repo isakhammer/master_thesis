@@ -211,12 +211,22 @@ Recall that for $v \in H^{1}( \mathcal{T } _{h}) $ these inequalities holds $\fo
 \]
 For proof, see \cite[Lemma 4.2]{hansbo2003finite}.
 
-A key idea is to distinguish between the physical space $\Omega $ and the polyhedra consisting of the active mesh $\Omega ^{e}_{h} = \mathcal{T}_{h}$. Thus, to do an
-a priori estimate we find it necessary to define an bounded extension operator satisfying, \[
-( \cdot ) ^{e}: W^{m,q}( \Omega )  \to W^{m,q} ( \Omega ^{e}), \quad \| v^{e} \|_{ m,q,\Omega ^{e}  }^{  } \lesssim \| v \|_{ m,q, \Omega  }^{  }.
+A key idea is to distinguish between the physical space $\Omega $ and the polyhedra consisting of the active mesh $\Omega ^{e}_{h} = \mathcal{T}_{h}$. Assume that $\Omega $ has a boundary $\Gamma $ in $C^{1}$ that does exists an bounded extension operator, \[
+( \cdot ) ^{e}: W^{m,q}( \Omega )  \to W^{m,q} ( \Omega ^{e})
 \]
-where $0< m \le \infty$ and $1 \le q \le \infty$.
-\todo[inline]{ The physical space $\Omega $ is a subset of $\Omega ^{e}$, so I do not understand why $\| v^{e} \|_{ m,q,\Omega ^{e}  }^{  } \lesssim \| v \|_{ m,q, \Omega  }^{  } $ should hold.  I may also make a figure to illustrate $\Omega ^{e}$. }
+for all  $v \in W^{m,q}( \Omega )$ where $0< m \le \infty$ and $1 \le q \le \infty$ which satisfies \[
+    \begin{split}
+ v^{e}| _{\Omega } =   v  \\
+\| v^{e} \|_{ m,q,\Omega ^{e}  }^{  } & \lesssim \| v \|_{ m,q, \Omega  }^{  } \\
+    \end{split}
+\]
+This extension theorem primarily utilizes \cite[Theorem 9.7]{brezis2011functional} by Brezis, with valuable context provided by \cite[p.181, p. 185]{stein1970singular}.
+\begin{remark}
+    Be aware that this theorem requires that we have a sufficiently smooth domain, hence, emphasizing the assumption of a sufficiently smooth boundary. Also keep in mind that the original results is the theorem a mapping from $ ( \cdot ) ^{e}: W^{m,q}(
+    \Omega )  \to W^{m,q} ( \mathbb{R} ^{d})$, but we restricted ourself to the active set $\Omega ^{e}_{h} = \mathcal{T} _{h}$ .
+    \todo[inline]{ TODO: Not sure if this argument holds. At least from my point of view is this choice naive without proof. }
+\end{remark}
+% \todo[inline]{ The physical space $\Omega $ is a subset of $\Omega ^{e}$, so I do not understand why $\| v^{e} \|_{ m,q,\Omega ^{e}  }^{  } \lesssim \| v \|_{ m,q, \Omega  }^{  } $ should hold.  I may also make a figure to illustrate $\Omega ^{e}$. }
 
 Now assume that $\Omega _{h}^{e} \subset  \Omega^{e} $. We define an unfitted Cléments interpolator $C_{h}^{e}: H^{r}( \Omega ^{e}_{h}) \to V_{h}$
 s.t.  $C ^{e} _{h} v := C _{h} v^{e} $.
