@@ -6,6 +6,7 @@ using CSV
 using DataFrames
 using LaTeXStrings
 using Printf
+using YAML
 
 
 struct Simulation
@@ -41,9 +42,11 @@ function translation_plot(sims::Vector{Simulation},dirname)
     plot!(p2,[0], [1], linestyle = :dot, label = L"\Vert e \Vert_{a_h,*}", color = "black")
     plot!(p2,[0], [1], linestyle = :dash, label = L"\Vert e \Vert_{H^1}", color = "black")
     plot!(p2,[0], [1], linestyle = :solid, label = L"\Vert e \Vert_{L^2}", color = "black")
+    plot!(p1,[0], [1], linestyle = :solid, label = L"\kappa_{\infty} (A)", color = "black")
     plot!(p2, legendfontsize=12)  # Adjust the value 12 to your desired font size
     plot!(p1, legendfontsize=12)  # Adjust the value 12 to your desired font size
-
+    xlabel!(p1, L"\delta")
+    xlabel!(p2, L"\delta")
     file1 = dirname*"/translation-cond.tex"
     file2 = dirname*"/translation-error.tex"
     println("Saved in $file1 and $file2")
