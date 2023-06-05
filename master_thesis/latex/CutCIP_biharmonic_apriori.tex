@@ -193,11 +193,7 @@ and if the following conditions for an parameter $l$ is satisfied, it exists err
     \inf_{v_{h} \in \mathcal{P} ^{k}_{c}( \Omega ) } \| v - v_{h} \|_{  m,p,\Omega }^{  } \le C h^{l-m}  \| v \|_{ l,p,\Omega  }^{  }    \forall v \in W_{l,p}( \Omega ).
     \]
 \end{corollary}
-
-
-This result is very useful since it is now sufficient to show that a priori estimates holds given to prove convergence rate.
-
-For further detailed information about the Cléments interpolation, please investigate \cite[Chapter 1.6]{ern04}.
+This result is very useful since it is now sufficient to show that a priori estimates holds given to prove convergence rate. For further detailed information about the Cléments interpolation, please investigate \cite[Chapter 1.6]{ern04}.
 We will use these estimates to compute convergence rate given that Ceas' Lemma holds.
 
 
@@ -223,22 +219,22 @@ for all  $v \in W^{m,q}( \Omega )$ where $0< m \le \infty$ and $1 \le q \le \inf
 This extension theorem primarily utilizes \cite[Theorem 9.7]{brezis2011functional} by Brezis, with valuable context provided by \cite[p.181, p. 185]{stein1970singular}.
 \begin{remark}
     Be aware that this theorem requires that we have a sufficiently smooth domain, hence, emphasizing the assumption of a sufficiently smooth boundary. Also keep in mind that the original results is the theorem a mapping from $ ( \cdot ) ^{e}: W^{m,q}(
-    \Omega )  \to W^{m,q} ( \mathbb{R} ^{d})$, but we restricted ourself to a slightly bigger extension $\Omega^{e} \supset   \Omega $.
+    \Omega )  \to W^{m,q} ( \mathbb{R} ^{d})$, but we restrict ourself to a slightly bigger extension $\Omega^{e} \supset   \Omega $.
     This is useful because we are now able to extend the function to the active set, while preserving the Sobolev regularity.
     \todo[inline]{ TODO: Not sure if this argument holds. At least from my point of view is this generalization is not trivial.}
 \end{remark}
 % \todo[inline]{ The physical space $\Omega $ is a subset of $\Omega ^{e}$, so I do not understand why $\| v^{e} \|_{ m,q,\Omega ^{e}  }^{  } \lesssim \| v \|_{ m,q, \Omega  }^{  } $ should hold.  I may also make a figure to illustrate $\Omega ^{e}$. }
 
-Now construct the extended Sobolev space s.t. that $\Omega _{h}^{e} =\mathcal{T}_{h} \subset  \Omega^{e} $. We define an unfitted Cléments interpolator $C_{h}^{e}: H^{r}( \Omega ^{e}_{h}) \to V_{h}$
+Now construct the extended Sobolev space s.t. that $\Omega _{h}^{e} =\mathcal{T}_{h} \subset  \Omega^{e} $. We define an unfitted Cléments interpolator $C_{h}^{e}: H^{m}( \Omega ^{e}_{h}) \to V_{h}$
 s.t.  $C ^{e} _{h} v := C _{h} v^{e} $.
 We can immediately observe that the interpolation satisfies the global error estimates, that is,
 \begin{align}
     \label{eq:bi_projection_estimates_1}
-    \| v - C _{h}^{e} v \|_{  r, \mathcal{T} _{h} }^{  } & \lesssim h^{s-r}\sum_{T \in \mathcal{T}_h} \| v \|_{ s, \omega(T) }^{  }, \quad 0\le r\le s \\
+    \| v - C _{h}^{e} v \|_{  m,2, \mathcal{T} _{h} }^{  } & \lesssim h^{l-m}\sum_{T \in \mathcal{T}_h} \| v \|_{ l,2, \omega(T) }^{  }, \quad m\le l\le k+1 \\
     \label{eq:bi_projection_estimates_2}
-\| v - C ^{e}_{h}v \|_{ r,\mathcal{F} _{h} }^{  } & \lesssim h^{s-r-\frac{1}{2}}\sum_{T \in \mathcal{T}_h} \| v \|_{ s, \omega(F)  }^{  }, \quad 0  \le  r \le   s- \frac{1}{2} \\
+    \| v - C ^{e}_{h}v \|_{ m,2,\mathcal{F} _{h} }^{  } & \lesssim h^{l-m-\frac{1}{2}}\sum_{T \in \mathcal{T}_h} \| v \|_{ l,2, \omega(F)  }^{  }, \quad m+\frac{1}{2}  \le  l \le   k+1 \\
     \label{eq:bi_projection_estimates_3}
-\| v - C ^{e}_{h}v \|_{ r, \Gamma }^{  } & \lesssim h^{s-r-\frac{1}{2}} \sum_{T \in \mathcal{T}_h}  \| v \|_{ s,  \omega(T)  }^{  }, \quad 0  \le  r \le   s- \frac{1}{2}
+\| v - C ^{e}_{h}v \|_{ m,2, \Gamma }^{  } & \lesssim h^{l-m-\frac{1}{2}} \sum_{T \in \mathcal{T}_h}  \| v \|_{ l,2,  \omega(T)  }^{  }, \quad m+\frac{1}{2}  \le  l \le  k+1
 \end{align}
 
 Naturally can we see this is the tools we need to construct an estimate for the energy norm.
