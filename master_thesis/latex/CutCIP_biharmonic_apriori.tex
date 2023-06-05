@@ -9,7 +9,7 @@ However, the $C^{0}$ discrete solution is to rough for the standard Lagrange int
 \subsubsection{Cléments interpolation}%
 \label{ssub:clement_operator}
 
-\begin{figure}
+\begin{figure}[h!]
 \begin{minipage}{.5\linewidth}
 \centering
 \subfloat[]{
@@ -218,7 +218,7 @@ for all  $v \in W^{m,q}( \Omega )$ where $0< m \le \infty$ and $1 \le q \le \inf
 \]
 This extension theorem primarily utilizes \cite[Theorem 9.7]{brezis2011functional} by Brezis, with valuable context provided by \cite[p.181, p. 185]{stein1970singular}.
 \begin{remark}
-    Be aware that this theorem requires that we have a sufficiently smooth domain, hence, emphasizing the assumption of a sufficiently smooth boundary. Also keep in mind that the original results is the theorem a mapping from $ ( \cdot ) ^{e}: W^{m,q}(
+    Be aware that this theorem requires that we have a sufficiently smooth domain, hence, emphasizing the assumption of a sufficiently smooth boundary. Also keep in mind that the original theorem states the mapping $ ( \cdot ) ^{e}: W^{m,q}(
     \Omega )  \to W^{m,q} ( \mathbb{R} ^{d})$, but we restrict ourself to a slightly bigger extension $\Omega^{e} \supset   \Omega $.
     This is useful because we are now able to extend the function to the active set, while preserving the Sobolev regularity.
     \todo[inline]{ TODO: Not sure if this argument holds. At least from my point of view is this generalization is not trivial.}
@@ -236,9 +236,7 @@ We can immediately observe that the interpolation satisfies the global error est
     \label{eq:bi_projection_estimates_3}
 \| v - C ^{e}_{h}v \|_{ m,2, \Gamma }^{  } & \lesssim h^{l-m-\frac{1}{2}} \sum_{T \in \mathcal{T}_h}  \| v \|_{ l,2,  \omega(T)  }^{  }, \quad m+\frac{1}{2}  \le  l \le  k+1
 \end{align}
-
 Naturally can we see this is the tools we need to construct an estimate for the energy norm.
-
 \begin{lemma}
     \label{lemma:astar_estimate}
     Let $u \in H^{s}( \Omega ) $ for $s\ge 3$ be a exact solution. Then we have  \[
