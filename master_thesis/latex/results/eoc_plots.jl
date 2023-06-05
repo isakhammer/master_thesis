@@ -48,8 +48,8 @@ function generate_plots(data,path)
     # Add the third data series
     hs_hat =  1 ./ ( 2 .^(1:11) )
     println(hs_hat)
-    Plots.plot!(p, hs_hat, 300*hs_hat.^1, color="grey", label=L"Ch^1")
-    Plots.plot!(p, hs_hat, 100*hs_hat.^2, color="black", label=L"Ch^2")
+    Plots.plot!(p, hs_hat, 300*hs_hat.^1, color="grey", label=L"O(h)")
+    Plots.plot!(p, hs_hat, 100*hs_hat.^2, color="black", label=L"O(h^2)")
 
     # Configs
     Plots.xlabel!(p, "h")

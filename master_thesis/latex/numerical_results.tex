@@ -184,26 +184,25 @@ Thus, since these norms are equivalent will we in this report focus on $ \kappa_
 
 
 Our goal it validate the Theorem \ref{thm:apriori_result} for $k= 2$ for the Hessian formulation and show that the Laplace formulation has the same properties.
-We define big-oh $O( h^{r})$ to be a upper bound s.t. it exists an $C>0$ s.t.  $\| e \|_{  }^{  } \le M h^{r} \text{ for all } h$, where $r$ is the order of convergence.
+We define big-oh $O( h^{r})$ to be a upper bound s.t. it exists an $C>0$ s.t.  $\| e \|_{  }^{  } \le M h^{r} \text{ for all } h$, where $r$ is the order of convergence. Since we only will implement $k=1$.
 That is, we will validate that it exists an upper bound $ O( h)  $ for  $\| e \|_{L^{2}( \Omega )   }^{  }$  and $O( h^2)  $ for $\| e \|_{ a_{h},* }^{  } $, i.e. obtaining a so-called optimal convergence.
 We did the following convergence tests.
 \begin{itemize}
-    \item \textbf{Convergence on Circe domain}
-        Since we
+    \item \textbf{Convergence on circe domain}
         First we consider the manufactured solution s.t.
         \[
             u(x,y) = (x^2+ y^2 -1) \sin\left(2 \pi x \right)\cos\left(2\pi y\right)
         \]
-        The result can be shown on the in Figure \ref{fig:conv_hes_lap} and Table \ref{tab:conv_hes_lap}. Here we observe that for we clearly get optimal convergence, that is, for $\| \cdot  \|_{a_{h},*  }^{  } $ we get a consistent $EOC$ of $1$
-        hence,  and the $ \| \cdot  \|_{L^{2}( \Omega )   }^{  } $,
-        norm.
+        The result can be shown on the in Figure \ref{fig:conv_hes_lap} and Table \ref{tab:conv_hes_lap}. Here we observe that for we clearly get optimal convergence, that is, we get a consistent EOC 1 and 2 for the respective norms $\| e  \|_{a_{h},*  }^{  } $
+        and $\| e  \|_{L^2( \Omega )   }^{  } $.  We also get a consistent EOC of 2 for $\| e \|_{ H^{1}(\Omega  )  }^{  } $, even though we do not have theoretical a priori estimates of this norm.
+Remark that we get a slight drop for high refinements due to high condition number, which is expected.
     \item \textbf{Convergence on flower domain}
-        First we consider the manufactured solution s.t.
+        We consider the manufactured solution s.t.
         \[
             u(x,y) =  \sin\left( 2\pi x \right)\cos\left(2\pi y\right)
         \]
-        The result can be shown on the in Figure \ref{fig:conv_hes_lap} and Table \ref{tab:conv_hes_lap}. Here we observe that for we get optimal convergence for $\| \cdot  \|_{a_{h},*  }^{  } $ and the $ \| \cdot  \|_{L^{2}( \Omega )   }^{  } $
-        norm.
+        In this case must we assume non homogeneous Neumann conditions, and thus we only test the numerical results for the Laplace formulation. The result can be shown on the in Figure \ref{fig:conv_flower_lap} and Table \ref{tab:conv_flower_lap}. Here we
+        observe that for we get optimal convergence, that is EOC of order 1 and 2 for $\| e  \|_{a_{h},*  }^{  } $ and  $ \| e  \|_{L^{2}( \Omega )   }^{  } $ norm. However, again we see a slight drop of order of convergence due to a high condition number.
 \end{itemize}
 
 \begin{figure}[h!]
@@ -212,7 +211,7 @@ We did the following convergence tests.
 % \hfill
 \subfloat[Laplace]{\input{results/eoc-test/eoc-laplace-circle/conv-plot.tex}}
 
-\caption{ Convergence plots for the Hessian and the Laplacian method applied to the circular domain with side length $L=2.7$, using parameters $\gamma=20$, $\gamma_1=10$ and $\gamma_2=1$.}
+\caption{ Convergence plots for the Hessian and the Laplacian method applied to the circular domain with side length $L=2.7$, using parameters $\gamma=20$, $\gamma_1=10$ and $\gamma_2= 0.5$.}
 \label{fig:conv_hes_lap}
 \end{figure}
 
@@ -230,23 +229,24 @@ We did the following convergence tests.
     \centering
     \subfloat[Laplace]{\input{results/eoc-test/eoc-laplace-circle/conv-table.tex}}
 \end{minipage}
-\caption{EOC results for the Hessian and the Laplacian method applied to the circular domain with side length $L=2.7$, using parameters $\gamma=20$, $\gamma_1=10$ and $\gamma_2=1$.}
+\caption{EOC results for the Hessian and the Laplacian method applied to the circular domain with side length $L=2.7$, using parameters $\gamma=20$, $\gamma_1=10$ and $\gamma_2= 0.5$.}
 \label{tab:conv_hes_lap}
 \end{table}
 
 
 \begin{table} \input{results/eoc-test/eoc-laplace-flower/conv-table.tex}
-\caption{Convergence rates for the Laplacian-based method applied to the Flower domain with side length $L=2.7$, using parameters $\gamma=20$, $\gamma_1=10$, and $\gamma_2=1$}
+\caption{Convergence rates for the Laplacian-based method applied to the Flower domain with side length $L=2.7$, using parameters $\gamma=20$, $\gamma_1=10$, and $\gamma_2= 0.5$}
+\label{tab:conv_flower_lap}
 \end{table}
 \begin{figure}
     \centering
 \input{results/eoc-test/eoc-laplace-flower/conv-plot.tex}
-\caption{Convergence rates for the Laplacian-based method applied to the Flower domain with side length $L=2.7$, using parameters $\gamma=20$, $\gamma_1=10$, and $\gamma_2=1$}
+\caption{Convergence rates for the Laplacian-based method applied to the Flower domain with side length $L=2.7$, using parameters $\gamma=20$, $\gamma_1=10$, and $\gamma_2= 0.5$}
+\label{fig:conv_flower_lap}
 \end{figure}
 
-\subsubsection{Translation test}%
-\label{ssub:translation_test}
 
+To test the stability of the method during bad cut configurations (see Figure \ref{fig:intersection-example}), will we introduce the so-called translation test. The idea is the
 
 Here we have the translation test $\delta $ from $0$ to $2 \sqrt{2}h $.
 
@@ -280,6 +280,7 @@ Here we have the translation test $\delta $ from $0$ to $2 \sqrt{2}h $.
 
     \end{tikzpicture}
     \caption{Illustration of the translation test with translation $\delta$ from  $(0,2 \sqrt{2}h)  $ }
+    \label{fig:illustration_translation}
 \end{figure}
 
 
@@ -297,6 +298,7 @@ Here we have the translation test $\delta $ from $0$ to $2 \sqrt{2}h $.
 
 \caption{ Translation results for Hessian $n=16$ for $500$ iterations, $\delta =(0, 2 \sqrt{2}h) $ for $L=2.7$ with a circle $R=1$       }
 
+\label{fig:trans_hes}
 \end{figure}
 
 \begin{figure}[htp]
@@ -313,4 +315,5 @@ Here we have the translation test $\delta $ from $0$ to $2 \sqrt{2}h $.
 
 \caption{ Translation results for Laplace $n=16$ for $500$ iterations, $\delta =(0, 2 \sqrt{2}h) $ for $L=2.7$ with a circle $R=1$       }
 
+\label{fig:trans_lap}
 \end{figure}

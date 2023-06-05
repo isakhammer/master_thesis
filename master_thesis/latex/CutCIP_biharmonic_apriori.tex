@@ -155,11 +155,11 @@ C_{h} v = \sum_{i=1}^{N} \widehat{C}_{j( i) } ( v (G_{A_{i}}) (G^{-1}_{A_{i}}(a_
 \]
 where $\phi _{i}$ is the corresponding polynomial basis at node $a_{i}$.
 
-Recall the integral norm notation,
+Recall the general Sobolev norm notation,
 \[
 \| u \|_{ m,p,T }^{  } = \left( \sum_{ \left\lvert \alpha  \right\rvert \le m}^{} \int_{T}^{}  \left\lvert  \partial ^{\alpha } u \right\rvert^{p} dx   \right)^{\frac{1}{2}}
 \]
-where we use that $\| u \|_{ T  }^{  } = \| u \|_{ m,0,T  }^{  } $ and similarly $\| u \|_{ 2,T  }^{  } = \| u \|_{ m,2,T  }^{  }  $.
+where we use the convenient notation $\| u \|_{L^2(T) }^{  } = \| u \|_{ T  }^{  } = \| u \|_{ 0,2,T  }^{  } $ and similarly $\| u \|_{ H^r( T )  }^{  } = \| u \|_{ r,T  }^{  } = \| u \|_{ r,2,T  }^{  }  $.
 
 
 Finally, we have the following lemma
@@ -427,4 +427,20 @@ Using the result from the first part and the Assumption \ref{as:EP2}.
 \end{proof}
 
 
+\todo[inline]{
+We define big-oh $O( h^{r})$ to be a upper bound s.t. it exists an $C>0$ s.t.  $\| e \|_{  }^{  } \le M h^{r} \text{ for all } h$, where $r$ is the order of convergence. Since we only will implement $k=1$.
+Hence, we have the construct the following Corollary.
 
+
+\begin{corollary}[Order of convergence]
+    Let $u \in H^{s}( \Omega ) $ , $s\ge 3$ a solution and let $u \in V_{h}$ of order $k = 2$ be the solution to \eqref{eq:Bi_a_h}. Then for $r = \min_{}\{s, k+1\} $ the error $e = u - u_{h}$ is bounded s.t . $ \| e \|_{ a_{h},* }^{  }$ is in $O( h)
+    $ and $\| e \|_{ L^{2} }^{  } $ is in $O( h^{2}) $. Or in other words, it exists and $M>0$
+    \begin{align}
+            \| e \|_{ a_{h},* }^{  } & \le    M h^{r-1}  \\
+            \| e \|_{ \Omega  }^{  } & \le    M h^{r}
+    \end{align}
+\end{corollary}
+\begin{proof}
+    It easily comes from the results $ \| u \|_{ r,\Omega  }^{  } = \| u \|_{r, 2,\Omega  }^{  } \le \| u \|_{r, \infty,\Omega  }^{  } = M $, where $M$ is a constant. The rest follows from the Theorem \ref{thm:apriori_result}.
+\end{proof}
+}
