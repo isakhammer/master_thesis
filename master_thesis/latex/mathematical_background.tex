@@ -125,15 +125,10 @@ We define the mean as $\mean{ v} |_{F} = v    $ and the jump as $\jump{v}|_{F} =
 \label{sub:broken_sobolev_spaces}
 
 In this work will we compute norms on discontinuous elements, thus, it will be necessary to define broken Sobolev spaces.
-
 Let $\mathcal{T}_{h} $ be a mesh and some integer $m\le n$. Then we define the broken Sobolev space to be \[
-H^{m}( \mathcal{T}_{h} ) := \left\{ v \in L^2( \Omega )  \mid \ v|_{T} \in H^{m}( T) \quad     \forall T \in  \mathcal{T} \right\}
-\]
-and similarly for the facets $\mathcal{F}_{h} $, that is
-\[
     \begin{split}
-        L^{2}( \mathcal{F}_{h} ) &:= \left\{ v \in L^2( \mathcal{T}_{h}  )  \mid   \ v|_{F} \in L^{2}( F)  \quad  \forall F \in  \mathcal{F}_{h}   \right\} \\
-        H^{m}( \mathcal{F}_{h} ) &:= \left\{ v \in L^2( \mathcal{F}_{h}  )  \mid   \ v|_{F} \in H^{m}( F)  \quad  \forall F \in  \mathcal{F}_{h}   \right\}
+H^{m}( \mathcal{T}_{h} ) & := \left\{ v \in L^2( \Omega )  \mid \ v|_{T} \in H^{m}( T) \quad     \forall T \in  \mathcal{T} \right\}\\
+        L^{2}( \mathcal{F}_{h} ) &:= \left\{ v \in L^2( \mathcal{T}_{h}  )  \mid   \ v|_{F} \in L^{2}( F)  \quad  \forall F \in  \mathcal{F}_{h}   \right\}.
     \end{split}
 \]
 This motivates us to define broken Sobolev norms and inner products using a summation over mesh elements. That is,
@@ -141,11 +136,11 @@ This motivates us to define broken Sobolev norms and inner products using a summ
  \| v \|_{H^{m}( \mathcal{T}_{h} ) }^{2} = \sum_{T \in  \mathcal{T}_{h} }^{} \| v  \|_{ H^{m}( T ) }^{2  } \quad \text{ and } \quad
  (v ,w )_{H^{m}( \mathcal{T}_{h} ) }^{} = \sum_{T \in \mathcal{T} _{h}}^{} (v ,w )_{ H^{m}( T ) }^{  } .
 \]
-As expected we use the notation,  $\| v \|_{\mathcal{T}_{h}} =  \| v \|_{L^{2}( \mathcal{T}_{h} ) }$ and  $(v ,w )_{ \mathcal{T}_{h} }^{} = (v ,w )_{L^2( \mathcal{T} ) }^{} $.
+As expected we use the notation,  $\| v \|_{\mathcal{T}_{h}} =  \| v \|_{L^{2}( \mathcal{T}_{h} ) }$ and  $(v ,w )_{ \mathcal{T}_{h} }^{} = (v ,w )_{L^2( \mathcal{T}_{h} ) }^{} $.
 That is,
 \[
- \| v \|_{H^{m}( \mathcal{F}_{h} ) }^{2} = \sum_{F \in  \mathcal{F}_{h} }^{} \| v  \|_{ H^{m}( F ) }^{2  } \quad \text{ and } \quad
- (v ,w )_{H^{m}( \mathcal{F} ) }^{} = \sum_{T \in \mathcal{F} _{h}}^{} (v ,w )_{ H^{m}( F ) }^{  } .
+ \| v \|_{H^{m}( \mathcal{F}_{h} ) }^{2} = \sum_{F \in  \mathcal{F}_{h} }^{} \| v  \|_{ L^{2}( F ) }^{2  } \quad \text{ and } \quad
+ (v ,w )_{L^{2}( \mathcal{F}_{h} ) }^{} = \sum_{T \in \mathcal{F} _{h}}^{} (v ,w )_{ L^{2}( F ) }^{  } .
 \]
 And again, we often use the more compact notation $\| v \|_{\mathcal{F}_{h}} =  \| v \|_{L^{2}( \mathcal{F}_{h} ) }$ and  $(v ,w )_{ \mathcal{F}_{h} }^{} = (v ,w )_{L^2( \mathcal{F}_{h} ) }^{} $.
 A very useful lemma when working on estimates on broken Sobolev spaces is that a if a function is continuous, then the jump between the mesh elements is zero. A function $ v \in  H^{1}( \mathcal{T}_{h} ) $ belongs to $ H^{1}( \Omega )  $ if and only
