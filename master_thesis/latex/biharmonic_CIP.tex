@@ -1,10 +1,10 @@
 
 \newpage
-\section{Continuous Interior Penalty Biharmonic Problem }%
+\section{Continuous Interior Penalty Biharmonic Problem on a Polygonal Domain}%
 \label{sec:CIP_biharmonic_problem}
 
 Recall the biharmonic problem.
-Let $\Omega \subseteq    \mathbb{R} ^d$ be a bounded polygonal domain and $\Gamma $ be its corresponding boundary. Let the biharmonic problem BH have the form,
+Let $\Omega \subseteq    \mathbb{R} ^d$ be a bounded polygonal domain and $\Gamma $ be its corresponding boundary. Also let $\mathcal{T}_{h} = \left\{ T \right\} $ be a shape-regular fitted mesh s.t. $\mathcal{T}_{h} = \Omega $. Let the BH have the form,
 \begin{equation}
 \label{eq:bi_problem}
 \begin{split}
@@ -14,7 +14,7 @@ Let $\Omega \subseteq    \mathbb{R} ^d$ be a bounded polygonal domain and $\Gamm
 \end{split}
 \end{equation}
 Here is $\Delta ^2 = \Delta  \left( \Delta  \right) $ the biharmonic operator, also known as the bilaplacian. We will assume for the strong form that $u \in H^{4}\left( \Omega  \right) $, $\alpha  \in  \mathbb{R} $ and $f \in L^{2}\left( \Omega  \right)
-$. The functions $g_{1},g_{2}: \Omega  \to \mathbb{R}$ are denoted as boundary conditions similar to the CH problem.
+$. The functions $g_{1},g_{2}: \Omega  \to \mathbb{R}$ are denoted as boundary conditions similar to the CH problem if we do not take account of the non-linearity.
 
 \begin{remark}
 It is worth noting that the BH problem is closely related to the Kirchhoff's plate problem by changing the boundary conditions s.t. $u = \partial _{n } u = 0$ on $\Gamma $, which is in the literature known as so-called clamped boundary conditions.
@@ -46,6 +46,16 @@ a_{h}^{H} \left( u, v \right)   =&
 \end{split}
 \end{equation}
 
+With the corresponding energy norms,
+\begin{equation}
+\label{eq:a_cip_energy_norm}
+    \begin{split}
+ \| v \|_{ a_{h} }^{ 2 }& =  \| v\|_{ \Omega  }^{2  }  +  \| D ^2 v \|_{ \mathcal{T} _{h}  }^{ 2 }  + \|  h^{-\frac{1}{2}} \jump{ \partial _{n} v    }\|_{  \mathcal{F} _{h} }^{2  },  \quad v \in V_{h}  \\
+   \| v \|_{ a_{h},* }^{ 2 } &= \| v \|_{ a_{h} }^{ 2 }  + \| h^{\frac{1}{2}}  \mean{     \partial _{nn } v}  \|_{ \mathcal{F}_{h}   }^{  2}, \quad  v\in V \oplus V_{h}.
+    \end{split}
+\end{equation}
+
+
 \item The Laplace formulation is
     \begin{equation}
         \label{eq:cip_laplace_form}
@@ -57,6 +67,15 @@ a_{h}^{H} \left( u, v \right)   =&
                                              l^{L}_{h}( v) & =  \left( f, v \right) _{\Omega } - ( g_{2},  v )_{\Gamma } -  ( g_{1}, \Delta  v  )_{\Gamma }  + \frac{\gamma }{h} ( g_{1}, \partial _{n} v  )_{\Gamma }
                                          \end{split}
                                      \end{equation}
+                                     With the corresponding energy norms
+                                     \begin{equation}
+                                         \label{eq:a_cip_energy_norm}
+                                         \begin{split}
+                                             \| v \|_{ a_{h} }^{ 2 }& =  \| v\|_{ \Omega  }^{2  }  +  \| \Delta  ^2 v \|_{ \mathcal{T} _{h}  }^{ 2 }  + \|  h^{-\frac{1}{2}} \jump{ \partial _{n} v    }\|_{  \mathcal{F} _{h} }^{2  },  \quad v \in V_{h}  \\
+                                             \| v \|_{ a_{h},* }^{ 2 } &= \| v \|_{ a_{h} }^{ 2 }  + \| h^{\frac{1}{2}}  \mean{     \partial _{nn } v}  \|_{ \mathcal{F}_{h}   }^{  2}, \quad  v\in V \oplus V_{h}.
+                                         \end{split}
+                                     \end{equation}
+
 
 \end{enumerate}
 
