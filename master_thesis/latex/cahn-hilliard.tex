@@ -12,14 +12,40 @@
 \end{itemize}
 
 
-\subsection{The Problem}%
+\subsection{The linear Cahn-Hilliard}%
+\label{sub:the_problem}
+
+We will consider linear Cahn Hilliard problem is on the form
+\begin{equation}
+\label{eq:ch_exact}
+    \begin{split}
+        \partial _{t} u  - \varepsilon \Delta^2   u -   & =  h(x)  \quad \text{in} \Omega \\
+        \partial _{n} u & =  g_{1}(x)  \quad \text{ on } \Gamma \\
+        \partial _{n} \Delta u & = g_{2}(x)  \quad \text{ on } \Gamma  \\
+        u(t=0) & = u_{0}   \text{ on } \Omega
+    \end{split}
+\end{equation}
+
+
+We can see that the simplest weak formulation for $u,v \in H^{4}( \Omega ) $ is on the form
+\[
+( \partial _{t}u, v )_{\Omega }  - \varepsilon ( \Delta^2 u, v)_{\Omega } = ( h,v)_{\Omega }   \\
+\]
+
+
+
+We can easily observe that the biharmonic equation is a term of this equation. Combining the theory from \ref{sec:cutcip_biharmonic_problem} and can we see that the Laplace formulation
+
+
+
+\subsection{The general Cahn-Hilliard}%
 \label{sub:the_problem}
 
 We will consider General Cahn Hilliard problem is on the form
 \begin{equation}
 \label{eq:ch_exact}
     \begin{split}
-        \partial _{t} u & - \Delta ( \varepsilon  \Delta u - \frac{1}{\varepsilon } f( u) ) =  h(x)  \quad \text{in} \Omega \\
+        \partial _{t} u  - \Delta ( \varepsilon  \Delta u - \frac{1}{\varepsilon } f( u) ) & =  h(x)  \quad \text{in} \Omega \\
         \partial _{n} u & =  g_{1}(x)  \quad \text{ on } \Gamma \\
         \red{ f( u) +}  \partial _{n} \Delta u & = g_{2}(x)  \quad \text{ on } \Gamma  \\
         u(t=0) & = u_{0}   \text{ on } \Omega
@@ -35,7 +61,7 @@ Where $f( s)  = F' ( s)=s( s^2 -1)  $ and $F( s)  = \frac{1}{4} ( s^2 - 1)^2 $. 
 
 Our goal is to write the Cahn Hilliard equation on weak form.
 Assume that $\Omega  \subset \mathbb{R} ^{d}$ is a polygon.
- Let $u \in \times H^{4}( \Omega ) $ and $v \in V_{h} $ where
+ Let $u \in  H^{4}( \Omega ) $ and $v \in V_{h} $ where
 \[
 V_{h} = \left\{ v \in C^{0}( \Omega )   \mid v\in \mathcal{P} ^{k} ( T) \quad \forall T \in \mathcal{T} _{h} \right\}.
 \]
