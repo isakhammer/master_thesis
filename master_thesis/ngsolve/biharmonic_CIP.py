@@ -113,11 +113,30 @@ def run(order, n_grid, solver_config, vtk_dirname=None):  # Mesh related paramet
         # cond_number = np.max(S) / np.min(S)
 
         # Method 3 (Works good, but is costly)
+        # A_csc = A.tocsc()
+        # Ainv_csc = lg.inv(A_csc)
+        # cond_number = lg.norm(A_csc)*lg.norm(lg.inv(A_csc))
+
+        # Method 4
         A_csc = A.tocsc()
         Ainv_csc = lg.inv(A_csc)
-        cond_number = lg.norm(A_csc)*lg.norm(lg.inv(A_csc))
 
+        print(f'Test {len(u_h.vec.data)}:')
+        start_time = time.time()
+        cond_number = lg.norm(A_csc,2)*lg.norm(Ainv_csc,2)
+        print(f'Time 2norm: {time.time() - start_time} seconds')
 
+        start_time = time.time()
+        cond_number = lg.norm(A_csc, 1)*lg.norm(Ainv_csc,1)
+        print(f'Time 1norm: {time.time() - start_time} seconds')
+
+        start_time = time.time()
+        cond_number = lg.norm(A_csc, np.inf)*lg.norm(Ainv_csc, np.inf)
+        print(f' inf: {time.time() - start_time} seconds')
+
+        start_time = time.time()
+        cond_number = lg.norm(A_csc, "fro")*lg.norm(Ainv_csc, "fro")
+        print(f'Fro: {time.time() - start_time} seconds')
 
     # Interpolation
     V_ex = H1(mesh, order=order+2, dgjumps=True)
