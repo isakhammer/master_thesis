@@ -47,7 +47,7 @@ We will consider General Cahn Hilliard problem is on the form
     \begin{split}
         \partial _{t} u  - \Delta ( \varepsilon  \Delta u - \frac{1}{\varepsilon } f( u) ) & =  h(x)  \quad \text{in} \Omega \\
         \partial _{n} u & =  g_{1}(x)  \quad \text{ on } \Gamma \\
-        \red{ f( u) +}  \partial _{n} \Delta u & = g_{2}(x)  \quad \text{ on } \Gamma  \\
+          \partial _{n} ( \red{ f( u) + \varepsilon } \Delta u ) & = g_{2}(x)  \quad \text{ on } \Gamma  \\
         u(t=0) & = u_{0}   \text{ on } \Omega
     \end{split}
 \end{equation}

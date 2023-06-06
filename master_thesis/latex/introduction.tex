@@ -43,19 +43,19 @@ mapping $u: \left[ 0, T \right] \times \Omega  \to \left[ -1,1 \right]  $, which
 
 For an isotropic
 binary mixture non-uniform, the standard Ginzburg-Landay free energy functional is given by \[
-E( u)  = \int_{\Omega }^{} \frac{\varepsilon ^2}{2} \abs{ \nabla u } ^2 + F( u) dx
+E( u)  = \int_{\Omega }^{} \frac{\varepsilon }{2} \abs{ \nabla u } ^2 + \frac{1}{\varepsilon } F( u) dx
 \]
 The nonlinear function $F( u) $ is denoted as the (Helmholtz) free energy density associated with the interaction dynamics between the components and thus comes in many forms depending on the thermodynamic properties, see \cite{miranville2017cahn}.
 However, we will in this article assume that $F( u) = ( 1 / 4 ) ( 1- u^2) ^{4} $.
 We choose to define the chemical potential $\mu $ as the variational derivative,
 \[
-\mu = \frac{ \delta E( u) }{ \delta  u} = f( u)  - \varepsilon ^{2} \Delta c .
+\mu = \frac{ \delta E( u) }{ \delta  u} = \frac{1}{\varepsilon }f( u)  - \varepsilon  \Delta u .
 \]
 where we used the notation $f( u) = F'( u) $.
 First of all, to require local mass conservation, we may enforce the continuity equation, that is \[
 \partial _{t} u + \nabla \cdot \mathcal{J}  = 0,
 \]
-where $J$ denotes the flux governed by the physical dynamics. Hence, this naturally leads to the no-flux and the Neumann boundary conditions,
+where $\mathcal{J} $ denotes the flux governed by the physical dynamics. Hence, this naturally leads to the no-flux and the Neumann boundary conditions,
 \begin{equation}
 \label{eq:conservation}
     \begin{split}
@@ -63,15 +63,15 @@ where $J$ denotes the flux governed by the physical dynamics. Hence, this natura
 \partial _{n} u & = 0 \text{ on } \Gamma
     \end{split}
 \end{equation}
- A well-accepted law for the flux is that it is proportional to the chemical energy gradient, $\mathcal{J} = - M  \nabla \mu  $ for a parameter $M$.
+ A well-accepted law for the flux is that it is proportional to the chemical energy gradient, $\mathcal{J} = - M  \nabla \mu  $ for a parameter $M$. For the simplicity we assume $M=1$.
 Thus, we finally have the strong form Cahn-Hilliard equation. Let $ u( x,0) =  u_{0}$ then is the dynamics on the form,
 
 \begin{equation}
 \label{eq:strongch}
     \begin{split}
-\partial _{t} u  &= \Delta ( f( u)  - \varepsilon ^2 \Delta u ) \quad \text{ in } \Omega  \\
+\partial _{t} u - \Delta (  \varepsilon ^2 \Delta u - f( u) ) &=0  \quad \text{ in } \Omega  \\
 \partial _{n} u &= 0 \quad \text{ on } \Gamma  \\
-\partial _{n}(f( u)  - \varepsilon ^2 \Delta u )  &= 0 \quad \text{ on } \Gamma  \\
+\partial _{n} \left( \frac{1}{\varepsilon }f( u)  - \varepsilon \Delta u \right)    &= 0 \quad \text{ on } \Gamma  \\
     \end{split}
 \end{equation}
 
