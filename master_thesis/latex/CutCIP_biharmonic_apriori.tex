@@ -236,7 +236,9 @@ We can immediately observe that the interpolation satisfies the global error est
     \label{eq:bi_projection_estimates_3}
 \| v - C ^{e}_{h}v \|_{ m,2, \Gamma }^{  } & \lesssim h^{l-m-\frac{1}{2}} \sum_{T \in \mathcal{T}_h}  \| v \|_{ l,2,  \omega(T)  }^{  }, \quad m+\frac{1}{2}  \le  l \le  k+1
 \end{align}
+\todo[inline]{ Maybe hard to argue \eqref{eq:bi_projection_estimates_3} to hold on $\Gamma $.}
 Naturally can we see this is the tools we need to construct an estimate for the energy norm.
+
 \begin{lemma}
     \label{lemma:astar_estimate}
     Let $u \in H^{s}( \Omega ) $ for $s\ge 3$ be a exact solution. Then we have  \[
@@ -259,7 +261,7 @@ Naturally can we see this is the tools we need to construct an estimate for the 
     \begin{enumerate}[label=\arabic*)]
         \item     Starting with the first term we get
     \[
-            \| |\alpha |^{\frac{1}{2}} ( u - C_{h}^{e}u) \|_{ \mathcal{T} _{h} \cap \Omega  }^{ 2}  \le  \| \alpha  \|_{L^\infty ( \Omega )    }^{2  }   \|  ( u - C_{h}^{e}u) \|_{0,\mathcal{T} _{h}  }^{ 2} \lesssim  h^{2s} \sum_{T \in \mathcal{T}
+            \| |\alpha |^{\frac{1}{2}} ( u - C_{h}^{e}u) \|_{ \mathcal{T} _{h} \cap \Omega  }^{ 2}   \lesssim     \|  ( u - C_{h}^{e}u) \|_{0,\mathcal{T} _{h}  }^{ 2} \lesssim  h^{2s} \sum_{T \in \mathcal{T}
             _{h}}^{}   \| v \|_{s,w( T)  }^{  2}
     \]
     Here we simply used \eqref{eq:bi_projection_estimates_1}.
