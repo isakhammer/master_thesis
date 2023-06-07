@@ -239,7 +239,7 @@ a_{h}^{H} \left( u, v \right)   =&
 Hence, we are finished.
 
 \begin{remark}
-Remark that we imposed the Neumann condition $g_{1}$ using the Nitsche's method and thus imposing a regularisation term \cite{nitsche1971variationsprinzip}. Observe we added n symmetry term $( \mean{ \partial _{n n} v }, \jump{ \partial _{n}u }      )_{\mathcal{F}_{h}}$,
+We imposed the Neumann condition $g_{1}$ using the Nitsche's method and thus imposing a regularisation term \cite{nitsche1971variationsprinzip}. Observe we added n symmetry term $( \mean{ \partial _{n n} v }, \jump{ \partial _{n}u }      )_{\mathcal{F}_{h}}$,
 which is consistent for zero, also involving penalties for the interior facets. Technically is the interior regularisation equivalent to do a Nitsche's method inbetween all interior elements, but with boundary conditions of each triangle weakly
 imposed to zero. Thus, the penalty parameter $\gamma$  is the same interior and exterior elements. From \cite{brenner2012quadratic, brenner2012} is it experimentally shown that $\gamma = 2k ( k-1 ) $ where $k$ is the polynomial order $k\ge 2$ may be
 a good choice for most applications.
