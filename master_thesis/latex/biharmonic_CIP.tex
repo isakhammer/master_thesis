@@ -284,7 +284,7 @@ Hence, we end up with the identity,
 ( \Delta ^2 u, v ) _{\Omega } = ( \Delta u, \Delta v)_{\mathcal{T} _{h} }  +  ( \jump{ \partial _{n} v} , \mean{ \Delta u })_{\mathcal{F}_{h} }  + ( g_{2} , v )_{\Gamma } - ( \partial _{n} v, \Delta u)_{\Gamma }.
 \]
 
-Finally, can we construct the Laplace CIP formulation. Let $u,v \in V_{h}$, then can we write the following statement.
+Finally, can we construct the Laplace CIP formulation. Let $u,v \in V_{h}$, then can finally write the following respective forms.
 
 \begin{equation}
     \begin{split}
@@ -325,11 +325,11 @@ Putting it all together we have the following mixed weak formulation; Find $( u,
 ( \nabla \sigma , \nabla \varphi  )_{\Omega}  & = ( f,\varphi ) _{\Omega} + ( g_{2} ,  \varphi )_{\Gamma } \quad  \forall \varphi \in H^{1}( \Omega )
     \end{split}
 \]
-Now we want to relate this formulation to the abstract saddle point problem (SPP) (find references).
+Now we want to relate this formulation to the abstract saddle point problem (SPP).
 Let $V = H^{1}( \Omega ) $  and $W=H^{1}( \Omega ) $ be  Hilbert spaces and define the bilinear form $a: V\times V \to \mathbb{R}  $ and $b: V \times W \to \mathbb{R} $ s.t. $a( \sigma,v ) = - ( \sigma , v) _{\Omega }  $ and $b( u,v) = ( \nabla u,
 \nabla v)_{\Omega  }  $. We also may define the linear forms, $G,F: V \to \mathbb{R} $ s.t. $ G( v)  = ( g_{1}, v) _{\Gamma } $ and $F( \varphi ) = ( f, \varphi )_{\Omega } + ( g_{2}, \varphi )_{\Gamma } $.
 
-Hence, we can connect it to the SPP. We want to find $( u,\sigma ) \in V \times W$ s.t.  \[
+Hence, we have the following SPP. Find $( u,\sigma ) \in V \times W$ s.t.  \[
     \begin{cases}
        a( \sigma ,v) + b ( u, v )  & = G( v)   \quad  \forall v \in V \\
        b( u, \varphi  )  & = F( \varphi )     \quad \forall \phi \in W
