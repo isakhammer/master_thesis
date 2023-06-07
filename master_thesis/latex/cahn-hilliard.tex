@@ -72,11 +72,11 @@ Expanding the first Laplace operator can we observe that,
 Hence, this makes it natural to associate the biharmonic $( \Delta ^2 u,v)_{\Gamma } $ with bilinear forms $a_h^{L} $ and $a^{H}_{h} $ from Section \ref{sec:CIP_biharmonic_problem}, however, in this section will we only consider $a^{L}$.
 We will now find seek to find a bilinear form of the nonlinear term,
 
-\begin{lemma}[Nonlinear bilinear term]
+\begin{lemma}[Semi-linear form]
     Let $u \in H^2( \Omega ) $ and $v \in V_{h}$ the test function.
-Then can we rewrite the nonlinear term into the bilinear form, $( -\Delta f( u) , v)_{\Omega } = c_{h}(u,v )   $, where
+Then can we rewrite the nonlinear term into the semi-linear form, $( -\Delta f( u) , v)_{\Omega } = c_{h}(u,v )   $, where
 \[
-    c^{}_{h} ( u,v) = - ( f( u), \Delta v )_{ \Omega } + ( f( \mean{ u }  ), \jump{ \partial _{n} v }   )_{\mathcal{F}_{h} }  \red{- ( f' (  u  )  \partial _{n}u ,  v      )_{\mathcal{F}_{h} ^{ext}}}
+    c^{}_{h} ( u,v)  = -( f( u), \Delta v )_{\mathcal{T} _{h}} + ( f(u), \partial _{n} v)_{\mathcal{F}^{ext}_{h} } +  ( f( u) , \jump{ \partial _{n}v }  )_{\mathcal{F} _{h}^{int}} + ( f'( u)  \partial _{n}u   ,  v)_{\mathcal{F} _{h}^{ext}}
 \]
 
 \end{lemma}
@@ -106,12 +106,21 @@ It is apparent that rewriting the system to summation of the facets we conclude 
 Here we used that $ \jump{ f( u)  } = 0  $ and $\mean{ f( u)  } = f( u)  $  since $u \in H^2( \Omega ) $. Also remark that $\jump{ \partial _{n}v } \neq 0   $ from $v \in V_{h}$. We can do similar procedure for the other term.
 \[
     \begin{split}
-\sum_{T \in \mathcal{T} _{h}}^{} (   f'( u)\partial _{n}u, v )_{\partial T } & = \sum_{F \in \mathcal{F} _{h}}^{} (\mean{ f'( u)\partial _{n}u }  , \jump{ v }   )_{F} +  (\jump{ f'( u)\partial _{n}u }  , \mean{ v }   )_{F} \\
-                                                                             & = \sum_{F \in \mathcal{F} _{h}}^{} (\mean{ f'( u)} \mean{ \partial _{n}u }  , \jump{ v }   )_{F} = \sum_{F \in \mathcal{F} _{h}^{ext}}^{} ( f'( u)  \partial _{n}u   ,  v
-                                                                             )_{F}  \\
+        \sum_{T \in \mathcal{T} _{h}}^{} (   f'( u)\partial _{n}u, v )_{\partial T } &=  \sum_{F \in \mathcal{F}_{h} }^{} \int_{F}^{}  \jump{( f'( u)\partial _{n}u  ) v } \\
+& = (\mean{ f'( u)\partial _{n}u }  , \jump{ v }   )_{\mathcal{F}^{ext}_{h} } + (\mean{ f'( u)\partial _{n}u }  , \jump{ v }   )_{\mathcal{F}^{int}_{h} } +  (\jump{ f'( u)\partial _{n}u }  , \mean{ v }   )_{\mathcal{F}^{int}_{h} } \\
+                                                                             & =  ( f'( u)  \partial _{n}u   ,  v
+                                                                             )_{\mathcal{F} _{h}^{ext}}
     \end{split}
 \]
-Again, here a similar identities $\jump{  f' ( u) \partial _{n} u} = 0  $ since $u \in H^2( \Omega ) $. Ultimately, the final term is eliminated by setting $ \jump{v} = 0 $ for internal facets, excluding the exterior facets.
+Again, here a similar identities $\jump{  f' ( u) \partial _{n} u} = 0  $ since $u \in H^2( \Omega ) $. Ultimately, from the continuity of $v$ is the jump term eliminated, $ \jump{v} = 0 $. Hence, we end up with the following formulation.
+\[
+    \begin{split}
+-(\Delta f( u) , v)_{ \mathcal{T}_{h}  } &= -(\nabla f( u), \nabla v  )_{ \mathcal{T}_{h}  } + ( \partial _{n}  f( u), v )_{\partial \mathcal{T}_{h}  }.\\
+                    & = -( f( u), \Delta v )_{\mathcal{T} _{h}} + (f( u), \partial _{n} v  )_{\partial \mathcal{T} _{h}} + (   f'( u)\partial _{n}u, v )_{\partial \mathcal{T} _{h} } \\
+&= -( f( u), \Delta v )_{\mathcal{T} _{h}} + ( f(u), \partial _{n} v)_{\mathcal{F}^{ext}_{h} } +  ( f( u) , \jump{ \partial _{n}v }  )_{\mathcal{F} _{h}^{int}} + ( f'( u)  \partial _{n}u   ,  v)_{\mathcal{F} _{h}^{ext}}
+    \end{split}
+.
+\]
 \end{proof}
 
 Hence, we have a scheme for nonlinear spatial discretization. Let $u \in \left[ 0,T \right] \times V_{h}  $ and $v \in V_{h}$. We define the following CIP discretization
