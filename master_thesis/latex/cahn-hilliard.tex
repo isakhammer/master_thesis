@@ -71,10 +71,10 @@ variant $a^{L}$.
 We will now find seek to find a bilinear form of the nonlinear term,
 
 \begin{lemma}[Semi-linear form]
-    Let $u \in H^2( \Omega ) $ and $v \in V_{h}$ the test function.
+    Let $u \in H^4( \Omega ) $ be solution to \eqref{eq:ch_gen} and $v \in V_{h}$ the test function.
 Then can we rewrite the nonlinear term into the semi-linear form, $( -\Delta f( u) , v)_{\Omega } = c_{h}(u,v )   $, where
 \[
-    c^{}_{h} ( u,v)  = -( f( u), \Delta v )_{\mathcal{T} _{h}}+  ( f( u) , \jump{ \partial _{n}v }  )_{\mathcal{F} _{h}^{int}} + ( f(u), \partial _{n} v)_{\mathcal{F}^{ext}_{h} }  + ( f'( u)  \partial _{n}u   ,  v)_{\mathcal{F} _{h}^{ext}}
+    c^{}_{h} ( u,v)  = -( f( u), \Delta v )_{\mathcal{T} _{h}}+  ( f( u) , \jump{ \partial _{n}v }  )_{\mathcal{F} _{h}^{int}} + ( f(u), \partial _{n} v)_{\mathcal{F}^{ext}_{h} }  + ( f'( u)  g_{1}   ,  v)_{\mathcal{F} _{h}^{ext}}
 \]
 
 \end{lemma}
@@ -109,29 +109,20 @@ Here we used that $ \jump{ f( u)  } = 0  $ and $\mean{ f( u)  } = f( u)  $  sinc
         \sum_{T \in \mathcal{T} _{h}}^{} (   f'( u)\partial _{n}u, v )_{\partial T } &=  \sum_{F \in \mathcal{F}_{h} }^{} \int_{F}^{}  \jump{( f'( u)\partial _{n}u  ) v } \\
 & = (\mean{ f'( u)\partial _{n}u }  , \jump{ v }   )_{\mathcal{F}^{ext}_{h} } + (\mean{ f'( u)\partial _{n}u }  , \jump{ v }   )_{\mathcal{F}^{int}_{h} } +  (\jump{ f'( u)\partial _{n}u }  , \mean{ v }   )_{\mathcal{F}^{int}_{h} } \\
                                                                              & =  ( f'( u)  \partial _{n}u   ,  v
-                                                                             )_{\mathcal{F} _{h}^{ext}}
+                                                                             )_{\mathcal{F} _{h}^{ext}} = ( f'( u)  g_{1}   ,  v
+                                                                             )_{\mathcal{F} ^{ext}_{h} }
     \end{split}
 \]
-Again, here a similar identities $\jump{  f' ( u) \partial _{n} u} = 0  $ since $u \in H^2( \Omega ) $. Ultimately, from the continuity of $v$ is the jump term eliminated, $ \jump{v} = 0 $. Hence, we end up with the following formulation.
+Again, here a similar identities $\jump{  f' ( u) \partial _{n} u} = 0  $ since $u \in H^2( \Omega ) $. Ultimately, from the continuity of $v$ is the jump term eliminated, $ \jump{v} = 0 $. Summarizing the proof we have the following lines.
 \[
     \begin{split}
 -(\Delta f( u) , v)_{ \mathcal{T}_{h}  } &= -(\nabla f( u), \nabla v  )_{ \mathcal{T}_{h}  } + ( \partial _{n}  f( u), v )_{\partial \mathcal{T}_{h}  }.\\
                     & = -( f( u), \Delta v )_{\mathcal{T} _{h}} + (f( u), \partial _{n} v  )_{\partial \mathcal{T} _{h}} + (   f'( u)\partial _{n}u, v )_{\partial \mathcal{T} _{h} } \\
-&= -( f( u), \Delta v )_{\mathcal{T} _{h}} +  ( f( u) , \jump{ \partial _{n}v }  )_{\mathcal{F} _{h}^{int}} + ( f(u), \partial _{n} v)_{\mathcal{F}^{ext}_{h} }  + ( f'( u)  \partial _{n}u   ,  v)_{\mathcal{F} _{h}^{ext}}
+&= -( f( u), \Delta v )_{\mathcal{T} _{h}} +  ( f( u) , \jump{ \partial _{n}v }  )_{\mathcal{F} _{h}^{int}} + ( f(u), \partial _{n} v)_{\mathcal{F}^{ext}_{h} }  + ( f'( u)  g_{1}   ,  v)_{\mathcal{F} _{h}^{ext}}
     \end{split}
 .
 \]
 \end{proof}
-
-As a note on imposing the nonlinear boundary condition. Observe we can rewrite the boundary condition in the following way, $$
-\partial _{n}\left( \varepsilon \Delta u + \frac{1}{\varepsilon } f( u)  \right) = \varepsilon \partial _{n}\Delta u + \frac{1}{\varepsilon }f' ( u) \partial _{n} u = \varepsilon \partial _{n}\Delta u +
-\frac{1}{\varepsilon } f' ( u) g_{1} =  g_{2}
-$$ for $u$ evaluated on $  \Gamma  $. Suppose we want
-to impose $g_{2}$ condition using the classic standard method in Subsection \ref{sub:construction_of_laplacian_cip}. We see that from the first step that  \[
-    \begin{split}
-\varepsilon ( \Delta ^2 u , v)_{\Omega }  & =\varepsilon  (\nabla \Delta u, \nabla v )_{\Omega } - \varepsilon ( \partial _{n}\Delta u, v  )_{\Gamma } = \varepsilon (\nabla \Delta u, \nabla v )_{\Omega } - \varepsilon (g_{2} - \frac{1}{\varepsilon } f' ( u) g_{1} , v  )_{\Gamma }
-    \end{split}
-\]
 
 Hence, we have a scheme for nonlinear spatial discretization. Let $u \in \left[ 0,T \right] \times V_{h}  $ and $v \in V_{h}$. We define the following CIP discretization
 \begin{equation}
@@ -140,11 +131,11 @@ Hence, we have a scheme for nonlinear spatial discretization. Let $u \in \left[ 
         a_{h} \left( u, v \right)   =& ( \Delta  u, \Delta v ) _{ \Omega } \\
                                      & + \left( \mean{  \Delta  u }, \jump{ \partial _{n }v} \right)_{\mathcal{F}_{h}  }  + \left( \mean{ \Delta  v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}  }  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h} } \\
                                      & + \left(   \Delta  u ,  \partial _{n }v \right)_{\Gamma   }  + \left(  \Delta  v ,  \partial _{n}u       \right)_{\Gamma  }  + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{ \Gamma } \\
-    c^{}_{h} ( u,v)  & = -( f( u), \Delta v )_{\mathcal{T} _{h}}+  ( f( u) , \jump{ \partial _{n}v }  )_{\mathcal{F} _{h}^{int}} + ( f(u), \partial _{n} v)_{\Gamma  }  + ( f'( u)  \partial _{n}u   ,  v)_{\Gamma } \\
-    l_{h}( v_{}) & =  \left( h, v \right) _{\Omega } \red{- \varepsilon ( g_{2},  v )_{\Gamma } +\frac{1}{\varepsilon } (f(u),  v )_{\Gamma }} -  ( g_{1}, \Delta  v  )_{\Gamma }  + \frac{\gamma }{h} ( g_{1}, \partial _{n} v  )_{\Gamma }
+    c^{}_{h} ( u,v)  & = -( f( u), \Delta v )_{\mathcal{T} _{h}}+  ( f( u) , \jump{ \partial _{n}v }  )_{\mathcal{F} _{h}^{int}} + ( f(u), \partial _{n} v)_{\Gamma  }  + ( f'( u)  g_{1}   ,  v)_{\Gamma } \\
+    l_{h}( v_{}) & =  \left( h, v \right) _{\Omega } -  \varepsilon ( g_{2},  v )_{\Gamma }  -  \varepsilon ( g_{1}, \Delta  v  )_{\Gamma }  + \varepsilon \frac{\gamma }{h} ( g_{1}, \partial _{n} v  )_{\Gamma }
     \end{split}
 \end{equation}
-s.t. that the following equation holds.
+s.t. that the following relation ship holds.
 \[
     ( \partial _{t}u, v)_\Omega + \varepsilon  a_{h}( u,v) + \frac{1}{\varepsilon }c_{h}( u,v) - l_{h}(v)  = 0
 \]
