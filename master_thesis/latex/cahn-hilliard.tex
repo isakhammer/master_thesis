@@ -14,24 +14,22 @@
 
 \subsection{The linear Cahn-Hilliard}%
 
-We will consider linear Cahn Hilliard problem is on the form
+We will consider linear Cahn Hilliard problem. Let $ u( x,0) =  u_{0}$ then is the formulations
+
 \begin{equation}
 \label{eq:ch_exact}
     \begin{split}
-        \partial _{t} u  - \varepsilon \Delta^2   u -   & =  h(x)  \quad \text{in} \Omega \\
+        \partial _{t} u  + \varepsilon \Delta^2   u -   & =  h(x)  \quad \text{in} \Omega \\
         \partial _{n} u & =  g_{1}(x)  \quad \text{ on } \Gamma \\
-        \partial _{n} \Delta u & = g_{2}(x)  \quad \text{ on } \Gamma  \\
-        u(t=0) & = u_{0}   \text{ on } \Omega
+        \varepsilon \partial _{n} \Delta u & = g_{2}(x)  \quad \text{ on } \Gamma  \\
     \end{split}
 \end{equation}
 
 
-We can see that the simplest weak formulation for $u,v \in H^{4}( \Omega ) $ is on the form
+We can see that the simplest weak formulation for $u,v \in H^{4}( \Omega ) $ is on the form,
 \[
 ( \partial _{t}u, v )_{\Omega }  - \varepsilon ( \Delta^2 u, v)_{\Omega } = ( h,v)_{\Omega }   \\
 \]
-
-
 We can easily observe that the biharmonic equation is a term of this equation. Combining the theory from \ref{sec:cutcip_biharmonic_problem} and can we see that the Laplace formulation
 
 
