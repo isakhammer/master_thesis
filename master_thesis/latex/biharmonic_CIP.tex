@@ -142,12 +142,12 @@ We applied the simple relation,
 \partial_n (\partial_n u)  & = n^T \nabla (\partial_n u)  = n ^T (D^2 u \ n)  = n^{T} D^2 u \ n = \partial _{nn} u, \\
 \partial_n (\partial_{t_{i}} u)  & = t_{i}^T \nabla (\partial_n u)  = t_i^T (D^2 u \ n )   = n^{T} D^2 u \ t_{i} = \partial _{n t_{i}} u.
     \end{align*}
-We may also deduce the relationship $\partial _{nt_{i}} u = \partial _{t_{i}n}u$ which arise from the fact that $n^{T} D^2u \ t_{i} = ( n^{T} D^2u \ v )^T = t_{i}^{T}  D^2u \  n$, where we utilized the symmetry $D^2u = ( D^2u) ^{T} $.
+We may also deduce the relationship $\partial _{nt_{i}} u = \partial _{t_{i}n}u$ which arise from the fact that $n^{T} D^2u \ t_{i} = ( t_{i}^{T} D^2u \  n)^T = t_{i}^{T}  D^2u \  n$, where we utilized the symmetry $D^2u = ( D^2u) ^{T} $ and that the
+product is a scalar.
 Adding all these calculations together we have the following local identity,
 \[
 ( \Delta ^2 u, v) _{T}   = ( D^2 u, D^2v)_{T } + ( \partial _{n}  \Delta u, v )_{\partial T} -( \partial _{n} ( \partial_{n}u ), \partial _{n} v  )_{\partial T}-\sum_{i=1}^{d-1} ( \partial _{n} ( \partial_{t_{i}}u ), \partial _{t_{i}} v  )_{\partial T}
 \]
-
 For global continuity we add all the triangles in the mesh $\mathcal{T} _{h}$.
 
 \begin{equation}
