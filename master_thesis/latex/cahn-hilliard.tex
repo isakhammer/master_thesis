@@ -40,18 +40,18 @@ We can easily observe that the biharmonic equation is a term of this equation. C
 \subsection{The general Cahn-Hilliard}%
 \label{sub:the_problem}
 
-We will consider General Cahn Hilliard problem is on the form
+Recall the strong form Cahn-Hilliard equation. Let $ u( x,0) =  u_{0}$ then is the dynamics on the form,
+
 \begin{equation}
-\label{eq:ch_exact}
+\label{eq:strongch}
     \begin{split}
-        \partial _{t} u  - \Delta ( \varepsilon  \Delta u - \frac{1}{\varepsilon } f( u) ) & =  h(x)  \quad \text{in} \Omega \\
-        \partial _{n} u & =  g_{1}(x)  \quad \text{ on } \Gamma \\
-          \partial _{n} ( \red{ f( u) + \varepsilon } \Delta u ) & = g_{2}(x)  \quad \text{ on } \Gamma  \\
-        u(t=0) & = u_{0}   \text{ on } \Omega
+\partial _{t} u + \Delta  \left(  \varepsilon  \Delta u - \frac{1}{\varepsilon }f( u) \right)   &= h( x)   \quad \text{ in } \Omega  \\
+\partial _{n} u &= g_{1}( x)  \quad \text{ on } \Gamma  \\
+\partial _{n} \left(  \varepsilon \Delta u - \frac{1}{\varepsilon }f( u)   \right)    &= g_{2}(x)  \quad \text{ on } \Gamma  \\
     \end{split}
 \end{equation}
 
-Where $f( s)  = F' ( s)=s( s^2 -1)  $ and $F( s)  = \frac{1}{4} ( s^2 - 1)^2 $. $\Omega \subset \mathbb{R} ^{d} $  for $d = 2,3$.
+where we used the notation $f( u) = F'( u) =u( u^2 -1)  $ for $F( u) = \frac{1}{4}( u^{2} - 1)^{2} $. $\Omega \subset \mathbb{R} ^{d} $  for $d = 2,3$.
 
 
 
@@ -66,17 +66,16 @@ V_{h} = \left\{ v \in C^{0}( \Omega )   \mid v\in \mathcal{P} ^{k} ( T) \quad \f
 \]
 Expanding the first Laplace operator can we observe that,
 \[
-- ( \Delta ( \varepsilon  \Delta u - \frac{1}{\varepsilon } f( u) ) ,v )_{\Omega } = \varepsilon ( \Delta^{2} u ,v )_{\Omega } - \frac{1}{\varepsilon } ( \Delta f( u)  ,v )_{\Omega }.
+ ( \Delta ( \varepsilon  \Delta u - \frac{1}{\varepsilon } f( u) ) ,v )_{\Omega } = \varepsilon ( \Delta^{2} u ,v )_{\Omega } - \frac{1}{\varepsilon } ( \Delta f( u)  ,v )_{\Omega }.
 \]
-
-Hence, this makes it natural to associate the biharmonic $( \Delta ^2 u,v)_{\Gamma } $ with bilinear forms $a_h^{L} $ and $a^{H}_{h} $ from Section \ref{sec:CIP_biharmonic_problem}, however, in this section will we only consider $a^{L}$.
+Hence, this makes it natural to associate the biharmonic $( \Delta ^2 u,v)_{\Gamma } $ with bilinear forms $a_h^{L} $ and $a^{H}_{h} $ from Section \ref{sec:CIP_biharmonic_problem}, however, in this section will we only consider the Laplace variant $a^{L}$.
 We will now find seek to find a bilinear form of the nonlinear term,
 
 \begin{lemma}[Semi-linear form]
     Let $u \in H^2( \Omega ) $ and $v \in V_{h}$ the test function.
 Then can we rewrite the nonlinear term into the semi-linear form, $( -\Delta f( u) , v)_{\Omega } = c_{h}(u,v )   $, where
 \[
-    c^{}_{h} ( u,v)  = -( f( u), \Delta v )_{\mathcal{T} _{h}} + ( f(u), \partial _{n} v)_{\mathcal{F}^{ext}_{h} } +  ( f( u) , \jump{ \partial _{n}v }  )_{\mathcal{F} _{h}^{int}} + ( f'( u)  \partial _{n}u   ,  v)_{\mathcal{F} _{h}^{ext}}
+    c^{}_{h} ( u,v)  = -( f( u), \Delta v )_{\mathcal{T} _{h}}+  ( f( u) , \jump{ \partial _{n}v }  )_{\mathcal{F} _{h}^{int}} + ( f(u), \partial _{n} v)_{\mathcal{F}^{ext}_{h} }  + ( f'( u)  \partial _{n}u   ,  v)_{\mathcal{F} _{h}^{ext}}
 \]
 
 \end{lemma}
@@ -117,7 +116,7 @@ Again, here a similar identities $\jump{  f' ( u) \partial _{n} u} = 0  $ since 
     \begin{split}
 -(\Delta f( u) , v)_{ \mathcal{T}_{h}  } &= -(\nabla f( u), \nabla v  )_{ \mathcal{T}_{h}  } + ( \partial _{n}  f( u), v )_{\partial \mathcal{T}_{h}  }.\\
                     & = -( f( u), \Delta v )_{\mathcal{T} _{h}} + (f( u), \partial _{n} v  )_{\partial \mathcal{T} _{h}} + (   f'( u)\partial _{n}u, v )_{\partial \mathcal{T} _{h} } \\
-&= -( f( u), \Delta v )_{\mathcal{T} _{h}} + ( f(u), \partial _{n} v)_{\mathcal{F}^{ext}_{h} } +  ( f( u) , \jump{ \partial _{n}v }  )_{\mathcal{F} _{h}^{int}} + ( f'( u)  \partial _{n}u   ,  v)_{\mathcal{F} _{h}^{ext}}
+&= -( f( u), \Delta v )_{\mathcal{T} _{h}} +  ( f( u) , \jump{ \partial _{n}v }  )_{\mathcal{F} _{h}^{int}} + ( f(u), \partial _{n} v)_{\mathcal{F}^{ext}_{h} }  + ( f'( u)  \partial _{n}u   ,  v)_{\mathcal{F} _{h}^{ext}}
     \end{split}
 .
 \]
