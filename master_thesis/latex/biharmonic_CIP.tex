@@ -64,8 +64,8 @@ With the corresponding energy norms,
         \begin{split}
             a_{h}^{L} \left( u, v \right)   =&
             \left( \alpha  u, v \right) _{\Omega }   +  \left( \Delta  u, \Delta v \right) _{ \Omega } \\
-                                             & + \left( \mean{  \Delta  u }, \jump{ \partial _{n }v} \right)_{\mathcal{F}_{h}  }  + \left( \mean{ \Delta  v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}  }  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h} } \\
-                                             & + \left(   \Delta  u ,  \partial _{n }v \right)_{\Gamma   }  + \left(  \Delta  v ,  \partial _{n}u       \right)_{\Gamma  }  + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{ \Gamma } \\
+                                             & - \left( \mean{  \Delta  u }, \jump{ \partial _{n }v} \right)_{\mathcal{F}_{h}  }  - \left( \mean{ \Delta  v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}  }  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h} } \\
+                                             & - \left(   \Delta  u ,  \partial _{n }v \right)_{\Gamma   }  - \left(  \Delta  v ,  \partial _{n}u       \right)_{\Gamma  }  + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{ \Gamma } \\
                                              l^{L}_{h}( v)  =&  \left( f, v \right) _{\Omega } - ( g_{2},  v )_{\Gamma } -  ( g_{1}, \Delta  v  )_{\Gamma }  + \frac{\gamma }{h} ( g_{1}, \partial _{n} v  )_{\Gamma }
                                          \end{split}
                                      \end{equation}
@@ -256,9 +256,8 @@ $\mathcal{T}_{h} $. Using Greens Theorem is it obvious that \(
 \).
 The main difference here is that we straight away do a new iteration of the Greens theorem.
 \begin{equation*}
-( \nabla ( \Delta u ) , \nabla v ) _{T }  =  + ( \partial _{n}v , \Delta v)_{\partial T} - ( \Delta u, \Delta v ) _{T}
+-( \nabla ( \Delta u ) , \nabla v ) _{T }  =   ( \Delta u, \Delta v ) _{T} - ( \partial _{n}v , \Delta v)_{\partial T}
 .\end{equation*}
-
 Hence, we have a local identity s.t. \[
 ( \Delta ^2 u, v ) _{T} = ( \Delta u, \Delta v) +  ( \partial _{n} \Delta u, v)_{\partial T} - ( \partial _{n} v, \Delta u) _{\partial T}
 \]
@@ -272,8 +271,7 @@ Now, doing a summation over all elements we get \[
   )}_{(II)}   \\
     \end{split}
 \]
-
-Now, decomposing the terms as utilizing the regularity of $u$ and $v$ is it easy to see that.    \[
+Decomposing the terms and utilizing the regularity of $u$ and $v$ is it easy to see that,    \[
 \begin{split}
     (I) & = ( \partial _{n^{+}} \Delta u, v)_{ F} + ( \partial _{n^{-}} \Delta u, v)_{ F}  = \int_{F}^{} \left[ \partial _{n} \Delta u \cdot  v \right] =  (  \mean{ \partial _{n^{+}} \Delta u } , \underbrace{\jump{v  }}_{ = 0}      )_{ F} + (  \underbrace{\jump{ \partial _{n}
     \Delta u }}_{=0}  , \mean{v  }     )_{ F} \\
@@ -281,7 +279,6 @@ Now, decomposing the terms as utilizing the regularity of $u$ and $v$ is it easy
     }}_{=0} )_{F}
 \end{split} .
 \]
-
 Hence, we end up with the identity,
 \[
 ( \Delta ^2 u, v ) _{\Omega } = ( \Delta u, \Delta v)_{\mathcal{T} _{h} }  +  ( \jump{ \partial _{n} v} , \mean{ \Delta u })_{\mathcal{F}_{h} }  + ( g_{2} , v )_{\Gamma } - ( \partial _{n} v, \Delta u)_{\Gamma }.
@@ -293,8 +290,8 @@ Finally, can we construct the Laplace CIP formulation. Let $u,v \in V_{h}$, then
     \begin{split}
         a_{h}^{L} \left( u, v \right)   =&
         \left( \alpha  u, v \right) _{\Omega }   +  \left( \Delta  u, \Delta v \right) _{ \Omega } \\
-                                         & + \left( \mean{  \Delta  u }, \jump{ \partial _{n }v} \right)_{\mathcal{F}_{h}  }  + \left( \mean{ \Delta  v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}  }  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h} } \\
-                                         & + \left(   \Delta  u ,  \partial _{n }v \right)_{\Gamma   }  + \left(  \Delta  v ,  \partial _{n}u       \right)_{\Gamma  }  + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{ \Gamma } \\
+                                         & - \left( \mean{  \Delta  u }, \jump{ \partial _{n }v} \right)_{\mathcal{F}_{h}  }  - \left( \mean{ \Delta  v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}  }  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h} } \\
+                                         & - \left(   \Delta  u ,  \partial _{n }v \right)_{\Gamma   }  - \left(  \Delta  v ,  \partial _{n}u       \right)_{\Gamma  }  + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{ \Gamma } \\
         l^{L}_{h}( v_{h}) & =  \left( f, v \right) _{\Omega } - ( g_{2},  v )_{\Gamma } -  ( g_{1}, \Delta  v  )_{\Gamma }  + \frac{\gamma }{h} ( g_{1}, \partial _{n} v  )_{\Gamma }
     \end{split}
 \end{equation}
