@@ -70,11 +70,11 @@ The set of all facets is the union of external and internal facets, $\mathcal{F}
             \mathcal{F}^{int} _{h}  = \left\{ F=T^{+}\cap T^{-}  \mid  T^{+}, T^{-} \in \mathcal{T}_{h}  \right\} \text{ and }
             \mathcal{F}^{ext} _{h}  = \left\{ F= \partial T \cap \partial \Omega    \mid  T  \in \mathcal{T}_{h}  \right\}.
 \]
-Let $\mathcal{T}_{h} $ be a mesh of $\Omega $ equipped with the facets $\mathcal{F}_{h} $. We will define the following normal vectors
+Let $\mathcal{T}_{h} $ be a mesh of $\Omega $ equipped with the facets $\mathcal{F}_{h} $. We will define the following normal vectors.
 \begin{enumerate}[label=\arabic*)]
-    \item We define $n \mid _{T}$ to be unit outward normal on $\partial T$ for each $T \in \mathcal{T}_{h} $
- \item For all $F \in \mathcal{F }^{int} _{h}$ we define $n$ to be the facet normal $ n  \mid_F = n \mid _{T^{+}} $  from $T^{+}$ to $T^{-}$, illustrated in figure \ref{fig:normal}.
- \item For all $F \in F^{ext}_{h}$ we define the facet normal $n \mid _{F} = n \mid _{T} $ to the unit outward normal.
+    \item We define $ n= n \mid _{T}$ to be unit outward normal on $\partial T$ for each $T \in \mathcal{T}_{h} $
+ \item Let $F \in \mathcal{F }^{int} _{h}$. we define $n$ to be the facet normal $ n =  n  \mid_F = n \mid _{T^{+}} $  from $T^{+}$ to $T^{-}$, illustrated in figure \ref{fig:normal}.
+ \item Let $F \in \mathcal{F} ^{ext}_{h}$. Then we define the facet normal $n \mid _{F} = n \mid _{T} $ to the unit outward normal.
 \end{enumerate}
 Keep in mind that in many that we often will simply use the notation $n = n \mid _{T}$ in most cases.
 
@@ -86,36 +86,44 @@ We define the mean as $\mean{ v} |_{F} = v    $ and the jump as $\jump{v}|_{F} =
 
     \end{enumerate}
     To simplify will we use the notation $\mean{ v } = \mean{ v } \mid _{F}    $ and $\jump{ v } = \jump{ v } \mid _{F}    $ for all $F \in \mathcal{F} _{h}$.
-    Remark that if we have to functions $u,v \in L^2( \mathcal{T}_{h} ) $, then the following identity holds $  \jump{ uv }    = \jump{ u }   \mean{ v }    + \mean{ u }  \jump{ v }$.
+    Remark that if we have to functions $u,v \in L^2( \mathcal{T}_{h} ) $, then the following identity holds $  \jump{ uv }    = \jump{ u }   \mean{ v }    + \mean{ u }  \jump{ v }$ along all facets $ \mathcal{F}_{h} $ associated with the
+    triangulation $\mathcal{T} _{h}$.
 
 
 \begin{figure}[!h]
 \centering
 \begin{tikzpicture}[scale=1]
-\coordinate (A) at (0,0);
+\coordinate (A) at (-1.5, -0);
 \coordinate (C) at (0,3);
 \coordinate (B) at (4,0);
-\coordinate (D) at (4,4);
+\coordinate (D) at (4,3.5);
 
 \draw (A) -- (B) -- (C) -- cycle;
 \draw (B) -- (C) -- (D) -- cycle;
 \fill[red, opacity=0.5] (A) -- (B) -- (C);
 \fill[blue, opacity=0.5] (B) -- (C) -- (D);
+\draw[ultra  thick] (C) -- (B);
 
-\coordinate (Tm) at (3.5,3.5);
-\coordinate (Tp) at (0.5, 0.5);
-\coordinate (e) at (1.5, 1.5);
-\coordinate (start) at (1.7, 1.7);
-\coordinate (end) at (2.25, 2.4);
+\coordinate (Tm) at (3.6,1.5);
+\coordinate (Tp) at (2.0, 0.5);
+\coordinate (e) at (0.5, 2.2);
 \node[below left] at (Tm) {$T^{-} $ };
 \node[above right] at (Tp) {$T^{+}$ };
 \node[below right] at (e) {$F$ };
 
-\draw [->, thick] (start) -- (end);
-\node[below right] at (end) {$n$};
+\coordinate (start) at (1.7, 1.7);
+\coordinate (endPlus) at (2.25, 2.4);
+\coordinate (endMinus) at (1.15, 1.0);
+
+\draw [->, thick] (start) -- (endPlus);
+\node[above right] at (endPlus) {$n^{+}$};
+
+\draw [->, thick] (start) -- (endMinus);
+\node[below left] at (endMinus) {$n^{-}$};
+
 \end{tikzpicture}
 
-\caption{Facet $F \in \mathcal{F}_h^{int} $ shared by the triangles $T^{+}, T^{-} \in \mathcal{T}_{h} $ and the normal unit vector $n$.  }
+\caption{Facet $F \in \mathcal{F}_h^{int} $ shared by the triangles $T^{+}, T^{-} \in \mathcal{T}_{h} $ and the normal unit vector $n^{+}$ and $n^{-}$. If we pick $T=T^{+}$ then we define $n  \mid _{F} = n^{+}$.}
     \label{fig:normal}
 \end{figure}
 
