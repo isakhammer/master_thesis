@@ -43,7 +43,7 @@ We can easily observe that the biharmonic equation is a term of this equation. C
 Recall the strong form Cahn-Hilliard equation. Let $ u( x,0) =  u_{0}$ then is the dynamics on the form,
 
 \begin{equation}
-\label{eq:strongch}
+\label{eq:ch_gen}
     \begin{split}
 \partial _{t} u + \Delta  \left(  \varepsilon  \Delta u - \frac{1}{\varepsilon }f( u) \right)   &= h( x)   \quad \text{ in } \Omega  \\
 \partial _{n} u &= g_{1}( x)  \quad \text{ on } \Gamma  \\
@@ -79,6 +79,8 @@ Then can we rewrite the nonlinear term into the semi-linear form, $( -\Delta f( 
 \]
 
 \end{lemma}
+\todo[inline]{ I am really sure the minus sign in front of $ \sum_{e \in \mathcal{E}^{I} }^{} \left<f' ( \mean{ u }  ) \mean{ \partial _{n} u }   , \jump{ v }    \right>_{e} $  in \cite[ Equation 4.2]{feng2007fully}  must be wrong. I also criticize
+\cite[ Remark 4.1d]{feng2007fully} which says that says that finding this weak form is not possible for conforming methods (I guess $C^{0}$ is a conforming method??). }
 
 \begin{proof}
   We can easily see by doing Greens theorem twice that \[
