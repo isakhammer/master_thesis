@@ -21,7 +21,7 @@ We will consider linear Cahn Hilliard problem. Let $ u( x,0) =  u_{0}$ then is t
     \begin{split}
         \partial _{t} u  + \varepsilon \Delta^2   u -   & =  h(x)  \quad \text{in} \Omega \\
         \partial _{n} u & =  g_{1}(x)  \quad \text{ on } \Gamma \\
-        \varepsilon \partial _{n} \Delta u & = g_{2}(x)  \quad \text{ on } \Gamma  \\
+         \partial _{n} \Delta u & = g_{2}(x)  \quad \text{ on } \Gamma  \\
     \end{split}
 \end{equation}
 
@@ -45,7 +45,7 @@ Recall the strong form Cahn-Hilliard equation. Let $ u( x,0) =  u_{0}$ then is t
     \begin{split}
 \partial _{t} u + \Delta  \left(  \varepsilon  \Delta u - \frac{1}{\varepsilon }f( u) \right)   &= h( x)   \quad \text{ in } \Omega  \\
 \partial _{n} u &= g_{1}( x)  \quad \text{ on } \Gamma  \\
-\partial _{n} \left(  \varepsilon \Delta u - \frac{1}{\varepsilon }f( u)   \right)    &= g_{2}(x)  \quad \text{ on } \Gamma  \\
+\partial _{n}    \Delta u   &= g_{2}(x)  \quad \text{ on } \Gamma  \\
     \end{split}
 \end{equation}
 where we used the notation $f( u) = F'( u) =u( u^2 -1)  $ for $F( u) = \frac{1}{4}( u^{2} - 1)^{2} $. $\Omega \subset \mathbb{R} ^{d} $  for $d = 2,3$. In contrast to the standard version presented in the introduction \eqref{eq:strongch}, is this version
@@ -53,7 +53,7 @@ generalized to also holds for for functions $h,g_{1},g_{2}: \Omega \to\mathbb{R}
 
 
 
-\subsection{ CIP method for the Cahn Hilliard Equation}%
+\subsection{ CIP method for the Cahn Hilliard Equation on a Polygonal mesh}%
 \label{sub:writing_the_cahn_hilliard_equation_of_weak_form}
 
 Our goal is to write the Cahn Hilliard equation on weak form.
@@ -66,7 +66,8 @@ Expanding the first Laplace operator can we observe that,
 \[
  ( \Delta ( \varepsilon  \Delta u - \frac{1}{\varepsilon } f( u) ) ,v )_{\Omega } = \varepsilon ( \Delta^{2} u ,v )_{\Omega } - \frac{1}{\varepsilon } ( \Delta f( u)  ,v )_{\Omega }.
 \]
-Hence, this makes it natural to associate the biharmonic $( \Delta ^2 u,v)_{\Gamma } $ with bilinear forms $a_h^{L} $ and $a^{H}_{h} $ from Section \ref{sec:CIP_biharmonic_problem}, however, in this section will we only consider the Laplace variant $a^{L}$.
+Hence, this makes it natural to associate the biharmonic $( \Delta ^2 u,v)_{\Gamma } $ with bilinear forms $a_h^{H} $ in  and $a^{H}_{h} $ from Section \ref{sec:CIP_biharmonic_problem}, however, in this section will we only consider the Laplace
+variant $a^{L}$.
 We will now find seek to find a bilinear form of the nonlinear term,
 
 \begin{lemma}[Semi-linear form]
@@ -122,6 +123,16 @@ Again, here a similar identities $\jump{  f' ( u) \partial _{n} u} = 0  $ since 
 \]
 \end{proof}
 
+As a note on imposing the nonlinear boundary condition. Observe we can rewrite the boundary condition in the following way, $$
+\partial _{n}\left( \varepsilon \Delta u + \frac{1}{\varepsilon } f( u)  \right) = \varepsilon \partial _{n}\Delta u + \frac{1}{\varepsilon }f' ( u) \partial _{n} u = \varepsilon \partial _{n}\Delta u +
+\frac{1}{\varepsilon } f' ( u) g_{1} =  g_{2}
+$$ for $u$ evaluated on $  \Gamma  $. Suppose we want
+to impose $g_{2}$ condition using the classic standard method in Subsection \ref{sub:construction_of_laplacian_cip}. We see that from the first step that  \[
+    \begin{split}
+\varepsilon ( \Delta ^2 u , v)_{\Omega }  & =\varepsilon  (\nabla \Delta u, \nabla v )_{\Omega } - \varepsilon ( \partial _{n}\Delta u, v  )_{\Gamma } = \varepsilon (\nabla \Delta u, \nabla v )_{\Omega } - \varepsilon (g_{2} - \frac{1}{\varepsilon } f' ( u) g_{1} , v  )_{\Gamma }
+    \end{split}
+\]
+
 Hence, we have a scheme for nonlinear spatial discretization. Let $u \in \left[ 0,T \right] \times V_{h}  $ and $v \in V_{h}$. We define the following CIP discretization
 \begin{equation}
     \label{eq:cip_ch}
@@ -130,7 +141,7 @@ Hence, we have a scheme for nonlinear spatial discretization. Let $u \in \left[ 
                                      & + \left( \mean{  \Delta  u }, \jump{ \partial _{n }v} \right)_{\mathcal{F}_{h}  }  + \left( \mean{ \Delta  v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}  }  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h} } \\
                                      & + \left(   \Delta  u ,  \partial _{n }v \right)_{\Gamma   }  + \left(  \Delta  v ,  \partial _{n}u       \right)_{\Gamma  }  + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{ \Gamma } \\
     c^{}_{h} ( u,v)  & = -( f( u), \Delta v )_{\mathcal{T} _{h}}+  ( f( u) , \jump{ \partial _{n}v }  )_{\mathcal{F} _{h}^{int}} + ( f(u), \partial _{n} v)_{\Gamma  }  + ( f'( u)  \partial _{n}u   ,  v)_{\Gamma } \\
-    l_{h}( v_{}) & =  \left( h, v \right) _{\Omega } \red{- ( g_{2},  v )_{\Gamma } +\frac{1}{\varepsilon } (f(u),  v )_{\Gamma }} -  ( g_{1}, \Delta  v  )_{\Gamma }  + \frac{\gamma }{h} ( g_{1}, \partial _{n} v  )_{\Gamma }
+    l_{h}( v_{}) & =  \left( h, v \right) _{\Omega } \red{- \varepsilon ( g_{2},  v )_{\Gamma } +\frac{1}{\varepsilon } (f(u),  v )_{\Gamma }} -  ( g_{1}, \Delta  v  )_{\Gamma }  + \frac{\gamma }{h} ( g_{1}, \partial _{n} v  )_{\Gamma }
     \end{split}
 \end{equation}
 s.t. that the following equation holds.
