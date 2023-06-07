@@ -130,13 +130,13 @@ Hence, we have a scheme for nonlinear spatial discretization. Let $u \in \left[ 
         a_{h} \left( u, v \right)   =& ( \Delta  u, \Delta v ) _{ \Omega } \\
                                      & + \left( \mean{  \Delta  u }, \jump{ \partial _{n }v} \right)_{\mathcal{F}_{h}  }  + \left( \mean{ \Delta  v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}  }  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h} } \\
                                      & + \left(   \Delta  u ,  \partial _{n }v \right)_{\Gamma   }  + \left(  \Delta  v ,  \partial _{n}u       \right)_{\Gamma  }  + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{ \Gamma } \\
-    c^{}_{h} ( u,v) & = - ( f( u), \Delta v )_{ \Omega } + ( f( \mean{ u }  ), \jump{ \partial _{n} v }   )_{\mathcal{F}_{h} }  \red{- ( f' (  u  )  \partial _{n}u ,  v      )_{ \Gamma }} \\
-    l_{h}( v_{}) & =  \left( h, v \right) _{\Omega } - ( g_{2},  v )_{\Gamma } \red{+(f(u),  v )_{\Gamma }} -  ( g_{1}, \Delta  v  )_{\Gamma }  + \frac{\gamma }{h} ( g_{1}, \partial _{n} v  )_{\Gamma }
+    c^{}_{h} ( u,v)  & = -( f( u), \Delta v )_{\mathcal{T} _{h}}+  ( f( u) , \jump{ \partial _{n}v }  )_{\mathcal{F} _{h}^{int}} + ( f(u), \partial _{n} v)_{\Gamma  }  + ( f'( u)  \partial _{n}u   ,  v)_{\Gamma } \\
+    l_{h}( v_{}) & =  \left( h, v \right) _{\Omega } \red{- ( g_{2},  v )_{\Gamma } +\frac{1}{\varepsilon } (f(u),  v )_{\Gamma }} -  ( g_{1}, \Delta  v  )_{\Gamma }  + \frac{\gamma }{h} ( g_{1}, \partial _{n} v  )_{\Gamma }
     \end{split}
 \end{equation}
 s.t. that the following equation holds.
 \[
-    ( \partial _{t}u, v)_\Omega + a_{h}( u,v) + c_{h}( u,v) - l_{h}(v)  = 0
+    ( \partial _{t}u, v)_\Omega + \varepsilon  a_{h}( u,v) + \frac{1}{\varepsilon }c_{h}( u,v) - l_{h}(v)  = 0
 \]
 
 

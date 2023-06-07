@@ -160,7 +160,7 @@ By integrating over exterior facets $\mathcal{F} _{h}^{ext}$ and interior facets
 \begin{equation*}
     \begin{split}
  ( \Delta  ^{2} u,v ) _{\Omega }  =&\sum_{T\in \mathcal{T} _{h}}^{} ( D^2u,D^2v ) _{T }  + (\partial _{n} \Delta  u,v)_{\partial T} - (\partial _{nn} u, \partial _{n}v )_{\partial T}  - \sum_{i=1}^{d-1} ( \partial _{t_{i}n}u , \partial _{t_{i}} v  )_{\partial T}   \\
-= &\sum_{T\in \mathcal{T} _{h}}^{} ( D^2u,D^2v ) _{T }  + \sum_{F \in \mathcal{F}_{h}^{ext} }^{}  (\partial _{n} \Delta  u,v)_{F} - (\underbrace{\partial _{nn} u}_{ \partial _{n} g_{1}} , \partial _{n}v )_{F}  - \sum_{i=1}^{d-1} ( \underbrace{\partial _{ t_{i}n} u }_{  \partial_{ t_{i} } g_{1},  }, \partial _{t_{i}} v
+= &\sum_{T\in \mathcal{T} _{h}}^{} ( D^2u,D^2v ) _{T }  + \sum_{F \in \mathcal{F}_{h}^{ext} }^{}  (\partial _{n} \Delta  u,v)_{F} - (\partial _{nn} u, \partial _{n}v )_{F}  - \sum_{i=1}^{d-1} ( \partial _{ t_{i}n} u , \partial _{t_{i}} v
 )_{F}     \\
    &  + \sum_{F \in \mathcal{F} _{h}^{int}}^{} \underbrace{\left( (\partial _{n^{+}} \Delta  u^{+}
         ,v^{+} )_{F}
@@ -216,15 +216,17 @@ Observe that the cancellations in the term $(I)$ and term $(III)$  appears of th
 Hence, we have the following identity.
 \begin{equation}
 \label{eq:bi_basic_dg_full_1}
-\red{
 \begin{split}
     \left( \Delta  ^{2} u, v \right) _{\Omega }  =&   \left( D^2u, D^2v \right)_{\mathcal{T} _{h}} +  \left(g_{2}, v  \right) _{\mathcal{F}^{ext}_{h} }  -  ( \mean{ \partial _{nn} u }   , \jump{ \partial_{n} v } )_{\mathcal{F}_{h}^{int} } \\
-                                                  & - ( \partial _{n} g_{1} , \partial _{n} v)_{\mathcal{F}^{ext}_{h} } - \sum_{i =1  }^{d-1} ( \partial   _{t_{i}} g_{1}  ,  \partial   _{t_{i}}  v  )_{ \mathcal{F}^{ext} _{h}  }
-\end{split}
+                                                  & \red{ - ( \partial _{nn} u , \partial _{n} v)_{\mathcal{F}^{ext}_{h} } - \sum_{i =1  }^{d-1} ( \partial   _{t_{i}n} u  ,  \partial   _{t_{i}}  v  )_{ \mathcal{F}^{ext} _{h}  }
 }
+\end{split}
 \end{equation}
+\todo[inline]{ Let $u$ be evaluated on $\Gamma $. It is clear that $\partial_{ nn } u = \partial_n g_1  $ does not old even though $\partial_n u = g_1  $. Similarly, $\partial_{ t_{i}n } u \neq \partial_{t_{i}} g_1  $ even though $\partial_n u = g_1  $ on
+$\Gamma$. A simple example is when $g_{1} = 0$ and a square boundary with length $2L$ in the origin. If $g_{1}(x,y) = \sin(\frac{ 2 \pi }{L} x)$ then is $\partial _{n_x} g_{1}(L,0) = \frac{2 \pi}{L} [1,0] \cdot [cos(2 \pi ), 0] = \frac{2 \pi}{L}  $
+and if $g_1(x,y) = x-L$ then is $ \partial _{n_x} g_1 = 0 $. I believe a similar example also holds in the tangential direction.  Hence, an alternative method  to impose $g_1$ must be considered for the tangential direction, for example a Nitsche formulation.   }
 
-
+$g_1(x,y) = x-L \\$
 We will now assemble the Hessian CIP formulation. Assume $u,v \in V_{h}$, then we have the linear form
 \begin{equation}
 \begin{split}
@@ -233,7 +235,8 @@ a_{h}^{H} \left( u, v \right)   =&
  & -
   \left( \mean{  \partial _{n n} u }, \jump{ \partial _{n }u} \right)_{\mathcal{F}_{h}}  -
  \left( \mean{ \partial _{n n} v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}}  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h}} \\
- l_{h}^{H}( v_{h}) & =  \left( f, v \right) _{\Omega }  - \left(g_{2}, v  \right) _{\Gamma } - ( g_{1}, \partial _{nn} v)_{\Gamma } +  \frac{\gamma }{h} ( g_{1} , \partial _{n} v)_{\Gamma }
+  l_{h}^{H}( v_{h}) & =  \left( f, v \right) _{\Omega }  - \left(g_{2}, v  \right) _{\Gamma } \red{- ( g_{1}, \partial _{nn} v)_{\Gamma } +  \frac{\gamma }{h} ( g_{1} , \partial _{n} v)_{\Gamma }
+ }
 \end{split}
 \end{equation}
 Hence, we are finished.
