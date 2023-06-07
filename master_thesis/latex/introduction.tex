@@ -56,22 +56,25 @@ First of all, to require local mass conservation, we may enforce the continuity 
 \partial _{t} u + \nabla \cdot \mathcal{J}  = 0,
 \]
 where $\mathcal{J} $ denotes the flux governed by the physical dynamics. Hence, this naturally leads to the no-flux and the Neumann boundary conditions,
-\begin{equation}
-\label{eq:conservation}
-    \begin{split}
+\begin{align}
+\label{eq:bc1}
 \mathcal{J}  \cdot n & = 0 \text{ on } \Gamma \\
+\label{eq:bc2}
 \partial _{n} u & = 0 \text{ on } \Gamma
-    \end{split}
-\end{equation}
- A well-accepted law for the flux is that it is proportional to the chemical energy gradient, $\mathcal{J} = - M  \nabla \mu  $ for a parameter $M$. For the simplicity we assume $M=1$.
-Thus, we finally have the strong form Cahn-Hilliard equation. Let $ u( x,0) =  u_{0}$ then is the dynamics on the form,
+\end{align}
+ A well-accepted law for the flux is that it is proportional to the chemical energy gradient, $\mathcal{J} = - M  \nabla \mu  $ for a parameter $M$. For the simplicity we assume $M=1$. This implies we can rewrite the boundary condition
+ \eqref{eq:bc1} s.t. \[
+\mathcal{J}  \cdot n  = \partial _{n} \left(  \varepsilon \Delta u - \frac{1}{\varepsilon }f( u)   \right)  = \varepsilon  \partial _{n} \Delta u - \frac{1}{\varepsilon } f' ( u) \partial _{n}u =  \varepsilon  \partial _{n} \Delta u    ,
+ \]
+ for $u$ evaluated on $\Gamma $. Here we used that $\partial _{n} f( u) = f' ( u) \partial _{n}u  = 0$ from the boundary condition \eqref{eq:bc2}.
+ Hence, we now have a reasonable set of boundary conditions and can finally write the strong form of the Cahn-Hilliard equation. Let $ u( x,0) =  u_{0}$ then is the dynamics on the form,
 
 \begin{equation}
 \label{eq:strongch}
     \begin{split}
 \partial _{t} u + \Delta  \left(  \varepsilon  \Delta u - \frac{1}{\varepsilon }f( u) \right)   &=0  \quad \text{ in } \Omega  \\
 \partial _{n} u &= 0 \quad \text{ on } \Gamma  \\
-\partial _{n} \left(  \varepsilon \Delta u - \frac{1}{\varepsilon }f( u)   \right)    &= 0 \quad \text{ on } \Gamma  \\
+\partial _{n}    \Delta u       &= 0 \quad \text{ on } \Gamma  \\
     \end{split}
 \end{equation}
 
