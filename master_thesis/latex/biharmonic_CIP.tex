@@ -13,7 +13,7 @@ Let $\Omega \subseteq    \mathbb{R} ^d$ be a bounded polygonal domain and $\Gamm
     \partial _{n} \Delta  u & = g_{2}( x)   \quad \text{on } \partial \Omega .  \\
 \end{split}
 \end{equation}
-Here is $\Delta ^2 = \Delta  \left( \Delta  \right) $ the biharmonic operator, also known as the bilaplacian. We will assume for the strong form that $u \in H^{4}\left( \Omega  \right) $, $\alpha  \in  \mathbb{R} $ and $f \in L^{2}\left( \Omega  \right)
+Here is $\Delta ^2 = \Delta  \left( \Delta  \right) $ the biharmonic operator, also known as the bilaplacian. We will assume for the strong form that $u \in H^{4}\left( \Omega  \right) $, $\alpha  >0 $ and $f \in L^{2}\left( \Omega  \right)
 $. The functions $g_{1},g_{2}: \Omega  \to \mathbb{R}$ are denoted as boundary conditions similar to the CH problem if we do not take account of the non-linearity.
 
 \begin{remark}
@@ -23,17 +23,18 @@ imposing the Dirichlet and Neumann conditions strongly in the discrete solution 
 \end{remark}
 
 
+
 \subsection{Continuous Interior Penalty formulations}%
 \label{sub:continuous_interior_penalty_formulations}
 
 We define the two relevant CIP formulations for the \eqref{eq:bi_problem} as follows. Let $$V_{h} = \left\{ v \in C^{0}\left( \Omega  \right): v_{T} = v | _{T} \in \mathcal{P} _{2}\left( T \right), \forall T \in
 \mathcal{T}_{h}    \right\}$$
 
-The general idea is to construct a bilinear problem $a_{h}: V_{h} \times  V_{h} = \mathbb{R} $ and $l_{h}: V^{h} \to \mathbb{R} $ s.t. there exists an $u \in V_{h}$ s.t. $a_{h}( u_{h}, v_{h}) = l_{h}( v) $ for all $v \in V_{h}$. For the CIP
+The general idea is to construct a bilinear problem $a_{h}: V_{h} \times  V_{h} = \mathbb{R} $ and $l_{h}: V_{h} \to \mathbb{R} $ s.t. there exists an $u \in V_{h}$ s.t. $a_{h}( u_{h}, v_{h}) = l_{h}( v) $ for all $v \in V_{h}$. For the CIP
 formulation we will investigate two formulations of the forms $a_{h}$ and $l_{h}$.
 
 \begin{enumerate}[label=\arabic*)]
-    \item The Hessian problem formulation is,
+    \item The Hessian problem formulation is
 \begin{equation}
     \label{eq:cip_biharmonic_form}
 \begin{split}
@@ -44,6 +45,7 @@ a_{h}^{H} \left( u, v \right)   =&
  \left( \mean{ \partial _{n n} v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}}  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h}} \\
  l_{h}^{H}( v) & =  \left( f, v \right) _{\Omega }  - \left(g_{2}, v  \right) _{\Gamma } - ( g_{1}, \partial _{nn} v)_{\Gamma } +  \frac{\gamma }{h} ( g_{1} , \partial _{n} v)_{\Gamma }
 \end{split}
+.
 \end{equation}
 
 With the corresponding energy norms,
@@ -74,6 +76,7 @@ With the corresponding energy norms,
                                              \| v \|_{ a_{h} }^{ 2 }& =  \| v\|_{ \Omega  }^{2  }  +  \| \Delta   v \|_{ \mathcal{T} _{h}  }^{ 2 }  + \|  h^{-\frac{1}{2}} \jump{ \partial _{n} v    }\|_{  \mathcal{F} _{h} }^{2  },  \quad v \in V_{h}  \\
                                              \| v \|_{ a_{h},* }^{ 2 } &= \| v \|_{ a_{h} }^{ 2 }  + \| h^{\frac{1}{2}}  \mean{     \partial _{nn } v}  \|_{ \mathcal{F}_{h}   }^{  2}, \quad  v\in V \oplus V_{h}.
                                          \end{split}
+                                         .
                                      \end{equation}
 
 
@@ -89,11 +92,9 @@ k+1 \right\}$ the a priori estimates are   \[
     \end{split}
 \]
 
-\begin{remark}
 
-As the author knows the exact Laplace formulation \eqref{eq:cip_laplace_form} is not found in the literature, but it is expected to have the same well-posedness and convergence properties as the
-Hessian formulation. Hence, in this master report will we focus on the Hessian formulation for the analysis. However, for the numerical results will will both be presented.
-\end{remark}
+
+
 
 
 \subsection{  Construction for Hessian CIP}%
@@ -243,6 +244,7 @@ which is consistent for zero, also involving penalties for the interior facets. 
 imposed to zero. Thus, the penalty parameter $\gamma$  is the same interior and exterior elements. From \cite{brenner2012quadratic, brenner2012} is it experimentally shown that $\gamma = 2k ( k-1 ) $ where $k$ is the polynomial order $k\ge 2$ may be
 a good choice for most applications.
 \end{remark}
+
 
 
 \subsection{Construction of Laplacian CIP}%
