@@ -141,14 +141,28 @@ s.t. that the following relation ship holds.
 \]
 
 
-\subsection{Implicit Explicit Scheme}%
+\subsection{Development of an Implicit-Explicit Scheme}
 \label{sub:implicit_explicit_scheme}
 
-
+The primary aim is to formulate an uncomplicated time iteration scheme. Define the index $m$ to range over the set ${0, 1, \ldots, M}$, which corresponds to uniformly distributed time points $t_{m}$ that satisfy the boundary conditions $t_{0} = 0$
+and $t_{M} = T$. Here, each time step is an element of the function space, i.e. $U^{m} \in V_{h}$  with the initial condition defined as $U^{0} = u( t_{0},x )$.
 For the Implicit explicit scheme (IMEX) sceheme we have the following discretization
 \[
-( \overline{\partial } _{t} U^{m}, v   )_{\Omega } + \varepsilon a^{m}_{h}( U^{M} , v) + \frac{1}{\varepsilon } ( P^{m} U^{m-1}, v) _{\Omega } =0, \quad \forall v \in V_{h}^{m}.
+( \overline{\partial } _{t} U^{m}, v   )_{\Omega } + \varepsilon a^{m}_{h}( U^{m} , v) + \frac{1}{\varepsilon } c_{h} (  U^{m-1}, v)  =0, \quad \forall v \in V_{h}^{m}.
 \]
+
+Here we have define the forward difference operator with time step $\tau $
+\[
+\overline{\partial } _{t} U^{m} = \frac{U^{m} - U^{m-1}}{ \tau }
+\]
+Hence, we have a explicit scheme
+\[
+U^{m}  + \tau \varepsilon a_{h}( U^{m} , v)   =  U^{m-1} - \frac{\tau}{\varepsilon } c_{h} (  U^{m-1}, v).
+\]
+
+
+
+
 
 
 \subsection{Introduction to numerical methods for Cahn Hilliard}%
