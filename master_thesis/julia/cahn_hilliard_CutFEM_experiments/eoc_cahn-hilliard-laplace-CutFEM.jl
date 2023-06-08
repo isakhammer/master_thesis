@@ -6,11 +6,14 @@ using GridapEmbedded
 function main()
     ## Cahn-hilliard
     ε = 1/30
+    f_ex(u) = u*(u*u - 1) # why mean necessary???
     f(u) = mean(u)*(mean(u)*mean(u) - 1) # why mean necessary???
-    g_0(x) = x[1]
+    f_der(u) = 3*mean(u)*mean(u) - 1 # why mean necessary???
 
     u_ex(x, t::Real) = cos(x[1])*cos(x[2])*exp(-(4*ε^2 + 2)*t)
     u_ex(t) = x -> u_ex(x,t)
+
+    g_0(t) = x -> ∂t(u_ex)(x,t) +ε*Δ(Δ(u_ex(t)))(x) #+ Δ( f_ex(u_ex(t)) )
 
     ##
     L=2.50
@@ -102,11 +105,11 @@ function main()
                 #+ ∫(f_dev(u)g1*∇(v)⋅n_Γ )*dΓ
                )
 
-    l(v) = ∫(g_0*v)*dΩ
+    l(t,v) = ∫(g_0(t)*v)*dΩ
 
     # Constructing  right hand side  (which is explicit)
-    rhs(u, v) = τ*l(v) + ∫(u*v)*dΩ + τ *(1/ε)*c_h(u,v)
-    rhs(u) = v -> rhs(u,v)
+    rhs(t, u, v) = τ*l(t,v) + ∫(u*v)*dΩ + τ *(1/ε)*c_h(u,v)
+    rhs(t, u) = v -> rhs(t,u,v)
 
     lhs(u,v) = ∫(u*v)*dΩ  + τ*ε*a(u,v)
     lhs(u,v) =  τ*ε*a(u,v)
@@ -149,8 +152,7 @@ function main()
         while k < kmax
             k += 1
             println("Iteration k = $k")
-            b = assemble_vector(rhs(uh), V)
-            return
+            b = assemble_vector(rhs(t, uh), V)
             op = AffineOperator(A, b)
             cache = solve!(u_dof_vals, lu, op, cache, isnothing(cache))
             uh = FEFunction(U, u_dof_vals)
