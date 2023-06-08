@@ -14,9 +14,6 @@ function main()
     u_ex(x, t::Real) = cos(x[1])*cos(x[2])*exp(-(4*ε^2 + 2)*t)
     u_ex(t) = x -> u_ex(x,t)
 
-    g_0(t) = x -> ( ∂t(u_ex)(x,t) +ε*Δ(Δ(u_ex(t)))(x)
-                   - ( 3/ε )*(2*∇(u_ex(t))(x)⋅∇(u_ex(t))(x) + u_ex(t)(x)*u_ex(t)(x)*Δ(u_ex(t))(x)  )
-                  )
 
     ##
     L=2.50
@@ -83,6 +80,14 @@ function main()
     n_Λ = get_normal_vector(Λ)
     n_Fg = get_normal_vector(Fg)
 
+    # Manufactured solution
+    g_0(t) = x -> ( ∂t(u_ex)(x,t) +ε*Δ(Δ(u_ex(t)))(x)
+                   - ( 3/ε )*(2*∇(u_ex(t))(x)⋅∇(u_ex(t))(x) + u_ex(t)(x)*u_ex(t)(x)*Δ(u_ex(t))(x)  )
+                  )
+
+    g_2(t) = x -> ∇(Δ(u_ex(t)))(x)⋅n_Γ
+
+
     function jump_nn(u,n)
         return ( n.plus⋅ ∇∇(u).plus⋅ n.plus - n.minus ⋅ ∇∇(u).minus ⋅ n.minus )
     end
@@ -97,10 +102,10 @@ function main()
 
     γg1 = 10/2
     γg2 = 0.1
-    g(u,v) = h^(-2)*( ∫( (γg1*h)*jump(n_Fg⋅∇(u))*jump(n_Fg⋅∇(v)) ) * dFg +
+    g_h(u,v) = h^(-2)*( ∫( (γg1*h)*jump(n_Fg⋅∇(u))*jump(n_Fg⋅∇(v)) ) * dFg +
                      ∫( (γg2*h^3)*jump_nn(u,n_Fg)*jump_nn(v,n_Fg) ) * dFg)
 
-    a(u,v) = a_L(u,v) + g(u,v)
+    a(u,v) = a_L(u,v) + g_h(u,v)
 
     c_h(u,v) = ( ∫(-f(u)*Δ(v))*dΩ
                 + ∫(f(u)*jump(∇(v)⋅n_Λ))*dΛ
@@ -108,10 +113,10 @@ function main()
                 #+ ∫(f_dev(u)g1*∇(v)⋅n_Γ )*dΓ
                )
 
-    l(t,v) = ∫(g_0(t)*v)*dΩ
+    l_L(t,v) = ∫(g_0(t)*v)*dΩ
 
     # Constructing  right hand side  (which is explicit)
-    rhs(t, u, v) = τ*l(t,v) + ∫(u*v)*dΩ + τ *(1/ε)*c_h(u,v)
+    rhs(t, u, v) = τ*l_L(t,v) + ∫(u*v)*dΩ + τ *(1/ε)*c_h(u,v)
     rhs(t, u) = v -> rhs(t,u,v)
 
     lhs(u,v) = ∫(u*v)*dΩ  + τ*ε*a(u,v)
