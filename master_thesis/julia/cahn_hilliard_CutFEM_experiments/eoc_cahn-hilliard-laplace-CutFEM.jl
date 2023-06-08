@@ -85,8 +85,8 @@ function main()
                    - ( 3/ε )*(2*∇(u_ex(t))(x)⋅∇(u_ex(t))(x) + u_ex(t)(x)*u_ex(t)(x)*Δ(u_ex(t))(x)  )
                   )
 
-    g_2(t) = x -> ∇(Δ(u_ex(t)))(x)⋅n_Γ
-
+    ∇Δu_ex(t) = x ->  ∇(Δ(u_ex(t)))(x)
+    g_2(t) = ∇Δu_ex(t)⋅n_Γ
 
     function jump_nn(u,n)
         return ( n.plus⋅ ∇∇(u).plus⋅ n.plus - n.minus ⋅ ∇∇(u).minus ⋅ n.minus )
@@ -113,7 +113,7 @@ function main()
                 #+ ∫(f_dev(u)g1*∇(v)⋅n_Γ )*dΓ
                )
 
-    l_L(t,v) = ∫(g_0(t)*v)*dΩ
+    l_L(t,v) = ∫(g_0(t)*v)*dΩ - ∫(g_2(t)* v)*dΓ
 
     # Constructing  right hand side  (which is explicit)
     rhs(t, u, v) = τ*l_L(t,v) + ∫(u*v)*dΩ + τ *(1/ε)*c_h(u,v)
