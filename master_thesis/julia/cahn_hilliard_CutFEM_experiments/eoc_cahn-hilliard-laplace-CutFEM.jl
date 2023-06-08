@@ -6,13 +6,12 @@ using GridapEmbedded
 function main()
     ## Cahn-hilliard
     ε = 1/30
-    f_ex(u) = u*(u*u - 1) # why mean necessary???
     f(u) = mean(u)*(mean(u)*mean(u) - 1) # why mean necessary???
-    f_der(u) = 3*u*u - 1 # why mean necessary???
+    # f(u) = u*(u*u - 1)
+    f_der(u) = 3*u*u - 1
 
     u_ex(x, t::Real) = cos(x[1])*cos(x[2])*exp(-(4*ε^2 + 2)*t)
     u_ex(t) = x -> u_ex(x,t)
-
 
     ##
     L=2.50
