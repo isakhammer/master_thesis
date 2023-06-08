@@ -19,7 +19,7 @@ We will consider linear Cahn Hilliard problem. Let $ u( x,0) =  u_{0}$ then is t
 \begin{equation}
 \label{eq:ch_exact}
     \begin{split}
-        \partial _{t} u  + \varepsilon \Delta^2   u -   & =  h(x)  \quad \text{in} \Omega \\
+        \partial _{t} u  + \varepsilon \Delta^2   u -   & =  g_{0}(x)  \quad \text{in} \Omega \\
         \partial _{n} u & =  g_{1}(x)  \quad \text{ on } \Gamma \\
          \partial _{n} \Delta u & = g_{2}(x)  \quad \text{ on } \Gamma  \\
     \end{split}
@@ -43,7 +43,7 @@ Recall the strong form Cahn-Hilliard equation. Let $ u( x,0) =  u_{0}$ then is t
 \begin{equation}
 \label{eq:ch_gen}
     \begin{split}
-\partial _{t} u + \Delta  \left(  \varepsilon  \Delta u - \frac{1}{\varepsilon }f( u) \right)   &= h( x)   \quad \text{ in } \Omega  \\
+\partial _{t} u + \Delta  \left(  \varepsilon  \Delta u - \frac{1}{\varepsilon }f( u) \right)   &= g_{0}( x)   \quad \text{ in } \Omega  \\
 \partial _{n} u &= g_{1}( x)  \quad \text{ on } \Gamma  \\
 \partial _{n}    \Delta u   &= g_{2}(x)  \quad \text{ on } \Gamma  \\
     \end{split}
@@ -132,7 +132,7 @@ Hence, we have a scheme for nonlinear spatial discretization. Let $u \in \left[ 
                                      & + \left( \mean{  \Delta  u }, \jump{ \partial _{n }v} \right)_{\mathcal{F}_{h}  }  + \left( \mean{ \Delta  v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}  }  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h} } \\
                                      & + \left(   \Delta  u ,  \partial _{n }v \right)_{\Gamma   }  + \left(  \Delta  v ,  \partial _{n}u       \right)_{\Gamma  }  + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{ \Gamma } \\
     c^{}_{h} ( u,v)  & = -( f( u), \Delta v )_{\mathcal{T} _{h}}+  ( f( u) , \jump{ \partial _{n}v }  )_{\mathcal{F} _{h}^{int}} + ( f(u), \partial _{n} v)_{\Gamma  }  + ( f'( u)  g_{1}   ,  v)_{\Gamma } \\
-    l_{h}( v_{}) & =  \left( h, v \right) _{\Omega } -  \varepsilon ( g_{2},  v )_{\Gamma }  -  \varepsilon ( g_{1}, \Delta  v  )_{\Gamma }  + \varepsilon \frac{\gamma }{h} ( g_{1}, \partial _{n} v  )_{\Gamma }
+    l_{h}( v_{}) & =  \left( g_{0}, v \right) _{\Omega } -  \varepsilon ( g_{2},  v )_{\Gamma }  -  \varepsilon ( g_{1}, \Delta  v  )_{\Gamma }  + \varepsilon \frac{\gamma }{h} ( g_{1}, \partial _{n} v  )_{\Gamma }
     \end{split}
 \end{equation}
 s.t. that the following relation ship holds.

@@ -6,12 +6,11 @@ using GridapEmbedded
 function main()
     ## Cahn-hilliard
     ε = 1/30
-    f(u) = mean(u)*(mean(u)*mean(u) - 1) # why mean necessarry???
-    h(x) = x[1]
+    f(u) = mean(u)*(mean(u)*mean(u) - 1) # why mean necessary???
+    g_0(x) = x[1]
 
     u_ex(x, t::Real) = cos(x[1])*cos(x[2])*exp(-(4*ε^2 + 2)*t)
     u_ex(t) = x -> u_ex(x,t)
-    f_ex(x, t::Real) = 0
 
     ##
     L=2.50
@@ -103,7 +102,7 @@ function main()
                 #+ ∫(f_dev(u)g1*∇(v)⋅n_Γ )*dΓ
                )
 
-    l(v) = ∫(h*v)*dΩ
+    l(v) = ∫(g_0*v)*dΩ
 
     # Constructing  right hand side  (which is explicit)
     rhs(u, v) = τ*l(v) + ∫(u*v)*dΩ + τ *(1/ε)*c_h(u,v)
@@ -160,6 +159,7 @@ function main()
         pvd[t] = createvtk(Ω, resultdir*"ch-solution_$t"*".vtu",cellfields=["uh"=>uh, "u_ex"=>u_ex(t)])
     end
 
+    # Construct pvd file
     createpvd(resultdir*"ch-solution") do pvd_file
         for (t, vtk) in pvd
             pvd_file[t] = vtk
