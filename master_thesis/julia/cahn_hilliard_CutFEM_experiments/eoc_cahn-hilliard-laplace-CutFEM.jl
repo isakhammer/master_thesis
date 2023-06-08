@@ -6,11 +6,8 @@ using GridapEmbedded
 function main()
     ## Cahn-hilliard
     ε = 1/30
-    # ε = 1
-    # Gibb's potential
-    ψ(u) = mean(u)*(1-mean(u)*mean(u))
-    # ψ(u) = u*(1-u^2)
-    # ψ(u) = u
+    f(u) = mean(u)*(mean(u)*mean(u) - 1) # why mean necessarry???
+    h(x) = x[1]
 
     u_ex(x, t::Real) = cos(x[1])*cos(x[2])*exp(-(4*ε^2 + 2)*t)
     u_ex(t) = x -> u_ex(x,t)
@@ -88,25 +85,32 @@ function main()
     # M+ dt A
     γ = 1.5*order*( order+1)
     τ = ε^2/10
-    a_CIP(u,v) = ∫(u*v)*dΩ + τ*ε^2*( ∫(Δ(v)⊙Δ(u))dΩ
-                                    + ∫(-mean(Δ(v))⊙jump(∇(u)⋅n_Λ) - mean(Δ(u))⊙jump(∇(v)⋅n_Λ) + (γ/h)⋅jump(∇(u)⋅n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ
-                                    + ∫(-Δ(v)⊙∇(u)⋅n_Γ - Δ(u)⊙∇(v)⋅n_Γ + (γ/h)⋅ ∇(u)⊙n_Γ⋅∇(v)⊙n_Γ )dΓ
-                                   )
+    a_L(u,v) =   ( ∫(Δ(v)⊙Δ(u))dΩ
+                    + ∫(-mean(Δ(v))⊙jump(∇(u)⋅n_Λ) - mean(Δ(u))⊙jump(∇(v)⋅n_Λ) + (γ/h)⋅jump(∇(u)⋅n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ
+                    + ∫(-Δ(v)⊙∇(u)⋅n_Γ - Δ(u)⊙∇(v)⋅n_Γ + (γ/h)⋅ ∇(u)⊙n_Γ⋅∇(v)⊙n_Γ )dΓ
+                   )
 
     γg1 = 10/2
     γg2 = 0.1
     g(u,v) = h^(-2)*( ∫( (γg1*h)*jump(n_Fg⋅∇(u))*jump(n_Fg⋅∇(v)) ) * dFg +
                      ∫( (γg2*h^3)*jump_nn(u,n_Fg)*jump_nn(v,n_Fg) ) * dFg)
 
-    a(u,v) = a_CIP(u,v) + g(u,v)
+    a(u,v) = a_L(u,v) + g(u,v)
 
-    # l(u, v) = ∫(τ*f*v + u*v)*dΩ
-    l(u, v) =  ∫(u*v)*dΩ + τ * (
-                                ∫(ψ(u)*Δ(v))*dΩ
-                                - ∫(ψ(mean(u))*jump(∇(v)⋅n_Λ))*dΛ
-                                - ∫(ψ(u)*∇(v)⋅n_Γ )*dΓ
-                               )
-    l(u) = v -> l(u,v)
+    c_h(u,v) = ( ∫(-f(u)*Δ(v))*dΩ
+                + ∫(f(u)*jump(∇(v)⋅n_Λ))*dΛ
+                - ∫(f(u)*∇(v)⋅n_Γ )*dΓ
+                #+ ∫(f_dev(u)g1*∇(v)⋅n_Γ )*dΓ
+               )
+
+    l(v) = ∫(h*v)*dΩ
+
+    # Constructing  right hand side  (which is explicit)
+    rhs(u, v) = τ*l(v) + ∫(u*v)*dΩ + τ *(1/ε)*c_h(u,v)
+    rhs(u) = v -> rhs(u,v)
+
+    lhs(u,v) = ∫(u*v)*dΩ  + τ*ε*a(u,v)
+    lhs(u,v) =  τ*ε*a(u,v)
 
 
     ## time loop
@@ -132,7 +136,7 @@ function main()
     println("========================================")
 
     ## Set up linear algebra system
-    A = assemble_matrix(a, U, V)
+    A = assemble_matrix(lhs, U, V)
     lu = LUSolver()
     cache = nothing
 
@@ -146,7 +150,8 @@ function main()
         while k < kmax
             k += 1
             println("Iteration k = $k")
-            b = assemble_vector(l(uh), V)
+            b = assemble_vector(rhs(uh), V)
+            return
             op = AffineOperator(A, b)
             cache = solve!(u_dof_vals, lu, op, cache, isnothing(cache))
             uh = FEFunction(U, u_dof_vals)
