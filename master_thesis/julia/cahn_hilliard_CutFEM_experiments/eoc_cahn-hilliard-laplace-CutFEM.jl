@@ -7,9 +7,8 @@ function main()
     ## Cahn-hilliard
     ε = 1/30
     f_ex(u) = u*(u*u - 1) # why mean necessary???
-    f_der_ex(u) = 3u*u
     f(u) = mean(u)*(mean(u)*mean(u) - 1) # why mean necessary???
-    f_der(u) = 3*mean(u)*mean(u) - 1 # why mean necessary???
+    f_der(u) = 3*u*u - 1 # why mean necessary???
 
     u_ex(x, t::Real) = cos(x[1])*cos(x[2])*exp(-(4*ε^2 + 2)*t)
     u_ex(t) = x -> u_ex(x,t)
@@ -85,8 +84,12 @@ function main()
                    - ( 3/ε )*(2*∇(u_ex(t))(x)⋅∇(u_ex(t))(x) + u_ex(t)(x)*u_ex(t)(x)*Δ(u_ex(t))(x)  )
                   )
 
+    ∇u_ex(t) = x ->  ∇(u_ex(t))(x)
+    g_1(t) = ∇u_ex(t)⋅n_Γ
+
     ∇Δu_ex(t) = x ->  ∇(Δ(u_ex(t)))(x)
     g_2(t) = ∇Δu_ex(t)⋅n_Γ
+
 
     function jump_nn(u,n)
         return ( n.plus⋅ ∇∇(u).plus⋅ n.plus - n.minus ⋅ ∇∇(u).minus ⋅ n.minus )
@@ -110,10 +113,10 @@ function main()
     c_h(u,v) = ( ∫(-f(u)*Δ(v))*dΩ
                 + ∫(f(u)*jump(∇(v)⋅n_Λ))*dΛ
                 - ∫(f(u)*∇(v)⋅n_Γ )*dΓ
-                #+ ∫(f_dev(u)g1*∇(v)⋅n_Γ )*dΓ
+                + ∫(f_der(u)*g_1(t)*∇(v)⋅n_Γ )*dΓ
                )
 
-    l_L(t,v) = ∫(g_0(t)*v)*dΩ - ∫(g_2(t)* v)*dΓ
+    l_L(t,v) = ∫(g_0(t)*v)*dΩ - ∫(ε*g_2(t)* v)*dΓ - ∫(ε*g_1(t)*Δ(v))*dΓ
 
     # Constructing  right hand side  (which is explicit)
     rhs(t, u, v) = τ*l_L(t,v) + ∫(u*v)*dΩ + τ *(1/ε)*c_h(u,v)
