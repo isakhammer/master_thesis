@@ -7,13 +7,14 @@ function main()
     ## Cahn-hilliard
     ε = 1/30
     f_ex(u) = u*(u*u - 1) # why mean necessary???
+    f_der_ex(u) = 3u*u
     f(u) = mean(u)*(mean(u)*mean(u) - 1) # why mean necessary???
     f_der(u) = 3*mean(u)*mean(u) - 1 # why mean necessary???
 
     u_ex(x, t::Real) = cos(x[1])*cos(x[2])*exp(-(4*ε^2 + 2)*t)
     u_ex(t) = x -> u_ex(x,t)
 
-    g_0(t) = x -> ∂t(u_ex)(x,t) +ε*Δ(Δ(u_ex(t)))(x) #+ Δ( f_ex(u_ex(t)) )
+    g_0(t) = x -> ∂t(u_ex)(x,t) +ε*Δ(Δ(u_ex(t)))(x) +  3*u_ex(t)(x)*u_ex(t)(x)
 
     ##
     L=2.50
