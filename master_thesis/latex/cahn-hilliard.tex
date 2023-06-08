@@ -137,7 +137,7 @@ Hence, we have a scheme for nonlinear spatial discretization. Let $u \in \left[ 
 \end{equation}
 s.t. that the following relation ship holds.
 \[
-    ( \partial _{t}u, v)_\Omega + \varepsilon  a_{h}( u,v) + \frac{1}{\varepsilon }c_{h}( u,v) - l_{h}(v)  = 0
+    ( \partial _{t}u, v)_\Omega + \varepsilon  a_{h}( u,v) + \frac{1}{\varepsilon }c_{h}( u,v)   =  l_{h}(v)
 \]
 
 
@@ -145,22 +145,26 @@ s.t. that the following relation ship holds.
 \label{sub:implicit_explicit_scheme}
 
 The primary aim is to formulate an uncomplicated time iteration scheme. Define the index $m$ to range over the set ${0, 1, \ldots, M}$, which corresponds to uniformly distributed time points $t_{m}$ that satisfy the boundary conditions $t_{0} = 0$
-and $t_{M} = T$. Here, each time step is an element of the function space, i.e. $U^{m} \in V_{h}$  with the initial condition defined as $U^{0} = u( t_{0},x )$.
+and $t_{M} = T$. Here, each time step is an element of the function space, i.e. $u^{m}_{h} \in V_{h}$  with the initial condition defined as $u^{0} = u( t_{0},x )$.
 For the Implicit explicit scheme (IMEX) sceheme we have the following discretization
 \[
-( \overline{\partial } _{t} U^{m}, v   )_{\Omega } + \varepsilon a^{m}_{h}( U^{m} , v) + \frac{1}{\varepsilon } c_{h} (  U^{m-1}, v)  =0, \quad \forall v \in V_{h}^{m}.
+( \overline{\partial } _{t} u^{m}_{h}, v   )_{\Omega } + \varepsilon a^{m}_{h}( u_{h}^{m} , v) + \frac{1}{\varepsilon } c_{h} (  u_{h}^{m-1}, v)  = l_{h}( v) , \quad \forall v \in V_{h}^{m}.
 \]
 
 Here we have define the forward difference operator with time step $\tau $
 \[
-\overline{\partial } _{t} U^{m} = \frac{U^{m} - U^{m-1}}{ \tau }
+\overline{\partial } _{t} u_{h}^{m} = \frac{u_{h}^{m} - u_{h}^{m-1}}{ \tau }
 \]
-Hence, we have a explicit scheme
+, then we have the following scheme.
 \[
-U^{m}  + \tau \varepsilon a_{h}( U^{m} , v)   =  U^{m-1} - \frac{\tau}{\varepsilon } c_{h} (  U^{m-1}, v).
+( u_{h}^{m},v )_{\Omega }  + \tau \varepsilon a_{h}( u_{h}^{m} , v)   = \tau  l_{h}( v) +   ( u_{h}^{m-1},v )_{\Omega } - \frac{\tau}{\varepsilon } c_{h} (  u_{h}^{m-1}, v) .
 \]
 
-
+Recall that $V_{h}$ is spanned by the orthonormal polynomial basis $ \left\{ \phi _{j} \right\}_{i=1}^{ N}  $ with $N$ degrees of freedom  s.t.  $v = \sum_{i}^{N} V_{i} \phi_{i}   $ and $u_{h} = \sum_{i}^{N} U_{i} \phi_{i}   $.
+Let $[ A ]_{i,j} =  a( \phi _{i}, \phi _{j}) $ and $U^{m} = \left[ U_{1}, \ldots, U^{N} \right]^{T} $ and $V= \left[ V_{1}, \ldots, V_{M} \right]^{T} $. It is then natural to write the system on the following format
+\[
+( u_{h}^{m},v )_{\Omega }  + \tau \varepsilon a_{h}( u_{h}^{m} , v)   = \tau  l_{h}( v) +   ( u_{h}^{m-1},v )_{\Omega } - \frac{\tau}{\varepsilon } c_{h} (  u_{h}^{m-1}, v).
+\]
 
 
 
