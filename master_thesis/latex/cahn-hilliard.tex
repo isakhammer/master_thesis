@@ -49,8 +49,25 @@ Recall the strong form Cahn-Hilliard equation. Let $ u( x,0) =  u_{0}$ then is t
     \end{split}
 \end{equation}
 where we used the notation $f( u) = F'( u) =u( u^2 -1)  $ for $F( u) = \frac{1}{4}( u^{2} - 1)^{2} $. $\Omega \subset \mathbb{R} ^{d} $  for $d = 2,3$. In contrast to the standard version presented in the introduction \eqref{eq:strongch}, is this version
-generalized to also holds for for functions $h,g_{1},g_{2}: \Omega \to\mathbb{R}   $. While the standard version may be physical correct, this version creates flexibility so we can easily construct manufactured solution on complex domains.
+generalized to also holds for for functions $g_{0},g_{1},g_{2}: \Omega \to\mathbb{R}   $. While the standard version may be physical correct, this version creates flexibility so we can easily construct manufactured solution on complex domains.
 
+\begin{remark}
+    Computing manufactured solution using $g_{0}$ may be temping with the formulation presented in formulation \eqref{eq:ch_gen}. However, observed that expanding the Laplacian we get,
+\[
+    \begin{split}
+        \Delta  \left(  \varepsilon  \Delta u - \frac{1}{\varepsilon }f( u) \right) & = \varepsilon \Delta^2 u - \frac{1}{\varepsilon } \Delta f( u) \\
+                                                                                    &= \varepsilon \Delta ^2 u  - \frac{3}{\varepsilon }( 2u \| \nabla u \|_{ 2 }^{ 2 } + u^{2}  \Delta u )   \\
+    \end{split}
+\]
+Here we applied the chain rule twice and inserted the derivatives.
+\[
+    \begin{split}
+\Delta f( u)  &= \nabla \cdot \nabla f( u)  = \nabla \cdot  \left[ f' ( u) \partial _{x_{1}}u, \ldots, f' ( u) \partial _{x_{d}}u \right] ^{T} \\
+& =  f'' ( u)( ( \partial _{x_{1}}u )^{2} + \ldots +( \partial _{x_{d}}u )^{2} ) +  f' ( u)( \partial _{x_{1} x_{1}}u + \ldots +   \partial _{x_{d} x_{d}}u ) \\
+&=  f'' ( u) \| \nabla u \|_{ 2 }^{ 2 } + f' ( u)  \Delta u  = 6u \| \nabla u \|_{ 2 }^{ 2 } + 3u^{2}  \Delta u
+    \end{split}
+\]
+\end{remark}
 
 
 \subsection{ CIP method for the Cahn Hilliard Equation on a Polygonal mesh}%
@@ -62,7 +79,7 @@ Assume that $\Omega  \subset \mathbb{R} ^{d}$ is a polygon.
 \[
 V_{h} = \left\{ v \in C^{0}( \Omega )   \mid v\in \mathcal{P} ^{k} ( T) \quad \forall T \in \mathcal{T} _{h} \right\}.
 \]
-Expanding the first Laplace operator can we observe that,
+Now, expanding the first Laplace operator from a weak point of view is it clear that
 \[
  ( \Delta ( \varepsilon  \Delta u - \frac{1}{\varepsilon } f( u) ) ,v )_{\Omega } = \varepsilon ( \Delta^{2} u ,v )_{\Omega } - \frac{1}{\varepsilon } ( \Delta f( u)  ,v )_{\Omega }.
 \]
