@@ -14,7 +14,9 @@ function main()
     u_ex(x, t::Real) = cos(x[1])*cos(x[2])*exp(-(4*ε^2 + 2)*t)
     u_ex(t) = x -> u_ex(x,t)
 
-    g_0(t) = x -> ∂t(u_ex)(x,t) +ε*Δ(Δ(u_ex(t)))(x) +  3*u_ex(t)(x)*u_ex(t)(x)
+    g_0(t) = x -> ( ∂t(u_ex)(x,t) +ε*Δ(Δ(u_ex(t)))(x)
+                   - ( 3/ε )*(2*∇(u_ex(t))(x)⋅∇(u_ex(t))(x) + u_ex(t)(x)*u_ex(t)(x)*Δ(u_ex(t))(x)  )
+                  )
 
     ##
     L=2.50
