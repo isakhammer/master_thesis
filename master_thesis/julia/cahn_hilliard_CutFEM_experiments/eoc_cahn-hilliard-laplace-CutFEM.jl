@@ -152,6 +152,11 @@ function main()
     lu = LUSolver()
     cache = nothing
 
+    ts = Float64[]
+    el2_ts = Float64[]
+    eh1_ts = Float64[]
+
+
     # Time loop
     while t < T
         Nt += 1
@@ -166,9 +171,19 @@ function main()
             op = AffineOperator(A, b)
             cache = solve!(u_dof_vals, lu, op, cache, isnothing(cache))
             uh = FEFunction(U, u_dof_vals)
+
         end
         println("----------------------------------------")
         pvd[t] = createvtk(Ω, resultdir*"ch-solution_$t"*".vtu",cellfields=["uh"=>uh, "u_ex"=>u_ex(t)])
+
+        e = u_ex(t) - uh
+        el2_t = sqrt(sum( ∫(e*e)dΩ ))
+        eh1_t = sqrt(sum( ∫( e*e + ∇(e)⋅∇(e) )*dΩ ))
+        println("el2_t $el2_t")
+
+        push!( ts, t)
+        push!( el2_ts, el2_t )
+        push!( eh1_ts, eh1_t )
     end
 
     # Construct pvd file
