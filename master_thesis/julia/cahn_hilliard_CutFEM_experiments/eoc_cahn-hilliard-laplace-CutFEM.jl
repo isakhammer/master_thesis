@@ -112,7 +112,7 @@ function main()
 
     c_h(u,v) = ( ∫(-f(u)*Δ(v))*dΩ
                 + ∫(f(u)*jump(∇(v)⋅n_Λ))*dΛ
-                - ∫(f(u)*∇(v)⋅n_Γ )*dΓ
+                + ∫(f(u)*∇(v)⋅n_Γ )*dΓ
                 + ∫(f_der(u)*g_1(t)*∇(v)⋅n_Γ )*dΓ
                )
 
