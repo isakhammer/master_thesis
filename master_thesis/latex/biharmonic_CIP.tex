@@ -22,6 +22,25 @@ Many of the papers we refer to may consider clamped boundary condition and not t
 imposing the Dirichlet and Neumann conditions strongly in the discrete solution space or weakly using the Nitsche's method \cite{nitsche1971variationsprinzip}.
 \end{remark}
 
+We want to construct a weak form for the strong BH problem \eqref{eq:bi_problem}. Let $v \in H_{2}( \Omega ) $  Using Greens Theorem is it obvious that \(
+\left( \Delta ^2 u,v \right) _{ \Omega  }   = ( \partial _{n} \Delta u, v ) _{\Gamma   } - ( \nabla \left( \Delta  u \right) , \nabla v ) _{ \Omega }
+\).
+Now doing a new iteration of the Greens theorem we get
+$ -( \nabla ( \Delta u ) , \nabla v ) _{\Omega  }  =   ( \Delta u, \Delta v ) _{\Omega } - ( \partial _{n}v , \Delta v)_{\Gamma } $.
+Hence, we have the identity s.t.
+\begin{equation}
+\label{eq:iden_bi}
+( \Delta ^2 u, v ) _{\Omega } = ( \Delta u, \Delta v)_{\Omega } +  ( \partial _{n} \Delta u, v)_{\Gamma } - ( \partial _{n} v, \Delta u) _{\Gamma }
+\end{equation}
+Taking account for the boundary conditions do we end up with the following corresponding weak problem to the BH problem \eqref{eq:bi_problem}.
+Find a $u \in H^2( \Omega ) $ s.t. $a( u,v) = l( v)  \forall v \in H^{2}( \Omega )  $ where
+  \[
+      \begin{split}
+a( u,v) & =  ( \Delta u, \Delta v)_{\Omega } +  ( \partial _{n} \Delta u, v)_{\Gamma } - ( \partial _{n} v, \Delta u) _{\Gamma } - ( \partial _{n} u, \Delta v) _{\Gamma }\\
+l( v)  &= ( f,v)_{\Omega } - ( g_{2} , v)_\Omega - ( g_{1}, \Delta v) _{\Gamma }
+      \end{split}
+\]
+Remark that the $g_{1}$ boundary condition is weakly imposed by adding a symmetry term, $- ( \partial _{n} u, \Delta v) _{\Gamma } - ( g_{1}, \Delta v) _{\Gamma }=0 $.
 
 
 \subsection{Continuous Interior Penalty formulations}%
@@ -269,14 +288,8 @@ a good choice for most applications.
 
 \end{lemma}
 \begin{proof}
-  Similarly, we start constructing a local theory for a triangle $T$ and then extend it to the full mesh $\mathcal{T}_{h} $. Using Greens Theorem is it obvious that \(
-\left( \Delta ^2 u,v \right) _{T }   = ( \partial _{n} \Delta u, v ) _{\partial T  } - ( \nabla \left( \Delta  u \right) , \nabla v ) _{T }
-\).
-The main difference here is that we straight away do a new iteration of the Greens theorem.
-\begin{equation*}
--( \nabla ( \Delta u ) , \nabla v ) _{T }  =   ( \Delta u, \Delta v ) _{T} - ( \partial _{n}v , \Delta v)_{\partial T}
-.\end{equation*}
-Hence, we have a local identity s.t. \[
+  Similarly, we start constructing a local theory for a triangle $T$ and then extend it to the full mesh $\mathcal{T}_{h} $.
+Utilizing \eqref{eq:iden_bi} can we construct a local identity s.t. \[
 ( \Delta ^2 u, v ) _{T} = ( \Delta u, \Delta v) +  ( \partial _{n} \Delta u, v)_{\partial T} - ( \partial _{n} v, \Delta u) _{\partial T}
 \]
 Now, doing a summation over all elements we get \[
