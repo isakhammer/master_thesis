@@ -257,26 +257,23 @@ Naturally can we see this is the tools we need to construct an estimate for the 
         \end{split}
     \]
 
-    The strategy is to bound each term individually by applying the estimates \eqref{eq:bi_projection_estimates_1}, \eqref{eq:bi_projection_estimates_2} and \eqref{eq:bi_projection_estimates_2}.
+    The strategy is to bound each term individually by applying the estimates \eqref{eq:bi_projection_estimates_1}, \eqref{eq:bi_projection_estimates_2} and \eqref{eq:bi_projection_estimates_3}.
+
     \begin{enumerate}[label=\arabic*)]
-        \item     Starting with the first term we get
+        \item     Starting with the first two terms we get
     \[
         \begin{split}
             \| |\alpha |^{\frac{1}{2}} ( u - C_{h}^{e}u) \|_{ \mathcal{T} _{h} \cap \Omega  }^{ 2}    & \lesssim     \|  ( u - C_{h}^{e}u) \|_{0,\mathcal{T} _{h}  }^{ 2}
              =\|  ( u - C_{h}^{e}u) \|_{0,2,\mathcal{T} _{h}  }^{ 2} \\
              &   \lesssim  h^{2s} \sum_{T \in \mathcal{T}
-            _{h}}^{}   \| v \|_{s,w( T)  }^{  2}
-        \end{split}
-    \]
-    Here we simply used \eqref{eq:bi_projection_estimates_1}.
-\item
-    Similarly can we use  for the second term, \[
-        \begin{split}
+            _{h}}^{}   \| u \|_{s,w( T)  }^{  2} \lesssim  h^{2(s-2)} \sum_{T \in \mathcal{T}
+            _{h}}^{}   \| u \|_{s,\mathcal{T}_{h} }^{  2} \\
             \| D^2 ( u - C_{h}^{e}u ) \|_{\mathcal{T} _{h} \cap \Omega   }^{ 2 } &  \lesssim  \|  u - C_{h}^{e}u  \|_{2,\mathcal{T} _{h}   }^{ 2 }   =  \|  u - C_{h}^{e}u  \|_{2,2,\mathcal{T} _{h}   }^{ 2 } \\
-                                                                                 & \lesssim \sum_{T \in \mathcal{T} _{h}}^{} h^{2(s-2)} \| u \|_{ s, \omega ( T)  }^{ 2 }.
+                                                                                 & \lesssim \sum_{T \in \mathcal{T} _{h}}^{} h^{2(s-2)} \| u \|_{ s, \omega ( T)  }^{ 2 }\lesssim \sum_{T \in \mathcal{T} _{h}}^{} h^{2(s-2)} \| u \|_{ s, \mathcal{T}_{h}}^{ 2 }.
         \end{split}
     \]
-    Again, this is via the estimate \eqref{eq:bi_projection_estimates_1}.
+    Here we simply used \eqref{eq:bi_projection_estimates_1} and argue that $ \sum_{T}^{} \| v \|_{s,\omega ( T)   }^{  } \lesssim \| v \|_{s, \mathcal{T}_{h}   }^{  } $.
+
 \item
         Recall $\| \jump{ \partial _{n} u }   \|_{ \mathcal{F} _{h} }^{  } \le \| \partial _{n^{+}} u^{+}   \|_{ \mathcal{F} _{h} }^{  } +   \|\partial _{n^{-}} u^{-}   \|_{ \mathcal{F} _{h} }^{  } \lesssim  \|\partial _{n} u \|_{ \partial\mathcal{T }_{h}  }^{2  }  $
         and the inverse estimate $\| \partial _{n} u \|_{ F  }^{2} \lesssim h^{-1} \| \nabla u \|_{ T }^{2  }  $.
