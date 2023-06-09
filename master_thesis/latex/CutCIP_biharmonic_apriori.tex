@@ -304,18 +304,20 @@ Naturally can we see this is the tools we need to construct an estimate for the 
     \red{Same $\frac{5}{4} \text{ or }h^{-\frac{1}{2}}$ issue as above}.
 \item
 
-            We also know that $\| \mean{ u }   \|_{ \mathcal{F} _{h} }^{  } \le \| u^{+} \|_{ \mathcal{F} _{h}  }^{  } + \| u^{-} \|_{ \mathcal{F} _{h}  }^{  }   \lesssim  \| u \|_{ \partial\mathcal{T }_{h}  }^{2  }  $ and the $\| \partial _{nn} u \|_{ F  }^{} \lesssim h^{-\frac{1}{2}} \| D^2 u \|_{ T }^{  }  $. It is clear
-            by using \eqref{eq:bi_projection_estimates_2} that this must holds
+            Recall that $\| \mean{ u }   \|_{ \mathcal{F} _{h} }^{  } \le \| u^{+} \|_{ \mathcal{F} _{h}  }^{  } + \| u^{-} \|_{ \mathcal{F} _{h}  }^{  }   \lesssim  \| u \|_{ \partial\mathcal{T }_{h}  }^{2  }  $ and the second order inverse
+            inequality \eqref{eq:bi_cut_inverse_1}. It is clear
+            by using \eqref{eq:bi_projection_estimates_1} that this holds.
             \[
                 \begin{split}
- \| h^{\frac{1}{2}} \mean{ \partial _{nn} (u - C_{h}^{e}u) }   \|_{\mathcal{F} _{h}^{} \cap \Omega   }^{  2} &  \lesssim h^{} \|   \partial _{nn} (u - C_{h}^{e}u)    \|_{\partial \mathcal{T} _{h}   }^{  2}  \lesssim  \|   D^2 (u - C_{h}^{e}u)    \|_{ \mathcal{T} _{h}   }^{  2} \\
-                                                                                                                &  = \|   u - C_{h}^{e}u    \|_{ 2, \mathcal{T} _{h}   }^{  2} \lesssim h^{2s} \sum_{T \in \mathcal{T}_h}^{} \| u \|_{s, \omega ( T)   }^{  }
+ \| h^{\frac{1}{2}} \mean{ \partial _{nn} (u - C_{h}^{e}u) }   \|_{\mathcal{F} _{h}^{} \cap \Omega   }^{  2} &  \lesssim h^{} \|   \partial _{nn} (u - C_{h}^{e}u)    \|_{\partial \mathcal{T} _{h}   }^{  2}  \lesssim h^{} h^{-1}  \|   D^2 (u - C_{h}^{e}u)    \|_{ \mathcal{T} _{h}   }^{  2} \\
+                                                                                                                &  = \|   u - C_{h}^{e}u    \|_{ 2, \mathcal{T} _{h}   }^{  2}  \lesssim h^{2(s - 2)} \sum_{T \in \mathcal{T}_h}^{} \| u \|_{s, \mathcal{T} _{h} }^{  }
                 \end{split}
             \]
             \item
-                Similarly we can easily see by using \eqref{eq:bi_projection_estimates_3} that this must hold,
+                Similarly we can easily see by using \eqref{eq:bi_projection_estimates_1} and the second order boundary inverse inequality  \eqref{eq:bi_cut_inverse_2} that this must hold,
+
                 \[
-              \| h^{\frac{1}{2}} \partial _{nn}(u - C_{h}^{e}u)     \|_{ \Gamma }^{  2} \lesssim   \|  D^2(u - C_{h}^{e}u)     \|_{ \Gamma  }^{  2} \lesssim \|  u - C_{h}^{e}u \|_{ 2, \Gamma}^{2  } \lesssim h^{2(s-r -\frac{1}{2})} \sum_{T \in
+              \| h^{\frac{1}{2}} \partial _{nn}(u - C_{h}^{e}u)     \|_{ \Gamma }^{  2} \lesssim   \|  D^2(u - C_{h}^{e}u)     \|_{ \mathcal{T}_{h}   }^{  2} \lesssim \|  u - C_{h}^{e}u \|_{ 2, \Gamma}^{2  } \lesssim h^{2(s-r -\frac{1}{2})} \sum_{T \in
               \mathcal{T}_h }^{} \| u \|_{ s, \omega ( T)  }^{2  }
             \]
     \end{enumerate}

@@ -498,7 +498,14 @@ Since the inequalities above holds for all elements locally is it natural to do 
 \label{eq:bi_cut_inverse_2}
 \| \partial _{nn}  v \|_{ \mathcal{F}_h \cap \Omega    }^{  }  &  \lesssim   h^{-\frac{1}{2}} \| D^2 v \|_{ \mathcal{T}_h  }^{  }.
 \end{align}
-In fact, combining the inequalities we get the identity,
+    We aware that these inequalities also holds for the first order, that is.
+\begin{align}
+\label{eq:bi_n_cut_inverse_1}
+\| \partial _{n} v \|_{ \mathcal{T} _{h} \cap \Gamma  }^{  } &\lesssim h^{-\frac{1}{2}} \| \nabla v \|_{ \mathcal{T}_h }^{  }, \\
+\label{eq:bi_n_cut_inverse_2}
+\| \partial _{n}  v \|_{ \mathcal{F}_h \cap \Omega    }^{  }  &  \lesssim   h^{-\frac{1}{2}} \| \nabla v \|_{ \mathcal{T}_h  }^{  }.
+\end{align}
+In fact, combining the second order inequalities we get the following identity.
 \begin{equation}
 \label{eq:bi_identity}
 h\| \partial _{nn}  v \|_{ \mathcal{F}_h \cap \Omega    }^{2 } + h\| \partial _{nn} v \|_{ \mathcal{T} _{h} \cap \Gamma  }^{2  } \lesssim \| D^2 v \|_{ \mathcal{T} _{h}  }^{2  }.
