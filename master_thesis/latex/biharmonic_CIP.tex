@@ -53,7 +53,7 @@ With the corresponding energy norms,
 \label{eq:a_cip_energy_norm_hes}
     \begin{split}
  \| v \|_{ a_{h} }^{ 2 }& =  \| v\|_{ \Omega  }^{2  }  +  \| D ^2 v \|_{ \Omega   }^{ 2 }  + \|  h^{-\frac{1}{2}} \jump{ \partial _{n} v    }\|_{  \mathcal{F} _{h}^{int} }^{2  }+ \|  h^{-\frac{1}{2}}  \partial _{n} v    \|_{  \Gamma  }^{2  },  \quad v \in V_{h}  \\
-   \| v \|_{ a_{h},* }^{ 2 } =& \| v \|_{ a_{h} }^{ 2 }  + \| h^{\frac{1}{2}}  \mean{     \partial _{nn } v}  \|_{ \mathcal{F}_{h}   }^{  2}+ \| h^{\frac{1}{2}} \partial _{nn } v  \|_{ \Gamma    }^{  2}, \quad  v\in V \oplus V_{h}.
+   \| v \|_{ a_{h},* }^{ 2 } &= \| v \|_{ a_{h} }^{ 2 }  + \| h^{\frac{1}{2}}  \mean{     \partial _{nn } v}  \|_{ \mathcal{F}_{h}^{int}   }^{  2}+ \| h^{\frac{1}{2}} \partial _{nn } v  \|_{ \Gamma    }^{  2}, \quad  v\in V \oplus V_{h}.
     \end{split}
 \end{equation}
 
@@ -64,7 +64,8 @@ With the corresponding energy norms,
         \begin{split}
             a_{h}^{L} \left( u, v \right)   =&
             \left( \alpha  u, v \right) _{\Omega }   +  \left( \Delta  u, \Delta v \right) _{ \Omega } \\
-                                             & - \left( \mean{  \Delta  u }, \jump{ \partial _{n }v} \right)_{\mathcal{F}_{h}  }  - \left( \mean{ \Delta  v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}  }  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h} } \\
+                                             & - \left( \mean{  \Delta  u }, \jump{ \partial _{n }v} \right)_{\mathcal{F}_{h}^{int}  }  - \left( \mean{ \Delta  v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}^{int}  }  + \frac{\gamma }{h}
+                                             \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h}^{int} } \\
                                              & - \left(   \Delta  u ,  \partial _{n }v \right)_{\Gamma   }  - \left(  \Delta  v ,  \partial _{n}u       \right)_{\Gamma  }  + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{ \Gamma } \\
                                              l^{L}_{h}( v)  =&  \left( f, v \right) _{\Omega } - ( g_{2},  v )_{\Gamma } -  ( g_{1}, \Delta  v  )_{\Gamma }  + \frac{\gamma }{h} ( g_{1}, \partial _{n} v  )_{\Gamma }
                                          \end{split}
@@ -225,12 +226,6 @@ Hence, we have the following identity.
 
 \end{proof}
 
-\todo[inline]{ Let $u$ be evaluated on $\Gamma $. It is clear that $\partial_{ nn } u = \partial_n g_1  $ does not old even though $\partial_n u = g_1  $. Similarly, $\partial_{ t_{i}n } u \neq \partial_{t_{i}} g_1  $ even though $\partial_n u = g_1  $ on
-    $\Gamma$ .
-    % To illustrate, an simple example is when $g_{1} = 0$ and a square domain $\Omega = [-L,L]^2$ at the boundary point $(L,0)$. If $g_{1}(x,y) = \sin(\frac{ 2 \pi }{L} y)\cos(\frac{ 2 \pi }{L} x)$ then is $\partial _{t} g_{1}(L,0) = \frac{2 \pi}{L}
-    % [0, \cos(\frac{ 2 \pi }{L} L)\cos(\frac{ 2 \pi }{L} 0) ] \cdot [0,1]^T  = \frac{2 \pi}{L}  $
-% and if $g_1(x,y) = x-L$ then is $ \partial _{t} g_1 = 0 $.
-Hence, an alternative method  to impose $g_1$ must be considered for the tangential direction.   }
 
 We will now assemble the Hessian CIP formulation. Assume $u,v \in V_{h}$, then we have the linear form
 \begin{equation}
@@ -246,8 +241,14 @@ a_{h}^{H} \left( u, v \right)   =&
 \end{split}
 .
 \end{equation}
-\todo[inline]{ Need to remove the red stuff. }
+\todo[inline]{ Need to get red stuff to vanish via $g_1 = 0$ somehow . }
 Hence, the Hessian formulation is derived.
+\todo[inline]{ Let $u$ be evaluated on $\Gamma $. It is clear that $\partial_{ nn } u = \partial_n g_1  $ does not old even though $\partial_n u = g_1  $. Similarly, $\partial_{ t_{i}n } u \neq \partial_{t_{i}} g_1  $ even though $\partial_n u = g_1  $ on
+    $\Gamma$ .
+    % To illustrate, an simple example is when $g_{1} = 0$ and a square domain $\Omega = [-L,L]^2$ at the boundary point $(L,0)$. If $g_{1}(x,y) = \sin(\frac{ 2 \pi }{L} y)\cos(\frac{ 2 \pi }{L} x)$ then is $\partial _{t} g_{1}(L,0) = \frac{2 \pi}{L}
+    % [0, \cos(\frac{ 2 \pi }{L} L)\cos(\frac{ 2 \pi }{L} 0) ] \cdot [0,1]^T  = \frac{2 \pi}{L}  $
+% and if $g_1(x,y) = x-L$ then is $ \partial _{t} g_1 = 0 $.
+Hence, an alternative method  to impose $g_1$ must be considered for the tangential direction.   }
 
 \begin{remark}
 We imposed the Neumann condition $g_{1}$ using the Nitsche's method and thus imposing a regularisation term \cite{nitsche1971variationsprinzip}. Observe we added a consistent symmetry term $( \mean{ \partial _{n n} v }, \jump{ \partial _{n}u }      )_{\mathcal{F}_{h}}$,

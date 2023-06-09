@@ -484,7 +484,15 @@ A useful variant is the following inequality that is,
 \begin{equation*}
 \| \partial _{nn} v \|_{ \Gamma \cap T  }^{  } \lesssim h^{-\frac{1}{2}} \| D^2 v \|_{ T }^{  }.
 \end{equation*}
-Summation the inverse inequalities over $\mathcal{F}_{h} $ and $\mathcal{T}_{h} $ implies that
+\begin{remark}
+    It may be natural to instead look at $\| \partial _{nn} v \|_{ \Gamma \cap T  }^{  } \lesssim h^{-\frac{1}{2}} \| D^2 v \|_{ T\cap \Omega  }^{  }$, however, this cannot hold for a unfitted mesh. The reason is because it leads to geometric
+    problems when measuring the relationship between the intersected boundary $\abs{ \Gamma \cap T }_{d-1} $ and the intersected volume $\abs{ T\cap \Omega }$   For the examples provided in
+    Figure \ref{fig:example_patch} we can obviously observe that the relationship $ \abs{ \Gamma \cap T }_{d-1} / \abs{ T\cap \Omega }   $ may in fact diverge for bad cut configurations, and thus makes it necessarry to extend the norm to the full
+    element $T$ for the inequality to holds. .
+\end{remark}
+
+
+Since the inequalities above holds for all elements locally is it natural to do a global summation over the over $\mathcal{F}_{h} $ and $\mathcal{T}_{h} $. This implies that
 \begin{align}
 \label{eq:bi_cut_inverse_1}
 \| \partial _{nn} v \|_{ \mathcal{T} _{h} \cap \Gamma  }^{  } &\lesssim h^{-\frac{1}{2}} \| D^2 v \|_{ \mathcal{T}_h }^{  }, \\
