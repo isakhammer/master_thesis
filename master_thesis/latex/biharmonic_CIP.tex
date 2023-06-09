@@ -36,14 +36,13 @@ formulation we will investigate two formulations of the forms $a_{h}$ and $l_{h}
 \begin{enumerate}[label=\arabic*)]
     \item The Hessian problem formulation is
 \begin{equation}
-    \label{eq:cip_biharmonic_form}
 \begin{split}
 a_{h}^{H} \left( u, v \right)   =&
     \left( \alpha  u, v \right) _{\Omega }   +  \left( D^2 u, D^2v \right) _{\Omega } \\
  & - \left( \mean{  \partial _{n n} u }, \jump{ \partial _{n }u} \right)_{\mathcal{F}_{h}^{int}}  -
  \left( \mean{ \partial _{n n} v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}^{int}}  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h}^{int}} \\
- & - \left( \mean{  \partial _{n n} u }, \jump{ \partial _{n }u} \right)_{\Gamma }  -
- \left( \mean{ \partial _{n n} v }, \jump{ \partial _{n}u }      \right)_{\Gamma }  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\Gamma } \\
+ & - \left(   \partial _{n n} u ,  \partial _{n }u \right)_{\Gamma }  -
+ \left(  \partial _{n n} v ,  \partial _{n}u       \right)_{\Gamma }  + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{\Gamma } \\
  l_{h}^{H}( v)  =&  \left( f, v \right) _{\Omega }  - \left(g_{2}, v  \right) _{\Gamma } - ( g_{1}, \partial _{nn} v)_{\Gamma } +  \frac{\gamma }{h} ( g_{1} , \partial _{n} v)_{\Gamma }
 \end{split}
 .
@@ -94,8 +93,9 @@ k+1 \right\}$ the a priori estimates are   \[
     \end{split}
 \]
 
-\subsection{  Construction for Hessian CIP}%
-\label{sub:continious_weak_form_of_biharmonic_equation}
+\subsection{Detailed Construction of Hessian and Laplacian Formulations }%
+\label{sub:construction_of_laplacian_cip}
+
 Out goal is to derive the Hessian formulation.
 
 \begin{lemma}
@@ -103,9 +103,8 @@ Let $u \in H^{4}( \Omega ) $ be the solution to \eqref{eq:bi_problem}.  And let 
 \begin{equation}
 \label{eq:bi_basic_dg_full_1}
 \begin{split}
-    \left( \Delta  ^{2} u, v \right) _{\Omega }  =&   \left( D^2u, D^2v \right)_{\mathcal{T} _{h}} +  \left(g_{2}, v  \right) _{\mathcal{F}^{ext}_{h} }  -  ( \mean{ \partial _{nn} u }   , \jump{ \partial_{n} v } )_{\mathcal{F}_{h}^{int} } \\
-                                                  & \red{ - ( \partial _{nn} u , \partial _{n} v)_{\mathcal{F}^{ext}_{h} } - \sum_{i =1  }^{d-1} ( \partial   _{t_{i}n} u  ,  \partial   _{t_{i}}  v  )_{ \mathcal{F}^{ext} _{h}  }
-}
+    \left( \Delta  ^{2} u, v \right) _{\Omega }  =&   \left( D^2u, D^2v \right)_{\Omega } +  \left(g_{2}, v  \right) _{ \Gamma  }  -  ( \mean{ \partial _{nn} u }   , \jump{ \partial_{n} v } )_{\mathcal{F}_{h}^{int} } \\
+                                                  &  - ( \partial _{nn} u , \partial _{n} v)_{\Gamma  } - \sum_{i =1  }^{d-1} ( \partial   _{t_{i}n} u  ,  \partial   _{t_{i}}  v  )_{ \Gamma   }
 \end{split}
 \end{equation}
 
@@ -215,57 +214,45 @@ Where integration over all interior facets $ \forall F \in \mathcal{F}_{h}^{int}
 .\end{equation*}
 Observe that the cancellations in the term $(I)$ and term $(III)$  appears of the continuity of $v\in V $ and $u\in H^{4}( \Omega ) $ which makes the jumps and derivative jumps zero. On the other hand, the second term $(II)$  is does not vanish since the discontinuity in normal vector for $v \in V$ is a jump. It can also be raised that $\mean{
 \partial _{nn} u } = \partial _{nn} u  $ holds by the continuity of $H^{4}( \Omega  ) $.
-
-% \red{
-% Remark that we can simplify the exterior boundary integral terms for each $F \in \mathcal{F} ^{ext}_{h}$ using $t_{i}t_{i}^{T}=1$ and $ n^{T} n = 1$, then apply \eqref{eq:projection}},
-% \[
-% \red{
-%     \begin{split}
-% ( \partial _{n} g_{1}, \partial _{n} v)_{F} + \sum_{{i} =1}^{d-1} (\partial _{t_{i}} g_{1} , \partial _{t_{i}} v )_{F } & =( n^{T} \nabla  g_{1}n , n^{T}\nabla  v n)_{F} + \sum_{{i} =1}^{d-1} ( t_{i}^{T} \nabla  g_{1} \ t_{i} , t_{i}^{T} \nabla  v \ t_{i} )_{F } \\
-%                                                                           & = ( (I - n  \otimes n ) \nabla _{} g_{1}  , (I - n  \otimes n ) \nabla  v  )_{F }
-%     \end{split}
-% }
-% \]
 Hence, we have the following identity.
 \begin{equation}
 \label{eq:bi_basic_dg_full_1}
 \begin{split}
     \left( \Delta  ^{2} u, v \right) _{\Omega }  =&   \left( D^2u, D^2v \right)_{\mathcal{T} _{h}} +  \left(g_{2}, v  \right) _{\mathcal{F}^{ext}_{h} }  -  ( \mean{ \partial _{nn} u }   , \jump{ \partial_{n} v } )_{\mathcal{F}_{h}^{int} } \\
-                                                  & \red{ - ( \partial _{nn} u , \partial _{n} v)_{\mathcal{F}^{ext}_{h} } - \sum_{i =1  }^{d-1} ( \partial   _{t_{i}n} u  ,  \partial   _{t_{i}}  v  )_{ \mathcal{F}^{ext} _{h}  }
-}
+                                                  &  - ( \partial _{nn} u , \partial _{n} v)_{\mathcal{F}^{ext}_{h} } - \sum_{i =1  }^{d-1} ( \partial   _{t_{i}n} u  ,  \partial   _{t_{i}}  v  )_{ \mathcal{F}^{ext} _{h}  }
 \end{split}
 \end{equation}
+
+\end{proof}
+
 \todo[inline]{ Let $u$ be evaluated on $\Gamma $. It is clear that $\partial_{ nn } u = \partial_n g_1  $ does not old even though $\partial_n u = g_1  $. Similarly, $\partial_{ t_{i}n } u \neq \partial_{t_{i}} g_1  $ even though $\partial_n u = g_1  $ on
 $\Gamma$. A simple example is when $g_{1} = 0$ and a square boundary with length $2L$ in the origin. If $g_{1}(x,y) = \sin(\frac{ 2 \pi }{L} x)$ then is $\partial _{n_x} g_{1}(L,0) = \frac{2 \pi}{L} [1,0] \cdot [cos(2 \pi ), 0] = \frac{2 \pi}{L}  $
 and if $g_1(x,y) = x-L$ then is $ \partial _{n_x} g_1 = 0 $. I believe a similar example also holds in the tangential direction.  Hence, an alternative method  to impose $g_1$ must be considered for the tangential direction, for example a Nitsche formulation.   }
-
-\end{proof}
 
 We will now assemble the Hessian CIP formulation. Assume $u,v \in V_{h}$, then we have the linear form
 \begin{equation}
 \begin{split}
 a_{h}^{H} \left( u, v \right)   =&
-    \left( \alpha  u, v \right) _{\Omega }   +  \left( D^2 u, D^2v \right) _{\mathcal{T} _{h}} \\
- & -
-  \left( \mean{  \partial _{n n} u }, \jump{ \partial _{n }u} \right)_{\mathcal{F}_{h}}  -
- \left( \mean{ \partial _{n n} v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}}  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h}} \\
-  l_{h}^{H}( v_{h}) & =  \left( f, v \right) _{\Omega }  - \left(g_{2}, v  \right) _{\Gamma } \red{- ( g_{1}, \partial _{nn} v)_{\Gamma } +  \frac{\gamma }{h} ( g_{1} , \partial _{n} v)_{\Gamma }
- }
+    \left( \alpha  u, v \right) _{\Omega }   +  \left( D^2 u, D^2v \right) _{\Omega } \\
+ & - \left( \mean{  \partial _{n n} u }, \jump{ \partial _{n }u} \right)_{\mathcal{F}_{h}^{int}}  -
+ \left( \mean{ \partial _{n n} v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}^{int}}  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h}^{int}} \\
+ & - \left(   \partial _{n n} u ,  \partial _{n }u \right)_{\Gamma }  -
+ \left(  \partial _{n n} v ,  \partial _{n}u       \right)_{\Gamma }  + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{\Gamma } \\
+ l_{h}^{H}( v)  =&  \left( f, v \right) _{\Omega }  - \left(g_{2}, v  \right) _{\Gamma } - ( g_{1}, \partial _{nn} v)_{\Gamma } +  \frac{\gamma }{h} ( g_{1} , \partial _{n} v)_{\Gamma }
 \end{split}
+.
 \end{equation}
-Hence, we are finished.
+Hence, the Hessian formulation is derived.
 
 \begin{remark}
-We imposed the Neumann condition $g_{1}$ using the Nitsche's method and thus imposing a regularisation term \cite{nitsche1971variationsprinzip}. Observe we added n symmetry term $( \mean{ \partial _{n n} v }, \jump{ \partial _{n}u }      )_{\mathcal{F}_{h}}$,
+We imposed the Neumann condition $g_{1}$ using the Nitsche's method and thus imposing a regularisation term \cite{nitsche1971variationsprinzip}. Observe we added a consistent symmetry term $( \mean{ \partial _{n n} v }, \jump{ \partial _{n}u }      )_{\mathcal{F}_{h}}$,
 which is consistent for zero, also involving penalties for the interior facets. Technically is the interior regularisation equivalent to do a Nitsche's method inbetween all interior elements, but with boundary conditions of each triangle weakly
-imposed to zero. Thus, the penalty parameter $\gamma$  is the same interior and exterior elements. From \cite{brenner2012quadratic, brenner2012} is it experimentally shown that $\gamma = 2k ( k-1 ) $ where $k$ is the polynomial order $k\ge 2$ may be
+imposed to zero. Thus, the penalty parameter $\gamma$  is the same interior and exterior elements. From \cite{brenner2012quadratic, brenner2012} is it experimentally shown that $\gamma = 2k ( k-1 ) $ where $k\ge 2$ is the polynomial order  may be
 a good choice for most applications.
 \end{remark}
 
 
 
-\subsection{Construction of Laplacian CIP}%
-\label{sub:construction_of_laplacian_cip}
 
 \begin{lemma}
  Assume $u \in H^{4}( \Omega ) $ and $v \in  V = \left\{ v \in H^{1}( \Omega )  \mid  v \mid _{T} \in H^{m}( T) \ \forall T \in \mathcal{T} _{h}   \right\} $. Then we have the following identity.
