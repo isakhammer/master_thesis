@@ -269,11 +269,8 @@ Naturally can we see this is the tools we need to construct an estimate for the 
              Starting with the first two terms we get
     \[
         \begin{split}
-            \| |\alpha |^{\frac{1}{2}} ( u - C_{h}^{e}u) \|_{ \mathcal{T} _{h} \cap \Omega  }^{ 2}    & \lesssim     \|  ( u - C_{h}^{e}u) \|_{0,\mathcal{T} _{h}  }^{ 2}
-             =\|  ( u - C_{h}^{e}u) \|_{0,2,\mathcal{T} _{h}  }^{ 2} \\
-             &   \lesssim  h^{2s} \sum_{T \in \mathcal{T}
-            _{h}}^{}   \| u \|_{s,w( T)  }^{  2} \lesssim  h^{2(s-2)} \sum_{T \in \mathcal{T}
-            _{h}}^{}   \| u \|_{s,\mathcal{T}_{h} }^{  2} \\
+            \| |\alpha |^{\frac{1}{2}} ( u - C_{h}^{e}u) \|_{ \mathcal{T} _{h} \cap \Omega  }^{ 2}    & \lesssim \|  ( u - C_{h}^{e}u) \|_{0,2,\mathcal{T} _{h}  }^{ 2} \\
+             &    \lesssim  h^{2(s-0)}    \| u \|_{s,\mathcal{T}_{h} }^{  2}\lesssim  h^{2(s-2)}    \| u \|_{s,\mathcal{T}_{h} }^{  2} \\
             \| D^2 ( u - C_{h}^{e}u ) \|_{\mathcal{T} _{h} \cap \Omega   }^{ 2 } &  \lesssim  \|  u - C_{h}^{e}u  \|_{2,\mathcal{T} _{h}   }^{ 2 }   =  \|  u - C_{h}^{e}u  \|_{2,2,\mathcal{T} _{h}   }^{ 2 } \\
                                                                                  & \lesssim \sum_{T \in \mathcal{T} _{h}}^{} h^{2(s-2)} \| u \|_{ s, \mathcal{T}_{h}}^{ 2 }.
         \end{split}
@@ -293,8 +290,7 @@ Naturally can we see this is the tools we need to construct an estimate for the 
     And for the boundary term we do a similar procedure, but instead use the first order inverse estimate \eqref{eq:bi_n_cut_inverse_1}. \[
         \begin{split}
             \gamma \| h^{-\frac{1}{2}}  \partial _{n} ( u - C_{h}^{e}u ) \|_{ \Gamma    }^{  2} & \lesssim h^{-2} \|   \nabla  ( u - C_{h}^{e}u )    \|_{ \mathcal{T}_{h} }^{2  }  \lesssim  h^{-2} \|    u - C_{h}^{e}u     \|_{1,2, \mathcal{T}_{h}   }^{2  } \\
-            & \lesssim h^{-2} h^{2(s-1)}   \| u \|_{s, \mathcal{T}_{h}   }^{  2} \\
-            & \lesssim  h^{2(s- 2)}   \| u \|_{s, \mathcal{T}_{h}   }^{  2}
+            & \lesssim h^{-2} h^{2(s-1)}   \| u \|_{s, \mathcal{T}_{h}   }^{  2}  \lesssim  h^{2(s- 2)}   \| u \|_{s, \mathcal{T}_{h}   }^{  2}
         \end{split}
     \]
             Recall that $\| \mean{ u }   \|_{ \mathcal{F} _{h} }^{  } \le \| u^{+} \|_{ \mathcal{F} _{h}  }^{  } + \| u^{-} \|_{ \mathcal{F} _{h}  }^{  }   \lesssim  \| u \|_{ \partial\mathcal{T }_{h}  }^{2  }  $ and the second order inverse
@@ -303,7 +299,7 @@ Naturally can we see this is the tools we need to construct an estimate for the 
             \[
                 \begin{split}
  \| h^{\frac{1}{2}} \mean{ \partial _{nn} (u - C_{h}^{e}u) }   \|_{\mathcal{F} _{h}^{} \cap \Omega   }^{  2} &  \lesssim h^{} \|   \partial _{nn} (u - C_{h}^{e}u)    \|_{\partial \mathcal{T} _{h} \cap \Omega    }^{  2}  \lesssim h^{} h^{-1}  \|   D^2 (u - C_{h}^{e}u)    \|_{ \mathcal{T} _{h}   }^{  2} \\
-                                                                                                                &  = \|   u - C_{h}^{e}u    \|_{ 2, \mathcal{T} _{h}   }^{  2}  \lesssim h^{2(s - 2)} \sum_{T \in \mathcal{T}_h}^{} \| u \|_{s, \mathcal{T} _{h} }^{  }
+                                                                                                                &  = \|   u - C_{h}^{e}u    \|_{ 2, \mathcal{T} _{h}   }^{  2}  \lesssim h^{2(s - 2)}  \| u \|_{s, \mathcal{T} _{h} }^{  }
                 \end{split}
             \]
                 Similarly we can easily see by using \eqref{eq:bi_projection_estimates_1} and the second order boundary inverse inequality  \eqref{eq:bi_cut_inverse_1} that this must hold,
