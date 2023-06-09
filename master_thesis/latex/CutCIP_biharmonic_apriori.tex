@@ -243,7 +243,8 @@ We can immediately observe that the interpolation satisfies the global error est
     \label{eq:bi_projection_estimates_3}
 \| v - C ^{e}_{h}v \|_{ m,2, \Gamma }^{  } & \lesssim h^{l-m-\frac{1}{2}} \sum_{T \in \mathcal{T}_h}  \| v \|_{ l,2,  \mathcal{T} _{h}  }^{  }, \quad m+\frac{1}{2}  \le  l \le  k+1
 \end{align}
-\todo[inline]{ Maybe hard to argue \eqref{eq:bi_projection_estimates_3} to hold on $\Gamma $.}
+\todo[inline]{ Maybe hard to argue \eqref{eq:bi_projection_estimates_3} to hold on $\Gamma $, but may be related to some generalization of \eqref{eq:bi_n_cut_inverse_1} and \eqref{eq:bi_cut_inverse_1}. Anyhow, \eqref{eq:bi_projection_estimates_2} and
+\eqref{eq:bi_projection_estimates_2} was never used in the proof of Lemma \ref{lemma:astar_estimate}.}
 Naturally can we see this is the tools we need to construct an estimate for the energy norm.
 
 \begin{lemma}
@@ -264,10 +265,8 @@ Naturally can we see this is the tools we need to construct an estimate for the 
         \end{split}
     \]
 
-    The strategy is to bound each term individually by applying the estimates \eqref{eq:bi_projection_estimates_1}, \eqref{eq:bi_projection_estimates_2} and \eqref{eq:bi_projection_estimates_3}.
-
-    \begin{enumerate}[label=\arabic*)]
-        \item     Starting with the first two terms we get
+    The strategy is to bound each term individually.
+             Starting with the first two terms we get
     \[
         \begin{split}
             \| |\alpha |^{\frac{1}{2}} ( u - C_{h}^{e}u) \|_{ \mathcal{T} _{h} \cap \Omega  }^{ 2}    & \lesssim     \|  ( u - C_{h}^{e}u) \|_{0,\mathcal{T} _{h}  }^{ 2}
@@ -280,30 +279,24 @@ Naturally can we see this is the tools we need to construct an estimate for the 
         \end{split}
     \]
     Here we simply used \eqref{eq:bi_projection_estimates_1}.
-
-    Recall the inverse estimate $\| \partial _{n} u \|_{ F  }^{2} \lesssim h^{-1} \| \nabla u \|_{ T }^{2  }  $ and that $\| \jump{ \partial _{n} u }   \|_{ \mathcal{F} _{h} }^{  } \le \| \partial _{n^{+}} u^{+}   \|_{ \mathcal{F} _{h} }^{  } +
-    \|\partial _{n^{-}} u^{-}   \|_{ \mathcal{F} _{h} }^{  } \lesssim  \|\partial _{n} u \|_{ \partial\mathcal{T }_{h}  }^{2  }  $.
-        Thus, by the inequality $\| \partial _{n} u \|_{ \partial  \mathcal{T}_{h}   }^{2} \lesssim h^{-1} \| \nabla u \|_{ \mathcal{T}
-        _{h} }^{2  }  $ and  by \eqref{eq:bi_projection_estimates_2} we see, \[
+    Recall the first order inverse estimate \eqref{eq:bi_n_cut_inverse_2} and that $\| \jump{ \partial _{n} u }   \|_{ \mathcal{F} _{h} }^{  } \le \| \partial _{n^{+}} u^{+}   \|_{ \mathcal{F} _{h} }^{  } +
+    \|\partial _{n^{-}} u^{-}   \|_{ \mathcal{F} _{h} }^{  } \lesssim  \|\partial _{n} u \|_{ \partial\mathcal{T }_{h}  }^{2  }  $, hence, this implies $\| \jump{ \partial _{n} u }   \|_{   \mathcal{F}_{h}\cap \Omega    }^{2} \lesssim h^{-1} \| \nabla u \|_{ \mathcal{T}
+        _{h} }^{2  }  $. Using this and the inequality \eqref{eq:bi_projection_estimates_1} we therefore can observe, \[
         \begin{split}
             \gamma \| h^{-\frac{1}{2}} \jump{ \partial _{n} ( u - C_{h}^{e}u ) }   \|_{ \mathcal{F}_{h} \cap \Omega   }^{  2}   & \lesssim
-            h^{-1} \|   \partial _{n} ( u - C_{h}^{e}u )    \|_{  \partial \mathcal{T} _{h} }^{2  } \lesssim  h^{-2} \|   \nabla  ( u - C_{h}^{e}u )    \|_{ \mathcal{T} _{h} }^{2  }\\
-&=  h^{-2} \|    u - C_{h}^{e}u     \|_{ 1,2,\mathcal{T} _{h} }^{2  } \lesssim \sum_{T \in \mathcal{T}_{h} }^{} h^{ -2 } h^{ 2(s - 1 - \frac{1}{2})  } \| u \|_{ s, \omega (  F)  }^{  2} \\
-& \lesssim \sum_{T \in \mathcal{T}_{h} }^{}  h^{ 2(s - \frac{5}{4} )  } \| u \|_{ s, \mathcal{T}_{h}    }^{  2} \\
+            h^{-1} \|   \partial _{n} ( u - C_{h}^{e}u )    \|_{  \partial \mathcal{T} _{h} }^{2  } \lesssim  h^{-2} \|   \nabla  ( u - C_{h}^{e}u )    \|_{ \mathcal{T} _{h}\cap \Omega  }^{2  }\\
+&=  h^{-2} \|    u - C_{h}^{e}u     \|_{ 1,2,\mathcal{T} _{h} }^{2  } \lesssim  h^{ -2 } h^{ 2(s - 1)  } \| u \|_{ s, \mathcal{T}_{h}   }^{  2} \\
+& \lesssim   h^{ 2(s - 2)  } \| u \|_{ s, \mathcal{T}_{h}   }^{  2} \\
         \end{split}
         .
     \]
-    \red{ Something wrong at $\frac{5}{4}$ since it is not $2$. This comes from an $h^{-\frac{1}{2}}$ too much.}
-    And for the boundary term we do a similar procedure, but instead use \eqref{eq:bi_projection_estimates_3} and the first order inverse estimate \eqref{eq:bi_n_cut_inverse_1}. \[
+    And for the boundary term we do a similar procedure, but instead use the first order inverse estimate \eqref{eq:bi_n_cut_inverse_1}. \[
         \begin{split}
-            \gamma \| h^{-\frac{1}{2}}  \partial _{n} ( u - C_{h}^{e}u ) \|_{ \Gamma    }^{  2} & \lesssim h^{-2} \|   \nabla  ( u - C_{h}^{e}u )    \|_{ \mathcal{T}_{h}   }^{2  }  \lesssim  h^{-2} \|    u - C_{h}^{e}u     \|_{1,2, \Gamma  }^{2  } \\
-            & \lesssim h^{-2} h^{2(s- 1- \frac{1}{2})}   \| u \|_{s, \mathcal{T}_{h}   }^{  2} \\
-            & \lesssim  h^{2(s- \frac{5}{4})}   \| u \|_{s, \mathcal{T}_{h}   }^{  2}
+            \gamma \| h^{-\frac{1}{2}}  \partial _{n} ( u - C_{h}^{e}u ) \|_{ \Gamma    }^{  2} & \lesssim h^{-2} \|   \nabla  ( u - C_{h}^{e}u )    \|_{ \mathcal{T}_{h} }^{2  }  \lesssim  h^{-2} \|    u - C_{h}^{e}u     \|_{1,2, \mathcal{T}_{h}   }^{2  } \\
+            & \lesssim h^{-2} h^{2(s-1)}   \| u \|_{s, \mathcal{T}_{h}   }^{  2} \\
+            & \lesssim  h^{2(s- 2)}   \| u \|_{s, \mathcal{T}_{h}   }^{  2}
         \end{split}
     \]
-    \red{Same $\frac{5}{4} \text{ or }h^{-\frac{1}{2}}$ issue as above}.
-\item
-
             Recall that $\| \mean{ u }   \|_{ \mathcal{F} _{h} }^{  } \le \| u^{+} \|_{ \mathcal{F} _{h}  }^{  } + \| u^{-} \|_{ \mathcal{F} _{h}  }^{  }   \lesssim  \| u \|_{ \partial\mathcal{T }_{h}  }^{2  }  $ and the second order inverse
             inequality \eqref{eq:bi_cut_inverse_2}. It is clear
             by using \eqref{eq:bi_projection_estimates_1} that this holds.
@@ -313,16 +306,13 @@ Naturally can we see this is the tools we need to construct an estimate for the 
                                                                                                                 &  = \|   u - C_{h}^{e}u    \|_{ 2, \mathcal{T} _{h}   }^{  2}  \lesssim h^{2(s - 2)} \sum_{T \in \mathcal{T}_h}^{} \| u \|_{s, \mathcal{T} _{h} }^{  }
                 \end{split}
             \]
-            \item
                 Similarly we can easily see by using \eqref{eq:bi_projection_estimates_1} and the second order boundary inverse inequality  \eqref{eq:bi_cut_inverse_1} that this must hold,
 
                 \[
-              \| h^{\frac{1}{2}} \partial _{nn}(u - C_{h}^{e}u)     \|_{ \Gamma }^{  2} \lesssim   \|  D^2(u - C_{h}^{e}u)     \|_{ \mathcal{T}_{h}   }^{  2} \lesssim \|  u - C_{h}^{e}u \|_{ 2, \mathcal{T}_{h} }^{2  } \lesssim h^{2(s-2)} \sum_{T \in
-              \mathcal{T}_h }^{} \| u \|_{ s, \omega ( T)  }^{2  }
+              \| h^{\frac{1}{2}} \partial _{nn}(u - C_{h}^{e}u)     \|_{ \Gamma }^{  2} \lesssim   \|  D^2(u - C_{h}^{e}u)     \|_{ \mathcal{T}_{h}   }^{  2} \lesssim \|  u - C_{h}^{e}u \|_{ 2, \mathcal{T}_{h} }^{2  } \lesssim h^{2(s-2)}  \| u \|_{ s, \mathcal{T}_{h}   }^{2  }
             \]
-    \end{enumerate}
 
-    Thus, all elements is bounded and the proof is complete.
+    Thus, all elements is bounded by $ h^{2(s-2)}  \| u \|_{ s, \mathcal{T}_{h}   }^{2  } $  and the proof is complete.
 \end{proof}
 
 \begin{lemma}[Weak galerkin orthogonality]
