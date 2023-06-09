@@ -141,8 +141,25 @@ Hence, we have that the active set is the union of the interior and cut elements
 
 
 
+
 \subsection{ Cut Continuous Interior Penalty Method }%
 \label{sub:cut_cip_method}
+This makes it natural to redefine the biharmonic problem on a unfitted domain.
+Let $\Omega \subseteq    \mathbb{R} ^d$ s.t. $\Gamma  $ be its corresponding boundary in $C^2$. Let the BH have the form,
+\begin{equation}
+\label{eq:bi_main_problem}
+\begin{split}
+    \Delta^2  u  + \alpha  u  & = f( x)  \quad \text{in } \Omega,   \\
+    \partial _{n} u & = g_{1}(x)   \quad \text{on } \partial \Omega,  \\
+    \partial _{n} \Delta  u & = g_{2}( x)   \quad \text{on } \partial \Omega .  \\
+\end{split}
+\end{equation}
+Here is $\Delta ^2 = \Delta  \left( \Delta  \right) $ the biharmonic operator, also known as the bilaplacian. We will assume for the strong form that $u \in H^{4}\left( \Omega  \right) $, $\alpha  >0 $ and $f \in L^{2}\left( \Omega  \right)
+$.
+\begin{remark}
+    Be aware that the only difference between the BH variants, \eqref{eq:bi_problem} and \eqref{eq:bi_main_problem}, is that the first one problem is fitted s.t. $\mathcal{T}_{h} = \Omega  $, while the latter is unfitted and equipped with a sufficiently smooth boundary.
+\end{remark}
+
 
 We denote the $C^{0}$ polynomial space of order $k$ as
 \[
@@ -153,7 +170,7 @@ V_{h} = \left\{ v \in C^{0}\left( \Omega  \right): v_{T} = v | _{T} \in \mathcal
 
 Drawing on the principles outlined in Section \ref{sec:CIP_biharmonic_problem}, we can indeed derive two equivalent formulations for the biharmonic equation, specifically adapted to an unfitted mesh. Similarly both formulation is the bilinear form
 $a_{h}:V_{h}
-\times V_{h} \to  \mathbb{R}  $ and the linear form $l_{h}: V_{h} \to \mathbb{R} $. Recall the recall the Hessian formulation \eqref{eq:cip_biharmonic_form} and the Laplace formulation \eqref{eq:cip_laplace_form}. Then we have the following
+\times V_{h} \to  \mathbb{R}  $ and the linear form $l_{h}: V_{h} \to \mathbb{R} $. Recall the recall the Hessian formulation \eqref{eq:cip_hessian_form} and the Laplace formulation \eqref{eq:cip_laplace_form} on a polygonal mesh. Then we have the following
 unfitted variants.
 
 \begin{enumerate}[label=\arabic*)]
