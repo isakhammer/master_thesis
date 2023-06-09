@@ -94,15 +94,26 @@ k+1 \right\}$ the a priori estimates are   \[
     \end{split}
 \]
 
-
-
-
-
-
 \subsection{  Construction for Hessian CIP}%
 \label{sub:continious_weak_form_of_biharmonic_equation}
+Out goal is to derive the Hessian formulation.
 
-Assume $u \in H^{4}( \Omega ) $ and $V = \left\{ v \in H^{1}( \Omega )  \mid  v \mid _{T} \in H^{m}( T) \ \forall T \in \mathcal{T} _{h}   \right\} $. We will start constructing a local theory for a triangle $K$ and then extend it to the full mesh
+\begin{lemma}
+Let $u \in H^{4}( \Omega ) $ be the solution to \eqref{eq:bi_problem}.  And let $V = \left\{ v \in H^{1}( \Omega )  \mid  v \mid _{T} \in H^{m}( T) \ \forall T \in \mathcal{T} _{h}   \right\} $. Then can does the following identity hold.
+\begin{equation}
+\label{eq:bi_basic_dg_full_1}
+\begin{split}
+    \left( \Delta  ^{2} u, v \right) _{\Omega }  =&   \left( D^2u, D^2v \right)_{\mathcal{T} _{h}} +  \left(g_{2}, v  \right) _{\mathcal{F}^{ext}_{h} }  -  ( \mean{ \partial _{nn} u }   , \jump{ \partial_{n} v } )_{\mathcal{F}_{h}^{int} } \\
+                                                  & \red{ - ( \partial _{nn} u , \partial _{n} v)_{\mathcal{F}^{ext}_{h} } - \sum_{i =1  }^{d-1} ( \partial   _{t_{i}n} u  ,  \partial   _{t_{i}}  v  )_{ \mathcal{F}^{ext} _{h}  }
+}
+\end{split}
+\end{equation}
+
+\end{lemma}
+
+\begin{proof}
+
+ We will start constructing a local theory for a triangle $K$ and then extend it to the full mesh
 $\mathcal{T}_{h} $. Using Greens Theorem is it obvious that \(
 \left( \Delta ^2 u,v \right) _{T }   = \left( \partial _{n} \Delta u, v \right) _{\partial T  } - \left( \nabla \left( \Delta  u \right) , \nabla v \right) _{T }
 \).
@@ -227,6 +238,8 @@ Hence, we have the following identity.
 \todo[inline]{ Let $u$ be evaluated on $\Gamma $. It is clear that $\partial_{ nn } u = \partial_n g_1  $ does not old even though $\partial_n u = g_1  $. Similarly, $\partial_{ t_{i}n } u \neq \partial_{t_{i}} g_1  $ even though $\partial_n u = g_1  $ on
 $\Gamma$. A simple example is when $g_{1} = 0$ and a square boundary with length $2L$ in the origin. If $g_{1}(x,y) = \sin(\frac{ 2 \pi }{L} x)$ then is $\partial _{n_x} g_{1}(L,0) = \frac{2 \pi}{L} [1,0] \cdot [cos(2 \pi ), 0] = \frac{2 \pi}{L}  $
 and if $g_1(x,y) = x-L$ then is $ \partial _{n_x} g_1 = 0 $. I believe a similar example also holds in the tangential direction.  Hence, an alternative method  to impose $g_1$ must be considered for the tangential direction, for example a Nitsche formulation.   }
+
+\end{proof}
 
 We will now assemble the Hessian CIP formulation. Assume $u,v \in V_{h}$, then we have the linear form
 \begin{equation}
