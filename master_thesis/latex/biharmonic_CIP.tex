@@ -39,11 +39,12 @@ formulation we will investigate two formulations of the forms $a_{h}$ and $l_{h}
     \label{eq:cip_biharmonic_form}
 \begin{split}
 a_{h}^{H} \left( u, v \right)   =&
-    \left( \alpha  u, v \right) _{\Omega }   +  \left( D^2 u, D^2v \right) _{\mathcal{T} _{h}} \\
- & -
-  \left( \mean{  \partial _{n n} u }, \jump{ \partial _{n }u} \right)_{\mathcal{F}_{h}}  -
- \left( \mean{ \partial _{n n} v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}}  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h}} \\
- l_{h}^{H}( v) & =  \left( f, v \right) _{\Omega }  - \left(g_{2}, v  \right) _{\Gamma } - ( g_{1}, \partial _{nn} v)_{\Gamma } +  \frac{\gamma }{h} ( g_{1} , \partial _{n} v)_{\Gamma }
+    \left( \alpha  u, v \right) _{\Omega }   +  \left( D^2 u, D^2v \right) _{\Omega } \\
+ & - \left( \mean{  \partial _{n n} u }, \jump{ \partial _{n }u} \right)_{\mathcal{F}_{h}^{int}}  -
+ \left( \mean{ \partial _{n n} v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}^{int}}  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h}^{int}} \\
+ & - \left( \mean{  \partial _{n n} u }, \jump{ \partial _{n }u} \right)_{\Gamma }  -
+ \left( \mean{ \partial _{n n} v }, \jump{ \partial _{n}u }      \right)_{\Gamma }  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\Gamma } \\
+ l_{h}^{H}( v)  =&  \left( f, v \right) _{\Omega }  - \left(g_{2}, v  \right) _{\Gamma } - ( g_{1}, \partial _{nn} v)_{\Gamma } +  \frac{\gamma }{h} ( g_{1} , \partial _{n} v)_{\Gamma }
 \end{split}
 .
 \end{equation}
@@ -52,8 +53,8 @@ With the corresponding energy norms,
 \begin{equation}
 \label{eq:a_cip_energy_norm_hes}
     \begin{split}
- \| v \|_{ a_{h} }^{ 2 }& =  \| v\|_{ \Omega  }^{2  }  +  \| D ^2 v \|_{ \mathcal{T} _{h}  }^{ 2 }  + \|  h^{-\frac{1}{2}} \jump{ \partial _{n} v    }\|_{  \mathcal{F} _{h} }^{2  },  \quad v \in V_{h}  \\
-   \| v \|_{ a_{h},* }^{ 2 } =& \| v \|_{ a_{h} }^{ 2 }  + \| h^{\frac{1}{2}}  \mean{     \partial _{nn } v}  \|_{ \mathcal{F}_{h}   }^{  2}, \quad  v\in V \oplus V_{h}.
+ \| v \|_{ a_{h} }^{ 2 }& =  \| v\|_{ \Omega  }^{2  }  +  \| D ^2 v \|_{ \Omega   }^{ 2 }  + \|  h^{-\frac{1}{2}} \jump{ \partial _{n} v    }\|_{  \mathcal{F} _{h}^{int} }^{2  }+ \|  h^{-\frac{1}{2}}  \partial _{n} v    \|_{  \Gamma  }^{2  },  \quad v \in V_{h}  \\
+   \| v \|_{ a_{h},* }^{ 2 } =& \| v \|_{ a_{h} }^{ 2 }  + \| h^{\frac{1}{2}}  \mean{     \partial _{nn } v}  \|_{ \mathcal{F}_{h}   }^{  2}+ \| h^{\frac{1}{2}} \partial _{nn } v  \|_{ \Gamma    }^{  2}, \quad  v\in V \oplus V_{h}.
     \end{split}
 \end{equation}
 
@@ -73,8 +74,9 @@ With the corresponding energy norms,
                                      \begin{equation}
                                          \label{eq:a_cip_energy_norm_lap}
                                          \begin{split}
-                                             \| v \|_{ a_{h} }^{ 2 }& =  \| v\|_{ \Omega  }^{2  }  +  \| \Delta   v \|_{ \mathcal{T} _{h}  }^{ 2 }  + \|  h^{-\frac{1}{2}} \jump{ \partial _{n} v    }\|_{  \mathcal{F} _{h} }^{2  },  \quad v \in V_{h}  \\
-                                             \| v \|_{ a_{h},* }^{ 2 } &= \| v \|_{ a_{h} }^{ 2 }  + \| h^{\frac{1}{2}}  \mean{     \partial _{nn } v}  \|_{ \mathcal{F}_{h}   }^{  2}, \quad  v\in V \oplus V_{h}.
+                                             \| v \|_{ a_{h} }^{ 2 }& =  \| v\|_{ \Omega  }^{2  }  +  \| \Delta   v \|_{ \Omega   }^{ 2 }  + \|  h^{-\frac{1}{2}} \jump{ \partial _{n} v    }\|_{  \mathcal{F} _{h}^{int} }^{2  } +  \|  h^{-\frac{1}{2}}
+                                             \partial _{n} v  \|_{  \Gamma  }^{2  },  \quad v \in V_{h}  \\
+                                             \| v \|_{ a_{h},* }^{ 2 } &= \| v \|_{ a_{h} }^{ 2 }  + \| h^{\frac{1}{2}}  \mean{     \partial _{nn } v}  \|_{ \mathcal{F}_{h}^{int}   }^{  2}+ \| h^{\frac{1}{2}}       \partial _{nn } v  \|_{ \Gamma    }^{  2}, \quad  v\in V \oplus V_{h}.
                                          \end{split}
                                          .
                                      \end{equation}
@@ -226,7 +228,6 @@ Hence, we have the following identity.
 $\Gamma$. A simple example is when $g_{1} = 0$ and a square boundary with length $2L$ in the origin. If $g_{1}(x,y) = \sin(\frac{ 2 \pi }{L} x)$ then is $\partial _{n_x} g_{1}(L,0) = \frac{2 \pi}{L} [1,0] \cdot [cos(2 \pi ), 0] = \frac{2 \pi}{L}  $
 and if $g_1(x,y) = x-L$ then is $ \partial _{n_x} g_1 = 0 $. I believe a similar example also holds in the tangential direction.  Hence, an alternative method  to impose $g_1$ must be considered for the tangential direction, for example a Nitsche formulation.   }
 
-$g_1(x,y) = x-L \\$
 We will now assemble the Hessian CIP formulation. Assume $u,v \in V_{h}$, then we have the linear form
 \begin{equation}
 \begin{split}
