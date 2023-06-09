@@ -226,8 +226,11 @@ Hence, we have the following identity.
 \end{proof}
 
 \todo[inline]{ Let $u$ be evaluated on $\Gamma $. It is clear that $\partial_{ nn } u = \partial_n g_1  $ does not old even though $\partial_n u = g_1  $. Similarly, $\partial_{ t_{i}n } u \neq \partial_{t_{i}} g_1  $ even though $\partial_n u = g_1  $ on
-$\Gamma$. A simple example is when $g_{1} = 0$ and a square boundary with length $2L$ in the origin. If $g_{1}(x,y) = \sin(\frac{ 2 \pi }{L} x)$ then is $\partial _{n_x} g_{1}(L,0) = \frac{2 \pi}{L} [1,0] \cdot [cos(2 \pi ), 0] = \frac{2 \pi}{L}  $
-and if $g_1(x,y) = x-L$ then is $ \partial _{n_x} g_1 = 0 $. I believe a similar example also holds in the tangential direction.  Hence, an alternative method  to impose $g_1$ must be considered for the tangential direction, for example a Nitsche formulation.   }
+    $\Gamma$ .
+    % To illustrate, an simple example is when $g_{1} = 0$ and a square domain $\Omega = [-L,L]^2$ at the boundary point $(L,0)$. If $g_{1}(x,y) = \sin(\frac{ 2 \pi }{L} y)\cos(\frac{ 2 \pi }{L} x)$ then is $\partial _{t} g_{1}(L,0) = \frac{2 \pi}{L}
+    % [0, \cos(\frac{ 2 \pi }{L} L)\cos(\frac{ 2 \pi }{L} 0) ] \cdot [0,1]^T  = \frac{2 \pi}{L}  $
+% and if $g_1(x,y) = x-L$ then is $ \partial _{t} g_1 = 0 $.
+Hence, an alternative method  to impose $g_1$ must be considered for the tangential direction.   }
 
 We will now assemble the Hessian CIP formulation. Assume $u,v \in V_{h}$, then we have the linear form
 \begin{equation}
@@ -237,17 +240,19 @@ a_{h}^{H} \left( u, v \right)   =&
  & - \left( \mean{  \partial _{n n} u }, \jump{ \partial _{n }u} \right)_{\mathcal{F}_{h}^{int}}  -
  \left( \mean{ \partial _{n n} v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}^{int}}  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h}^{int}} \\
  & - \left(   \partial _{n n} u ,  \partial _{n }u \right)_{\Gamma }  -
- \left(  \partial _{n n} v ,  \partial _{n}u       \right)_{\Gamma }  + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{\Gamma } \\
+ \left(  \partial _{n n} v ,  \partial _{n}u       \right)_{\Gamma }  + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{\Gamma }   \red{-\sum_{i =1  }^{d-1} ( \partial   _{t_{i}n} u  ,  \partial   _{t_{i}}  v  )_{
+ \mathcal{F}^{ext} _{h}  }} \\
  l_{h}^{H}( v)  =&  \left( f, v \right) _{\Omega }  - \left(g_{2}, v  \right) _{\Gamma } - ( g_{1}, \partial _{nn} v)_{\Gamma } +  \frac{\gamma }{h} ( g_{1} , \partial _{n} v)_{\Gamma }
 \end{split}
 .
 \end{equation}
+\todo[inline]{ Need to remove the red stuff. }
 Hence, the Hessian formulation is derived.
 
 \begin{remark}
 We imposed the Neumann condition $g_{1}$ using the Nitsche's method and thus imposing a regularisation term \cite{nitsche1971variationsprinzip}. Observe we added a consistent symmetry term $( \mean{ \partial _{n n} v }, \jump{ \partial _{n}u }      )_{\mathcal{F}_{h}}$,
 which is consistent for zero, also involving penalties for the interior facets. Technically is the interior regularisation equivalent to do a Nitsche's method inbetween all interior elements, but with boundary conditions of each triangle weakly
-imposed to zero. Thus, the penalty parameter $\gamma$  is the same interior and exterior elements. From \cite{brenner2012quadratic, brenner2012} is it experimentally shown that $\gamma = 2k ( k-1 ) $ where $k\ge 2$ is the polynomial order  may be
+imposed to zero. Thus, the penalty parameter $\gamma$  is the same interior and exterior elements. From \cite{brenner2012quadratic, brenner2012} is it experimentally shown that $\gamma = 2k ( k-1 ) $, where $k\ge 2$ is the polynomial order, may be
 a good choice for most applications.
 \end{remark}
 
