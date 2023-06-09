@@ -145,19 +145,29 @@ Hence, we have that the active set is the union of the interior and cut elements
 \subsection{ Cut Continuous Interior Penalty Method }%
 \label{sub:cut_cip_method}
 This makes it natural to redefine the biharmonic problem on a unfitted domain.
-Let $\Omega \subseteq    \mathbb{R} ^d$ s.t. $\Gamma  $ be its corresponding boundary in $C^2$. Let the BH have the form,
+Let $\Omega \subseteq    \mathbb{R} ^d$ s.t. $\Gamma  $ be its corresponding boundary in $C^2$. Then is the BH problem on the form,
 \begin{equation}
 \label{eq:bi_main_problem}
 \begin{split}
     \Delta^2  u  + \alpha  u  & = f( x)  \quad \text{in } \Omega,   \\
-    \partial _{n} u & = g_{1}(x)   \quad \text{on } \partial \Omega,  \\
-    \partial _{n} \Delta  u & = g_{2}( x)   \quad \text{on } \partial \Omega .  \\
+    \partial _{n} u & = g_{1}(x)   \quad \text{on } \Gamma ,  \\
+    \partial _{n} \Delta  u & = g_{2}( x)   \quad \text{on } \Gamma  .  \\
 \end{split}
 \end{equation}
 Here is $\Delta ^2 = \Delta  \left( \Delta  \right) $ the biharmonic operator, also known as the bilaplacian. We will assume for the strong form that $u \in H^{4}\left( \Omega  \right) $, $\alpha  >0 $ and $f \in L^{2}\left( \Omega  \right)
-$.
+$. For completeness will we also add the corresponding continuous weak formulation.
+Find a $u \in H^2( \Omega ) $ s.t. $a( u,v) = l( v)  \forall v \in H^{2}( \Omega )  $ where
+\begin{equation}
+\label{eq:bi_weak}
+      \begin{split}
+a( u,v) & =  ( \Delta u, \Delta v)_{\Omega } +  ( \partial _{n} \Delta u, v)_{\Gamma } - ( \partial _{n} v, \Delta u) _{\Gamma } - ( \partial _{n} u, \Delta v) _{\Gamma }\\
+l( v)  &= ( f,v)_{\Omega } - ( g_{2} , v)_\Omega - ( g_{1}, \Delta v) _{\Gamma }
+      \end{split}
+\end{equation}
+
 \begin{remark}
-    Be aware that the only difference between the BH variants, \eqref{eq:bi_problem} and \eqref{eq:bi_main_problem}, is that the first one problem is fitted s.t. $\mathcal{T}_{h} = \Omega  $, while the latter is unfitted and equipped with a sufficiently smooth boundary.
+    Be aware that the only difference between the strong BH variants, \eqref{eq:bi_problem} and \eqref{eq:bi_main_problem}, is that the first one problem is fitted s.t. $\mathcal{T}_{h} = \Omega  $, while the latter is unfitted and equipped with a
+    sufficiently smooth boundary. The continuous weak formulations is entirely identical in its composition.
 \end{remark}
 
 
