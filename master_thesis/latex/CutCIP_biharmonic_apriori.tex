@@ -261,32 +261,33 @@ Naturally can we see this is the tools we need to construct an estimate for the 
     \begin{enumerate}[label=\arabic*)]
         \item     Starting with the first term we get
     \[
-            \| |\alpha |^{\frac{1}{2}} ( u - C_{h}^{e}u) \|_{ \mathcal{T} _{h} \cap \Omega  }^{ 2}   \lesssim     \|  ( u - C_{h}^{e}u) \|_{0,\mathcal{T} _{h}  }^{ 2} \lesssim  h^{2s} \sum_{T \in \mathcal{T}
+        \begin{split}
+            \| |\alpha |^{\frac{1}{2}} ( u - C_{h}^{e}u) \|_{ \mathcal{T} _{h} \cap \Omega  }^{ 2}    & \lesssim     \|  ( u - C_{h}^{e}u) \|_{0,\mathcal{T} _{h}  }^{ 2}
+             =\|  ( u - C_{h}^{e}u) \|_{0,2,\mathcal{T} _{h}  }^{ 2} \\
+             &   \lesssim  h^{2s} \sum_{T \in \mathcal{T}
             _{h}}^{}   \| v \|_{s,w( T)  }^{  2}
+        \end{split}
     \]
     Here we simply used \eqref{eq:bi_projection_estimates_1}.
 \item
     Similarly can we use  for the second term, \[
-    \| D^2 ( u - C_{h}^{e}u ) \|_{\mathcal{T} _{h} \cap \Omega   }^{ 2 } \lesssim  \|  u - C_{h}^{e}u  \|_{2,\mathcal{T} _{h}   }^{ 2 } \lesssim \sum_{T \in \mathcal{T} _{h}}^{} h^{2(s-2)} \| u \|_{ s, \omega ( T)  }^{ 2 }.
+        \begin{split}
+            \| D^2 ( u - C_{h}^{e}u ) \|_{\mathcal{T} _{h} \cap \Omega   }^{ 2 } &  \lesssim  \|  u - C_{h}^{e}u  \|_{2,\mathcal{T} _{h}   }^{ 2 }   =  \|  u - C_{h}^{e}u  \|_{2,2,\mathcal{T} _{h}   }^{ 2 } \\
+                                                                                 & \lesssim \sum_{T \in \mathcal{T} _{h}}^{} h^{2(s-2)} \| u \|_{ s, \omega ( T)  }^{ 2 }.
+        \end{split}
     \]
     Again, this is via the estimate \eqref{eq:bi_projection_estimates_1}.
 \item
-        Recall $\| \jump{ u }   \|_{ \mathcal{F} _{h} }^{  } \le \| v^{+}   \|_{ \mathcal{F} _{h} }^{  } +   \| v^{-}   \|_{ \mathcal{F} _{h} }^{  } \lesssim  \| u \|_{ \partial\mathcal{T }_{h}  }^{2  }  $ and the inverse estimate $\| \partial _{n} u \|_{ F  }^{} \lesssim h^{-\frac{1}{2}} \| \nabla u \|_{ T }^{  }  $.
-     Hence, by \eqref{eq:bi_projection_estimates_2}  \[
+        Recall $\| \jump{ \partial _{n} u }   \|_{ \mathcal{F} _{h} }^{  } \le \| \partial _{n^{+}} u^{+}   \|_{ \mathcal{F} _{h} }^{  } +   \|\partial _{n^{-}} u^{-}   \|_{ \mathcal{F} _{h} }^{  } \lesssim  \|\partial _{n} u \|_{ \partial\mathcal{T }_{h}  }^{2  }  $
+        and the inverse estimate $\| \partial _{n} u \|_{ F  }^{2} \lesssim h^{-1} \| \nabla u \|_{ T }^{2  }  $.
+     Hence, by \eqref{eq:bi_projection_estimates_2} we have \[
         \begin{split}
-            \gamma \| h^{-\frac{1}{2}} \jump{ \partial _{n} ( u - C_{h}^{e}u ) }   \|_{ \mathcal{F}_{h} \cap \Omega   }^{  2}   &\lesssim \| h^{-\frac{1}{2}}  \partial _{n} ( u - C_{h}^{e}u )    \|_{  \partial \mathcal{T} _{h} }^{2  }
-       \lesssim h^{-2} \|   \nabla  ( u - C_{h}^{e}u )    \|_{  \mathcal{T} _{h} }^{2  }     \\
-                                                                                                                 &\lesssim h^{-2} \|      u - C_{h}^{e}u     \|_{1,  \mathcal{T}_{h} }^{2  }
-                                                                                                                 \lesssim \sum_{T \in \mathcal{T} _{h}}^{} h^{2(s-1)} \| u \|_{ s,T  }^{ 2}
+            \gamma \| h^{-\frac{1}{2}} \jump{ \partial _{n} ( u - C_{h}^{e}u ) }   \|_{ \mathcal{F}_{h} \cap \Omega   }^{  2}   & \lesssim
+            h^{-1} \|   \partial _{n} ( u - C_{h}^{e}u )    \|_{  \partial \mathcal{T} _{h} }^{2  } \lesssim  h^{-2} \|   \nabla  ( u - C_{h}^{e}u )    \|_{ \mathcal{T} _{h} }^{2  }\\
+&=  h^{-2} \|    u - C_{h}^{e}u     \|_{ 1,2,\mathcal{T} _{h} }^{2  } \lesssim \sum_{T \in \mathcal{T}_{h} }^{} h^{ 2(s - 1 - \frac{1}{2})  } \| u \|_{ s, \omega (  F)  }^{  2} \\
+&= \sum_{T \in \mathcal{T}_{h} }^{} h^{ 2(s -\frac{3}{2})  } \| u \|_{ s, \omega (  F)  }^{  2} \\
         \end{split}
     \]
-    \todo[inline]{
-        Not sure if \eqref{eq:bi_projection_estimates_2} holds here!
-        \[
-     \| \partial _{n}(u - C_{h}^{e}u)     \|_{1, \partial \mathcal{T}_{h} }^{2  }
-                                                                                                                 \lesssim \sum_{T \in \mathcal{T}_{h} }^{}
-                                                                                                                 h^{ 2(l - m - \frac{1}{2})  } \| u      \|_{ s, \omega (  F)  }^{  2}
-    \]  }
 \item
     And for the boundary term we simply apply \eqref{eq:bi_projection_estimates_3}, \[
         \begin{split}
