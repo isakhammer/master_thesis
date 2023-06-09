@@ -267,8 +267,15 @@ a good choice for most applications.
 \subsection{Construction of Laplacian CIP}%
 \label{sub:construction_of_laplacian_cip}
 
- Again, assume $u \in H^{4}( \Omega ) $ and $ v \in  V = \left\{ v \in H^{1}( \Omega )  \mid  v \mid _{T} \in H^{m}( T) \ \forall T \in \mathcal{T} _{h}   \right\} $. Similarly, we start constructing a local theory for a triangle $T$ and then extend it to the full mesh
-$\mathcal{T}_{h} $. Using Greens Theorem is it obvious that \(
+\begin{lemma}
+ Assume $u \in H^{4}( \Omega ) $ and $v \in  V = \left\{ v \in H^{1}( \Omega )  \mid  v \mid _{T} \in H^{m}( T) \ \forall T \in \mathcal{T} _{h}   \right\} $. Then we have the following identity.
+\[
+( \Delta ^2 u, v ) _{\Omega } = ( \Delta u, \Delta v)_{\mathcal{T} _{h} }  +  ( \jump{ \partial _{n} v} , \mean{ \Delta u })_{\mathcal{F}_{h} }  + ( g_{2} , v )_{\Gamma } - ( \partial _{n} v, \Delta u)_{\Gamma }.
+\]
+
+\end{lemma}
+\begin{proof}
+  Similarly, we start constructing a local theory for a triangle $T$ and then extend it to the full mesh $\mathcal{T}_{h} $. Using Greens Theorem is it obvious that \(
 \left( \Delta ^2 u,v \right) _{T }   = ( \partial _{n} \Delta u, v ) _{\partial T  } - ( \nabla \left( \Delta  u \right) , \nabla v ) _{T }
 \).
 The main difference here is that we straight away do a new iteration of the Greens theorem.
@@ -301,6 +308,8 @@ Hence, we end up with the identity,
 ( \Delta ^2 u, v ) _{\Omega } = ( \Delta u, \Delta v)_{\mathcal{T} _{h} }  +  ( \jump{ \partial _{n} v} , \mean{ \Delta u })_{\mathcal{F}_{h} }  + ( g_{2} , v )_{\Gamma } - ( \partial _{n} v, \Delta u)_{\Gamma }.
 \]
 
+
+\end{proof}
 Finally, can we construct the Laplace CIP formulation. Let $u,v \in V_{h}$, then can finally write the following respective forms.
 
 \begin{equation}
