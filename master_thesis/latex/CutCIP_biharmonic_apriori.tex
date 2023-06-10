@@ -272,7 +272,7 @@ Naturally can we see this is the tools we need to construct an estimate for the 
             \| |\alpha |^{\frac{1}{2}} ( u - C_{h}^{e}u) \|_{ \mathcal{T} _{h} \cap \Omega  }^{ 2}    & \lesssim \|  ( u - C_{h}^{e}u) \|_{0,2,\mathcal{T} _{h}  }^{ 2} \\
              &    \lesssim  h^{2(s-0)}    \| u \|_{s,\mathcal{T}_{h} }^{  2}\lesssim  h^{2(s-2)}    \| u \|_{s,\mathcal{T}_{h} }^{  2} \\
             \| D^2 ( u - C_{h}^{e}u ) \|_{\mathcal{T} _{h} \cap \Omega   }^{ 2 } &  \lesssim  \|  u - C_{h}^{e}u  \|_{2,\mathcal{T} _{h}   }^{ 2 }   =  \|  u - C_{h}^{e}u  \|_{2,2,\mathcal{T} _{h}   }^{ 2 } \\
-                                                                                 & \lesssim \sum_{T \in \mathcal{T} _{h}}^{} h^{2(s-2)} \| u \|_{ s, \mathcal{T}_{h}}^{ 2 }.
+                                                                                 & \lesssim  h^{2(s-2)} \| u \|_{ s, \mathcal{T}_{h}}^{ 2 }.
         \end{split}
     \]
     Here we simply used \eqref{eq:bi_projection_estimates_1}.
@@ -313,7 +313,7 @@ Naturally can we see this is the tools we need to construct an estimate for the 
 
 \begin{lemma}[Weak galerkin orthogonality]
 Let $u \in H^{s}( \Omega )  $, $ s\ge 3 $  be the exact solution and $u_{h} \in V_{h}$ is a discrete solution. Then is \[
-    a_{h}( u - u_{h}, v) = g_{h} ( u_{h}, v) \quad \forall v \in V_{h}.
+    A_{h}( u - u_{h}, v) = g_{h} ( u_{h}, v) \quad \forall v \in V_{h}.
     \]
 \end{lemma}
 
