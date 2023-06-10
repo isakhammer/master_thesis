@@ -318,7 +318,7 @@ Let $u \in H^{s}( \Omega )  $, $ s\ge 3 $  be the exact solution and $u_{h} \in 
 \end{lemma}
 
 \begin{proof}
-   From the definition of the problem \eqref{eq:discrete_CutCIP_prob}, utilizing that $a_{h}( u,v) = l(v ) \forall v \in V_{h} $ can we easily observe that \[
+   From the definition of the problem \eqref{eq:discrete_CutCIP_prob} and utilizing that $a_{h}( u,v) = l(v ) \forall v \in V_{h} $ can we easily observe that \[
        \begin{split}
    l(v ) & =  A_{h}( u_{h},v) =  a_{h}( u,v)  = a_{h}( u_{h},v)+g_{h}( u_{h},v)
        \end{split}
@@ -353,14 +353,14 @@ Let $u \in H^{s}( \Omega )  $, $ s\ge 3 $  be the exact solution and $u_{h} \in 
     Let $e = u - u_{h}$ consist of $e = e_{h} + e_{\pi }$, where the discrete error has the form $e_{h} = C _{h}^{e} u - u_{h}$ and the interpolation error $e_{\pi } = u - C _{h} ^{e}u$. We can then observe that
     \[
         \begin{split}
-    \| u - u_{h} \|_{ a_{h},* }^{  } &= \| u - C_{h}^{e} u + C_{h}^{e}u - u_{h} \|_{ a_{h},* }^{  } \\
+    \| u - u_{h} \|_{ a_{h} }^{  } & \lesssim  \| u - C_{h}^{e} u + C_{h}^{e}u - u_{h} \|_{ a_{h},* }^{  } \\
     & \le \|  u - C_{h}^{e} u \|_{a_{h},*  }^{  } +  \| C_{h}^{e}u - u_{h} \|_{a_{h},*  }^{  }\\
-                                     & \le \| e_{\pi } \|_{a_{h},*}^{  } + \| e_{h} \|_{A_{h},*  }^{  }
+                                     & \le \| e_{\pi } \|_{a_{h},*}^{  } + \| e_{h} \|_{A_{h}  }^{  }
         \end{split}
     \]
     \red{Using Lemma \ref{lemma:astar_estimate}, can we see that $\| e_{\pi } \|_{a_{h},*}^{  } \lesssim h^{r-1} \| u \|_{ r,\Omega  }^{  }  $ is already fulfilled.} So it remains to check the discrete part. From Lemma \ref{lemma:bi_Ah_coercive}, \ref{lemma:bi_Ah_bounded}, the weak Galerkin orthogonality and Assumption \ref{as:bi_EP2} is it natural to see that, \[
     \begin{split}
-\| e_{h} \|_{ A_{h},* }^{ 2 } & \lesssim a_{h}( C _{h}^{e} u - u_{h}, e_{h}) + g_{h}( C _{h}^{e}u - u_{h}, e_{h}) \\
+\| e_{h} \|_{ A_{h} }^{ 2 } & \lesssim a_{h}( C _{h}^{e} u - u_{h}, e_{h}) + g_{h}( C _{h}^{e}u - u_{h}, e_{h}) \\
  & = a_{h}( C _{h}^{e} u - u, e_{h}) + a_{h}( u - u_{h}, e_{h}) + g_{h}( C _{h}^{e}u - u_{h}, e_{h}) \\
  & = a_{h}( C _{h}^{e} u - u, e_{h}) + g_{h}( C _{h}^{e}u, e_{h}) \\
  & \lesssim h^{r-1} \| u \|_{ r, \Omega  }^{  } \| e_{h} \|_{ A_{h} }^{  }.
@@ -369,19 +369,18 @@ Let $u \in H^{s}( \Omega )  $, $ s\ge 3 $  be the exact solution and $u_{h} \in 
 
 
 
-The last line of the calculations above comes from the fact that
+The last line of the calculations above was the Assumption \ref{as:bi_EP2}, i.e.,
 \[
     \begin{split}
-        a_{h}( C _{h}^{e} u - u, e_{h}) + g_{h}( C _{h}^{e}u, e_{h}) &\lesssim \| C _{h}^{e} u - u \|_{a_{h},*  }^{  } \| e_{h} \|_{a_{h},*  }^{  }
+        a_{h}( C _{h}^{e} u - u, e_{h}) + g_{h}( C _{h}^{e}u, e_{h}) &\lesssim \| C _{h}^{e} u - u \|_{a_{h},*  }^{  } \| e_{h} \|_{a_{h}  }^{  }
         + \abs{ C _{h}^{e}u }_{g_{h}} \abs{e_{h}  }_{g_{h}} \\
-         &\lesssim \| C _{h}^{e} u - u \|_{a_{h},*  }^{  } \| e_{h} \|_{a_{h},*  }^{  } + h^{r-1} \| e_{h} \|_{r, \Omega   }^{  }\abs{e_{h}  }_{g_{h}} \\
+         &\lesssim \| C _{h}^{e} u - u \|_{a_{h},*  }^{  } \| e_{h} \|_{a_{h}  }^{  } + h^{r-1} \| e_{h} \|_{r, \Omega   }^{  }\abs{e_{h}  }_{g_{h}} \\
          &\lesssim (\| C _{h}^{e} u - u \|_{a_{h},*  }^{  } + h^{r-1} \| e_{h} \|_{r, \Omega   }^{  }) \|e_{h}\|_{A_{h}} \\
          &\lesssim  h^{r-1} \| u \|_{r, \Omega   }^{  } \|e_{h}\|_{A_{h}}.
     \end{split}
 \]
-Here we noticed that $\| e_{h} \|_{a_{h},*  }^{  } + \abs{e_{h}  }_{g_{h}} \lesssim \| e_{h} \|_{ A_{h} }^{  }  $. We also argued that $\| C _{h}^{e} u - u \|_{a_{h},*  }^{  } \lesssim h^{r-1}\| u \|_{ r,\Omega  }^{  }  $ from Lemma
+Here we noticed that $\| e_{h} \|_{a_{h}  }^{  } + \abs{e_{h}  }_{g_{h}} \lesssim \| e_{h} \|_{ A_{h} }^{  }  $. We also argued that $\| C _{h}^{e} u - u \|_{a_{h},*  }^{  } \lesssim h^{r-1}\| u \|_{ r,\Omega  }^{  }  $ from Lemma
 \ref{lemma:astar_estimate}.
-\todo[inline]{ TODO: Need to show $ \| e_{h} \|_{a_{h},*  }^{  } + |e_{h}  |_{g_{h}} \le  \| e_{h} \|_{ A_{h} }^{  }  $ }
 Hence, the first part of the proof is complete.
 
     \item We want to show that $ \| e \|_{ \Omega  }^{  } \lesssim   h^{r} \| u \|_{ r,\Omega  }^{  }$. The idea is to apply the so-called Aubin-Nitsche duality trick by being aware of the ghost penalty $g_{h}$. Let us denote the following observation.
