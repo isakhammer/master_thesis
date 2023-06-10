@@ -312,10 +312,19 @@ Naturally can we see this is the tools we need to construct an estimate for the 
 \end{proof}
 
 \begin{lemma}[Weak galerkin orthogonality]
-Let $u \in H^{s}( \Omega )  $, $ s\ge 3 $  be the exact solution and $u_{h} \in V_{h}$ is a discrete solution. Then is \[
-    A_{h}( u - u_{h}, v) = g_{h} ( u_{h}, v) \quad \forall v \in V_{h}.
+Let $u \in H^{s}( \Omega )  $, $ s\ge 3 $  be the exact solution and $u_{h} \in V_{h}$ is a discrete solution to \eqref{eq:discrete_CutCIP_prob}. Then is \[
+    a_{h}( u - u_{h}, v) = g_{h} ( u_{h}, v) \quad \forall v \in V_{h}.
     \]
 \end{lemma}
+
+\begin{proof}
+   From the definition of the problem \eqref{eq:discrete_CutCIP_prob}, utilizing that $a_{h}( u,v) = l(v ) \forall v \in V_{h} $ can we easily observe that \[
+       \begin{split}
+   l(v ) & =  A_{h}( u_{h},v) =  a_{h}( u,v)  = a_{h}( u_{h},v)+g_{h}( u_{h},v)
+       \end{split}
+   \]
+    Hence, it is clear that $a_{h}( u -  u_{h}, v) = g_{h}( u_{h},v)  $.
+\end{proof}
 
 \begin{assumption}[EP2]
     \label{as:bi_EP2}
