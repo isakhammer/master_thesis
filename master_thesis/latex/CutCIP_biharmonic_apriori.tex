@@ -346,12 +346,12 @@ Let $u \in H^{s}( \Omega )  $, $ s\ge 3 $  be the exact solution and $u_{h} \in 
         \begin{split}
     \| u - u_{h} \|_{ a_{h},* }^{  } &= \| u - C_{h}^{e} u + C_{h}^{e}u - u_{h} \|_{ a_{h},* }^{  } \\
     & \le \|  u - C_{h}^{e} u \|_{a_{h},*  }^{  } +  \| C_{h}^{e}u - u_{h} \|_{a_{h},*  }^{  }\\
-                                     & \le \| e_{\pi } \|_{a_{h},*}^{  } + \| e_{h} \|_{A_{h}  }^{  }
+                                     & \le \| e_{\pi } \|_{a_{h},*}^{  } + \| e_{h} \|_{A_{h},*  }^{  }
         \end{split}
     \]
-Using Lemma \ref{lemma:astar_estimate}, can we see that $\| e_{\pi } \|_{a_{h},*}^{  } \lesssim h^{r-1} \| u \|_{ r,\Omega  }^{  }  $ is already fulfilled. So it remains to check the discrete part. From Lemma \ref{lemma:bi_Ah_coercive}, \ref{lemma:bi_Ah_bounded}, the weak Galerkin orthogonality and Assumption \ref{as:bi_EP2} is it natural to see that, \[
+    \red{Using Lemma \ref{lemma:astar_estimate}, can we see that $\| e_{\pi } \|_{a_{h},*}^{  } \lesssim h^{r-1} \| u \|_{ r,\Omega  }^{  }  $ is already fulfilled.} So it remains to check the discrete part. From Lemma \ref{lemma:bi_Ah_coercive}, \ref{lemma:bi_Ah_bounded}, the weak Galerkin orthogonality and Assumption \ref{as:bi_EP2} is it natural to see that, \[
     \begin{split}
-\| e_{h} \|_{ A_{h} }^{ 2 } & \lesssim a_{h}( C _{h}^{e} u - u_{h}, e_{h}) + g_{h}( C _{h}^{e}u - u_{h}, e_{h}) \\
+\| e_{h} \|_{ A_{h},* }^{ 2 } & \lesssim a_{h}( C _{h}^{e} u - u_{h}, e_{h}) + g_{h}( C _{h}^{e}u - u_{h}, e_{h}) \\
  & = a_{h}( C _{h}^{e} u - u, e_{h}) + a_{h}( u - u_{h}, e_{h}) + g_{h}( C _{h}^{e}u - u_{h}, e_{h}) \\
  & = a_{h}( C _{h}^{e} u - u, e_{h}) + g_{h}( C _{h}^{e}u, e_{h}) \\
  & \lesssim h^{r-1} \| u \|_{ r, \Omega  }^{  } \| e_{h} \|_{ A_{h} }^{  }.
