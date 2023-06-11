@@ -8,7 +8,7 @@ using CSV
 using YAML
 using LaTeXStrings
 
-function main()
+function main(;domain="flower")
 
     ## Cahn-hilliard
     ε = 1/30
@@ -26,12 +26,19 @@ function main()
     L=2.70
     n = 2^7
     h = 2*L/n
-    pmin = Point(-L, -L)
-    pmax = Point(L, L)
+    it = 1000
+    γ = 20
+    τ = ε^2/10
+    γg1 = 10
+    γg2 = 0.5
+
+    pmin = Point(-L/2, -L/2)
+    pmax = Point(L/2, L/2)
     partition = (n,n)
     bgmodel = CartesianDiscreteModel(pmin, pmax, partition)
 
-    maindir = "figures/physical_CH"
+
+    maindir = "figures/physical_CH_$domain"
     if isdir(maindir)
         rm(maindir; recursive=true)
         mkpath(maindir)
@@ -39,10 +46,9 @@ function main()
 
     graphicsdir = maindir*"/graphics"
     mkpath(graphicsdir)
-    writevtk(bgmodel, graphicsdir*"/mvp_model")
+
 
     # Implicit geometry
-    domain = "flower"
     if domain=="circle"
         R  = 1.0
         geo = disk(R)
@@ -63,6 +69,11 @@ function main()
 
     # Set up interpolation mesh and function spaces
     Ω_act = Triangulation(cutgeo, ACTIVE)
+    Ω = Triangulation(cutgeo, PHYSICAL)
+    Ω_bg = Triangulation(bgmodel)
+    writevtk(Ω_bg,   graphicsdir*"/Omega_bg")
+    writevtk(Ω,         graphicsdir*"/Omega")
+    writevtk(Ω_act,     graphicsdir*"/Omega_act")
 
     ## Function spaces
     order = 2
@@ -97,16 +108,13 @@ function main()
     end
 
     # M+ dt A
-    γ = 20
-    τ = ε^2/10
+
     a_CIP(u,v) = ∫(u*v)*dΩ + τ*ε^2*( ∫(Δ(v)⊙Δ(u))dΩ
                                     + ∫(-mean(Δ(v))⊙jump(∇(u)⋅n_Λ) - mean(Δ(u))⊙jump(∇(v)⋅n_Λ) + (γ/h)⋅jump(∇(u)⋅n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ
                                     + ∫(-Δ(v)⊙∇(u)⋅n_Γ - Δ(u)⊙∇(v)⋅n_Γ + (γ/h)⋅ ∇(u)⊙n_Γ⋅∇(v)⊙n_Γ )dΓ
                                    )
 
 
-    γg1 = 10
-    γg2 = 0.5
     g(u,v) = h^(-2)*( ∫( (γg1*h)*jump(n_Fg⋅∇(u))*jump(n_Fg⋅∇(v)) ) * dFg +
                      ∫( (γg2*h^3)*jump_nn(u,n_Fg)*jump_nn(v,n_Fg) ) * dFg)
 
@@ -127,7 +135,7 @@ function main()
 
         ## time loop
         t0 = 0.0
-        T = 100*τ
+        T = it*τ
         Nt_max = convert(Int64, ceil((T - t0)/τ))
         Nt = 0
         t = t0
@@ -200,16 +208,19 @@ function main()
     savefig(p2,maindir*"/mass_cons.png" )
 
     parameters = Dict(
+        "domain" => domain,
         "gamma" => γ,
         "gamma1" => γg1,
         "gamma2" => γg2,
         "epsilon" => ε,
         "tau" => "epsilon^2/10",
         "L"=>2.70,
-        "n"=> 2^7
+        "n"=> 2^7,
+        "it"=> it
     )
 
     YAML.write_file(maindir*"/parameters.yml", parameters)
 
 end
-main()
+main(domain="circle")
+main(domain="flower")
