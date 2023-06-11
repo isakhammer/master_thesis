@@ -2,6 +2,10 @@
 using Gridap
 using Gridap.Algebra
 using GridapEmbedded
+using Plots
+using DataFrames
+using CSV
+using LaTeXStrings
 
 ## Cahn-hilliard
 ε = 1/30
@@ -16,7 +20,7 @@ u_ex(t) = x -> u_ex(x,t)
 f_ex(x, t::Real) = 0
 
 ##
-L=2.50
+L=2.70
 n = 2^7
 h = L/n
 pmin = Point(-L, -L)
@@ -24,24 +28,29 @@ pmax = Point(L, L)
 partition = (n,n)
 bgmodel = CartesianDiscreteModel(pmin, pmax, partition)
 
-resultdir = "CutFEM-cahn-hilliard-results/"
-mkpath(resultdir)
-writevtk(bgmodel, joinpath(resultdir,"model"))
+maindir = "figures/physical_CH"
+if isdir(maindir)
+    rm(maindir; recursive=true)
+    mkpath(maindir)
+end
+
+graphicsdir = maindir*"/graphics"
+mkpath(graphicsdir)
+writevtk(bgmodel, graphicsdir*"/mvp_model")
 
 # Implicit geometry
-domain = "other"
+domain = "flower"
 if domain=="circle"
     R  = 1.0
-    geo1 = disk(R)
-elseif domain=="other"
-    geo1 = disk(0.5, x0=Point(0.0,0.0))
-    geo2 = disk(0.5, x0=Point(0.95,0.0))
-    geo3 = disk(0.5, x0=Point(0.95,0.95))
-    geo4 = disk(0.5, x0=Point(0.0,0.95))
-
-    geo = union(geo1,geo2)
-    geo = union(geo,geo3)
-    geo = union(geo,geo4)
+    geo = disk(R)
+elseif domain=="flower"
+    function ls_flower(x)
+        r0, r1 = L*0.3, L*0.1
+        theta = atan(x[1], x[2])
+        r0 + r1*cos(5.0*theta) -(x[1]^2 + x[2]^2)^0.5
+    end
+    # using ! operator to define the interioir
+    geo = !AnalyticalGeometry(x-> ls_flower(x))
 end
 
 
@@ -85,7 +94,7 @@ function jump_nn(u,n)
 end
 
 # M+ dt A
-γ = 1.5*order*( order+1)
+γ = 20
 τ = ε^2/10
 a_CIP(u,v) = ∫(u*v)*dΩ + τ*ε^2*( ∫(Δ(v)⊙Δ(u))dΩ
             + ∫(-mean(Δ(v))⊙jump(∇(u)⋅n_Λ) - mean(Δ(u))⊙jump(∇(v)⋅n_Λ) + (γ/h)⋅jump(∇(u)⋅n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ
@@ -93,8 +102,8 @@ a_CIP(u,v) = ∫(u*v)*dΩ + τ*ε^2*( ∫(Δ(v)⊙Δ(u))dΩ
         )
 
 
-γg1 = 10/2
-γg2 = 0.1
+γg1 = 10
+γg2 = 0.5
 g(u,v) = h^(-2)*( ∫( (γg1*h)*jump(n_Fg⋅∇(u))*jump(n_Fg⋅∇(v)) ) * dFg +
                    ∫( (γg2*h^3)*jump_nn(u,n_Fg)*jump_nn(v,n_Fg) ) * dFg)
 
@@ -108,14 +117,18 @@ l(u, v) =  ∫(u*v)*dΩ + τ * (
           )
 l(u) = v -> l(u,v)
 
-createpvd(resultdir*"ch-solution") do pvd
+u_const_ts = Float64[]
+Es = Float64[]
+ts = Float64[]
+createpvd(graphicsdir*"/sol") do pvd
 
     ## time loop
     t0 = 0.0
-    T = 1000*τ
+    T = 100*τ
     Nt_max = convert(Int64, ceil((T - t0)/τ))
     Nt = 0
     t = t0
+
 
     # Maximal number of Picard iterations
     kmax = 1
@@ -124,7 +137,14 @@ createpvd(resultdir*"ch-solution") do pvd
     u_dof_vals = (rand(Float64, num_free_dofs(U)) .-0.5)*2.0
     # uh = interpolate_everywhere(u_ex(0),U)
     uh = FEFunction(U, u_dof_vals)
-    pvd[t] = createvtk(Ω, resultdir*"ch-solution_$t"*".vtu",cellfields=["uh"=>uh, "u_ex"=>u_ex(t)])
+    pvd[t] = createvtk(Ω, graphicsdir*"/sol_$t"*".vtu",cellfields=["uh"=>uh, "u_ex"=>u_ex(t)])
+
+    # Adding plotting values
+    push!(ts, t)
+    E = sum( ∫(( ∇(uh)⋅∇(uh) ) + (1/4)*((uh*uh - 1)*(uh*uh - 1))  )dΩ)
+    push!(Es, E)
+    u_const = sum( ∫(uh)dΩ )
+    push!( u_const_ts, u_const)
 
     println("========================================")
     println("Solving Cahn-Hilliard with t0 = $t0, T = $T and time step τ = $τ with Nt_max = $Nt_max timesteps")
@@ -150,7 +170,29 @@ createpvd(resultdir*"ch-solution") do pvd
             cache = solve!(u_dof_vals, lu, op, cache, isnothing(cache))
             uh = FEFunction(U, u_dof_vals)
         end
+
+        # Adding plotting values
+        push!(ts, t)
+        E = sum( ∫(( ∇(uh)⋅∇(uh) ) + (1/4)*((uh*uh - 1)*(uh*uh - 1))  )dΩ)
+        push!(Es, E)
+        u_const = sum( ∫(uh)dΩ )
+        push!( u_const_ts, u_const)
+
         println("----------------------------------------")
-        pvd[t] = createvtk(Ω, resultdir*"ch-solution_$t"*".vtu",cellfields=["uh"=>uh, "u_ex"=>u_ex(t)])
+        pvd[t] = createvtk(Ω, graphicsdir*"/sol_$t"*".vtu",cellfields=["uh"=>uh, "u_ex"=>u_ex(t)])
     end
 end
+
+# Save results
+df = DataFrame(ts=ts, Es=Es, u_const_ts=u_const_ts)
+CSV.write(maindir*"/sol.csv", df, delim=',')
+
+# plots
+# Normalize data
+norm_u_const_ts = (  u_const_ts .- u_const_ts[1]) ./ u_const_ts[1]
+
+# Plotting values
+p1 = plot(ts, norm_u_const_ts, title = L" $ \| u_h(x,t)- u(0,x)\|_{L^2(\Omega)} /\|u(x,0)\|_{L^2(\Omega)}$")
+p2 = plot(ts, Es, yscale=:log10, title = L"$E(u)$")
+plot(p1, p2, layout = (2,1))
+
