@@ -117,7 +117,7 @@ l(u, v) =  ∫(u*v)*dΩ + τ * (
           )
 l(u) = v -> l(u,v)
 
-u_const_ts = Float64[]
+e_L1_ts = Float64[]
 Es = Float64[]
 ts = Float64[]
 createpvd(graphicsdir*"/sol") do pvd
@@ -136,15 +136,17 @@ createpvd(graphicsdir*"/sol") do pvd
     # Initial data
     u_dof_vals = (rand(Float64, num_free_dofs(U)) .-0.5)*2.0
     # uh = interpolate_everywhere(u_ex(0),U)
-    uh = FEFunction(U, u_dof_vals)
+    u0 = FEFunction(U, u_dof_vals)
+    u0_L1 = sum( ∫(u0)dΩ )
+    uh = u0
     pvd[t] = createvtk(Ω, graphicsdir*"/sol_$t"*".vtu",cellfields=["uh"=>uh, "u_ex"=>u_ex(t)])
 
-    # Adding plotting values
+    # Adding initial plotting values
     push!(ts, t)
     E = sum( ∫(( ∇(uh)⋅∇(uh) ) + (1/4)*((uh*uh - 1)*(uh*uh - 1))  )dΩ)
+    e_L1 = sum( ∫( (u0 - uh ) )dΩ)
     push!(Es, E)
-    u_const = sum( ∫(uh)dΩ )
-    push!( u_const_ts, u_const)
+    push!( e_L1_ts, e_L1/u0_L1)
 
     println("========================================")
     println("Solving Cahn-Hilliard with t0 = $t0, T = $T and time step τ = $τ with Nt_max = $Nt_max timesteps")
@@ -171,12 +173,12 @@ createpvd(graphicsdir*"/sol") do pvd
             uh = FEFunction(U, u_dof_vals)
         end
 
-        # Adding plotting values
+        # Adding initial plotting values
         push!(ts, t)
         E = sum( ∫(( ∇(uh)⋅∇(uh) ) + (1/4)*((uh*uh - 1)*(uh*uh - 1))  )dΩ)
+        e_L1 = sum( ∫( (u0 - uh ) )dΩ)
         push!(Es, E)
-        u_const = sum( ∫(uh)dΩ )
-        push!( u_const_ts, u_const)
+        push!( e_L1_ts, e_L1/u0_L1)
 
         println("----------------------------------------")
         pvd[t] = createvtk(Ω, graphicsdir*"/sol_$t"*".vtu",cellfields=["uh"=>uh, "u_ex"=>u_ex(t)])
@@ -191,7 +193,7 @@ CSV.write(maindir*"/sol.csv", df, delim=',')
 # Normalize data
 norm_u_const_ts = (  u_const_ts .- u_const_ts[1]) ./ u_const_ts[1]
 
-p1 = plot(ts, norm_u_const_ts, label = L"$ \| u_h(x,t)- u(0,x)\|_{L^2(\Omega)} /\|u(x,0)\|_{L^2(\Omega)}$", xlabel="t")
-p2 = plot(ts, Es, yscale=:log10, label = L"$E(u)$", xlabel="t")
-plot(p1, p2, layout = (2,1))
+p1 = plot(ts, norm_u_const_ts, label = L"$ \| u_h(x,t)- u(0,x)\|_{L^1(\Omega)} /\|u(x,0)\|_{L^1(\Omega)}$", xlabel="t")
+p2 = plot(ts[2:end], Es[2:end], xscale=:log10, yscale=:log10, label = L"$E(u)$", xlabel="t")
+plot(p1, p2, layout = (1,2))
 
