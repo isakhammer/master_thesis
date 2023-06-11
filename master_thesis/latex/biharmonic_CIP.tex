@@ -1,19 +1,19 @@
 
 \newpage
-\section{Continuous Interior Penalty Biharmonic Problem }%
+\section{Continuous Interior Penalty Biharmonic Problem on a Polygonal Domain}%
 \label{sec:CIP_biharmonic_problem}
 
 Recall the biharmonic problem.
-Let $\Omega \subseteq    \mathbb{R} ^d$ be a bounded polygonal domain and $\Gamma $ be its corresponding boundary. Let the biharmonic problem BH have the form,
+Let $\Omega \subseteq    \mathbb{R} ^d$ be a bounded polygonal domain and $\Gamma $ be its corresponding boundary. Also let $\mathcal{T}_{h} = \left\{ T \right\} $ be a shape-regular fitted mesh s.t. $\mathcal{T}_{h} = \Omega $. Let the BH problem have the form,
 \begin{equation}
 \label{eq:bi_problem}
 \begin{split}
     \Delta^2  u  + \alpha  u  & = f( x)  \quad \text{in } \Omega,   \\
-    \partial _{n} u & = g_{1}(x)   \quad \text{on } \partial \Omega,  \\
-    \partial _{n} \Delta  u & = g_{2}( x)   \quad \text{on } \partial \Omega .  \\
+    \partial _{n} u & = g_{1}(x)   \quad \text{on } \Gamma ,  \\
+    \partial _{n} \Delta  u & = g_{2}( x)   \quad \text{on } \Gamma .  \\
 \end{split}
 \end{equation}
-Here is $\Delta ^2 = \Delta  \left( \Delta  \right) $ the biharmonic operator, also known as the bilaplacian. We will assume for the strong form that $u \in H^{4}\left( \Omega  \right) $, $\alpha  \in  \mathbb{R} $ and $f \in L^{2}\left( \Omega  \right)
+Here is $\Delta ^2 = \Delta  \left( \Delta  \right) $ the biharmonic operator, also known as the bilaplacian. We will assume for the strong form that $u \in H^{4}\left( \Omega  \right) $, $\alpha  >0 $ and $f \in L^{2}\left( \Omega  \right)
 $. The functions $g_{1},g_{2}: \Omega  \to \mathbb{R}$ are denoted as boundary conditions similar to the CH problem.
 
 \begin{remark}
@@ -22,6 +22,26 @@ Many of the papers we refer to may consider clamped boundary condition and not t
 imposing the Dirichlet and Neumann conditions strongly in the discrete solution space or weakly using the Nitsche's method \cite{nitsche1971variationsprinzip}.
 \end{remark}
 
+We want to construct a weak form for the strong BH problem \eqref{eq:bi_problem}. Let $v \in H_{2}( \Omega ) $  Using Greens Theorem is it obvious that \(
+\left( \Delta ^2 u,v \right) _{ \Omega  }   = ( \partial _{n} \Delta u, v ) _{\Gamma   } - ( \nabla \left( \Delta  u \right) , \nabla v ) _{ \Omega }
+\).
+Now doing a new iteration of the Greens theorem we get
+$ -( \nabla ( \Delta u ) , \nabla v ) _{\Omega  }  =   ( \Delta u, \Delta v ) _{\Omega } - ( \partial _{n}v , \Delta v)_{\Gamma } $.
+Hence, we have the identity s.t.
+\begin{equation}
+\label{eq:iden_bi}
+( \Delta ^2 u, v ) _{\Omega } = ( \Delta u, \Delta v)_{\Omega } +  ( \partial _{n} \Delta u, v)_{\Gamma } - ( \partial _{n} v, \Delta u) _{\Gamma }
+\end{equation}
+Taking account for the boundary conditions do we end up with the following corresponding weak problem to the BH problem \eqref{eq:bi_problem}.
+Find a $u \in H^2( \Omega ) $ s.t. $a( u,v) = l( v)  \forall v \in H^{2}( \Omega )  $ where
+  \[
+      \begin{split}
+a( u,v) & =  ( \alpha u,v)_{\Omega } + ( \Delta u, \Delta v)_{\Omega } +  ( \partial _{n} \Delta u, v)_{\Gamma } - ( \partial _{n} v, \Delta u) _{\Gamma } - ( \partial _{n} u, \Delta v) _{\Gamma }\\
+l( v)  &= ( f,v)_{\Omega } - ( g_{2} , v)_\Omega - ( g_{1}, \Delta v) _{\Gamma }
+      \end{split}
+\]
+Remark that the $g_{1}$ boundary condition is weakly imposed by adding a symmetry term, $- ( \partial _{n} u, \Delta v) _{\Gamma } - ( g_{1}, \Delta v) _{\Gamma }=0 $.
+
 
 \subsection{Continuous Interior Penalty formulations}%
 \label{sub:continuous_interior_penalty_formulations}
@@ -29,53 +49,97 @@ imposing the Dirichlet and Neumann conditions strongly in the discrete solution 
 We define the two relevant CIP formulations for the \eqref{eq:bi_problem} as follows. Let $$V_{h} = \left\{ v \in C^{0}\left( \Omega  \right): v_{T} = v | _{T} \in \mathcal{P} _{2}\left( T \right), \forall T \in
 \mathcal{T}_{h}    \right\}$$
 
-The general idea is to construct a bilinear problem $a_{h}: V_{h} \times  V_{h} = \mathbb{R} $ and $l_{h}: V^{h} \to \mathbb{R} $ s.t. there exists an $u \in V_{h}$ s.t. $a_{h}( u_{h}, v_{h}) = l_{h}( v) $ for all $v \in V_{h}$. For the CIP
+The general idea is to construct a bilinear problem $a_{h}: V_{h} \times  V_{h} = \mathbb{R} $ and $l_{h}: V_{h} \to \mathbb{R} $ s.t. there exists an $u \in V_{h}$ s.t. $a_{h}( u_{h}, v_{h}) = l_{h}( v) $ for all $v \in V_{h}$. For the CIP
 formulation we will investigate two formulations of the forms $a_{h}$ and $l_{h}$.
 
 \begin{enumerate}[label=\arabic*)]
-    \item The first problem is the Hessian problem formulation, that is,
+    \item Assuming that $g_{1} = 0$. Then Hessian problem formulation is
 \begin{equation}
+        \label{eq:cip_hessian_form}
 \begin{split}
 a_{h}^{H} \left( u, v \right)   =&
-    \left( \alpha  u, v \right) _{\Omega }   +  \left( D^2 u, D^2v \right) _{\mathcal{T} _{h}} \\
- & +
-  \left( \mean{  \partial _{n n} u }, \jump{ \partial _{n }u} \right)_{\mathcal{F}_{h}}  +
- \left( \mean{ \partial _{n n} v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}}  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h}} \\
- l_{h}^{H}( v_{h}) & =  \left( f, v \right) _{\Omega }  - \left(g_{2}, v  \right) _{\Gamma } - ( g_{1}, \partial _{nn} v)_{\Gamma } +  \frac{\gamma }{h} ( g_{1} , \partial _{n} v)_{\Gamma }
+    \left( \alpha  u, v \right) _{\Omega }   +  \left( D^2 u, D^2v \right) _{\Omega } \\
+ & - \left( \mean{  \partial _{n n} u }, \jump{ \partial _{n }u} \right)_{\mathcal{F}_{h}^{int}}  -
+ \left( \mean{ \partial _{n n} v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}^{int}}  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h}^{int}} \\
+ & - \left(   \partial _{n n} u ,  \partial _{n }u \right)_{\Gamma }  -
+ \left(  \partial _{n n} v ,  \partial _{n}u       \right)_{\Gamma }  + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{\Gamma } \\
+ l_{h}^{H}( v)  =&  \left( f, v \right) _{\Omega }  - \left(g_{2}, v  \right) _{\Gamma } - ( g_{1}, \partial _{nn} v)_{\Gamma } +  \frac{\gamma }{h} ( g_{1} , \partial _{n} v)_{\Gamma }
 \end{split}
+.
 \end{equation}
+
+With the corresponding energy norms,
+\begin{equation}
+\label{eq:a_cip_energy_norm_hes}
+    \begin{split}
+ \| v \|_{ a_{h} }^{ 2 }& =  \| v\|_{ \Omega  }^{2  }  +  \| D ^2 v \|_{ \Omega   }^{ 2 }  + \|  h^{-\frac{1}{2}} \jump{ \partial _{n} v    }\|_{  \mathcal{F} _{h}^{int} }^{2  }+ \|  h^{-\frac{1}{2}}  \partial _{n} v    \|_{  \Gamma  }^{2  },  \quad v \in V_{h}  \\
+   \| v \|_{ a_{h},* }^{ 2 } &= \| v \|_{ a_{h} }^{ 2 }  + \| h^{\frac{1}{2}}  \mean{     \partial _{nn } v}  \|_{ \mathcal{F}_{h}^{int}   }^{  2}+ \| h^{\frac{1}{2}} \partial _{nn } v  \|_{ \Gamma    }^{  2}, \quad  v\in V \oplus V_{h}.
+    \end{split}
+\end{equation}
+
 
 \item The Laplace formulation is
     \begin{equation}
-    \label{eq:cip_laplace_form}
+        \label{eq:cip_laplace_form}
         \begin{split}
             a_{h}^{L} \left( u, v \right)   =&
             \left( \alpha  u, v \right) _{\Omega }   +  \left( \Delta  u, \Delta v \right) _{ \Omega } \\
-                                             & + \left( \mean{  \Delta  u }, \jump{ \partial _{n }v} \right)_{\mathcal{F}_{h}  }  + \left( \mean{ \Delta  v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}  }  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h} } \\
-                                             & + \left(   \Delta  u ,  \partial _{n }v \right)_{\Gamma   }  + \left(  \Delta  v ,  \partial _{n}u       \right)_{\Gamma  }  + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{ \Gamma } \\
-                                             l^{L}_{h}( v_{h}) & =  \left( f, v \right) _{\Omega } - ( g_{2},  v )_{\Gamma } -  ( g_{1}, \Delta  v  )_{\Gamma }  + \frac{\gamma }{h} ( g_{1}, \partial _{n} v  )_{\Gamma }
+                                             & - \left( \mean{  \Delta  u }, \jump{ \partial _{n }v} \right)_{\mathcal{F}_{h}^{int}  }  - \left( \mean{ \Delta  v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}^{int}  }  + \frac{\gamma }{h}
+                                             \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h}^{int} } \\
+                                             & - \left(   \Delta  u ,  \partial _{n }v \right)_{\Gamma   }  - \left(  \Delta  v ,  \partial _{n}u       \right)_{\Gamma  }  + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{ \Gamma } \\
+                                             l^{L}_{h}( v)  =&  \left( f, v \right) _{\Omega } - ( g_{2},  v )_{\Gamma } -  ( g_{1}, \Delta  v  )_{\Gamma }  + \frac{\gamma }{h} ( g_{1}, \partial _{n} v  )_{\Gamma }
                                          \end{split}
                                      \end{equation}
+                                     With the corresponding energy norms
+                                     \begin{equation}
+                                         \label{eq:a_cip_energy_norm_lap}
+                                         \begin{split}
+                                             \| v \|_{ a_{h} }^{ 2 }& =  \| v\|_{ \Omega  }^{2  }  +  \| \Delta   v \|_{ \Omega   }^{ 2 }  + \|  h^{-\frac{1}{2}} \jump{ \partial _{n} v    }\|_{  \mathcal{F} _{h}^{int} }^{2  } +  \|  h^{-\frac{1}{2}}
+                                             \partial _{n} v  \|_{  \Gamma  }^{2  },  \quad v \in V_{h}  \\
+                                             \| v \|_{ a_{h},* }^{ 2 } &= \| v \|_{ a_{h} }^{ 2 }  + \| h^{\frac{1}{2}}  \mean{     \partial _{nn } v}  \|_{ \mathcal{F}_{h}^{int}   }^{  2}+ \| h^{\frac{1}{2}}       \partial _{nn } v  \|_{ \Gamma    }^{  2}, \quad  v\in V \oplus V_{h}.
+                                         \end{split}
+                                         .
+                                     \end{equation}
+
 
 \end{enumerate}
 
-
-The Hessian formulation is well investigated by Susanne Brenner in several papers for \cite{brenner2012, brenner2012quadratic, brenner2012quadratic_kirk} with a corresponding analysis. Similarly, variants of the Laplace formulation can be found here
-\cite{feng2007fully, georgoulis2009discontinuous}.
-
 \begin{remark}
-
-As the author knows the exact Laplace formulation \eqref{eq:cip_laplace_form} is not found in the literature, but it is expected to have the same well-posedness and convergence properties as the
-Hessian formulation. Hence, in this master report will we (because of time limitations) focus on the Hessian formulation for the analysis. However, for the numerical results will will both be presented.
+It should be noted that the Hessian formulation has a substantial limitation in that it is only valid for homogeneous Neumann conditions. This constraint arises from the challenges associated with imposing $g_{1}$ via the tangential derivative terms in Equation \eqref{eq:bi_basic_dg_full_1} during the proof of Lemma \ref{lemma:bh_hessian_identity}.
+From a physical perspective, this is not problematic as it aligns with the boundary conditions of the original CH problem \eqref{eq:strongch}. However, from the standpoint of numerical validation, the homogeneous Neumann condition enforces strict
+rules on the design of manufactured solutions on arbitrary domains. Consequently, the examples illustrated in section \ref{sec:numerical_results} are only demonstrated on simple domains. This particular constraint does not apply to the Laplace formulation.
 \end{remark}
 
-\todo[inline]{ Write some notes about energy norms, well-posedness and a priori estimates.}
+The Hessian formulation is well investigated by Susanne Brenner in several papers for \cite{brenner2012, brenner2012quadratic, brenner2012quadratic_kirk} with a corresponding analysis and numerical validation. Similarly, variants of the Laplace formulation can be found here
+\cite{feng2007fully, georgoulis2009discontinuous}. In these article there is good also evidence  that both formulation have the following expected a priori estimates. Let  $u \in H^{s}( \Omega ) $, and $u_{h}\in  V_{h}  $ of order $k$. Then with $r = \min\left\{ s,
+k+1 \right\}$ the a priori estimates are   \[
+    \begin{split}
+\| u - u_{h} \|_{ a_{h},*  }^{  }  & \lesssim  h^{r-1} \| u \|_{ r, \Omega  }^{  } \\
+\| u - u_{h} \|_{ \Omega   }^{  }  & \lesssim  h^{r} \| u \|_{ r,\Omega  }^{  }
+    \end{split}
+\]
 
+\subsection{Detailed Construction of Hessian and Laplacian Formulations }%
+\label{sub:construction_of_laplacian_cip}
 
-\subsection{  Construction for Hessian CIP}%
-\label{sub:continious_weak_form_of_biharmonic_equation}
+Out goal is to derive the Hessian formulation.
 
-Assume $u \in H^{4}( \Omega ) $ and $V = \left\{ v \in H^{1}( \Omega )  \mid  v \mid _{T} \in H^{m}( T) \ \forall T \in \mathcal{T} _{h}   \right\} $. We will start constructing a local theory for a triangle $K$ and then extend it to the full mesh
+\begin{lemma}
+    \label{lemma:bh_hessian_identity}
+    Assume the homogeneous Neumann conditions, $g_1( x ) = 0 $.
+Let $u \in H^{4}( \Omega ) $ be the solution to \eqref{eq:bi_problem}.  And let $V = \left\{ v \in H^{1}( \Omega )  \mid  v \mid _{T} \in H^{m}( T) \ \forall T \in \mathcal{T} _{h}   \right\} $. Then does the following identity hold.
+\begin{equation}
+\label{eq:bi_basic_dg_full}
+\begin{split}
+    \left( \Delta  ^{2} u, v \right) _{\Omega }  =&   \left( D^2u, D^2v \right)_{\Omega } +  \left(g_{2}, v  \right) _{ \Gamma  }  -  ( \mean{ \partial _{nn} u }   , \jump{ \partial_{n} v } )_{\mathcal{F}_{h}^{int} }  - ( \partial _{nn} u , \partial _{n} v)_{\Gamma  }
+\end{split}
+\end{equation}
+
+\end{lemma}
+
+\begin{proof}
+
+ We will start constructing a local theory for a triangle $K$ and then extend it to the full mesh
 $\mathcal{T}_{h} $. Using Greens Theorem is it obvious that \(
 \left( \Delta ^2 u,v \right) _{T }   = \left( \partial _{n} \Delta u, v \right) _{\partial T  } - \left( \nabla \left( \Delta  u \right) , \nabla v \right) _{T }
 \).
@@ -88,48 +152,64 @@ We can expand the second term in the following way.
     \end{split}
 .\end{equation*}
 Hence, the boundary condition of $\Delta u$ is integrated into the formulation.  It can be denoted that $D^2$ is the Hessian matrix operator. Also remark that we apply the notation
-$( D^2u, D^2v )_{\Omega } = \int_{\Omega }^{} D^{2}u : D^2v  dx$ for the inner product $D^2u:D^2v$. We may also recall that the two times directional derivative is the identity $\partial _{nn} u = n \cdot  D^2 u \cdot  n$.
-Let $t_{i}$ for $i= 1,\ldots,d$  be the surface tangential vector basis for an facet in the set $\partial_{}T$.
+$( D^2u, D^2v )_{\Omega } = \int_{\Omega }^{} D^{2}u : D^2v  dx$ for the inner product $D^2u:D^2v$.
+
+We want to decompose the evaluation of $\nabla  u $ on the boundary $\partial T$ in the tangential and normal direction. Pick a facet  $F \in \partial T$, then we define the following decomposition of linear transformation $\nabla u = P_{F}\nabla u  + Q_{F}  \nabla u  $ s.t. the
+orthogonality, $
+P_{F} \nabla u  \cdot Q_{F}  \nabla u = 0$, holds. The normal projection matrix is defined as $Q_{F} = n \otimes n $ and the tangential decomposition follows from $ P_{F} = I - Q_{F} = I - n \otimes n  =  \sum_{i=1}^{d-1} t_{i} \otimes t_i$, which
+is a orthonormal basis $t_{i}$, $i = 1, \ldots, d-1$ for the space orthogonal to the outer normal vector $n$ on a facet $F$. Let $ a_{1}, a_{2}, a_{3} \in R^{d}$ be any vectors, then it is well known that the following identity holds $ ( a_{1}
+\otimes a_{2}  ) a_{3} = ( a_{2}^{T}  a_{3}) a_{1} $. Hence, we have
+\begin{equation}
+\label{eq:projection}
+    \begin{split}
+   Q_{F} \nabla u & = ( n \otimes n ) \nabla u =  (n^{T} \nabla u)n \\
+   P_{F} \nabla u & =( I - n \otimes n ) \nabla u =   \nabla u  - (n^{T}  \nabla u)n =  \sum_{ i =1 }^{d-1} ( t_{i}^{T}  \nabla u ) t_{i}
+    \end{split}
+\end{equation}
+
 Given that $u$ is evaluated only on $\partial T$ can we write
-$\nabla u = \left( \nabla u \cdot n \right) n + \sum_i^{d-1} \left( \nabla u \cdot t_i \right) t_i$ s.t.
+$\nabla u = \left( n^{T} \nabla u   \right) n + \sum_i^{d-1} \left( t_i^{T} \nabla u   \right) t_i$ s.t.
 \[
     \begin{split}
 (  \partial_n\nabla u, \nabla v ) _{\partial_{} T  } & =  ( \partial _{n} ( \partial_{n}u \cdot n), \partial _{n} v \cdot n )_{\partial T}   +\sum_{i=1}^{d-1} ( \partial _{n} ( \partial_{t_{i}}u \cdot t_{i}), \partial _{t_{i}} v \cdot t_{i} )_{\partial T} \\
 & =  ( \partial _{nn} u ), \partial _{n} v  )_{\partial T}+\sum_{i=1}^{d-1} ( \partial _{n t_{i}}u , \partial _{t_{i}} v  )_{\partial T}
     \end{split}
 \]
-Here we used that $n\cdot n = 1$ and $t_{i} \cdot t_{i} = 1 \ \forall i$, which holds since every facet in $\partial T$ is flat.
+Here we used that $n^{T} n = 1$ and $t_{i}^{T} t_{i} = 1$.
 We applied the simple relation,
     \begin{align*}
-\partial_n (\partial_n u)  & = \nabla (\partial_n u) \cdot n = (D^2 u \cdot n) \cdot n = n^{T} D^2 u \ n = \partial _{nn} u, \\
-\partial_n (\partial_{t_{i}} u)  & = \nabla (\partial_n u) \cdot t_{i} = (D^2 u \cdot t_i) \cdot n = n^{T} D^2 u \ t_{i} = \partial _{nt_{i}} u.
+\partial_n (\partial_n u)  & = n^T \nabla (\partial_n u)  = n ^T (D^2 u \ n)  = n^{T} D^2 u \ n = \partial _{nn} u, \\
+\partial_n (\partial_{t_{i}} u)  & = t_{i}^T \nabla (\partial_n u)  = t_i^T (D^2 u \ n )   = n^{T} D^2 u \ t_{i} = \partial _{n t_{i}} u.
     \end{align*}
-Adding all these calculations together we have the following identity,
+We may also deduce the relationship $\partial _{nt_{i}} u = \partial _{t_{i}n}u$ which arise from the fact that $n^{T} D^2u \ t_{i} = ( t_{i}^{T} D^2u \  n)^T = t_{i}^{T}  D^2u \  n$, where we utilized the symmetry $D^2u = ( D^2u) ^{T} $ and that the
+product is a scalar.
+Adding all these calculations together we have the following local identity,
 \[
 ( \Delta ^2 u, v) _{T}   = ( D^2 u, D^2v)_{T } + ( \partial _{n}  \Delta u, v )_{\partial T} -( \partial _{n} ( \partial_{n}u ), \partial _{n} v  )_{\partial T}-\sum_{i=1}^{d-1} ( \partial _{n} ( \partial_{t_{i}}u ), \partial _{t_{i}} v  )_{\partial T}
 \]
-
 For global continuity we add all the triangles in the mesh $\mathcal{T} _{h}$.
 
 \begin{equation}
 \label{eq:bi_basic_dg2}
 \left( \Delta  ^{2} u,v \right) _{\Omega } = \sum_{T \in  \mathcal{T} _{h}}^{}  ( D^2 u, D^2v)_{T } + ( \partial _{n}  \Delta u, v )_{\partial T} -( \partial _{n} ( \partial_{n}u ), \partial _{n} v  )_{\partial T}-\sum_{i=1}^{d-1} ( \partial _{n t_{i}} u , \partial _{t_{i}} v  )_{\partial T}
 \end{equation}
-However, by integrating over exterior facets $\mathcal{F} _{h}^{ext}$ and interior facets $\mathcal{F} _{h}^{int}$ we will get e more suitable formulation which makes it easier to penalize discontinuities.
+Our goal is to simplify the equation above so we can take account for discontinuities of the derivatives.
+By integrating over exterior facets $\mathcal{F} _{h}^{ext}$ and interior facets $\mathcal{F} _{h}^{int}$ we will get e more suitable formulation which makes it easier to control the jumps between the elements, hence makes it possible to penalize discontinuities.
 
 \begin{equation*}
     \begin{split}
- ( \Delta  ^{2} u,v ) _{\Omega } & =\sum_{T\in \mathcal{T} _{h}}^{} ( D^2u,D^2v ) _{T } + (\partial _{n} \Delta  u,v)_{\partial T} - (\partial _{nn} u, \partial _{n}v )_{\partial T}  - \sum_{i=1}^{d-1} ( \partial _{nt_{i}}u , \partial _{t_{i}} v  )_{\partial T}   \\
-&= \sum_{T\in \mathcal{T} _{h}}^{} ( D^2u,D^2v ) _{T }  + \sum_{F \in \mathcal{F}_{h}^{ext} }^{}  (\partial _{n} \Delta  u,v)_{F} - (\partial _{nn} u, \partial _{n}v )_{F}  - \sum_{i=1}^{d-1} \underbrace{( \partial _{n t_{i}} u , \partial _{t_{i}} v
-)_{F}}_{ \red{= 0 ???}}     \\
- \quad  &+ \sum_{F \in \mathcal{F} _{h}^{int}}^{} \underbrace{\left( (\partial _{n^{+}} \Delta  u^{+}
+ ( \Delta  ^{2} u,v ) _{\Omega }  =&\sum_{T\in \mathcal{T} _{h}}^{} ( D^2u,D^2v ) _{T }  + (\partial _{n} \Delta  u,v)_{\partial T} - (\partial _{nn} u, \partial _{n}v )_{\partial T}  - \sum_{i=1}^{d-1} ( \partial _{t_{i}n}u , \partial _{t_{i}} v  )_{\partial T}   \\
+= &\sum_{T\in \mathcal{T} _{h}}^{} ( D^2u,D^2v ) _{T }  + \sum_{F \in \mathcal{F}_{h}^{ext} }^{}  (\partial _{n} \Delta  u,v)_{F} - (\partial _{nn} u, \partial _{n}v )_{F}  - \sum_{i=1}^{d-1} ( \partial _{ t_{i}n} u , \partial _{t_{i}} v
+)_{F}     \\
+   &  + \sum_{F \in \mathcal{F} _{h}^{int}}^{} \underbrace{\left( (\partial _{n^{+}} \Delta  u^{+}
         ,v^{+} )_{F}
-+ \left(\partial _{n^{-}} \Delta  u^{+} ,v^{-}\right)_{F}  \right)}_{(I)}   + \sum_{i=1}^{d-1}\underbrace{( (\partial _{n^{+}t_{i}} u^{+}, \partial_{t_{i}} v^{+} )_{F} +  \left(\partial _{n^{-}t_{i}} u^{-},
++ \left(\partial _{n^{-}} \Delta  u^{+} ,v^{-}\right)_{F}  \right)}_{(I)}    \\
+    &\quad \quad  -
+\underbrace{\left( \left(\partial _{n^{+}n^{+}} u^{+}, \partial _{n^{+}} v^{+} \right) _{F} + \left(\partial _{n^{-}n^{-}} u^{-}, \partial _{n^{-}} v^{-}
+\right) _{F} \right) }_{(II)} \\
+   &  \quad \quad - \sum_{i=1}^{d-1}\underbrace{( (\partial _{n^{+}t_{i}} u^{+}, \partial_{t_{i}} v^{+} )_{F} +  \left(\partial _{n^{-}t_{i}} u^{-},
         \partial_{t_{i}} v^{-}
-\right)_{F} ) }_{(II)} \\
-  &\quad \quad \quad  \quad  +
-\underbrace{\left( \left(\partial _{n^{+}n^{+}} u^{+}, v^{+} \right) _{F} + \left(\partial _{n^{-}n^{-}} u^{-}, v^{-}
-\right) _{F} \right) }_{(III)}
+\right)_{F} ) }_{(III)} \\
     \end{split}
 .\end{equation*}
 
@@ -138,73 +218,74 @@ Where integration over all interior facets $ \forall F \in \mathcal{F}_{h}^{int}
     \begin{split}
         (I) &  =    \left(\partial _{n^{+}} \Delta  u^{+} ,v^{+}\right)_{F} +
         \left(\partial _{n^{-}} \Delta  u^{-} ,v^{-}\right)_{F}  \\
-        & =   \int_{F}^{}
-        \jump{ \partial _{n} \Delta  u \cdot v } =
-         \int_{F}^{}
-         \mean{ \partial _{n} \Delta  u } \underbrace{\jump{ v }}_{= 0}    + \underbrace{\jump{ \partial _{n} \Delta  u
-         }}_{= 0}    \mean{ v } = 0 \\
-        (II) &  =     \left(\partial _{n^{+}t_{i}} u^{+}, \partial_{t_{i}} v^{+}
-        \right)_{F} +  \left(\partial _{n^{-}t_{i}} u^{-}, \partial_{t_{i}} v^{-}
-\right)_{F}   \\
-&  =   \int_{F}^{}
-        \jump{ \partial _{nt_{i}} u \cdot  \partial_{t_{i}} v } =
-         \int_{F}^{}
-         \mean{ \partial _{nt_{i}} u    } \underbrace{\jump{ \partial_{t_{i}} v }  }_{= 0}    + \underbrace{\jump{ \partial
-                 _{nt_{i}}  u
-         }}_{= 0}    \mean{ \partial _{t_{i}}v }  = 0\\
-        (III) &  =     \left(\partial _{n^{+}n^{+}} u^{+}, \partial_{n^{+}} v^{+} \right)_{F} +  \left(\partial _{n^{-}n^{-}} u^{-}, \partial_{n^{-}} v^{-} \right)_{F}    =    \int_{F}^{} \jump{ \partial _{nn} u \cdot  \partial_{n} v }  \\
-        & = \int_{F}^{}
-        \mean{ \partial _{nn} u    } \underbrace{\jump{ \partial_{n} v }  }_{\neq 0}    + \underbrace{\jump{ \partial
-                 _{nn}  u
-         }}_{= 0}    \mean{ \partial _{n}v }     \end{split}
+            & =   \int_{F}^{}
+            \jump{ \partial _{n} \Delta  u \cdot v } =
+            \int_{F}^{}
+            \mean{ \partial _{n} \Delta  u } \underbrace{\jump{ v }}_{= 0}    + \underbrace{\jump{ \partial _{n} \Delta  u
+            }}_{= 0}    \mean{ v } = 0 \\
+            (II) &  =     \left(\partial _{n^{+}n^{+}} u^{+}, \partial_{n^{+}} v^{+} \right)_{F} +  \left(\partial _{n^{-}n^{-}} u^{-}, \partial_{n^{-}} v^{-} \right)_{F}    \\
+                 &= \int_{F}^{} \jump{ \partial _{nn} u \cdot  \partial_{n} v }   = \int_{F}^{}
+                       \mean{ \partial _{nn} u    } \underbrace{\jump{ \partial_{n} v }  }_{\neq 0}    + \underbrace{\jump{ \partial
+                               _{nn}  u
+                       }}_{= 0}    \mean{ \partial _{n}v } \\
+            (III) &  =     \left(\partial _{n^{+}t_{i}} u^{+}, \partial_{t_{i}} v^{+}
+                \right)_{F} +  \left(\partial _{n^{-}t_{i}} u^{-}, \partial_{t_{i}} v^{-}
+                \right)_{F}   \\
+                 &  =   \int_{F}^{}
+                 \jump{ \partial _{nt_{i}} u \cdot  \partial_{t_{i}} v } =
+                 \int_{F}^{}
+                 \mean{ \partial _{nt_{i}} u    } \underbrace{\jump{ \partial_{t_{i}} v }  }_{= 0}    + \underbrace{\jump{ \partial
+                         _{nt_{i}}  u
+                 }}_{= 0}    \mean{ \partial _{t_{i}}v }  = 0
+                   \end{split}
 .\end{equation*}
-Observe that the cancellations in the term $(I)$ and term $(II)$  appears of the continuity of $v\in V $ and $u\in H^{4}( \Omega ) $ which makes the jumps and derivative jumps zero. However, The third term $(III)$  is fairly interesting since the discontinuity in
-normal vector for $v \in V$ is a jump, while the second term is still continuous. It can also be raised that $\mean{
-\partial _{nn} u } = \partial _{nn} u  $ holds by the continuity of $H^{4}( \Omega  ) $. Hence, we have the following identity.
-
+Observe that the cancellations in the term $(I)$ and term $(III)$  appears of the continuity of $v\in V $ and $u\in H^{4}( \Omega ) $ which makes the jumps and derivative jumps zero. On the other hand, the second term $(II)$  is does not vanish since the discontinuity in normal vector for $v \in V$ is a jump. It can also be raised that $\mean{
+\partial _{nn} u } = \partial _{nn} u  $ holds by the continuity of $H^{4}( \Omega  ) $.
+Hence, we have the following identity.
 \begin{equation}
 \label{eq:bi_basic_dg_full_1}
 \begin{split}
-\left( \Delta  ^{2} u, v \right) _{\Omega }  =  \left( D^2u, D^2v \right)_{\mathcal{T} _{h}} +  \left(g_{2}, v  \right) _{\mathcal{F}^{ext}_{h} }
-  +  ( \mean{ \partial _{nn} u }   , \jump{ \partial_{n} v } )_{\mathcal{F}_{h} }
+    \left( \Delta  ^{2} u, v \right) _{\Omega }  =&   \left( D^2u, D^2v \right)_{\mathcal{T} _{h}} +  \left(g_{2}, v  \right) _{\mathcal{F}^{ext}_{h} }  -  ( \mean{ \partial _{nn} u }   , \jump{ \partial_{n} v } )_{\mathcal{F}_{h}^{int} } \\
+                                                  &  - ( \partial _{nn} u , \partial _{n} v)_{\mathcal{F}^{ext}_{h} } - \sum_{i =1  }^{d-1} ( \partial   _{t_{i}n} u  ,  \partial   _{t_{i}}  v  )_{ \mathcal{F}^{ext} _{h}  }
 \end{split}
 \end{equation}
 
+Under the assumption that $g_{1} = 0$ on $\Gamma$, and given that the tangent vector is orthogonal to $n$, we can assert that $ \partial_{t_{i} n} u = \partial_{t_{i}} ( \partial _{n} u ) = 0 $ holds for any $i = 1,\ldots, d$. This implies that the
+last term of the equation vanish, thus providing the validity of the stated identity.
 
-We will now assemble the Hessian CIP formulation. Assume $u,v \in V_{h}$, then we have the linear form
+\end{proof}
+
+
+We will now assemble the Hessian CIP formulation. Assume $u,v \in V_{h}$ and $g_{1} = 0$, then we have the linear form
 \begin{equation}
 \begin{split}
 a_{h}^{H} \left( u, v \right)   =&
-    \left( \alpha  u, v \right) _{\Omega }   +  \left( D^2 u, D^2v \right) _{\mathcal{T} _{h}} \\
- & +
-  \left( \mean{  \partial _{n n} u }, \jump{ \partial _{n }u} \right)_{\mathcal{F}_{h}}  +
- \left( \mean{ \partial _{n n} v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}}  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h}} \\
- l_{h}^{H}( v_{h}) & =  \left( f, v \right) _{\Omega }  - \left(g_{2}, v  \right) _{\Gamma } - ( g_{1}, \partial _{nn} v)_{\Gamma } +  \frac{\gamma }{h} ( g_{1} , \partial _{n} v)_{\Gamma }
+    \left( \alpha  u, v \right) _{\Omega }   +  \left( D^2 u, D^2v \right) _{\Omega } \\
+ & - \left( \mean{  \partial _{n n} u }, \jump{ \partial _{n }u} \right)_{\mathcal{F}_{h}^{int}}  -
+ \left( \mean{ \partial _{n n} v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}^{int}}  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h}^{int}} \\
+ & - \left(   \partial _{n n} u ,  \partial _{n }u \right)_{\Gamma }  -
+ \left(  \partial _{n n} v ,  \partial _{n}u       \right)_{\Gamma }  + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{\Gamma }   \\
+ l_{h}^{H}( v)  =&  \left( f, v \right) _{\Omega }  - \left(g_{2}, v  \right) _{\Gamma }
 \end{split}
+.
 \end{equation}
-Hence, we are finished.
 
-\begin{remark}
-Remark that we imposed the Neumann condition $g_{1}$ using the Nitsche's method and thus imposing a regularisation term \cite{nitsche1971variationsprinzip}. Observe we added n symmetry term $( \mean{ \partial _{n n} v }, \jump{ \partial _{n}u }      )_{\mathcal{F}_{h}}$,
-which is consistent for zero, also involving penalties for the interior facets. Technically is the interior regularisation equivalent to do a Nitsche's method inbetween all interior elements, but with boundary conditions of each triangle weakly
-imposed to zero. Thus, the penalty parameter $\gamma$  is the same interior and exterior elements. From \cite{brenner2012quadratic, brenner2012} is it experimentally shown that $\gamma = 2k ( k-1 ) $ where $k$ is the polynomial order $k\ge 2$ may be
-a good choice for most applications.
-\end{remark}
+Hence, the Hessian formulation is derived.
 
 
-\subsection{Construction of Laplacian CIP}%
-\label{sub:construction_of_laplacian_cip}
 
- Again, assume $u \in H^{4}( \Omega ) $ and $ v \in  V = \left\{ v \in H^{1}( \Omega )  \mid  v \mid _{T} \in H^{m}( T) \ \forall T \in \mathcal{T} _{h}   \right\} $. Similarly, we start constructing a local theory for a triangle $T$ and then extend it to the full mesh
-$\mathcal{T}_{h} $. Using Greens Theorem is it obvious that \(
-\left( \Delta ^2 u,v \right) _{T }   = ( \partial _{n} \Delta u, v ) _{\partial T  } - ( \nabla \left( \Delta  u \right) , \nabla v ) _{T }
-\).
-The main difference here is that we straight away do a new iteration of the Greens theorem.
-\begin{equation*}
-( \nabla ( \Delta u ) , \nabla v ) _{T }  =  + ( \partial _{n}v , \Delta v)_{\partial T} - ( \Delta u, \Delta v ) _{T}
-.\end{equation*}
 
-Hence, we have a local identity s.t. \[
+
+\begin{lemma}
+ Assume $u \in H^{4}( \Omega ) $ and $v \in  V = \left\{ v \in H^{1}( \Omega )  \mid  v \mid _{T} \in H^{m}( T) \ \forall T \in \mathcal{T} _{h}   \right\} $. Then we have the following identity.
+\[
+( \Delta ^2 u, v ) _{\Omega } = ( \Delta u, \Delta v)_{\mathcal{T} _{h} }  +  ( \jump{ \partial _{n} v} , \mean{ \Delta u })_{\mathcal{F}_{h} }  + ( g_{2} , v )_{\Gamma } - ( \partial _{n} v, \Delta u)_{\Gamma }.
+\]
+
+\end{lemma}
+\begin{proof}
+  Similarly, we start constructing a local theory for a triangle $T$ and then extend it to the full mesh $\mathcal{T}_{h} $.
+Utilizing \eqref{eq:iden_bi} can we construct a local identity s.t. \[
 ( \Delta ^2 u, v ) _{T} = ( \Delta u, \Delta v) +  ( \partial _{n} \Delta u, v)_{\partial T} - ( \partial _{n} v, \Delta u) _{\partial T}
 \]
 Now, doing a summation over all elements we get \[
@@ -217,8 +298,7 @@ Now, doing a summation over all elements we get \[
   )}_{(II)}   \\
     \end{split}
 \]
-
-Now, decomposing the terms as utilizing the regularity of $u$ and $v$ is it easy to see that.    \[
+Decomposing the terms and utilizing the regularity of $u$ and $v$ is it easy to see that,    \[
 \begin{split}
     (I) & = ( \partial _{n^{+}} \Delta u, v)_{ F} + ( \partial _{n^{-}} \Delta u, v)_{ F}  = \int_{F}^{} \left[ \partial _{n} \Delta u \cdot  v \right] =  (  \mean{ \partial _{n^{+}} \Delta u } , \underbrace{\jump{v  }}_{ = 0}      )_{ F} + (  \underbrace{\jump{ \partial _{n}
     \Delta u }}_{=0}  , \mean{v  }     )_{ F} \\
@@ -226,26 +306,34 @@ Now, decomposing the terms as utilizing the regularity of $u$ and $v$ is it easy
     }}_{=0} )_{F}
 \end{split} .
 \]
-
 Hence, we end up with the identity,
 \[
 ( \Delta ^2 u, v ) _{\Omega } = ( \Delta u, \Delta v)_{\mathcal{T} _{h} }  +  ( \jump{ \partial _{n} v} , \mean{ \Delta u })_{\mathcal{F}_{h} }  + ( g_{2} , v )_{\Gamma } - ( \partial _{n} v, \Delta u)_{\Gamma }.
 \]
 
-Finally, can we construct the Laplace CIP formulation. Let $u,v \in V_{h}$, then can we write the following statement.
+
+\end{proof}
+Finally, can we construct the Laplace CIP formulation. Let $u,v \in V_{h}$, then can finally write the following respective forms.
 
 \begin{equation}
     \begin{split}
         a_{h}^{L} \left( u, v \right)   =&
         \left( \alpha  u, v \right) _{\Omega }   +  \left( \Delta  u, \Delta v \right) _{ \Omega } \\
-                                         & + \left( \mean{  \Delta  u }, \jump{ \partial _{n }v} \right)_{\mathcal{F}_{h}  }  + \left( \mean{ \Delta  v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}  }  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h} } \\
-                                         & + \left(   \Delta  u ,  \partial _{n }v \right)_{\Gamma   }  + \left(  \Delta  v ,  \partial _{n}u       \right)_{\Gamma  }  + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{ \Gamma } \\
+                                         & - \left( \mean{  \Delta  u }, \jump{ \partial _{n }v} \right)_{\mathcal{F}_{h}  }  - \left( \mean{ \Delta  v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}^{int}  }  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h}^{int} } \\
+                                         & - \left(   \Delta  u ,  \partial _{n }v \right)_{\Gamma   }  - \left(  \Delta  v ,  \partial _{n}u       \right)_{\Gamma  }  + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{ \Gamma } \\
         l^{L}_{h}( v_{h}) & =  \left( f, v \right) _{\Omega } - ( g_{2},  v )_{\Gamma } -  ( g_{1}, \Delta  v  )_{\Gamma }  + \frac{\gamma }{h} ( g_{1}, \partial _{n} v  )_{\Gamma }
     \end{split}
 \end{equation}
 
 
-Similarly, as in the previous section, is the boundary condition $g_{1}$ imposed weakly using the Nitsche's method, hence, the regularization term.
+In contrast to the Hessian formulation, is the boundary Neumann booundary condition $g_{1}$ is imposed weakly using the Nitsche's method, hence, the regularization term.
+This consists of adding a symmetry term and adding an additional stabilization regularisation term \cite{nitsche1971variationsprinzip}, that is,  \[
+( \Delta  v,  \partial _{n}u    )_{\Gamma } +( \Delta
+v,g_{1}     )_{\Gamma } + \frac{\gamma}{h}(\partial _{n}u -  g_{1}, \partial _{n}v     )_{\Gamma }   = 0
+\]
+It is worth noting that technically is the interior regularisation equivalent to do a Nitsche's method in all interior boundaries of the elements with boundary conditions of each element weakly
+imposed to zero. Thus, we expect the penalty parameter $\gamma$ to be the same interior and exterior elements. Let where $k\ge 2$ is the polynomial order, then for the Hessian formulation is it theoretically proven that $\gamma = 2k ( k-1 ) $
+\cite{brenner2012quadratic, brenner2012}. However, we still prefer to experimentally verify the best parameter.
 
 
 \subsection{Note on the Biharmonic Mixed Formulation}%
@@ -273,11 +361,11 @@ Putting it all together we have the following mixed weak formulation; Find $( u,
 ( \nabla \sigma , \nabla \varphi  )_{\Omega}  & = ( f,\varphi ) _{\Omega} + ( g_{2} ,  \varphi )_{\Gamma } \quad  \forall \varphi \in H^{1}( \Omega )
     \end{split}
 \]
-Now we want to relate this formulation to the abstract saddle point problem (SPP) (find references).
+Now we want to relate this formulation to the abstract saddle point problem (SPP).
 Let $V = H^{1}( \Omega ) $  and $W=H^{1}( \Omega ) $ be  Hilbert spaces and define the bilinear form $a: V\times V \to \mathbb{R}  $ and $b: V \times W \to \mathbb{R} $ s.t. $a( \sigma,v ) = - ( \sigma , v) _{\Omega }  $ and $b( u,v) = ( \nabla u,
 \nabla v)_{\Omega  }  $. We also may define the linear forms, $G,F: V \to \mathbb{R} $ s.t. $ G( v)  = ( g_{1}, v) _{\Gamma } $ and $F( \varphi ) = ( f, \varphi )_{\Omega } + ( g_{2}, \varphi )_{\Gamma } $.
 
-Hence, we can connect it to the SPP. We want to find $( u,\sigma ) \in V \times W$ s.t.  \[
+Hence, we have the following SPP. Find $( u,\sigma ) \in V \times W$ s.t.  \[
     \begin{cases}
        a( \sigma ,v) + b ( u, v )  & = G( v)   \quad  \forall v \in V \\
        b( u, \varphi  )  & = F( \varphi )     \quad \forall \phi \in W

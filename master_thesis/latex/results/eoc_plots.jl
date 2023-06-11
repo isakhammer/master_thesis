@@ -1,8 +1,9 @@
 using Plots
 pgfplotsx()
-default_size = (600, 250)
+default_size = (300, 300)
 
 using CSV
+using YAML
 using DataFrames
 using PrettyTables
 using LaTeXStrings
@@ -25,20 +26,31 @@ function compute_eoc(hs::Vector, errs1::Vector, errs2::Vector, errs3::Vector)
 end
 
 
-
 function generate_plots(data,path)
     hs = 2 ./ data.ns
-    # Initial plot with the first data series
-    p = Plots.plot(hs, data.el2s, label=L"\Vert e \Vert_{L^2}", size=default_size, legend=:outertopright, xscale=:log2, yscale=:log2, minorgrid=true)
+
+    # Set up an empty plot with the desired properties
+    p = Plots.plot(size=default_size, legend=:outertopright, xscale=:log2, yscale=:log2, minorgrid=true)
+
+    # Add the energy data series
+    Plots.plot!(p, hs, data.ehs_energy, label=L"\Vert e \Vert_{a_{h,*}}")
+    Plots.scatter!(p, hs, data.ehs_energy, primary=false)
+
+    # Add the L2 data series
+    Plots.plot!(p, hs, data.el2s, label=L"\Vert e \Vert_{L^2}")
     Plots.scatter!(p, hs, data.el2s, primary=false)
 
-    # Add the second data series
+    # Add the H1 data series
     Plots.plot!(p, hs, data.eh1s, label=L"\Vert e \Vert_{H^1}")
     Plots.scatter!(p, hs, data.eh1s, primary=false)
 
+
     # Add the third data series
-    Plots.plot!(p, hs, data.ehs_energy, label=L"\Vert e \Vert_{a_{h,*}}")
-    Plots.scatter!(p, hs, data.ehs_energy, primary=false)
+    hs_hat =  1 ./ ( 2 .^(1:11) )
+    println(hs_hat)
+    Plots.plot!(p, hs_hat, 300*hs_hat.^1, color="grey", label=L"O(h)")
+    Plots.plot!(p, hs_hat, 100*hs_hat.^2, color="black", label=L"O(h^2)")
+
     # Configs
     Plots.xlabel!(p, "h")
     Plots.plot!(p, minorgrid=false)
@@ -48,7 +60,7 @@ function generate_plots(data,path)
 
     hs_str = ["1/$(n)" for n in data.ns]
     eoc_l2, eoc_eh1, eoc_eh_energy = compute_eoc(hs, data.el2s, data.eh1s, data.ehs_energy)
-    header = [L"$h/L$", L"$n$", L"$\Vert e \Vert_{L^2}$", "EOC", L"$ \Vert e \Vert_{H^1}$", "EOC", L"$\Vert e \Vert_{ a_h,* }$", "EOC", L"\kappa(A)", "ndofs"]
+    header = [L"$h/L$", L"$n$", L"$\Vert e \Vert_{L^2}$", "EOC", L"$ \Vert e \Vert_{H^1}$", "EOC", L"$\Vert e \Vert_{ a_h,* }$", "EOC", L"\kappa_{\infty}(A)", "ndofs"]
     data = hcat(hs_str, data.ns, data.el2s,  eoc_l2, data.eh1s, eoc_eh1, data.ehs_energy, eoc_eh_energy, data.cond_numbers, data.ndofs)
     formatters = (ft_printf("%s", [1]), ft_printf("%.0f", [2]), ft_printf("%.2f", [4, 6, 8]), ft_printf("%.1E", [3, 5, 7, 9, 10]), ft_nonothing)
 
@@ -60,22 +72,22 @@ function generate_plots(data,path)
 end
 
 
-# Hessian Circle
 dirname = "eoc-test"
-config="L-2.7-gamma0-20-gamma1-10-gamma2-1"
-param = (20,10,1)
-
-path = "$dirname/eoc-hessian-circle-$config/conv"
-data = CSV.read("$path.csv", DataFrame)
-generate_plots(data, path)
-
-
-# Laplace Circle
-path = "$dirname/eoc-laplace-circle-$config/conv"
-data = CSV.read("$path.csv", DataFrame)
-generate_plots(data, path)
+params = YAML.load_file("$dirname/parameters.yml")
+println(params)
 
 # Laplace Flower
-path = "$dirname/eoc-laplace-flower-$config/conv"
+path = "$dirname/eoc-laplace-flower/conv"
 data = CSV.read("$path.csv", DataFrame)
 generate_plots(data, path)
+
+# Laplace Circle
+path = "$dirname/eoc-laplace-circle/conv"
+data = CSV.read("$path.csv", DataFrame)
+generate_plots(data, path)
+
+# Hessian Circle
+path = "$dirname/eoc-hessian-circle/conv"
+data = CSV.read("$path.csv", DataFrame)
+generate_plots(data, path)
+

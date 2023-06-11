@@ -1,0 +1,6 @@
+iterations: 500
+gamma1: 0.0
+gamma: 20.0
+gamma2: 0.0
+L: 2.7
+n: 16

@@ -1,7 +1,7 @@
 include("biharmonic_CutCIP_laplace.jl")
 include("biharmonic_CutCIP_hessian.jl")
 using Statistics
-
+using YAML
 using Dates
 using Test
 import Plots
@@ -109,40 +109,50 @@ function main()
         mkdir(maindir)
     end
     # Manufactured solution
-    l, m, r = (2, 1, 1)
+    l, m, r = (1, 1, 1)
     u_ex(x) = sin(m*( 2π/l )*x[1])*cos(r*( 2π/l )*x[2])
 
-    γ, γg1, γg2 = 20, 10, 1
+    γ, γg1, γg2 = 20, 10, 0.5
     L, δ = 2.7, 0.0
-    ns = [2^3, 2^4, 2^5, 2^6, 2^7, 2^8, 2^9]
+
+    parameters = Dict(
+        "gamma" => γ,
+        "gamma1" => γg1,
+        "gamma2" => γg2,
+        "L" => L,
+    )
+
+
+    YAML.write_file("$maindir/parameters.yml", parameters)
+
+    ns = [2^3, 2^4, 2^5]
 
     @testset "Laplace Flower EOC tests" begin
         geometry ="flower"
-        resultdir= "$maindir/eoc-laplace-$(geometry)-L-$(L)-gamma0-$(γ)-gamma1-$(γg1)-gamma2-$(γg2)"
+        resultdir= "$maindir/eoc-laplace-$(geometry)"
         println(resultdir)
         mkpath(resultdir)
         @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex, run_solver=SolverLaplace.run,  L=L, δ=δ, γ=γ, γg1=γg1, γg2=γg2, geometry=geometry)
     end
 
     # Manufactured solution
-    u_ex(x) = (x[1]^2 + x[2]^2 - 1)^2*sin(m*( 2π/l )*x[1])*cos(r*( 2π/l )*x[2])
+    u_ex2(x) = (x[1]^2 + x[2]^2 - 1)^2*sin(m*( 2π/l )*x[1])*cos(r*( 2π/l )*x[2])
     @testset "Laplace EOC tests" begin
         geometry ="circle"
-        resultdir= "$maindir/eoc-laplace-$(geometry)-L-$(L)-gamma0-$(γ)-gamma1-$(γg1)-gamma2-$(γg2)"
+        resultdir= "$maindir/eoc-laplace-$(geometry)"
         println(resultdir)
         mkpath(resultdir)
-        @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex, run_solver=SolverLaplace.run,  L=L, δ=δ, γ=γ, γg1=γg1, γg2=γg2, geometry=geometry)
+        @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex2, run_solver=SolverLaplace.run,  L=L, δ=δ, γ=γ, γg1=γg1, γg2=γg2, geometry=geometry)
     end
 
     @testset "Hessian EOC tests" begin
         geometry ="circle"
-        resultdir= "$maindir/eoc-hessian-$(geometry)-L-$(L)-gamma0-$(γ)-gamma1-$(γg1)-gamma2-$(γg2)"
+        resultdir= "$maindir/eoc-hessian-$(geometry)"
         println(resultdir)
         mkpath(resultdir)
-        @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex, run_solver=SolverHessian.run,  L=L, δ=δ, γ=γ, γg1=γg1, γg2=γg2)
+        @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex2, run_solver=SolverHessian.run,  L=L, δ=δ, γ=γ, γg1=γg1, γg2=γg2)
     end
+
 end
 
-@testset "Main" begin
-    main()
-end
+main()

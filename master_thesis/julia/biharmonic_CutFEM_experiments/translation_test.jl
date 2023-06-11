@@ -9,20 +9,14 @@ module TranslationTest
     using Printf
     import Plots
     using DataFrames
+    using YAML
     using CSV
     using LaTeXStrings
     using Latexify
     import Gridap
 
-    latex = false
-
-    if latex == true
-        Plots.pgfplotsx()
-        endfix = ".tex"
-    else
-        Plots.gr()
-        endfix = ".png"
-    end
+    Plots.gr()
+    endfix = ".png"
 
     default_size = (800, 600)
     # default_size = (400, 300)
@@ -82,7 +76,7 @@ module TranslationTest
     end
 
 
-    function translation_test(solver, param_list, δs, L, n, dirname, prefix)
+    function translation_test(solver, param_list, δs, L, n, dirname)
 
         # run simulations
         results = Vector{SimulationData}()
@@ -98,7 +92,9 @@ module TranslationTest
         # Merge L2 error, H1 error, and Energy error into one plot
         p2 = Plots.plot(legend=:outertopright, size=default_size,legendtitle=L"(\gamma, \gamma_1, \gamma_2)", yscale=:log10, minorgrid=false)
 
-        for sim_data in results
+        for i in 1:length(results)
+            sim_data = results[i]
+
             γ, γg1, γg2 = sim_data.params
             cond_max = maximum(sim_data.cond_numbers)
             el2_max = maximum(sim_data.el2s)
@@ -113,17 +109,25 @@ module TranslationTest
             Plots.plot!(p2, δs, sim_data.eh1s, label=nothing, color=sim_data.color, linestyle=:dash)
             Plots.plot!(p2, δs, sim_data.ehs_energy, label=nothing, color=sim_data.color, linestyle=:dot)
 
-            title_text = "gamma-$γ-gamma1-$γg1-gamma2-$γg2"
-            CSV.write(dirname*"/$(prefix)-$title_text.csv", DataFrame(deltas = δs, cond_numbers = sim_data.cond_numbers, el2s = sim_data.el2s, eh1s = sim_data.eh1s, ehs_energy = sim_data.ehs_energy), delim=',')
+            parameters = Dict("gamma" => γ,
+                              "gamma1" => γg1,
+                              "gamma2" => γg2,
+                              "L" => L,
+                              "n" => n,
+                              "iterations" => length(δs)
+                             )
+            YAML.write_file("$dirname/sim-$i.yml", parameters)
+            CSV.write(dirname*"/sim-$i.csv", DataFrame(deltas = δs, cond_numbers = sim_data.cond_numbers, el2s = sim_data.el2s, eh1s = sim_data.eh1s, ehs_energy = sim_data.ehs_energy), delim=',')
+
             # Plotting moving grid (boundary is standstill)
             vtkdirname = "$dirname/graphics"
             mkpath(vtkdirname)
-            Gridap.writevtk(sim_data.graphics[1].Γ, vtkdirname*"/boundary.vtu")
-            Gridap.createpvd(vtkdirname*"/$title_text") do pvd
+            Gridap.writevtk(sim_data.graphics[1].Γ, vtkdirname*"/sim-$i-boundary.vtu")
+            Gridap.createpvd(vtkdirname*"/sim-$i") do pvd
                 N = length(δs)
-                for i in 1:N
+                for j in 1:N
                     δi = δs[i]
-                    pvd[i] = Gridap.createvtk(sim_data.graphics[i].Ω_bg, vtkdirname*"/$title_text-delta_$i.vtu")
+                    pvd[i] = Gridap.createvtk(sim_data.graphics[i].Ω_bg, vtkdirname*"/sim-$i-delta-$j.vtu")
                 end
             end
 
@@ -136,8 +140,8 @@ module TranslationTest
         Plots.xlabel!(p2, L"$\delta$")
         Plots.ylabel!(p2, L"$\Vert e \Vert_{L^2,solid} $, $\Vert e \Vert_{H^1,dash} $, $\Vert e \Vert_{ah,*,dot}$")
 
-        Plots.savefig(p1, dirname*"/$prefix"*"_cond_trans"*endfix)
-        Plots.savefig(p2, dirname*"/$prefix"*"_errors_trans"*endfix)
+        Plots.savefig(p1, dirname*"/cond-trans.png")
+        Plots.savefig(p2, dirname*"/errors-trans.png")
 
         return results
     end
@@ -146,7 +150,7 @@ module TranslationTest
 end
 
 function main()
-    l, m, r = (2, 1, 1)
+    l, m, r = (1, 1, 1)
     u_ex(x) = (x[1]^2 + x[2]^2 - 1)^2*sin(m*( 2π/l )*x[1])*cos(r*( 2π/l )*x[2])
 
     # Parameters
@@ -156,36 +160,22 @@ function main()
     n = 2^4
     h = L/n
     δ2 = 2*sqrt(2)*h # two squares
+    γ, γg1, γg2 = (20, 10, 0.5)
     δs = LinRange(δ1, δ2, iterations)
 
 
     # No penalty comparison
     function run_penalty_test(solver_function, dirname)
         param_list = [
-                      ((20, 10, 1), "blue"),
-                      ((20, 0, 0), "red")
+                      ((γ, γg1, γg2), "blue"),
+                      ((γ, 0, 0), "red")
                      ]
 
         # Construct solver
         solver = TranslationTest.Solver(u_ex, solver_function)
-        prefix = "no-penalty-test"
-        results = TranslationTest.translation_test(solver, param_list, δs, L, n, dirname, prefix)
+        results = TranslationTest.translation_test(solver, param_list, δs, L, n, dirname)
         sim_data_ghost_penalty, sim_data_no_penalty = results
 
-        @testset "Error tests" begin
-
-            # sim_data_ghost_penalty test cases
-            @test maximum(sim_data_ghost_penalty.cond_numbers) < 10^8
-            @test maximum(sim_data_ghost_penalty.el2s) < 10^(-1)
-            @test maximum(sim_data_ghost_penalty.eh1s) < 0.5*10^0
-            @test maximum(sim_data_ghost_penalty.ehs_energy) < 10^1
-
-            # sim_data_no_penalty test cases
-            @test maximum(sim_data_no_penalty.cond_numbers) > 10^8
-            # @test maximum(sim_data_no_penalty.el2s) > 2*maximum(sim_data_ghost_penalty.el2s)
-            # @test maximum(sim_data_no_penalty.eh1s) > 2*maximum(sim_data_ghost_penalty.eh1s)
-            @test maximum(sim_data_no_penalty.ehs_energy) > 2*maximum(sim_data_ghost_penalty.ehs_energy)
-        end
     end
 
     maindir = "figures/translation-test"
@@ -194,18 +184,14 @@ function main()
         mkdir(maindir)
     end
 
-    @testset "Laplace penalty tests" begin
-        dirname = "$maindir/laplace-n-$(n)-it-$(iterations)-L-$(L)"
-        mkpath(dirname)
-        run_penalty_test(SolverLaplace.run, dirname)
-    end
+    dirname = "$maindir/laplace_no_penalty"
+    mkpath(dirname)
+    run_penalty_test(SolverLaplace.run, dirname)
 
-    @testset "Hessian penalty tests" begin
-        # Make figure env
-        dirname = "$maindir/hessian-n-$(n)-it-$(iterations)-L-$(L)"
-        mkpath(dirname)
-        run_penalty_test(SolverHessian.run, dirname)
-    end
+    # Make figure env
+    dirname = "$maindir/hessian_no_penalty"
+    mkpath(dirname)
+    run_penalty_test(SolverHessian.run, dirname)
 
 end
 

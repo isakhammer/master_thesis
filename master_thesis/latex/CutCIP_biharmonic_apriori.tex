@@ -9,7 +9,7 @@ However, the $C^{0}$ discrete solution is to rough for the standard Lagrange int
 \subsubsection{Cléments interpolation}%
 \label{ssub:clement_operator}
 
-\begin{figure}
+\begin{figure}[h!]
 \begin{minipage}{.5\linewidth}
 \centering
 \subfloat[]{
@@ -155,11 +155,11 @@ C_{h} v = \sum_{i=1}^{N} \widehat{C}_{j( i) } ( v (G_{A_{i}}) (G^{-1}_{A_{i}}(a_
 \]
 where $\phi _{i}$ is the corresponding polynomial basis at node $a_{i}$.
 
-Recall the integral norm notation,
+Recall the general Sobolev norm notation,
 \[
 \| u \|_{ m,p,T }^{  } = \left( \sum_{ \left\lvert \alpha  \right\rvert \le m}^{} \int_{T}^{}  \left\lvert  \partial ^{\alpha } u \right\rvert^{p} dx   \right)^{\frac{1}{2}}
 \]
-where we use that $\| u \|_{ T  }^{  } = \| u \|_{ m,0,T  }^{  } $ and similarly $\| u \|_{ 2,T  }^{  } = \| u \|_{ m,2,T  }^{  }  $.
+where we use the convenient notation $\| u \|_{L^2(T) }^{  } = \| u \|_{ T  }^{  } = \| u \|_{ 0,2,T  }^{  } $ and similarly $\| u \|_{ H^r( T )  }^{  } = \| u \|_{ r,T  }^{  } = \| u \|_{ r,2,T  }^{  }  $.
 
 
 Finally, we have the following lemma
@@ -193,11 +193,7 @@ and if the following conditions for an parameter $l$ is satisfied, it exists err
     \inf_{v_{h} \in \mathcal{P} ^{k}_{c}( \Omega ) } \| v - v_{h} \|_{  m,p,\Omega }^{  } \le C h^{l-m}  \| v \|_{ l,p,\Omega  }^{  }    \forall v \in W_{l,p}( \Omega ).
     \]
 \end{corollary}
-
-
-This result is very useful since it is now sufficient to show that a priori estimates holds given to prove convergence rate.
-
-For further detailed information about the Cléments interpolation, please investigate \cite[Chapter 1.6]{ern04}.
+This result is very useful since it is now sufficient to show that a priori estimates holds given to prove convergence rate. For further detailed information about the Cléments interpolation, please investigate \cite[Chapter 1.6]{ern04}.
 We will use these estimates to compute convergence rate given that Ceas' Lemma holds.
 
 
@@ -211,25 +207,44 @@ Recall that for $v \in H^{1}( \mathcal{T } _{h}) $ these inequalities holds $\fo
 \]
 For proof, see \cite[Lemma 4.2]{hansbo2003finite}.
 
-A key idea is to distinguish between the physical space $\Omega $ and the polyhedra consisting of the active mesh $\Omega ^{e}_{h} = \mathcal{T}_{h}$. Thus, to do an
-a priori estimate we find it necessary to define an bounded extension operator satisfying, \[
-( \cdot ) ^{e}: W^{m,q}( \Omega )  \to W^{m,q} ( \Omega ^{e}), \quad \| v^{e} \|_{ m,q,\Omega ^{e}  }^{  } \lesssim \| v \|_{ m,q, \Omega  }^{  }.
+A key idea is to utilize between the relationship between the physical space $\Omega $ and the active mesh $\mathcal{T}_{h}$. Assume that $\Omega $ has a boundary $\Gamma $ in $C^{1}$, then does it exist an bounded extension operator, \[
+( \cdot ) ^{e}: W^{m,q}( \Omega )  \to W^{m,q} ( \Omega ^{e})
 \]
-where $0< m \le \infty$ and $1 \le q \le \infty$.
-\todo[inline]{ The physical space $\Omega $ is a subset of $\Omega ^{e}$, so I do not understand why $\| v^{e} \|_{ m,q,\Omega ^{e}  }^{  } \lesssim \| v \|_{ m,q, \Omega  }^{  } $ should hold.  I may also make a figure to illustrate $\Omega ^{e}$. }
+for all  $v \in W^{m,q}( \Omega )$ where $0< m \le \infty$ and $1 \le q \le \infty$ which satisfies \[
+    \begin{split}
+ v^{e}| _{\Omega } =   v  \\
+\| v^{e} \|_{ m,q,\Omega ^{e}  }^{  } & \lesssim \| v \|_{ m,q, \Omega  }^{  } \\
+    \end{split}
+\]
+This extension theorem primarily utilizes \cite[Theorem 9.7]{brezis2011functional} by Brezis, with valuable context provided by \cite[p.181, p. 185]{stein1970singular}.
+\begin{remark}
+    Be aware that this theorem requires that we have a sufficiently smooth domain, hence, emphasizing the assumption of a sufficiently smooth boundary. Also keep in mind that the original theorem states the mapping $ ( \cdot ) ^{e}: W^{m,q}(
+    \Omega )  \to W^{m,q} ( \mathbb{R} ^{d})$, but we restrict ourself to a slightly bigger extension $\Omega^{e} \supset   \Omega $.
+    This is useful because we are now able to extend the function to the active set, while preserving the Sobolev regularity.
+    \todo[inline]{ TODO: Not sure if this argument holds. At least from my point of view is this generalization is not trivial.}
+\end{remark}
+% \todo[inline]{ The physical space $\Omega $ is a subset of $\Omega ^{e}$, so I do not understand why $\| v^{e} \|_{ m,q,\Omega ^{e}  }^{  } \lesssim \| v \|_{ m,q, \Omega  }^{  } $ should hold.  I may also make a figure to illustrate $\Omega ^{e}$. }
 
-Now assume that $\Omega _{h}^{e} \subset  \Omega^{e} $. We define an unfitted Cléments interpolator $C_{h}^{e}: H^{r}( \Omega ^{e}_{h}) \to V_{h}$
+Now construct the extended Sobolev space s.t. that $\Omega _{h}^{e} =\mathcal{T}_{h} \subset  \Omega^{e} $. We define an unfitted Cléments interpolator $C_{h}^{e}: H^{m}( \Omega ^{e}_{h}) \to V_{h}$
 s.t.  $C ^{e} _{h} v := C _{h} v^{e} $.
 We can immediately observe that the interpolation satisfies the global error estimates, that is,
+\begin{align*}
+    \| v - C _{h}^{e} v \|_{  m,2, \mathcal{T} _{h} }^{  } & \lesssim h^{l-m}\sum_{T \in \mathcal{T}_h} \| v \|_{ l,2, \omega(T) }^{  }, \quad m\le l\le k+1 \\
+    \| v - C ^{e}_{h}v \|_{ m,2,\mathcal{F} _{h} }^{  } & \lesssim h^{l-m-\frac{1}{2}}\sum_{T \in \mathcal{T}_h} \| v \|_{ l,2, \omega(F)  }^{  }, \quad m+\frac{1}{2}  \le  l \le   k+1 \\
+\| v - C ^{e}_{h}v \|_{ m,2, \Gamma }^{  } & \lesssim h^{l-m-\frac{1}{2}} \sum_{T \in \mathcal{T}_h}  \| v \|_{ l,2,  \omega(T)  }^{  }, \quad m+\frac{1}{2}  \le  l \le  k+1
+\end{align*}
+ and argue that $ \sum_{T}^{} \| v \|_{s,\omega ( T)   }^{  } \le C  \| v \|_{s, \mathcal{T}_{h}   }^{  } $ where $C$ is some constant decided by the maximum number of elements in a patch
+    $\omega( T)  $ for all $T \in \mathcal{T} _{h}$. This also holds for the inequality $ \sum_{T}^{} \| v \|_{s,\omega ( F)   }^{  } \le C  \| v \|_{s, \mathcal{T}_{h}   }^{  } $. Hence, we have perhaps an even more useful set of inequalities.
 \begin{align}
     \label{eq:bi_projection_estimates_1}
-    \| v - C _{h}^{e} v \|_{  r, \mathcal{T} _{h} }^{  } & \lesssim h^{s-r}\sum_{T \in \mathcal{T}_h} \| v \|_{ s, \omega(T) }^{  }, \quad 0\le r\le s \\
+    \| v - C _{h}^{e} v \|_{  m,2, \mathcal{T} _{h} }^{  } & \lesssim h^{l-m}\sum_{T \in \mathcal{T}_h} \| v \|_{ l,2, \mathcal{T} _{h} }^{  }, \quad m\le l\le k+1 \\
     \label{eq:bi_projection_estimates_2}
-\| v - C ^{e}_{h}v \|_{ r,\mathcal{F} _{h} }^{  } & \lesssim h^{s-r-\frac{1}{2}}\sum_{T \in \mathcal{T}_h} \| v \|_{ s, \omega(F)  }^{  }, \quad 0  \le  r \le   s- \frac{1}{2} \\
+    \| v - C ^{e}_{h}v \|_{ m,2,\mathcal{F} _{h} }^{  } & \lesssim h^{l-m-\frac{1}{2}}\sum_{T \in \mathcal{T}_h} \| v \|_{ l,2, \mathcal{T} _{h}  }^{  }, \quad m+\frac{1}{2}  \le  l \le   k+1 \\
     \label{eq:bi_projection_estimates_3}
-\| v - C ^{e}_{h}v \|_{ r, \Gamma }^{  } & \lesssim h^{s-r-\frac{1}{2}} \sum_{T \in \mathcal{T}_h}  \| v \|_{ s,  \omega(T)  }^{  }, \quad 0  \le  r \le   s- \frac{1}{2}
+\| v - C ^{e}_{h}v \|_{ m,2, \Gamma }^{  } & \lesssim h^{l-m-\frac{1}{2}} \sum_{T \in \mathcal{T}_h}  \| v \|_{ l,2,  \mathcal{T} _{h}  }^{  }, \quad m+\frac{1}{2}  \le  l \le  k+1
 \end{align}
-
+\todo[inline]{ Maybe hard to argue \eqref{eq:bi_projection_estimates_3} to hold on $\Gamma $, but may be related to some generalization of \eqref{eq:bi_n_cut_inverse_1} and \eqref{eq:bi_cut_inverse_1}. Anyhow, \eqref{eq:bi_projection_estimates_2} and
+\eqref{eq:bi_projection_estimates_3} was never used in the proof of Lemma \ref{lemma:astar_estimate} since we used inverse estimates and ended up with \eqref{eq:bi_projection_estimates_1} instead on all of them.}
 Naturally can we see this is the tools we need to construct an estimate for the energy norm.
 
 \begin{lemma}
@@ -250,80 +265,66 @@ Naturally can we see this is the tools we need to construct an estimate for the 
         \end{split}
     \]
 
-    The strategy is to bound each term individually by applying the estimates \eqref{eq:bi_projection_estimates_1}, \eqref{eq:bi_projection_estimates_2} and \eqref{eq:bi_projection_estimates_2}.
-    \begin{enumerate}[label=\arabic*)]
-        \item     Starting with the first term we get
+    The strategy is to bound each term individually.
+             Starting with the first two terms we get
     \[
-            \| |\alpha |^{\frac{1}{2}} ( u - C_{h}^{e}u) \|_{ \mathcal{T} _{h} \cap \Omega  }^{ 2}  \le  \| \alpha  \|_{L^\infty ( \Omega )    }^{2  }   \|  ( u - C_{h}^{e}u) \|_{0,\mathcal{T} _{h}  }^{ 2} \lesssim  h^{2s} \sum_{T \in \mathcal{T}
-            _{h}}^{}   \| v \|_{s,w( T)  }^{  2}
+        \begin{split}
+            \| |\alpha |^{\frac{1}{2}} ( u - C_{h}^{e}u) \|_{ \mathcal{T} _{h} \cap \Omega  }^{ 2}    & \lesssim \|  ( u - C_{h}^{e}u) \|_{0,2,\mathcal{T} _{h}  }^{ 2} \\
+             &    \lesssim  h^{2(s-0)}    \| u \|_{s,\mathcal{T}_{h} }^{  2}\lesssim  h^{2(s-2)}    \| u \|_{s,\mathcal{T}_{h} }^{  2} \\
+            \| D^2 ( u - C_{h}^{e}u ) \|_{\mathcal{T} _{h} \cap \Omega   }^{ 2 } &  \lesssim  \|  u - C_{h}^{e}u  \|_{2,\mathcal{T} _{h}   }^{ 2 }   =  \|  u - C_{h}^{e}u  \|_{2,2,\mathcal{T} _{h}   }^{ 2 } \\
+                                                                                 & \lesssim  h^{2(s-2)} \| u \|_{ s, \mathcal{T}_{h}}^{ 2 }.
+        \end{split}
     \]
     Here we simply used \eqref{eq:bi_projection_estimates_1}.
-\item
-    Similarly can we use  for the second term, \[
-    \| D^2 ( u - C_{h}^{e}u ) \|_{\mathcal{T} _{h} \cap \Omega   }^{ 2 } \lesssim  \|  u - C_{h}^{e}u  \|_{2,\mathcal{T} _{h}   }^{ 2 } \lesssim \sum_{T \in \mathcal{T} _{h}}^{} h^{2(s-2)} \| u \|_{ s, \omega ( T)  }^{ 2 }.
-    \]
-    Again, this is via the estimate \eqref{eq:bi_projection_estimates_1}.
-\item
-        Recall $\| \jump{ u }   \|_{ \mathcal{F} _{h} }^{  } \le \| v^{+}   \|_{ \mathcal{F} _{h} }^{  } +   \| v^{-}   \|_{ \mathcal{F} _{h} }^{  } \lesssim  \| u \|_{ \partial\mathcal{T }_{h}  }^{2  }  $ and the inverse estimate $\| \partial _{n} u \|_{ F  }^{} \lesssim h^{-\frac{1}{2}} \| \nabla u \|_{ T }^{  }  $.
-     Hence, by \eqref{eq:bi_projection_estimates_2}  \[
+    Recall the first order inverse estimate \eqref{eq:bi_n_cut_inverse_2} and that $\| \jump{ \partial _{n} u }   \|_{ \mathcal{F} _{h} }^{  } \le \| \partial _{n^{+}} u^{+}   \|_{ \mathcal{F} _{h} }^{  } +
+    \|\partial _{n^{-}} u^{-}   \|_{ \mathcal{F} _{h} }^{  } \lesssim  \|\partial _{n} u \|_{ \partial\mathcal{T }_{h}  }^{2  }  $, hence, this implies $\| \jump{ \partial _{n} u }   \|_{   \mathcal{F}_{h}\cap \Omega    }^{2} \lesssim h^{-1} \| \nabla u \|_{ \mathcal{T}
+        _{h} }^{2  }  $. Using this and the inequality \eqref{eq:bi_projection_estimates_1} we therefore can observe, \[
         \begin{split}
-            \gamma \| h^{-\frac{1}{2}} \jump{ \partial _{n} ( u - C_{h}^{e}u ) }   \|_{ \mathcal{F}_{h} \cap \Omega   }^{  2}   &\lesssim \| h^{-\frac{1}{2}}  \partial _{n} ( u - C_{h}^{e}u )    \|_{  \partial \mathcal{T} _{h} }^{2  }
-       \lesssim h^{-2} \|   \nabla  ( u - C_{h}^{e}u )    \|_{  \mathcal{T} _{h} }^{2  }     \\
-                                                                                                                 &\lesssim h^{-2} \|      u - C_{h}^{e}u     \|_{1,  \mathcal{T}_{h} }^{2  }
-                                                                                                                 \lesssim \sum_{T \in \mathcal{T} _{h}}^{} h^{2(s-1)} \| u \|_{ s,T  }^{ 2}
+            \gamma \| h^{-\frac{1}{2}} \jump{ \partial _{n} ( u - C_{h}^{e}u ) }   \|_{ \mathcal{F}_{h} \cap \Omega   }^{  2}   & \lesssim
+            h^{-1} \|   \partial _{n} ( u - C_{h}^{e}u )    \|_{  \partial \mathcal{T} _{h} }^{2  } \lesssim  h^{-2} \|   \nabla  ( u - C_{h}^{e}u )    \|_{ \mathcal{T} _{h}\cap \Omega  }^{2  }\\
+&=  h^{-2} \|    u - C_{h}^{e}u     \|_{ 1,2,\mathcal{T} _{h} }^{2  } \lesssim  h^{ -2 } h^{ 2(s - 1)  } \| u \|_{ s, \mathcal{T}_{h}   }^{  2} \\
+& \lesssim   h^{ 2(s - 2)  } \| u \|_{ s, \mathcal{T}_{h}   }^{  2} \\
+        \end{split}
+        .
+    \]
+    And for the boundary term we do a similar procedure, but instead use the first order inverse estimate \eqref{eq:bi_n_cut_inverse_1}. \[
+        \begin{split}
+            \gamma \| h^{-\frac{1}{2}}  \partial _{n} ( u - C_{h}^{e}u ) \|_{ \Gamma    }^{  2} & \lesssim h^{-2} \|   \nabla  ( u - C_{h}^{e}u )    \|_{ \mathcal{T}_{h} }^{2  }  \lesssim  h^{-2} \|    u - C_{h}^{e}u     \|_{1,2, \mathcal{T}_{h}   }^{2  } \\
+            & \lesssim h^{-2} h^{2(s-1)}   \| u \|_{s, \mathcal{T}_{h}   }^{  2}  \lesssim  h^{2(s- 2)}   \| u \|_{s, \mathcal{T}_{h}   }^{  2}
         \end{split}
     \]
-    \todo[inline]{
-        Not sure if \eqref{eq:bi_projection_estimates_2} holds here!
-        \[
-     \| \partial _{n}(u - C_{h}^{e}u)     \|_{1, \partial \mathcal{T}_{h} }^{2  }
-                                                                                                                 \lesssim \sum_{T \in \mathcal{T}_{h} }^{}
-                                                                                                                 h^{ 2(l - m - \frac{1}{2})  } \| u      \|_{ s, \omega (  F)  }^{  2}
-    \]  }
-\item
-    And for the boundary term we simply apply \eqref{eq:bi_projection_estimates_3}, \[
-        \begin{split}
-            \gamma \| h^{-\frac{1}{2}}  \partial _{n} ( u - C_{h}^{e}u ) \|_{ \Gamma    }^{  2} \lesssim h^{-2} \|   \nabla  ( u - C_{h}^{e}u )    \|_{ \Gamma  }^{2  } \lesssim  h^{-2} \|    u - C_{h}^{e}u     \|_{1, \Gamma  }^{2  }\lesssim h^{2(s- r-
-            \frac{1}{2}) -2}
-              \sum_{T \in \mathcal{T} _{h}}^{}  \| u \|_{s,T  }^{  2}
-        \end{split}
-    \]
-    \todo[inline]{ Does it makes sense to integrate $\| \nabla u \|_{ \Gamma  }^{  } $, i.e. no normal vectors? I guess not. Hence, \eqref{eq:bi_projection_estimates_3} is kinda strange.}
-\item
-
-            We also know that $\| \mean{ u }   \|_{ \mathcal{F} _{h} }^{  } \le \| u^{+} \|_{ \mathcal{F} _{h}  }^{  } + \| u^{-} \|_{ \mathcal{F} _{h}  }^{  }   \lesssim  \| u \|_{ \partial\mathcal{T }_{h}  }^{2  }  $ and the $\| \partial _{nn} u \|_{ F  }^{} \lesssim h^{-\frac{1}{2}} \| D^2 u \|_{ T }^{  }  $. It is clear
-            by using \eqref{eq:bi_projection_estimates_2} that this must holds
+            Recall that $\| \mean{ u }   \|_{ \mathcal{F} _{h} }^{  } \le \| u^{+} \|_{ \mathcal{F} _{h}  }^{  } + \| u^{-} \|_{ \mathcal{F} _{h}  }^{  }   \lesssim  \| u \|_{ \partial\mathcal{T }_{h}  }^{2  }  $ and the second order inverse
+            inequality \eqref{eq:bi_cut_inverse_2}. It is clear
+            by using \eqref{eq:bi_projection_estimates_1} that this holds.
             \[
                 \begin{split}
- \| h^{\frac{1}{2}} \mean{ \partial _{nn} (u - C_{h}^{e}u) }   \|_{\mathcal{F} _{h}^{} \cap \Omega   }^{  2} &  \lesssim h^{} \|   \partial _{nn} (u - C_{h}^{e}u)    \|_{\partial \mathcal{T} _{h}   }^{  2}  \lesssim  \|   D^2 (u - C_{h}^{e}u)    \|_{ \mathcal{T} _{h}   }^{  2} \\
-                                                                                                                &  = \|   u - C_{h}^{e}u    \|_{ 2, \mathcal{T} _{h}   }^{  2} \lesssim h^{2s} \sum_{T \in \mathcal{T}_h}^{} \| u \|_{s, \omega ( T)   }^{  }
+ \| h^{\frac{1}{2}} \mean{ \partial _{nn} (u - C_{h}^{e}u) }   \|_{\mathcal{F} _{h}^{} \cap \Omega   }^{  2} &  \lesssim h^{} \|   \partial _{nn} (u - C_{h}^{e}u)    \|_{\partial \mathcal{T} _{h} \cap \Omega    }^{  2}  \lesssim h^{} h^{-1}  \|   D^2 (u - C_{h}^{e}u)    \|_{ \mathcal{T} _{h}   }^{  2} \\
+                                                                                                                &  = \|   u - C_{h}^{e}u    \|_{ 2, \mathcal{T} _{h}   }^{  2}  \lesssim h^{2(s - 2)}  \| u \|_{s, \mathcal{T} _{h} }^{  }
                 \end{split}
             \]
-            \item
-                Similarly we can easily see by using \eqref{eq:bi_projection_estimates_3} that this must hold,
-                \[
-              \| h^{\frac{1}{2}} \partial _{nn}(u - C_{h}^{e}u)     \|_{ \Gamma }^{  2} \lesssim   \|  D^2(u - C_{h}^{e}u)     \|_{ \Gamma  }^{  2} \lesssim \|  u - C_{h}^{e}u \|_{ 2, \Gamma}^{2  } \lesssim h^{2(s-r -\frac{1}{2})} \sum_{T \in
-              \mathcal{T}_h }^{} \| u \|_{ s, \omega ( T)  }^{2  }
-            \]
-    \end{enumerate}
+                Similarly we can easily see by using \eqref{eq:bi_projection_estimates_1} and the second order boundary inverse inequality  \eqref{eq:bi_cut_inverse_1} that this must hold,
 
-    Finally, combining all the estimates we have
-    \[
-        \begin{split}
-            \| u - C_{h}^{e}u \|_{ a_{h}, * }^{  2}  \lesssim  & \   \sum_{T \in \mathcal{T}_h}^{}  \bigg(    h^{2s}\| u \|_{s, \omega ( T)   }^{  } +  h^{2(s-2)} \| u \|_{ s, \omega ( T)  }^{ 2 } \\
-             & +  h^{2(s-1)} \| u \|_{s,T }^{ 2} + h^{2(s- r- \frac{1}{2}) -2}   \| u \|_{s,T  }^{  2} \\
-            & + h^{2s}  \| u \|_{s, \omega ( T)   }^{  } + h^{2(s-r -\frac{1}{2})}  \| u \|_{ s, \omega ( T)  }^{2  } \bigg) \\
-            \lesssim & \ h^{2s ( s-2) } \| u \|_{H^{s}( \Omega )   }^{2  }
-        \end{split}
-    \]
-    Thus, the proof is complete.
+                \[
+              \| h^{\frac{1}{2}} \partial _{nn}(u - C_{h}^{e}u)     \|_{ \Gamma }^{  2} \lesssim   \|  D^2(u - C_{h}^{e}u)     \|_{ \mathcal{T}_{h}   }^{  2} \lesssim \|  u - C_{h}^{e}u \|_{ 2, \mathcal{T}_{h} }^{2  } \lesssim h^{2(s-2)}  \| u \|_{ s, \mathcal{T}_{h}   }^{2  }
+            \]
+
+    Thus, all elements is bounded by $ h^{2(s-2)}  \| u \|_{ s, \mathcal{T}_{h}   }^{2  } $  and the proof is complete.
 \end{proof}
 
 \begin{lemma}[Weak galerkin orthogonality]
-Let $u \in H^{s}( \Omega )  $, $ s\ge 3 $  be the exact solution and $u_{h} \in V_{h}$ is a discrete solution to \eqref{eq:Bi_a_h}. Then is \[
+Let $u \in H^{s}( \Omega )  $, $ s\ge 3 $  be the exact solution and $u_{h} \in V_{h}$ is a discrete solution to \eqref{eq:discrete_CutCIP_prob}. Then is \[
     a_{h}( u - u_{h}, v) = g_{h} ( u_{h}, v) \quad \forall v \in V_{h}.
     \]
 \end{lemma}
+
+\begin{proof}
+   From the definition of the problem \eqref{eq:discrete_CutCIP_prob} and utilizing that $a_{h}( u,v) = l(v ) \forall v \in V_{h} $ can we easily observe that \[
+       \begin{split}
+   l(v ) & =  A_{h}( u_{h},v) =  a_{h}( u,v)  = a_{h}( u_{h},v)+g_{h}( u_{h},v)
+       \end{split}
+   \]
+    Hence, it is clear that $a_{h}( u -  u_{h}, v) = g_{h}( u_{h},v)  $.
+\end{proof}
 
 \begin{assumption}[EP2]
     \label{as:bi_EP2}
@@ -335,7 +336,7 @@ Let $u \in H^{s}( \Omega )  $, $ s\ge 3 $  be the exact solution and $u_{h} \in 
 
 \begin{theorem}
     \label{thm:apriori_result}
-    Let $u \in H^{s}( \Omega ) $ , $s\ge 3$ a solution and let $u \in V_{h}$ of order $k$ be the solution to \eqref{eq:Bi_a_h}. Then for $r = \min_{}\{s, k+1\} $ the error $e = u - u_{h}$ satisfies
+    Let $u \in H^{s}( \Omega ) $ , $s\ge 3$ a solution to \eqref{eq:bi_weak} and let $u \in V_{h}$ of order $k\ge 2$ be the discrete solution to \eqref{eq:cip_unfitted_hessian_form}. Then for $r = \min_{}\{s, k+1\} $ the error $e = u - u_{h}$ satisfies
     \begin{align}
         \label{eq:bi_apriori_1}
             \| e \|_{ a_{h},* }^{  } &\lesssim   h^{r-1} \| u \|_{ r,\Omega  }^{  }\\
@@ -351,9 +352,13 @@ Let $u \in H^{s}( \Omega )  $, $ s\ge 3 $  be the exact solution and $u_{h} \in 
         \item We want to prove that $\| e \|_{ a_{h},* }^{  } \lesssim   h^{r-1} \| u \|_{ r,\Omega  }^{  }$.
     Let $e = u - u_{h}$ consist of $e = e_{h} + e_{\pi }$, where the discrete error has the form $e_{h} = C _{h}^{e} u - u_{h}$ and the interpolation error $e_{\pi } = u - C _{h} ^{e}u$. We can then observe that
     \[
-    \| u - u_{h} \|_{ a_{h} }^{  }  \le \| e_{\pi } \|_{a_{h},*}^{  } + \| e_{h} \|_{A_{h}  }^{  }
+        \begin{split}
+    \| u - u_{h} \|_{ a_{h} }^{  } & \lesssim  \| u - C_{h}^{e} u + C_{h}^{e}u - u_{h} \|_{ a_{h},* }^{  } \\
+    & \le \|  u - C_{h}^{e} u \|_{a_{h},*  }^{  } +  \| C_{h}^{e}u - u_{h} \|_{a_{h},*  }^{  }\\
+                                     & \le \| e_{\pi } \|_{a_{h},*}^{  } + \| e_{h} \|_{A_{h}  }^{  }
+        \end{split}
     \]
-Using Lemma \ref{lemma:astar_estimate}, can we see that $\| e_{\pi } \|_{a_{h},*}^{  } \lesssim h^{r-1} \| u \|_{ r,\Omega  }^{  }  $ is already fulfilled. So it remains to check the discrete part. From Lemma \ref{lemma:bi_Ah_coercive}, \ref{lemma:bi_Ah_bounded}, the weak Galerkin orthogonality and Assumption \ref{as:bi_EP2} is it natural to see that, \[
+    \red{Using Lemma \ref{lemma:astar_estimate}, can we see that $\| e_{\pi } \|_{a_{h},*}^{  } \lesssim h^{r-1} \| u \|_{ r,\Omega  }^{  }  $ is already fulfilled.} So it remains to check the discrete part. From Lemma \ref{lemma:bi_Ah_coercive}, \ref{lemma:bi_Ah_bounded}, the weak Galerkin orthogonality and Assumption \ref{as:bi_EP2} is it natural to see that, \[
     \begin{split}
 \| e_{h} \|_{ A_{h} }^{ 2 } & \lesssim a_{h}( C _{h}^{e} u - u_{h}, e_{h}) + g_{h}( C _{h}^{e}u - u_{h}, e_{h}) \\
  & = a_{h}( C _{h}^{e} u - u, e_{h}) + a_{h}( u - u_{h}, e_{h}) + g_{h}( C _{h}^{e}u - u_{h}, e_{h}) \\
@@ -364,19 +369,18 @@ Using Lemma \ref{lemma:astar_estimate}, can we see that $\| e_{\pi } \|_{a_{h},*
 
 
 
-The last line of the calculations above comes from the fact that
+The last line of the calculations above was the Assumption \ref{as:bi_EP2}, i.e.,
 \[
     \begin{split}
-        a_{h}( C _{h}^{e} u - u, e_{h}) + g_{h}( C _{h}^{e}u, e_{h}) &\lesssim \| C _{h}^{e} u - u \|_{a_{h},*  }^{  } \| e_{h} \|_{a_{h},*  }^{  }
+        a_{h}( C _{h}^{e} u - u, e_{h}) + g_{h}( C _{h}^{e}u, e_{h}) &\lesssim \| C _{h}^{e} u - u \|_{a_{h},*  }^{  } \| e_{h} \|_{a_{h}  }^{  }
         + \abs{ C _{h}^{e}u }_{g_{h}} \abs{e_{h}  }_{g_{h}} \\
-         &\lesssim \| C _{h}^{e} u - u \|_{a_{h},*  }^{  } \| e_{h} \|_{a_{h},*  }^{  } + h^{r-1} \| e_{h} \|_{r, \Omega   }^{  }\abs{e_{h}  }_{g_{h}} \\
+         &\lesssim \| C _{h}^{e} u - u \|_{a_{h},*  }^{  } \| e_{h} \|_{a_{h}  }^{  } + h^{r-1} \| e_{h} \|_{r, \Omega   }^{  }\abs{e_{h}  }_{g_{h}} \\
          &\lesssim (\| C _{h}^{e} u - u \|_{a_{h},*  }^{  } + h^{r-1} \| e_{h} \|_{r, \Omega   }^{  }) \|e_{h}\|_{A_{h}} \\
          &\lesssim  h^{r-1} \| u \|_{r, \Omega   }^{  } \|e_{h}\|_{A_{h}}.
     \end{split}
 \]
-Here we noticed that $\| e_{h} \|_{a_{h},*  }^{  } + \abs{e_{h}  }_{g_{h}} \lesssim \| e_{h} \|_{ A_{h} }^{  }  $. We also argued that $\| C _{h}^{e} u - u \|_{a_{h},*  }^{  } \lesssim h^{r-1}\| u \|_{ r,\Omega  }^{  }  $ from Lemma
+Here we noticed that $\| e_{h} \|_{a_{h}  }^{  } + \abs{e_{h}  }_{g_{h}} \lesssim \| e_{h} \|_{ A_{h} }^{  }  $. We also argued that $\| C _{h}^{e} u - u \|_{a_{h},*  }^{  } \lesssim h^{r-1}\| u \|_{ r,\Omega  }^{  }  $ from Lemma
 \ref{lemma:astar_estimate}.
-\todo[inline]{ TODO: Need to show $ \| e_{h} \|_{a_{h},*  }^{  } + |e_{h}  |_{g_{h}} \le  \| e_{h} \|_{ A_{h} }^{  }  $ }
 Hence, the first part of the proof is complete.
 
     \item We want to show that $ \| e \|_{ \Omega  }^{  } \lesssim   h^{r} \| u \|_{ r,\Omega  }^{  }$. The idea is to apply the so-called Aubin-Nitsche duality trick by being aware of the ghost penalty $g_{h}$. Let us denote the following observation.
@@ -427,4 +431,20 @@ Using the result from the first part and the Assumption \ref{as:EP2}.
 \end{proof}
 
 
+% \todo[inline]{
+% We define big-oh $O( h^{r})$ to be a upper bound s.t. it exists an $C>0$ s.t.  $\| e \|_{  }^{  } \le M h^{r} \text{ for all } h$, where $r$ is the order of convergence. Since we only will implement $k=1$.
+% Hence, we have the construct the following Corollary.
 
+
+% \begin{corollary}[Order of convergence]
+%     Let $u \in H^{s}( \Omega ) $ , $s\ge 3$ a solution and let $u \in V_{h}$ of order $k = 2$ be the solution to \eqref{eq:Bi_a_h}. Then for $r = \min_{}\{s, k+1\} $ the error $e = u - u_{h}$ is bounded s.t . $ \| e \|_{ a_{h},* }^{  }$ is in $O( h)
+%     $ and $\| e \|_{ L^{2} }^{  } $ is in $O( h^{2}) $. Or in other words, it exists and $M>0$
+%     \begin{align}
+%             \| e \|_{ a_{h},* }^{  } & \le    M h^{r-1}  \\
+%             \| e \|_{ \Omega  }^{  } & \le    M h^{r}
+%     \end{align}
+% \end{corollary}
+% \begin{proof}
+%     It easily comes from the results $ \| u \|_{ r,\Omega  }^{  } = \| u \|_{r, 2,\Omega  }^{  } \le \| u \|_{r, \infty,\Omega  }^{  } = M $, where $M$ is a constant. The rest follows from the Theorem \ref{thm:apriori_result}.
+% \end{proof}
+% }
