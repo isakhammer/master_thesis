@@ -343,9 +343,6 @@ where $u_{0}( x) = u_{h}( x,t) $. Let us define
 \[
  e_{L^{1}( \Omega)  } = \frac{\| u_h(x,t)- u(0,x)\|_{L^1(\Omega)}}{\|u(x,0)\|_{L^1(\Omega)}}
 \]
-We can observe that both laws is showed to hold both for the flower domain and the circular domain in Figure \ref{fig:physical_CH_plot}.The plots confirm the expected physical properties of the Cahn-Hilliard equation. The error measure
-$e_{L^{1}(\Omega)}$ shows small deviations of the numerical solution $u_h(x, t)$ from the initial condition $u(x, 0)$ is very small is in the order of $10^-5$ demonstrating that the mass is conserved. We also observe that the energy functional
-$E(u_h)$ decreases over time, signifying the system's tendency to seek a state of minimal energy.
 
 \begin{figure}[h!]
 \input{"results/physical_CH_plot.tex"}
@@ -353,7 +350,56 @@ $E(u_h)$ decreases over time, signifying the system's tendency to seek a state o
 \label{fig:physical_CH_plot}
 \end{figure}
 
+We can observe that both laws is showed to hold both for the flower domain and the circular domain in Figure \ref{fig:physical_CH_plot}.The plots confirm the expected physical properties of the Cahn-Hilliard equation. The error measure
+$e_{L^{1}(\Omega)}$ shows small deviations of the numerical solution $u_h(x, t)$ from the initial condition $u(x, 0)$ is very small is in the order of $10^-5$ demonstrating that the mass is conserved. We also observe that the energy functional
+$E(u_h)$ decreases over time, signifying the system's tendency to seek a state of minimal energy.
 
 
 
 
+\begin{figure}[h!]
+    \centering
+    \subfloat[]{\label{sub:fig:ill_c0}
+        \includegraphics[width=0.3\textwidth]{results/illustration/c0.png}
+    }\hfill
+    \subfloat[]{\label{sub:fig:ill_c2}
+        \includegraphics[width=0.3\textwidth]{results/illustration/c2.png}
+    }\hfill
+    \subfloat[]{\label{sub:fig:ill_c10}
+        \includegraphics[width=0.3\textwidth]{results/illustration/c10.png}
+    }
+    \vspace{10pt} % to add vertical space between the rows of images
+    \subfloat[]{\label{sub:fig:ill_c50}
+        \includegraphics[width=0.3\textwidth]{results/illustration/c50.png}
+    }\hfill
+    \subfloat[]{\label{sub:fig:ill_c200}
+        \includegraphics[width=0.3\textwidth]{results/illustration/c200.png}
+    }\hfill
+    \subfloat[]{\label{sub:fig:ill_c1000}
+        \includegraphics[width=0.3\textwidth]{results/illustration/c1000.png}
+    }
+\end{figure}
+
+
+\begin{figure}[h!]
+    \centering
+    \subfloat[]{\label{sub:fig:ill_f0}
+        \includegraphics[width=0.3\textwidth]{results/illustration/f0.png}
+    }\hfill
+    \subfloat[]{\label{sub:fig:ill_f2}
+        \includegraphics[width=0.3\textwidth]{results/illustration/f2.png}
+    }\hfill
+    \subfloat[]{\label{sub:fig:ill_f10}
+        \includegraphics[width=0.3\textwidth]{results/illustration/f10.png}
+    }
+    \vspace{10pt} % to add vertical space between the rows of images
+    \subfloat[]{\label{sub:fig:ill_f50}
+        \includegraphics[width=0.3\textwidth]{results/illustration/f50.png}
+    }\hfill
+    \subfloat[]{\label{sub:fig:ill_f200}
+        \includegraphics[width=0.3\textwidth]{results/illustration/f200.png}
+    }\hfill
+    \subfloat[]{\label{sub:fig:ill_f1000}
+        \includegraphics[width=0.3\textwidth]{results/illustration/f1000.png}
+    }
+\end{figure}
