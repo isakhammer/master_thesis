@@ -2,47 +2,57 @@
 using Gridap
 using Gridap.Algebra
 using GridapEmbedded
+using Dates
 
 ## Cahn-hilliard
-ε = 1/30
-# ε = 1
+ε = 1/60
 # Gibb's potential
 ψ(u) = mean(u)*(1-mean(u)*mean(u))
-# ψ(u) = u*(1-u^2)
-# ψ(u) = u
+# Rhs
+f_ex(x, t::Real) = 0
 
 u_ex(x, t::Real) = cos(x[1])*cos(x[2])*exp(-(4*ε^2 + 2)*t)
 u_ex(t) = x -> u_ex(x,t)
-f_ex(x, t::Real) = 0
+f_ex(x, t::Real) = 0 
 
 ##
-L=2.50
-n = 2^7
+L=1.123
+# L=2.50
+n = 120
+# n = 2^7
 h = L/n
 pmin = Point(-L, -L)
 pmax = Point(L, L)
 partition = (n,n)
 bgmodel = CartesianDiscreteModel(pmin, pmax, partition)
 
-resultdir = "CutFEM-cahn-hilliard-results/"
+resultdir = "CutFEM-cahn-hilliard-results_"*string(Dates.now())*"/"
 mkpath(resultdir)
 writevtk(bgmodel, joinpath(resultdir,"model"))
 
 # Implicit geometry
 domain = "other"
-if domain=="circle"
-    R  = 1.0
-    geo1 = disk(R)
-elseif domain=="other"
-    geo1 = disk(0.5, x0=Point(0.0,0.0))
-    geo2 = disk(0.5, x0=Point(0.95,0.0))
-    geo3 = disk(0.5, x0=Point(0.95,0.95))
-    geo4 = disk(0.5, x0=Point(0.0,0.95))
+# if domain=="circle"
+#     R  = 1.0
+#     geo1 = disk(R)
+# elseif domain=="other"
+#     geo1 = disk(0.5, x0=Point(0.0,0.0))
+#     geo2 = disk(0.5, x0=Point(0.95,0.0))
+#     geo3 = disk(0.5, x0=Point(0.95,0.95))
+#     geo4 = disk(0.5, x0=Point(0.0,0.95))
 
-    geo = union(geo1,geo2)
-    geo = union(geo,geo3)
-    geo = union(geo,geo4)
+#     geo = union(geo1,geo2)
+#     geo = union(geo,geo3)
+#     geo = union(geo,geo4)
+# end
+
+r0 = 0.7
+r1 = 0.3
+function ls_flower(x)
+    theta = atan(x[1], x[2])
+    (x[1]^2 + x[2]^2)^0.5 - r0 - r1*cos(5.0*theta)
 end
+geo = AnalyticalGeometry(x-> ls_flower(x))
 
 
 # Cut the background model
@@ -111,7 +121,7 @@ createpvd(resultdir*"ch-solution") do pvd
 
     ## time loop
     t0 = 0.0
-    T = 1000*τ
+    T = 10000*τ
     Nt_max = convert(Int64, ceil((T - t0)/τ))
     Nt = 0
     t = t0
@@ -123,7 +133,8 @@ createpvd(resultdir*"ch-solution") do pvd
     u_dof_vals = (rand(Float64, num_free_dofs(U)) .-0.5)*2.0
     # uh = interpolate_everywhere(u_ex(0),U)
     uh = FEFunction(U, u_dof_vals)
-    pvd[t] = createvtk(Ω, resultdir*"ch-solution_$t"*".vtu",cellfields=["uh"=>uh, "u_ex"=>u_ex(t)])
+    pvd[t] = createvtk(Ω_act, resultdir*"ch-solution_$t"*".vtu",cellfields=["uh"=>uh])
+    # pvd[t] = createvtk(Ω_act, resultdir*"ch-solution_$t"*".vtu",cellfields=["uh"=>uh, "u_ex"=>u_ex(t)])
 
     println("========================================")
     println("Solving Cahn-Hilliard with t0 = $t0, T = $T and time step τ = $τ with Nt_max = $Nt_max timesteps")
@@ -150,6 +161,7 @@ createpvd(resultdir*"ch-solution") do pvd
             uh = FEFunction(U, u_dof_vals)
         end
         println("----------------------------------------")
-        pvd[t] = createvtk(Ω, resultdir*"ch-solution_$t"*".vtu",cellfields=["uh"=>uh, "u_ex"=>u_ex(t)])
+        pvd[t] = createvtk(Ω_act, resultdir*"ch-solution_$t"*".vtu",cellfields=["uh"=>uh])
+        # pvd[t] = createvtk(Ω_act, resultdir*"ch-solution_$t"*".vtu",cellfields=["uh"=>uh, "u_ex"=>u_ex(t)])
     end
 end
