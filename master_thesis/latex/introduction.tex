@@ -79,11 +79,10 @@ where $\mathcal{J} $ denotes the flux governed by the physical dynamics. Hence, 
 \end{equation}
 
 Based on these laws and the boundary conditions, it becomes evident that the energy functional serves as a Lyapunov function in the sense that its time derivative is monotonically decreasing and that the global mass concentration is zero, i.e.
-\[
-    \begin{split}
+\begin{equation}
+\label{eq:mass_cons_energy_decrease}
 \frac{d}{dt} E( u)  \le  0 \text{ and }\frac{d}{dt} \int_{\Omega }^{}  u dx = 0.
-    \end{split}
-\]
+\end{equation}
 Remark that the inequality computation utilizes the assumption of $M$ to be constant, and both equations require the no-flux boundary condition, $\mathcal{J} \cdot n = 0$.
 For details, see \cite[Equation 17 ]{lee2014physical} and \cite[Equation 1.7]{garcke2020weak}.
 This is useful since we expect $E( u( \cdot , t_{2}) ) \le  E( u( \cdot , t_{1}) ) $ for $0 < t_{1} < t_{2} $ and that the global mass is conserved, \[
