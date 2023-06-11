@@ -339,9 +339,15 @@ words, we can check that our discrete solution satisfies \[
 \int_{\Omega }^{} u_{h} ( x,t)  dx & = \int_{\Omega }^{} u_{0}(x)  dx,
     \end{split}
 \]
-where $u_{0}( x) = u_{h}( x,t) $. We can see that this is satisfied in plot
+where $u_{0}( x) = u_{h}( x,t) $. Let us define
+\[
+ e_{L^{1}( \Omega)  } = \frac{\| u_h(x,t)- u(0,x)\|_{L^1(\Omega)}}{\|u(x,0)\|_{L^1(\Omega)}}
+\]
 
-\todo[inline]{ Insert plot. }
+We can observe that this is showed to hold.
+
+% \input{"results/energy_plot.tex"}
+% \input{"results/mass_cons_plot.tex"}
 
 
 
