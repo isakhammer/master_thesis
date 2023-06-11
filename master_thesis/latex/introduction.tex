@@ -13,7 +13,7 @@ On the microscopic level on the biomembrane, there is an ongoing debate about th
 special properties such as signalling and intercellular trafficking \cite{ levental2020lipid, hancock2006lipid, munro2003lipid, simons1997functional}. It turns out that the hypothesis can be tested by modelling the problem as a separation problem using
 CH \cite{miller2020divide, garcke2016coupled, yushutin2019computational}.
 
-\subsection{The Cahn Hilliard Problem}%
+\subsection{The Physical Cahn Hilliard Problem}%
 \label{sub:the_equations}
 
 The CH problem comes in many variants depending on its application, but we will in this report on the binary mixture version \cite{miranville2017cahn}. Let $\Omega \subset  \mathbb{R} ^{d} $ be a compact set for $d=2,3$ with a sufficiently smooth boundary
@@ -78,6 +78,7 @@ where $\mathcal{J} $ denotes the flux governed by the physical dynamics. Hence, 
     \end{split}
 \end{equation}
 
+In this report, we will refer to this formulation as the Physical CH formulation due to the physical characteristics it embodies.
 Based on these laws and the boundary conditions, it becomes evident that the energy functional serves as a Lyapunov function in the sense that its time derivative is monotonically decreasing and that the global mass concentration is zero, i.e.
 \begin{equation}
 \label{eq:mass_cons_energy_decrease}
