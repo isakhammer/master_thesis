@@ -191,8 +191,7 @@ CSV.write(maindir*"/sol.csv", df, delim=',')
 # Normalize data
 norm_u_const_ts = (  u_const_ts .- u_const_ts[1]) ./ u_const_ts[1]
 
-# Plotting values
-p1 = plot(ts, norm_u_const_ts, title = L" $ \| u_h(x,t)- u(0,x)\|_{L^2(\Omega)} /\|u(x,0)\|_{L^2(\Omega)}$")
-p2 = plot(ts, Es, yscale=:log10, title = L"$E(u)$")
+p1 = plot(ts, norm_u_const_ts, label = L"$ \| u_h(x,t)- u(0,x)\|_{L^2(\Omega)} /\|u(x,0)\|_{L^2(\Omega)}$", xlabel="t")
+p2 = plot(ts, Es, yscale=:log10, label = L"$E(u)$", xlabel="t")
 plot(p1, p2, layout = (2,1))
 
