@@ -343,11 +343,14 @@ where $u_{0}( x) = u_{h}( x,t) $. Let us define
 \[
  e_{L^{1}( \Omega)  } = \frac{\| u_h(x,t)- u(0,x)\|_{L^1(\Omega)}}{\|u(x,0)\|_{L^1(\Omega)}}
 \]
+We can observe that both laws is showed to hold both for the flower domain and the circular domain in Figure \ref{fig:physical_CH_plot}.The plots confirm the expected physical properties of the Cahn-Hilliard equation. The error measure
+$e_{L^{1}(\Omega)}$ shows small deviations of the numerical solution $u_h(x, t)$ from the initial condition $u(x, 0)$ and the shows the energy functional $E(u_h)$, demonstrating the decrease of the energy over time.
 
-We can observe that this is showed to hold.
-
-% \input{"results/energy_plot.tex"}
-% \input{"results/mass_cons_plot.tex"}
+\begin{figure}[h!]
+\input{"results/physical_CH_plot.tex"}
+\caption{Evolution of the error measure, $e_{L^{1}(\Omega)}$ and the energy functional $E(u_h)$ over time for two different domains: a circular domain and a flower-shaped domain.  }
+\label{fig:physical_CH_plot}
+\end{figure}
 
 
 
