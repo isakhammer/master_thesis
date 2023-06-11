@@ -5,6 +5,7 @@ using GridapEmbedded
 using Plots
 using DataFrames
 using CSV
+using YAML
 using LaTeXStrings
 
 function main()
@@ -24,7 +25,7 @@ function main()
     ##
     L=2.70
     n = 2^7
-    h = L/n
+    h = 2*L/n
     pmin = Point(-L, -L)
     pmax = Point(L, L)
     partition = (n,n)
@@ -197,6 +198,18 @@ function main()
     plot!(p1, p2, layout = (1,2))
     savefig(p1,maindir*"/energy.png" )
     savefig(p2,maindir*"/mass_cons.png" )
+
+    parameters = Dict(
+        "gamma" => γ,
+        "gamma1" => γg1,
+        "gamma2" => γg2,
+        "epsilon" => ε,
+        "tau" => "epsilon^2/10",
+        "L"=>2.70,
+        "n"=> 2^7
+    )
+
+    YAML.write_file(maindir*"/parameters.yml", parameters)
 
 end
 main()
