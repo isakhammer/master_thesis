@@ -14,21 +14,21 @@ function main(;domain="flower")
     ε = 1/30
     # ε = 1
     # Gibb's potential
-    ψ(u) = mean(u)*(1-mean(u)*mean(u))
-    # ψ(u) = u*(1-u^2)
-    # ψ(u) = u
+    f(u) = mean(u)*(1 - mean(u)*mean(u))
+    # f(u) = u*(1-u^2)
+    # f(u) = u
 
     u_ex(x, t::Real) = cos(x[1])*cos(x[2])*exp(-(4*ε^2 + 2)*t)
     u_ex(t) = x -> u_ex(x,t)
-    f_ex(x, t::Real) = 0
+    # f_ex(x, t::Real) = 0
 
     ##
     L=2.70
     n = 2^7
     h = 2*L/n
-    it = 1000
+    it = 500
     γ = 20
-    τ = ε^2/10
+    τ = ε^2/30
     γg1 = 10
     γg2 = 0.5
 
@@ -116,14 +116,11 @@ function main(;domain="flower")
                      ∫( (γg2*h^3)*jump_nn(u,n_Fg)*jump_nn(v,n_Fg) ) * dFg)
 
     A_h(u,v) = a_CIP(u,v) + g(u,v)
-    lhs(u,v) = ∫(u*v)*dΩ + τ*ε^2*A_h(u,v)
+    lhs(u,v) = ∫(u*v)*dΩ + τ*ε*A_h(u,v)
 
     # l(u, v) = ∫(τ*f*v + u*v)*dΩ
-    rhs(u, v) =  ∫(u*v)*dΩ + τ * (
-                                ∫(ψ(u)*Δ(v))*dΩ
-                                - ∫(ψ(mean(u))*jump(∇(v)⋅n_Λ))*dΛ
-                                - ∫(ψ(u)*∇(v)⋅n_Γ )*dΓ
-                               )
+    c_h(u,v) = ( ∫(f(u)*Δ(v))*dΩ - ∫(f(mean(u))*jump(∇(v)⋅n_Λ))*dΛ - ∫(f(u)*∇(v)⋅n_Γ )*dΓ)
+    rhs(u, v) =  ∫(u*v)*dΩ + ( τ/ε) *c_h(u,v)
     rhs(u) = v -> rhs(u,v)
 
     ## time loop
@@ -150,7 +147,7 @@ function main(;domain="flower")
     Es = Float64[]
     ts = Float64[]
     push!(ts, t)
-    E = sum( ∫(( ∇(uh)⋅∇(uh) ) + (1/4)*((uh*uh - 1)*(uh*uh - 1))  )dΩ)
+    E = sum( ∫((ε/2)*( ∇(uh)⋅∇(uh) ) + (1/ε)*(1/4)*((uh*uh - 1)*(uh*uh - 1))  )dΩ)
     e_L1 = sum( ∫( (u0 - uh ) )dΩ)
     push!(Es, E)
     push!( e_L1_ts, e_L1/u0_L1)
@@ -203,9 +200,9 @@ function main(;domain="flower")
     CSV.write(maindir*"/sol.csv", df, delim=',')
 
     # Normalize data
-    p1 = plot(ts, e_L1_ts, label = L"$ \| u_h(x,t)- u(0,x)\|_{L^1(\Omega)} /\|u(x,0)\|_{L^1(\Omega)}$", xlabel="t")
+    p1 = plot(ts, e_L1_ts, label = L"$ e_{L^1(\Omega)} $", xlabel="t")
+
     p2 = plot(ts[2:end], Es[2:end], xscale=:log10, yscale=:log10, label = L"$E(u)$", xlabel="t")
-    plot!(p1, p2, layout = (1,2))
     savefig(p1,maindir*"/mass_cons.png" )
     savefig(p2,maindir*"/energy.png" )
 
