@@ -264,14 +264,7 @@ function generate_plot(;ns, τs,
 
 end
 
-function conv_test()
-
-    domain="circle"
-    maindir = "figures/eoc_CH_$domain"
-    if isdir(maindir)
-        rm(maindir; recursive=true)
-        mkpath(maindir)
-    end
+function spatial_test(maindir)
 
     el2s_L2 = Float64[]
     eh1s_L2 = Float64[]
@@ -285,9 +278,9 @@ function conv_test()
     dirname = maindir*"/conv_spatial"
     mkpath(dirname)
 
-    # ns = [2^3, 2^4, 2^5, 2^6, 2^7, 2^8]
-    ns = [2^3, 2^4, 2^5, 2^6]
-    τ_spatial = 2^(-1)
+    ns = [2^3, 2^4, 2^5, 2^6, 2^7, 2^8]
+    # ns = [2^3, 2^4, 2^5, 2^6]
+    τ_spatial = 2^(-2)
     for n in ns
         el2_L2, eh1_L2, eah_L2, el2_inf, eh1_inf, eah_inf = run_CH(n=n, τ_hat=τ_spatial, dirname=dirname)
         push!(el2s_L2, el2_L2)
@@ -306,5 +299,53 @@ function conv_test()
 
 end
 
-conv_test()
+function transient_test(maindir)
+
+    el2s_L2 = Float64[]
+    eh1s_L2 = Float64[]
+    eahs_L2 = Float64[]
+    el2s_inf = Float64[]
+    eh1s_inf = Float64[]
+    eahs_inf = Float64[]
+
+    # Spatial EOC
+    println("Run transient EOC tests")
+    dirname = maindir*"/conv_transient"
+    mkpath(dirname)
+
+    τs = [2^-1, 2^-2, 2^-3, 2^-4]
+    n_trans = 2^8
+    for τ_hat in τs
+        el2_L2, eh1_L2, eah_L2, el2_inf, eh1_inf, eah_inf = run_CH(n=n_trans, τ_hat=τ_hat, dirname=dirname)
+        push!(el2s_L2, el2_L2)
+        push!(eh1s_L2, eh1_L2)
+        push!(eahs_L2, eah_L2)
+        push!(el2s_inf, el2_inf)
+        push!(eh1s_inf, eh1_inf)
+        push!(eahs_inf, eah_inf)
+    end
+
+    ns_trans = n_trans*ones(length(τs))
+    generate_plot(ns=ns_trans,τs=τs,
+                  el2s_L2=el2s_L2, eh1s_L2=eh1s_L2, eahs_L2=eahs_L2,
+                  el2s_inf=el2s_inf, eh1s_inf=eh1s_inf, eahs_inf=eahs_inf,
+                  dirname=maindir, transient=true)
+
+end
+
+function main()
+    domain="circle"
+    maindir = "figures/eoc_CH_$domain"
+    if isdir(maindir)
+        rm(maindir; recursive=true)
+        mkpath(maindir)
+    end
+    spatial_test(maindir)
+    transient_test(maindir)
+
+end
+
+main()
+
+
 
