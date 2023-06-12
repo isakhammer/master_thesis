@@ -118,7 +118,6 @@ function main(;domain="flower")
     A_h(u,v) = a_CIP(u,v) + g(u,v)
     lhs(u,v) = ∫(u*v)*dΩ + τ*ε*A_h(u,v)
 
-    # l(u, v) = ∫(τ*f*v + u*v)*dΩ
     c_h(u,v) = ( ∫(f(u)*Δ(v))*dΩ - ∫(f(mean(u))*jump(∇(v)⋅n_Λ))*dΛ - ∫(f(u)*∇(v)⋅n_Γ )*dΓ)
     rhs(u, v) =  ∫(u*v)*dΩ + ( τ/ε) *c_h(u,v)
     rhs(u) = v -> rhs(u,v)
