@@ -67,9 +67,9 @@ function run_CH(;domain="circle", n=2^6, τ_hat, dirname)
     Ω_act = Triangulation(cutgeo, ACTIVE)
     Ω = Triangulation(cutgeo, PHYSICAL)
     Ω_bg = Triangulation(bgmodel)
-    writevtk(Ω_bg,   graphicsdir*"/Omega_bg")
-    writevtk(Ω,         graphicsdir*"/Omega")
-    writevtk(Ω_act,     graphicsdir*"/Omega_act")
+    writevtk(Ω_bg,   graphicsdir*"/Omega_bg_$n")
+    writevtk(Ω,         graphicsdir*"/Omega_$n")
+    writevtk(Ω_act,     graphicsdir*"/Omega_act_$n")
 
     ## Function spaces
     order = 2
@@ -196,8 +196,8 @@ function run_CH(;domain="circle", n=2^6, τ_hat, dirname)
         "gamma2" => γg2,
         "epsilon" => ε,
         "tau_hat" => τ_hat,
-        "L"=>2.70,
-        "n"=> 2^7,
+        "L"=>L,
+        "n"=> n,
         "it"=> it
     )
 
