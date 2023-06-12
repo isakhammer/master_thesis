@@ -17,7 +17,7 @@ function run_CH(;domain="circle", n=2^6, dirname)
     # ε = 1
     # Gibb's potential
     f(u) = mean(u)*(1 - mean(u)*mean(u))
-    u_ex(x, t::Real) = (x[1]*x[1] + x[2]*x[2] - 1 )^2*cos(x[1])*cos(x[2])*exp(-(4*ε^2 + 2)*t)
+    u_ex(x, t::Real) = (x[1]*x[1] + x[2]*x[2] - 1 )^4*cos(x[1])*cos(x[2])*cos(t*ε^2)
     u_ex(t) = x -> u_ex(x, t)
     g_0(t) = x -> ( ∂t(u_ex)(x,t) +ε*Δ(Δ(u_ex(t)))(x)
                    # - ( 3/ε )*(2*∇(u_ex(t))(x)⋅∇(u_ex(t))(x) + u_ex(t)(x)*u_ex(t)(x)*Δ(u_ex(t))(x)  )
@@ -26,9 +26,9 @@ function run_CH(;domain="circle", n=2^6, dirname)
     L=2.70
     # n = 2^6
     h = 2*L/n
-    it = 10
+    # it = 10
     γ = 20
-    τ = ε^2/30
+    τ = ε^2/50
     T = ε^2
     it = T/τ
     γg1 = 10
@@ -115,12 +115,11 @@ function run_CH(;domain="circle", n=2^6, dirname)
 
     c_h(u,v) = ( ∫(f(u)*Δ(v))*dΩ - ∫(f(mean(u))*jump(∇(v)⋅n_Λ))*dΛ - ∫(f(u)*∇(v)⋅n_Γ )*dΓ)
     l_h(v, t ) = ∫(g_0(t)*v)*dΩ
-    rhs(u, v, t) =  ∫(u*v)*dΩ + τ*l_h(v,t) #+ ( τ/ε) *c_h(u,v)
+    rhs(u, v, t) =  ∫(u*v)*dΩ + τ*l_h(v,t)# + ( τ/ε) *c_h(u,v)
     rhs(u, t ) = v -> rhs(u,v,t)
 
     ## time loop
     t0 = 0.0
-    T = it*τ
     Nt_max = convert(Int64, ceil((T - t0)/τ))
     Nt = 0
     t = t0
@@ -142,9 +141,9 @@ function run_CH(;domain="circle", n=2^6, dirname)
     eh1_ts = Float64[]
     ts = Float64[]
 
-    println("========================================")
-    println("Solving Cahn-Hilliard with t0 = $t0, T = $T and time step τ = $τ with Nt_max = $Nt_max timesteps")
-    println("========================================")
+    # println("========================================")
+    # println("Solving Cahn-Hilliard with t0 = $t0, T = $T and time step τ = $τ with Nt_max = $Nt_max timesteps")
+    # println("========================================")
 
     ## Set up linear algebra system
     A = assemble_matrix(lhs, U, V)
@@ -152,15 +151,19 @@ function run_CH(;domain="circle", n=2^6, dirname)
     cache = nothing
 
     # Time loop
+    println("Solving Cahn-Hilliard for step $(Nt_max), n = $n, τ = $τ")
     while t < T
         Nt += 1
         t += τ
-        println("----------------------------------------")
-        println("Solving Cahn-Hilliard for t = $t, step $(Nt)/$(Nt_max)")
+        # println("----------------------------------------")
         k = 0
+
+        if Nt % 25 == 0
+            println("$(Nt)/$(Nt_max)")
+        end
+
         while k < kmax
             k += 1
-            println("Iteration k = $k")
             b = assemble_vector(rhs(uh, t), V)
             op = AffineOperator(A, b)
             cache = solve!(u_dof_vals, lu, op, cache, isnothing(cache))
@@ -168,13 +171,13 @@ function run_CH(;domain="circle", n=2^6, dirname)
         end
 
         # Adding initial plotting values
-        println("----------------------------------------")
+        # println("----------------------------------------")
         pvd[t] = createvtk(Ω, graphicsdir*"/sol-tau-$τ-n-$n-$t"*".vtu",cellfields=["uh"=>uh, "u_ex"=>u_ex(t)])
 
         e = u_ex(t) - uh
         el2_t = sqrt(sum( ∫(e*e)dΩ ))
         eh1_t = sqrt(sum( ∫( e*e + ∇(e)⋅∇(e) )*dΩ ))
-        println("el2_t $el2_t, eh1_t, $eh1_t ")
+        # println("el2_t $el2_t, eh1_t, $eh1_t ")
         push!( ts, t)
         push!( el2_ts, el2_t )
         push!( eh1_ts, eh1_t )
@@ -281,7 +284,7 @@ function conv_test()
     dirname = maindir*"/conv_spatial"
     mkpath(dirname)
 
-    ns = [2^3, 2^4, 2^5, 2^6]
+    ns = [2^3, 2^4, 2^5, 2^6, 2^7, 2^8]
     for n in ns
         el2_L2, eh1_L2, el2_inf, eh1_inf = run_CH(n=n, dirname=dirname)
         push!(el2s_L2, el2_L2)
