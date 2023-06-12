@@ -8,23 +8,24 @@ using CSV
 using YAML
 using LaTeXStrings
 
-function main(;domain="flower")
+function main(;domain="circle")
 
     ## Cahn-hilliard
     ε = 1/30
     # ε = 1
     # Gibb's potential
     f(u) = mean(u)*(1 - mean(u)*mean(u))
-    # f(u) = u*(1-u^2)
-    # f(u) = u
-
-    u_ex(x, t::Real) = cos(x[1])*cos(x[2])*exp(-(4*ε^2 + 2)*t)
+    u_ex(x, t::Real) = (x[1]*x[1] + x[2]*x[2] - 1 )^2*cos(x[1])*cos(x[2])*exp(-(4*ε^2 + 2)*t)
+    u_ex(t) = x -> u_ex(x, t)
+    g_0(t) = x -> ( ∂t(u_ex)(x,t) +ε*Δ(Δ(u_ex(t)))(x)
+                   # - ( 3/ε )*(2*∇(u_ex(t))(x)⋅∇(u_ex(t))(x) + u_ex(t)(x)*u_ex(t)(x)*Δ(u_ex(t))(x)  )
+                  )
 
     ##
     L=2.70
-    n = 2^7
+    n = 2^6
     h = 2*L/n
-    it = 50
+    it = 10
     γ = 20
     τ = ε^2/30
     γg1 = 10
@@ -36,7 +37,7 @@ function main(;domain="flower")
     bgmodel = CartesianDiscreteModel(pmin, pmax, partition)
 
 
-    maindir = "figures/physical_CH_$domain"
+    maindir = "figures/eoc_CH_$domain"
     if isdir(maindir)
         rm(maindir; recursive=true)
         mkpath(maindir)
@@ -117,8 +118,9 @@ function main(;domain="flower")
     lhs(u,v) = ∫(u*v)*dΩ + τ*ε*A_h(u,v)
 
     c_h(u,v) = ( ∫(f(u)*Δ(v))*dΩ - ∫(f(mean(u))*jump(∇(v)⋅n_Λ))*dΛ - ∫(f(u)*∇(v)⋅n_Γ )*dΓ)
-    rhs(u, v) =  ∫(u*v)*dΩ + ( τ/ε) *c_h(u,v)
-    rhs(u) = v -> rhs(u,v)
+    l_h(v, t ) = ∫(g_0(t)*v)*dΩ
+    rhs(u, v, t) =  ∫(u*v)*dΩ + τ*l_h(v,t) #+ ( τ/ε) *c_h(u,v)
+    rhs(u, t ) = v -> rhs(u,v,t)
 
     ## time loop
     t0 = 0.0
@@ -132,22 +134,17 @@ function main(;domain="flower")
 
     # Initial data
     u_dof_vals = (rand(Float64, num_free_dofs(U)) .-0.5)*2.0
-    # uh = interpolate_everywhere(u_ex(0),U)
-    u0 = FEFunction(U, deepcopy(u_dof_vals))
-    uh = FEFunction(U, u_dof_vals)
-    u0_L1 = sum( ∫(u0)dΩ )
+    uh = interpolate_everywhere(u_ex(0),U)
+    # u0 = FEFunction(U, deepcopy(u_dof_vals))
+    # uh = FEFunction(U, u_dof_vals)
+    # u0_L1 = sum( ∫(u0)dΩ )
     pvd = Dict()
     pvd[t] = createvtk(Ω, graphicsdir*"/sol_$t"*".vtu",cellfields=["uh"=>uh, "u_ex"=>u_ex(t)])
 
     # Adding initial plotting values
-    e_L1_ts = Float64[]
-    Es = Float64[]
+    el2_ts = Float64[]
+    eh1_ts = Float64[]
     ts = Float64[]
-    push!(ts, t)
-    E = sum( ∫((ε/2)*( ∇(uh)⋅∇(uh) ) + (1/ε)*(1/4)*((uh*uh - 1)*(uh*uh - 1))  )dΩ)
-    e_L1 = sum( ∫( (u0 - uh ) )dΩ)
-    push!(Es, E)
-    push!( e_L1_ts, e_L1/u0_L1)
 
     println("========================================")
     println("Solving Cahn-Hilliard with t0 = $t0, T = $T and time step τ = $τ with Nt_max = $Nt_max timesteps")
@@ -168,21 +165,23 @@ function main(;domain="flower")
         while k < kmax
             k += 1
             println("Iteration k = $k")
-            b = assemble_vector(rhs(uh), V)
+            b = assemble_vector(rhs(uh, t), V)
             op = AffineOperator(A, b)
             cache = solve!(u_dof_vals, lu, op, cache, isnothing(cache))
             uh = FEFunction(U, u_dof_vals)
         end
 
         # Adding initial plotting values
-        push!(ts, t)
-        E = sum( ∫(( ∇(uh)⋅∇(uh) ) + (1/4)*((uh*uh - 1)*(uh*uh - 1))  )dΩ)
-        e_L1 = sum( ∫( (u0 - uh ) )dΩ)
-        push!(Es, E)
-        push!( e_L1_ts, e_L1/u0_L1)
-
         println("----------------------------------------")
         pvd[t] = createvtk(Ω, graphicsdir*"/sol_$t"*".vtu",cellfields=["uh"=>uh, "u_ex"=>u_ex(t)])
+
+        e = u_ex(t) - uh
+        el2_t = sqrt(sum( ∫(e*e)dΩ ))
+        eh1_t = sqrt(sum( ∫( e*e + ∇(e)⋅∇(e) )*dΩ ))
+        println("el2_t $el2_t, eh1_t, $eh1_t ")
+        push!( ts, t)
+        push!( el2_ts, el2_t )
+        push!( eh1_ts, eh1_t )
     end
 
     # Construct pvd file
@@ -193,14 +192,14 @@ function main(;domain="flower")
     end
 
     # Save results
-    df = DataFrame(ts=ts, Es=Es, e_L1_ts=e_L1_ts)
-    CSV.write(maindir*"/sol.csv", df, delim=',')
+    # df = DataFrame(ts=ts, Es=Es, e_L1_ts=e_L1_ts)
+    # CSV.write(maindir*"/sol.csv", df, delim=',')
 
     # Normalize data
-    p1 = plot(ts, e_L1_ts, label = L"$ e_{L^1(\Omega)} $", xlabel="t")
-    p2 = plot(ts[2:end], Es[2:end], xscale=:log2, yscale=:log2, label = L"$E(u)$", xlabel="t")
-    savefig(p1,maindir*"/mass_cons.png" )
-    savefig(p2,maindir*"/energy.png" )
+    # p1 = plot(ts, e_L1_ts, label = L"$ e_{L^1(\Omega)} $", xlabel="t")
+    # p2 = plot(ts[2:end], Es[2:end], xscale=:log2, yscale=:log2, label = L"$E(u)$", xlabel="t")
+    # savefig(p1,maindir*"/mass_cons.png" )
+    # savefig(p2,maindir*"/energy.png" )
 
     parameters = Dict(
         "domain" => domain,
@@ -217,6 +216,5 @@ function main(;domain="flower")
     YAML.write_file(maindir*"/parameters.yml", parameters)
 
 end
-main(domain="circle")
-# main(domain="flower")
+main()
 
