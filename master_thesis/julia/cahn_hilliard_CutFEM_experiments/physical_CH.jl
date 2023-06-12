@@ -103,10 +103,6 @@ function main(;domain="flower")
     n_Λ = get_normal_vector(Λ)
     n_Fg = get_normal_vector(Fg)
 
-    function jump_nn(u,n)
-        return ( n.plus⋅ ∇∇(u).plus⋅ n.plus - n.minus ⋅ ∇∇(u).minus ⋅ n.minus )
-    end
-
     a_CIP(u,v) = ( ∫(Δ(v)⊙Δ(u))dΩ
                   + ∫(-mean(Δ(v))⊙jump(∇(u)⋅n_Λ) - mean(Δ(u))⊙jump(∇(v)⋅n_Λ) + (γ/h)⋅jump(∇(u)⋅n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ
                   + ∫(-Δ(v)⊙∇(u)⋅n_Γ - Δ(u)⊙∇(v)⋅n_Γ + (γ/h)⋅ ∇(u)⊙n_Γ⋅∇(v)⊙n_Γ )dΓ
