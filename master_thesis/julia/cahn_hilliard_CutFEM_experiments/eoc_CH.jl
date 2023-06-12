@@ -7,8 +7,10 @@ using DataFrames
 using CSV
 using YAML
 using LaTeXStrings
+using Latexify
+using PrettyTables
 
-function main(;domain="circle")
+function run_CH(;domain="circle", n=2^6, dirname)
 
     ## Cahn-hilliard
     ε = 1/30
@@ -21,13 +23,14 @@ function main(;domain="circle")
                    # - ( 3/ε )*(2*∇(u_ex(t))(x)⋅∇(u_ex(t))(x) + u_ex(t)(x)*u_ex(t)(x)*Δ(u_ex(t))(x)  )
                   )
 
-    ##
     L=2.70
-    n = 2^6
+    # n = 2^6
     h = 2*L/n
     it = 10
     γ = 20
     τ = ε^2/30
+    T = ε^2
+    it = T/τ
     γg1 = 10
     γg2 = 0.5
 
@@ -37,13 +40,7 @@ function main(;domain="circle")
     bgmodel = CartesianDiscreteModel(pmin, pmax, partition)
 
 
-    maindir = "figures/eoc_CH_$domain"
-    if isdir(maindir)
-        rm(maindir; recursive=true)
-        mkpath(maindir)
-    end
-
-    graphicsdir = maindir*"/graphics"
+    graphicsdir = dirname*"/graphics"
     mkpath(graphicsdir)
 
 
@@ -79,7 +76,6 @@ function main(;domain="circle")
     # Construct function spaces
     V = TestFESpace(Ω_act, ReferenceFE(lagrangian, Float64, order), conformity=:H1)
     U = TrialFESpace(V)
-
 
     # Set up integration meshes, measures and normals
     Ω = Triangulation(cutgeo, PHYSICAL)
@@ -139,7 +135,7 @@ function main(;domain="circle")
     # uh = FEFunction(U, u_dof_vals)
     # u0_L1 = sum( ∫(u0)dΩ )
     pvd = Dict()
-    pvd[t] = createvtk(Ω, graphicsdir*"/sol_$t"*".vtu",cellfields=["uh"=>uh, "u_ex"=>u_ex(t)])
+    pvd[t] = createvtk(Ω, graphicsdir*"/sol-tau-$τ-n-$n-$t"*".vtu",cellfields=["uh"=>uh, "u_ex"=>u_ex(t)])
 
     # Adding initial plotting values
     el2_ts = Float64[]
@@ -173,7 +169,7 @@ function main(;domain="circle")
 
         # Adding initial plotting values
         println("----------------------------------------")
-        pvd[t] = createvtk(Ω, graphicsdir*"/sol_$t"*".vtu",cellfields=["uh"=>uh, "u_ex"=>u_ex(t)])
+        pvd[t] = createvtk(Ω, graphicsdir*"/sol-tau-$τ-n-$n-$t"*".vtu",cellfields=["uh"=>uh, "u_ex"=>u_ex(t)])
 
         e = u_ex(t) - uh
         el2_t = sqrt(sum( ∫(e*e)dΩ ))
@@ -191,16 +187,6 @@ function main(;domain="circle")
         end
     end
 
-    # Save results
-    # df = DataFrame(ts=ts, Es=Es, e_L1_ts=e_L1_ts)
-    # CSV.write(maindir*"/sol.csv", df, delim=',')
-
-    # Normalize data
-    # p1 = plot(ts, e_L1_ts, label = L"$ e_{L^1(\Omega)} $", xlabel="t")
-    # p2 = plot(ts[2:end], Es[2:end], xscale=:log2, yscale=:log2, label = L"$E(u)$", xlabel="t")
-    # savefig(p1,maindir*"/mass_cons.png" )
-    # savefig(p2,maindir*"/energy.png" )
-
     parameters = Dict(
         "domain" => domain,
         "gamma" => γ,
@@ -213,8 +199,104 @@ function main(;domain="circle")
         "it"=> it
     )
 
-    YAML.write_file(maindir*"/parameters.yml", parameters)
+    YAML.write_file(dirname*"/parameters.yml", parameters)
+
+    el2s_L2 = sqrt(sum(τ* e_ti^2 for e_ti in el2_ts))
+    eh1s_L2 = sqrt(sum(τ* e_ti^2 for e_ti in eh1_ts))
+    el2s_inf = maximum(abs.(el2_ts))
+    eh1s_inf = maximum(abs.(eh1_ts))
+    return el2s_L2, eh1s_L2, el2s_inf, eh1s_inf
 
 end
-main()
+
+function generate_plot(Xs,
+        el2s_L2, eh1s_L2,
+        el2s_inf, eh1s_inf,
+        dirname::String, Xs_name::String)
+
+    # L2 norms
+    p = Plots.plot(Xs, el2s_L2, label="L2L2", legend=:bottomright, xscale=:log2, yscale=:log2, minorgrid=true)
+    Plots.scatter!(p, Xs, el2s_L2, primary=false)
+
+    Plots.plot!(p, Xs, eh1s_L2, label=L"L2H1")
+    Plots.scatter!(p, Xs, eh1s_L2, primary=false)
+
+    # inf norms
+    Plots.plot!(p, Xs, el2s_inf, label=L"infL2")
+    Plots.scatter!(p, Xs, el2s_inf, primary=false)
+
+    Plots.plot!(p, Xs, eh1s_inf, label=L"infH1")
+    Plots.scatter!(p, Xs, eh1s_inf, primary=false)
+
+    # Configs
+    Plots.xlabel!(p, "$Xs_name")
+    Plots.plot!(p, xscale=:log2, yscale=:log2, minorgrid=true)
+    Plots.plot!(p, legendfontsize=12)  # Adjust the value 12 to your desired font size
+
+    # Save the plot as a .png file using the GR backend
+    Plots.savefig(p, "$dirname/plot.png")
+
+    compute_eoc(Xs,  errs) = log.(errs[1:end-1]./errs[2:end])./( log.(Xs[1:end-1]./Xs[2:end]) )
+    eoc_l2s_L2 = compute_eoc(Xs, el2s_L2)
+    eoc_eh1s_L2 = compute_eoc(Xs, eh1s_L2)
+    eoc_l2s_inf = compute_eoc(Xs, el2s_inf)
+    eoc_eh1s_inf = compute_eoc(Xs, eh1s_inf)
+
+    eoc_l2s_L2 =  [nothing; eoc_l2s_L2]
+    eoc_eh1s_L2 =  [nothing; eoc_eh1s_L2]
+    eoc_l2s_inf =  [nothing; eoc_l2s_inf]
+    eoc_eh1s_inf =  [nothing; eoc_eh1s_inf]
+
+
+    Xs_str =  latexify.(Xs)
+    data = hcat(Xs_str,
+                el2s_L2,  eoc_l2s_L2, eh1s_L2, eoc_eh1s_L2,
+                el2s_inf,  eoc_l2s_inf, eh1s_inf, eoc_eh1s_inf)
+
+    formatters = (ft_nonothing, ft_printf("%.1E", [2, 4, 6, 8]), ft_printf("%.2f", [3, 5, 7, 9]))
+
+    header = [Xs_name,
+              "L2L2", "EOC", "L2H1", "EOC",
+              "infL2", "EOC", "infH1", "EOC"]
+
+    pretty_table(data, header=header, formatters =formatters )
+end
+
+function conv_test()
+
+    domain="circle"
+    maindir = "figures/eoc_CH_$domain"
+    if isdir(maindir)
+        rm(maindir; recursive=true)
+        mkpath(maindir)
+    end
+
+    el2s_L2 = Float64[]
+    eh1s_L2 = Float64[]
+    el2s_inf = Float64[]
+    eh1s_inf = Float64[]
+
+    # Spatial EOC
+    println("Run spatial EOC tests")
+    dirname = maindir*"/conv_spatial"
+    mkpath(dirname)
+
+    ns = [2^3, 2^4, 2^5, 2^6]
+    for n in ns
+        el2_L2, eh1_L2, el2_inf, eh1_inf = run_CH(n=n, dirname=dirname)
+        push!(el2s_L2, el2_L2)
+        push!(eh1s_L2, eh1_L2)
+        push!(el2s_inf, el2_inf)
+        push!(eh1s_inf, eh1_inf)
+    end
+
+    hs = 1 .// ns
+    generate_plot(hs,
+                  el2s_L2, eh1s_L2,
+                  el2s_inf, eh1s_inf,
+                  dirname, "h")
+
+end
+
+conv_test()
 
