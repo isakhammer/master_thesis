@@ -131,26 +131,58 @@ function main(;domain="flower")
     e_L1_ts = Float64[]
     Es = Float64[]
     ts = Float64[]
-    createpvd(graphicsdir*"/sol") do pvd
 
-        ## time loop
-        t0 = 0.0
-        T = it*τ
-        Nt_max = convert(Int64, ceil((T - t0)/τ))
-        Nt = 0
-        t = t0
+    ## time loop
+    t0 = 0.0
+    T = it*τ
+    Nt_max = convert(Int64, ceil((T - t0)/τ))
+    Nt = 0
+    t = t0
 
 
-        # Maximal number of Picard iterations
-        kmax = 1
+    # Maximal number of Picard iterations
+    kmax = 1
 
-        # Initial data
-        u_dof_vals = (rand(Float64, num_free_dofs(U)) .-0.5)*2.0
-        # uh = interpolate_everywhere(u_ex(0),U)
-        u0 = FEFunction(U, deepcopy(u_dof_vals))
-        uh = FEFunction(U, u_dof_vals)
-        u0_L1 = sum( ∫(u0)dΩ )
-        pvd[t] = createvtk(Ω, graphicsdir*"/sol_$t"*".vtu",cellfields=["uh"=>uh, "u_ex"=>u_ex(t)])
+    # Initial data
+    u_dof_vals = (rand(Float64, num_free_dofs(U)) .-0.5)*2.0
+    # uh = interpolate_everywhere(u_ex(0),U)
+    u0 = FEFunction(U, deepcopy(u_dof_vals))
+    uh = FEFunction(U, u_dof_vals)
+    u0_L1 = sum( ∫(u0)dΩ )
+    pvd = Dict()
+    pvd[t] = createvtk(Ω, graphicsdir*"/sol_$t"*".vtu",cellfields=["uh"=>uh, "u_ex"=>u_ex(t)])
+
+    # Adding initial plotting values
+    push!(ts, t)
+    E = sum( ∫(( ∇(uh)⋅∇(uh) ) + (1/4)*((uh*uh - 1)*(uh*uh - 1))  )dΩ)
+    e_L1 = sum( ∫( (u0 - uh ) )dΩ)
+    push!(Es, E)
+    push!( e_L1_ts, e_L1/u0_L1)
+
+    println("========================================")
+    println("Solving Cahn-Hilliard with t0 = $t0, T = $T and time step τ = $τ with Nt_max = $Nt_max timesteps")
+    println("========================================")
+
+    ## Set up linear algebra system
+    A = assemble_matrix(a, U, V)
+    lu = LUSolver()
+    cache = nothing
+
+    # Time loop
+    while t < T
+        Nt += 1
+        t += τ
+        println("----------------------------------------")
+        println("Solving Cahn-Hilliard for t = $t, step $(Nt)/$(Nt_max)")
+        k = 0
+        while k < kmax
+            k += 1
+            println("Iteration k = $k")
+            b = assemble_vector(l(uh), V)
+            op = AffineOperator(A, b)
+            cache = solve!(u_dof_vals, lu, op, cache, isnothing(cache))
+            uh = FEFunction(U, u_dof_vals)
+        end
 
         # Adding initial plotting values
         push!(ts, t)
@@ -159,40 +191,14 @@ function main(;domain="flower")
         push!(Es, E)
         push!( e_L1_ts, e_L1/u0_L1)
 
-        println("========================================")
-        println("Solving Cahn-Hilliard with t0 = $t0, T = $T and time step τ = $τ with Nt_max = $Nt_max timesteps")
-        println("========================================")
+        println("----------------------------------------")
+        pvd[t] = createvtk(Ω, graphicsdir*"/sol_$t"*".vtu",cellfields=["uh"=>uh, "u_ex"=>u_ex(t)])
+    end
 
-        ## Set up linear algebra system
-        A = assemble_matrix(a, U, V)
-        lu = LUSolver()
-        cache = nothing
-
-        # Time loop
-        while t < T
-            Nt += 1
-            t += τ
-            println("----------------------------------------")
-            println("Solving Cahn-Hilliard for t = $t, step $(Nt)/$(Nt_max)")
-            k = 0
-            while k < kmax
-                k += 1
-                println("Iteration k = $k")
-                b = assemble_vector(l(uh), V)
-                op = AffineOperator(A, b)
-                cache = solve!(u_dof_vals, lu, op, cache, isnothing(cache))
-                uh = FEFunction(U, u_dof_vals)
-            end
-
-            # Adding initial plotting values
-            push!(ts, t)
-            E = sum( ∫(( ∇(uh)⋅∇(uh) ) + (1/4)*((uh*uh - 1)*(uh*uh - 1))  )dΩ)
-            e_L1 = sum( ∫( (u0 - uh ) )dΩ)
-            push!(Es, E)
-            push!( e_L1_ts, e_L1/u0_L1)
-
-            println("----------------------------------------")
-            pvd[t] = createvtk(Ω, graphicsdir*"/sol_$t"*".vtu",cellfields=["uh"=>uh, "u_ex"=>u_ex(t)])
+    # Construct pvd file
+    createpvd(graphicsdir*"/sol") do pvd_file
+        for (t, vtk) in pvd
+            pvd_file[t] = vtk
         end
     end
 
