@@ -260,7 +260,7 @@ function generate_plot(;ns, τs,
                      eoc_eahs_inf=eoc_eahs_inf,
                     )
     println(data)
-    CSV.write("$dirname/$endfix.csv", delim=',')
+    CSV.write("$dirname/$endfix.csv", data, delim=',')
 
 end
 
@@ -279,8 +279,9 @@ function spatial_test(maindir)
     mkpath(dirname)
 
     ns = [2^3, 2^4, 2^5, 2^6, 2^7, 2^8]
-    # ns = [2^3, 2^4, 2^5, 2^6]
-    τ_spatial = 2^(-2)
+    τ_spatial = 2^(-4)
+    # ns = [2^3, 2^4, 2^5]
+    # τ_spatial = 2^(-1)
     for n in ns
         el2_L2, eh1_L2, eah_L2, el2_inf, eh1_inf, eah_inf = run_CH(n=n, τ_hat=τ_spatial, dirname=dirname)
         push!(el2s_L2, el2_L2)
@@ -295,7 +296,7 @@ function spatial_test(maindir)
     generate_plot(ns=ns,τs=τs_spatial,
                   el2s_L2=el2s_L2, eh1s_L2=eh1s_L2, eahs_L2=eahs_L2,
                   el2s_inf=el2s_inf, eh1s_inf=eh1s_inf, eahs_inf=eahs_inf,
-                  dirname=maindir, spatial=true)
+                  dirname=dirname, spatial=true)
 
 end
 
@@ -315,6 +316,8 @@ function transient_test(maindir)
 
     τs = [2^-1, 2^-2, 2^-3, 2^-4]
     n_trans = 2^8
+    # τs = [2^-1, 2^-2]
+    # n_trans = 2^4
     for τ_hat in τs
         el2_L2, eh1_L2, eah_L2, el2_inf, eh1_inf, eah_inf = run_CH(n=n_trans, τ_hat=τ_hat, dirname=dirname)
         push!(el2s_L2, el2_L2)
@@ -329,7 +332,43 @@ function transient_test(maindir)
     generate_plot(ns=ns_trans,τs=τs,
                   el2s_L2=el2s_L2, eh1s_L2=eh1s_L2, eahs_L2=eahs_L2,
                   el2s_inf=el2s_inf, eh1s_inf=eh1s_inf, eahs_inf=eahs_inf,
-                  dirname=maindir, transient=true)
+                  dirname=dirname, transient=true)
+
+end
+
+function diag_test(maindir)
+
+    el2s_L2 = Float64[]
+    eh1s_L2 = Float64[]
+    eahs_L2 = Float64[]
+    el2s_inf = Float64[]
+    eh1s_inf = Float64[]
+    eahs_inf = Float64[]
+
+    # Spatial EOC
+    println("Run diag EOC tests")
+    dirname = maindir*"/conv_diag"
+    mkpath(dirname)
+    τs = [2^-1, 2^-2, 2^-3, 2^-4, 2^-5]
+    ns = [2^3, 2^4, 2^5, 2^6, 2^7]
+
+    # τs = [2^-1, 2^-2]
+    # ns = [2^3, 2^4]
+    for i in 1:length(τs)
+        n, τ_hat = ns[i], τs[i]
+        el2_L2, eh1_L2, eah_L2, el2_inf, eh1_inf, eah_inf = run_CH(n=n, τ_hat=τ_hat, dirname=dirname)
+        push!(el2s_L2, el2_L2)
+        push!(eh1s_L2, eh1_L2)
+        push!(eahs_L2, eah_L2)
+        push!(el2s_inf, el2_inf)
+        push!(eh1s_inf, eh1_inf)
+        push!(eahs_inf, eah_inf)
+    end
+
+    generate_plot(ns=ns,τs=τs,
+                  el2s_L2=el2s_L2, eh1s_L2=eh1s_L2, eahs_L2=eahs_L2,
+                  el2s_inf=el2s_inf, eh1s_inf=eh1s_inf, eahs_inf=eahs_inf,
+                  dirname=dirname, transient=true, spatial=true)
 
 end
 
@@ -342,6 +381,7 @@ function main()
     end
     spatial_test(maindir)
     transient_test(maindir)
+    diag_test(maindir)
 
 end
 
