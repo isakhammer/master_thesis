@@ -107,30 +107,23 @@ function main(;domain="flower")
         return ( n.plus⋅ ∇∇(u).plus⋅ n.plus - n.minus ⋅ ∇∇(u).minus ⋅ n.minus )
     end
 
-    # M+ dt A
-
     a_CIP(u,v) = ∫(u*v)*dΩ + τ*ε^2*( ∫(Δ(v)⊙Δ(u))dΩ
                                     + ∫(-mean(Δ(v))⊙jump(∇(u)⋅n_Λ) - mean(Δ(u))⊙jump(∇(v)⋅n_Λ) + (γ/h)⋅jump(∇(u)⋅n_Λ)⊙jump(∇(v)⋅n_Λ))dΛ
                                     + ∫(-Δ(v)⊙∇(u)⋅n_Γ - Δ(u)⊙∇(v)⋅n_Γ + (γ/h)⋅ ∇(u)⊙n_Γ⋅∇(v)⊙n_Γ )dΓ
                                    )
 
-
     g(u,v) = h^(-2)*( ∫( (γg1*h)*jump(n_Fg⋅∇(u))*jump(n_Fg⋅∇(v)) ) * dFg +
                      ∫( (γg2*h^3)*jump_nn(u,n_Fg)*jump_nn(v,n_Fg) ) * dFg)
 
-    a(u,v) = a_CIP(u,v) + g(u,v)
+    lhs(u,v) = a_CIP(u,v) + g(u,v)
 
     # l(u, v) = ∫(τ*f*v + u*v)*dΩ
-    l(u, v) =  ∫(u*v)*dΩ + τ * (
+    rhs(u, v) =  ∫(u*v)*dΩ + τ * (
                                 ∫(ψ(u)*Δ(v))*dΩ
                                 - ∫(ψ(mean(u))*jump(∇(v)⋅n_Λ))*dΛ
                                 - ∫(ψ(u)*∇(v)⋅n_Γ )*dΓ
                                )
-    l(u) = v -> l(u,v)
-
-    e_L1_ts = Float64[]
-    Es = Float64[]
-    ts = Float64[]
+    rhs(u) = v -> rhs(u,v)
 
     ## time loop
     t0 = 0.0
@@ -138,7 +131,6 @@ function main(;domain="flower")
     Nt_max = convert(Int64, ceil((T - t0)/τ))
     Nt = 0
     t = t0
-
 
     # Maximal number of Picard iterations
     kmax = 1
@@ -153,6 +145,9 @@ function main(;domain="flower")
     pvd[t] = createvtk(Ω, graphicsdir*"/sol_$t"*".vtu",cellfields=["uh"=>uh, "u_ex"=>u_ex(t)])
 
     # Adding initial plotting values
+    e_L1_ts = Float64[]
+    Es = Float64[]
+    ts = Float64[]
     push!(ts, t)
     E = sum( ∫(( ∇(uh)⋅∇(uh) ) + (1/4)*((uh*uh - 1)*(uh*uh - 1))  )dΩ)
     e_L1 = sum( ∫( (u0 - uh ) )dΩ)
@@ -164,7 +159,7 @@ function main(;domain="flower")
     println("========================================")
 
     ## Set up linear algebra system
-    A = assemble_matrix(a, U, V)
+    A = assemble_matrix(lhs, U, V)
     lu = LUSolver()
     cache = nothing
 
@@ -178,7 +173,7 @@ function main(;domain="flower")
         while k < kmax
             k += 1
             println("Iteration k = $k")
-            b = assemble_vector(l(uh), V)
+            b = assemble_vector(rhs(uh), V)
             op = AffineOperator(A, b)
             cache = solve!(u_dof_vals, lu, op, cache, isnothing(cache))
             uh = FEFunction(U, u_dof_vals)
@@ -210,8 +205,8 @@ function main(;domain="flower")
     p1 = plot(ts, e_L1_ts, label = L"$ \| u_h(x,t)- u(0,x)\|_{L^1(\Omega)} /\|u(x,0)\|_{L^1(\Omega)}$", xlabel="t")
     p2 = plot(ts[2:end], Es[2:end], xscale=:log10, yscale=:log10, label = L"$E(u)$", xlabel="t")
     plot!(p1, p2, layout = (1,2))
-    savefig(p1,maindir*"/energy.png" )
-    savefig(p2,maindir*"/mass_cons.png" )
+    savefig(p1,maindir*"/mass_cons.png" )
+    savefig(p2,maindir*"/energy.png" )
 
     parameters = Dict(
         "domain" => domain,
