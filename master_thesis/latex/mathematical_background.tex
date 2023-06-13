@@ -45,6 +45,14 @@ where the seminorm is defined such that, $ \left\lvert u \right\rvert _{H^{k}( \
 $
 We will often denote the shorthand notation $ \| u \|_{ k, \Omega  }^{  } = \| u \|_{ H^{k}( \Omega)  }^{  } $ and $ \abs{ u }_{ k, \Omega  }^{  }  = \abs{ u }_{ H^{k}( \Omega)  }^{  }$.
 
+Given the context of Sobolev spaces, we consider the elements $u, v \in H^{1}( \Omega )$. We can denote Greens theorem, which links integrals over a volume and its boundary, as follows,
+\[
+( \Delta u, v) _{\Omega } = -( \nabla u, \nabla v)_{\Omega } + ( u, \partial _{n}v)_{\Gamma }
+\]
+This identity serves as an essential tool for the calculations done in this thesis, and thus, will be taken for granted.
+
+
+
 \subsection{Computational Domains}%
 \label{sub:computational_domain}
 Assume that $\Omega \subset \mathbb{R} ^{d} $ is a compact set with a boundary  $\Gamma $. In standard FEM methods a key assumption is that the set $\Omega $ is a polyhedra. This is useful since a polyhedra can be fully covered by a collection of polyhedra and, hence, motivating us to define a fitted mesh.
