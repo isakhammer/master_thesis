@@ -161,15 +161,15 @@ function main(;domain="flower")
     cache = nothing
 
     # Time loop
+    println("----------------------------------------")
+    println("Solving Cahn-Hilliard for step $(Nt_max), n = $n, τ = $τ")
     while t < T
         Nt += 1
         t += τ
-        println("----------------------------------------")
-        println("Solving Cahn-Hilliard for t = $t, step $(Nt)/$(Nt_max)")
         k = 0
+        println("$(Nt)/$(Nt_max)")
         while k < kmax
             k += 1
-            println("Iteration k = $k")
             b = assemble_vector(rhs(uh), V)
             op = AffineOperator(A, b)
             cache = solve!(u_dof_vals, lu, op, cache, isnothing(cache))
@@ -182,8 +182,6 @@ function main(;domain="flower")
         e_L1 = sum( ∫( (u0 - uh ) )dΩ)
         push!(Es, E)
         push!( e_L1_ts, e_L1/u0_L1)
-
-        println("----------------------------------------")
         pvd[t] = createvtk(Ω, graphicsdir*"/sol_$t"*".vtu",cellfields=["uh"=>uh, "u_ex"=>u_ex(t)])
     end
 
