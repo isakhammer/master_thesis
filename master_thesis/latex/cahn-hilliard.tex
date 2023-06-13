@@ -91,7 +91,7 @@ We will now find seek to find a bilinear form of the nonlinear term,
     Let $u \in H^4( \Omega ) $ be solution to \eqref{eq:ch_gen} and $v \in V_{h}$ the test function.
 Then can we rewrite the nonlinear term into the corresponding semi-linear form $c_{h}:V_{h} \times  V_{h} \to \mathbb{R} $  for the nonlinear term $( -\Delta f( u) , v)_{\Omega }$ into two equivalent formulations.
 \begin{enumerate}[label=\arabic*)]
-    \item  $c^{}_{h} ( u,v)  = ( f' ( u) \nabla u, v )  - ( f'( u)  g_{1}   ,  v)_{\Gamma }$
+    \item  $c^{}_{h} ( u,v)  = ( f' ( u) \nabla u, v )_{\Omega }  - ( f'( u)  g_{1}   ,  v)_{\Gamma }$
     \item
         $c^{}_{h} ( u,v)  = -( f( u), \Delta v )_{\Omega }+  ( f( u) , \jump{ \partial _{n}v }  )_{\mathcal{F} _{h}^{int}} + ( f(u), \partial _{n} v)_{\Gamma  }  - ( f'( u)  g_{1}   ,  v)_{\Gamma }$
 \end{enumerate}
@@ -159,6 +159,13 @@ s.t. that the following relation ship holds.
 \[
     ( \partial _{t}u, v)_\Omega + \varepsilon  a_{h}( u,v) + \frac{1}{\varepsilon }c_{h}( u,v)   =  l_{h}(v)
 \]
+
+\subsection{Constructing the Unfitted CIP version}%
+\label{sub:constructing_the_unfitted_cip_version}
+
+Now, assume that $\Omega $ is a domain with $\Gamma $ in $C^2$. It is clear that the unfitted variant is in the following form.
+
+
 
 
 \subsection{Development of an Implicit-Explicit Scheme}
