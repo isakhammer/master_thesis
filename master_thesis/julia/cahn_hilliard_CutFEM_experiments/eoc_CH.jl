@@ -10,14 +10,14 @@ using LaTeXStrings
 using Latexify
 using PrettyTables
 
-function run_CH(;domain="circle", n=2^6, dirname)
+function run_CH(;domain="circle", n=2^6, τ_hat, dirname)
 
     ## Cahn-hilliard
     ε = 1/30
     # ε = 1
     # Gibb's potential
     f(u) = mean(u)*(1 - mean(u)*mean(u))
-    u_ex(x, t::Real) = (x[1]*x[1] + x[2]*x[2] - 1 )^2*cos(x[1])*cos(x[2])*exp(-(4*ε^2 + 2)*t)
+    u_ex(x, t::Real) = (x[1]*x[1] + x[2]*x[2] - 1 )^4*cos(x[1])*cos(x[2])*cos(t*ε^2)
     u_ex(t) = x -> u_ex(x, t)
     g_0(t) = x -> ( ∂t(u_ex)(x,t) +ε*Δ(Δ(u_ex(t)))(x)
                    # - ( 3/ε )*(2*∇(u_ex(t))(x)⋅∇(u_ex(t))(x) + u_ex(t)(x)*u_ex(t)(x)*Δ(u_ex(t))(x)  )
@@ -26,9 +26,9 @@ function run_CH(;domain="circle", n=2^6, dirname)
     L=2.70
     # n = 2^6
     h = 2*L/n
-    it = 10
+    # it = 10
     γ = 20
-    τ = ε^2/30
+    τ = τ_hat*( ε^2/10 )
     T = ε^2
     it = T/τ
     γg1 = 10
@@ -67,9 +67,9 @@ function run_CH(;domain="circle", n=2^6, dirname)
     Ω_act = Triangulation(cutgeo, ACTIVE)
     Ω = Triangulation(cutgeo, PHYSICAL)
     Ω_bg = Triangulation(bgmodel)
-    writevtk(Ω_bg,   graphicsdir*"/Omega_bg")
-    writevtk(Ω,         graphicsdir*"/Omega")
-    writevtk(Ω_act,     graphicsdir*"/Omega_act")
+    writevtk(Ω_bg,   graphicsdir*"/Omega_bg_$n")
+    writevtk(Ω,         graphicsdir*"/Omega_$n")
+    writevtk(Ω_act,     graphicsdir*"/Omega_act_$n")
 
     ## Function spaces
     order = 2
@@ -115,12 +115,11 @@ function run_CH(;domain="circle", n=2^6, dirname)
 
     c_h(u,v) = ( ∫(f(u)*Δ(v))*dΩ - ∫(f(mean(u))*jump(∇(v)⋅n_Λ))*dΛ - ∫(f(u)*∇(v)⋅n_Γ )*dΓ)
     l_h(v, t ) = ∫(g_0(t)*v)*dΩ
-    rhs(u, v, t) =  ∫(u*v)*dΩ + τ*l_h(v,t) #+ ( τ/ε) *c_h(u,v)
+    rhs(u, v, t) =  ∫(u*v)*dΩ + τ*l_h(v,t)# + ( τ/ε) *c_h(u,v)
     rhs(u, t ) = v -> rhs(u,v,t)
 
     ## time loop
     t0 = 0.0
-    T = it*τ
     Nt_max = convert(Int64, ceil((T - t0)/τ))
     Nt = 0
     t = t0
@@ -135,16 +134,13 @@ function run_CH(;domain="circle", n=2^6, dirname)
     # uh = FEFunction(U, u_dof_vals)
     # u0_L1 = sum( ∫(u0)dΩ )
     pvd = Dict()
-    pvd[t] = createvtk(Ω, graphicsdir*"/sol-tau-$τ-n-$n-$t"*".vtu",cellfields=["uh"=>uh, "u_ex"=>u_ex(t)])
+    pvd[t] = createvtk(Ω, graphicsdir*"/sol-tau-$τ_hat-n-$n-$t"*".vtu",cellfields=["uh"=>uh, "u_ex"=>u_ex(t)])
 
     # Adding initial plotting values
     el2_ts = Float64[]
     eh1_ts = Float64[]
+    eah_ts = Float64[]
     ts = Float64[]
-
-    println("========================================")
-    println("Solving Cahn-Hilliard with t0 = $t0, T = $T and time step τ = $τ with Nt_max = $Nt_max timesteps")
-    println("========================================")
 
     ## Set up linear algebra system
     A = assemble_matrix(lhs, U, V)
@@ -152,15 +148,19 @@ function run_CH(;domain="circle", n=2^6, dirname)
     cache = nothing
 
     # Time loop
+    println("Solving Cahn-Hilliard for step $(Nt_max), n = $n, τ_hat = $τ_hat")
     while t < T
         Nt += 1
         t += τ
-        println("----------------------------------------")
-        println("Solving Cahn-Hilliard for t = $t, step $(Nt)/$(Nt_max)")
+        # println("----------------------------------------")
         k = 0
+
+        if Nt % 25 == 0
+            println("$(Nt)/$(Nt_max)")
+        end
+
         while k < kmax
             k += 1
-            println("Iteration k = $k")
             b = assemble_vector(rhs(uh, t), V)
             op = AffineOperator(A, b)
             cache = solve!(u_dof_vals, lu, op, cache, isnothing(cache))
@@ -168,20 +168,21 @@ function run_CH(;domain="circle", n=2^6, dirname)
         end
 
         # Adding initial plotting values
-        println("----------------------------------------")
-        pvd[t] = createvtk(Ω, graphicsdir*"/sol-tau-$τ-n-$n-$t"*".vtu",cellfields=["uh"=>uh, "u_ex"=>u_ex(t)])
+        # println("----------------------------------------")
+        pvd[t] = createvtk(Ω, graphicsdir*"/sol-tau-$τ_hat-n-$n-$t"*".vtu",cellfields=["uh"=>uh, "u_ex"=>u_ex(t)])
 
         e = u_ex(t) - uh
         el2_t = sqrt(sum( ∫(e*e)dΩ ))
         eh1_t = sqrt(sum( ∫( e*e + ∇(e)⋅∇(e) )*dΩ ))
-        println("el2_t $el2_t, eh1_t, $eh1_t ")
+        eah_t = sqrt(sum( ∫( Δ(e)⋅Δ(e) )*dΩ ))
         push!( ts, t)
         push!( el2_ts, el2_t )
         push!( eh1_ts, eh1_t )
+        push!( eah_ts, eah_t )
     end
 
     # Construct pvd file
-    createpvd(graphicsdir*"/sol") do pvd_file
+    createpvd(graphicsdir*"/sol-tau-$τ_hat-n-$n") do pvd_file
         for (t, vtk) in pvd
             pvd_file[t] = vtk
         end
@@ -190,113 +191,201 @@ function run_CH(;domain="circle", n=2^6, dirname)
     parameters = Dict(
         "domain" => domain,
         "gamma" => γ,
+        "epsilon" => ε,
         "gamma1" => γg1,
         "gamma2" => γg2,
         "epsilon" => ε,
-        "tau" => "epsilon^2/10",
-        "L"=>2.70,
-        "n"=> 2^7,
+        "tau_hat" => τ_hat,
+        "L"=>L,
+        "n"=> n,
         "it"=> it
     )
 
-    YAML.write_file(dirname*"/parameters.yml", parameters)
+    YAML.write_file(dirname*"/sol-tau-$τ_hat-n-$n.yml", parameters)
 
-    el2s_L2 = sqrt(sum(τ* e_ti^2 for e_ti in el2_ts))
-    eh1s_L2 = sqrt(sum(τ* e_ti^2 for e_ti in eh1_ts))
-    el2s_inf = maximum(abs.(el2_ts))
-    eh1s_inf = maximum(abs.(eh1_ts))
-    return el2s_L2, eh1s_L2, el2s_inf, eh1s_inf
+    el2_L2 = sqrt(sum(τ* e_ti^2 for e_ti in el2_ts))
+    eh1_L2 = sqrt(sum(τ* e_ti^2 for e_ti in eh1_ts))
+    eah_L2 = sqrt(sum(τ* e_ti^2 for e_ti in eah_ts))
+    el2_inf = maximum(abs.(el2_ts))
+    eh1_inf = maximum(abs.(eh1_ts))
+    eah_inf = maximum(abs.(eah_ts))
+    return el2_L2, eh1_L2, eah_L2, el2_inf, eah_L2, eah_inf
 
 end
 
-function generate_plot(Xs,
-        el2s_L2, eh1s_L2,
-        el2s_inf, eh1s_inf,
-        dirname::String, Xs_name::String)
+function generate_plot(;ns, τs,
+        el2s_L2, eh1s_L2, eahs_L2,
+        el2s_inf, eh1s_inf, eahs_inf,
+        dirname::String, spatial=false, transient=false)
 
-    # L2 norms
-    p = Plots.plot(Xs, el2s_L2, label="L2L2", legend=:bottomright, xscale=:log2, yscale=:log2, minorgrid=true)
-    Plots.scatter!(p, Xs, el2s_L2, primary=false)
-
-    Plots.plot!(p, Xs, eh1s_L2, label=L"L2H1")
-    Plots.scatter!(p, Xs, eh1s_L2, primary=false)
-
-    # inf norms
-    Plots.plot!(p, Xs, el2s_inf, label=L"infL2")
-    Plots.scatter!(p, Xs, el2s_inf, primary=false)
-
-    Plots.plot!(p, Xs, eh1s_inf, label=L"infH1")
-    Plots.scatter!(p, Xs, eh1s_inf, primary=false)
-
-    # Configs
-    Plots.xlabel!(p, "$Xs_name")
-    Plots.plot!(p, xscale=:log2, yscale=:log2, minorgrid=true)
-    Plots.plot!(p, legendfontsize=12)  # Adjust the value 12 to your desired font size
-
-    # Save the plot as a .png file using the GR backend
-    Plots.savefig(p, "$dirname/plot.png")
-
-    compute_eoc(Xs,  errs) = log.(errs[1:end-1]./errs[2:end])./( log.(Xs[1:end-1]./Xs[2:end]) )
-    eoc_l2s_L2 = compute_eoc(Xs, el2s_L2)
-    eoc_eh1s_L2 = compute_eoc(Xs, eh1s_L2)
-    eoc_l2s_inf = compute_eoc(Xs, el2s_inf)
-    eoc_eh1s_inf = compute_eoc(Xs, eh1s_inf)
-
-    eoc_l2s_L2 =  [nothing; eoc_l2s_L2]
-    eoc_eh1s_L2 =  [nothing; eoc_eh1s_L2]
-    eoc_l2s_inf =  [nothing; eoc_l2s_inf]
-    eoc_eh1s_inf =  [nothing; eoc_eh1s_inf]
-
-
-    Xs_str =  latexify.(Xs)
-    data = hcat(Xs_str,
-                el2s_L2,  eoc_l2s_L2, eh1s_L2, eoc_eh1s_L2,
-                el2s_inf,  eoc_l2s_inf, eh1s_inf, eoc_eh1s_inf)
-
-    formatters = (ft_nonothing, ft_printf("%.1E", [2, 4, 6, 8]), ft_printf("%.2f", [3, 5, 7, 9]))
-
-    header = [Xs_name,
-              "L2L2", "EOC", "L2H1", "EOC",
-              "infL2", "EOC", "infH1", "EOC"]
-
-    pretty_table(data, header=header, formatters =formatters )
-end
-
-function conv_test()
-
-    domain="circle"
-    maindir = "figures/eoc_CH_$domain"
-    if isdir(maindir)
-        rm(maindir; recursive=true)
-        mkpath(maindir)
+    function compute_eoc(Xs::Vector, errs::Vector)
+        eoc = log.(errs[1:end-1] ./ errs[2:end]) ./ log.(Xs[1:end-1] ./ Xs[2:end])
+        return [NaN; eoc]
     end
+
+    if spatial
+        endfix="spatial"
+        Xs = 1 ./ ns
+    elseif transient
+        endfix="transient"
+        Xs = τs
+    elseif spatial && transient
+        endfix="diagonal"
+        Xs = τs
+    end
+
+    eoc_el2s_L2 = compute_eoc(Xs, el2s_L2)
+    eoc_eh1s_L2 = compute_eoc(Xs, eh1s_L2)
+    eoc_eahs_L2 = compute_eoc(Xs, eahs_L2)
+    eoc_el2s_inf = compute_eoc(Xs, el2s_inf)
+    eoc_eh1s_inf = compute_eoc(Xs, eh1s_inf)
+    eoc_eahs_inf = compute_eoc(Xs, eahs_inf)
+
+    # Producing a CSV file
+    data = DataFrame( ns=ns, taus=τs,
+                     # L2 data
+                     el2s_L2=eoc_el2s_L2,
+                     eoc_el2s_L2=eoc_el2s_L2,
+                     el2s_inf=eoc_el2s_inf,
+                     eoc_el2s_inf=eoc_el2s_inf,
+                     # H1 data
+                     eh1s_L2=eh1s_L2,
+                     eoc_eh1s_L2=eoc_eh1s_L2,
+                     eh1s_inf=eh1s_inf,
+                     eoc_eh1s_inf=eoc_eh1s_inf,
+                     # Ah data
+                     eahs_L2=eahs_L2,
+                     eoc_eahs_L2=eoc_eahs_L2,
+                     eahs_inf=eahs_inf,
+                     eoc_eahs_inf=eoc_eahs_inf,
+                    )
+    println(data)
+    CSV.write("$dirname/$endfix.csv", data, delim=',')
+
+end
+
+function spatial_test(maindir)
 
     el2s_L2 = Float64[]
     eh1s_L2 = Float64[]
+    eahs_L2 = Float64[]
     el2s_inf = Float64[]
     eh1s_inf = Float64[]
+    eahs_inf = Float64[]
 
     # Spatial EOC
     println("Run spatial EOC tests")
     dirname = maindir*"/conv_spatial"
     mkpath(dirname)
 
-    ns = [2^3, 2^4, 2^5, 2^6]
+    ns = [2^3, 2^4, 2^5, 2^6, 2^7, 2^8]
+    τ_spatial = 2^(-4)
+    # ns = [2^3, 2^4, 2^5]
+    # τ_spatial = 2^(-1)
     for n in ns
-        el2_L2, eh1_L2, el2_inf, eh1_inf = run_CH(n=n, dirname=dirname)
+        el2_L2, eh1_L2, eah_L2, el2_inf, eh1_inf, eah_inf = run_CH(n=n, τ_hat=τ_spatial, dirname=dirname)
         push!(el2s_L2, el2_L2)
         push!(eh1s_L2, eh1_L2)
+        push!(eahs_L2, eah_L2)
         push!(el2s_inf, el2_inf)
         push!(eh1s_inf, eh1_inf)
+        push!(eahs_inf, eah_inf)
     end
 
-    hs = 1 .// ns
-    generate_plot(hs,
-                  el2s_L2, eh1s_L2,
-                  el2s_inf, eh1s_inf,
-                  dirname, "h")
+    τs_spatial = τ_spatial*ones(length(ns))
+    generate_plot(ns=ns,τs=τs_spatial,
+                  el2s_L2=el2s_L2, eh1s_L2=eh1s_L2, eahs_L2=eahs_L2,
+                  el2s_inf=el2s_inf, eh1s_inf=eh1s_inf, eahs_inf=eahs_inf,
+                  dirname=dirname, spatial=true)
 
 end
 
-conv_test()
+function transient_test(maindir)
+
+    el2s_L2 = Float64[]
+    eh1s_L2 = Float64[]
+    eahs_L2 = Float64[]
+    el2s_inf = Float64[]
+    eh1s_inf = Float64[]
+    eahs_inf = Float64[]
+
+    # Spatial EOC
+    println("Run transient EOC tests")
+    dirname = maindir*"/conv_transient"
+    mkpath(dirname)
+
+    τs = [2^-1, 2^-2, 2^-3, 2^-4]
+    n_trans = 2^8
+    # τs = [2^-1, 2^-2]
+    # n_trans = 2^4
+    for τ_hat in τs
+        el2_L2, eh1_L2, eah_L2, el2_inf, eh1_inf, eah_inf = run_CH(n=n_trans, τ_hat=τ_hat, dirname=dirname)
+        push!(el2s_L2, el2_L2)
+        push!(eh1s_L2, eh1_L2)
+        push!(eahs_L2, eah_L2)
+        push!(el2s_inf, el2_inf)
+        push!(eh1s_inf, eh1_inf)
+        push!(eahs_inf, eah_inf)
+    end
+
+    ns_trans = n_trans*ones(length(τs))
+    generate_plot(ns=ns_trans,τs=τs,
+                  el2s_L2=el2s_L2, eh1s_L2=eh1s_L2, eahs_L2=eahs_L2,
+                  el2s_inf=el2s_inf, eh1s_inf=eh1s_inf, eahs_inf=eahs_inf,
+                  dirname=dirname, transient=true)
+
+end
+
+function diag_test(maindir)
+
+    el2s_L2 = Float64[]
+    eh1s_L2 = Float64[]
+    eahs_L2 = Float64[]
+    el2s_inf = Float64[]
+    eh1s_inf = Float64[]
+    eahs_inf = Float64[]
+
+    # Spatial EOC
+    println("Run diag EOC tests")
+    dirname = maindir*"/conv_diag"
+    mkpath(dirname)
+    τs = [2^-1, 2^-2, 2^-3, 2^-4, 2^-5]
+    ns = [2^3, 2^4, 2^5, 2^6, 2^7]
+
+    # τs = [2^-1, 2^-2]
+    # ns = [2^3, 2^4]
+    for i in 1:length(τs)
+        n, τ_hat = ns[i], τs[i]
+        el2_L2, eh1_L2, eah_L2, el2_inf, eh1_inf, eah_inf = run_CH(n=n, τ_hat=τ_hat, dirname=dirname)
+        push!(el2s_L2, el2_L2)
+        push!(eh1s_L2, eh1_L2)
+        push!(eahs_L2, eah_L2)
+        push!(el2s_inf, el2_inf)
+        push!(eh1s_inf, eh1_inf)
+        push!(eahs_inf, eah_inf)
+    end
+
+    generate_plot(ns=ns,τs=τs,
+                  el2s_L2=el2s_L2, eh1s_L2=eh1s_L2, eahs_L2=eahs_L2,
+                  el2s_inf=el2s_inf, eh1s_inf=eh1s_inf, eahs_inf=eahs_inf,
+                  dirname=dirname, transient=true, spatial=true)
+
+end
+
+function main()
+    domain="circle"
+    maindir = "figures/eoc_CH_$domain"
+    if isdir(maindir)
+        rm(maindir; recursive=true)
+        mkpath(maindir)
+    end
+    spatial_test(maindir)
+    transient_test(maindir)
+    diag_test(maindir)
+
+end
+
+main()
+
+
 
