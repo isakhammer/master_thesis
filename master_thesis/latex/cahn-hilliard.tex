@@ -89,56 +89,59 @@ We will now find seek to find a bilinear form of the nonlinear term,
 
 \begin{lemma}[Semi-linear form]
     Let $u \in H^4( \Omega ) $ be solution to \eqref{eq:ch_gen} and $v \in V_{h}$ the test function.
-Then can we rewrite the nonlinear term into the semi-linear form, $( -\Delta f( u) , v)_{\Omega } = c_{h}(u,v )   $, where
-\[
-    c^{}_{h} ( u,v)  = -( f( u), \Delta v )_{\mathcal{T} _{h}}+  ( f( u) , \jump{ \partial _{n}v }  )_{\mathcal{F} _{h}^{int}} + ( f(u), \partial _{n} v)_{\mathcal{F}^{ext}_{h} }  + ( f'( u)  g_{1}   ,  v)_{\mathcal{F} _{h}^{ext}}
-\]
+Then can we rewrite the nonlinear term into the corresponding semi-linear form $c_{h}:V_{h} \times  V_{h} \to \mathbb{R} $  for the nonlinear term $( -\Delta f( u) , v)_{\Omega }$ into two equivalent formulations.
+\begin{enumerate}[label=\arabic*)]
+    \item  $c^{}_{h} ( u,v)  = ( f' ( u) \nabla u, v )  - ( f'( u)  g_{1}   ,  v)_{\Gamma }$
+    \item
+        $c^{}_{h} ( u,v)  = -( f( u), \Delta v )_{\Omega }+  ( f( u) , \jump{ \partial _{n}v }  )_{\mathcal{F} _{h}^{int}} + ( f(u), \partial _{n} v)_{\Gamma  }  - ( f'( u)  g_{1}   ,  v)_{\Gamma }$
+\end{enumerate}
 
 \end{lemma}
-\todo[inline]{ I am really sure the minus sign in front of $ \sum_{e \in \mathcal{E}^{I} }^{} \left<f' ( \mean{ u }  ) \mean{ \partial _{n} u }   , \jump{ v }    \right>_{e} $  in \cite[ Equation 4.2]{feng2007fully}  must be wrong. I also criticize
-\cite[ Remark 4.1d]{feng2007fully} which says that says that finding this weak form is not possible for conforming methods (I guess $C^{0}$ is a conforming method??). }
+\todo[inline]{ I criticize \cite[ Remark 4.1d]{feng2007fully} which says that says that finding this weak form is not possible for conforming methods (I guess $C^{0}$ is a conforming method??). }
 
 \begin{proof}
-  We can easily see by doing Greens theorem twice that \[
-    \begin{split}
--(\Delta f( u) , v)_{T } &= -(\nabla f( u), \nabla v  )_{T } + ( \partial _{n}  f( u), v )_{\partial T }.\\
-                    & = -( f( u), \Delta v )_{T} + (f( u), \partial _{n} v  )_{\partial T} + (   f'( u)\partial _{n}u, v )_{\partial T } .
-    \end{split}
-\]
-We have utilized the relationship $\partial _{n} f(u) = f' ( u) \partial _{n}u$.
- Summation of the triangles we get the following problem,
-\[
-\sum_{T \in  \mathcal{T} _{h} }^{} -(\Delta f( u) , v)_{T } = \sum_{T \in \mathcal{T} _{h}}^{}  -( f( u), \Delta v )_{T} + (f( u), \partial _{n} v  )_{\partial T} + (   f'( u)\partial _{n}u, v )_{\partial T }.
-\]
-It is apparent that rewriting the system to summation of the facets we conclude that, \[
-    \begin{split}
-\sum_{T \in \mathcal{T}_{h} }^{} ( f( u) , \partial _{n}v)_{\partial T} & =  \sum_{F \in \mathcal{F}_{h} }^{} \int_{F}^{}  \jump{    f( u) \partial _{n}v}   \\
-& = ( f(u), \partial _{n} v)_{\mathcal{F}^{ext}_{h} }  +  ( \jump{f( u)} , \mean{ \partial _{n}v }  )_{\mathcal{F} _{h}^{int}} + ( \mean{f( u)}
-, \jump{ \partial _{n}v }  )_{\mathcal{F}^{int}_{h} } \\
- & = ( f(u), \partial _{n} v)_{\mathcal{F}^{ext}_{h} } +   ( \mean{f( u)} , \jump{ \partial _{n}v }  )_{\mathcal{F}^{int}_{h} } \\
- & = ( f(u), \partial _{n} v)_{\mathcal{F}^{ext}_{h} } +  ( f( u) , \jump{ \partial _{n}v }  )_{\mathcal{F} _{h}^{int}}
-    \end{split}
-    .
-\]
-Here we used that $ \jump{ f( u)  } = 0  $ and $\mean{ f( u)  } = f( u)  $  since $u \in H^2( \Omega ) $. Also remark that $\jump{ \partial _{n}v } \neq 0   $ from $v \in V_{h}$. We can do similar procedure for the other term.
+
+    We will first show the first formulation, and then the second. The equivalence follows in a weak sense for $u \in H^{4}( \Omega ) $  when this is shown.
+    \begin{enumerate}[label=\arabic*)]
+        \item We want to construct the first formulation. Let $T$ be an element in $\mathcal{T}_{h}$. From Greens theorem is it easy to see that
+            \begin{equation}
+            \label{eq:1_gr}
+-(\Delta f( u) , v)_{T } = (\nabla f( u), \nabla v  )_{T } - ( \partial _{n}  f( u), v )_{\partial T }
+            \end{equation}
+            First by utilizing that $\nabla f( u) = f' ( u) \nabla u $ and $\partial _{n}f( u)  = f' ( u)  \partial _{n}u$  and doing a summation over the triangles  is it clear that \[
+            ( -\Delta f( u),v )_{\Omega  } =(f' ( u) \nabla u, \nabla v  )_{\Omega  } - (   f' ( u)\partial _{n}u, v )_{\partial \mathcal{T}_{h}  }
+            \]
+            Iterating over the facets is it clear that \[
+                \begin{split}
+            (   f' ( u)\partial _{n}u, v )_{\partial \mathcal{T}_{h}  } & = \sum_{F \in \mathcal{F}_{h}  }^{} \int_{F}^{}   \jump{ f' ( u)\partial _{n}u, v } \\
+                                                                        & =  ( \jump{ f' ( u) \partial _{n}u },  \mean{v}    )_{\mathcal{F}^{int}_{h} } + ( \mean{ f' ( u) \partial _{n}u }, \jump{ v }    )_{\mathcal{F}^{int}_{h} } +  ( f' ( u) \partial _{n}u, v) _{\Gamma } \\
+                                                                        & =  ( f' ( u) \partial _{n}u, v) _{\Gamma }
+                \end{split}
+            \]
+            The jump terms vanishes by the regularity of $u$ and $v$. Hence, by inserting $g_{1}$ we have shown that the first formulation holds.
+        \item  Doing a new iteration of Greens thorem on \eqref{eq:1_gr} we get the following terms.
 \[
     \begin{split}
-        \sum_{T \in \mathcal{T} _{h}}^{} (   f'( u)\partial _{n}u, v )_{\partial T } &=  \sum_{F \in \mathcal{F}_{h} }^{} \int_{F}^{}  \jump{( f'( u)\partial _{n}u  ) v } \\
-& = (\mean{ f'( u)\partial _{n}u }  , \jump{ v }   )_{\mathcal{F}^{ext}_{h} } + (\mean{ f'( u)\partial _{n}u }  , \jump{ v }   )_{\mathcal{F}^{int}_{h} } +  (\jump{ f'( u)\partial _{n}u }  , \mean{ v }   )_{\mathcal{F}^{int}_{h} } \\
-                                                                             & =  ( f'( u)  \partial _{n}u   ,  v
-                                                                             )_{\mathcal{F} _{h}^{ext}} = ( f'( u)  g_{1}   ,  v
-                                                                             )_{\mathcal{F} ^{ext}_{h} }
+-(\Delta f( u) , v)_{T }  = -( f( u), \Delta v )_{T} + (f( u), \partial _{n} v  )_{\partial T} - (   f'( u)\partial _{n}u, v )_{\partial T } .
     \end{split}
 \]
-Again, here a similar identities $\jump{  f' ( u) \partial _{n} u} = 0  $ since $u \in H^2( \Omega ) $. Ultimately, from the continuity of $v$ is the jump term eliminated, $ \jump{v} = 0 $. Summarizing the proof we have the following lines.
-\[
+Now, by doing a summation of all triangles it is clear that this holds.
+\begin{equation}
+\label{eq:f_g2}
+-(\Delta f( u) , v)_{\Omega  }  = -( f( u), \Delta v )_{\Omega } + (f( u), \partial _{n} v  )_{\partial \mathcal{T}_{h} } - (   f'( u)\partial _{n}u, v )_{\partial \mathcal{T}_{h}  }
+\end{equation}
+It comes evident from the first step of the proof that $ (   f'( u)\partial _{n}u, v )_{\partial \mathcal{T}_{h}  } = (   f'( u)\partial _{n}u, v )_{\Gamma }$, hence, we only need to compute the term $(f( u), \partial _{n} v  )_{\partial
+\mathcal{T}_{h} }$ on the facets. \[
     \begin{split}
--(\Delta f( u) , v)_{ \mathcal{T}_{h}  } &= -(\nabla f( u), \nabla v  )_{ \mathcal{T}_{h}  } + ( \partial _{n}  f( u), v )_{\partial \mathcal{T}_{h}  }.\\
-                    & = -( f( u), \Delta v )_{\mathcal{T} _{h}} + (f( u), \partial _{n} v  )_{\partial \mathcal{T} _{h}} + (   f'( u)\partial _{n}u, v )_{\partial \mathcal{T} _{h} } \\
-&= -( f( u), \Delta v )_{\mathcal{T} _{h}} +  ( f( u) , \jump{ \partial _{n}v }  )_{\mathcal{F} _{h}^{int}} + ( f(u), \partial _{n} v)_{\mathcal{F}^{ext}_{h} }  + ( f'( u)  g_{1}   ,  v)_{\mathcal{F} _{h}^{ext}}
+(f( u), \partial _{n} v  )_{\partial
+\mathcal{T}_{h} } & = \sum_{F\in \mathcal{F} _{h}}^{} \int_{F}^{}\jump{ f( u), \partial _{n} v  } \\
+& =  (\jump{ f( u)  }  , \mean{ \partial _{n} v }    )_{ \mathcal{F}_{h}^{int} } +(\mean{ f( u)  }  , \jump{ \partial _{n} v }    )_{ \mathcal{F}_{h}^{int} } + (f( u), \partial _{n} v  )_{\Gamma } \\
+&=  (\mean{ f( u)  }  , \jump{ \partial _{n} v }    )_{ \mathcal{F}_{h}^{int} } + (f( u), \partial _{n} v  )_{\Gamma }
     \end{split}
-.
 \]
+Again one of the jump terms vanishes because of the regularity of $u$.
+Inserting the result into \eqref{eq:f_g2} have we shown that the second formulation also holds.
+    \end{enumerate}
 \end{proof}
 
 Hence, we have a scheme for nonlinear spatial discretization. Let $u \in \left[ 0,T \right] \times V_{h}  $ and $v \in V_{h}$. We define the following CIP discretization
