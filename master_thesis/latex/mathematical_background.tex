@@ -2,14 +2,16 @@
 \section{Mathematical Background}%
 \label{sec:mathematical_background}
 
+\todo[inline]{ Write short intro }
+
 \subsection{Notation}%
 \label{sub:notation}
 
-We will in this report assume $\Omega $ to be a compact and open set in $\mathbb{R} ^{d}$. Let $p \in \mathbb{R} $, $ 1 \le  p \le  \infty$. We define the space $L^{p}\left( \Omega  \right) $ to be the set of all measurable functions $f: \Omega  \mapsto \mathbb{R} $ such that
-$\left\lvert f \right\rvert ^{p}$ is Lebesgue measurable, i.e,
+We will in this report assume $\Omega $ to be a compact and open set in $\mathbb{R} ^{d}$. Let $p \in \mathbb{R} $, $ 1 \le  p \le  \infty$, and  define the space $L^{p}\left( \Omega  \right) $ to be the set of all measurable functions $u: \Omega  \mapsto \mathbb{R} $ such that
+$\left\lvert f \right\rvert ^{p}$ is Lebesgue integrable, i.e,
 
 \begin{equation*}
-    L^{p}\left( \Omega  \right) = \left\{ f: \Omega \mapsto \mathbb{R}  \mid \int_{\Omega }^{} \left\lvert f \right\rvert ^{p} d \Omega  < \infty  \right\}
+    L^{p}\left( \Omega  \right) = \left\{ u: \Omega \mapsto \mathbb{R}  \mid \int_{\Omega }^{} \left\lvert u \right\rvert ^{p} d \Omega  < \infty  \right\}
 .\end{equation*}
 Let $u \in L^{p}\left( \Omega  \right) $. We define the integral norm of order $p$ to be \[
 \| u \|_{ L^{p}\left( \Omega  \right)  }^{  }  = \left( \int_{\Omega }^{} \left\lvert u \right\rvert ^{p} dx  \right) ^{\frac{1}{p}}.
