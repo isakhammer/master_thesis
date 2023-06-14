@@ -226,10 +226,9 @@ Summation over the intersected triangles $\mathcal{T} _{\Gamma }$ implies,
         \sum_{j=0}^{k} h^{2j+1} ( \jump{   D^2 \partial ^{j}_{n}  v }, \jump{  D^2 \partial ^{j}_{n}  v}    )_{\mathcal{F}_{h}^{g}} \lesssim  \sum_{j=0}^{k} h^{2j-3} ( \jump{    \partial ^{j}_{n}  v }, \jump{  \partial ^{j}_{n}  v}
         )_{\mathcal{F}_{h}^{g}}.
         \]
-        Let us denote the tangential operator $P_{F} := I - n_{} \oplus n_{} $, where $n_{}\oplus n_{}$ is an outer product of the normals on a facet $F$. We apply this so we can to decompose the Hessian evaluated on the facet  s.t. \[
-        D^2 v  \mid _{F} = ( \partial _{n_{}n_{}}v)n_{} + P_{F} D^2 v .
+        Recall the decomposition procedure done in \eqref{eq:projection} for a facet $F$ , where $P_{F} := I - n_{} \oplus n_{} $ and $Q_{F} = n_{} \oplus n_{}$. We apply this so we can to decompose the Hessian evaluated on the facet  s.t. \[
+        D^2 v  \mid _{F} = Q_{F}D^2v + P_{F} D^2 v .
         \]
-        \todo[inline]{ Need to find a better version for $ (\partial _{n_{}n_{}}v)n_{}$  }
         Recall from basic finite element theory that $\| D^2v \|_{F  }^{ 2 }\le h^{-2} \| \nabla v \|_{ F }^{ 2 } \le h^{-4} \| v \|_{ F }^{2  }    $.
         That is, applying the decomposition we get the following estimates \[
         \| \jump{ P_{F}   D^2 \partial _{n}^{j} v }\|_{ F }^{ 2 } = \| P_{F} D^2 \jump{ \partial _{n}^{j} v }   \|_{ F  }^{ 2} \lesssim h^{-4} \|  \jump{ \partial ^{j}_{n} v }   \|_{ F }^{  2}.
