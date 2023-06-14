@@ -66,11 +66,15 @@ The mesh size is defined as the maximum diameter $h := h_{max} $ of any polyhedr
 $h _{T}  = \mathrm{diam}\left( T \right)   = \mathrm{max}_{x_1, x_{2} \in T} \ \mathrm{ dist }(x_{1}, x_{2})$
 Hence, motivating us to use the notation $\mathcal{T} _{h}$ for a mesh $\mathcal{T} $ with size $h$.
 
- A mesh is conform if $T_{1} \neq T_{2 }$  then $T_{1} \cap T_{2} \neq \emptyset  $ for all $T_{1}, T_{2} \in \mathcal{T}_{h}$. This means that each $T$ share either a vertex or a facet.
+For simplicity will we restrict ourself to simplicial and quadrilateral elements.
+A mesh $\mathcal{T}_{h}$ in $ \mathbb{R} ^{d}$ is said to be matching if
+for all neighbouring elements $T_{1}, T_{2} \in \mathcal{T} _{h}$ such that the intersection $T_{1} \cap T_{2} $ is a manifold of dimensions $( d-1)$, then $T_{1} \cap T_{2} $ a entire facet of both $T_{1}$ and $T_{2}$.
+
 Let the chunkiness parameter $c_{T} := h_{T}/r_{T}$, where $r_{T}$  is the largest ball that be inscribed inside a element $T \in \mathcal{T}_{h} $.
 A mesh is said to be shape regular if $c_{T}\le  c$ is independent of $T$  and $h$. We also say that the mesh is quasi-uniform only if it is shape regular and $h_{\mathrm{ max }} \le  c h_{\mathrm{ min }}$.
+For a more complete description of meshes, see \cite[Chapter 8]{ErnGuermond2021}.
 
-In this report will we assume that a mesh $\mathcal{T}_{h} $ is conform, shape regular and quasi-uniform unless specified.
+In this thesis will we assume that a mesh $\mathcal{T}_{h} $ is matching, shape regular and quasi-uniform unless specified.
  The fact that the mesh is conform makes is a useful property since the interface between mesh elements has come into contact in the sense
 that it is either a vertex or a facet. This with the combination of shape regularity and quasi-uniformity has been a major key to prove important inequalities in broken Sobolev spaces \cite[Chapter 1.4.1]{pietro2012}. Hence, the assumptions are very handy when proving convergence.
 
