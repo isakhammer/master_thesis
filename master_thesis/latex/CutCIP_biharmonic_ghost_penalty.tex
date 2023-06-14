@@ -233,13 +233,16 @@ Summation over the intersected triangles $\mathcal{T} _{\Gamma }$ implies,
         That is, applying the decomposition we get the following estimates \[
             \begin{split}
         \| \jump{ P_{F}   D^2 \partial _{n}^{j} v }\|_{ F }^{ 2 } & = \| P_{F} D^2 \jump{ \partial _{n}^{j} v }   \|_{ F  }^{ 2} = \| (I- n\otimes n) D^2 \jump{ \partial _{n}^{j} v }   \|_{ F  }^{ 2}    \\
-        & \lesssim  \|  D^2 \jump{ \partial _{n}^{j} v }   \|_{ F  }^{ 2} \lesssim h^{-4} \|  \jump{ \partial ^{j}_{n} v }   \|_{ F }^{  2}.
+        & \lesssim  \|  (I- n\otimes n) \|_{l^{\infty} }^{  } \| D^2 \jump{ \partial _{n}^{j} v }   \|_{ F  }^{ 2} \lesssim   \|  D^2 \jump{ \partial _{n}^{j} v }   \|_{ F  }^{ 2} \lesssim h^{-4} \|  \jump{ \partial ^{j}_{n} v }   \|_{ F }^{  2}. \\
+        \| \jump{ Q_{F}   D^2 \partial _{n}^{j} v }\|_{ F }^{ 2 } & = \| Q_{F} D^2 \jump{ \partial _{n}^{j} v }   \|_{ F  }^{ 2} = \| n\otimes n D^2 \jump{ \partial _{n}^{j} v }   \|_{ F  }^{ 2}    \\
+        & \lesssim  \| n \otimes n \|_{l^{\infty} }^{  }  \|  D^2 \jump{ \partial _{n}^{j} v }   \|_{ F  }^{ 2} \lesssim h^{-4} \|  \jump{ \partial ^{j}_{n} v }   \|_{ F }^{  2}.
             \end{split}
         \]
+        Here is $\| \cdot  \|_{l^{\infty}  }^{  } $ denoted as the discrete matrix inf-norm.
         Thus, using this on the decomposition can we admit that
          \[
              \begin{split}
-            h^{2j +1} \| \jump{D^2 \partial ^{j}_{n}  v}  \|_{ F }^{2  } & \lesssim h^{2j +1} \|  \partial _{nn}  \jump{ \partial ^{j}_{n}  v }     n  \|_{ F }^{2  } + h^{2j +1} \| P_{F} D^2 \jump{ \partial ^{j}_{n}  v }       \|_{ F }^{2  } \\
+            h^{2j +1} \| \jump{D^2 \partial ^{j}_{n}  v}  \|_{ F }^{2  } & \lesssim h^{2j +1} \| Q_{F} \jump{ \partial ^{j}_{n}  v }  \|_{ F }^{2  } + h^{2j +1} \| P_{F} D^2 \jump{ \partial ^{j}_{n}  v }       \|_{ F }^{2  } \\
             & \lesssim  h^{2j +1 } \|  \jump{ \partial ^{j+2}_{n} v }      \|_{F  }^{ 2 } + h^{2j -3}  \| \jump{ \partial ^{j}_{n}v }   \|_{ F }^{ 2 }
              \end{split}
         \]
