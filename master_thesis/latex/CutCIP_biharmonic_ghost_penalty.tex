@@ -243,20 +243,23 @@ Summation over the intersected triangles $\mathcal{T} _{\Gamma }$ implies,
          \[
              \begin{split}
             h^{2j +1} \| \jump{D^2 \partial ^{j}_{n}  v}  \|_{ F }^{2  } & \lesssim h^{2j +1} \| Q_{F} \jump{ \partial ^{j}_{n}  v }  \|_{ F }^{2  } + h^{2j +1} \| P_{F} D^2 \jump{ \partial ^{j}_{n}  v }       \|_{ F }^{2  } \\
-            & \lesssim  h^{2j +1 } \|  \jump{ \partial ^{j+2}_{n} v }      \|_{F  }^{ 2 } + h^{2j -3}  \| \jump{ \partial ^{j}_{n}v }   \|_{ F }^{ 2 }
+            &  \lesssim   h^{2j -3}  \| \jump{ \partial ^{j}_{n}v }   \|_{ F }^{ 2 }
              \end{split}
         \]
-        \todo[inline]{ Check last argument! }
+        \red{Seems like the projection argument is not necessarry. You can simply prove it using direcetly the estimate $\| D^2v \|_{F  }^{ 2 }\le h^{-2} \| \nabla v \|_{ F }^{ 2 } \le h^{-4} \| v \|_{ F }^{2  }    $ s.t.
+        $$
+        \| D^2 \jump{ \partial _{n}^{j} v } \|_{F  }^{ 2 } \le h^{-4} \| \jump{ \partial _{n}^{j} v } \|_{ F }^{2  }
+    $$ }
 
         Thus, fulfilling \eqref{eq:bi_inv_gh_2}.
         \[
             \begin{split}
-         \sum_{j=0}^{k} h^{2j+1} ( \jump{   D^2 \partial ^{j}_{n}  v }, \jump{  D^2 \partial ^{j}_{n}  v}    )_{\mathcal{F}_{h}^{g}} = \sum_{j=0}^{k} h^{2j+1}  \|\jump{   D^2 \partial ^{j}_{n}  v }  \|_{\mathcal{F} _{h}^{g}  }^{2  }
+         \sum_{j=0}^{k} h^{2j+1} ( \jump{   D^2 \partial ^{j}_{n}  v }, \jump{  D^2 \partial ^{j}_{n}  v}    )_{\mathcal{F}_{h}^{g}} & \lesssim  \sum_{j=0}^{k} h^{2j-3}  (\jump{    \partial ^{j}_{n}  v }, \jump{ \partial ^{j}_{n}  v }  )_{\mathcal{F} _{h}^{g}  }^{2  }
             \end{split}
         \]
-        \todo[inline]{TODO: Finish this proof. }
 
     \end{enumerate}
+    Hence, the proof is complete.
 
 \end{proof}
 
