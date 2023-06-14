@@ -276,13 +276,21 @@ Finally, we now have the tools we need to construct an candidate for the ghost p
 \end{proposition}
 
 \begin{proof}
-    First of all, from it is clear that \[
+    First of all, from Lemma \ref{lemma:bi_inv_gh_lemma} is it clear that \(
+    \| D^2v \|_{ \mathcal{T} _{h} }^{  }  \lesssim \| D^2 v \|_{ \Omega   }^{  } + \abs{ v } _{g_{h}}.
+    \)
+    Thus, the Assumption \ref{as:EP1} holds and it only remains to check Assumption \ref{as:EP2}, that is, $ \abs{ C^{e}_{h} v }_{g_{h}} \lesssim h^{r-1} \| v \|_{r, \Omega   }^{  }$.
+    Let $v  \in H^{s}( \Omega ) $, $s\ge 3$,  and $r = \min\{s,k-1\} $
+    From definition is \[
         \begin{split}
-    % \| v \|_{ \mathcal{T} _{h} }^{  } & \lesssim \|  v \|_{ \Omega   }^{  } + \abs{ v } _{g_{h}} \\
-    \| D^2v \|_{ \mathcal{T} _{h} }^{  } & \lesssim \| D^2 v \|_{ \Omega   }^{  } + \abs{ v } _{g_{h}}
+        \abs{ C^{e}_{h} v }_{g_{h}}^{2} & = \sum_{j=1}^{k}  \gamma _{j} h^{2j-3} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n} v }  ) _{\mathcal{F}_{h}^{g} } \\
+& = \sum_{j=1}^{r-1}  \gamma _{j} h^{2j-3} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n} v }  ) _{\mathcal{F}_{h}^{g} } + \sum_{j=r}^{k}  \gamma _{j} h^{2j-3} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n} v }  ) _{\mathcal{F}_{h}^{g} } \\
+&= \sum_{j=r}^{k}  \gamma _{j} h^{2j-3} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n} v }  ) _{\mathcal{F}_{h}^{g} } \\
         \end{split}
     \]
-    Thus, the Assumption \ref{as:EP1} is satisfied.
 
-    For \ref{as:EP2} we.
+
+
+
+
 \end{proof}
