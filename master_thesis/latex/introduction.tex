@@ -289,7 +289,9 @@ thus, the badly cut cells are removed, ensuring robustness and well-posedness.
 
 \subsection{Outline of the report}%
 \label{sub:outline_of_the_report}
+In this article, we propose an novel stabilized unfitted cut continuous interior penalty method (CutCIP) specifically for the BH problem, which incorporates the CutFEM methodology in combination with a CIP formulation. We will follow the work theoretical
+procedure as presented in the DG Poisson formulation proposed by \cite{gurkan2019stabilized}, but instead apply the CIP BH formulation while taking account to analytical results provided in \cite{feng2007fully, brenner2012quadratic}.
 
-This report is a novel stabilized cut continuous interior penalty method (CutCIP) that utilizes the CutFEM framework to handle complex domains and the CIP formulation for its elegant formulation to handle fourth-order spatial derivatives, to solve
-the CH problem. We will name the cut continuous interior penalty method (CutCIP) method. In the first section prove that the method is stable and has optimal
-convergence for the BH problem, and then extend the method to handle the CH problem. We will then provide numerical examples.
+The main results in this thesis is as follows. In Section \ref{sec:CIP_biharmonic_problem} the basic construction of the CIP BH formulations and the related properties is established. Subsequently, in Section \ref{sec:cutcip_biharmonic_problem} we propose the corresponding CutCIP BH method, but also
+provide a theoretical proof to show that the stability and convergence properties from the original CIP method are conserved. In Section \ref{sec:cahn_hilliard_equation} we briefly extend the method to handle the CH problem. Finally, Section
+\ref{sec:numerical_results} is dedicated to numerical experiments.
