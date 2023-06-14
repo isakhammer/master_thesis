@@ -2,7 +2,8 @@
 \section{Mathematical Background}%
 \label{sec:mathematical_background}
 
-\todo[inline]{ Write short intro }
+We will in this section will we review standardized and well know methods and notations. Generally is the notation followed from \cite[Chapter 1]{pietro2012}.
+
 
 \subsection{Notation}%
 \label{sub:notation}
@@ -16,18 +17,18 @@ $\left\lvert f \right\rvert ^{p}$ is Lebesgue integrable, i.e,
 Let $u \in L^{p}\left( \Omega  \right) $. We define the integral norm of order $p$ to be \[
 \| u \|_{ L^{p}\left( \Omega  \right)  }^{  }  = \left( \int_{\Omega }^{} \left\lvert u \right\rvert ^{p} dx  \right) ^{\frac{1}{p}}.
 \]
-Since $p=2$ is frequently used in this report, we also define for convenience a compact notation $\| u \|_{ \Omega  }^{  }  = \| u \|_{ L^{2}\left( \Omega  \right)  }^{  } $ .  We say that $L^{2}\left( \Omega  \right) $ is a Hilbert space if it is equipped with a inner
-product of two functions $u,v \in L^{2}\left( \Omega  \right) $ s.t.
+Since $p=2$ is frequently used in this report, we also define for convenience a compact notation $\| u \|_{ \Omega  }^{  }  = \| u \|_{ L^{2}\left( \Omega  \right)  }^{  } $ .  Recall that $L^{2}\left( \Omega  \right) $ is a Hilbert space if it is equipped with a inner
+product of two functions $u,v \in L^{2}\left( \Omega  \right) $ such that
     $
 \left( u,v \right) _{\Omega } = \left( u,v \right) _{L^2\left( \Omega  \right) } = \int_{\Omega }^{} u  v dx.
 $
-We now use this notation for derivatives,
+The following definition for derivatives is employed,
 \begin{equation}
 \label{eq:mixed_derivative}
-\partial ^{\alpha  } f = \frac{\partial ^{\left\lvert \alpha  \right\rvert } f}{ \partial ^{\alpha _{1} } x_{1} \partial ^{\alpha _{2}} x_{2}  }, \quad \text{for } \alpha=\left( \alpha _{1}, \alpha _{2} \right) \text{ and } f \in C^{\left\lvert \alpha  \right\rvert }
+\partial ^{\alpha  } u = \frac{\partial ^{\left\lvert \alpha  \right\rvert } u}{ \partial ^{\alpha _{1} } x_{1} \partial ^{\alpha _{2}} x_{2}  }, \quad \text{for } \alpha=\left( \alpha _{1}, \alpha _{2} \right) \text{ and } f \in C^{\left\lvert \alpha  \right\rvert }
 \left( \Omega  \right)
 .\end{equation}
-For $d$ dimensions of order $k$ we define the multi-index $\alpha  = ( \alpha _{1}, \ldots, \alpha _{d})  $ with the absolute value $\abs{ \alpha  } = \sum_{i}^{}  \alpha _{i} = k $ s.t.
+For $d$ dimensions of order $k$ we define the multi-index $\alpha  = ( \alpha _{1}, \ldots, \alpha _{d})  $ with the absolute value $\abs{ \alpha  } = \sum_{i=1}^{d}  \alpha _{i} = k $ s.t.
 \[
 \partial ^{\alpha} f = \frac{\partial ^{ \alpha_{1}  }  } {\partial^{} x_{1}^{\alpha _{1}}  } \ldots \frac{\partial ^{ \alpha_{d}  }  } {\partial^{} x_{d}^{\alpha _{d}}  } f
 \]
@@ -242,7 +243,7 @@ F: X  \mapsto \mathbb{R} \text{ s.t. }\forall v,w \in X, \forall a,b \in \mathbb
 
 \begin{definition}[Coercivity]
     \label{def:coercivity}
-    Let $X$ be a Hilbert space and let $a \in  \mathcal{L} ( X \times  X,\mathbb{R} )  $. We say that the bilinear form $a$ is coercive on $X$ if there exists an constant $C > 0 $ s.t. \[
+    Let $X$ be a Hilbert space and let $a \in  \mathcal{L} ( X \times  X,\mathbb{R} )  $. Recall that the bilinear form $a$ is coercive on $X$ if there exists an constant $C > 0 $ s.t. \[
      a( v,v) \ge  C \| v \|_{ X }^{  } \quad  \forall v \in  X
     \]
 \end{definition}
