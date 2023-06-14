@@ -63,12 +63,12 @@ We define a fitted mesh $\mathcal{T} $ of the domain $\Omega $ to be a collectio
 \ref{fig:domain_mesh}.
 Here we say that each $T \in  \mathcal{T} $ is a mesh element or an element.
 The mesh size is defined as the maximum diameter $h := h_{max} $ of any polyhedra in the mesh $\mathcal{T} = \left\{ T \right\}  $, that is, $ h_{max} = \max_{T \in \mathcal{T} }  h_{T}$ s.t.
-    $h _{T}  = diam\left( T \right)   = \max_{x_1, x_{2} \in T} dist(x_{1}, x_{2})$
+$h _{T}  = \mathrm{diam}\left( T \right)   = \mathrm{max}_{x_1, x_{2} \in T} \ \mathrm{ dist }(x_{1}, x_{2})$
 Hence, motivating us to use the notation $\mathcal{T} _{h}$ for a mesh $\mathcal{T} $ with size $h$.
 
  A mesh is conform if $T_{1} \neq T_{2 }$  then $T_{1} \cap T_{2} \neq \emptyset  $ for all $T_{1}, T_{2} \in \mathcal{T}_{h}$. This means that each $T$ share either a vertex or a facet.
 Let the chunkiness parameter $c_{T} := h_{T}/r_{T}$, where $r_{T}$  is the largest ball that be inscribed inside a element $T \in \mathcal{T}_{h} $.
-A mesh is said to be shape regular if $c_{T}\le  c$ is independent of $T$  and $h$. We also say that the mesh is quasi-uniform only if it is shape regular and $h_{max} \le  c h_{min}$.
+A mesh is said to be shape regular if $c_{T}\le  c$ is independent of $T$  and $h$. We also say that the mesh is quasi-uniform only if it is shape regular and $h_{\mathrm{ max }} \le  c h_{\mathrm{ min }}$.
 
 In this report will we assume that a mesh $\mathcal{T}_{h} $ is conform, shape regular and quasi-uniform unless specified.
  The fact that the mesh is conform makes is a useful property since the interface between mesh elements has come into contact in the sense
