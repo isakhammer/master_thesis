@@ -231,7 +231,10 @@ Summation over the intersected triangles $\mathcal{T} _{\Gamma }$ implies,
         \]
         Recall from basic finite element theory that $\| D^2v \|_{F  }^{ 2 }\le h^{-2} \| \nabla v \|_{ F }^{ 2 } \le h^{-4} \| v \|_{ F }^{2  }    $.
         That is, applying the decomposition we get the following estimates \[
-        \| \jump{ P_{F}   D^2 \partial _{n}^{j} v }\|_{ F }^{ 2 } = \| P_{F} D^2 \jump{ \partial _{n}^{j} v }   \|_{ F  }^{ 2} \lesssim h^{-4} \|  \jump{ \partial ^{j}_{n} v }   \|_{ F }^{  2}.
+            \begin{split}
+        \| \jump{ P_{F}   D^2 \partial _{n}^{j} v }\|_{ F }^{ 2 } & = \| P_{F} D^2 \jump{ \partial _{n}^{j} v }   \|_{ F  }^{ 2} = \| (I- n\otimes n) D^2 \jump{ \partial _{n}^{j} v }   \|_{ F  }^{ 2}    \\
+        & \lesssim  \|  D^2 \jump{ \partial _{n}^{j} v }   \|_{ F  }^{ 2} \lesssim h^{-4} \|  \jump{ \partial ^{j}_{n} v }   \|_{ F }^{  2}.
+            \end{split}
         \]
         Thus, using this on the decomposition can we admit that
          \[
