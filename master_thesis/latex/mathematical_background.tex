@@ -30,23 +30,23 @@ The following definition for derivatives is employed,
 .\end{equation}
 For $d$ dimensions of order $k$ we define the multi-index $\alpha  = ( \alpha _{1}, \ldots, \alpha _{d})  $ with the absolute value $\abs{ \alpha  } = \sum_{i=1}^{d}  \alpha _{i} = k $ s.t.
 \[
-\partial ^{\alpha} f = \frac{\partial ^{ \alpha_{1}  }  } {\partial^{} x_{1}^{\alpha _{1}}  } \ldots \frac{\partial ^{ \alpha_{d}  }  } {\partial^{} x_{d}^{\alpha _{d}}  } f
+\partial ^{\alpha} u = \frac{\partial ^{ \alpha_{1}  }  } {\partial^{} x_{1}^{\alpha _{1}}  } \ldots \frac{\partial ^{ \alpha_{d}  }  } {\partial^{} x_{d}^{\alpha _{d}}  } u
 \]
 
-  Let $m\ge 0$ be an integer and let $1 \le  p \le  \infty$ be a real number. Then we define the Sobolev space
+  Let $m\ge 0$ be an integer and let $1 \le  p \le  \infty$ be a real number. Then the Sobolev space $H^{m}( \Omega ) $ are defined by
 \[
 H^{m}\left( \Omega  \right) = \left\{ u \in L^{2}\left( \Omega  \right)  \mid  \partial ^{\alpha } u \in L^{2}\left( \Omega  \right)  \forall \alpha : \left\lvert \alpha  \right\rvert  \le m \right\}.
 \]
-Equipped with the inner product is $H^{m}\left( \Omega  \right) $  denoted as a Hilbert space, that is, for $u,v \in H^{m}\left( \Omega  \right) $, \[
-    \left( u,v \right) _{H^{m}\left( \Omega   \right) } = \sum_{\left\lvert \alpha  \right\rvert  \le  m}^{}  \int_{\Omega }^{} \partial ^{\alpha } u \partial ^{\alpha } v dx.
+Equipped with the inner product for $u,v \in H^{m}\left( \Omega  \right) $, \[
+    \left( u,v \right) _{H^{m}\left( \Omega   \right) } = \sum_{\left\lvert \alpha  \right\rvert  \le  m}^{}  \int_{\Omega }^{} \partial ^{\alpha } u \partial ^{\alpha } v dx,
 \]
-Similarly, the norm is is denoted as,
+with the corresponding norm
 $
-\| u \|_{ H^{m}\left( \Omega  \right)  }^{2  }  =  \| u \|_{ L^{2}\left( \Omega  \right)    }^{2} + \sum_{k = 1}^{m}  \left\lvert u \right\rvert ^{2} _{  H^{k}\left( \Omega  \right) },
+\| u \|_{ H^{m}\left( \Omega  \right)  }^{2  }  =  \| u \|_{ L^{2}\left( \Omega  \right)    }^{2} + \sum_{k = 1}^{m}  \left\lvert u \right\rvert ^{2} _{  H^{k}\left( \Omega  \right) }.
 $
-where the seminorm is defined such that, $ \left\lvert u \right\rvert _{H^{k}( \Omega  ) }^{2} =  \sum_{\left\lvert \alpha  \right\rvert  = k}^{} \| \partial ^{\alpha }u \|_{ \Omega  }^{ 2 }  .
+Here the seminorm is defined such that, $ \left\lvert u \right\rvert _{H^{k}( \Omega  ) }^{2} =  \sum_{\left\lvert \alpha  \right\rvert  = k}^{} \| \partial ^{\alpha }u \|_{ \Omega  }^{ 2 }  .
 $
-We will often denote the shorthand notation $ \| u \|_{ k, \Omega  }^{  } = \| u \|_{ H^{k}( \Omega)  }^{  } $ and $ \abs{ u }_{ k, \Omega  }^{  }  = \abs{ u }_{ H^{k}( \Omega)  }^{  }$.
+We will often use the shorthand notation $ \| u \|_{ k, \Omega  }^{  } = \| u \|_{ H^{k}( \Omega)  }^{  } $ and $ \abs{ u }_{ k, \Omega  }^{  }  = \abs{ u }_{ H^{k}( \Omega)  }^{  }$.
 
 Given the context of Sobolev spaces, we consider the functions $ u \in H^{2}( \Omega )$ and $ v \in H^{1}( \Omega )$. We can denote Greens theorem, which links integrals over a volume and its boundary, as follows,
 \[
