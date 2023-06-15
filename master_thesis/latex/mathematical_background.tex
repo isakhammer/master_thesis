@@ -279,18 +279,27 @@ $\mathcal{T} _{h}$. We say that a method is conform if $X_{h}\subset X $ and non
 \end{problem}
 
 We denote the functional $a_{h}: X_{h} \times X_{h} \to \mathbb{R} $ as an consistent approximation of $a: X \times X \to \mathbb{R} $, and similarly for the right-hand side.
-In this report will we generally denote $X_{h}(\mathcal{T}_{h}  )  = \mathcal{P}^{k}(\mathcal{T}_{h})$.
-
-% define the cierlets FEM definition
-% Polynomic space
-% Figures
-
+In this report will we generally specify any discrete space $X_{h}(\mathcal{T}_{h})$  as the $C^{0}$ continuous polynomial space $\mathcal{P}^{k}(\mathcal{T}_{h})$, of order $k$.
 
 \begin{definition}[Broken polynomial spaces]
-    Let $\mathcal{T}_{h} $ be a mesh of $\Omega \in \mathbb{R} ^{d} $. Let $\mathcal{P}^{k}(T) $ be the space of all polynomials of degree $k$ in the mesh element $T$. We define the broken polynomial space as \[
-    \mathcal{P}^{k} ( \mathcal{T}_{h} ) := \left\{ v \in L^2( \Omega )  \mid  v|_{T} \in \mathcal{P}^k( T) \quad  \forall T \in  \mathcal{T}_{h}   \right\}.
+    Let $\mathcal{T}_{h} $ be a mesh of $\Omega \in \mathbb{R} ^{d} $. Let $\mathcal{P}^{k}(T) $ be the space of all polynomials of order $k$ in the mesh element $T$ in $\mathcal{T}_{h}$ . We define the $C^{0}$ continuous broken polynomial space as \[
+    \mathcal{P}^{k} ( \mathcal{T}_{h} ) := \left\{ v \in C^{0}( \Omega )   \mid  v|_{T} \in \mathcal{P}^k( T) \quad  \forall T \in  \mathcal{T}_{h}   \right\}.
     \]
+
 \end{definition}
+
+\begin{definition}[Local polynomial space]
+    \label{def:label}
+    Let $T$ be a element in a mesh $\mathcal{T}_{h} $,  $x = \left[ x_{1}, \ldots, x_{d} \right] ^{T} $ be a vector, and $\alpha  = \left[ \alpha _{1}, \ldots, \alpha _{d} \right] $ be a multi index.
+    The local polynomial space $\mathcal{P} ^{k}( T) $ is denoted as  \[
+        \mathcal{P}^{k}( T) =  \mathrm{span}\left\{ x^{\alpha } \ \text{for } x \in T \text{ and } 0 \le  \alpha _{i} \le k \right\}.
+    \]
+    where  $x^{\alpha }$ is a monomial such that $x^{\alpha } = x_{1}^{\alpha _{1}} \ldots x_{d}^{\alpha _{d}}$.
+
+\end{definition}
+
+
+
 
 
 
