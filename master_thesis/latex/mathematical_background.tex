@@ -256,7 +256,7 @@ X'  = \left\{ F: X \to \mathbb{R}   \mid  F \text{ is linear and bounded} \right
 \begin{lemma}[Lax-Milgram]
     \label{def:lax-milgram}
     The abstract linear problem \ref{def:abstract_linear_problem} is well-posed if $a(\cdot , \cdot  ) $ is bounded and coercive. Moreover, the following a priori estimate holds true.\[
-    \| v \|_{ X }^{  } \lesssim  \frac{1}{C} \| f \|_{ X'  }^{  }
+    \| v \|_{ X }^{  } \lesssim  \| f \|_{ X'  }^{  }
     \]
 \end{lemma}
 \begin{proof}
@@ -279,6 +279,11 @@ $\mathcal{T} _{h}$. We say that a method is conform if $X_{h}\subset X $ and non
 \end{problem}
 
 We denote the functional $a_{h}: X_{h} \times X_{h} \to \mathbb{R} $ as an consistent approximation of $a: X \times X \to \mathbb{R} $, and similarly for the right-hand side.
+In this report will we generally denote $X_{h}(\mathcal{T}_{h}  )  = \mathcal{P}^{k}(\mathcal{T}_{h})$.
+
+% define the cierlets FEM definition
+% Polynomic space
+% Figures
 
 
 \begin{definition}[Broken polynomial spaces]
@@ -286,6 +291,7 @@ We denote the functional $a_{h}: X_{h} \times X_{h} \to \mathbb{R} $ as an consi
     \mathcal{P}^{k} ( \mathcal{T}_{h} ) := \left\{ v \in L^2( \Omega )  \mid  v|_{T} \in \mathcal{P}^k( T) \quad  \forall T \in  \mathcal{T}_{h}   \right\}.
     \]
 \end{definition}
+
 
 
 
