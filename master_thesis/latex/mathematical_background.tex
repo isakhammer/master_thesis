@@ -196,7 +196,7 @@ $$\| D^2v \|_{T  }^{ 2 } \lesssim h^{-1} \| \nabla v  \|_{ T  }^{  } \lesssim h^
 
 Another very useful inequality is the so-called trace inequality which connect the relationship of evaluating the norm on element $ T $ and with any of the corresponding facets $F \in \partial T$. The general form is $\| v \|_{F   }^{  }  \lesssim
 h^{-\frac{1}{2}} \| v \|_{ T  }^{  } $, see \cite[Lemma 12.8]{ErnGuermond2021}.
-Let $\partial _{n} v = \nabla v \ n$ and $\partial_{nn} v = n^{T} D^2 v \ n $, and keeping in mind that the normal vector has a unit length, i.e., $ | n |{l^{2} }^{ } = 1 $, can we evidently apply the trace inverse inequality to conclude, \[
+Let $\partial _{n} v = \nabla v \ n$ and $\partial_{nn} v = n^{T} D^2 v \ n $, and keeping in mind that the normal vector has a unit length, can we evidently apply the trace inverse inequality to conclude, \[
 \begin{split}
     \| \partial _{n} v \|_{F  }^{  }  & \le \| \nabla v \|_{F  }^{  }  \le h^{-\frac{1}{2}} \| \nabla  v \|_{T  }^{  },  \\
     \| \partial _{nn} v \|_{ F }^{  } & \le  \| D^2 v \|_{ F }^{  }   \le  h^{-\frac{1}{2}} \| D^2 v \|_{ T }^{  }.
@@ -227,49 +227,36 @@ Let $\partial _{n} v = \nabla v \ n$ and $\partial_{nn} v = n^{T} D^2 v \ n $, a
 
 \begin{definition}[Linear bounded functional]
     \label{def:linear_function}
-Let $X$ be a Hilbert space. Furthermore, we define the dual space the be the space of linear and bounded functionals $F: X  \mapsto \mathbb{R} $, i.e., \[
-X'  =
-\left.
-\begin{cases}
-F: X  \mapsto \mathbb{R} \text{ s.t. }\forall v,w \in X, \forall a,b \in \mathbb{R} \text{ and } C> 0 \text{ is }   \\
-  F\left( \lambda v + \mu w  \right) = \lambda F(v) + \mu F(w) \text{ and } \left\lvert F\left( v \right)  \right\rvert \le C \| v \|_{ X  }^{  }
-\end{cases}
-  \right\}
+Let $X$ be a Hilbert space. Furthermore, we define the dual space $X' $ to be the space of linear and bounded functionals $F: X  \mapsto \mathbb{R} $, i.e., \[
+X'  = \left\{ F: X \to \mathbb{R}   \mid  F \text{ is linear and bounded} \right\}
 \]
-% and we equip it with the functional norm,  \[
-%     \| F \|_{ \mathcal{V} ^{*} }^{  } = \sup_{v \in \mathcal{V}   } \frac{\left\lvert F\left( v \right)  \right\rvert }{\| v \|_{ \mathcal{V}  }^{  } }.
-% \]
-% \todo[inline]{ Maybe write it in terms of $\mathcal{L} $ definition instead. Might need to do some dive into functional analysis books. Anyhow, I am not happy with this definitionin context with the rest of the subchapter.}
 \end{definition}
-
-% \begin{definition}[Bilinear bounded functional]
-%     \label{def:bilinear_function}
-%     Write definitions of a bilinear bounded operator
-% \end{definition}
 
 \begin{problem}[Abstract linear problem]
     \label{def:abstract_linear_problem}
     Assume $X$ and $Y$  to be two Hilbert spaces. Let the vector space $\mathcal{L}( X,Y)  $ be all linear bounded operators spanned from $X$ to $Y$. We define the abstract linear problem as follows; find $u \in X$ s.t. \[
     a( u,v)  = l(v ) := \left<f,v \right>_{X' , X}  \forall v \in X
     \]
-    Where $a \in  \mathcal{L} ( X \times X,\mathbb{R} ) $ is a bounded linear form and $f \in X':= \mathcal{L} ( X,\mathbb{R} )  $ is a bounded linear form. Here we denote $\left<\cdot ,\cdot  \right>_{X' .X} $ as the duality pairing between $X' $
-    and $X $.
+    Where $a \in  \mathcal{L} ( X, X,\mathbb{R} ) $ is a bounded bilinear form and $f \in X':= \mathcal{L} ( X,\mathbb{R} )  $ is a bounded linear form. Here we denote by $\left<\cdot ,\cdot  \right>_{X' .X} $ the duality pairing between $X' $ and $X $.
 
 \end{problem}
 
 
-\begin{definition}[Coercivity]
+\begin{definition}[Coercivity and Boundedness]
     \label{def:coercivity}
-    Let $X$ be a Hilbert space and let $a \in  \mathcal{L} ( X \times  X,\mathbb{R} )  $. Recall that the bilinear form $a$ is coercive on $X$ if there exists an constant $C > 0 $ s.t. \[
-     a( v,v) \ge  C \| v \|_{ X }^{  } \quad  \forall v \in  X
+    Let $X$ be a Hilbert space and let $a( \cdot ,\cdot )  \in  \mathcal{L} ( X, X,\mathbb{R} )  $. Recall that the bilinear form $a( \cdot ,\cdot ) $ is coercive on $X$ if there exists an constant $C_{1} > 0 $ such that \[
+     a( v,v) \ge  C_{2} \| v \|_{ X }^{  } \quad  \forall v \in  X
+    \]
+     The bilinear form $a( \cdot ,\cdot ) $ is said to bounded if there exists an constant $C_{2}$  \[
+    a( u,v)  \le C_{1} \| u \|_{ X }^{  }  \| v \|_{X }^{  }
     \]
 \end{definition}
 
 
 \begin{lemma}[Lax-Milgram]
     \label{def:lax-milgram}
-    We say that the abstract linear problem \ref{def:abstract_linear_problem} is well-posed if $a$ is coercive. Moreover, the following a priori estimate holds true.\[
-    \| v \|_{ X }^{  } \le \frac{1}{C} \| f \|_{ X'  }^{  }
+    We say that the abstract linear problem \ref{def:abstract_linear_problem} is well-posed if $a(\cdot , \cdot  ) $ is bounded and coercive. Moreover, the following a priori estimate holds true.\[
+    \| v \|_{ X }^{  } \lesssim  \frac{1}{C} \| f \|_{ X'  }^{  }
     \]
 \end{lemma}
 \begin{proof}
