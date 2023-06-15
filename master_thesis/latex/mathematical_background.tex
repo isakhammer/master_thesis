@@ -282,8 +282,12 @@ We denote the functional $a_{h}: X_{h} \times X_{h} \to \mathbb{R} $ as an consi
 In this report will we generally specify any discrete space $X_{h}(\mathcal{T}_{h})$  as the $C^{0}$ continuous polynomial space $\mathcal{P}^{k}(\mathcal{T}_{h})$, of order $k$.
 
 \begin{definition}[Broken polynomial spaces]
-    Let $\mathcal{T}_{h} $ be a mesh of $\Omega \in \mathbb{R} ^{d} $. Let $\mathcal{P}^{k}(T) $ be the space of all polynomials of order $k$ in the mesh element $T$ in $\mathcal{T}_{h}$ . We define the $C^{0}$ continuous broken polynomial space as \[
-    \mathcal{P}^{k} ( \mathcal{T}_{h} ) := \left\{ v \in C^{0}( \Omega )   \mid  v|_{T} \in \mathcal{P}^k( T) \quad  \forall T \in  \mathcal{T}_{h}   \right\}.
+    Let $\mathcal{T}_{h} $ be a mesh of $\Omega \in \mathbb{R} ^{d} $. Let $\mathcal{P}^{k}(T) $ be the space of all polynomials of order $k$ in the mesh element $T$ in $\mathcal{T}_{h}$ . We define the broken polynomial space as \[
+    \mathcal{P}^{k} ( \mathcal{T}_{h} ) := \left\{ v \in L^{2}( \mathcal{T}_{h} )    \mid  v|_{T} \in \mathcal{P}^k( T) \quad  \forall T \in  \mathcal{T}_{h}   \right\}.
+    \]
+    Similarly, the global $C^{0}$ continuous polynomial space is denoted as
+    \[
+    \mathcal{P}^{k}_{c} ( \mathcal{T}_{h} ) := \left\{ v \in C^{0}( \Omega )   \mid  v|_{T} \in \mathcal{P}^k( T) \quad  \forall T \in  \mathcal{T}_{h}   \right\}.
     \]
 
 \end{definition}
@@ -495,4 +499,6 @@ element as $\mathbb{P} ^{k}(T )$ and $\mathbb{Q} ^{k}( T)$, both of polynomial o
         \caption{Illustration of the nodes for the element of either a simplex or a quadrilateral for dimension $d=2$.}
         \label{fig:ill_nodes}
 \end{figure}
+
+
 
