@@ -299,10 +299,188 @@ In this report will we generally specify any discrete space $X_{h}(\mathcal{T}_{
 \end{definition}
 
 
+\begin{figure}[htb!]
+    \centering
+    \hfill
+    \subfloat[$\mathcal{P}^{1}( T)  $]{
+        \begin{tikzpicture}[scale=1.5]
+            % Define the coordinates
+            \coordinate (A) at (0,0);
+            \coordinate (B) at (2,0);
+            \coordinate (C) at (1,{sqrt(3)});
 
+            % Draw the triangle
+            \fill[blue!30] (A) -- (B) -- (C) -- cycle;
 
+            % Draw the nodes
+            \fill (A) circle (2pt);
+            \fill (B) circle (2pt);
+            \fill (C) circle (2pt);
+        \end{tikzpicture}
+    }
+    \hfill
+    \subfloat[ $\mathcal{P}^{2}( T)  $]{
+        \begin{tikzpicture}[scale=1.5]
+            % Define the coordinates
+            \coordinate (A) at (0,0);
+            \coordinate (B) at (2,0);
+            \coordinate (C) at (1,{sqrt(3)});
 
+            % Define the midpoints
+            \coordinate (D) at ($(A)!0.5!(B)$);
+            \coordinate (E) at ($(B)!0.5!(C)$);
+            \coordinate (F) at ($(A)!0.5!(C)$);
 
+            % Draw the triangle
+            \fill[blue!30] (A) -- (B) -- (C) -- cycle;
 
+            % Draw the nodes
+            \fill (A) circle (2pt);
+            \fill (B) circle (2pt);
+            \fill (C) circle (2pt);
+            \fill (D) circle (2pt);
+            \fill (E) circle (2pt);
+            \fill (F) circle (2pt);
+        \end{tikzpicture}
+    }
+    \hfill
+    \subfloat[$\mathcal{P}^{3}( T)  $ ]{
+        \begin{tikzpicture}[scale=1.5]
+            % Define the coordinates
+            \coordinate (A) at (0,0);
+            \coordinate (B) at (2,0);
+            \coordinate (C) at (1,{sqrt(3)});
 
+            % Define the additional points along the edges
+            \coordinate (D) at ($(A)!0.3333!(B)$);
+            \coordinate (E) at ($(B)!0.3333!(C)$);
+            \coordinate (F) at ($(C)!0.3333!(A)$);
+            \coordinate (G) at ($(A)!0.6667!(B)$);
+            \coordinate (H) at ($(B)!0.6667!(C)$);
+            \coordinate (I) at ($(C)!0.6667!(A)$);
+
+            % Define the centroid
+            \coordinate (J) at (1, {sqrt(3)/3});
+
+            % Draw the triangle
+            \draw (A) -- (B) -- (C) -- cycle;
+            \fill[blue!30] (A) -- (B) -- (C) -- cycle;
+
+            % Draw the nodes
+            \fill (A) circle (2pt);
+            \fill (B) circle (2pt);
+            \fill (C) circle (2pt);
+            \fill (D) circle (2pt);
+            \fill (E) circle (2pt);
+            \fill (F) circle (2pt);
+            \fill (G) circle (2pt);
+            \fill (H) circle (2pt);
+            \fill (I) circle (2pt);
+            \fill (J) circle (2pt);
+        \end{tikzpicture}
+    }
+    \\
+    \hfill
+    \subfloat[$\mathcal{P}^{1}( T)  $]{
+        \begin{tikzpicture}[scale=1.5]
+            % Define the coordinates
+            \coordinate (A) at (0,0);
+            \coordinate (B) at (2,0);
+            \coordinate (C) at (2,2);
+            \coordinate (D) at (0,2);
+
+            % Draw the square
+            \fill[blue!30] (A) -- (B) -- (C) -- (D) -- cycle;
+
+            % Draw the nodes
+            \fill (A) circle (2pt);
+            \fill (B) circle (2pt);
+            \fill (C) circle (2pt);
+            \fill (D) circle (2pt);
+        \end{tikzpicture}
+    }
+    \hfill
+    \subfloat[ $\mathcal{P}^{2}( T)  $]{
+        \begin{tikzpicture}[scale=1.5]
+            % Define the coordinates
+            \coordinate (A) at (0,0);
+            \coordinate (B) at (2,0);
+            \coordinate (C) at (2,2);
+            \coordinate (D) at (0,2);
+
+            % Define the midpoints
+            \coordinate (E) at ($(A)!0.5!(B)$);
+            \coordinate (F) at ($(B)!0.5!(C)$);
+            \coordinate (G) at ($(C)!0.5!(D)$);
+            \coordinate (H) at ($(D)!0.5!(A)$);
+            % Define the centroid
+            \coordinate (M) at (1, 1);
+
+            % Draw the square
+            \fill[blue!30] (A) -- (B) -- (C) -- (D) -- cycle;
+
+            % Draw the nodes
+            \fill (A) circle (2pt);
+            \fill (B) circle (2pt);
+            \fill (C) circle (2pt);
+            \fill (D) circle (2pt);
+            \fill (E) circle (2pt);
+            \fill (F) circle (2pt);
+            \fill (G) circle (2pt);
+            \fill (H) circle (2pt);
+            \fill (M) circle (2pt);
+        \end{tikzpicture}
+    }
+    % And so on for $\mathcal{P}^{3}( S)  $, $\mathcal{P}^{4}( S)  $, etc.
+    \hfill
+    \subfloat[ $\mathcal{P}^{3}( T)  $]{
+        \begin{tikzpicture}[scale=1.5]
+            % Define the coordinates
+            \coordinate (A) at (0,0);
+            \coordinate (B) at (2,0);
+            \coordinate (C) at (2,2);
+            \coordinate (D) at (0,2);
+
+            % Define the additional points along the edges
+            \coordinate (E) at ($(A)!0.3333!(B)$);
+            \coordinate (F) at ($(B)!0.3333!(C)$);
+            \coordinate (G) at ($(C)!0.3333!(D)$);
+            \coordinate (H) at ($(D)!0.3333!(A)$);
+            \coordinate (I) at ($(A)!0.6667!(B)$);
+            \coordinate (J) at ($(B)!0.6667!(C)$);
+            \coordinate (K) at ($(C)!0.6667!(D)$);
+            \coordinate (L) at ($(D)!0.6667!(A)$);
+
+            % Define the internal nodes
+            \coordinate (M) at ($(E)+(0,0.6667)$);
+            \coordinate (N) at ($(E)+(0,1.332)$);
+            \coordinate (O) at ($(I)+(0,0.6667)$);
+            \coordinate (P) at ($(I)+(0,1.332)$);
+
+            % Draw the square
+            \draw (A) -- (B) -- (C) -- (D) -- cycle;
+            \fill[blue!30] (A) -- (B) -- (C) -- (D) -- cycle;
+
+            % Draw the nodes
+            \fill (A) circle (2pt);
+            \fill (B) circle (2pt);
+            \fill (C) circle (2pt);
+            \fill (D) circle (2pt);
+            \fill (E) circle (2pt);
+            \fill (F) circle (2pt);
+            \fill (G) circle (2pt);
+            \fill (H) circle (2pt);
+            \fill (I) circle (2pt);
+            \fill (J) circle (2pt);
+            \fill (K) circle (2pt);
+            \fill (L) circle (2pt);
+            \fill (M) circle (2pt);
+            \fill (N) circle (2pt);
+            \fill (O) circle (2pt);
+            \fill (P) circle (2pt);
+        \end{tikzpicture}
+        }
+        \caption{Illustration of the nodes for the element of either a simplex or a quadrilateral for $d=1$ .}
+        \label{fig:ill_nodes}
+\end{figure}
 
