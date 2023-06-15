@@ -76,22 +76,22 @@ For a more complete description of meshes, see \cite[Chapter 8]{ErnGuermond2021}
 
 In this thesis will we assume that a mesh $\mathcal{T}_{h} $ is matching, shape regular and quasi-uniform unless specified.
  The fact that the mesh is conform makes is a useful property since the interface between mesh elements has come into contact in the sense
-that it is either a vertex or a facet. This with the combination of shape regularity and quasi-uniformity has been a major key to prove important inequalities in broken Sobolev spaces \cite[Chapter 1.4.1]{pietro2012}. Hence, the assumptions are very handy when proving convergence.
+that it is either a vertex or a facet. This with the combination of shape regularity and quasi-uniformity is a major key to prove important inequalities in broken Sobolev spaces \cite[Chapter 1.4.1]{pietro2012}. Hence, the assumptions are very handy when proving convergence.
 
 
 Let $\mathcal{T}_{h}  = \left\{ T \right\} $ be a mesh of $\Omega \subset  \mathbb{R} ^d $ consisting of polygons $T \in \mathbb{R} ^{d}$.
-The set of all facets is the union of external and internal facets, $\mathcal{F} _{h} = \mathcal{F} ^{ext}_{h} \cup \mathcal{F} _{h}^{int} $, where each are defined like this:
+The set of all facets is the union of external and internal facets, $\mathcal{F} _{h} = \mathcal{F} ^{ext}_{h} \cup \mathcal{F} _{h}^{int} $, where each are defined by
 \[
             \mathcal{F}^{int} _{h}  = \left\{ F=T^{+}\cap T^{-}  \mid  T^{+}, T^{-} \in \mathcal{T}_{h}  \right\} \text{ and }
             \mathcal{F}^{ext} _{h}  = \left\{ F= \partial T \cap \partial \Omega    \mid  T  \in \mathcal{T}_{h}  \right\}.
 \]
-Let $\mathcal{T}_{h} $ be a mesh of $\Omega $ equipped with the facets $\mathcal{F}_{h} $. We will define the following normal vectors.
+Assume $T^{+} \neq T^{-}$ . Next, we define the following normal vectors.
 \begin{enumerate}[label=\arabic*)]
-    \item We define $ n= n \mid _{T}$ to be unit outward normal on $\partial T$ for each $T \in \mathcal{T}_{h} $
+    \item We define $ n= n | _{\partial T}$ to be unit outward normal on $\partial T$ for each $T \in \mathcal{T}_{h} $
  \item Let $F \in \mathcal{F }^{int} _{h}$. we define $n$ to be the facet normal $ n =  n  \mid_F = n \mid _{T^{+}} $  from $T^{+}$ to $T^{-}$, illustrated in figure \ref{fig:normal}.
- \item Let $F \in \mathcal{F} ^{ext}_{h}$. Then we define the facet normal $n \mid _{F} = n \mid _{T} $ to the unit outward normal.
+ \item Let $F \in \mathcal{F} ^{ext}_{h}$. Then we define the facet normal $n | _{F} = n \mid _{T} $ to the unit outward normal.
 \end{enumerate}
-Keep in mind that in many that we often will simply use the notation $n = n \mid _{T}$ in most cases.
+Keep in mind that in many that we often will simply use the notation $n $.
 
     Let $v\in L^2( \Omega ) $ be a scalar function on $\Omega$ with a corresponding shape regular and quasi-uniform mesh $\mathcal{T}_{h} $. We will use the following definitions.
     \begin{enumerate}[label=\arabic*)]
