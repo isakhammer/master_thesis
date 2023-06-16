@@ -900,7 +900,7 @@ sharing at least one vertex with $F \in  \mathcal{F} _{h}$. For an illustrative 
         \fill (ahi) circle (2pt);
         \node[anchor=north west, xshift=-0.1cm, yshift=0.1cm] at (ahi) {$\hat{a}_{j( i)} $};
 
-        \draw[->, thick, >=stealth] ($(ahi)+(0.2,+0.2)$) to[bend right] node[midway, above] {$G_{A_i}$} ($(ai)+(0.2,+0.3)$);
+        \draw[->, thick, >=stealth] ($(ahi)+(0.2,+0.2)$) to[bend right] node[midway, above] {$\mathcal{G}_{A_i}$} ($(ai)+(0.2,+0.3)$);
 
     \end{tikzpicture}
 }
@@ -943,7 +943,7 @@ sharing at least one vertex with $F \in  \mathcal{F} _{h}$. For an illustrative 
     \node[anchor=north west] at (ahat_i) {$\hat{a}_{j( i)} $};
 
     % Draw the mapping G_{A_i} from ahat_i to a_i
-    \draw[->, thick, >=stealth] ($(ahat_i)+(0.2,0.2)$) to[bend right] node[midway, above] {$G_{A_i}$} ($(a_i)+(0.2,0.2)$);
+    \draw[->, thick, >=stealth] ($(ahat_i)+(0.2,0.2)$) to[bend right] node[midway, above] {$\mathcal{G}_{A_i}$} ($(a_i)+(0.2,0.2)$);
 \end{tikzpicture}
 }
 \end{minipage}\par\medskip
@@ -987,7 +987,7 @@ sharing at least one vertex with $F \in  \mathcal{F} _{h}$. For an illustrative 
     \fill (ai) circle (2pt);
     \node[anchor=south, yshift=0.2cm] at (ai) {$a_i$};
 
-    \draw[->, thick, >=stealth] ($(ah_i)+(0.2,- 0.2)$) to[bend right] node[midway, above, yshift=0.1cm] {$G_{A_i}$} ($(ai)+(-0.2,-0.2)$);
+    \draw[->, thick, >=stealth] ($(ah_i)+(0.2,- 0.2)$) to[bend right] node[midway, above, yshift=0.1cm] {$\mathcal{G}_{A_i}$} ($(ai)+(-0.2,-0.2)$);
 
 \end{tikzpicture}
 }
@@ -1054,11 +1054,8 @@ and if the following conditions for an parameter $l$ is satisfied, it exists err
     \inf_{v_{h} \in \mathcal{P} ^{k}_{c}( \Omega ) } \| v - v_{h} \|_{  m,p,\Omega }^{  } \le C h^{l-m}  \| v \|_{ l,p,\Omega  }^{  }    \forall v \in W_{l,p}( \Omega ).
     \]
 \end{corollary}
-This result is very useful since it is now sufficient to show that a priori estimates holds given to prove convergence rate. For further detailed information about the Cléments interpolation, please investigate \cite[Chapter 1.6]{ern04}.
+This result is very useful since it is now sufficient to show that a priori estimates holds to prove convergence rate. For further detailed information about the Cléments interpolation, please investigate \cite[Chapter 1.6]{ern04}.
 We will use these estimates to compute convergence rate given that Ceas' Lemma holds.
-
-
-
 
 \subsection{Cea's Lemma}%
 \label{sub:cea_s_lemma}
