@@ -515,7 +515,7 @@ We may introduce the reference element $\hat{T} $ in $d$ dimensions. The referen
 mapping, i.e. $\mathcal{G}(x) = Ax +
 b$.
 
-\begin{figure}[hb!]
+\begin{figure}[h!]
     \centering
     \hfill
     \subfloat[]{
@@ -526,7 +526,7 @@ b$.
             \coordinate (C) at (0,1);
             \coordinate (G1) at (1/3,1/3);
 
-            \fill[blue!30] (A) -- (B) -- (C) -- cycle;
+            \fill[red!30] (A) -- (B) -- (C) -- cycle;
             \draw (A) -- (B) -- (C) -- cycle;
             \fill (A) circle (2pt);
             \fill (B) circle (2pt);
@@ -558,7 +558,7 @@ b$.
             \coordinate (D) at (0,1);
             \coordinate (G1) at (0.5,0.5);
 
-            \fill[blue!30] (A) -- (B) -- (C) -- (D) -- cycle;
+            \fill[red!30] (A) -- (B) -- (C) -- (D) -- cycle;
             \draw (A) -- (B) -- (C) -- (D) -- cycle;
             \fill (A) circle (2pt);
             \fill (B) circle (2pt);
@@ -580,8 +580,95 @@ b$.
             \fill (H) circle (2pt);
 
             % Draw arrow to signify the mapping G
-            \draw[->, thick, >=stealth] ($(G1)+(0.1,0.1)$) to[bend left] node[midway, above, yshift=0.1cm] {$\mathcal{G}$} ($(G2)+(-0.2,0.2)$);
+            \draw[->, thick, >=stealth] ($(G1)+(0.3,0.1)$) to[bend left] node[midway, above, yshift=0.1cm] {$\mathcal{G}$} ($(G2)+(-0.2,0.2)$);
         \end{tikzpicture}
+    }
+    \\
+    \hfill
+    \subfloat[]{
+        \begin{tikzpicture}[scale=1.0]
+            % Define the Reference tetra
+            \coordinate (A) at (0,0);
+            \coordinate (B) at (1,0);
+            \coordinate (C) at (0,1);
+            \coordinate (D) at (0.7,0.7);
+            \coordinate (G1) at (1/3,1/3);
+
+            \fill[red!65] (A) -- (B) -- (C) -- cycle;
+            \fill[red!30] (D) -- (B) -- (C) -- cycle;
+            \draw (A) -- (B) -- (C) -- cycle;
+            \draw (D) -- (B) -- (C) -- cycle;
+            \draw[dashed] (A) -- (D);
+            \fill (A) circle (2pt);
+            \fill (B) circle (2pt);
+            \fill (C) circle (2pt);
+            \fill (D) circle (2pt);
+
+
+            % Define the Translated tetra
+            \coordinate (A') at ($(A) + (2,0)$);
+            \coordinate (B') at ($(B) + (2,0)$);
+            \coordinate (C') at ($(C) + (2.6, 0.6)$);
+            \coordinate (D') at ($(D) + (2.5, 0.2)$);
+
+            \fill[blue!65] (A') -- (B') -- (C') -- cycle;
+            \fill[blue!30] (D') -- (B') -- (C') -- cycle;
+            \draw (A') -- (B') -- (C') -- cycle;
+            \draw (D') -- (B') -- (C') -- cycle;
+            \draw[dashed] (A') -- (D');
+            \fill (A') circle (2pt);
+            \fill (B') circle (2pt);
+            \fill (C') circle (2pt);
+            \fill (D') circle (2pt);
+
+            % Draw arrow to signify the mapping G
+            \draw[->, thick, >=stealth] ($(G1)+(0.6,0.2)$) to[bend left] node[midway, above, yshift=0.1cm] {$\mathcal{G}$} ($(D')+(-0.6,0.1)$);
+        \end{tikzpicture}
+    }
+    \hfill
+    \subfloat[]{
+        \begin{tikzpicture}[scale=1.0]
+    % Define the Reference cube
+    \coordinate (A) at (0,0);
+    \coordinate (B) at (1,0);
+    \coordinate (C) at (1,1);
+    \coordinate (D) at (0,1);
+    \coordinate (E) at (0.3,0.3);
+    \coordinate (F) at (1.3,0.3);
+    \coordinate (G) at (1.3,1.3);
+    \coordinate (H) at (0.3,1.3);
+
+    \fill[red!65] (A) -- (B) -- (C) -- (D) -- cycle;
+    \fill[red!45] (D) -- (H) -- (G) -- (C) -- cycle;
+    \fill[red!30] (B) -- (C) -- (G) -- (F) -- cycle;
+    \draw (A) -- (B) -- (C) -- (D) -- cycle;
+    \draw (A) -- (E) -- (F) -- (B);
+    \draw (D) -- (H) -- (G) -- (C);
+    \draw[dashed] (E) -- (H);
+    \draw[dashed] (F) -- (G);
+
+    % Define the Translated cube
+    \coordinate (A') at ($(A) + (3.3, 0.0)$);
+    \coordinate (B') at ($(B) + (3.3, 0.0)$);
+    \coordinate (C') at ($(C) + (3.3, 0.0)$);
+    \coordinate (D') at ($(D) + (3.3, 0.0)$);
+    \coordinate (E') at ($(E) + (2.2, 0.3)$);
+    \coordinate (F') at ($(F) + (2.2, 0.3)$);
+    \coordinate (G') at ($(G) + (2.2, 0.3)$);
+    \coordinate (H') at ($(H) + (2.2, 0.3)$);
+
+    \fill[blue!65] (A') -- (B') -- (C') -- (D') -- cycle;
+    \fill[blue!30] (D') -- (H') -- (G') -- (C') -- cycle;
+    \fill[blue!45] (D') -- (A') -- (E') -- (H') -- cycle;
+    \draw (A') -- (B') -- (C') -- (D') -- cycle;
+    \draw (A') -- (E') -- (F') -- (B');
+    \draw (D') -- (H') -- (G') -- (C');
+    \draw[dashed] (E') -- (H');
+    \draw[dashed] (F') -- (G');
+
+    % Draw arrow to signify the mapping G
+    \draw[->, thick, >=stealth] ($(A)+(0.8,0.5)$) to[bend left] node[midway, above, yshift=0.1cm] {$\mathcal{G}$} ($(A')+(-0.5,0.8)$);
+\end{tikzpicture}
     }
     \caption{Illustration of affine mapping $\mathcal{G} : \hat{T} \to T $ }
 \end{figure}
