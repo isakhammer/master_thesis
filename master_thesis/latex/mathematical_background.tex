@@ -779,6 +779,196 @@ Hence, affine meshes is essential for the error analysis which utilize the inter
 % A consequence of this is that classical methods are not able to approximate curved boundaries for quadrilatural elements unless nonaffine interpolation estimates is provided.
 
 
+\subsection{Cléments interpolation}%
+\label{ssub:clement_operator}
+
+\begin{figure}[h!]
+\begin{minipage}{.5\linewidth}
+\centering
+\subfloat[]{
+    \label{fig:macroelements:a}
+    \begin{tikzpicture}[scale=0.5]
+        % Arbitrary triangle
+        \coordinate (A1) at (0,0);
+        \coordinate (B1) at (4,1);
+        \coordinate (C1) at (1,3);
+        \fill [red!30] (A1) -- (B1) -- (C1) -- cycle;
+        \draw (A1) -- (B1) -- (C1) -- cycle;
+
+        % Centroid
+        \coordinate (ai) at (barycentric cs:A1=1,B1=1,C1=1);
+        \fill (ai) circle (2pt);
+        \node[anchor=north west] at (ai) {$a_i$};
+
+        % Reference triangle
+        \coordinate (A2) at ($(A1) + (6, 0)$);
+        \coordinate (B2) at ($(A2) + (0, 3)$);
+        \coordinate (C2) at ($(A2) + (3, 0)$);
+        \fill [blue!30] (A2) -- (B2) -- (C2) -- cycle;
+        \draw (A2) -- (B2) -- (C2) -- cycle;
+
+        % Centroid of the reference triangle
+        \coordinate (ahi) at (barycentric cs:A2=1,B2=1,C2=1);
+        \fill (ahi) circle (2pt);
+        \node[anchor=north west] at (ahi) {$\hat{a}_{j( i)} $};
+
+        \draw[->, thick, >=stealth] ($(ahi)+(0.2,+0.2)$) to[bend right] node[midway, above] {$G_{A_i}$} ($(ai)+(0.2,+0.3)$);
+
+    \end{tikzpicture}
+}
+\end{minipage}%
+\begin{minipage}{.5\linewidth}
+\centering
+\subfloat[]{
+    \label{fig:macroelements:b}
+    \begin{tikzpicture}[scale=0.5]
+    % Arbitrary square
+    \coordinate (A1) at (0,0);
+    \coordinate (B1) at (3,1);
+    \coordinate (C1) at (4,4);
+    \coordinate (D1) at (1,3);
+    \draw (A1) -- (B1) -- (C1) -- (D1) -- cycle;
+    \fill[red!30] (A1) -- (B1) -- (C1) -- (D1) -- cycle;
+
+    % Draw edge from D1 to B1
+    \draw (D1) -- (B1);
+
+    % Pick a point on the edge and label it as a_i
+    \coordinate (a_i) at ($(D1)!.6!(B1)$);
+    \fill (a_i) circle (2pt);
+    \node[anchor=north] at (a_i) {$a_i$};
+
+    % Reference equilateral triangle
+    \coordinate (A2) at ($(A1) + (6, 0)$);
+    \coordinate (B2) at ($(A2) + (2, 3.464)$); % 3.464 = 2 * sqrt(3)
+    \coordinate (C2) at ($(A2) + (4, 0)$);
+    \fill[blue!30] (A2) -- (B2) -- (C2) -- cycle;
+    \draw (A2) -- (B2) -- (C2) -- cycle;
+
+    % Divide the equilateral triangle into two right triangles
+    \coordinate (M) at ($(A2)!.5!(C2)$);
+    \draw (B2) -- (M);
+
+    % Pick a point on the shared edge and label it as ahat_i
+    \coordinate (ahat_i) at ($(B2)!.7!(M)$);
+    \fill (ahat_i) circle (2pt);
+    \node[anchor=north west] at (ahat_i) {$\hat{a}_{j( i)} $};
+
+    % Draw the mapping G_{A_i} from ahat_i to a_i
+    \draw[->, thick, >=stealth] ($(ahat_i)+(0.2,0.2)$) to[bend right] node[midway, above] {$G_{A_i}$} ($(a_i)+(0.2,0.2)$);
+\end{tikzpicture}
+}
+\end{minipage}\par\medskip
+\centering
+\subfloat[]{
+    \label{fig:macroelements:c}
+ \begin{tikzpicture}[scale=0.5]
+
+    % Central vertex a_i
+    \coordinate (ah_i) at (0, 0);
+
+    % Reference hexagon
+    \foreach \angle in {0, 60, ..., 300} {
+        \coordinate (A) at (\angle:2.5);
+        \coordinate (B) at (\angle + 60:2.5);
+        \fill[blue!30] (ah_i) -- (A) -- (B) -- cycle;
+        \draw (ah_i) -- (A) -- (B) -- cycle;
+    }
+
+    \fill (ah_i) circle (2pt);
+    \node[anchor=east, yshift=0.25cm] at (ah_i) {$\hat{a}_{j( i) }$};
+
+    \coordinate (A1) at (5, 0);
+    \coordinate (B1) at (8, 0);
+    \coordinate (C1) at (8, 3);
+    \coordinate (D1) at (7, 4);
+    \coordinate (E1) at (3.5, 4);
+    \coordinate (F1) at (3, 2);
+    \fill[red!30] (A1) -- (B1) -- (C1) -- (D1) -- (E1) -- (F1) -- cycle;
+    \draw (A1) -- (B1) -- (C1) -- (D1) -- (E1) -- (F1) -- cycle;
+
+    \coordinate (ai) at (barycentric cs:A1=1,B1=1,C1=1,D1=1,E1=1,F1=1);
+    % Draw lines from vertices to a_i
+    \draw (A1) -- (ai);
+    \draw (B1) -- (ai);
+    \draw (C1) -- (ai);
+    \draw (D1) -- (ai);
+    \draw (E1) -- (ai);
+    \draw (F1) -- (ai);
+    % Centroid
+    \fill (ai) circle (2pt);
+    \node[anchor=south, yshift=0.2cm] at (ai) {$a_i$};
+
+    \draw[->, thick, >=stealth] ($(ah_i)+(0.2,- 0.2)$) to[bend right] node[midway, above, yshift=0.1cm] {$G_{A_i}$} ($(ai)+(-0.2,-0.2)$);
+
+\end{tikzpicture}
+}
+
+\caption{Illustration of the different cases when mapping from the reference macroelement $\widehat{A}_{j( i) }$  to the domain $A_{i}$,  $G_{A_{i}}: \widehat{A}_{j( i) } \to A_{i}$. Here we have defined $\hat{a}_{j(i)} \in \widehat{A}_{j(i)}$ s.t. $G( \hat{a}_{j( i) })
+= a_i$. }
+
+\label{fig:macroelements}
+\end{figure}
+
+
+We want to compute the expected convergence rate of the energy norm \eqref{eq:bi_Ah_norm}. An important tool in the process is the Cléments interpolation operator, $C_{h}$.
+It is used for interpolation on non smooth functions by applying an regularization on so-called macroelements. Let us denote the $\mathcal{P}_{c}^{k}( \Omega )  $ to be an $H^{1}$ conformal polynomial space. We denote $\left\{ a_{1}, \ldots, a_{N}
+\right\} $ to be the Lagrange nodes. Associated with each node $a_{i}$ we denote the macroelement $A_{i}$ to consist of all simplices containing $a_{i}$. Let $n_{cf}$ be the number of configurations for the macroelement, then we define the index $j:
+\left\{ 1,\ldots,N \right\} \to \left\{ 1, \ldots, n_{cf} \right\}  $ s.t. $j( i) $ is the index associated with the reference configuration $\widehat{A}_{j(i) }$ for corresponding macroelement $A_{i}$ for an illustration, see
+Figure \ref{fig:macroelements}.
+
+Let us define a $C^{0}$-diffeomorphism $G_{A_{i}}:
+\widehat{A}_{j( i) } \to A_{i}$ s.t. for all $\widehat{T} \in \widehat{A}_{j( i) } $ is the restriction $G_{A_{i}  \mid \widehat{T}}$ affine. The Cléments interpolation operator $C_{h}$ is defined as a $L^2$-projection onto the macroelements. That is, given
+a reference macroelement $\widehat{A}_{j( i) }$ and a function $\hat{v} \in L^{1}( \widehat{A}_{j( i) })  $, then $\widehat{C}_{j( i) } \hat{v}$  is the unique polynomial in $\mathcal{P}^{k} ( \widehat{A}_{j( i) })  $ s.t. \[
+\int_{  \widehat{A}_{j( i) }}^{} ( \widehat{C}_{j( i) } \hat{v} - \hat{v}) p \ dx  = 0 \quad  \forall p \in \mathcal{P}^{k} ( \widehat{A}_{j( i) })
+\]
+Finally, we define the Cléments interpolator $C_{h} : L^{1}( \Omega )  \to \mathcal{P} ^{k}_{c}(\Omega  ) $ s.t.
+\[
+C_{h} v = \sum_{i=1}^{N} \widehat{C}_{j( i) } ( v (G_{A_{i}}) (G^{-1}_{A_{i}}(a_{i})) )\phi _{i},
+\]
+where $\phi _{i}$ is the corresponding polynomial basis at node $a_{i}$.
+
+Recall the general Sobolev norm notation,
+\[
+\| u \|_{ m,p,T }^{  } = \left( \sum_{ \left\lvert \alpha  \right\rvert \le m}^{} \int_{T}^{}  \left\lvert  \partial ^{\alpha } u \right\rvert^{p} dx   \right)^{\frac{1}{2}}
+\]
+where we use the convenient notation $\| u \|_{L^2(T) }^{  } = \| u \|_{ T  }^{  } = \| u \|_{ 0,2,T  }^{  } $ and similarly $\| u \|_{ H^r( T )  }^{  } = \| u \|_{ r,T  }^{  } = \| u \|_{ r,2,T  }^{  }  $.
+
+
+Finally, we have the following lemma
+
+\begin{lemma}
+    \label{lemma:clements}
+
+We define the Clement interpolation as the projection
+$C_{h}: H^{m} \left( \Omega  \right) \mapsto V_{h}$, where $V_{h}$ has the order $k$. Then does the following stability estimate hold,
+\[
+ \| C_{h} v \|_{H^{m}\left( \Omega  \right)   }^{  } \lesssim \| v \|_{ H^{m}\left( \Omega  \right)  }^{  } \quad \forall v \in H^{m}\left( \Omega  \right),
+\]
+and if the following conditions for an parameter $l$ is satisfied, it exists error estimates s.t.,
+\[
+    \begin{split}
+      m\le l \le k+1  \implies \| v - C_{h} v \|_{ m,p,T   }^{  }  &  \lesssim h^{l-m}_{T} \| v \|_{l,p,\omega \left( T \right)  }^{  } \quad  \forall T \in \mathcal{T} _{h}, \forall v \in H^{l}( \omega \left( T \right)
+      ), \\
+      m +\frac{1}{2}\le l \le k+1  \implies \| v - C_{h} v \|_{ m,p,F }^{  } & \lesssim h^{l-m- \frac{1}{2}}_{T} \| v \|_{l,p,\omega \left( F \right)  }^{  } \quad  \forall \partial T \in \mathcal{T} _{h}, \forall v \in H^{l}( \omega \left( F
+      \right)).
+    \end{split}
+\]
+
+\end{lemma}
+
+
+\begin{corollary}
+    \label{cor:celement_apriori}
+    Let $0 \le l \le k+1$ and let $0\le m \le \min_{} ( 1,l )$.
+    Given Lemma \ref{lemma:clements}  then there exists an $C > 0$ s.t.
+    \[
+    \inf_{v_{h} \in \mathcal{P} ^{k}_{c}( \Omega ) } \| v - v_{h} \|_{  m,p,\Omega }^{  } \le C h^{l-m}  \| v \|_{ l,p,\Omega  }^{  }    \forall v \in W_{l,p}( \Omega ).
+    \]
+\end{corollary}
+This result is very useful since it is now sufficient to show that a priori estimates holds given to prove convergence rate. For further detailed information about the Cléments interpolation, please investigate \cite[Chapter 1.6]{ern04}.
+We will use these estimates to compute convergence rate given that Ceas' Lemma holds.
+
 
 
 
