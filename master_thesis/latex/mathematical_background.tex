@@ -781,6 +781,8 @@ Hence, affine meshes is essential for the error analysis which utilize the inter
 
 \subsection{Cléments interpolation}%
 \label{ssub:clement_operator}
+Our goal is to to utilize interpolation estimates to compute convergence rates. An important tool in the process is the so-called Cléments interpolation operator, $C_{h}$.
+It is used for interpolation on non smooth functions by applying an regularization on so-called macroelements. However, we need to define affine operations on so-called macroelements before we can proceed with the error estimates.
 
 A patch for a element $\omega \left( T \right) $ is denoted as the set of elements in $\mathcal{T} _{h}$  sharing at least one vertex with $T \in \mathcal{T} _{h}$. Similarly,  a patch of a facet $\omega \left( F \right) $ is defined as the set of all elements in $\mathcal{T}_{h} $
 sharing at least one vertex with $F \in  \mathcal{F} _{h}$. For an illustrative example of patches in a two-dimensional triangular mesh, please refer to Figure \ref{fig:example_patch}.
@@ -868,7 +870,7 @@ sharing at least one vertex with $F \in  \mathcal{F} _{h}$. For an illustrative 
     \label{fig:example_patch}%
 \end{figure}
 
-\begin{figure}[bh!]
+\begin{figure}[b]
 \begin{minipage}{.5\linewidth}
 \centering
 \subfloat[]{
@@ -997,14 +999,14 @@ sharing at least one vertex with $F \in  \mathcal{F} _{h}$. For an illustrative 
 \end{figure}
 
 
-Our goal is to to utilize interpolation estimates to compute convergence rates. An important tool in the process is the so-called Cléments interpolation operator, $C_{h}$.
-It is used for interpolation on non smooth functions by applying an regularization on so-called macroelements. Let us denote the $\mathcal{P}_{c}^{k}( \Omega )  $ to be an $H^{1}$ conformal polynomial space. We denote $\left\{ a_{1}, \ldots, a_{N}
-\right\} $ to be the Lagrange nodes. Associated with each node $a_{i}$ we denote the macroelement $A_{i}$ to consist of all simplices containing $a_{i}$. Let $n_{cf}$ be the number of configurations for the macroelement, then we define the index $j:
-\left\{ 1,\ldots,N \right\} \to \left\{ 1, \ldots, n_{cf} \right\}  $ s.t. $j( i) $ is the index associated with the reference configuration $\widehat{A}_{j(i) }$ for corresponding macroelement $A_{i}$ for an illustration, see
+ Recall the nodes  $\left\{ a_{i}\right\}_{i\in N}$ to be the Lagrange nodes on one or more elements in $\mathcal{T}_{h}$. Associated with each node $a_{i}$ we denote the macroelement $A_{i}$ to consist of all elements containing $a_{i}$. Let $n_{cf}$ be the number of configurations for the macroelement, then we define the index $j:
+\left\{ 1,\ldots,N \right\} \to \left\{ 1, \ldots, n_{cf} \right\}  $ s.t. $j( i) $ is the index associated with the reference configuration $\widehat{A}_{j(i) }$ for corresponding macroelement $A_{i}$.
+Let us define a $C^{0}$-diffeomorphism $\mathcal{G}_{A_{i}}:
+\widehat{A}_{j( i) } \to A_{i}$ on the reference macroelements such that for all $\hat{T} \in \widehat{A}_{j( i) } $ is the restriction $\mathcal{G} _{A_{i}}|_{ \hat{T} }$ affine. For an illustration of the reference
+macroelement $\widehat{A}_{j( i) }$ and how it related to $a_{i}$ , see
 Figure \ref{fig:macroelements}.
 
-Let us define a $C^{0}$-diffeomorphism $G_{A_{i}}:
-\widehat{A}_{j( i) } \to A_{i}$ s.t. for all $\widehat{T} \in \widehat{A}_{j( i) } $ is the restriction $G_{A_{i}  \mid \widehat{T}}$ affine. The Cléments interpolation operator $C_{h}$ is defined as a $L^2$-projection onto the macroelements. That is, given
+The Cléments interpolation operator $C_{h}$ is defined as a $L^2$-projection onto the macroelements. That is, given
 a reference macroelement $\widehat{A}_{j( i) }$ and a function $\hat{v} \in L^{1}( \widehat{A}_{j( i) })  $, then $\widehat{C}_{j( i) } \hat{v}$  is the unique polynomial in $\mathcal{P}^{k} ( \widehat{A}_{j( i) })  $ s.t. \[
 \int_{  \widehat{A}_{j( i) }}^{} ( \widehat{C}_{j( i) } \hat{v} - \hat{v}) p \ dx  = 0 \quad  \forall p \in \mathcal{P}^{k} ( \widehat{A}_{j( i) })
 \]
