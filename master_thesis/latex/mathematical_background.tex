@@ -273,8 +273,8 @@ The finite element method (FEM) is a numerical method to solve partial different
 $\mathcal{T} _{h}$. We say that a method is conform if $X_{h}\subset X $ and non-conform if $X _{h} \not\subset X$. We define the approximate problem as follows.
 \begin{problem}[The approximate problem]
     \label{def:approx_problem}
-    Find  $u \in X_{h}$ s.t. \[
-    a_{h}(u,v ) = \left<f,v \right>   \forall v \in X_{h}
+    Find  $u_{h} \in X_{h}$ s.t. \[
+    a_{h}(u_{h},v ) = \left<f,v \right>   \forall v \in X_{h}
     \]
 \end{problem}
 
@@ -320,7 +320,7 @@ As anticipated, the local node configuration of the polynomial space, denoted as
 element as $\mathcal{P} ^{k}(T )$ and $\mathcal{Q} ^{k}( T)$, both of polynomial order $k$. In Figure \ref{fig:ill_nodes} is it illustrated for  $k=1,2,3$ in dimension $d=2$ on how the node configuration evolve.
 
 
-\begin{figure}[hb!]
+\begin{figure}[h!]
     \centering
     \hfill
     \subfloat[$\mathcal{P}^{1}( T)  $]{
@@ -505,17 +505,17 @@ element as $\mathcal{P} ^{k}(T )$ and $\mathcal{Q} ^{k}( T)$, both of polynomial
             \fill (P) circle (2pt);
         \end{tikzpicture}
         }
-        \caption{Illustration of the nodes for the element of either a simplex or a quadrilateral for dimension $d=2$.}
+        \caption{Illustration of the nodes for the element of a simplex a quadrilateral for dimension $d=2$ for polynomial orders $k=1,2,3$.}
         \label{fig:ill_nodes}
 \end{figure}
 
 
-We may introduce the reference element $\hat{T} $ in $d$ dimensions. The reference for a quadrilatural is denoted as $\hat{T} = [0,1]^{d}$. The reference for a simplex in  is defined by the convex hull spanned by the points $( z_{0}, e_{1}, \ldots, e_{d}) $ where $z_{0}:=0$ is the origin and $ \left\{ e_{i}
+We may introduce the reference element $\hat{T} $ in $d$ dimensions. The reference for a quadrilateral is denoted as $\hat{T} = [0,1]^{d}$. The reference for a simplex in  is defined by the convex hull spanned by the points $( z_{0}, e_{1}, \ldots, e_{d}) $ where $z_{0}:=0$ is the origin and $ \left\{ e_{i}
 \right\}_{i=1}^{d} $ is the standard Cartesian basis in $ \mathbb{R} ^{d} $. A corresponding reference finite element is defined as $( \hat{T}, \hat{\mathcal{P} }, \hat{\Sigma}   ) $.
 
 
 
-\begin{figure}[h!]
+\begin{figure}[th!]
     \centering
     \hspace{-2.2cm}  % Adjust the space as necessary
     \subfloat[]{
@@ -674,12 +674,10 @@ We may introduce the reference element $\hat{T} $ in $d$ dimensions. The referen
 
 Let the mapping $\mathcal{G} : \hat{T} \to  T$ as the affine
 mapping, i.e. $\mathcal{G}(x) = Ax +
-b$. For an illustration see Figure \ref{fig:affine_mapping}.
-
-
+b$.
 The important property of affine transformations is the preservation of parallelism. This means that for any two vectors $x,y \in  \hat{T}$ that are parallel in the reference triange, then their images $\mathcal{G}(x)  $  and $\mathcal{G}( y)  $ will
 also be parallel. Generally speaking, an affine transformation of the reference simplex is a transformation to any another simplex of the same dimension. However, for any quadrilateral, an affine transformation preserves the parallelism of opposite
-sides. Hence, any quadrilateral transforms into another quadrilateral where pairs of opposite sides remain parallel, For a counter example, see Figure \ref{fig:nonaffine}.
+sides, for an illustration see Figure \ref{fig:affine_mapping} and for a counter example see Figure \ref{fig:nonaffine}.
 
 \begin{figure}[h!]
     \centering
@@ -761,3 +759,7 @@ sides. Hence, any quadrilateral transforms into another quadrilateral where pair
     \caption{Illustration of an affine mapping $\mathcal{G}: \hat{T} \mapsto T$  versus a non-affine transformation. The left figure preserves parallel lines before and after the transformation, indicating an affine transformation. However, the right figure does not maintain parallelism, making it a non-affine transformation.}
     \label{fig:nonaffine}
 \end{figure}
+
+
+
+Hence, this is motivating us to work with structured mesh.
