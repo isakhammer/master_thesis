@@ -294,31 +294,36 @@ In this report will we generally specify any discrete space $X_{h}(\mathcal{T}_{
 
 \begin{definition}[Local polynomial space]
     \label{def:local_space}
-    Let $T$ be a element in a mesh $\mathcal{T}_{h} $,  $x = \left[ x_{1}, \ldots, x_{d} \right] $ be a vector, and $\alpha  = \left[ \alpha _{1}, \ldots, \alpha _{d} \right] $ be a multi index.
-    The local polynomial space $\mathcal{P} ^{k}( T) $ is denoted as
+    Let $T$ be a element in a mesh $\mathcal{T}_{h} $,  $x = \left[ x_{1}, \ldots, x_{d} \right] $ be a vector, and $\alpha  = \left[ \alpha _{1}, \ldots, \alpha _{d} \right] \in \mathbb{N} ^{d} $ be a multi index.
+    The local polynomial space $\mathcal{P} ^{k}( T) $ for a simplex is denoted as
     \begin{equation}
     \label{eq:pol_space}
         \mathcal{P}^{k}( T) =  \mathrm{span}\left\{ x^{\alpha } \ \text{for } x \in T \text{ and } 0 \le  \alpha _{i} \le k \right\}.
     \end{equation}
     where  $x^{\alpha }$ is a monomial such that $x^{\alpha } = x_{1}^{\alpha _{1}} \ldots x_{d}^{\alpha _{d}}$.
 
+    Let $T$ be a cuboid, i.e.,  $T = \prod_{i=1}^{d} [z_{i}^{-},z_{i}^{+}]$ where $z_{i}^{-}< z_{i}^{+}$ for $z_{i}^{\pm} \in \mathbb{R} $. Then do we define the polynomial space $\mathcal{Q}^{k}( T)$  in $\mathbb{R} ^{d}$ as the tensor product of 1-dimensional
+    finite elements, i.e.,
+      \[
+    \mathcal{Q} _{k}(T)  := \mathcal{P}^{k}( [z_{1}^{-},z_{1}^{+}] ) \otimes \ldots \otimes \mathcal{P}^{k}( [z_{d}^{-},z_{d}^{+}] )
+    \]
 \end{definition}
 
 Following Ciarlet \cite[pp.93]{ciarlet1991basic}, the abstract definition of a finite element is defined as the triplet $( T, \mathcal{P}, \Sigma ) $. In our case is $T$ a simplex or a quadrilateral geometry and the $\mathcal{P} $ a finite dimensional polynomial space consisting of $N$ shape
 functions $\left\{ \phi_{i}  \right\}_{i\in N} $ such as \eqref{eq:pol_space}.
 On the other hand, $\Sigma $ is the so-called dual of $\mathcal{P}$, that is, the set of linear forms $\left\{ \sigma _{i} \right\} $ such that. $ \sigma_{j} ( \phi_{i} ) = \delta _{ij}$ and $p( x) = \sum_{i\in N}^{} \sigma_{i} ( p) p_{i} $.
-
 If there is a set of points $\left\{ a_{i} \right\}_{i \in N} $  in $T$ such that
 $\sigma_{i}( p) = p( a_{i}) \  \forall p \in \mathcal{P}$,  then the triple $( T, \mathcal{P}, \Sigma  ) $ is called a Lagrangian finite element. The set of points $\left\{ a_{i} \right\}_{i \in N}  $ is called nodes and is associated with the
 so-called nodal basis of $\mathcal{P} $ such that  $\phi ( a_{i}) = \delta _{ij} \ \forall i,j  \in N$
-As anticipated, the node configuration of the polynomial space, denoted as $\mathcal{P}^{k}( T)$, is influenced by the form of $T$. For the purpose of our discussion, let us represent the polynomial basis for a simplicial element and a quadrilateral
-element as $\mathbb{P} ^{k}(T )$ and $\mathbb{Q} ^{k}( T)$, both of polynomial order $k$. In Figure \ref{fig:ill_nodes} is it illustrated for  $k=1,2,3$ in dimension $d=2$ on how the node configuration evolve.
+
+As anticipated, the local node configuration of the polynomial space, denoted as $\mathcal{P}^{k}( T)$, is influenced by the form of $T$. For the purpose of our discussion, let us represent the polynomial basis for a simplicial element and a quadrilateral
+element as $\mathcal{P} ^{k}(T )$ and $\mathcal{Q} ^{k}( T)$, both of polynomial order $k$. In Figure \ref{fig:ill_nodes} is it illustrated for  $k=1,2,3$ in dimension $d=2$ on how the node configuration evolve.
 
 
 \begin{figure}[hb!]
     \centering
     \hfill
-    \subfloat[$\mathbb{P}^{1}( T)  $]{
+    \subfloat[$\mathcal{P}^{1}( T)  $]{
         \begin{tikzpicture}[scale=1.0]
             % Define the coordinates
             \coordinate (A) at (0,0);
@@ -335,7 +340,7 @@ element as $\mathbb{P} ^{k}(T )$ and $\mathbb{Q} ^{k}( T)$, both of polynomial o
         \end{tikzpicture}
     }
     \hfill
-    \subfloat[ $\mathbb{P}^{2}( T)  $]{
+    \subfloat[ $\mathcal{P}^{2}( T)  $]{
         \begin{tikzpicture}[scale=1.0]
             % Define the coordinates
             \coordinate (A) at (0,0);
@@ -360,7 +365,7 @@ element as $\mathbb{P} ^{k}(T )$ and $\mathbb{Q} ^{k}( T)$, both of polynomial o
         \end{tikzpicture}
     }
     \hfill
-    \subfloat[$\mathbb{P} ^{3}( T)  $ ]{
+    \subfloat[$\mathcal{P} ^{3}( T)  $ ]{
         \begin{tikzpicture}[scale=1.0]
             % Define the coordinates
             \coordinate (A) at (0,0);
@@ -397,7 +402,7 @@ element as $\mathbb{P} ^{k}(T )$ and $\mathbb{Q} ^{k}( T)$, both of polynomial o
     }
     \\
     \hfill
-    \subfloat[$\mathbb{Q}^{1}( T)  $]{
+    \subfloat[$\mathcal{Q}^{1}( T)  $]{
         \begin{tikzpicture}[scale=1.0]
             % Define the coordinates
             \coordinate (A) at (0,0);
@@ -416,7 +421,7 @@ element as $\mathbb{P} ^{k}(T )$ and $\mathbb{Q} ^{k}( T)$, both of polynomial o
         \end{tikzpicture}
     }
     \hfill
-    \subfloat[ $\mathbb{Q} ^{2}( T)  $]{
+    \subfloat[ $\mathcal{Q} ^{2}( T)  $]{
         \begin{tikzpicture}[scale=1.0]
             % Define the coordinates
             \coordinate (A) at (0,0);
@@ -449,7 +454,7 @@ element as $\mathbb{P} ^{k}(T )$ and $\mathbb{Q} ^{k}( T)$, both of polynomial o
     }
     % And so on for $\mathcal{P}^{3}( S)  $, $\mathcal{P}^{4}( S)  $, etc.
     \hfill
-    \subfloat[ $\mathbb{Q} _{3}( T)  $]{
+    \subfloat[ $\mathcal{Q} _{3}( T)  $]{
         \begin{tikzpicture}[scale=1.0]
             % Define the coordinates
             \coordinate (A) at (0,0);
