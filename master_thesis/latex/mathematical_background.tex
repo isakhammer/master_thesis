@@ -1057,9 +1057,29 @@ and if the following conditions for an parameter $l$ is satisfied, it exists err
 This result is very useful since it is now sufficient to show that a priori estimates holds to prove convergence rate. For further detailed information about the Cléments interpolation, please investigate \cite[Chapter 1.6]{ern04}.
 We will use these estimates to compute convergence rate given that Ceas' Lemma holds.
 
-\subsection{Cea's Lemma}%
-\label{sub:cea_s_lemma}
+\subsection{Ceas' Lemma}%
+\label{sub:ceas_lemma}
 
-
+Assume that we have a problem that satisfies the Lax-Milgram theorem and let $X _{h} \subseteq  X $ be the discrete polynomial space. We transition the problem to find a solution, $u_{h} \in  \mathcal{V}_{h}$, so it holds that $a\left( u_{h},v_{h} \right)  = l\left( v_{h} \right) \ \  \forall v_{h} \in X _{h} $.
+Since the method is conform, i.e., $X _{h} \subseteq  X $, does it exists a exact solution, $u \in  \mathcal{V}$, such that \(
+a \left( u, v_{h} \right)  = l\left( v_{h} \right)  \ \  \forall v_{h} \in  X _{h}.
+\)
+Furthermore, the problem is said to be strongly consistent since it fulfills the Galerkin orthogonality property, that is $ a\left( u -u_{h} , v_{h} \right)  =0$. thus, if $u_{h},v_{h} \in  X _{h}$, then
+\begin{equation}
+\label{eq:cealemma_proof}
+    \begin{split}
+\alpha \| u -u_{h} \|_{ X  }^{ 2 } & \le  a\left( u - u_{h}, u - u_{h}  \right)    \\
+&= a\left( u - u_{h}, u -v_{h} \right) - a\left( u -u_{h}, v_{h} - u_{h} \right)  \\
+ &  \le  M \| u - u_{h} \|_{ X  }^{  }  \| u - v_{h} \|_{ X  }^{  }
+    \end{split}
+.\end{equation}
+Hence, we now have the so-called Ceas' lemma, \[
+\| u - u_{h} \|_{ X  }^{  }  \le  \frac{M}{\alpha } \inf_{v_{h} \in X_{h} } \|  v_{h} - u \|_{X  }^{  }.
+\]
+A useful property is that for a conformal numerical method to converge can we now simply require \[
+\lim_{h \to 0}  \inf_{v_{h} \in  X_{h}}  \| v - v_{h} \|_{ X  }^{  } = 0 \quad  \forall v \in \mathcal{V}.
+\]
+In that case will $\| u - u_{h} \|_{ \mathcal{V}  }^{  }  \to  0$, $h \to  0$. Hence, if this requirement is fulfilled, the numerical methods will converge to a unique solution.
+For more information, see \cite{quartdiff}.
 
 
