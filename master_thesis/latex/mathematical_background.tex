@@ -511,9 +511,9 @@ element as $\mathcal{P} ^{k}(T )$ and $\mathcal{Q} ^{k}( T)$, both of polynomial
 
 
 We may introduce the reference element $\hat{T} $ in $d$ dimensions. The reference for a quadrilatural is denoted as $\hat{T} = [0,1]^{d}$. The reference for a simplex in  is defined by the convex hull spanned by the points $( z_{0}, e_{1}, \ldots, e_{d}) $ where $z_{0}:=0$ is the origin and $ \left\{ e_{i}
-\right\}_{i=1}^{d} $ is the standard Cartesian basis in $ \mathbb{R} ^{d} $. A corresponding reference finite element is defined as $( \hat{T}, \hat{\mathcal{P} }, \hat{\Sigma}   ) $. Let the mapping $\mathcal{G} : \hat{T} \to  T$ as the affine
-mapping, i.e. $\mathcal{G}(x) = Ax +
-b$.
+\right\}_{i=1}^{d} $ is the standard Cartesian basis in $ \mathbb{R} ^{d} $. A corresponding reference finite element is defined as $( \hat{T}, \hat{\mathcal{P} }, \hat{\Sigma}   ) $.
+
+
 
 \begin{figure}[h!]
     \centering
@@ -669,6 +669,95 @@ b$.
     \draw[->, thick, >=stealth] ($(A)+(0.8,0.5)$) to[bend left] node[midway, above, yshift=0.1cm] {$\mathcal{G}$} ($(A')+(-0.5,0.8)$);
 \end{tikzpicture}
     }
-    \caption{Illustration of affine mapping $\mathcal{G} : \hat{T} \to T $ }
-    \label{fig:affine_mapping}
+    \caption{Illustration of affine mapping $\mathcal{G} : \hat{T} \to T $ in dimensions $d=2,3$ from a reference element $\hat{T}$  to element $T$ for simplexes and and quadrilaterals.  } \label{fig:affine_mapping}
+\end{figure}
+
+Let the mapping $\mathcal{G} : \hat{T} \to  T$ as the affine
+mapping, i.e. $\mathcal{G}(x) = Ax +
+b$. For an illustration see Figure \ref{fig:affine_mapping}.
+
+
+The important property of affine transformations is the preservation of parallelism. This means that for any two vectors $x,y \in  \hat{T}$ that are parallel in the reference triange, then their images $\mathcal{G}(x)  $  and $\mathcal{G}( y)  $ will
+also be parallel. Generally speaking, an affine transformation of the reference simplex is a transformation to any another simplex of the same dimension. However, for any quadrilateral, an affine transformation preserves the parallelism of opposite
+sides. Hence, any quadrilateral transforms into another quadrilateral where pairs of opposite sides remain parallel, For a counter example, see Figure \ref{fig:nonaffine}.
+
+\begin{figure}[h!]
+    \centering
+    \hspace{-2.2cm}  % Adjust the space as necessary
+    \subfloat[]{
+        \begin{tikzpicture}[scale=1.0]
+            % Define the Reference quadrilateral
+            \coordinate (A) at (0,0);
+            \coordinate (B) at (1,0);
+            \coordinate (C) at (1,1);
+            \coordinate (D) at (0,1);
+            \coordinate (G1) at (0.5,0.5);
+
+            \fill[red!30] (A) -- (B) -- (C) -- (D) -- cycle;
+            \draw (A) -- (B) -- (C) -- (D) -- cycle;
+            \fill (A) circle (2pt);
+            \fill (B) circle (2pt);
+            \fill (C) circle (2pt);
+            \fill (D) circle (2pt);
+
+            % Define the arbitrary quadrilateral
+            \coordinate (E) at (2,0);
+            \coordinate (F) at (3,0);
+            \coordinate (G) at (3.5,1);
+            \coordinate (H) at (2.5,1);
+            \coordinate (G2) at (2.5,0.5);
+
+            \fill[blue!30] (E) -- (F) -- (G) -- (H) -- cycle;
+            \draw (E) -- (F) -- (G) -- (H) -- cycle;
+            \fill (E) circle (2pt);
+            \fill (F) circle (2pt);
+            \fill (G) circle (2pt);
+            \fill (H) circle (2pt);
+
+            % Draw arrow to signify the mapping G
+            \draw[->, thick, >=stealth] ($(G1)+(0.3,0.1)$) to[bend left] node[midway, above, yshift=0.1cm] {$\mathcal{G}$} ($(G2)+(-0.2,0.2)$);
+        \end{tikzpicture}
+    }
+    \hspace{2.0cm}  % Adjust the space as necessary
+    \subfloat[]{
+        \begin{tikzpicture}[scale=1.0]
+            % Define the Reference quadrilateral
+            \coordinate (A) at (0,0);
+            \coordinate (B) at (1,0);
+            \coordinate (C) at (1,1);
+            \coordinate (D) at (0,1);
+            \coordinate (G1) at (0.5,0.5);
+
+            \coordinate (R1) at (1.5,0.7);
+            \coordinate (R2) at (1.4,1.0);
+
+            \fill[red!30] (A) -- (B) -- (C) -- (D) -- cycle;
+            \draw (A) -- (B) -- (C) -- (D) -- cycle;
+            \draw[very thick] (R1) -- (R2);
+            \fill (A) circle (2pt);
+            \fill (B) circle (2pt);
+            \fill (C) circle (2pt);
+            \fill (D) circle (2pt);
+
+            % Define the arbitrary quadrilateral
+            \coordinate (E) at (2,0);
+            \coordinate (F) at (3.5,0);
+            \coordinate (G) at (3.0,1);
+            \coordinate (H) at (2.5,1);
+            \coordinate (G2) at (2.5,0.5);
+
+            \fill[blue!30] (E) -- (F) -- (G) -- (H) -- cycle;
+            \draw (E) -- (F) -- (G) -- (H) -- cycle;
+            \fill (E) circle (2pt);
+            \fill (F) circle (2pt);
+            \fill (G) circle (2pt);
+            \fill (H) circle (2pt);
+
+            % Draw arrow to signify the mapping G
+            \draw[->, thick, >=stealth] ($(G1)+(0.3,0.1)$) to[bend left] node[midway, above, yshift=0.1cm] {$\mathcal{G}$} ($(G2)+(-0.2,0.2)$);
+
+        \end{tikzpicture}
+    }
+    \caption{Illustration of an affine mapping $\mathcal{G}: \hat{T} \mapsto T$  versus a non-affine transformation. The left figure preserves parallel lines before and after the transformation, indicating an affine transformation. However, the right figure does not maintain parallelism, making it a non-affine transformation.}
+    \label{fig:nonaffine}
 \end{figure}
