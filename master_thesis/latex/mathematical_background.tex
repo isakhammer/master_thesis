@@ -332,6 +332,7 @@ element as $\mathcal{P} ^{k}(T )$ and $\mathcal{Q} ^{k}( T)$, both of polynomial
 
             % Draw the triangle
             \fill[blue!30] (A) -- (B) -- (C) -- cycle;
+            \draw (A) -- (B) -- (C) -- cycle;
 
             % Draw the nodes
             \fill (A) circle (2pt);
@@ -354,6 +355,7 @@ element as $\mathcal{P} ^{k}(T )$ and $\mathcal{Q} ^{k}( T)$, both of polynomial
 
             % Draw the triangle
             \fill[blue!30] (A) -- (B) -- (C) -- cycle;
+            \draw (A) -- (B) -- (C) -- cycle;
 
             % Draw the nodes
             \fill (A) circle (2pt);
@@ -384,8 +386,8 @@ element as $\mathcal{P} ^{k}(T )$ and $\mathcal{Q} ^{k}( T)$, both of polynomial
             \coordinate (J) at (1, {sqrt(3)/3});
 
             % Draw the triangle
-            \draw (A) -- (B) -- (C) -- cycle;
             \fill[blue!30] (A) -- (B) -- (C) -- cycle;
+            \draw (A) -- (B) -- (C) -- cycle;
 
             % Draw the nodes
             \fill (A) circle (2pt);
@@ -412,6 +414,7 @@ element as $\mathcal{P} ^{k}(T )$ and $\mathcal{Q} ^{k}( T)$, both of polynomial
 
             % Draw the square
             \fill[blue!30] (A) -- (B) -- (C) -- (D) -- cycle;
+            \draw (A) -- (B) -- (C) -- (D) -- cycle;
 
             % Draw the nodes
             \fill (A) circle (2pt);
@@ -439,6 +442,7 @@ element as $\mathcal{P} ^{k}(T )$ and $\mathcal{Q} ^{k}( T)$, both of polynomial
 
             % Draw the square
             \fill[blue!30] (A) -- (B) -- (C) -- (D) -- cycle;
+            \draw (A) -- (B) -- (C) -- (D) -- cycle;
 
             % Draw the nodes
             \fill (A) circle (2pt);
@@ -479,8 +483,8 @@ element as $\mathcal{P} ^{k}(T )$ and $\mathcal{Q} ^{k}( T)$, both of polynomial
             \coordinate (P) at ($(I)+(0,1.332)$);
 
             % Draw the square
-            \draw (A) -- (B) -- (C) -- (D) -- cycle;
             \fill[blue!30] (A) -- (B) -- (C) -- (D) -- cycle;
+            \draw (A) -- (B) -- (C) -- (D) -- cycle;
 
             % Draw the nodes
             \fill (A) circle (2pt);
@@ -511,3 +515,73 @@ We may introduce the reference element $\hat{T} $ in $d$ dimensions. The referen
 mapping, i.e. $\mathcal{G}(x) = Ax +
 b$.
 
+\begin{figure}[hb!]
+    \centering
+    \hfill
+    \subfloat[]{
+        \begin{tikzpicture}[scale=1.0]
+            % Define the Reference triange
+            \coordinate (A) at (0,0);
+            \coordinate (B) at (1,0);
+            \coordinate (C) at (0,1);
+            \coordinate (G1) at (1/3,1/3);
+
+            \fill[blue!30] (A) -- (B) -- (C) -- cycle;
+            \draw (A) -- (B) -- (C) -- cycle;
+            \fill (A) circle (2pt);
+            \fill (B) circle (2pt);
+            \fill (C) circle (2pt);
+
+            % Define the arbitary triange
+            \coordinate (D) at (2,0);
+            \coordinate (E) at (4,0);
+            \coordinate (F) at (3,{sqrt(2)});
+            \coordinate (G2) at (3, {sqrt(3)/3});
+
+            \fill[blue!30] (D) -- (E) -- (F) -- cycle;
+            \draw (D) -- (E) -- (F) -- cycle;
+            \fill (D) circle (2pt);
+            \fill (E) circle (2pt);
+            \fill (F) circle (2pt);
+
+            % Draw arrow to signify the mapping G
+            \draw[->, thick, >=stealth] ($(G1)+(0.2,0.2)$) to[bend left] node[midway, above, yshift=0.1cm] {$\mathcal{G}$} ($(G2)+(-0.2,0.2)$);
+        \end{tikzpicture}
+    }
+    \hfill
+    \subfloat[]{
+        \begin{tikzpicture}[scale=1.0]
+            % Define the Reference quadrilateral
+            \coordinate (A) at (0,0);
+            \coordinate (B) at (1,0);
+            \coordinate (C) at (1,1);
+            \coordinate (D) at (0,1);
+            \coordinate (G1) at (0.5,0.5);
+
+            \fill[blue!30] (A) -- (B) -- (C) -- (D) -- cycle;
+            \draw (A) -- (B) -- (C) -- (D) -- cycle;
+            \fill (A) circle (2pt);
+            \fill (B) circle (2pt);
+            \fill (C) circle (2pt);
+            \fill (D) circle (2pt);
+
+            % Define the arbitrary quadrilateral
+            \coordinate (E) at (2,0);
+            \coordinate (F) at (4,0);
+            \coordinate (G) at (4,2);
+            \coordinate (H) at (2,2);
+            \coordinate (G2) at (3,1);
+
+            \fill[blue!30] (E) -- (F) -- (G) -- (H) -- cycle;
+            \draw (E) -- (F) -- (G) -- (H) -- cycle;
+            \fill (E) circle (2pt);
+            \fill (F) circle (2pt);
+            \fill (G) circle (2pt);
+            \fill (H) circle (2pt);
+
+            % Draw arrow to signify the mapping G
+            \draw[->, thick, >=stealth] ($(G1)+(0.1,0.1)$) to[bend left] node[midway, above, yshift=0.1cm] {$\mathcal{G}$} ($(G2)+(-0.2,0.2)$);
+        \end{tikzpicture}
+    }
+    \caption{Illustration of affine mapping $\mathcal{G} : \hat{T} \to T $ }
+\end{figure}
