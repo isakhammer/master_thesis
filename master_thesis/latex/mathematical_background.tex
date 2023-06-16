@@ -308,6 +308,7 @@ In this report will we generally specify any discrete space $X_{h}(\mathcal{T}_{
     \mathcal{Q} _{k}(T)  := \mathcal{P}^{k}( [z_{1}^{-},z_{1}^{+}] ) \otimes \ldots \otimes \mathcal{P}^{k}( [z_{d}^{-},z_{d}^{+}] )
     \]
 \end{definition}
+For more information about the local polynomial spaces, see \cite[Chapter 6.4, 7.3]{ErnGuermond2021}
 
 Following Ciarlet \cite[pp.93]{ciarlet1991basic}, the abstract definition of a finite element is defined as the triplet $( T, \mathcal{P}, \Sigma ) $. In our case is $T$ a simplex or a quadrilateral geometry and the $\mathcal{P} $ a finite dimensional polynomial space consisting of $N$ shape
 functions $\left\{ \phi_{i}  \right\}_{i\in N} $ such as \eqref{eq:pol_space}.
@@ -318,7 +319,6 @@ so-called nodal basis of $\mathcal{P} $ such that  $\phi ( a_{i}) = \delta _{ij}
 
 As anticipated, the local node configuration of the polynomial space, denoted as $\mathcal{P}^{k}( T)$, is influenced by the form of $T$. For the purpose of our discussion, let us represent the polynomial basis for a simplicial element and a quadrilateral
 element as $\mathcal{P} ^{k}(T )$ and $\mathcal{Q} ^{k}( T)$, both of polynomial order $k$. In Figure \ref{fig:ill_nodes} is it illustrated for  $k=1,2,3$ in dimension $d=2$ on how the node configuration evolve.
-
 
 \begin{figure}[h!]
     \centering
@@ -511,7 +511,7 @@ element as $\mathcal{P} ^{k}(T )$ and $\mathcal{Q} ^{k}( T)$, both of polynomial
 
 
 We may introduce the reference element $\hat{T} $ in $d$ dimensions. The reference for a quadrilateral is denoted as $\hat{T} = [0,1]^{d}$. The reference for a simplex in  is defined by the convex hull spanned by the points $( z_{0}, e_{1}, \ldots, e_{d}) $ where $z_{0}:=0$ is the origin and $ \left\{ e_{i}
-\right\}_{i=1}^{d} $ is the standard Cartesian basis in $ \mathbb{R} ^{d} $. A corresponding reference finite element is defined as $( \hat{T}, \hat{\mathcal{P} }, \hat{\Sigma}   ) $.
+\right\}_{i=1}^{d} $ is the standard Cartesian  unit basis in $ \mathbb{R} ^{d} $. A corresponding reference finite element is defined as $( \hat{T}, \hat{\mathcal{P} }, \hat{\Sigma}   ) $.
 
 
 
@@ -760,6 +760,20 @@ sides, for an illustration see Figure \ref{fig:affine_mapping} and for a counter
     \label{fig:nonaffine}
 \end{figure}
 
+Following \cite[Example 9.4]{ErnGuermond2021}, the $ ( \hat{T}, \hat{\mathcal{P} }, \hat{\Sigma} ) $ is denoted as the reference finite element associated with the nodes $\left\{ \hat{a}_{i} \right\}_{i\in N} $. Let the mapping $\psi $ be function in $\mathcal{L}( \mathcal{P} ^{k}( T), \mathcal{P} ^{k}(\hat{T}
+)  )  $ such that is an isomorphic from  $ \psi : \mathcal{P} ^{k}( T) \to \mathcal{P} ^{k}( \hat{T})   $.  Then $\sigma ( p) = \hat{\sigma }( \psi ( p) ) (a_{i} )  = ( p \circ \mathcal{G} )( \hat{a}_{i})      $ for all $p \in \mathcal{P}^{k}( T)  $.
+Then the Lagrange interpolation,  \[
+    p (x) = \sum_{i \in \mathcal{N} }^{} \sigma ( a_{i}) \theta_{i}( x) \quad \text{for } a_{i} = \mathcal{G}( \hat{a}_{i}) \quad  \forall i \in N     .
+\]
+Hence, the finite element $( T, \mathcal{P}, \Sigma  ) $ is reconstructed via the reference finite element $( \hat{T}, \hat{\mathcal{P} }, \hat{\Sigma} ) $ associated with the notes $\left\{ a_{i} \right\}_{i\in N} $.
+Thus, using the affine transformation can the definition of the local polynomial space be extended to dependent on the reference element. That is, \[
+    \begin{split}
+\mathcal{P}^{k}( T) & = \left\{ \hat{v} \circ  \mathcal{G}^{-1}( T)   \mid  \hat{v} \in \mathcal{P}^{k}( \hat{T})      \right\} \\
+\mathcal{Q}^{k}( T) & = \left\{ \hat{v} \circ  \mathcal{G}^{-1}( T)     \mid  \hat{v} \in \mathcal{Q}^{k}( \hat{T})      \right\} \\
+    \end{split}
+\]
+Working on shape-regular and affine geometries has shown to greatly simplify and generalise local interpolation estimates, see \cite[Theorem 11.12]{ErnGuermond2021}, and thus is very useful for deriving a priori estimates. Note that it exists
+workaround for proving nonaffine local interpolation estimates, but the necessarrly key assumptions on the relationship between the nodes $a_{i}$ and the regularity of mapping $\mathcal{G} $, then you can read \cite[Chapter 13]{ErnGuermond2021}.
 
+Hence, affine meshes is essential for the error analysis which utilize the interpolation estimates, but it limits us to work on structure mesh if we work on quadrilatural meshes.
 
-Hence, this is motivating us to work with structured mesh.
