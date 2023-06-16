@@ -765,7 +765,7 @@ Following \cite[Example 9.4]{ErnGuermond2021}, the $ ( \hat{T}, \hat{\mathcal{P}
 Then the Lagrange interpolation,  \[
     p (x) = \sum_{i \in \mathcal{N} }^{} \sigma ( a_{i}) \theta_{i}( x) \quad \text{for } a_{i} = \mathcal{G}( \hat{a}_{i}) \quad  \forall i \in N     .
 \]
-Hence, the finite element $( T, \mathcal{P}, \Sigma  ) $ is reconstructed via the reference finite element $( \hat{T}, \hat{\mathcal{P} }, \hat{\Sigma} ) $ associated with the notes $\left\{ a_{i} \right\}_{i\in N} $.
+Hence, the finite element $( T, \mathcal{P}, \Sigma  ) $, associated with the notes $\left\{ a_{i} \right\}_{i\in N} $, is reconstructed via the reference finite element $( \hat{T}, \hat{\mathcal{P} }, \hat{\Sigma} ) $.
 Thus, using the affine transformation can the definition of the local polynomial space be extended to dependent on the reference element. That is, \[
     \begin{split}
 \mathcal{P}^{k}( T) & = \left\{ \hat{v} \circ  \mathcal{G}^{-1}( T)   \mid  \hat{v} \in \mathcal{P}^{k}( \hat{T})      \right\} \\
@@ -997,7 +997,7 @@ sharing at least one vertex with $F \in  \mathcal{F} _{h}$. For an illustrative 
 \end{figure}
 
 
-We want to compute the expected convergence rate of the energy norm \eqref{eq:bi_Ah_norm}. An important tool in the process is the Cléments interpolation operator, $C_{h}$.
+Our goal is to to utilize interpolation estimates to compute convergence rates. An important tool in the process is the so-called Cléments interpolation operator, $C_{h}$.
 It is used for interpolation on non smooth functions by applying an regularization on so-called macroelements. Let us denote the $\mathcal{P}_{c}^{k}( \Omega )  $ to be an $H^{1}$ conformal polynomial space. We denote $\left\{ a_{1}, \ldots, a_{N}
 \right\} $ to be the Lagrange nodes. Associated with each node $a_{i}$ we denote the macroelement $A_{i}$ to consist of all simplices containing $a_{i}$. Let $n_{cf}$ be the number of configurations for the macroelement, then we define the index $j:
 \left\{ 1,\ldots,N \right\} \to \left\{ 1, \ldots, n_{cf} \right\}  $ s.t. $j( i) $ is the index associated with the reference configuration $\widehat{A}_{j(i) }$ for corresponding macroelement $A_{i}$ for an illustration, see
