@@ -32,14 +32,14 @@ We want to construct a weak form for the strong BH problem \eqref{eq:bi_problem}
 \left( \Delta ^2 u,v \right) _{ \Omega  }   = ( \partial _{n} \Delta u, v ) _{\Gamma   } - ( \nabla \left( \Delta  u \right) , \nabla v ) _{ \Omega }
 \).
 Applying a new iteration of the Greens theorem we get
-$ -( \nabla ( \Delta u ) , \nabla v ) _{\Omega  }  =   ( \Delta u, \Delta v ) _{\Omega } - ( \partial _{n}v , \Delta v)_{\Gamma } $.
+$ -( \nabla ( \Delta u ) , \nabla v ) _{\Omega  }  =   ( \Delta u, \Delta v ) _{\Omega } - ( \Delta u, \partial _{n}v )_{\Gamma } $.
 Hence, we obtain the identity
 \begin{equation}
 \label{eq:iden_bi}
 ( \Delta ^2 u, v ) _{\Omega } = ( \Delta u, \Delta v)_{\Omega } +  ( \partial _{n} \Delta u, v)_{\Gamma } - ( \partial _{n} v, \Delta u) _{\Gamma }
 \end{equation}
-Taking into account the boundary conditions do we end up with the following corresponding weak formulation of the biharmonic problem \eqref{eq:bi_problem}.
-Find a $u \in H^2( \Omega ) $ s.t. $a( u,v) = l( v)  \forall v \in H^{2}( \Omega )  $ where
+Taking into account the boundary conditions, we end up with the following corresponding weak formulation of the biharmonic problem \eqref{eq:bi_problem}.
+Find a $u \in H^2( \Omega ) $ such that $a( u,v) = l( v)  \forall v \in H^{2}( \Omega )  $ where
   \[
       \begin{split}
 a( u,v) & =  ( \alpha u,v)_{\Omega } + ( \Delta u, \Delta v)_{\Omega } +  ( \partial _{n} \Delta u, v)_{\Gamma } - ( \partial _{n} v, \Delta u) _{\Gamma } - ( \partial _{n} u, \Delta v) _{\Gamma }\\
