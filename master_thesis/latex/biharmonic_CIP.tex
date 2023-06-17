@@ -23,22 +23,22 @@ Here is $\Delta ^2 = \Delta  \left( \Delta  \right) $ the biharmonic operator, a
 $. The functions $g_{1},g_{2}: \Omega  \to \mathbb{R}$ are denoted as boundary conditions similar to the CH problem.
 
 \begin{remark}
-It is worth noting that the problem is closely related to the Kirchhoff's plate problem by changing the boundary conditions s.t. $u = \partial _{n } u = 0$ on $\Gamma $, which is in the literature known as so-called clamped boundary conditions.
+It is worth noting that the problem is closely related to the Kirchhoff's plate problem by changing the boundary conditions such that $u = \partial _{n } u = 0$ on $\Gamma $, which is in the literature known as so-called clamped boundary conditions.
 Many of the papers we refer to may consider clamped boundary condition and not the CH boundary conditions. The main difference relies on if the problem is treated with homogeneous or non-homogeneous boundary conditions and if the discrete space is
 imposing the Dirichlet and Neumann conditions strongly in the discrete solution space or weakly using the Nitsche's method \cite{nitsche1971variationsprinzip}.
 \end{remark}
 
-We want to construct a weak form for the strong BH problem \eqref{eq:bi_problem}. Let $v \in H_{2}( \Omega ) $  Using Greens Theorem is it obvious that \(
+We want to construct a weak form for the strong BH problem \eqref{eq:bi_problem}. Let $v \in H^{2}( \Omega ) $  Using Greens Theorem is it obvious that \(
 \left( \Delta ^2 u,v \right) _{ \Omega  }   = ( \partial _{n} \Delta u, v ) _{\Gamma   } - ( \nabla \left( \Delta  u \right) , \nabla v ) _{ \Omega }
 \).
-Now doing a new iteration of the Greens theorem we get
+Applying a new iteration of the Greens theorem we get
 $ -( \nabla ( \Delta u ) , \nabla v ) _{\Omega  }  =   ( \Delta u, \Delta v ) _{\Omega } - ( \partial _{n}v , \Delta v)_{\Gamma } $.
-Hence, we have the identity s.t.
+Hence, we obtain the identity
 \begin{equation}
 \label{eq:iden_bi}
 ( \Delta ^2 u, v ) _{\Omega } = ( \Delta u, \Delta v)_{\Omega } +  ( \partial _{n} \Delta u, v)_{\Gamma } - ( \partial _{n} v, \Delta u) _{\Gamma }
 \end{equation}
-Taking account for the boundary conditions do we end up with the following corresponding weak problem to the BH problem \eqref{eq:bi_problem}.
+Taking into account the boundary conditions do we end up with the following corresponding weak formulation of the biharmonic problem \eqref{eq:bi_problem}.
 Find a $u \in H^2( \Omega ) $ s.t. $a( u,v) = l( v)  \forall v \in H^{2}( \Omega )  $ where
   \[
       \begin{split}
@@ -247,7 +247,7 @@ Where integration over all interior facets $ \forall F \in \mathcal{F}_{h}^{int}
 .\end{equation*}
 Observe that the cancellations in the term $(I)$ and term $(III)$  appears of the continuity of $v\in V $ and $u\in H^{4}( \Omega ) $ which makes the jumps and derivative jumps zero. On the other hand, the second term $(II)$  is does not vanish since the discontinuity in normal vector for $v \in V$ is a jump. It can also be raised that $\mean{
 \partial _{nn} u } = \partial _{nn} u  $ holds by the continuity of $H^{4}( \Omega  ) $.
-Hence, we have the following identity.
+Hence, we obtain the following identity.
 \begin{equation}
 \label{eq:bi_basic_dg_full_1}
 \begin{split}
@@ -294,7 +294,7 @@ Hence, the Hessian formulation is derived.
 Utilizing \eqref{eq:iden_bi} can we construct a local identity s.t. \[
 ( \Delta ^2 u, v ) _{T} = ( \Delta u, \Delta v) +  ( \partial _{n} \Delta u, v)_{\partial T} - ( \partial _{n} v, \Delta u) _{\partial T}
 \]
-Now, doing a summation over all elements we get \[
+Now, summing over all elements we get \[
     \begin{split}
 ( \Delta ^2 u, v ) _{\Omega } & = \sum_{T \in \mathcal{T}_{h} }^{}  ( \Delta u, \Delta v)_{T}
 +  ( \partial _{n} \Delta u, v)_{\partial T} - ( \partial _{n} v, \Delta u) _{\partial T} \\
@@ -371,7 +371,7 @@ Now we want to relate this formulation to the abstract saddle point problem (SPP
 Let $V = H^{1}( \Omega ) $  and $W=H^{1}( \Omega ) $ be  Hilbert spaces and define the bilinear form $a: V\times V \to \mathbb{R}  $ and $b: V \times W \to \mathbb{R} $ s.t. $a( \sigma,v ) = - ( \sigma , v) _{\Omega }  $ and $b( u,v) = ( \nabla u,
 \nabla v)_{\Omega  }  $. We also may define the linear forms, $G,F: V \to \mathbb{R} $ s.t. $ G( v)  = ( g_{1}, v) _{\Gamma } $ and $F( \varphi ) = ( f, \varphi )_{\Omega } + ( g_{2}, \varphi )_{\Gamma } $.
 
-Hence, we have the following SPP. Find $( u,\sigma ) \in V \times W$ s.t.  \[
+Hence, we obtain the following SPP. Find $( u,\sigma ) \in V \times W$ s.t.  \[
     \begin{cases}
        a( \sigma ,v) + b ( u, v )  & = G( v)   \quad  \forall v \in V \\
        b( u, \varphi  )  & = F( \varphi )     \quad \forall \phi \in W
