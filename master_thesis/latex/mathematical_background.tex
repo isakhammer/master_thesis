@@ -785,14 +785,15 @@ where $N$ is the total degrees of freedom. Let $u_{j} = u_{h}\left( N_{j} \right
 \]
 Hence, by letting $\mathbf{u} = \left[ u_{j} \right] $ , $\mathbf{f} = \left[ \left( f, \varphi _{i}  \right) _{\Omega } \right] $  and $A = \left[ a_{h}\left( \phi _{j}, \phi _{i} \right)  \right] $ can we construct a linear system, \( A
 \mathbf{u} =\mathbf{f} \).
-Ultimately, the matrix $A$ is shown to be symmetric and positive definite only if $a_{h}( \cdot ,\cdot ) $ is symmetric and coercive, \cite[Theorem 4.1]{quartdiff}.
+Ultimately, the matrix $A$ is shown to be symmetric and positive definite only if $a_{h}( \cdot ,\cdot ) $ is well-posed.
 
 To summarize the workflow.
 
 \begin{enumerate}[label=\arabic*)]
+    \item Strong formulation: Find $u \in X$ such that  $ \mathcal{A} u = f   $.
     \item Abstract linear problem: Find $u \in X$ such that  $a( u,v) = l( v) \  \forall v \in V  $.
     \item Discrete linear problem: Find $u \in X_{h}$ such that  $a_{h}( u,v) = l( v) \  \forall v \in V_{h}  $.
-    \item Linear System: Find $u \in X_{h}$ such that  $ A \mathbf{u} = \mathbf{f}$.
+    \item Linear system of equations: Solve $ A \mathbf{u} = \mathbf{f}$.
 \end{enumerate}
 
 \subsection{Cléments interpolation}%
