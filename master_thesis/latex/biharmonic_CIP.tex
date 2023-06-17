@@ -1,11 +1,15 @@
 
-\section{Continuous interior penalty biharmonic problem with Cahn-Hilliard type boundary conditions}%
+\section{Continuous interior penalty methods for the biharmonic problem with Cahn-Hilliard type boundary conditions}%
 \label{sec:CIP_biharmonic_problem}
+
+One of the objective of this section is to discuss the strong formulation for the biharmonic problem (BH).
+Following this, we will present both the continuous weak formulation and the derivation of the two proposed discrete weak formulations, specifically the continuous interior penalty methods.
+We then present a short discussion of the current status of the properties of the methods.
 
 \subsection{The biharmonic problem with C-H boundary conditions}%
 \label{sub:the_biharmonic_problem_with_c_h_boundary_conditions}
 
-Recall the biharmonic problem.
+Recall the BH problem.
 Let $\Omega \subseteq    \mathbb{R} ^d$ be a bounded polygonal domain and $\Gamma $ be its corresponding boundary. Also let $\mathcal{T}_{h} = \left\{ T \right\} $ be a shape-regular fitted mesh s.t. $\mathcal{T}_{h} = \Omega $. Let the BH problem have the form,
 \begin{equation}
 \label{eq:bi_problem}
@@ -19,7 +23,7 @@ Here is $\Delta ^2 = \Delta  \left( \Delta  \right) $ the biharmonic operator, a
 $. The functions $g_{1},g_{2}: \Omega  \to \mathbb{R}$ are denoted as boundary conditions similar to the CH problem.
 
 \begin{remark}
-It is worth noting that the BH problem is closely related to the Kirchhoff's plate problem by changing the boundary conditions s.t. $u = \partial _{n } u = 0$ on $\Gamma $, which is in the literature known as so-called clamped boundary conditions.
+It is worth noting that the problem is closely related to the Kirchhoff's plate problem by changing the boundary conditions s.t. $u = \partial _{n } u = 0$ on $\Gamma $, which is in the literature known as so-called clamped boundary conditions.
 Many of the papers we refer to may consider clamped boundary condition and not the CH boundary conditions. The main difference relies on if the problem is treated with homogeneous or non-homogeneous boundary conditions and if the discrete space is
 imposing the Dirichlet and Neumann conditions strongly in the discrete solution space or weakly using the Nitsche's method \cite{nitsche1971variationsprinzip}.
 \end{remark}
