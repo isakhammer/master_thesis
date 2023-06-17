@@ -22,15 +22,10 @@ product of two functions $u,v \in L^{2}\left( \Omega  \right) $ such that
     $
 \left( u,v \right) _{\Omega } = \left( u,v \right) _{L^2\left( \Omega  \right) } = \int_{\Omega }^{} u  v dx.
 $
-The following definition for derivatives is employed,
-\begin{equation}
-\label{eq:mixed_derivative}
-\partial ^{\alpha  } u = \frac{\partial ^{\left\lvert \alpha  \right\rvert } u}{ \partial ^{\alpha _{1} } x_{1} \partial ^{\alpha _{2}} x_{2}  }, \quad \text{for } \alpha=\left( \alpha _{1}, \alpha _{2} \right) \text{ and } f \in C^{\left\lvert \alpha  \right\rvert }
-\left( \Omega  \right)
-.\end{equation}
+The following definition for derivatives is employed.
 For $d$ dimensions of order $k$ we define the multi-index $\alpha  = ( \alpha _{1}, \ldots, \alpha _{d})  $ with the absolute value $\abs{ \alpha  } = \sum_{i=1}^{d}  \alpha _{i} = k $ s.t.
 \[
-\partial ^{\alpha} u = \frac{\partial ^{ \alpha_{1}  }  } {\partial^{} x_{1}^{\alpha _{1}}  } \ldots \frac{\partial ^{ \alpha_{d}  }  } {\partial^{} x_{d}^{\alpha _{d}}  } u
+\partial ^{\alpha} u = \frac{\partial ^{ \alpha_{1}  }  } {\partial^{} x_{1}^{\alpha _{1}}  } \ldots \frac{\partial ^{ \alpha_{d}  }  } {\partial^{} x_{d}^{\alpha _{d}}  } u \quad  \text{for }u \in C^{\left\lvert \alpha  \right\rvert }( \Omega )
 \]
 
   Let $m\ge 0$ be an integer and let $1 \le  p \le  \infty$ be a real number. Then the Sobolev space $H^{m}( \Omega ) $ are defined by
@@ -773,8 +768,8 @@ sides, for an illustration see Figure \ref{fig:affine_mapping} and for a counter
 
 Following \cite[Example 9.4]{ErnGuermond2021}, the $ ( \hat{T}, \hat{\mathcal{P} }, \hat{\Sigma} ) $ is denoted as the reference finite element associated with the nodes $\left\{ \hat{a}_{i} \right\}_{i\in N} $. Let the mapping $\psi $ be function in $\mathcal{L}( \mathcal{P} ^{k}( T), \mathcal{P} ^{k}(\hat{T}
 )  )  $ such that is an isomorphic from  $ \psi : \mathcal{P} ^{k}( T) \to \mathcal{P} ^{k}( \hat{T})   $.  Then $\sigma ( p) = \hat{\sigma }( \psi ( p) ) (a_{i} )  = ( p \circ \mathcal{G} )( \hat{a}_{i})      $ for all $p \in \mathcal{P}^{k}( T)  $.
-Then the Lagrange interpolation,  \[
-    p (x) = \sum_{i \in \mathcal{N} }^{} \sigma ( a_{i}) \theta_{i}( x) \quad \text{for } a_{i} = \mathcal{G}( \hat{a}_{i}) \quad  \forall i \in N     .
+Then the Lagrange interpolation follows,  \[
+    p (x) = \sum_{i \in N }^{} \sigma ( a_{i}) \phi_{i}( x) \quad \text{for } a_{i} = \mathcal{G}( \hat{a}_{i}) \quad  \forall i \in N     .
 \]
 Hence, the finite element $( T, \mathcal{P}, \Sigma  ) $, associated with the notes $\left\{ a_{i} \right\}_{i\in N} $, is reconstructed via the reference finite element $( \hat{T}, \hat{\mathcal{P} }, \hat{\Sigma} ) $.
 Thus, using the affine transformation can the definition of the local polynomial space be extended to dependent on the reference element. That is, \[
