@@ -791,16 +791,16 @@ Ultimately, the matrix $A$ is shown to be symmetric and positive definite only i
                     arrow/.style={thick,->,>=stealth}
                     ]
 \node (sf) [box1] {Find $u \in V$ such that $\mathcal{A} u = f$};
-\node[left=0.5cm of sf,font=\bfseries, align=right] {Strong Formulation:};
+\node[left=0.5cm of sf,font=\bfseries, align=right] {Strong formulation:};
 
 \node (alp) [box2, below of=sf] {Find $u \in V$ such that $a(u,v) = l(v) \  \forall v \in V$};
-\node[left=0.5cm of alp,font=\bfseries, align=right] {Abstract Linear Problem:};
+\node[left=0.5cm of alp,font=\bfseries, align=right] {Abstract weak problem:};
 
 \node (dlp) [box3, below of=alp] {Find $u \in V_{h}$ such that $a_{h}(u,v) = l(v) \  \forall v \in V_{h}$};
-\node[left=0.5cm of dlp,font=\bfseries, align=right] {Discrete Linear Problem:};
+\node[left=0.5cm of dlp,font=\bfseries, align=right] {Discrete weak problem:};
 
 \node (lse) [box4, below of=dlp] {Solve $A \mathbf{u} = \mathbf{f}$};
-\node[left=0.5cm of lse,font=\bfseries, align=right] {Linear System of Equations:};
+\node[left=0.5cm of lse,font=\bfseries, align=right] {Linear system of equations:};
 
 \draw [arrow] (sf) -- (alp);
 \draw [arrow] (alp) -- (dlp);
