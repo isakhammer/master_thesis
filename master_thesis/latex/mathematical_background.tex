@@ -230,29 +230,28 @@ We will discover that Sobolev spaces are specifically engineered to study these 
 
 \begin{definition}[Linear bounded functional]
     \label{def:linear_function}
-Let $X$ be a Hilbert space. Furthermore, we define the dual space $X' $ to be the space of linear and bounded functionals $F: X  \mapsto \mathbb{R} $, i.e., \[
-X'  = \left\{ F: X \to \mathbb{R}   \mid  F \text{ is linear and bounded} \right\}
+Let $V$ be a Hilbert space. Furthermore, we define the dual space $V' $ to be the space of linear and bounded functionals $F: V  \mapsto \mathbb{R} $, i.e., \[
+V'  = \left\{ F: V \to \mathbb{R}   \mid  F \text{ is linear and bounded} \right\}
 \]
 \end{definition}
 
 \begin{problem}[Abstract linear problem]
     \label{def:abstract_linear_problem}
-    Assume $X$ and $Y$  to be two Hilbert spaces. Let the vector space $\mathcal{L}( X,Y)  $ be all linear bounded operators spanned from $X$ to $Y$. We define the abstract linear problem as follows; find $u \in X$ s.t. \[
-    a( u,v)  = l(v ) := \left<f,v \right>_{X' , X}  \forall v \in X
+    Assume $X$ and $Y$  to be two Hilbert spaces. Let the vector space $\mathcal{L}( X,Y)  $ be all linear bounded operators spanned from $V$ to $Y$. We define the abstract linear problem as follows; find $u \in V$ s.t. \[
+    a( u,v)  = l(v ) := \left<f,v \right>_{V' , V}  \forall v \in V
     \]
-    Where $a \in  \mathcal{L} ( X, X,\mathbb{R} ) $ is a bounded bilinear form and $f \in X':= \mathcal{L} ( X,\mathbb{R} )  $ is a bounded linear form associated with the abstract strong formulation \eqref{eq:strong_abs}. Here we denote by $\left<\cdot ,\cdot  \right>_{X' .X} $ the duality pairing between $X' $ and $X
-    $.
+    Where $a \in  \mathcal{L} ( V, V,\mathbb{R} ) $ is a bounded bilinear form and $f \in V':= \mathcal{L} ( V,\mathbb{R} )  $ is a bounded linear form associated with the abstract strong formulation \eqref{eq:strong_abs}. Here we denote by $\left<\cdot ,\cdot  \right>_{V',V} $ the duality pairing between $V'$ and $V$.
 
 \end{problem}
 
 
 \begin{definition}[Coercivity and Boundedness]
     \label{def:coercivity}
-    Let $X$ be a Hilbert space and let $a( \cdot ,\cdot )  \in  \mathcal{L} ( X, X,\mathbb{R} )  $. Recall that the bilinear form $a( \cdot ,\cdot ) $ is coercive on $X$ if there exists an constant $C_{1} > 0 $ such that \[
-     a( v,v) \ge  C_{2} \| v \|_{ X }^{  } \quad  \forall v \in  X
+    Let $V$ be a Hilbert space and let $a( \cdot ,\cdot )  \in  \mathcal{L} ( V, V,\mathbb{R} )  $. Recall that the bilinear form $a( \cdot ,\cdot ) $ is coercive on $X$ if there exists an constant $C_{1} > 0 $ such that \[
+     a( v,v) \ge  C_{2} \| v \|_{ V }^{  } \quad  \forall v \in  V
     \]
      The bilinear form $a( \cdot ,\cdot ) $ is said to bounded if there exists an constant $C_{2}$  \[
-    a( u,v)  \le C_{1} \| u \|_{ X }^{  }  \| v \|_{X }^{  }
+    a( u,v)  \le C_{1} \| u \|_{ V }^{  }  \| v \|_{V }^{  }
     \]
 \end{definition}
 
@@ -260,7 +259,7 @@ X'  = \left\{ F: X \to \mathbb{R}   \mid  F \text{ is linear and bounded} \right
 \begin{lemma}[Lax-Milgram]
     \label{def:lax-milgram}
     The abstract linear problem \ref{def:abstract_linear_problem} is well-posed if $a(\cdot , \cdot  ) $ is bounded and coercive. Moreover, the following a priori estimate holds true.\[
-    \| v \|_{ X }^{  } \lesssim  \| f \|_{ X'  }^{  }
+    \| v \|_{ V }^{  } \lesssim  \| f \|_{ V'  }^{  }
     \]
 \end{lemma}
 \begin{proof}
@@ -273,17 +272,17 @@ X'  = \left\{ F: X \to \mathbb{R}   \mid  F \text{ is linear and bounded} \right
 \label{sub:finite_element_method}
 
 
-The finite element method (FEM) is a numerical method to solve partial differential equation by finding an approximation of the Problem \ref{def:abstract_linear_problem}.  Let $X_{h}$ be a finite-dimensional (polynomial) approximation space on the mesh
-$\mathcal{T} _{h}$. We say that a method is conform if $X_{h}\subset X $ and non-conform if $X _{h} \not\subset X$. We define the approximate problem as follows.
+The finite element method (FEM) is a numerical method to solve partial differential equation by finding an approximation of the Problem \ref{def:abstract_linear_problem}.  Let $V_{h}$ be a finite-dimensional (polynomial) approximation space on the mesh
+$\mathcal{T} _{h}$. We say that a method is conform if $V_{h}\subset V $ and non-conform if $V _{h} \not\subset V$. We define the approximate problem as follows.
 \begin{problem}[The approximate problem]
     \label{def:approx_problem}
-    Find  $u_{h} \in X_{h}$ s.t. \[
-    a_{h}(u_{h},v ) = l_{h}( v) :=  \left<f,v \right>   \forall v \in X_{h}
+    Find  $u_{h} \in V_{h}$ s.t. \[
+    a_{h}(u_{h},v ) = l_{h}( v) :=  \left<f,v \right>   \forall v \in V_{h}
     \]
 \end{problem}
 
-We denote the functional $a_{h}: X_{h} \times X_{h} \to \mathbb{R} $ as an consistent approximation of $a: X \times X \to \mathbb{R} $, and similarly for the right-hand side $l_{h} : \times _{h} \to \mathbb{R} $ as an approximation of $l: X \to \mathbb{R} $.
-In this report will we generally specify any discrete space $X_{h}(\mathcal{T}_{h})$  as the $C^{0}$ continuous polynomial space $\mathcal{P}^{k}(\mathcal{T}_{h})$, of order $k$.
+We denote the functional $a_{h}: V_{h} \times V_{h} \to \mathbb{R} $ as an consistent approximation of $a: V \times V \to \mathbb{R} $, and similarly for the right-hand side $l_{h} : \times _{h} \to \mathbb{R} $ as an approximation of $l: V \to \mathbb{R} $.
+In this report will we generally specify any discrete space $V_{h}(\mathcal{T}_{h})$  as the $C^{0}$ continuous polynomial space $\mathcal{P}^{k}(\mathcal{T}_{h})$, of order $k$.
 
 
 
@@ -796,7 +795,8 @@ V_{h} =  \left\{ P_{c}^{k}( \mathcal{T}_{h} ) \text{ or }  Q_{c}^{k}( \mathcal{T
  \right\} \end{equation}
 Hence, all results holds for both polynomial spaces.
 
-We now have a well-defined discrete global space  $V_{h} $ consisting of the finite set of basis functions $\left\{ \phi _{i} \right\}_{i=1}^{N} $ associated with the Lagriangian nodes $\left\{ a_{i} \right\}_{i=1}^{N}  $. Let $u_{j} = u_{h}\left( N_{j} \right) $, so that $u_{h} = \sum_{j}^{N_{h}} u_{j} \phi _{j}  $. Then the Problem \ref{def:approx_problem} is equivalent to
+We now have a well-defined discrete global space  $V_{h} $ consisting of the finite set of basis functions $\left\{ \phi _{i} \right\}_{i=1}^{N} $ associated with the Lagriangian nodes $\left\{ a_{i} \right\}_{i=1}^{N}  $. Let $u_{j} = u_{h}\left(
+a_{j} \right) $, so that $u_{h} = \sum_{j=1}^{N} u_{j} \phi _{j}  $. Then the Problem \ref{def:approx_problem} is equivalent to
  \[
 \sum_{j = 1}^{N} u_{j} a_{h}\left( \phi _{j}, \phi _{i} \right)  = l\left( \phi _{i} \right), \quad \forall
 \]
@@ -807,9 +807,9 @@ Ultimately, the matrix $A$ is shown to be symmetric and positive definite only i
 To summarize the workflow of solving linear PDEs using the FEM method.
 
 \begin{enumerate}[label=\arabic*)]
-    \item Strong formulation: Find $u \in X$ such that  $ \mathcal{A} u = f   $.
-    \item Abstract linear problem: Find $u \in X$ such that  $a( u,v) = l( v) \  \forall v \in V  $.
-    \item Discrete linear problem: Find $u \in X_{h}$ such that  $a_{h}( u,v) = l( v) \  \forall v \in V_{h}  $.
+    \item Strong formulation: Find $u \in V$ such that  $ \mathcal{A} u = f   $.
+    \item Abstract linear problem: Find $u \in V$ such that  $a( u,v) = l( v) \  \forall v \in V  $.
+    \item Discrete linear problem: Find $u \in V_{h}$ such that  $a_{h}( u,v) = l( v) \  \forall v \in V_{h}  $.
     \item Linear system of equations: Solve $ A \mathbf{u} = \mathbf{f}$.
 \end{enumerate}
 
@@ -1093,27 +1093,26 @@ This result is very useful since it is now sufficient to show that a priori esti
 \subsection{Ceas Lemma}%
 \label{sub:ceas_lemma}
 
-
-Assume that we have a discrete bilinear form $a_{h}: X_{h}\times X_{h} \to \mathbb{R} $ and let $X _{h} \subseteq  X $ be the discrete polynomial space. We transition the problem to find a solution, $u_{h} \in  \mathcal{V}_{h}$, so it holds that $a\left( u_{h},v_{h} \right)  = l\left( v_{h} \right) \ \  \forall v_{h} \in X _{h} $.
-Since the method is conform, i.e., $X _{h} \subseteq  X $, does it exists a exact solution, $u \in  \mathcal{V}$, such that \(
+Assume that we have a discrete bilinear form $a_{h}: X_{h}\times X_{h} \to \mathbb{R} $ and let $X _{h} \subseteq  V $ be the discrete conform polynomial space. We transition the problem to find a solution, $u_{h} \in  \mathcal{V}_{h}$, so it holds that $a\left( u_{h},v_{h} \right)  = l\left( v_{h} \right) \ \  \forall v_{h} \in X _{h} $.
+Since the method is conform, i.e., $X _{h} \subseteq  V $, does it exists a exact solution, $u \in  \mathcal{V}$, such that \(
 a \left( u, v_{h} \right)  = l\left( v_{h} \right)  \ \  \forall v_{h} \in  X _{h}.
 \)
 Furthermore, the problem is said to be strongly consistent since it fulfills the Galerkin orthogonality property, that is $ a\left( u -u_{h} , v_{h} \right)  =0$. Thus, if $u_{h},v_{h} \in  X _{h}$, then
 \begin{equation}
 \label{eq:cealemma_proof}
     \begin{split}
-\alpha \| u -u_{h} \|_{ X  }^{ 2 } & \le  a\left( u - u_{h}, u - u_{h}  \right)    \\
+\alpha \| u -u_{h} \|_{ V  }^{ 2 } & \le  a\left( u - u_{h}, u - u_{h}  \right)    \\
 &= a\left( u - u_{h}, u -v_{h} \right) - a\left( u -u_{h}, v_{h} - u_{h} \right)  \\
- &  \le  M \| u - u_{h} \|_{ X  }^{  }  \| u - v_{h} \|_{ X  }^{  }
+ &  \le  M \| u - u_{h} \|_{ V  }^{  }  \| u - v_{h} \|_{ V  }^{  }
     \end{split}
 .\end{equation}
 Hence, we now have the so-called Ceas lemma, \[
-\| u - u_{h} \|_{ X  }^{  }  \lesssim  \inf_{v_{h} \in X_{h} } \|  v_{h} - u \|_{X  }^{  }.
+\| u - u_{h} \|_{ V  }^{  }  \lesssim  \inf_{v_{h} \in X_{h} } \|  v_{h} - u \|_{V  }^{  }.
 \]
 A useful property is that for a conformal numerical method to converge can we now simply require \[
-\lim_{h \to 0}  \inf_{v_{h} \in  X_{h}}  \| v - v_{h} \|_{ X  }^{  } = 0 \quad  \forall v \in X.
+\lim_{h \to 0}  \inf_{v_{h} \in  X_{h}}  \| v - v_{h} \|_{ V  }^{  } = 0 \quad  \forall v \in V.
 \]
-In that case will $\| u - u_{h} \|_{ X  }^{  }  \to  0$, $h \to  0$. Hence, if this requirement is fulfilled, the numerical methods will converge to a unique solution.
+In that case will $\| u - u_{h} \|_{ V  }^{  }  \to  0$, $h \to  0$. Hence, if this requirement is fulfilled, the numerical methods will converge to a unique solution.
 For more information, see \cite[pp. 66]{quartdiff}.
 
 In combination with Corollary \ref{cor:celement_apriori}, is Ceas lemma very handy to construct a priori estimates. However, Ceas lemma as it stands does assume conform methods $X_{h} \subset X$, hence, we must be cautious for broken Sobolev spaces.
