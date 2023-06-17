@@ -49,86 +49,11 @@ l( v)  &= ( f,v)_{\Omega } - ( g_{2} , v)_\Omega
 Remark that the Neumann boundary condition $g_{1}$ is strongly imposed in the space.
 
 
-\subsection{Continuous interior penalty formulations}%
-\label{sub:continuous_interior_penalty_formulations}
-
-We define the two relevant CIP formulations for the \eqref{eq:bi_problem} as follows. Recall that we defined $V_{h} = \left\{ \mathcal{P} _{c}^{k}( \mathcal{T} _{h}) \text{ or } \mathcal{Q} _{c}^{k}( \mathcal{T} _{h})    \right\}$ in \eqref{def:Vh_background}.
-
-The general idea is to construct a bilinear problem $a_{h}: V_{h} \times  V_{h} = \mathbb{R} $ and $l_{h}: V_{h} \to \mathbb{R} $ s.t. there exists an $u \in V_{h}$ s.t. $a_{h}( u_{h}, v_{h}) = l_{h}( v) $ for all $v \in V_{h}$. For the CIP
-formulation we will investigate two formulations of the forms $a_{h}$ and $l_{h}$.
-
-\begin{enumerate}[label=\arabic*)]
-    \item Assuming that $g_{1} = 0$. Then Hessian problem formulation is
-\begin{equation}
-        \label{eq:cip_hessian_form}
-\begin{split}
-a_{h}^{H} \left( u, v \right)   =&
-    \left( \alpha  u, v \right) _{\Omega }   +  \left( D^2 u, D^2v \right) _{\Omega } \\
- & - \left( \mean{  \partial _{n n} u }, \jump{ \partial _{n }u} \right)_{\mathcal{F}_{h}^{int}}  -
- \left( \mean{ \partial _{n n} v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}^{int}}  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h}^{int}} \\
- & - \left(   \partial _{n n} u ,  \partial _{n }u \right)_{\Gamma }  -
- \left(  \partial _{n n} v ,  \partial _{n}u       \right)_{\Gamma }  + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{\Gamma } \\
- l_{h}^{H}( v)  =&  \left( f, v \right) _{\Omega }  - \left(g_{2}, v  \right) _{\Gamma } - ( g_{1}, \partial _{nn} v)_{\Gamma } +  \frac{\gamma }{h} ( g_{1} , \partial _{n} v)_{\Gamma }
-\end{split}
-.
-\end{equation}
-
-With the corresponding energy norms,
-\begin{equation}
-\label{eq:a_cip_energy_norm_hes}
-    \begin{split}
- \| v \|_{ a_{h} }^{ 2 }& = \alpha  \| v\|_{ \Omega  }^{2  }  +  \| D ^2 v \|_{ \Omega   }^{ 2 }  + \|  h^{-\frac{1}{2}} \jump{ \partial _{n} v    }\|_{  \mathcal{F} _{h}^{int} }^{2  }+ \|  h^{-\frac{1}{2}}  \partial _{n} v    \|_{  \Gamma  }^{2  },  \quad v \in V_{h}  \\
-   \| v \|_{ a_{h},* }^{ 2 } &= \| v \|_{ a_{h} }^{ 2 }  + \| h^{\frac{1}{2}}  \mean{     \partial _{nn } v}  \|_{ \mathcal{F}_{h}^{int}   }^{  2}+ \| h^{\frac{1}{2}} \partial _{nn } v  \|_{ \Gamma    }^{  2}, \quad  v\in V \oplus V_{h}.
-    \end{split}
-\end{equation}
-
-
-\item The Laplace formulation is
-    \begin{equation}
-        \label{eq:cip_laplace_form}
-        \begin{split}
-            a_{h}^{L} \left( u, v \right)   =&
-            \left( \alpha  u, v \right) _{\Omega }   +  \left( \Delta  u, \Delta v \right) _{ \Omega } \\
-                                             & - \left( \mean{  \Delta  u }, \jump{ \partial _{n }v} \right)_{\mathcal{F}_{h}^{int}  }  - \left( \mean{ \Delta  v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}^{int}  }  + \frac{\gamma }{h}
-                                             \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h}^{int} } \\
-                                             & - \left(   \Delta  u ,  \partial _{n }v \right)_{\Gamma   }  - \left(  \Delta  v ,  \partial _{n}u       \right)_{\Gamma  }  + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{ \Gamma } \\
-                                             l^{L}_{h}( v)  =&  \left( f, v \right) _{\Omega } - ( g_{2},  v )_{\Gamma } -  ( g_{1}, \Delta  v  )_{\Gamma }  + \frac{\gamma }{h} ( g_{1}, \partial _{n} v  )_{\Gamma }
-                                         \end{split}
-                                     \end{equation}
-                                     With the corresponding energy norms
-                                     \begin{equation}
-                                         \label{eq:a_cip_energy_norm_lap}
-                                         \begin{split}
-                                             \| v \|_{ a_{h} }^{ 2 }& = \alpha \| v\|_{ \Omega  }^{2  }  +  \| \Delta   v \|_{ \Omega   }^{ 2 }  + \|  h^{-\frac{1}{2}} \jump{ \partial _{n} v    }\|_{  \mathcal{F} _{h}^{int} }^{2  } +  \|  h^{-\frac{1}{2}}
-                                             \partial _{n} v  \|_{  \Gamma  }^{2  },  \quad v \in V_{h}  \\
-                                             \| v \|_{ a_{h},* }^{ 2 } &= \| v \|_{ a_{h} }^{ 2 }  + \| h^{\frac{1}{2}}  \mean{     \partial _{nn } v}  \|_{ \mathcal{F}_{h}^{int}   }^{  2}+ \| h^{\frac{1}{2}}       \partial _{nn } v  \|_{ \Gamma    }^{  2}, \quad  v\in V \oplus V_{h}.
-                                         \end{split}
-                                         .
-                                     \end{equation}
-
-
-\end{enumerate}
-
-\begin{remark}
-It should be noted that the Hessian formulation has a substantial limitation in that it is only valid for homogeneous Neumann conditions. This constraint arises from the challenges associated with imposing $g_{1}$ via the tangential derivative terms in Equation \eqref{eq:bi_basic_dg_full_1} during the proof of Lemma \ref{lemma:bh_hessian_identity}.
-From a physical perspective, this is not problematic as it aligns with the boundary conditions of the original CH problem \eqref{eq:strongch}. However, from the standpoint of numerical validation, the homogeneous Neumann condition enforces strict
-rules on the design of manufactured solutions on arbitrary domains. Consequently, the examples illustrated in section \ref{sec:numerical_results} are only demonstrated on simple domains. This particular constraint does not apply to the Laplace formulation.
-\end{remark}
-
-The Hessian formulation is well investigated by Susanne Brenner in several papers for \cite{brenner2012, brenner2012quadratic, brenner2012quadratic_kirk} with a corresponding analysis and numerical validation. Similarly, variants of the Laplace formulation can be found here
-\cite{feng2007fully, georgoulis2009discontinuous}. In these article there is good also evidence  that both formulation have the following expected a priori estimates. Let  $u \in H^{s}( \Omega ) $, and $u_{h}\in  V_{h}  $ of order $k$. Then with $r = \min\left\{ s,
-k+1 \right\}$ the a priori estimates are   \[
-    \begin{split}
-\| u - u_{h} \|_{ a_{h},*  }^{  }  & \lesssim  h^{r-2} \| u \|_{ r, \Omega  }^{  } \\
-\| u - u_{h} \|_{ \Omega   }^{  }  & \lesssim  h^{r} \| u \|_{ r,\Omega  }^{  }
-    \end{split}
-\]
-
 \subsection{Detailed Construction of Hessian and Laplacian Formulations }%
 \label{sub:construction_of_laplacian_cip}
+Recall that we defined $V_{h} = \left\{ \mathcal{P} _{c}^{k}( \mathcal{T} _{h}) \text{ or } \mathcal{Q} _{c}^{k}( \mathcal{T} _{h})    \right\}$ in \eqref{def:Vh_background}.
 
 Out goal is to derive the Hessian formulation.
-
 \begin{lemma}
     \label{lemma:bh_hessian_identity}
     Assume the homogeneous Neumann conditions, $g_1( x ) = 0 $.
@@ -339,6 +264,80 @@ v,g_{1}     )_{\Gamma } + \frac{\gamma}{h}(\partial _{n}u -  g_{1}, \partial _{n
 It is worth noting that technically is the interior regularisation equivalent to do a Nitsche's method in all interior boundaries of the elements with boundary conditions of each element weakly
 imposed to zero. Thus, we expect the penalty parameter $\gamma$ to be the same interior and exterior elements. Let where $k\ge 2$ is the polynomial order, then for the Hessian formulation is it theoretically proven that $\gamma = 2k ( k-1 ) $
 \cite{brenner2012quadratic, brenner2012}. However, we still prefer to experimentally verify the best parameter.
+
+\subsection{Continuous interior penalty formulations}%
+\label{sub:continuous_interior_penalty_formulations}
+
+We define the two relevant CIP formulations for the \eqref{eq:bi_problem} as follows. The general idea is to construct a bilinear problem $a_{h}: V_{h} \times  V_{h} = \mathbb{R} $ and $l_{h}: V_{h} \to \mathbb{R} $ s.t. there exists an $u \in V_{h}$ s.t. $a_{h}( u_{h}, v_{h}) = l_{h}( v) $ for all $v \in V_{h}$. For the CIP
+formulation we will investigate two formulations of the forms $a_{h}$ and $l_{h}$.
+
+\begin{enumerate}[label=\arabic*)]
+    \item Assuming that $g_{1} = 0$. Then Hessian problem formulation is
+\begin{equation}
+        \label{eq:cip_hessian_form}
+\begin{split}
+a_{h}^{H} \left( u, v \right)   =&
+    \left( \alpha  u, v \right) _{\Omega }   +  \left( D^2 u, D^2v \right) _{\Omega } \\
+ & - \left( \mean{  \partial _{n n} u }, \jump{ \partial _{n }u} \right)_{\mathcal{F}_{h}^{int}}  -
+ \left( \mean{ \partial _{n n} v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}^{int}}  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h}^{int}} \\
+ & - \left(   \partial _{n n} u ,  \partial _{n }u \right)_{\Gamma }  -
+ \left(  \partial _{n n} v ,  \partial _{n}u       \right)_{\Gamma }  + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{\Gamma } \\
+ l_{h}^{H}( v)  =&  \left( f, v \right) _{\Omega }  - \left(g_{2}, v  \right) _{\Gamma } - ( g_{1}, \partial _{nn} v)_{\Gamma } +  \frac{\gamma }{h} ( g_{1} , \partial _{n} v)_{\Gamma }
+\end{split}
+.
+\end{equation}
+
+With the corresponding energy norms,
+\begin{equation}
+\label{eq:a_cip_energy_norm_hes}
+    \begin{split}
+ \| v \|_{ a_{h} }^{ 2 }& = \alpha  \| v\|_{ \Omega  }^{2  }  +  \| D ^2 v \|_{ \Omega   }^{ 2 }  + \|  h^{-\frac{1}{2}} \jump{ \partial _{n} v    }\|_{  \mathcal{F} _{h}^{int} }^{2  }+ \|  h^{-\frac{1}{2}}  \partial _{n} v    \|_{  \Gamma  }^{2  },  \quad v \in V_{h}  \\
+   \| v \|_{ a_{h},* }^{ 2 } &= \| v \|_{ a_{h} }^{ 2 }  + \| h^{\frac{1}{2}}  \mean{     \partial _{nn } v}  \|_{ \mathcal{F}_{h}^{int}   }^{  2}+ \| h^{\frac{1}{2}} \partial _{nn } v  \|_{ \Gamma    }^{  2}, \quad  v\in V \oplus V_{h}.
+    \end{split}
+\end{equation}
+
+
+\item The Laplace formulation is
+    \begin{equation}
+        \label{eq:cip_laplace_form}
+        \begin{split}
+            a_{h}^{L} \left( u, v \right)   =&
+            \left( \alpha  u, v \right) _{\Omega }   +  \left( \Delta  u, \Delta v \right) _{ \Omega } \\
+                                             & - \left( \mean{  \Delta  u }, \jump{ \partial _{n }v} \right)_{\mathcal{F}_{h}^{int}  }  - \left( \mean{ \Delta  v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}^{int}  }  + \frac{\gamma }{h}
+                                             \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h}^{int} } \\
+                                             & - \left(   \Delta  u ,  \partial _{n }v \right)_{\Gamma   }  - \left(  \Delta  v ,  \partial _{n}u       \right)_{\Gamma  }  + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{ \Gamma } \\
+                                             l^{L}_{h}( v)  =&  \left( f, v \right) _{\Omega } - ( g_{2},  v )_{\Gamma } -  ( g_{1}, \Delta  v  )_{\Gamma }  + \frac{\gamma }{h} ( g_{1}, \partial _{n} v  )_{\Gamma }
+                                         \end{split}
+                                     \end{equation}
+                                     With the corresponding energy norms
+                                     \begin{equation}
+                                         \label{eq:a_cip_energy_norm_lap}
+                                         \begin{split}
+                                             \| v \|_{ a_{h} }^{ 2 }& = \alpha \| v\|_{ \Omega  }^{2  }  +  \| \Delta   v \|_{ \Omega   }^{ 2 }  + \|  h^{-\frac{1}{2}} \jump{ \partial _{n} v    }\|_{  \mathcal{F} _{h}^{int} }^{2  } +  \|  h^{-\frac{1}{2}}
+                                             \partial _{n} v  \|_{  \Gamma  }^{2  },  \quad v \in V_{h}  \\
+                                             \| v \|_{ a_{h},* }^{ 2 } &= \| v \|_{ a_{h} }^{ 2 }  + \| h^{\frac{1}{2}}  \mean{     \partial _{nn } v}  \|_{ \mathcal{F}_{h}^{int}   }^{  2}+ \| h^{\frac{1}{2}}       \partial _{nn } v  \|_{ \Gamma    }^{  2}, \quad  v\in V \oplus V_{h}.
+                                         \end{split}
+                                         .
+                                     \end{equation}
+
+
+\end{enumerate}
+
+\begin{remark}
+It should be noted that the Hessian formulation has a substantial limitation in that it is only valid for homogeneous Neumann conditions. This constraint arises from the challenges associated with imposing $g_{1}$ via the tangential derivative terms in Equation \eqref{eq:bi_basic_dg_full_1} during the proof of Lemma \ref{lemma:bh_hessian_identity}.
+From a physical perspective, this is not problematic as it aligns with the boundary conditions of the original CH problem \eqref{eq:strongch}. However, from the standpoint of numerical validation, the homogeneous Neumann condition enforces strict
+rules on the design of manufactured solutions on arbitrary domains. Consequently, the examples illustrated in section \ref{sec:numerical_results} are only demonstrated on simple domains. This particular constraint does not apply to the Laplace formulation.
+\end{remark}
+
+The Hessian formulation is well investigated by Susanne Brenner in several papers for \cite{brenner2012, brenner2012quadratic, brenner2012quadratic_kirk} with a corresponding analysis and numerical validation. Similarly, variants of the Laplace formulation can be found here
+\cite{feng2007fully, georgoulis2009discontinuous}. In these article there is good also evidence  that both formulation have the following expected a priori estimates. Let  $u \in H^{s}( \Omega ) $, and $u_{h}\in  V_{h}  $ of order $k$. Then with $r = \min\left\{ s,
+k+1 \right\}$ the a priori estimates are   \[
+    \begin{split}
+\| u - u_{h} \|_{ a_{h},*  }^{  }  & \lesssim  h^{r-2} \| u \|_{ r, \Omega  }^{  } \\
+\| u - u_{h} \|_{ \Omega   }^{  }  & \lesssim  h^{r} \| u \|_{ r,\Omega  }^{  }
+    \end{split}
+\]
+
 
 
 \subsection{Note on the Biharmonic Mixed Formulation}%
