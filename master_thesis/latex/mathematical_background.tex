@@ -230,8 +230,8 @@ conditions and $X,Y$ are spaces of functions. Then we denote the abstract strong
 \label{eq:strong_abs}
 \mathcal{A} u = f.
 \end{equation}
-What we will see is that Sobolev spaces are designed to study this kinds of problems.
-
+Where the function $f: \Omega \subset \mathbb{R}^n \mapsto \mathbb{R}$. We assume that the function $u: \Omega \rightarrow \mathbb{R}$ satisfies the relation \eqref{eq:strong_abs} pointwise so that $\mathcal{A} u(x)=f(x) \forall x \in \Omega$.
+We will discover that Sobolev spaces are specifically engineered to study these kinds of problems.
 
 \begin{definition}[Linear bounded functional]
     \label{def:linear_function}
@@ -683,10 +683,10 @@ We may introduce the reference element $\hat{T} $ in $d$ dimensions. The referen
     \caption{Illustration of affine mapping $\mathcal{G} : \hat{T} \to T $ in dimensions $d=2,3$ from a reference element $\hat{T}$  to element $T$ for simplexes and and quadrilaterals.  } \label{fig:affine_mapping}
 \end{figure}
 
-Let the mapping $\mathcal{G} : \hat{T} \to  T$ as the affine
+Let the mapping $\mathcal{G} : \hat{T} \to  T$ an affine
 mapping, i.e. $\mathcal{G}(x) = Ax +
 b$.
-The important property of affine transformations is the preservation of parallelism. This means that for any two vectors $x,y \in  \hat{T}$ that are parallel in the reference triange, then their images $\mathcal{G}(x)  $  and $\mathcal{G}( y)  $ will
+The important property of affine transformations is the preservation of parallelism. Hence,  for any two vectors $x,y \in  \hat{T}$ that are parallel in the reference element, their images $\mathcal{G}(x)  $  and $\mathcal{G}( y)  $ will
 also be parallel. Generally speaking, an affine transformation of the reference simplex is a transformation to any another simplex of the same dimension. However, for any quadrilateral, an affine transformation preserves the parallelism of opposite
 sides, for an illustration see Figure \ref{fig:affine_mapping} and for a counter example see Figure \ref{fig:nonaffine}.
 
@@ -796,7 +796,7 @@ Hence, by letting $\mathbf{u} = \left[ u_{j} \right] $ , $\mathbf{f} = \left[ \l
 \mathbf{u} =\mathbf{f} \).
 Ultimately, the matrix $A$ is shown to be symmetric and positive definite only if $a_{h}( \cdot ,\cdot ) $ is well-posed.
 
-To summarize the workflow of solving linear PDEs.
+To summarize the workflow of solving linear PDEs using the FEM method.
 
 \begin{enumerate}[label=\arabic*)]
     \item Strong formulation: Find $u \in X$ such that  $ \mathcal{A} u = f   $.
@@ -1081,7 +1081,6 @@ and if the following conditions for an parameter $l$ is satisfied, it exists err
     \]
 \end{corollary}
 This result is very useful since it is now sufficient to show that a priori estimates holds to prove convergence rate. For further detailed information about the Cléments interpolation, please investigate \cite[Chapter 1.6]{ern04}.
-We will use these estimates to compute convergence rate given that Ceas' Lemma holds.
 
 \subsection{Ceas Lemma}%
 \label{sub:ceas_lemma}
@@ -1110,7 +1109,7 @@ In that case will $\| u - u_{h} \|_{ X  }^{  }  \to  0$, $h \to  0$. Hence, if t
 For more information, see \cite[pp. 66]{quartdiff}.
 
 In combination with Corollary \ref{cor:celement_apriori}, is Ceas lemma very handy to construct a priori estimates. However, Ceas lemma as it stands does assume conform methods $X_{h} \subset X$, hence, we must be cautious for broken Sobolev spaces.
- 
+
 
 
 
