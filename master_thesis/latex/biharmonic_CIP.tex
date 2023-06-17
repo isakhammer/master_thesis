@@ -39,14 +39,14 @@ Hence, we obtain the identity
 ( \Delta ^2 u, v ) _{\Omega } = ( \Delta u, \Delta v)_{\Omega } +  ( \partial _{n} \Delta u, v)_{\Gamma } - ( \partial _{n} v, \Delta u) _{\Gamma }
 \end{equation}
 Taking into account the boundary conditions, we end up with the following corresponding weak formulation of the biharmonic problem \eqref{eq:bi_problem}.
-Find a $u \in H^2( \Omega ) $ such that $a( u,v) = l( v)  \forall v \in H^{2}( \Omega )  $ where
+Find a unique $u \in \left\{ v \in  H^2( \Omega )  \mid \partial _{n} v  = g_{1}   \right\}  $ such that $a( u,v) = l( v)  \forall v \in H^{2}( \Omega )  $ where
   \[
       \begin{split}
-a( u,v) & =  ( \alpha u,v)_{\Omega } + ( \Delta u, \Delta v)_{\Omega } +  ( \partial _{n} \Delta u, v)_{\Gamma } - ( \partial _{n} v, \Delta u) _{\Gamma } - ( \partial _{n} u, \Delta v) _{\Gamma }\\
-l( v)  &= ( f,v)_{\Omega } - ( g_{2} , v)_\Omega - ( g_{1}, \Delta v) _{\Gamma }
+a( u,v) & =  ( \alpha u,v)_{\Omega } + ( \Delta u, \Delta v)_{\Omega } - (  \Delta u, \partial _{n} v) _{\Gamma }\\
+l( v)  &= ( f,v)_{\Omega } - ( g_{2} , v)_\Omega
       \end{split}
 \]
-Remark that the $g_{1}$ boundary condition is weakly imposed by adding a symmetry term, $- ( \partial _{n} u, \Delta v) _{\Gamma } - ( g_{1}, \Delta v) _{\Gamma }=0 $.
+Remark that the Neumann boundary condition $g_{1}$ is strongly imposed in the space.
 
 
 \subsection{Continuous Interior Penalty formulations}%
