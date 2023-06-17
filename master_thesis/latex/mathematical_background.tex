@@ -54,7 +54,7 @@ This identity serves as an essential tool for the calculations done.
 \subsection{Computational Domains}%
 \label{sub:computational_domain}
 Assume that $\Omega \subset \mathbb{R} ^{d} $ is a compact set with a boundary  $\Gamma $. In standard FEM methods a key assumption is that the set $\Omega $ is a polyhedra. This is useful since a polyhedra can be fully covered by a collection of polyhedra and, hence, motivating us to define a fitted mesh.
-We define a fitted mesh $\mathcal{T} $ of the domain $\Omega $ to be a collection of disjoint polyhedra $\left\{ T \right\}  $ forming a partition of $\Omega $ s.t $\overline{\Omega } = \bigcup _{T \in \mathcal{T} } T $, for illustration see Figure
+We define a fitted mesh $\mathcal{T} $ of the domain $\Omega $ to be a collection of closed polyhedra $\left\{ T \right\}  $ with disjoint interior forming a partition of $\Omega $ s.t $\overline{\Omega } = \bigcup _{T \in \mathcal{T} } T $, for illustration see Figure
 \ref{fig:domain_mesh}.
 Here we say that each $T \in  \mathcal{T} $ is a mesh element or an element.
 The mesh size is defined as the maximum diameter $h := h_{max} $ of any polyhedra in the mesh $\mathcal{T} = \left\{ T \right\}  $, that is, $ h_{max} = \max_{T \in \mathcal{T} }  h_{T}$ s.t.
@@ -285,16 +285,6 @@ $\mathcal{T} _{h}$. We say that a method is conform if $X_{h}\subset X $ and non
 We denote the functional $a_{h}: X_{h} \times X_{h} \to \mathbb{R} $ as an consistent approximation of $a: X \times X \to \mathbb{R} $, and similarly for the right-hand side $l_{h} : \times _{h} \to \mathbb{R} $ as an approximation of $l: X \to \mathbb{R} $.
 In this report will we generally specify any discrete space $X_{h}(\mathcal{T}_{h})$  as the $C^{0}$ continuous polynomial space $\mathcal{P}^{k}(\mathcal{T}_{h})$, of order $k$.
 
-\begin{definition}[Broken polynomial spaces]
-    Let $\mathcal{T}_{h} $ be a mesh of $\Omega \in \mathbb{R} ^{d} $. Let $\mathcal{P}^{k}(T) $ be the space of all polynomials of order $k$ in the mesh element $T$ in $\mathcal{T}_{h}$ . We define the broken polynomial space as \[
-    \mathcal{P}^{k} ( \mathcal{T}_{h} ) := \left\{ v \in L^{2}( \mathcal{T}_{h} )    \mid  v|_{T} \in \mathcal{P}^k( T) \quad  \forall T \in  \mathcal{T}_{h}   \right\}.
-    \]
-    Similarly, the global $C^{0}$ continuous polynomial space is denoted as
-    \[
-    \mathcal{P}^{k}_{c} ( \mathcal{T}_{h} ) := \left\{ v \in C^{0}( \Omega )   \mid  v|_{T} \in \mathcal{P}^k( T) \quad  \forall T \in  \mathcal{T}_{h}   \right\}.
-    \]
-
-\end{definition}
 
 
 
@@ -782,10 +772,33 @@ Working on shape-regular and affine geometries has shown to greatly simplify and
 workaround for proving nonaffine local interpolation estimates, but the necessarrly key assumptions on the relationship between the nodes $a_{i}$ and the regularity of mapping $\mathcal{G} $, then you can read \cite[Chapter 13]{ErnGuermond2021}.
 Hence, affine meshes is essential for the error analysis which utilize the interpolation estimates, but it limits us to work on structure mesh if we specifically choose on quadrilatural meshes.
 
-We now have a well-defined discrete global space  $X_{h} = \mathcal{P}^{k}( \mathcal{T}_{h} )   $ constructed a finite set of basis functions, $\left\{ \phi _{i} \right\}_{i=1}^{N} $ associated witht the Lagriangian nodes $\left\{ a_{i} \right\}_{i=1}^{N}  $,
-where $N$ is the total degrees of freedom. Let $u_{j} = u_{h}\left( N_{j} \right) $, so that $u_{h} = \sum_{j}^{N_{h}} u_{j} \phi _{j}  $. Then the Problem \ref{def:approx_problem} is equivalent to
+\begin{definition}[Broken polynomial spaces]
+    Let $\mathcal{T}_{h} $ be a mesh of $\Omega \in \mathbb{R} ^{d} $. Let $\mathcal{P}^{k}(T) $ be the space of all polynomials of order $k$ in the mesh element $T$ in $\mathcal{T}_{h}$ . We define the broken polynomial space and the global $C^{0}$ continuous polynomial space as
+    \begin{equation}
+        \begin{split}
+    \mathcal{P}^{k} ( \mathcal{T}_{h} ) & := \left\{ v \in L^{2}( \mathcal{T}_{h} )    \mid  v|_{T} \in \mathcal{P}^k( T) \quad  \forall T \in  \mathcal{T}_{h}   \right\}. \\
+    \mathcal{P}^{k}_{c} ( \mathcal{T}_{h} ) & := \left\{ v \in C^{0}( \mathcal{T}_{h}  )   \mid  v|_{T} \in \mathcal{P}^k( T) \quad  \forall T \in  \mathcal{T}_{h}   \right\}.
+        \end{split}
+    \end{equation}
+    Similarly, for quadrilatural elements is the polynomial spaces defined as,
+    \begin{equation}
+        \begin{split}
+    \mathcal{Q}^{k} ( \mathcal{T}_{h} ) & := \left\{ v \in L^{2}( \mathcal{T}_{h} )    \mid  v|_{T} \in \mathcal{Q}^k( T) \quad  \forall T \in  \mathcal{T}_{h}   \right\}. \\
+    \mathcal{Q}^{k}_{c} ( \mathcal{T}_{h} ) & := \left\{ v \in C^{0}( \mathcal{T}_{h} )   \mid  v|_{T} \in \mathcal{Q}^k( T) \quad  \forall T \in  \mathcal{T}_{h}   \right\}.
+        \end{split}
+    \end{equation}
+
+\end{definition}
+
+In this thesis will we generally utilize the global $C^{0}$ continuity, hence, for the rest of the thesis do we define
+\begin{equation}
+V_{h} =  \left\{ P_{c}^{k}( \mathcal{T}_{h} ) \text{ or }  Q_{c}^{k}( \mathcal{T}_{h} )
+ \right\} \end{equation}
+Hence, all results holds for both polynomial spaces.
+
+We now have a well-defined discrete global space  $V_{h} $ consisting of the finite set of basis functions $\left\{ \phi _{i} \right\}_{i=1}^{N} $ associated with the Lagriangian nodes $\left\{ a_{i} \right\}_{i=1}^{N}  $. Let $u_{j} = u_{h}\left( N_{j} \right) $, so that $u_{h} = \sum_{j}^{N_{h}} u_{j} \phi _{j}  $. Then the Problem \ref{def:approx_problem} is equivalent to
  \[
-\sum_{j = 1}^{N_{h}} u_{j} a_{h}\left( \phi _{j}, \phi _{i} \right)  = l\left( \phi _{i} \right), \quad \forall
+\sum_{j = 1}^{N} u_{j} a_{h}\left( \phi _{j}, \phi _{i} \right)  = l\left( \phi _{i} \right), \quad \forall
 \]
 Hence, by letting $\mathbf{u} = \left[ u_{j} \right] $ , $\mathbf{f} = \left[ \left( f, \varphi _{i}  \right) _{\Omega } \right] $  and $A = \left[ a_{h}\left( \phi _{j}, \phi _{i} \right)  \right] $ can we construct a linear system, \( A
 \mathbf{u} =\mathbf{f} \).
