@@ -49,11 +49,10 @@ l( v)  &= ( f,v)_{\Omega } - ( g_{2} , v)_\Omega
 Remark that the Neumann boundary condition $g_{1}$ is strongly imposed in the space.
 
 
-\subsection{Continuous Interior Penalty formulations}%
+\subsection{Continuous interior penalty formulations}%
 \label{sub:continuous_interior_penalty_formulations}
 
-We define the two relevant CIP formulations for the \eqref{eq:bi_problem} as follows. Let $$V_{h} = \left\{ v \in C^{0}\left( \Omega  \right): v_{T} = v | _{T} \in \mathcal{P} _{2}\left( T \right), \forall T \in
-\mathcal{T}_{h}    \right\}$$
+We define the two relevant CIP formulations for the \eqref{eq:bi_problem} as follows. Recall that we defined $V_{h} = \left\{ \mathcal{P} _{c}^{k}( \mathcal{T} _{h}) \text{ or } \mathcal{Q} _{c}^{k}( \mathcal{T} _{h})    \right\}$ in \eqref{def:Vh_background}.
 
 The general idea is to construct a bilinear problem $a_{h}: V_{h} \times  V_{h} = \mathbb{R} $ and $l_{h}: V_{h} \to \mathbb{R} $ s.t. there exists an $u \in V_{h}$ s.t. $a_{h}( u_{h}, v_{h}) = l_{h}( v) $ for all $v \in V_{h}$. For the CIP
 formulation we will investigate two formulations of the forms $a_{h}$ and $l_{h}$.
