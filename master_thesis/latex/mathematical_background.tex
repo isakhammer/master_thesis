@@ -292,6 +292,8 @@ In this report will we generally specify any discrete space $X_{h}(\mathcal{T}_{
 
 \end{definition}
 
+
+
 \begin{definition}[Local polynomial space]
     \label{def:local_space}
     Let $T$ be a element in a mesh $\mathcal{T}_{h} $,  $x = \left[ x_{1}, \ldots, x_{d} \right] $ be a vector, and $\alpha  = \left[ \alpha _{1}, \ldots, \alpha _{d} \right] \in \mathbb{N} ^{d} $ be a multi index.
@@ -774,9 +776,16 @@ Thus, using the affine transformation can the definition of the local polynomial
 \]
 Working on shape-regular and affine geometries has shown to greatly simplify and generalise local interpolation estimates, see \cite[Theorem 11.12]{ErnGuermond2021}, and thus is very useful for deriving a priori estimates. Note that it exists
 workaround for proving nonaffine local interpolation estimates, but the necessarrly key assumptions on the relationship between the nodes $a_{i}$ and the regularity of mapping $\mathcal{G} $, then you can read \cite[Chapter 13]{ErnGuermond2021}.
-
 Hence, affine meshes is essential for the error analysis which utilize the interpolation estimates, but it limits us to work on structure mesh if we specifically choose on quadrilatural meshes.
-% A consequence of this is that classical methods are not able to approximate curved boundaries for quadrilatural elements unless nonaffine interpolation estimates is provided.
+
+We now have a well-defined discrete global space  $X_{h} = \mathcal{P}^{k}( \mathcal{T}_{h} )   $ constructed a finite set of basis functions, $\left\{ \phi _{i} \right\}_{i=1}^{N} $ associated witht the Lagriangian nodes $\left\{ a_{i} \right\}_{i=1}^{N}  $,
+where $N$ is the total degrees of freedom. Let $u_{j} = u_{h}\left( N_{j} \right) $, so that $u_{h} = \sum_{j}^{N_{h}} u_{j} \phi _{j}  $. Then the Problem \ref{def:approx_problem} is equivalent to
+ \[
+\sum_{j = 1}^{N_{h}} u_{j} a_{h}\left( \phi _{j}, \phi _{i} \right)  = l\left( \phi _{i} \right), \quad \forall
+\]
+Hence, by letting $\mathbf{u} = \left[ u_{j} \right] $ , $\mathbf{f} = \left[ \left( f, \varphi _{i}  \right) _{\Omega } \right] $  and $A = \left[ a_{h}\left( \phi _{j}, \phi _{i} \right)  \right] $ can we construct a linear system, \( A
+\mathbf{u} =\mathbf{f} \).
+Ultimately, we have the final linear system which can be solved if $a_{h}( \cdot ,\cdot ) $ is well-posed.
 
 
 \subsection{Cléments interpolation}%
@@ -1064,7 +1073,7 @@ Assume that we have a problem that satisfies the Lax-Milgram theorem and let $X 
 Since the method is conform, i.e., $X _{h} \subseteq  X $, does it exists a exact solution, $u \in  \mathcal{V}$, such that \(
 a \left( u, v_{h} \right)  = l\left( v_{h} \right)  \ \  \forall v_{h} \in  X _{h}.
 \)
-Furthermore, the problem is said to be strongly consistent since it fulfills the Galerkin orthogonality property, that is $ a\left( u -u_{h} , v_{h} \right)  =0$. thus, if $u_{h},v_{h} \in  X _{h}$, then
+Furthermore, the problem is said to be strongly consistent since it fulfills the Galerkin orthogonality property, that is $ a\left( u -u_{h} , v_{h} \right)  =0$. Thus, if $u_{h},v_{h} \in  X _{h}$, then
 \begin{equation}
 \label{eq:cealemma_proof}
     \begin{split}
@@ -1073,13 +1082,14 @@ Furthermore, the problem is said to be strongly consistent since it fulfills the
  &  \le  M \| u - u_{h} \|_{ X  }^{  }  \| u - v_{h} \|_{ X  }^{  }
     \end{split}
 .\end{equation}
-Hence, we now have the so-called Ceas' lemma, \[
+Hence, we now have the so-called Ce's' lemma, \[
 \| u - u_{h} \|_{ X  }^{  }  \le  \frac{M}{\alpha } \inf_{v_{h} \in X_{h} } \|  v_{h} - u \|_{X  }^{  }.
 \]
 A useful property is that for a conformal numerical method to converge can we now simply require \[
 \lim_{h \to 0}  \inf_{v_{h} \in  X_{h}}  \| v - v_{h} \|_{ X  }^{  } = 0 \quad  \forall v \in \mathcal{V}.
 \]
 In that case will $\| u - u_{h} \|_{ \mathcal{V}  }^{  }  \to  0$, $h \to  0$. Hence, if this requirement is fulfilled, the numerical methods will converge to a unique solution.
-For more information, see \cite{quartdiff}.
+For more information, see \cite[pp. 66]{quartdiff}.
+
 
 
