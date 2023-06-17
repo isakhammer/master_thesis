@@ -257,16 +257,12 @@ The finite element method (FEM) is a numerical method to solve partial different
 $\mathcal{T} _{h}$. We say that a method is conform if $V_{h}\subset V $ and non-conform if $V _{h} \not\subset V$. We define the approximate problem as follows.
 \begin{problem}[The approximate problem]
     \label{def:approx_problem}
-    Find  $u_{h} \in V_{h}$ s.t. \[
-    a_{h}(u_{h},v ) = l_{h}( v) :=  \left<f,v \right>   \forall v \in V_{h}
+    Let $V_{h} \not\subset V$ a non-conform finite-dimensional space. Find  $u_{h} \in V_{h}$ such that, \[
+    a_{h}(u_{h},v ) = l_{h}( v) :=  \left<f,v \right>   \forall v \in V_{h}.
     \]
 \end{problem}
 
 We denote the functional $a_{h}: V_{h} \times V_{h} \to \mathbb{R} $ as an consistent approximation of $a: V \times V \to \mathbb{R} $, and similarly for the right-hand side $l_{h} : \times _{h} \to \mathbb{R} $ as an approximation of $l: V \to \mathbb{R} $.
-In this report will we generally specify any discrete space $V_{h}(\mathcal{T}_{h})$  as the $C^{0}$ continuous polynomial space $\mathcal{P}^{k}(\mathcal{T}_{h})$, of order $k$.
-
-
-
 
 \begin{definition}[Local polynomial space]
     \label{def:local_space}
@@ -281,7 +277,7 @@ In this report will we generally specify any discrete space $V_{h}(\mathcal{T}_{
     Let $T$ be a cuboid, i.e.,  $T = \prod_{i=1}^{d} [z_{i}^{-},z_{i}^{+}]$ where $z_{i}^{-}< z_{i}^{+}$ for $z_{i}^{\pm} \in \mathbb{R} $. Then the polynomial space $\mathcal{Q}^{k}( T)$  in $\mathbb{R} ^{d}$ is defined as the tensor product of 1-dimensional
     finite elements, i.e.,
       \[
-    \mathcal{Q} _{k}(T)  := \mathcal{P}^{k}( [z_{1}^{-},z_{1}^{+}] ) \otimes \ldots \otimes \mathcal{P}^{k}( [z_{d}^{-},z_{d}^{+}] )
+    \mathcal{Q} ^{k}(T)  := \mathcal{P}^{k}( [z_{1}^{-},z_{1}^{+}] ) \otimes \ldots \otimes \mathcal{P}^{k}( [z_{d}^{-},z_{d}^{+}] )
     \]
 \end{definition}
 For more information about the local polynomial spaces, see \cite[Chapter 6.4, 7.3]{ErnGuermond2021}
@@ -750,7 +746,7 @@ Thus, using the affine transformation can the definition of the local polynomial
 \]
 Working on shape-regular and affine geometries has shown to greatly simplify and generalise local interpolation estimates, see \cite[Theorem 11.12]{ErnGuermond2021}, and thus is very useful for deriving a priori estimates. Note that it exists
 workaround for proving nonaffine local interpolation estimates, but the necessarrly key assumptions on the relationship between the nodes $a_{i}$ and the regularity of mapping $\mathcal{G} $, then you can read \cite[Chapter 13]{ErnGuermond2021}.
-Hence, affine meshes is essential for the error analysis which utilize the interpolation estimates, but it limits us to work on structure mesh if we specifically choose on quadrilatural meshes.
+Hence, affine meshes is essential for the error analysis which utilize the interpolation estimates, but it limits us to work on structure mesh if we specifically choose on quadrilateral meshes..
 
 \begin{definition}[Broken polynomial spaces]
     Let $\mathcal{T}_{h} $ be a mesh of $\Omega \in \mathbb{R} ^{d} $. Let $\mathcal{P}^{k}(T) $ be the space of all polynomials of order $k$ in the mesh element $T$ in $\mathcal{T}_{h}$ . We define the broken polynomial space and the global $C^{0}$ continuous polynomial space as
@@ -785,14 +781,36 @@ Hence, by letting $\mathbf{u} = \left[ u_{j} \right] $ , $\mathbf{f} = \left[ \l
 \mathbf{u} =\mathbf{f} \).
 Ultimately, the matrix $A$ is shown to be symmetric and positive definite only if $a_{h}( \cdot ,\cdot ) $ is well-posed.
 
-To summarize the workflow of solving linear PDEs using the FEM method.
+\begin{figure}[]
+\centering
+\begin{tikzpicture}[node distance=2cm,
+                    box1/.style={rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=red!30},
+                    box2/.style={rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=orange!30},
+                    box3/.style={rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=green!30},
+                    box4/.style={rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=blue!30},
+                    arrow/.style={thick,->,>=stealth}
+                    ]
+\node (sf) [box1] {Find $u \in V$ such that $\mathcal{A} u = f$};
+\node[left=0.5cm of sf,font=\bfseries, align=right] {Strong Formulation:};
 
-\begin{enumerate}[label=\arabic*)]
-    \item Strong formulation: Find $u \in V$ such that  $ \mathcal{A} u = f   $.
-    \item Abstract linear problem: Find $u \in V$ such that  $a( u,v) = l( v) \  \forall v \in V  $.
-    \item Discrete linear problem: Find $u \in V_{h}$ such that  $a_{h}( u,v) = l( v) \  \forall v \in V_{h}  $.
-    \item Linear system of equations: Solve $ A \mathbf{u} = \mathbf{f}$.
-\end{enumerate}
+\node (alp) [box2, below of=sf] {Find $u \in V$ such that $a(u,v) = l(v) \  \forall v \in V$};
+\node[left=0.5cm of alp,font=\bfseries, align=right] {Abstract Linear Problem:};
+
+\node (dlp) [box3, below of=alp] {Find $u \in V_{h}$ such that $a_{h}(u,v) = l(v) \  \forall v \in V_{h}$};
+\node[left=0.5cm of dlp,font=\bfseries, align=right] {Discrete Linear Problem:};
+
+\node (lse) [box4, below of=dlp] {Solve $A \mathbf{u} = \mathbf{f}$};
+\node[left=0.5cm of lse,font=\bfseries, align=right] {Linear System of Equations:};
+
+\draw [arrow] (sf) -- (alp);
+\draw [arrow] (alp) -- (dlp);
+\draw [arrow] (dlp) -- (lse);
+\end{tikzpicture}
+\caption{Workflow of solving linear PDEs using the FEM method.}
+\label{fig:fem_workflow}
+\end{figure}
+
+To summarize the workflow of solving linear PDEs using the FEM method, see Figure \ref{fig:fem_workflow}.
 
 \subsection{Cléments interpolation}%
 \label{ssub:clement_operator}
