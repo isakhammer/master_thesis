@@ -53,7 +53,7 @@ This identity serves as an essential tool for the calculations done.
 
 \subsection{Computational Domains}%
 \label{sub:computational_domain}
-Assume that $\Omega \subset \mathbb{R} ^{d} $ is a compact set with a boundary  $\Gamma $. In standard FEM methods a key assumption is that the set $\Omega $ is a polyhedra. This is useful since a polyhedra can be fully covered by a collection of polyhedra and, hence, motivating us to define a fitted mesh.
+Assume that $\Omega \subset \mathbb{R} ^{d} $ is an open and bounded domain with a boundary $\Gamma $. In standard FEM methods a key assumption is that the set $\Omega $ is a polyhedra. This is useful since a polyhedra can be fully covered by a collection of polyhedra and, hence, motivating us to define a fitted mesh.
 We define a fitted mesh $\mathcal{T} $ of the domain $\Omega $ to be a collection of closed polyhedra $\left\{ T \right\}  $ with disjoint interior forming a partition of $\Omega $ s.t $\overline{\Omega } = \bigcup _{T \in \mathcal{T} } T $, for illustration see Figure
 \ref{fig:domain_mesh}.
 Here we say that each $T \in  \mathcal{T} $ is a mesh element or an element.
@@ -61,9 +61,9 @@ The mesh size is defined as the maximum diameter $h := h_{max} $ of any polyhedr
 $h _{T}  = \mathrm{diam}\left( T \right)   = \mathrm{max}_{x_1, x_{2} \in T} \ \mathrm{ dist }(x_{1}, x_{2})$
 Hence, motivating us to use the notation $\mathcal{T} _{h}$ for a mesh $\mathcal{T} $ with size $h$.
 
-For simplicity will we restrict ourself to simplicial and quadrilateral elements.
+For simplicity we restrict ourself to simplicial and quadrilateral elements.
 A mesh $\mathcal{T}_{h}$ in $ \mathbb{R} ^{d}$ is said to be matching if
-for all neighbouring elements $T_{1}, T_{2} \in \mathcal{T} _{h}$ such that the intersection $T_{1} \cap T_{2} $ is a manifold of dimensions $( d-1)$, then $T_{1} \cap T_{2} $ a entire facet of both $T_{1}$ and $T_{2}$.
+for all neighbouring elements $T_{1}, T_{2} \in \mathcal{T} _{h}$ such that the intersection is non-empty, $T_{1} \cap T_{2} \neq \emptyset  $, then $T_{1}\cap T_{2}$ is for $d=2$ either a common vertex, edge, and for $d=3$ a common vertex, edge or a face.
 
 Let the chunkiness parameter $c_{T} := h_{T}/r_{T}$, where $r_{T}$  is the largest ball that be inscribed inside a element $T \in \mathcal{T}_{h} $.
 A mesh is said to be shape regular if $c_{T}\le  c$ is independent of $T$  and $h$. We also say that the mesh is quasi-uniform only if it is shape regular and $h_{\mathrm{ max }} \le  c h_{\mathrm{ min }}$.
