@@ -2,7 +2,7 @@
 \section{Mathematical Background}%
 \label{sec:mathematical_background}
 
-We will in this section will we review standardized and well know methods and notations. Generally is the notation followed from \cite[Chapter 1]{pietro2012}.
+In this section, we will revisit the established definitions and provide a brief overview of Sobolev spaces. Afterward, we will briefly review the finite element method and discuss the necessary tools required for calculating a priori estimates.
 
 
 \subsection{Notation}%
@@ -192,7 +192,7 @@ $$
 \abs{ v }_{H^{l}( T) } \lesssim h^{m-l} \abs{ v }_{H^{m}( \Omega ) }.
 $$
 for $l \le m$. For proof, see \cite[Lemma 12.1]{ErnGuermond2021}. An essential example is the following inequality.
-$$\| D^2v \|_{T  }^{ 2 } \lesssim h^{-1} \| \nabla v  \|_{ T  }^{  } \lesssim h^{-2} \| v \|_{T  }^{  }   $$
+$$\| D^2v \|_{T  }^{  } \lesssim h^{-1} \| \nabla v  \|_{ T  }^{  } \lesssim h^{-2} \| v \|_{T  }^{  }   $$
 
 Another very useful inequality is the so-called trace inequality which connect the relationship of evaluating the norm on element $ T $ and with any of the corresponding facets $F \in \partial T$. The general form is $\| v \|_{F   }^{  }  \lesssim
 h^{-\frac{1}{2}} \| v \|_{ T  }^{  } $, see \cite[Lemma 12.8]{ErnGuermond2021}.
