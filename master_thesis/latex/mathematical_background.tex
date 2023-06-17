@@ -785,8 +785,15 @@ where $N$ is the total degrees of freedom. Let $u_{j} = u_{h}\left( N_{j} \right
 \]
 Hence, by letting $\mathbf{u} = \left[ u_{j} \right] $ , $\mathbf{f} = \left[ \left( f, \varphi _{i}  \right) _{\Omega } \right] $  and $A = \left[ a_{h}\left( \phi _{j}, \phi _{i} \right)  \right] $ can we construct a linear system, \( A
 \mathbf{u} =\mathbf{f} \).
-Ultimately, we have the final linear system which can be solved if $a_{h}( \cdot ,\cdot ) $ is well-posed.
+Ultimately, the matrix $A$ is shown to be symmetric and positive definite only if $a_{h}( \cdot ,\cdot ) $ is symmetric and coercive, \cite[Theorem 4.1]{quartdiff}.
 
+To summarize the workflow.
+
+\begin{enumerate}[label=\arabic*)]
+    \item Abstract linear problem: Find $u \in X$ such that  $a( u,v) = l( v) \  \forall v \in V  $.
+    \item Discrete linear problem: Find $u \in X_{h}$ such that  $a_{h}( u,v) = l( v) \  \forall v \in V_{h}  $.
+    \item Linear System: Find $u \in X_{h}$ such that  $ A \mathbf{u} = \mathbf{f}$.
+\end{enumerate}
 
 \subsection{Cléments interpolation}%
 \label{ssub:clement_operator}
@@ -1001,8 +1008,8 @@ sharing at least one vertex with $F \in  \mathcal{F} _{h}$. For an illustrative 
 \end{tikzpicture}
 }
 
-\caption{Illustration of the different cases when mapping from the reference macroelement $\widehat{A}_{j( i) }$  to the domain $A_{i}$,  $G_{A_{i}}: \widehat{A}_{j( i) } \to A_{i}$. Here we have defined $\hat{a}_{j(i)} \in \widehat{A}_{j(i)}$ s.t. $G( \hat{a}_{j( i) })
-= a_i$. }
+\caption{Illustration of the different cases when mapping from the reference macroelement $\widehat{A}_{j( i) }$  to the domain $A_{i}$,  $\mathcal{G} _{A_{i}}: \widehat{A}_{j( i) } \to A_{i}$. Here we have defined $\hat{a}_{j(i)} \in
+    \widehat{A}_{j(i)}$ s.t. $\mathcal{G}_{A_{i}} ( \hat{a}_{j( i) }) = a_i$. }
 
 \label{fig:macroelements}
 \end{figure}
@@ -1083,7 +1090,7 @@ Furthermore, the problem is said to be strongly consistent since it fulfills the
     \end{split}
 .\end{equation}
 Hence, we now have the so-called Ce's' lemma, \[
-\| u - u_{h} \|_{ X  }^{  }  \le  \frac{M}{\alpha } \inf_{v_{h} \in X_{h} } \|  v_{h} - u \|_{X  }^{  }.
+\| u - u_{h} \|_{ X  }^{  }  \lesssim  \inf_{v_{h} \in X_{h} } \|  v_{h} - u \|_{X  }^{  }.
 \]
 A useful property is that for a conformal numerical method to converge can we now simply require \[
 \lim_{h \to 0}  \inf_{v_{h} \in  X_{h}}  \| v - v_{h} \|_{ X  }^{  } = 0 \quad  \forall v \in \mathcal{V}.
