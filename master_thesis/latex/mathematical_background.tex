@@ -796,7 +796,7 @@ Hence, by letting $\mathbf{u} = \left[ u_{j} \right] $ , $\mathbf{f} = \left[ \l
 \mathbf{u} =\mathbf{f} \).
 Ultimately, the matrix $A$ is shown to be symmetric and positive definite only if $a_{h}( \cdot ,\cdot ) $ is well-posed.
 
-To summarize the workflow of solving linear PDEs.
+To summarize the workflow of solving linear PDEs using the FEM method.
 
 \begin{enumerate}[label=\arabic*)]
     \item Strong formulation: Find $u \in X$ such that  $ \mathcal{A} u = f   $.
@@ -1081,7 +1081,6 @@ and if the following conditions for an parameter $l$ is satisfied, it exists err
     \]
 \end{corollary}
 This result is very useful since it is now sufficient to show that a priori estimates holds to prove convergence rate. For further detailed information about the Cléments interpolation, please investigate \cite[Chapter 1.6]{ern04}.
-We will use these estimates to compute convergence rate given that Ceas' Lemma holds.
 
 \subsection{Ceas Lemma}%
 \label{sub:ceas_lemma}
@@ -1110,7 +1109,7 @@ In that case will $\| u - u_{h} \|_{ X  }^{  }  \to  0$, $h \to  0$. Hence, if t
 For more information, see \cite[pp. 66]{quartdiff}.
 
 In combination with Corollary \ref{cor:celement_apriori}, is Ceas lemma very handy to construct a priori estimates. However, Ceas lemma as it stands does assume conform methods $X_{h} \subset X$, hence, we must be cautious for broken Sobolev spaces.
- 
+
 
 
 
