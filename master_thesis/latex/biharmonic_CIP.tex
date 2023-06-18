@@ -53,7 +53,8 @@ Remark that the Neumann boundary condition $g_{1}$ is strongly imposed in the sp
 \label{sub:construction_of_laplacian_cip}
 
 To achieve the objective of constructing the Hessian and Laplacian formulations, the following lemmas will be the primary components. This is done by constructing a consistent formulation by assuming the function $u$ is exact with a sufficient
-regularity, and the test function $v$ defined via    $V_{h} = \left\{ \mathcal{P} _{c}^{k}( \mathcal{T} _{h}) \text{ or } \mathcal{Q} _{c}^{k}( \mathcal{T} _{h})    \right\}$ in \eqref{def:Vh_background}.
+regularity, and the test function $v$ defined via $V_{h} = \left\{ \mathcal{P} _{c}^{k}( \mathcal{T} _{h}) \text{ or } \mathcal{Q} _{c}^{k}( \mathcal{T} _{h})    \right\}$ in \eqref{def:Vh_background}.
+This asserts that when we replace $u \in V_{h}$, the system remains consistent. However, due to the nonconformal nature of $V_{h}$, it becomes necessary to introduce penalty terms to ensure the system is well-posed.
 \begin{lemma}
     \label{lemma:bh_hessian_identity}
     Assume the homogeneous Neumann conditions, $g_1( x ) = 0 $.
