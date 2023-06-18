@@ -76,7 +76,7 @@ continuity is imposed weakly and in the same way is the Neumann conditions also 
 
 
 \begin{lemma}
-    Assume the homogeneous Neumann conditions, $g_1 = 0 $.
+    Assume the homogeneous Neumann conditions $g_1 = 0 $.
 Let $u \in H^{4}( \Omega ) $ be the solution to \eqref{eq:bi_problem} and let $ v \in V_{h}$. Then does the following identity hold.
 \begin{equation}
 \label{eq:bi_basic_dg_full}
@@ -91,17 +91,22 @@ Let $u \in H^{4}( \Omega ) $ be the solution to \eqref{eq:bi_problem} and let $ 
 \begin{proof}
 
  We will start constructing a local theory for a element $T$ and then extend it to the full mesh
-$\mathcal{T}_{h} $. Using Greens Theorem is it obvious that \(
+$\mathcal{T}_{h} $. Using Greens Theorem is it obvious that
+\begin{equation}
+    \label{eq:id1}
 \left( \Delta ^2 u,v_h \right) _{T }   = \left( \partial _{n} \Delta u, v_h \right) _{\partial T  } - \left( \nabla \left( \Delta  u \right) , \nabla v_h \right) _{T }
-\).
+\end{equation}
+
 We can expand the second term in the following way.
-\begin{equation*}
+\begin{equation}
+    \label{eq:id2}
     \begin{split}
-( \nabla ( \Delta u ) , \nabla v_h ) _{T } & = \sum_{i = 1}^{ d}  ( \Delta  \partial _{x_{i}} u, \partial _{x_{i}}v_h ) _{T }  = \sum_{i = 1}^{d}  ( \nabla \cdot ( \nabla \partial _{x_{i}} u ) , \partial _{x_{i}} v_h )_{T }  \\
-&= \sum_{i = 1}^{d}  \left( ( \partial_n  \partial _{x_{i}} u,  \partial _{x_{i}} v_h ) _{\partial T } -   ( \nabla \partial _{x_{i}} u, \nabla \partial _{x_{i}} v_h )_{T } \right)
-= (  \partial_n\nabla u, \nabla v_h ) _{\partial_{} T  } - ( D^2 u, D^2v_h ) _{T } \\
+( \nabla ( \Delta u ) , \nabla v_h ) _{T } & = \sum_{i = 1}^{ d}  ( \Delta  \partial _{x_{i}} u, \partial _{x_{i}}v_h ) _{T }
+                                           = \sum_{i = 1}^{d}  ( \nabla \cdot ( \nabla \partial _{x_{i}} u ) , \partial _{x_{i}} v_h )_{T }  \\
+&= \sum_{i = 1}^{d}  \left( ( \partial_n  \partial _{x_{i}} u,  \partial _{x_{i}} v_h ) _{\partial T } -   ( \nabla \partial _{x_{i}} u, \nabla \partial _{x_{i}} v_h )_{T } \right) \\
+& = (  \partial_n\nabla u, \nabla v_h ) _{\partial_{} T  } - ( D^2 u, D^2v_h ) _{T }
     \end{split}
-.\end{equation*}
+.\end{equation}
 Hence, the normal flux of $\Delta u$ appears naturally into the formulation. It can be denoted that $D^2$ is the Hessian matrix operator. Also remark that we apply the notation
 $( D^2u, D^2v_h )_{\Omega } = \int_{\Omega }^{} D^{2}u : D^2v_h  dx$ for the inner product $D^2u:D^2v_h$.
 
@@ -120,12 +125,13 @@ where we defined a orthonormal basis $t_{i}$, $i = 1, \ldots, d-1$ for the space
 
 Given that $u$ is evaluated only on $\partial T$ can we write
 $\nabla u = \left( n^{T} \nabla u   \right) n + \sum_i^{d-1} \left( t_i^{T} \nabla u   \right) t_i$ such that,
-\[
+\begin{equation}
+\label{eq:id3}
     \begin{split}
 (  \partial_n\nabla u, \nabla v_h ) _{\partial_{} T  } & =  ( \partial _{n} ( \partial_{n}u \ n), \partial _{n} v_h \ n )_{\partial T}   +\sum_{i,j=1}^{d-1} ( \partial _{n} ( \partial_{t_{i}}u \ t_{i}), \partial _{t_{j}} v_h \ t_{j} )_{\partial T} \\
-& =  ( \partial _{nn} u ), \partial _{n} v_h  )_{\partial T}+\sum_{i=1}^{d-1} ( \partial _{n t_{i}}u , \partial _{t_{i}} v_h  )_{\partial T}
+& =  ( \partial _{nn} u, \partial _{n} v_h  )_{\partial T}+\sum_{i=1}^{d-1} ( \partial _{n t_{i}}u , \partial _{t_{i}} v_h  )_{\partial T}
     \end{split}
-\]
+\end{equation}
 Here we used that $n^{T} n = 1$ and $t_{i}^{T} t_{j} = \delta_{ij}$.
 Remark that simple relation was applied,
     \begin{align*}
@@ -134,15 +140,14 @@ Remark that simple relation was applied,
     \end{align*}
 We may also deduce the relationship $\partial _{nt_{i}} u = \partial _{t_{i}n}u$ which arise from the fact that $n^{T} D^2u \ t_{i} = ( t_{i}^{T} D^2u \  n)^T = t_{i}^{T}  D^2u \  n$, where we utilized the symmetry $D^2u = ( D^2u) ^{T} $ and that the
 product is a scalar.
-Adding all these calculations together we have the following local identity,
+Combining \eqref{eq:id1}, \eqref{eq:id2} and \eqref{eq:id3} we see that,
 \[
-( \Delta ^2 u, v_h) _{T}   = ( D^2 u, D^2v_h)_{T } + ( \partial _{n}  \Delta u, v_h )_{\partial T} -( \partial _{n} ( \partial_{n}u ), \partial _{n} v_h  )_{\partial T}-\sum_{i=1}^{d-1} ( \partial _{n} ( \partial_{t_{i}}u ), \partial _{t_{i}} v_h  )_{\partial T}
+    ( \Delta ^2 u, v_h) _{T}   = ( D^2 u, D^2v_h)_{T } + ( \partial _{n}  \Delta u, v_h )_{\partial T} -( \partial _{nn}u ), \partial _{n} v_h  )_{\partial T}-\sum_{i=1}^{d-1} ( \partial _{n t_{i}}u, \partial _{t_{i}} v_h  )_{\partial T}
 \]
-For global continuity we sum over the elements in the mesh $\mathcal{T} _{h}$.
-
+For global continuity we sum over the elements in the mesh $\mathcal{T} _{h}$,
 \begin{equation}
 \label{eq:bi_basic_dg2}
-\left( \Delta  ^{2} u,v_h \right) _{\Omega } = \sum_{T \in  \mathcal{T} _{h}}^{}  ( D^2 u, D^2v_h)_{T } + ( \partial _{n}  \Delta u, v_h )_{\partial T} -( \partial _{n} ( \partial_{n}u ), \partial _{n} v_h  )_{\partial T}-\sum_{i=1}^{d-1} ( \partial _{n t_{i}} u , \partial _{t_{i}} v_h  )_{\partial T}
+\left( \Delta  ^{2} u,v_h \right) _{\Omega } = \sum_{T \in  \mathcal{T} _{h}}^{}  ( D^2 u, D^2v_h)_{T } + ( \partial _{n}  \Delta u, v_h )_{\partial T} -( \partial _{nn}u , \partial _{n} v_h  )_{\partial T}-\sum_{i=1}^{d-1} ( \partial _{n t_{i}} u , \partial _{t_{i}} v_h  )_{\partial T}
 \end{equation}
 Our goal is to simplify the equation above so we can take account for discontinuities of the derivatives.
 By integrating over exterior facets $\mathcal{F} _{h}^{ext}$ and interior facets $\mathcal{F} _{h}^{int}$ we will get e more suitable formulation which makes it easier to control the jumps between the elements, hence makes it possible to penalize discontinuities.
