@@ -200,7 +200,6 @@ because of the regularity of $u$ and the boundary condition $g_{1}=0$. Hence, we
 The proof is complete.
 \end{proof}
 
-
 We will now assemble the Hessian CIP formulation. Assume $u,v \in V_{h}$ and $g_{1} = 0$, then we have the linear form
 \begin{equation}
     \label{eq:hessian_form}
@@ -216,11 +215,7 @@ a_{h}^{H} \left( u, v \right)   =&
 .
 \end{equation}
 
-Hence, the Hessian formulation is derived.
-
-
-
-
+Hence, the Hessian formulation is derived. Note that we added two consistent penalty terms. What we will see later that this term is essential for making the problem well-posed, hence the name interioir penalty method. For more information of CIP nonconform error analysis, see \cite[Chapter 1.3]{pietro2012}.
 
 \begin{lemma}
  Assume $u \in H^{4}( \Omega ) $ and $v \in  V = \left\{ v \in H^{1}( \Omega )  \mid  v \mid _{T} \in H^{m}( T) \ \forall T \in \mathcal{T} _{h}   \right\} $. Then we have the following identity.
