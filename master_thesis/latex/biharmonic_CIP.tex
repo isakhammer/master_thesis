@@ -281,10 +281,10 @@ $u \in V_{h}$ such that $a_{h}( u, v) = l_{h}( v) $ for all $v \in V_{h}$. To su
 \begin{split}
 a_{h}^{H} \left( u, v \right)   =&
     \left( \alpha  u, v \right) _{\Omega }   +  \left( D^2 u, D^2v \right) _{\Omega } \\
- & - \left( \mean{  \partial _{n n} u }, \jump{ \partial _{n }u} \right)_{\mathcal{F}_{h}^{int}}  -
- \left( \mean{ \partial _{n n} v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}^{int}}  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h}^{int}} \\
- & - \left(   \partial _{n n} u ,  \partial _{n }u \right)_{\Gamma }  -
- \left(  \partial _{n n} v ,  \partial _{n}u       \right)_{\Gamma }  + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{\Gamma } \\
+ & - \left( \mean{  \partial _{n n} u }, \jump{ \partial _{n }v} \right)_{\mathcal{F}_{h}^{int}}  -
+ \left(  \jump{ \partial _{n}u }, \mean{ \partial _{n n} v } \right)_{\mathcal{F}_{h}^{int}}  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h}^{int}} \\
+ & - \left(   \partial _{n n} u ,  \partial _{n }v \right)_{\Gamma }  -
+ \left(    \partial _{n}u,  \partial _{n n} v \right)_{\Gamma }  + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{\Gamma } \\
  l_{h}^{H}( v)  =&  \left( f, v \right) _{\Omega }  - \left(g_{2}, v  \right) _{\Gamma }
 \end{split}
 .
@@ -308,7 +308,7 @@ With the corresponding energy norms,
             \left( \alpha  u, v \right) _{\Omega }   +  \left( \Delta  u, \Delta v \right) _{ \Omega } \\
                                              & - \left( \mean{  \Delta  u }, \jump{ \partial _{n }v} \right)_{\mathcal{F}_{h}^{int}  }  - \left( \mean{ \Delta  v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}^{int}  }  + \frac{\gamma }{h}
                                              \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h}^{int} } \\
-                                             & - \left(   \Delta  u ,  \partial _{n }v \right)_{\Gamma   }  - \left(  \Delta  v ,  \partial _{n}u       \right)_{\Gamma  }  + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{ \Gamma } \\
+                                             & - \left(   \Delta  u ,  \partial _{n }v \right)_{\Gamma   }  - \left(  \partial _{n}u,  \Delta  v \right)_{\Gamma  }  + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{ \Gamma } \\
                                              l^{L}_{h}( v)  =&  \left( f, v \right) _{\Omega } - ( g_{2},  v )_{\Gamma } -  ( g_{1}, \Delta  v  )_{\Gamma }  + \frac{\gamma }{h} ( g_{1}, \partial _{n} v  )_{\Gamma }
                                          \end{split}
                                      \end{equation}
