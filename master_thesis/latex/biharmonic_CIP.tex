@@ -62,6 +62,7 @@ continuity is imposed weakly and in the same way is the Neumann conditions also 
 
 
 
+\begin{lemma}
     Assume the homogeneous Neumann conditions, $g_1 = 0 $.
 Let $u \in H^{4}( \Omega ) $ be the solution to \eqref{eq:bi_problem} and let $ v \in V_{h}$. Then does the following identity hold.
 \begin{equation}
@@ -72,7 +73,9 @@ Let $u \in H^{4}( \Omega ) $ be the solution to \eqref{eq:bi_problem} and let $ 
     & - ( \partial _{nn} u , \partial _{n} v_h)_{\Gamma  }- ( \partial _{n} u , \partial _{nn} v_h)_{\Gamma  } +  \left(g_{2}, v_h  \right) _{ \Gamma  }
 \end{split}
 \end{equation}
+\end{lemma}
 
+\begin{proof}
 
  We will start constructing a local theory for a element $T$ and then extend it to the full mesh
 $\mathcal{T}_{h} $. Using Greens Theorem is it obvious that \(
@@ -201,6 +204,8 @@ because of the regularity of $u$ and the boundary condition $g_{1}=0$. Hence, we
 
 The proof is complete.
 
+\end{proof}
+
 We will now assemble the Hessian CIP formulation. Assume $u,v \in V_{h}$ and $g_{1} = 0$, then we have the linear form
 \begin{equation}
     \label{eq:hessian_form}
@@ -222,6 +227,8 @@ Thus, the Hessian formulation is derived. Note that we added two consistent pena
 \label{ssub:construction_of_the_laplacian_formulation}
 
 
+\begin{lemma}
+
  Let $u \in H^{4}( \Omega ) $ the solution of \eqref{eq:bi_problem} and $v \in  V_{h}$. Then we have the following identity.
 \[
     \begin{split}
@@ -229,6 +236,10 @@ Thus, the Hessian formulation is derived. Note that we added two consistent pena
 & + ( g_{2} , v )_{\Gamma } - ( \partial _{n} v, \Delta u)_{\Gamma }- ( \partial _{n} u, \Delta v)_{\Gamma } +( g_{1} , \Delta v)_{\Gamma } .
     \end{split}
 \]
+\end{lemma}
+
+\begin{proof}
+
 
   Similarly, we start constructing a local theory for a element $T$ and then extend it to the full mesh $\mathcal{T}_{h} $.
 Utilizing \eqref{eq:iden_bi} can we construct a local identity s.t. \[
@@ -267,6 +278,7 @@ Adding the terms, we end up with the final formulation,
     \end{split}
 \]
 and the proof is complete.
+\end{proof}
 
 Finally, can we construct the Laplace CIP formulation. Let $u,v \in V_{h}$, then can finally write the following respective forms.
 
