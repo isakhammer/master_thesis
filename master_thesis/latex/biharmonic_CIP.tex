@@ -144,7 +144,7 @@ Combining \eqref{eq:id1}, \eqref{eq:id2} and \eqref{eq:id3} we see that,
 \[
     ( \Delta ^2 u, v_h) _{T}   = ( D^2 u, D^2v_h)_{T } + ( \partial _{n}  \Delta u, v_h )_{\partial T} -( \partial _{nn}u ), \partial _{n} v_h  )_{\partial T}-\sum_{i=1}^{d-1} ( \partial _{n t_{i}}u, \partial _{t_{i}} v_h  )_{\partial T}
 \]
-For global continuity we sum over the elements in the mesh $\mathcal{T} _{h}$,
+Now, to obtain a global approximation we sum over the elements in the mesh $\mathcal{T} _{h}$,
 \begin{equation}
 \label{eq:bi_basic_dg2}
 \left( \Delta  ^{2} u,v_h \right) _{\Omega } = \sum_{T \in  \mathcal{T} _{h}}^{}  ( D^2 u, D^2v_h)_{T } + ( \partial _{n}  \Delta u, v_h )_{\partial T} -( \partial _{nn}u , \partial _{n} v_h  )_{\partial T}-\sum_{i=1}^{d-1} ( \partial _{n t_{i}} u , \partial _{t_{i}} v_h  )_{\partial T}
