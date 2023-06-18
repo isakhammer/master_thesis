@@ -90,8 +90,8 @@ $( D^2u, D^2v )_{\Omega } = \int_{\Omega }^{} D^{2}u : D^2v  dx$ for the inner p
 
 Next, we want to decompose the evaluation of $\partial _{n}\nabla  u $ on the boundary $\partial T$ in the tangential and normal direction. Pick a facet  $F \in \partial T$, then we define the following decomposition of linear transformation $\nabla u = P_{F}\nabla u  + Q_{F}  \nabla u  $ s.t. the
 orthogonality, $
-P_{F} \nabla u  \cdot Q_{F}  \nabla u = 0$, holds. The normal projection matrix is defined as $Q_{F} = n \otimes n $ and the tangential decomposition follows from $ P_{F} = I - Q_{F} = I - n \otimes n  =  \sum_{i=1}^{d-1} t_{i} \otimes t_i$, which
-is a orthonormal basis $t_{i}$, $i = 1, \ldots, d-1$ for the space orthogonal to the outer normal vector $n$ on a facet $F$. Let $ a_{1}, a_{2}, a_{3} \in R^{d}$ be any vectors, then it is well known that the following identity holds $ ( a_{1}
+P_{F} \nabla u  \cdot Q_{F}  \nabla u = 0$, holds. Here, the normal projection matrix is defined as $Q_{F} = n \otimes n $ and the tangential decomposition follows from $ P_{F} = I - Q_{F} = I - n \otimes n  =  \sum_{i=1}^{d-1} t_{i} \otimes t_i$,
+where we defined a orthonormal basis $t_{i}$, $i = 1, \ldots, d-1$ for the space orthogonal to the outer normal vector $n$ on a facet $F$. Let $ a_{1}, a_{2}, a_{3} \in \mathbb{R} ^{d}$ be any vectors, then it is well known that the following identity holds $ ( a_{1}
 \otimes a_{2}  ) a_{3} = ( a_{2}^{T}  a_{3}) a_{1} $. Hence, we have
 \begin{equation}
 \label{eq:projection}
@@ -102,15 +102,15 @@ is a orthonormal basis $t_{i}$, $i = 1, \ldots, d-1$ for the space orthogonal to
 \end{equation}
 
 Given that $u$ is evaluated only on $\partial T$ can we write
-$\nabla u = \left( n^{T} \nabla u   \right) n + \sum_i^{d-1} \left( t_i^{T} \nabla u   \right) t_i$ s.t.
+$\nabla u = \left( n^{T} \nabla u   \right) n + \sum_i^{d-1} \left( t_i^{T} \nabla u   \right) t_i$ such that,
 \[
     \begin{split}
-(  \partial_n\nabla u, \nabla v ) _{\partial_{} T  } & =  ( \partial _{n} ( \partial_{n}u \cdot n), \partial _{n} v \cdot n )_{\partial T}   +\sum_{i=1}^{d-1} ( \partial _{n} ( \partial_{t_{i}}u \cdot t_{i}), \partial _{t_{i}} v \cdot t_{i} )_{\partial T} \\
+(  \partial_n\nabla u, \nabla v ) _{\partial_{} T  } & =  ( \partial _{n} ( \partial_{n}u \ n), \partial _{n} v \ n )_{\partial T}   +\sum_{i,j=1}^{d-1} ( \partial _{n} ( \partial_{t_{i}}u \ t_{i}), \partial _{t_{j}} v \ t_{j} )_{\partial T} \\
 & =  ( \partial _{nn} u ), \partial _{n} v  )_{\partial T}+\sum_{i=1}^{d-1} ( \partial _{n t_{i}}u , \partial _{t_{i}} v  )_{\partial T}
     \end{split}
 \]
-Here we used that $n^{T} n = 1$ and $t_{i}^{T} t_{i} = 1$.
-We applied the simple relation,
+Here we used that $n^{T} n = 1$ and $t_{i}^{T} t_{j} = \delta_{ij}$.
+Remark that simple relation was applied,
     \begin{align*}
 \partial_n (\partial_n u)  & = n^T \nabla (\partial_n u)  = n ^T (D^2 u \ n)  = n^{T} D^2 u \ n = \partial _{nn} u, \\
 \partial_n (\partial_{t_{i}} u)  & = t_{i}^T \nabla (\partial_n u)  = t_i^T (D^2 u \ n )   = n^{T} D^2 u \ t_{i} = \partial _{n t_{i}} u.
@@ -121,7 +121,7 @@ Adding all these calculations together we have the following local identity,
 \[
 ( \Delta ^2 u, v) _{T}   = ( D^2 u, D^2v)_{T } + ( \partial _{n}  \Delta u, v )_{\partial T} -( \partial _{n} ( \partial_{n}u ), \partial _{n} v  )_{\partial T}-\sum_{i=1}^{d-1} ( \partial _{n} ( \partial_{t_{i}}u ), \partial _{t_{i}} v  )_{\partial T}
 \]
-For global continuity we add all the triangles in the mesh $\mathcal{T} _{h}$.
+For global continuity we sum over the elements in the mesh $\mathcal{T} _{h}$.
 
 \begin{equation}
 \label{eq:bi_basic_dg2}
