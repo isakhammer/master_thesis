@@ -215,17 +215,20 @@ a_{h}^{H} \left( u, v \right)   =&
 .
 \end{equation}
 
-Hence, the Hessian formulation is derived. Note that we added two consistent penalty terms. What we will see later that this term is essential for making the problem well-posed, hence the name interioir penalty method. For more information of CIP nonconform error analysis, see \cite[Chapter 1.3]{pietro2012}.
+Thus, the Hessian formulation is derived. Note that we added two consistent penalty terms. What we will see later that this term is essential for making the problem well-posed, hence, the name interioir penalty method. For more information of CIP nonconform error analysis, see \cite[Chapter 1.3]{pietro2012}.
 
 \begin{lemma}
- Assume $u \in H^{4}( \Omega ) $ and $v \in  V = \left\{ v \in H^{1}( \Omega )  \mid  v \mid _{T} \in H^{m}( T) \ \forall T \in \mathcal{T} _{h}   \right\} $. Then we have the following identity.
+ Assume $u \in H^{4}( \Omega ) $ and $v \in  V_{h}$. Then we have the following identity.
 \[
-( \Delta ^2 u, v ) _{\Omega } = ( \Delta u, \Delta v)_{\mathcal{T} _{h} }  +  ( \jump{ \partial _{n} v} , \mean{ \Delta u })_{\mathcal{F}_{h} }  + ( g_{2} , v )_{\Gamma } - ( \partial _{n} v, \Delta u)_{\Gamma }.
+    \begin{split}
+( \Delta ^2 u, v ) _{\Omega }  =& ( \Delta u, \Delta v)_{\mathcal{T} _{h} }  +  ( \jump{ \partial _{n} u} , \mean{ \Delta v })_{\mathcal{F}_{h}^{int} }+  (  \mean{ \Delta u }, \jump{ \partial _{n} v} )_{\mathcal{F}_{h}^{int} } \\
+& + ( g_{2} , v )_{\Gamma } - ( \partial _{n} v, \Delta u)_{\Gamma }- ( \partial _{n} u, \Delta v)_{\Gamma } +( g_{1} , \Delta v)_{\Gamma } .
+    \end{split}
 \]
 
 \end{lemma}
 \begin{proof}
-  Similarly, we start constructing a local theory for a triangle $T$ and then extend it to the full mesh $\mathcal{T}_{h} $.
+  Similarly, we start constructing a local theory for a element $T$ and then extend it to the full mesh $\mathcal{T}_{h} $.
 Utilizing \eqref{eq:iden_bi} can we construct a local identity s.t. \[
 ( \Delta ^2 u, v ) _{T} = ( \Delta u, \Delta v) +  ( \partial _{n} \Delta u, v)_{\partial T} - ( \partial _{n} v, \Delta u) _{\partial T}
 \]
@@ -252,6 +255,17 @@ Hence, we end up with the identity,
 ( \Delta ^2 u, v ) _{\Omega } = ( \Delta u, \Delta v)_{\mathcal{T} _{h} }  +  ( \jump{ \partial _{n} v} , \mean{ \Delta u })_{\mathcal{F}_{h} }  + ( g_{2} , v )_{\Gamma } - ( \partial _{n} v, \Delta u)_{\Gamma }.
 \]
 
+We add consistent symmetry terms $( \mean{ \Delta  v } ,\jump{ \partial _{n} u }    )_{\mathcal{F}^{int}_{h} } $ and $( \Delta  v  , \partial _{n} u     )_{\Gamma  } -( \Delta  v  , g_{1}  )_{\Gamma  }  $, which effectely is adding zero
+because of the regularity of $u$ and boundary condition $\partial _{n} u = g_{1}$.
+
+Adding the terms, we end up with the final formulation,
+\[
+    \begin{split}
+( \Delta ^2 u, v ) _{\Omega }  =& ( \Delta u, \Delta v)_{\mathcal{T} _{h} }  +  ( \jump{ \partial _{n} u} , \mean{ \Delta v })_{\mathcal{F}_{h}^{int} }+  (  \mean{ \Delta u }, \jump{ \partial _{n} v} )_{\mathcal{F}_{h}^{int} } \\
+& + ( g_{2} , v )_{\Gamma } - ( \partial _{n} v, \Delta u)_{\Gamma }- ( \partial _{n} u, \Delta v)_{\Gamma } +( g_{1} , \Delta v)_{\Gamma } ,
+    \end{split}
+\]
+and the proof is complete.
 
 \end{proof}
 Finally, can we construct the Laplace CIP formulation. Let $u,v \in V_{h}$, then can finally write the following respective forms.
