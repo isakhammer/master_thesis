@@ -169,8 +169,9 @@ By integrating over exterior facets $\mathcal{F} _{h}^{ext}$ and interior facets
     \end{split}
 .\end{equation*}
 
-Where integration over all interior facets $ \forall F \in \mathcal{F}_{h}^{int}$ is computed in this way.
-\begin{equation*}
+Where integration of the interior facets is computed in the following fashion.
+\begin{equation}
+    \label{eq:dg2_facets}
     \begin{split}
         (I) &  =    \left(\partial _{n^{+}} \Delta  u^{+} ,v_h^{+}\right)_{F} +
         \left(\partial _{n^{-}} \Delta  u^{-} ,v_h^{-}\right)_{F}  \\
@@ -194,15 +195,16 @@ Where integration over all interior facets $ \forall F \in \mathcal{F}_{h}^{int}
                          _{nt_{i}}  u
                  }}_{= 0}    \mean{ \partial _{t_{i}}v_h }  = 0
                    \end{split}
-.\end{equation*}
-Observe that the cancellations in the term $(I)$ and term $(III)$  appears of the continuity of $v_h\in V_{h} $ and $u\in H^{4}( \Omega ) $ which makes the jumps and derivative jumps zero. On the other hand, the second term $(II)$  is does not vanish
-since the discontinuity in normal vector for $v_h \in V_{h}$ is a jump. It can also be raised that $\mean{
-\partial _{nn} u } = \partial _{nn} u  $ holds by the continuity of $H^{4}( \Omega  ) $.
-Hence, we obtain the following identity.
+.\end{equation}
+Observe that the cancellations in the term $(I)$ and term $(III)$  appears of the continuity of $v_h\in V_{h} $ and $u\in H^{4}( \Omega ) $ which makes the jumps and derivative jumps zero. On the other hand, the second term $(II)$  does not vanish
+since the derivative of $v_h \in V_{h}$ has a nonzero jump. It can also be raised that $\mean{
+\partial _{nn} u } = \partial _{nn} u  $ holds of $H^{4}( \Omega  ) $.
+
+Combining \eqref{eq:dg2_facets} and inserting the boundary condition $g_{2} = \partial _{n} \Delta u $ is it clear that the formulation presented in \eqref{eq:bi_basic_dg2} is equivalent to the following formulation.
 \begin{equation}
 \label{eq:bi_basic_dg_full_1}
 \begin{split}
-    \left( \Delta  ^{2} u, v_h \right) _{\Omega }  =&   \left( D^2u, D^2v_h \right)_{\mathcal{T} _{h}} +  \left(g_{2}, v_h  \right) _{\mathcal{F}^{ext}_{h} }  -  ( \mean{ \partial _{nn} u }   , \jump{ \partial_{n} v_h } )_{\mathcal{F}_{h}^{int} } \\
+    \left( \Delta  ^{2} u, v_h \right) _{\Omega }  =&   \left( D^2u, D^2v_h \right)_{\mathcal{T} _{h}} +  \left(g_{2}, v_h  \right) _{\Gamma  }  -  ( \mean{ \partial _{nn} u }   , \jump{ \partial_{n} v_h } )_{\mathcal{F}_{h}^{int} } \\
                                                   &  - ( \partial _{nn} u , \partial _{n} v_h)_{\mathcal{F}^{ext}_{h} } - \sum_{i =1  }^{d-1} ( \partial   _{t_{i}n} u  ,  \partial   _{t_{i}}  v_h  )_{ \mathcal{F}^{ext} _{h}  }
 \end{split}
 \end{equation}
@@ -210,8 +212,7 @@ Under the assumption that $g_{1} = 0$ on $\Gamma$, and given that the tangent ve
 last term of the equation vanish.
 
 We also note that we add consistent symmetry terms $( \mean{ \partial _{nn} v_h } ,\jump{ \partial _{n} u }    )_{\mathcal{F}^{int}_{h} } $ and $( \partial _{nn} v_h  , \partial _{n} u     )_{\Gamma  } $, which effectely is adding zero
-because of the regularity of $u$ and the boundary condition $g_{1}=0$. Hence, we have
-
+because of the regularity of $u$ and the boundary condition $g_{1}=0$. Finally, we have
 \begin{equation}
 \begin{split}
     \left( \Delta  ^{2} u, v_h \right) _{\Omega }  =&   \left( D^2u, D^2v_h \right)_{\Omega }   -  ( \mean{ \partial _{nn} u }   , \jump{ \partial_{n} v_h } )_{\mathcal{F}_{h}^{int} } -  (  \jump{ \partial_{n} u
