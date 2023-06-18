@@ -189,6 +189,7 @@ last term of the equation vanish, thus providing the validity of the stated iden
 
 We will now assemble the Hessian CIP formulation. Assume $u,v \in V_{h}$ and $g_{1} = 0$, then we have the linear form
 \begin{equation}
+    \label{eq:hessian_form}
 \begin{split}
 a_{h}^{H} \left( u, v \right)   =&
     \left( \alpha  u, v \right) _{\Omega }   +  \left( D^2 u, D^2v \right) _{\Omega } \\
@@ -247,6 +248,7 @@ Hence, we end up with the identity,
 Finally, can we construct the Laplace CIP formulation. Let $u,v \in V_{h}$, then can finally write the following respective forms.
 
 \begin{equation}
+    \label{eq:laplace_form}
     \begin{split}
         a_{h}^{L} \left( u, v \right)   =&
         \left( \alpha  u, v \right) _{\Omega }   +  \left( \Delta  u, \Delta v \right) _{ \Omega } \\
@@ -269,8 +271,8 @@ imposed to zero. Thus, we expect the penalty parameter $\gamma$ to be the same i
 \subsection{Continuous interior penalty formulations}%
 \label{sub:continuous_interior_penalty_formulations}
 
-We define the two relevant CIP formulations for the \eqref{eq:bi_problem} as follows. The general idea is to construct a bilinear problem $a_{h}: V_{h} \times  V_{h} = \mathbb{R} $ and $l_{h}: V_{h} \to \mathbb{R} $ s.t. there exists an $u \in V_{h}$ s.t. $a_{h}( u_{h}, v_{h}) = l_{h}( v) $ for all $v \in V_{h}$. For the CIP
-formulation we will investigate two formulations of the forms $a_{h}$ and $l_{h}$.
+We define the two CIP formulations associated with biharmonic problem \eqref{eq:bi_problem} following \cite{brenner2012} and \cite{feng2007fully}. The general idea is to utilize the constructed bilinear and linear forms in \eqref{eq:laplace_form} and \eqref{eq:hessian_form} to solve the problem: Find a
+$u \in V_{h}$ such that $a_{h}( u, v) = l_{h}( v) $ for all $v \in V_{h}$. To summarize, we have the following formulations.
 
 \begin{enumerate}[label=\arabic*)]
     \item Assuming that $g_{1} = 0$. Then Hessian problem formulation is
@@ -283,7 +285,7 @@ a_{h}^{H} \left( u, v \right)   =&
  \left( \mean{ \partial _{n n} v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}^{int}}  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h}^{int}} \\
  & - \left(   \partial _{n n} u ,  \partial _{n }u \right)_{\Gamma }  -
  \left(  \partial _{n n} v ,  \partial _{n}u       \right)_{\Gamma }  + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{\Gamma } \\
- l_{h}^{H}( v)  =&  \left( f, v \right) _{\Omega }  - \left(g_{2}, v  \right) _{\Gamma } - ( g_{1}, \partial _{nn} v)_{\Gamma } +  \frac{\gamma }{h} ( g_{1} , \partial _{n} v)_{\Gamma }
+ l_{h}^{H}( v)  =&  \left( f, v \right) _{\Omega }  - \left(g_{2}, v  \right) _{\Gamma }
 \end{split}
 .
 \end{equation}
