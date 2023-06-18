@@ -353,13 +353,17 @@ rules on the design of manufactured solutions on arbitrary domains. Consequently
 \end{remark}
 
 The Hessian formulation is well investigated by Susanne Brenner in several papers for \cite{brenner2012, brenner2012quadratic, brenner2012quadratic_kirk} with a corresponding analysis and numerical validation. Similarly, variants of the Laplace formulation can be found here
-\cite{feng2007fully, georgoulis2009discontinuous}. In these article there is good also evidence  that both formulation have the following expected a priori estimates. Let  $u \in H^{s}( \Omega ) $, and $u_{h}\in  V_{h}  $ of order $k$. Then with $r = \min\left\{ s,
-k+1 \right\}$ the a priori estimates are   \[
+\cite{feng2007fully, georgoulis2009discontinuous}. In these article there also is good theoretical and experimental evidence that both formulation have the following expected a priori estimates. Let  $u \in H^{s}( \Omega ) $ for $s\ge  \frac{5}{2} + \varepsilon$, and $u_{h}\in
+V_{h}  $ of order $k\ge 2$. Then with $r = \min\left\{ s,
+k+2 \right\}$ the a priori estimates are   \[
     \begin{split}
 \| u - u_{h} \|_{ a_{h},*  }^{  }  & \lesssim  h^{r-2} \| u \|_{ r, \Omega  }^{  } \\
-\| u - u_{h} \|_{ \Omega   }^{  }  & \lesssim  h^{r} \| u \|_{ r,\Omega  }^{  }
+\| u - u_{h} \|_{ \Omega   }^{  }  & \lesssim  h^{r- \max_{}\left\{ 0, 3-k \right\}  } \| u \|_{ r,\Omega  }^{  }
     \end{split}
 \]
+
+Remark that the $\| \cdot  \|_{\Omega   }^{  } $ norm estimates is suboptimal for $k=2$.
+\red{Need to clarify assumptions on the boundary. Maybe regularity of $g_{1}$ and $g_{2}$.  }
 
 
 
