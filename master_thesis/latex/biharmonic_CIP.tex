@@ -59,7 +59,7 @@ continuity is imposed weakly and in the same way is the Neumann conditions also 
 \begin{lemma}
     \label{lemma:bh_hessian_identity}
     Assume the homogeneous Neumann conditions, $g_1 = 0 $.
-Let $u \in H^{4}( \Omega ) $ be the solution to \eqref{eq:bi_problem}.  And let $ v \in V_{h}$. Then does the following identity hold.
+Let $u \in H^{4}( \Omega ) $ be the solution to \eqref{eq:bi_problem} and let $ v \in V_{h}$. Then does the following identity hold.
 \begin{equation}
 \label{eq:bi_basic_dg_full}
 \begin{split}
@@ -173,7 +173,8 @@ Where integration over all interior facets $ \forall F \in \mathcal{F}_{h}^{int}
                  }}_{= 0}    \mean{ \partial _{t_{i}}v }  = 0
                    \end{split}
 .\end{equation*}
-Observe that the cancellations in the term $(I)$ and term $(III)$  appears of the continuity of $v\in V $ and $u\in H^{4}( \Omega ) $ which makes the jumps and derivative jumps zero. On the other hand, the second term $(II)$  is does not vanish since the discontinuity in normal vector for $v \in V$ is a jump. It can also be raised that $\mean{
+Observe that the cancellations in the term $(I)$ and term $(III)$  appears of the continuity of $v\in V_{h} $ and $u\in H^{4}( \Omega ) $ which makes the jumps and derivative jumps zero. On the other hand, the second term $(II)$  is does not vanish
+since the discontinuity in normal vector for $v \in V_{h}$ is a jump. It can also be raised that $\mean{
 \partial _{nn} u } = \partial _{nn} u  $ holds by the continuity of $H^{4}( \Omega  ) $.
 Hence, we obtain the following identity.
 \begin{equation}
@@ -218,7 +219,7 @@ a_{h}^{H} \left( u, v \right)   =&
 Thus, the Hessian formulation is derived. Note that we added two consistent penalty terms. What we will see later that this term is essential for making the problem well-posed, hence, the name interioir penalty method. For more information of CIP nonconform error analysis, see \cite[Chapter 1.3]{pietro2012}.
 
 \begin{lemma}
- Assume $u \in H^{4}( \Omega ) $ and $v \in  V_{h}$. Then we have the following identity.
+ Let $u \in H^{4}( \Omega ) $ the solution of \eqref{eq:bi_problem} and $v \in  V_{h}$. Then we have the following identity.
 \[
     \begin{split}
 ( \Delta ^2 u, v ) _{\Omega }  =& ( \Delta u, \Delta v)_{\mathcal{T} _{h} }  +  ( \jump{ \partial _{n} u} , \mean{ \Delta v })_{\mathcal{F}_{h}^{int} }+  (  \mean{ \Delta u }, \jump{ \partial _{n} v} )_{\mathcal{F}_{h}^{int} } \\
@@ -282,10 +283,7 @@ Finally, can we construct the Laplace CIP formulation. Let $u,v \in V_{h}$, then
 
 
 In contrast to the Hessian formulation, is the boundary Neumann booundary condition $g_{1}$ is imposed weakly using the Nitsche's method, hence, the regularization term.
-This consists of adding a symmetry term and adding an additional stabilization regularisation term \cite{nitsche1971variationsprinzip}, that is,  \[
-( \Delta  v,  \partial _{n}u    )_{\Gamma } +( \Delta
-v,g_{1}     )_{\Gamma } + \frac{\gamma}{h}(\partial _{n}u -  g_{1}, \partial _{n}v     )_{\Gamma }   = 0
-\]
+This consists of adding a symmetry term and adding an additional stabilization regularisation term \cite{nitsche1971variationsprinzip}.
 It is worth noting that technically is the interior regularisation equivalent to do a Nitsche's method in all interior boundaries of the elements with boundary conditions of each element weakly
 imposed to zero. Thus, we expect the penalty parameter $\gamma$ to be the same interior and exterior elements. Let where $k\ge 2$ is the polynomial order, then for the Hessian formulation is it theoretically proven that $\gamma = 2k ( k-1 ) $
 \cite{brenner2012quadratic, brenner2012}. However, we still prefer to experimentally verify the best parameter.
