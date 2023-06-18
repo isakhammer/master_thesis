@@ -39,22 +39,35 @@ Hence, we obtain the identity
 ( \Delta ^2 u, v ) _{\Omega } = ( \Delta u, \Delta v)_{\Omega } +  ( \partial _{n} \Delta u, v)_{\Gamma } - ( \partial _{n} v, \Delta u) _{\Gamma }
 \end{equation}
 Taking into account the boundary conditions, we end up with the following corresponding weak formulation of the biharmonic problem \eqref{eq:bi_problem}.
-Find a unique $u \in V := \left\{ v \in  H^2( \Omega )  \mid \partial _{n} v  = g_{1}   \right\}  $ such that $a( u,v) = l( v)  \forall v \in H^{2}( \Omega )  $ where
-  \[
-      \begin{split}
+
+\begin{equation}
+\label{eq:V_deg}
+V := \left\{ v \in  H^2( \Omega )  \mid \partial _{n} v  = g_{1}   \right\}
+\end{equation}
+Consider the bilinear form $a:V\times V \to \mathbb{R}$ and the linear form $l: V \to \mathbb{R}$. We define the continuous weak formulation problem formulation as follows.
+
+Find a $u \in   $ such that
+\begin{equation}
+\label{eq:cont_weak_problem}
+a( u,v) = l( v)  \forall v \in V
+\end{equation}
+where
+\begin{equation}
+    \begin{split}
 a( u,v) & =  ( \alpha u,v)_{\Omega } + ( \Delta u, \Delta v)_{\Omega } - (  \Delta u, \partial _{n} v) _{\Gamma }\\
 l( v)  &= ( f,v)_{\Omega } - ( g_{2} , v)_\Omega
-      \end{split}
-\]
-Note that the Neumann boundary condition $g_{1}$ is strongly imposed in the space and $g_{2}$ naturally appears in the weak formulation.
+    \end{split}
+\end{equation}
+Note that the Neumann boundary condition $g_{1}$ is strongly imposed in $V$, and $g_{2}$ is naturally incorporated in the weak formulation.
 
 
 \subsection{Detailed construction of Hessian and Laplacian Formulations }%
 \label{sub:construction_of_laplacian_cip}
+The goal is to construct a corresponding discrete version for the problem \eqref{eq:cont_weak_problem}, that is to find a $u_{h} \in V_{h}$ such that $a_{h}( u_{h}, v_{h}) = l_{h}( v_{h}) $ for all $v_{h} \in V_{h}$.
 
 To achieve the objective of constructing the Hessian and Laplacian formulations, the following lemmas will be the primary components. This is done by constructing a consistent formulation by assuming the function $u$ is exact with a sufficient
-regularity, and the test function $v$ defined as an element in $V_{h}$.
-This asserts that when we replace $u \in V_{h}$, the system remains consistent. However, due to the nonconformal nature of $V_{h}$, it becomes necessary to introduce penalty terms to ensure the system is well-posed. Keep in mind that the $C^{1}$
+regularity, and the test function $v_{h}$ defined as an element from the nonconforming set $V_{h} \not\subset V$.
+This asserts when we have a bilinear form and replace the exact solution with $u_{h} \in V_{h}$, the system still remains consistent in $V$. However, due to the nonconformal nature of $V_{h}$, it becomes necessary to introduce penalty terms to ensure the system is well-posed. Keep in mind that the $C^{1}$
 continuity is imposed weakly and in the same way is the Neumann conditions also imposed weakly.
 
 \subsubsection{Construction of the Hessian formulation}%
