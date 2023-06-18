@@ -39,14 +39,14 @@ Hence, we obtain the identity
 ( \Delta ^2 u, v ) _{\Omega } = ( \Delta u, \Delta v)_{\Omega } +  ( \partial _{n} \Delta u, v)_{\Gamma } - ( \partial _{n} v, \Delta u) _{\Gamma }
 \end{equation}
 Taking into account the boundary conditions, we end up with the following corresponding weak formulation of the biharmonic problem \eqref{eq:bi_problem}.
-Find a unique $u \in \left\{ v \in  H^2( \Omega )  \mid \partial _{n} v  = g_{1}   \right\}  $ such that $a( u,v) = l( v)  \forall v \in H^{2}( \Omega )  $ where
+Find a unique $u \in V := \left\{ v \in  H^2( \Omega )  \mid \partial _{n} v  = g_{1}   \right\}  $ such that $a( u,v) = l( v)  \forall v \in H^{2}( \Omega )  $ where
   \[
       \begin{split}
 a( u,v) & =  ( \alpha u,v)_{\Omega } + ( \Delta u, \Delta v)_{\Omega } - (  \Delta u, \partial _{n} v) _{\Gamma }\\
 l( v)  &= ( f,v)_{\Omega } - ( g_{2} , v)_\Omega
       \end{split}
 \]
-Remark that the Neumann boundary condition $g_{1}$ is strongly imposed in the space.
+Note that the Neumann boundary condition $g_{1}$ is strongly imposed in the space and $g_{2}$ naturally appears in the weak formulation.
 
 
 \subsection{Detailed Construction of Hessian and Laplacian Formulations }%
@@ -293,6 +293,8 @@ imposed to zero. Thus, we expect the penalty parameter $\gamma$ to be the same i
 
 We define the two CIP formulations associated with biharmonic problem \eqref{eq:bi_problem} following \cite{brenner2012} and \cite{feng2007fully}. The general idea is to utilize the constructed bilinear and linear forms in \eqref{eq:laplace_form} and \eqref{eq:hessian_form} to solve the problem: Find a
 $u \in V_{h}$ such that $a_{h}( u, v) = l_{h}( v) $ for all $v \in V_{h}$. To summarize, we have the following formulations.
+
+First, note that since $V_{h} \not\subset V $ is it necessary to define the space $V \oplus V_{h}$, which essentially is the direct sum of these two spaces. This new space includes all elements from $V$ and $V_h$ and all possible linear combinations of these elements. i.e., let $u \in V$ and $u_{h} \in V_{h}$, then $u + u_{h} \in V \oplus V_{h} $.
 
 \begin{enumerate}[label=\arabic*)]
     \item Assuming that $g_{1} = 0$. Then Hessian problem formulation is
