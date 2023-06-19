@@ -270,9 +270,9 @@ With the corresponding energy norms,
     This formulation accommodates the nonconformity of $V_{h}$ by factoring in the discontinuities among the facets, yet it preserves consistency when $u$ exhibits sufficient regularity, specifically when $u\in H^{s}( \Omega ), s\ge \frac{5}{2} +
 \varepsilon $. This implies that the solution $u$  is continuous across the boundaries of interior elements, i.e.,  $\jump{ \partial _{n} u }   = 0 $ and  $\mean{ \partial _{nn} u }   = \partial _{nn} u $ on any $ F \in \mathcal{F} ^{int}_{h} $ .
 
-It is noteworthy that we have the consistent terms $\left( \mean{  \partial _{n n} u }, \jump{ \partial _{n }v_{h}} \right)_{\mathcal{F}_{h}^{int}} $ and $ \left(   \partial _{n n} u ,  \partial _{n }v \right)_{\Gamma }$ naturally appear in the
-derivation. However, we also added two symmetry terms,  $\left( \mean{  \partial _{n n} u }, \jump{ \partial _{n }v_{h}}
-\right)_{\mathcal{F}_{h}^{int}} $ and $ \left(   \partial _{n n} u ,  \partial _{n }v \right)_{\Gamma }$, and the so-called penalty terms, $ \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h}^{int}}$ and $ \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{\Gamma }$.
+It is noteworthy that we have the consistent terms $\left( \mean{  \partial _{n n} u_{h} }, \jump{ \partial _{n }v_{h}} \right)_{\mathcal{F}_{h}^{int}} $ and $ \left(   \partial _{n n} u_{h} ,  \partial _{n }v_h \right)_{\Gamma }$ naturally appear in the
+derivation. However, we also added two symmetry terms,  $\left( \mean{  \partial _{n n} u_{h} }, \jump{ \partial _{n }v_{h}}
+\right)_{\mathcal{F}_{h}^{int}} $ and $ \left(   \partial _{n n} u_{h} ,  \partial _{n }v_{h} \right)_{\Gamma }$, and the so-called penalty terms, $ \frac{\gamma }{h}  \left( \jump{ \partial _{n} u_{h}}, \jump{ \partial _{n} v_{h}   }   \right)_{\mathcal{F}_{h}^{int}}$ and $ \frac{\gamma }{h}  \left(  \partial _{n} u_{h},  \partial _{n} v_{h}      \right)_{\Gamma }$.
      These terms is essential for making the problem well-posed, hence, the name interior penalty method or symmetric interior penalty method. For more information of  nonconformal CIP error analysis, see \cite[Chapter 1.3]{pietro2012}.
 \end{remark}
 
@@ -285,10 +285,10 @@ derivation. However, we also added two symmetry terms,  $\left( \mean{  \partial
  Let $u \in H^{4}( \Omega ) $ the solution of \eqref{eq:bi_problem}, $v_{h} \in  V_{h}$ and a constant $\gamma >0$. Then we have the following identity.
 \[
     \begin{split}
-( \Delta ^2 u, v ) _{\Omega }  =& ( \Delta u, \Delta v)_{\mathcal{T} _{h} }  + ( g_{2} , v )_{\Gamma }  - ( g_{1} , \Delta v)_{\Gamma } + \frac{\gamma }{h} ( g_{1} ,  \partial _{n}v)_{\Gamma }\\
-& -  ( \jump{ \partial _{n} u} , \mean{ \Delta v })_{\mathcal{F}_{h}^{int} }-  (  \mean{ \Delta u }, \jump{ \partial _{n} v} )_{\mathcal{F}_{h}^{int} } + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }
+( \Delta ^2 u, v_{h} ) _{\Omega }  =& ( \Delta u, \Delta v_{h})_{\mathcal{T} _{h} }  + ( g_{2} , v_{h} )_{\Gamma }  - ( g_{1} , \Delta v_{h})_{\Gamma } + \frac{\gamma }{h} ( g_{1} ,  \partial _{n}v_{h})_{\Gamma }\\
+& -  ( \jump{ \partial _{n} u} , \mean{ \Delta v_{h} })_{\mathcal{F}_{h}^{int} }-  (  \mean{ \Delta u }, \jump{ \partial _{n} v_{h}} )_{\mathcal{F}_{h}^{int} } + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v_{h}   }
 \right)_{\mathcal{F}_{h}^{int} } \\
-& - ( \partial _{n} v, \Delta u)_{\Gamma }- ( \partial _{n} u, \Delta v)_{\Gamma } + \frac{\gamma }{h}( \partial _{n} u, \partial _{n} v)_{\Gamma }   .
+& - (  \Delta u, \partial _{n} v_{h})_{\Gamma }- ( \partial _{n} u, \Delta v_{h})_{\Gamma } + \frac{\gamma }{h}( \partial _{n} u, \partial _{n} v_{h})_{\Gamma }   .
     \end{split}
 \]
 \end{lemma}
@@ -297,42 +297,43 @@ derivation. However, we also added two symmetry terms,  $\left( \mean{  \partial
 
   Similarly, we start by constructing integration by parts identities locally for a element $T$ and then extend it to the full mesh $\mathcal{T}_{h} $.
 Utilizing \eqref{eq:iden_bi} can we see that \[
-( \Delta ^2 u, v ) _{T} = ( \Delta u, \Delta v) +  ( \partial _{n} \Delta u, v)_{\partial T} - ( \partial _{n} v, \Delta u) _{\partial T}
+( \Delta ^2 u, v_{h} ) _{T} = ( \Delta u, \Delta v_{h}) +  ( \partial _{n} \Delta u, v_{h})_{\partial T} - ( \partial _{n} v_{h}, \Delta u) _{\partial T}
 \]
 Now, summing over all elements we get \[
     \begin{split}
-( \Delta ^2 u, v ) _{\Omega } & = \sum_{T \in \mathcal{T}_{h} }^{}  \left( ( \Delta u, \Delta v)_{T}
-+  ( \partial _{n} \Delta u, v)_{\partial T} - ( \partial _{n} v, \Delta u) _{\partial T} \right)  \\
- & =   ( \Delta u, \Delta v)_{\mathcal{T} _{h}} +  \sum_{F \in \mathcal{F}_{h}^{ext} }^{}
- (\overbrace{( \partial _{n} \Delta u, v)_{ F}}^{=( g_{2},v)_{F} }  - ( \partial _{n} v, \Delta u) _{F}) \\
-  &   \quad + \sum_{F \in \mathcal{F}_{h}^{int} }^{} \underbrace{( ( \partial _{n^{+}} \Delta u, v)_{ F} + ( \partial _{n^{-}} \Delta u, v)_{ F} )}_{(I)}  - \underbrace{( ( \partial _{n^{+}} v, \Delta u) _{F} + ( \partial _{n^{-}} v, \Delta u) _{F}
+( \Delta ^2 u, v_{h} ) _{\Omega } & = \sum_{T \in \mathcal{T}_{h} }^{}  \left( ( \Delta u, \Delta v_{h})_{T}
++  ( \partial _{n} \Delta u, v_{h})_{\partial T} - ( \partial _{n} v_{h}, \Delta u) _{\partial T} \right)  \\
+ & =   ( \Delta u, \Delta v_{h})_{\mathcal{T} _{h}} +  \sum_{F \in \mathcal{F}_{h}^{ext} }^{}
+ (\overbrace{( \partial _{n} \Delta u, v_{h})_{ F}}^{=( g_{2},v_{h})_{F} }  - ( \partial _{n} v_{h}, \Delta u) _{F}) \\
+  &   \quad + \sum_{F \in \mathcal{F}_{h}^{int} }^{} \underbrace{( ( \partial _{n^{+}} \Delta u, v_{h})_{ F} + ( \partial _{n^{-}} \Delta u, v_{h})_{ F} )}_{(I)}  - \underbrace{( ( \partial _{n^{+}} v_{h}, \Delta u) _{F} + ( \partial _{n^{-}} v_{h}, \Delta u) _{F}
   )}_{(II)}   \\
     \end{split}
 \]
-Decomposing the terms and utilizing the regularity of $u \in H^{4}( \Omega ) $ and the $C^{0}$ continuity of $v\in V_{h}$ is it easy to see that,    \[
+Decomposing the terms and utilizing the regularity of $u \in H^{4}( \Omega ) $ and the $C^{0}$ continuity of $v_{h}\in V_{h}$ is it easy to see that,    \[
 \begin{split}
-    (I) & = ( \partial _{n^{+}} \Delta u, v)_{ F} + ( \partial _{n^{-}} \Delta u, v)_{ F}  = \int_{F}^{} \left[ \partial _{n} \Delta u \  v \right] =  (  \mean{ \partial _{n^{+}} \Delta u } , \underbrace{\jump{v  }}_{ = 0}      )_{ F} + (  \underbrace{\jump{ \partial _{n}
-    \Delta u }}_{=0}  , \mean{v  }     )_{ F} \\
-    (II) &=  ( \partial _{n^{+}} v, \Delta u) _{F} + ( \partial _{n^{-}} v, \Delta u) _{F} = \int_{F}^{} \jump{ \partial _{n} v \ \Delta u } =  ( \underbrace{\jump{ \partial _{n} v}}_{ \neq 0 } , \mean{ \Delta u })_{F}  + ( \mean{ \partial _{n} v}, \underbrace{\jump{ \Delta u
+    (I) & = ( \partial _{n^{+}} \Delta u, v_{h})_{ F} + ( \partial _{n^{-}} \Delta u, v_{h})_{ F}  = \int_{F}^{} \left[ \partial _{n} \Delta u \  v_{h} \right] =  (  \mean{ \partial _{n^{+}} \Delta u } , \underbrace{\jump{v_{h}  }}_{ = 0}      )_{ F} + (  \underbrace{\jump{ \partial _{n}
+    \Delta u }}_{=0}  , \mean{v_{h}  }     )_{ F} \\
+    (II) &=  ( \partial _{n^{+}} v_{h}, \Delta u) _{F} + ( \partial _{n^{-}} v_{h}, \Delta u) _{F} = \int_{F}^{} \jump{ \partial _{n} v_{h} \ \Delta u } =  ( \underbrace{\jump{ \partial _{n} v_{h}}}_{ \neq 0 } , \mean{ \Delta u })_{F}  + ( \mean{
+    \partial _{n} v_{h}}, \underbrace{\jump{ \Delta u
     }}_{=0} )_{F}
 \end{split} .
 \]
 Hence, we end up with the identity,
 \[
-( \Delta ^2 u, v ) _{\Omega } = ( \Delta u, \Delta v)_{\mathcal{T} _{h} }  +  ( \jump{ \partial _{n} v} , \mean{ \Delta u })_{\mathcal{F}_{h} }  + ( g_{2} , v )_{\Gamma } - ( \partial _{n} v, \Delta u)_{\Gamma }.
+( \Delta ^2 u, v_{h} ) _{\Omega } = ( \Delta u, \Delta v_{h})_{\mathcal{T} _{h} }  +  ( \jump{ \partial _{n} v_{h}} , \mean{ \Delta u })_{\mathcal{F}_{h} }  + ( g_{2} , v_{h} )_{\Gamma } - ( \partial _{n} v_{h}, \Delta u)_{\Gamma }.
 \]
 
-Similarly as for Lemma \ref{lemma:hessian}, we add consistent symmetry terms $(  \jump{ \partial _{n} u }, \mean{ \Delta  v })_{\mathcal{F}^{int}_{h} } $ and $(  \partial _{n} u, \Delta  v       )_{\Gamma  } -(  g_{1}, \Delta  v  )_{\Gamma  }  $ and
-the penalty terms $ \frac{\gamma }{h} (  \partial _{n} u, \partial _{n}   v       )_{\Gamma  } -\frac{\gamma }{h}(  g_{1}, \partial _{n} v  )_{\Gamma  }$ and $\frac{\gamma }{h}( \jump{ \partial _{n} u } , \jump{ \partial _{n} v }
+Similarly as for Lemma \ref{lemma:hessian}, we add consistent symmetry terms $(  \jump{ \partial _{n} u }, \mean{ \Delta  v_{h} })_{\mathcal{F}^{int}_{h} } $ and $(  \partial _{n} u, \Delta  v_{h}       )_{\Gamma  } -(  g_{1}, \Delta  v_{h}  )_{\Gamma  }  $ and
+the penalty terms $ \frac{\gamma }{h} (  \partial _{n} u, \partial _{n}   v_{h}       )_{\Gamma  } -\frac{\gamma }{h}(  g_{1}, \partial _{n} v_{h}  )_{\Gamma  }$ and $\frac{\gamma }{h}( \jump{ \partial _{n} u } , \jump{ \partial _{n} v_{h} }
 )_{\mathcal{F}^{int}_{h} }  $  . Effectively is the terms adding zero
 because of the regularity $ u \in H^{4}( \Omega ) $ and the boundary condition $\partial _{n} u = g_{1}$.
 Finally we have
 \[
     \begin{split}
-( \Delta ^2 u, v ) _{\Omega }  =& ( \Delta u, \Delta v)_{\mathcal{T} _{h} }  + ( g_{2} , v )_{\Gamma }  - ( g_{1} , \Delta v)_{\Gamma } + \frac{\gamma }{h} ( g_{1} ,  \partial _{n}v)_{\Gamma }\\
-& -  ( \jump{ \partial _{n} u} , \mean{ \Delta v })_{\mathcal{F}_{h}^{int} }-  (  \mean{ \Delta u }, \jump{ \partial _{n} v} )_{\mathcal{F}_{h}^{int} } + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }
+( \Delta ^2 u, v_{h} ) _{\Omega }  =& ( \Delta u, \Delta v_{h})_{\mathcal{T} _{h} }  + ( g_{2} , v_{h} )_{\Gamma }  - ( g_{1} , \Delta v_{h})_{\Gamma } + \frac{\gamma }{h} ( g_{1} ,  \partial _{n}v_{h})_{\Gamma }\\
+& -  ( \jump{ \partial _{n} u} , \mean{ \Delta v_{h} })_{\mathcal{F}_{h}^{int} }-  (  \mean{ \Delta u }, \jump{ \partial _{n} v_{h}} )_{\mathcal{F}_{h}^{int} } + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v_{h}   }
 \right)_{\mathcal{F}_{h}^{int} } \\
-& - ( \partial _{n} v, \Delta u)_{\Gamma }- ( \partial _{n} u, \Delta v)_{\Gamma } + \frac{\gamma }{h}( \partial _{n} u, \partial _{n} v)_{\Gamma }   .
+& - (  \Delta u , \partial _{n} v_{h})_{\Gamma }- ( \partial _{n} u, \Delta v_{h})_{\Gamma } + \frac{\gamma }{h}( \partial _{n} u, \partial _{n} v_{h})_{\Gamma }   .
     \end{split}
 \]
 and the proof is complete.
@@ -343,16 +344,16 @@ The discrete problem is as follows:
  \begin{equation}
     \text{Find } u_{h} \in V_{h} \text{ such that } a^{L}( u, v_{h})  = l_{h}^{L}( v_{h} )  \quad \forall v_{h} \in  V_{h}.
 \end{equation}
-Here is the corresponding bilinear and linear form defined as,
+The corresponding bilinear and linear form is defined as,
     \begin{equation}
         \label{eq:cip_laplace_form}
         \begin{split}
-            a_{h}^{L} \left( u, v \right)   =&
-            \left( \alpha  u, v \right) _{\Omega }   +  \left( \Delta  u, \Delta v \right) _{ \Omega } \\
-                                             & - \left( \mean{  \Delta  u }, \jump{ \partial _{n }v} \right)_{\mathcal{F}_{h}^{int}  }  - \left( \mean{ \Delta  v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}^{int}  }  + \frac{\gamma }{h}
-                                             \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h}^{int} } \\
-                                             & - \left(   \Delta  u ,  \partial _{n }v \right)_{\Gamma   }  - \left(  \partial _{n}u,  \Delta  v \right)_{\Gamma  }  + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{ \Gamma } \\
-                                             l^{L}_{h}( v)  =&  \left( f, v \right) _{\Omega } - ( g_{2},  v )_{\Gamma } -  ( g_{1}, \Delta  v  )_{\Gamma }  + \frac{\gamma }{h} ( g_{1}, \partial _{n} v  )_{\Gamma }
+            a_{h}^{L} \left( u_{h}, v_{h} \right)   =&
+            \left( \alpha  u_{h}, v_{h} \right) _{\Omega }   +  \left( \Delta  u_{h}, \Delta v_{h} \right) _{ \Omega } \\
+                                             & - \left( \mean{  \Delta  u_{h} }, \jump{ \partial _{n }v_{h}} \right)_{\mathcal{F}_{h}^{int}  }  - \left( \mean{ \Delta  v_{h} }, \jump{ \partial _{n}u_{h} }      \right)_{\mathcal{F}_{h}^{int}  }  + \frac{\gamma }{h}
+                                             \left( \jump{ \partial _{n} u_{h}}, \jump{ \partial _{n} v_{h}   }   \right)_{\mathcal{F}_{h}^{int} } \\
+                                             & - \left(   \Delta  u_{h} ,  \partial _{n }v_{h} \right)_{\Gamma   }  - \left(  \partial _{n}u_{h},  \Delta  v_{h} \right)_{\Gamma  }  + \frac{\gamma }{h}  \left(  \partial _{n} u_{h},  \partial _{n} v_{h}      \right)_{ \Gamma } \\
+                                             l^{L}_{h}( v_{h})  =&  \left( f, v_{h} \right) _{\Omega } - ( g_{2},  v_{h} )_{\Gamma } -  ( g_{1}, \Delta  v_{h}  )_{\Gamma }  + \frac{\gamma }{h} ( g_{1}, \partial _{n} v_{h}  )_{\Gamma }
                                          \end{split}
                                      \end{equation}
                                      With the corresponding energy norms
@@ -369,10 +370,10 @@ Here is the corresponding bilinear and linear form defined as,
 
 
                                      \begin{remark}
-Again, note that we have the consistent terms $\left( \mean{  \Delta  u }, \jump{ \partial _{n }v_{h}} \right)_{\mathcal{F}_{h}^{int}} $ and $ \left(   \Delta  u ,  \partial _{n }v \right)_{\Gamma }$ naturally appearing in the
-derivation. Also recall the symmetry terms $(  \jump{ \partial _{n} u }, \mean{ \Delta  v })_{\mathcal{F}^{int}_{h} } $ and $(  \partial _{n} u, \Delta  v       )_{\Gamma  } -(  g_{1}, \Delta  v  )_{\Gamma  }  $ and
-the penalty terms $ \frac{\gamma }{h} (  \partial _{n} u, \partial _{n}   v       )_{\Gamma  } -\frac{\gamma }{h}(  g_{1}, \partial _{n} v  )_{\Gamma  }$ and $\frac{\gamma }{h}( \jump{ \partial _{n} u } , \jump{ \partial _{n} v }
-)_{\mathcal{F}^{int}_{h} }  $, thus making the bilinear form $a^{L}( \cdot,\cdot ) $  symmetric and the problem well-posed.
+Again, note that we have the consistent terms $\left( \mean{  \Delta  u_{h} }, \jump{ \partial _{n }v_{h}} \right)_{\mathcal{F}_{h}^{int}} $ and $ \left(   \Delta  u_{h} ,  \partial _{n }v_{h} \right)_{\Gamma }$ naturally appearing in the
+derivation. Also recall the symmetry terms, $(  \jump{ \partial _{n} u_{h} }, \mean{ \Delta  v_{h} })_{\mathcal{F}^{int}_{h} } $ and $( (  \partial _{n} u_{h}, \Delta  v_{h}       )_{\Gamma  } -(  g_{1}, \Delta  v_{h}  )_{\Gamma  }   )$, and
+the penalty terms $ \frac{\gamma }{h} (  \partial _{n} u_{h}, \partial _{n}   v_{h}       )_{\Gamma  } -\frac{\gamma }{h}(  g_{1}, \partial _{n} v_{h}  )_{\Gamma  }$ and $\frac{\gamma }{h}( \jump{ \partial _{n} u_{h} } , \jump{ \partial _{n} v_{h} }
+_{\mathcal{F}^{int}_{h} }  $, thus making the bilinear form $a^{L}( \cdot,\cdot ) $  symmetric and the problem well-posed.
                                      \end{remark}
 
 \subsubsection{Comments and earlier work}%
