@@ -77,13 +77,15 @@ continuity is imposed weakly and in the same way is the Neumann conditions also 
 
 \begin{lemma}
     Assume the homogeneous Neumann conditions $g_1 = 0 $.
-Let $u \in H^{4}( \Omega ) $ be the solution to \eqref{eq:bi_problem} and let $ v \in V_{h}$. Then does the following identity hold.
+Let $u \in H^{4}( \Omega ) $ be the solution to \eqref{eq:bi_problem} and let $ v_{h} \in V_{h}$. Then does the following identity hold.
 \begin{equation}
 \label{eq:bi_basic_dg_full}
 \begin{split}
-    \left( \Delta  ^{2} u, v_h \right) _{\Omega }  =&   \left( D^2u, D^2v_h \right)_{\Omega }   -  ( \mean{ \partial _{nn} u }   , \jump{ \partial_{n} v_h } )_{\mathcal{F}_{h}^{int} } -  (  \jump{ \partial_{n} u
+    \left( \Delta  ^{2} u, v_h \right) _{\Omega }  =&   \left( D^2u, D^2v_h \right)_{\Omega } \\
+    &    -  ( \mean{ \partial _{nn} u }   , \jump{ \partial_{n} v_h } )_{\mathcal{F}_{h}^{int} } -  (  \jump{ \partial_{n} u
+    },\mean{ \partial _{nn} v_h } )_{\mathcal{F}_{h}^{int} } + \frac{\gamma }{h} (  \jump{ \partial_{n} u
     },\mean{ \partial _{nn} v_h } )_{\mathcal{F}_{h}^{int} } \\
-    & - ( \partial _{nn} u , \partial _{n} v_h)_{\Gamma  }- ( \partial _{n} u , \partial _{nn} v_h)_{\Gamma  } +  \left(g_{2}, v_h  \right) _{ \Gamma  }
+    & - ( \partial _{nn} u , \partial _{n} v_h)_{\Gamma  }- ( \partial _{n} u , \partial _{nn} v_h)_{\Gamma  } +  \left(g_{2}, v_h  \right) _{ \Gamma  }+ \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v_{h}      \right)_{\Gamma }
 \end{split}
 \end{equation}
 \end{lemma}
@@ -110,7 +112,7 @@ We can expand the second term in the following way.
 Hence, the normal flux of $\Delta u$ appears naturally into the formulation. It can be denoted that $D^2$ is the Hessian matrix operator. Also remark that we apply the notation
 $( D^2u, D^2v_h )_{\Omega } = \int_{\Omega }^{} D^{2}u : D^2v_h  dx$ for the inner product $D^2u:D^2v_h$.
 
-Next, we want to decompose the evaluation of $\partial _{n}\nabla  u $ on the boundary $\partial T$ in the tangential and normal direction. Pick a facet  $F \in \partial T$, then we define the following decomposition of linear transformation $\nabla u = P_{F}\nabla u  + Q_{F}  \nabla u  $ s.t. the
+Next, we want to decompose the evaluation of $\nabla  u $ on the boundary $\partial T$ in the tangential and normal direction. Pick a facet  $F \in \partial T$, then we define the following decomposition of linear transformation $\nabla u = P_{F}\nabla u  + Q_{F}  \nabla u  $ s.t. the
 orthogonality, $
 P_{F} \nabla u  \cdot Q_{F}  \nabla u = 0$, holds. Here, the normal projection matrix is defined as $Q_{F} = n \otimes n $ and the tangential decomposition follows from $ P_{F} = I - Q_{F} = I - n \otimes n  =  \sum_{i=1}^{d-1} t_{i} \otimes t_i$,
 where we defined a orthonormal basis $t_{i}$, $i = 1, \ldots, d-1$ for the space orthogonal to the outer normal vector $n$ on a facet $F$. Let $ a_{1}, a_{2}, a_{3} \in \mathbb{R} ^{d}$ be any vectors, then it is well known that the following identity holds $ ( a_{1}
@@ -215,9 +217,11 @@ We also note that we add consistent symmetry terms $( \mean{ \partial _{nn} v_h 
 because of the regularity of $u$ and the boundary condition $g_{1}=0$. Finally, we have
 \begin{equation}
 \begin{split}
-    \left( \Delta  ^{2} u, v_h \right) _{\Omega }  =&   \left( D^2u, D^2v_h \right)_{\Omega }   -  ( \mean{ \partial _{nn} u }   , \jump{ \partial_{n} v_h } )_{\mathcal{F}_{h}^{int} } -  (  \jump{ \partial_{n} u
-    },\mean{ \partial _{nn} v_h } )_{\mathcal{F}_{h}^{int} } \\
-    & - ( \partial _{nn} u , \partial _{n} v_h)_{\Gamma  } - (\partial _{nn} v_h , \partial _{n} u)_{\Gamma  } +  \left(g_{2}, v_h  \right) _{ \Gamma  }
+    \left( \Delta  ^{2} u, v_h \right) _{\Omega }  =&   \left( D^2u, D^2v_h \right)_{\Omega } \\
+    &    -  ( \mean{ \partial _{nn} u }   , \jump{ \partial_{n} v_h } )_{\mathcal{F}_{h}^{int} } -  (  \jump{ \partial_{n} u
+    },\mean{ \partial _{nn} v_h } )_{\mathcal{F}_{h}^{int} } + \frac{\gamma }{h}  (  \jump{ \partial_{n} u
+    },\ump{ \partial _{n} v_h } )_{\mathcal{F}_{h}^{int} } \\
+    & - ( \partial _{nn} u , \partial _{n} v_h)_{\Gamma  } - (\partial _{nn} v_h , \partial _{n} u)_{\Gamma  } +  \left(g_{2}, v_h  \right) _{ \Gamma  } + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{\Gamma }
 \end{split}
 \end{equation}
 
