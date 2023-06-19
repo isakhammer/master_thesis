@@ -225,7 +225,10 @@ The proof is complete.
 
 \end{proof}
 
-We will now assemble the Hessian CIP formulation. Let $u \in H^{4}( \Omega ) $ and  $v_{h} \in V_{h}$ and assume that $g_{1} = 0$, then we have the following bilinear and linear forms
+We will now assemble the Hessian CIP formulation. Assume that $g_{1} = 0$ holds. We want to find a $u \in H^{3}( \Omega ) $ such that \begin{equation}
+    a^{H}( u, v_{h})  = l_{h}( v_{h} )  \quad \forall v_{h} \in  V_{h}
+\end{equation}
+where the following bilinear and linear forms are
 \begin{equation}
     \label{eq:hessian_form}
 \begin{split}
@@ -240,7 +243,17 @@ a_{h}^{H} \left( u, v_{h} \right)   =&
 .
 \end{equation}
 
-Thus, the Hessian formulation is derived. Note that we added two consistent penalty terms. What we will see later that this term is essential for making the problem well-posed, hence, the name interioir penalty method. For more information of CIP nonconform error analysis, see \cite[Chapter 1.3]{pietro2012}.
+Thus, the Hessian formulation is derived.
+
+\begin{remark}
+    This formulation accommodates the nonconformity of $V_{h}$ by factoring in the discontinuities among the facets, yet it preserves consistency when $u$ exhibits sufficient regularity, specifically when $u\in H^{s}( \Omega ), s\ge \frac{5}{2} +
+\varepsilon $. This implies that the solution $u$  is continuous across the interelement boundaries, i.e.,  $\jump{ \partial _{n} u }   = 0 $ and  $\mean{ \partial _{nn} u }   = \partial _{nn} u $.
+
+Remark that we have the consistent terms $\left( \mean{  \partial _{n n} u }, \jump{ \partial _{n }v_{h}} \right)_{\mathcal{F}_{h}^{int}} $ and $ \left(   \partial _{n n} u ,  \partial _{n }v \right)_{\Gamma }$, which naturally appears in the
+derivation. However, we also added two symmetry terms, $ \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h}^{int}}$ and $\left( \mean{  \partial _{n n} u }, \jump{ \partial _{n }v_{h}}
+\right)_{\mathcal{F}_{h}^{int}} $ and $ \left(   \partial _{n n} u ,  \partial _{n }v \right)_{\Gamma }$, and the so-called penalty terms $ \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{\Gamma }$.
+     What we will see later that these term is essential for making the problem well-posed, hence, the name interior penalty method or symmetric interior penalty method. For more information of CIP nonconform error analysis, see \cite[Chapter 1.3]{pietro2012}.
+\end{remark}
 
 \subsubsection{Construction of the Laplacian formulation}%
 \label{ssub:construction_of_the_laplacian_formulation}
