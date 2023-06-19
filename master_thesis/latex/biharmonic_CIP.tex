@@ -76,6 +76,7 @@ continuity is imposed weakly and in the same way is the Neumann conditions also 
 
 
 \begin{lemma}
+    \label{lemma:hessian}
     Assume the homogeneous Neumann conditions $g_1 = 0 $.
 Let $u \in H^{4}( \Omega ) $ be the solution to \eqref{eq:bi_problem} and let $ v_{h} \in V_{h}$. Then does the following identity hold.
 \begin{equation}
@@ -270,8 +271,8 @@ derivation. However, we also added two symmetry terms,  $\left( \mean{  \partial
  Let $u \in H^{4}( \Omega ) $ the solution of \eqref{eq:bi_problem} and $v_{h} \in  V_{h}$. Then we have the following identity.
 \[
     \begin{split}
-( \Delta ^2 u, v ) _{\Omega }  =& ( \Delta u, \Delta v)_{\mathcal{T} _{h} }  + ( g_{2} , v )_{\Gamma } + \frac{\gamma }{h} ( g_{1} , \Delta v)_{\Gamma }\\
-& +  ( \jump{ \partial _{n} u} , \mean{ \Delta v })_{\mathcal{F}_{h}^{int} }+  (  \mean{ \Delta u }, \jump{ \partial _{n} v} )_{\mathcal{F}_{h}^{int} } + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }
+( \Delta ^2 u, v ) _{\Omega }  =& ( \Delta u, \Delta v)_{\mathcal{T} _{h} }  + ( g_{2} , v )_{\Gamma }  - ( g_{1} , \Delta v)_{\Gamma } + \frac{\gamma }{h} ( g_{1} ,  \partial _{n}v)_{\Gamma }\\
+& -  ( \jump{ \partial _{n} u} , \mean{ \Delta v })_{\mathcal{F}_{h}^{int} }-  (  \mean{ \Delta u }, \jump{ \partial _{n} v} )_{\mathcal{F}_{h}^{int} } + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }
 \right)_{\mathcal{F}_{h}^{int} } \\
 & - ( \partial _{n} v, \Delta u)_{\Gamma }- ( \partial _{n} u, \Delta v)_{\Gamma } + \frac{\gamma }{h}( \partial _{n} u, \partial _{n} v)_{\Gamma }   .
     \end{split}
@@ -307,13 +308,17 @@ Hence, we end up with the identity,
 ( \Delta ^2 u, v ) _{\Omega } = ( \Delta u, \Delta v)_{\mathcal{T} _{h} }  +  ( \jump{ \partial _{n} v} , \mean{ \Delta u })_{\mathcal{F}_{h} }  + ( g_{2} , v )_{\Gamma } - ( \partial _{n} v, \Delta u)_{\Gamma }.
 \]
 
-We add consistent symmetry terms $(  \jump{ \partial _{n} u }, \mean{ \Delta  v })_{\mathcal{F}^{int}_{h} } $ and $(  \partial _{n} u, \Delta  v       )_{\Gamma  } -(  g_{1}, \Delta  v  )_{\Gamma  }  $, which effectively is adding zero
-because of the $H^{4}( \Omega ) $  regularity of $u$ and the boundary condition $\partial _{n} u = g_{1}$.
-Adding the terms, we end up with the final formulation,
+Similarly as for Lemma \ref{lemma:hessian}, we add consistent symmetry terms $(  \jump{ \partial _{n} u }, \mean{ \Delta  v })_{\mathcal{F}^{int}_{h} } $ and $(  \partial _{n} u, \Delta  v       )_{\Gamma  } -(  g_{1}, \Delta  v  )_{\Gamma  }  $ and
+the penalty terms $ \frac{\gamma }{h} (  \partial _{n} u, \partial _{n}   v       )_{\Gamma  } -\frac{\gamma }{h}(  g_{1}, \partial _{n} v  )_{\Gamma  }$ and $\frac{\gamma }{h}( \jump{ \partial _{n} u } , \jump{ \partial _{n} v }
+)_{\mathcal{F}^{int}_{h} }  $  . Effectively is the terms adding zero
+because of the regularity $ u \in H^{4}( \Omega ) $ and the boundary condition $\partial _{n} u = g_{1}$.
+Finally we have
 \[
     \begin{split}
-( \Delta ^2 u, v ) _{\Omega }  =& ( \Delta u, \Delta v)_{\mathcal{T} _{h} }  +  ( \jump{ \partial _{n} u} , \mean{ \Delta v })_{\mathcal{F}_{h}^{int} }+  (  \mean{ \Delta u }, \jump{ \partial _{n} v} )_{\mathcal{F}_{h}^{int} } \\
-& + ( g_{2} , v )_{\Gamma } - ( \partial _{n} v, \Delta u)_{\Gamma }- ( \partial _{n} u, \Delta v)_{\Gamma } +( g_{1} , \Delta v)_{\Gamma } ,
+( \Delta ^2 u, v ) _{\Omega }  =& ( \Delta u, \Delta v)_{\mathcal{T} _{h} }  + ( g_{2} , v )_{\Gamma }  - ( g_{1} , \Delta v)_{\Gamma } + \frac{\gamma }{h} ( g_{1} ,  \partial _{n}v)_{\Gamma }\\
+& -  ( \jump{ \partial _{n} u} , \mean{ \Delta v })_{\mathcal{F}_{h}^{int} }-  (  \mean{ \Delta u }, \jump{ \partial _{n} v} )_{\mathcal{F}_{h}^{int} } + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }
+\right)_{\mathcal{F}_{h}^{int} } \\
+& - ( \partial _{n} v, \Delta u)_{\Gamma }- ( \partial _{n} u, \Delta v)_{\Gamma } + \frac{\gamma }{h}( \partial _{n} u, \partial _{n} v)_{\Gamma }   .
     \end{split}
 \]
 and the proof is complete.
