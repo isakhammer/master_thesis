@@ -267,13 +267,13 @@ derivation. However, we also added two symmetry terms,  $\left( \mean{  \partial
 
 \begin{lemma}
 
- Let $u \in H^{4}( \Omega ) $ the solution of \eqref{eq:bi_problem} and $v \in  V_{h}$. Then we have the following identity.
+ Let $u \in H^{4}( \Omega ) $ the solution of \eqref{eq:bi_problem} and $v_{h} \in  V_{h}$. Then we have the following identity.
 \[
     \begin{split}
-( \Delta ^2 u, v ) _{\Omega }  =& ( \Delta u, \Delta v)_{\mathcal{T} _{h} } \\
+( \Delta ^2 u, v ) _{\Omega }  =& ( \Delta u, \Delta v)_{\mathcal{T} _{h} }  + ( g_{2} , v )_{\Gamma } + \frac{\gamma }{h} ( g_{1} , \Delta v)_{\Gamma }\\
 & +  ( \jump{ \partial _{n} u} , \mean{ \Delta v })_{\mathcal{F}_{h}^{int} }+  (  \mean{ \Delta u }, \jump{ \partial _{n} v} )_{\mathcal{F}_{h}^{int} } + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }
-\right)_{\mathcal{F}_{h}^{int} } + \frac{\gamma }{h} ( \partial _{n} u, \partial _{n}v)_{\Gamma }\\
-& - ( \partial _{n} v, \Delta u)_{\Gamma }- ( \partial _{n} u, \Delta v)_{\Gamma } + ( \partial _{n} u, \partial _{n} v)_{\Gamma } + \frac{\gamma }{h} ( g_{1} , \Delta v)_{\Gamma } + ( g_{2} , v )_{\Gamma }  .
+\right)_{\mathcal{F}_{h}^{int} } \\
+& - ( \partial _{n} v, \Delta u)_{\Gamma }- ( \partial _{n} u, \Delta v)_{\Gamma } + \frac{\gamma }{h}( \partial _{n} u, \partial _{n} v)_{\Gamma }   .
     \end{split}
 \]
 \end{lemma}
