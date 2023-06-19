@@ -46,10 +46,10 @@ V := \left\{ v \in  H^2( \Omega )  \mid \partial _{n} v  = g_{1}   \right\}
 \end{equation}
 Consider the bilinear form $a:V\times V \to \mathbb{R}$ and the linear form $l: V \to \mathbb{R}$. We define the continuous weak formulation problem formulation as follows.
 
-Find a $u \in   $ such that
+
 \begin{equation}
 \label{eq:cont_weak_problem}
-a( u,v) = l( v)  \forall v \in V
+\text{Find } u \in V   \text{ such that } a( u,v) = l( v)  \forall v \in V
 \end{equation}
 where
 \begin{equation}
@@ -240,6 +240,7 @@ We will now assemble the Hessian CIP formulation.
 Assume that the homogeneous boundary condition $g_{1}=0$.
 The discrete problem is as follows:
  \begin{equation}
+    \label{eq:hessian_prob}
     \text{Find } u_{h} \in V_{h} \text{ such that } a^{H}( u_{h}, v_{h})  = l_{h}^{H}( v_{h} )  \quad \forall v_{h} \in  V_{h}.
 \end{equation}
 Here is the corresponding bilinear and linear form  defined as,
@@ -342,7 +343,8 @@ and the proof is complete.
 We will now assemble the Laplace CIP formulation.
 The discrete problem is as follows:
  \begin{equation}
-    \text{Find } u_{h} \in V_{h} \text{ such that } a^{L}( u, v_{h})  = l_{h}^{L}( v_{h} )  \quad \forall v_{h} \in  V_{h}.
+     \label{eq:laplace_prob}
+    \text{Find } u_{h} \in V_{h} \text{ such that } a^{L}( u_{h}, v_{h})  = l_{h}^{L}( v_{h} )  \quad \forall v_{h} \in  V_{h}.
 \end{equation}
 The corresponding bilinear and linear form is defined as,
     \begin{equation}
