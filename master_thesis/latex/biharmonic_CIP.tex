@@ -63,12 +63,14 @@ Note that the Neumann boundary condition $g_{1}$ is strongly imposed in $V$, and
 
 \subsection{Detailed construction of Hessian and Laplacian Formulations }%
 \label{sub:construction_of_laplacian_cip}
-The goal is to construct a corresponding discrete version for the problem \eqref{eq:cont_weak_problem}, that is to find a $u_{h} \in V_{h}$ such that $a_{h}( u_{h}, v_{h}) = l_{h}( v_{h}) $ for all $v_{h} \in V_{h}$.
+The goal is to construct a corresponding discrete formulation for the problem \eqref{eq:cont_weak_problem}, that is to find a $u_{h} \in V_{h}$ such that $a_{h}( u_{h}, v_{h}) = l_{h}( v_{h}) $ for all $v_{h} \in V_{h}$.
 
 To achieve the objective of constructing the Hessian and Laplacian formulations, the following lemmas will be the primary components. This is done by constructing a consistent formulation by assuming the function $u$ is exact with a sufficient
 regularity, and the test function $v_{h}$ defined as an element from the nonconforming set $V_{h} \not\subset V$.
 This asserts when we have a bilinear form and replace the exact solution with $u_{h} \in V_{h}$, the system still remains consistent in $V$. However, due to the nonconformal nature of $V_{h}$, it becomes necessary to introduce penalty terms to ensure the system is well-posed. Keep in mind that the $C^{1}$
 continuity is imposed weakly and in the same way is the Neumann conditions also imposed weakly.
+
+We will derive two CIP formulations following \cite{brenner2012} and \cite{feng2007fully}.
 
 \subsubsection{Construction of the Hessian formulation}%
 \label{ssub:construction_of_the_hessian_formulation}
@@ -232,7 +234,15 @@ The proof is complete.
 
 \end{proof}
 
-We will now assemble the Hessian CIP formulation. Assume that $g_{1} = 0$ holds and that $u \in H^{s}, s \ge \frac{5}{2}+ \varepsilon $ and $v \in V_{h}$. Then the following bilinear form in linear form is as follows.
+Note that since $V_{h} \not\subset V $ is it necessary to define the space $V \oplus V_{h}$, which essentially is the direct sum of these two spaces. This new space includes all elements from $V$ and $V_h$ and all possible linear combinations of these elements. i.e., let $u \in V$ and $u_{h} \in V_{h}$, then $u + u_{h} \in V \oplus V_{h} $.
+
+We will now assemble the Hessian CIP formulation.
+Assume that the homogeneous boundary condition $g_{1}=0$.
+The discrete problem is as follows:
+ \begin{equation}
+    \text{Find } u_{h} \in V_{h} \text{ such that } a^{H}( u, v_{h})  = l_{h}^{H}( v_{h} )  \quad \forall v_{h} \in  V_{h}.
+\end{equation}
+Here is the corresponding bilinear and linear form  defined as,
 \begin{equation}
     \label{eq:hessian_form}
 \begin{split}
@@ -247,10 +257,15 @@ a_{h}^{H} \left( u, v_{h} \right)   =&
 .
 \end{equation}
 
-The discrete problem is as follows: Find a $u \in V_{h} $ such that \begin{equation}
-    a^{H}( u, v_{h})  = l_{h}^{H}( v_{h} )  \quad \forall v_{h} \in  V_{h}
+With the corresponding energy norms,
+\begin{equation}
+\label{eq:a_cip_energy_norm_hes}
+    \begin{split}
+ \| v \|_{ a_{h} }^{ 2 }& = \alpha  \| v\|_{ \Omega  }^{2  }  +  \| D ^2 v \|_{ \Omega   }^{ 2 }  + \|  h^{-\frac{1}{2}} \jump{ \partial _{n} v    }\|_{  \mathcal{F} _{h}^{int} }^{2  }+ \|  h^{-\frac{1}{2}}  \partial _{n} v    \|_{  \Gamma  }^{2  },  \quad v \in V_{h}  \\
+   \| v \|_{ a_{h},* }^{ 2 } &= \| v \|_{ a_{h} }^{ 2 }  + \| h^{\frac{1}{2}}  \mean{     \partial _{nn } v}  \|_{ \mathcal{F}_{h}^{int}   }^{  2}+ \| h^{\frac{1}{2}} \partial _{nn } v  \|_{ \Gamma    }^{  2}, \quad  v\in V \oplus V_{h}.
+    \end{split}
 \end{equation}
-Thus, the Hessian formulation is derived.
+
 
 \begin{remark}
     This formulation accommodates the nonconformity of $V_{h}$ by factoring in the discontinuities among the facets, yet it preserves consistency when $u$ exhibits sufficient regularity, specifically when $u\in H^{s}( \Omega ), s\ge \frac{5}{2} +
@@ -259,7 +274,7 @@ Thus, the Hessian formulation is derived.
 It is noteworthy that we have the consistent terms $\left( \mean{  \partial _{n n} u }, \jump{ \partial _{n }v_{h}} \right)_{\mathcal{F}_{h}^{int}} $ and $ \left(   \partial _{n n} u ,  \partial _{n }v \right)_{\Gamma }$ naturally appears in the
 derivation. However, we also added two symmetry terms,  $\left( \mean{  \partial _{n n} u }, \jump{ \partial _{n }v_{h}}
 \right)_{\mathcal{F}_{h}^{int}} $ and $ \left(   \partial _{n n} u ,  \partial _{n }v \right)_{\Gamma }$, and the so-called penalty terms, $ \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h}^{int}}$ and $ \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{\Gamma }$.
-     These terms is essential for making the problem well-posed, hence, the name interior penalty method or symmetric interior penalty method. For more information of CIP nonconform error analysis, see \cite[Chapter 1.3]{pietro2012}.
+     These terms is essential for making the problem well-posed, hence, the name interior penalty method or symmetric interior penalty method. For more information of  nonconformal CIP error analysis, see \cite[Chapter 1.3]{pietro2012}.
 \end{remark}
 
 \subsubsection{Construction of the Laplacian formulation}%
@@ -324,60 +339,12 @@ Finally we have
 and the proof is complete.
 \end{proof}
 
-Finally, can we construct the Laplace CIP formulation. Let $u,v \in V_{h}$, then can finally write the following respective forms.
-
-\begin{equation}
-    \label{eq:laplace_form}
-    \begin{split}
-        a_{h}^{L} \left( u, v \right)   =&
-        \left( \alpha  u, v \right) _{\Omega }   +  \left( \Delta  u, \Delta v \right) _{ \Omega } \\
-                                         & - \left( \mean{  \Delta  u }, \jump{ \partial _{n }v} \right)_{\mathcal{F}_{h}  }  - \left( \mean{ \Delta  v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}^{int}  }  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h}^{int} } \\
-                                         & - \left(   \Delta  u ,  \partial _{n }v \right)_{\Gamma   }  - \left(  \Delta  v ,  \partial _{n}u       \right)_{\Gamma  }  + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{ \Gamma } \\
-        l^{L}_{h}( v_{h}) & =  \left( f, v \right) _{\Omega } - ( g_{2},  v )_{\Gamma } -  ( g_{1}, \Delta  v  )_{\Gamma }  + \frac{\gamma }{h} ( g_{1}, \partial _{n} v  )_{\Gamma }
-    \end{split}
+We will now assemble the Laplace CIP formulation.
+The discrete problem is as follows:
+ \begin{equation}
+    \text{Find } u_{h} \in V_{h} \text{ such that } a^{H}( u, v_{h})  = l_{h}^{H}( v_{h} )  \quad \forall v_{h} \in  V_{h}.
 \end{equation}
-
-
-This consists of adding a symmetry term and adding an additional stabilization regularisation term \cite{nitsche1971variationsprinzip}.
-It is worth noting that technically is the interior regularisation equivalent to do a Nitsche's method in all interior boundaries of the elements with boundary conditions of each element weakly
-imposed to zero. Thus, we expect the penalty parameter $\gamma$ to be the same interior and exterior elements. Let where $k\ge 2$ is the polynomial order, then for the Hessian formulation is it theoretically proven that $\gamma = 2k ( k-1 ) $
-\cite{brenner2012quadratic, brenner2012}. However, we still prefer to experimentally verify the best parameter.
-
-\subsection{Continuous interior penalty formulations}%
-\label{sub:continuous_interior_penalty_formulations}
-
-We define the two CIP formulations associated with biharmonic problem \eqref{eq:bi_problem} following \cite{brenner2012} and \cite{feng2007fully}. The general idea is to utilize the constructed bilinear and linear forms in \eqref{eq:laplace_form} and \eqref{eq:hessian_form} to solve the problem: Find a
-$u \in V_{h}$ such that $a_{h}( u, v) = l_{h}( v) $ for all $v \in V_{h}$. To summarize, we have the following formulations.
-
-First, note that since $V_{h} \not\subset V $ is it necessary to define the space $V \oplus V_{h}$, which essentially is the direct sum of these two spaces. This new space includes all elements from $V$ and $V_h$ and all possible linear combinations of these elements. i.e., let $u \in V$ and $u_{h} \in V_{h}$, then $u + u_{h} \in V \oplus V_{h} $.
-
-\begin{enumerate}[label=\arabic*)]
-    \item Assuming that $g_{1} = 0$. Then Hessian problem formulation is
-\begin{equation}
-        \label{eq:cip_hessian_form}
-\begin{split}
-a_{h}^{H} \left( u, v \right)   =&
-    \left( \alpha  u, v \right) _{\Omega }   +  \left( D^2 u, D^2v \right) _{\Omega } \\
- & - \left( \mean{  \partial _{n n} u }, \jump{ \partial _{n }v} \right)_{\mathcal{F}_{h}^{int}}  -
- \left(  \jump{ \partial _{n}u }, \mean{ \partial _{n n} v } \right)_{\mathcal{F}_{h}^{int}}  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h}^{int}} \\
- & - \left(   \partial _{n n} u ,  \partial _{n }v \right)_{\Gamma }  -
- \left(    \partial _{n}u,  \partial _{n n} v \right)_{\Gamma }  + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{\Gamma } \\
- l_{h}^{H}( v)  =&  \left( f, v \right) _{\Omega }  - \left(g_{2}, v  \right) _{\Gamma }
-\end{split}
-.
-\end{equation}
-
-With the corresponding energy norms,
-\begin{equation}
-\label{eq:a_cip_energy_norm_hes}
-    \begin{split}
- \| v \|_{ a_{h} }^{ 2 }& = \alpha  \| v\|_{ \Omega  }^{2  }  +  \| D ^2 v \|_{ \Omega   }^{ 2 }  + \|  h^{-\frac{1}{2}} \jump{ \partial _{n} v    }\|_{  \mathcal{F} _{h}^{int} }^{2  }+ \|  h^{-\frac{1}{2}}  \partial _{n} v    \|_{  \Gamma  }^{2  },  \quad v \in V_{h}  \\
-   \| v \|_{ a_{h},* }^{ 2 } &= \| v \|_{ a_{h} }^{ 2 }  + \| h^{\frac{1}{2}}  \mean{     \partial _{nn } v}  \|_{ \mathcal{F}_{h}^{int}   }^{  2}+ \| h^{\frac{1}{2}} \partial _{nn } v  \|_{ \Gamma    }^{  2}, \quad  v\in V \oplus V_{h}.
-    \end{split}
-\end{equation}
-
-
-\item The Laplace formulation is
+Here is the corresponding bilinear and linear form defined as,
     \begin{equation}
         \label{eq:cip_laplace_form}
         \begin{split}
@@ -401,7 +368,15 @@ With the corresponding energy norms,
                                      \end{equation}
 
 
-\end{enumerate}
+This consists of adding a symmetry term and adding an additional stabilization regularisation term \cite{nitsche1971variationsprinzip}.
+It is worth noting that technically is the interior regularisation equivalent to do a Nitsche's method in all interior boundaries of the elements with boundary conditions of each element weakly
+imposed to zero. Thus, we expect the penalty parameter $\gamma$ to be the same interior and exterior elements. Let where $k\ge 2$ is the polynomial order, then for the Hessian formulation is it theoretically proven that $\gamma = 2k ( k-1 ) $
+\cite{brenner2012quadratic, brenner2012}. However, we still prefer to experimentally verify the best parameter.
+
+\subsubsection{Remarks}%
+\label{ssub:remarks}
+
+
 
 \begin{remark}
 It should be noted that the Hessian formulation has a substantial limitation in that it is only valid for homogeneous Neumann conditions. This constraint arises from the challenges associated with imposing $g_{1}$ via the tangential derivative terms in Equation \eqref{eq:bi_basic_dg_full_1} during the proof of Lemma \ref{lemma:bh_hessian_identity}.
