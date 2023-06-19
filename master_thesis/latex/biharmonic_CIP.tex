@@ -80,7 +80,7 @@ We will derive two CIP formulations following \cite{brenner2012} and \cite{feng2
 \begin{lemma}
     \label{lemma:hessian}
     Assume the homogeneous Neumann conditions $g_1 = 0 $.
-Let $u \in H^{4}( \Omega ) $ be the solution to \eqref{eq:bi_problem} and let $ v_{h} \in V_{h}$. Then does the following identity hold.
+Let $u \in H^{4}( \Omega ) $ be the solution to \eqref{eq:bi_problem}, let $ v_{h} \in V_{h}$ and a constant $\gamma >0$. Then does the following identity hold.
 \begin{equation}
 \label{eq:bi_basic_dg_full}
 \begin{split}
@@ -282,7 +282,7 @@ derivation. However, we also added two symmetry terms,  $\left( \mean{  \partial
 
 \begin{lemma}
 
- Let $u \in H^{4}( \Omega ) $ the solution of \eqref{eq:bi_problem} and $v_{h} \in  V_{h}$. Then we have the following identity.
+ Let $u \in H^{4}( \Omega ) $ the solution of \eqref{eq:bi_problem}, $v_{h} \in  V_{h}$ and a constant $\gamma >0$. Then we have the following identity.
 \[
     \begin{split}
 ( \Delta ^2 u, v ) _{\Omega }  =& ( \Delta u, \Delta v)_{\mathcal{T} _{h} }  + ( g_{2} , v )_{\Gamma }  - ( g_{1} , \Delta v)_{\Gamma } + \frac{\gamma }{h} ( g_{1} ,  \partial _{n}v)_{\Gamma }\\
@@ -372,17 +372,17 @@ Here is the corresponding bilinear and linear form defined as,
 Again, note that we have the consistent terms $\left( \mean{  \Delta  u }, \jump{ \partial _{n }v_{h}} \right)_{\mathcal{F}_{h}^{int}} $ and $ \left(   \Delta  u ,  \partial _{n }v \right)_{\Gamma }$ naturally appearing in the
 derivation. Also recall the symmetry terms $(  \jump{ \partial _{n} u }, \mean{ \Delta  v })_{\mathcal{F}^{int}_{h} } $ and $(  \partial _{n} u, \Delta  v       )_{\Gamma  } -(  g_{1}, \Delta  v  )_{\Gamma  }  $ and
 the penalty terms $ \frac{\gamma }{h} (  \partial _{n} u, \partial _{n}   v       )_{\Gamma  } -\frac{\gamma }{h}(  g_{1}, \partial _{n} v  )_{\Gamma  }$ and $\frac{\gamma }{h}( \jump{ \partial _{n} u } , \jump{ \partial _{n} v }
-)_{\mathcal{F}^{int}_{h} }  $
-     These terms is essential for making the bilinear form $a^{L}( \cdot,\cdot ) $  symmetric and the problem well-posed.
+)_{\mathcal{F}^{int}_{h} }  $, thus making the bilinear form $a^{L}( \cdot,\cdot ) $  symmetric and the problem well-posed.
                                      \end{remark}
-\subsubsection{Remarks and earlier work}%
+
+\subsubsection{Comments and earlier work}%
 \label{ssub:remarks}
 
 It should be noted that the Hessian formulation has a substantial limitation in that it is only valid for homogeneous Neumann conditions. This constraint arises from the challenges associated with imposing $g_{1}$ via the tangential derivative terms
 in Equation \eqref{eq:bi_basic_dg_full_1} during the proof of Lemma \ref{lemma:hessian}.
 From a physical perspective, this is not problematic as it aligns with the boundary conditions of the original CH problem \eqref{eq:strongch}. However, from the standpoint of numerical validation, the homogeneous Neumann condition enforces strict
 rules on the design of manufactured solutions on arbitrary domains. One way to fix this is to enforce tangential derivatives of $g_{1}$, i.e., inserting $\partial _{n}u = g_{1}$ for $ ( \partial _{t_{i}}( \partial_{n}  u ) , \partial _{n} v)_\Gamma  $ into
-\eqref{eq:bi_basic_dg_full_1}. A downside with this method is that we must require $g_{1}$ is in $ H^{\frac{3}{2}}( \Gamma ) $.
+\eqref{eq:bi_basic_dg_full_1}. A downside with this method is that we must require $g_{1}$ in $ H^{\frac{3}{2}}( \Gamma ) $.
 Consequently, the examples illustrated in section \ref{sec:numerical_results} are only demonstrated on simple domains. This particular constraint does not apply to the Laplace formulation.
 
 The Hessian formulation is well investigated by Susanne Brenner in several papers for \cite{brenner2012, brenner2012quadratic, brenner2012quadratic_kirk} with a corresponding analysis and numerical validation. Similarly, variants of the Laplace formulation can be found here
