@@ -240,19 +240,19 @@ We will now assemble the Hessian CIP formulation.
 Assume that the homogeneous boundary condition $g_{1}=0$.
 The discrete problem is as follows:
  \begin{equation}
-    \text{Find } u_{h} \in V_{h} \text{ such that } a^{H}( u, v_{h})  = l_{h}^{H}( v_{h} )  \quad \forall v_{h} \in  V_{h}.
+    \text{Find } u_{h} \in V_{h} \text{ such that } a^{H}( u_{h}, v_{h})  = l_{h}^{H}( v_{h} )  \quad \forall v_{h} \in  V_{h}.
 \end{equation}
 Here is the corresponding bilinear and linear form  defined as,
 \begin{equation}
     \label{eq:hessian_form}
 \begin{split}
-a_{h}^{H} \left( u, v_{h} \right)   =&
-    \left( \alpha  u, v_{h} \right) _{\Omega }   +  \left( D^2 u, D^2v_{h} \right) _{\Omega } \\
- & - \left( \mean{  \partial _{n n} u }, \jump{ \partial _{n }v_{h}} \right)_{\mathcal{F}_{h}^{int}}  -
- \left( \jump{ \partial _{n}u }, \mean{ \partial _{n n} v } \right)_{\mathcal{F}_{h}^{int}}  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h}^{int}} \\
- & - \left(   \partial _{n n} u ,  \partial _{n }v \right)_{\Gamma }  -
- \left( \partial _{n}u , \partial _{n n} v       \right)_{\Gamma }  + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{\Gamma }   \\
- l_{h}^{H}( v)  =&  \left( f, v \right) _{\Omega }  - \left(g_{2}, v  \right) _{\Gamma }
+a_{h}^{H} \left( u_{h}, v_{h} \right)   =&
+    \left( \alpha  u_{h}, v_{h} \right) _{\Omega }   +  \left( D^2 u_{h}, D^2v_{h} \right) _{\Omega } \\
+ & - \left( \mean{  \partial _{n n} u_{h} }, \jump{ \partial _{n }v_{h}} \right)_{\mathcal{F}_{h}^{int}}  -
+ \left( \jump{ \partial _{n}u_{h} }, \mean{ \partial _{n n} v_{h} } \right)_{\mathcal{F}_{h}^{int}}  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u_{h}}, \jump{ \partial _{n} v_{h}   }   \right)_{\mathcal{F}_{h}^{int}} \\
+ & - \left(   \partial _{n n} u_{h} ,  \partial _{n }v_{h} \right)_{\Gamma }  -
+ \left( \partial _{n}u_{h} , \partial _{n n} v_{h}       \right)_{\Gamma }  + \frac{\gamma }{h}  \left(  \partial _{n} u_{h},  \partial _{n} v_{h}      \right)_{\Gamma }   \\
+ l_{h}^{H}( v_{h})  =&  \left( f, v_{h} \right) _{\Omega }  - \left(g_{2}, v_{h}  \right) _{\Gamma }
 \end{split}
 .
 \end{equation}
@@ -261,17 +261,16 @@ With the corresponding energy norms,
 \begin{equation}
 \label{eq:a_cip_energy_norm_hes}
     \begin{split}
- \| v \|_{ a_{h} }^{ 2 }& = \alpha  \| v\|_{ \Omega  }^{2  }  +  \| D ^2 v \|_{ \Omega   }^{ 2 }  + \|  h^{-\frac{1}{2}} \jump{ \partial _{n} v    }\|_{  \mathcal{F} _{h}^{int} }^{2  }+ \|  h^{-\frac{1}{2}}  \partial _{n} v    \|_{  \Gamma  }^{2  },  \quad v \in V_{h}  \\
-   \| v \|_{ a_{h},* }^{ 2 } &= \| v \|_{ a_{h} }^{ 2 }  + \| h^{\frac{1}{2}}  \mean{     \partial _{nn } v}  \|_{ \mathcal{F}_{h}^{int}   }^{  2}+ \| h^{\frac{1}{2}} \partial _{nn } v  \|_{ \Gamma    }^{  2}, \quad  v\in V \oplus V_{h}.
+ \| v \|_{ a_{h}^{H} }^{ 2 }& = \alpha  \| v\|_{ \Omega  }^{2  }  +  \| D ^2 v \|_{ \Omega   }^{ 2 }  + \|  h^{-\frac{1}{2}} \jump{ \partial _{n} v    }\|_{  \mathcal{F} _{h}^{int} }^{2  }+ \|  h^{-\frac{1}{2}}  \partial _{n} v    \|_{  \Gamma  }^{2  },  \quad v \in V_{h}  \\
+   \| v \|_{ a_{h}^{H},* }^{ 2 } &= \| v \|_{ a_{h} }^{ 2 }  + \| h^{\frac{1}{2}}  \mean{     \partial _{nn } v}  \|_{ \mathcal{F}_{h}^{int}   }^{  2}+ \| h^{\frac{1}{2}} \partial _{nn } v  \|_{ \Gamma    }^{  2}, \quad  v\in V \oplus V_{h}.
     \end{split}
 \end{equation}
 
-
 \begin{remark}
     This formulation accommodates the nonconformity of $V_{h}$ by factoring in the discontinuities among the facets, yet it preserves consistency when $u$ exhibits sufficient regularity, specifically when $u\in H^{s}( \Omega ), s\ge \frac{5}{2} +
-\varepsilon $. This implies that the solution $u$  is continuous across the interelement boundaries, i.e.,  $\jump{ \partial _{n} u }   = 0 $ and  $\mean{ \partial _{nn} u }   = \partial _{nn} u $.
+\varepsilon $. This implies that the solution $u$  is continuous across the boundaries of interior elements, i.e.,  $\jump{ \partial _{n} u }   = 0 $ and  $\mean{ \partial _{nn} u }   = \partial _{nn} u $ on any $ F \in \mathcal{F} ^{int}_{h} $ .
 
-It is noteworthy that we have the consistent terms $\left( \mean{  \partial _{n n} u }, \jump{ \partial _{n }v_{h}} \right)_{\mathcal{F}_{h}^{int}} $ and $ \left(   \partial _{n n} u ,  \partial _{n }v \right)_{\Gamma }$ naturally appears in the
+It is noteworthy that we have the consistent terms $\left( \mean{  \partial _{n n} u }, \jump{ \partial _{n }v_{h}} \right)_{\mathcal{F}_{h}^{int}} $ and $ \left(   \partial _{n n} u ,  \partial _{n }v \right)_{\Gamma }$ naturally appear in the
 derivation. However, we also added two symmetry terms,  $\left( \mean{  \partial _{n n} u }, \jump{ \partial _{n }v_{h}}
 \right)_{\mathcal{F}_{h}^{int}} $ and $ \left(   \partial _{n n} u ,  \partial _{n }v \right)_{\Gamma }$, and the so-called penalty terms, $ \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h}^{int}}$ and $ \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{\Gamma }$.
      These terms is essential for making the problem well-posed, hence, the name interior penalty method or symmetric interior penalty method. For more information of  nonconformal CIP error analysis, see \cite[Chapter 1.3]{pietro2012}.
