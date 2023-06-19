@@ -193,68 +193,30 @@ Here we noticed that $\| e_{h} \|_{a_{h}  }^{  } + \abs{e_{h}  }_{g_{h}} \lesssi
 \ref{lemma:astar_estimate}.
 Hence, the first part of the proof is complete.
 
-    \item We want to show that $ \| e \|_{ \Omega  }^{  } \lesssim   h^{r} \| u \|_{ r,\Omega  }^{  }$. The idea is to apply the so-called Aubin-Nitsche duality trick by being aware of the ghost penalty $g_{h}$. Let us denote the following observation.
-    Because of the Assumption \ref{as:EP2} is there a function $\phi \in H^2( \Omega ) \cap H^{1}_{0}( \Omega ) $ and a $\psi \in L^2( \Omega )  $ s.t.
-    $$-\Delta \phi = \psi  \text{ and }  \| \phi  \|_{ 2, \Omega  }^{  } \lesssim \| \psi  \|_{ \Omega  }^{  }.$$
+    \item We want to show that $ \| e \|_{ \Omega  }^{  } \lesssim   h^{r} \| u \|_{ r,\Omega  }^{  }$. The idea is to apply the so-called Aubin-Nitsche duality trick while being aware of the ghost penalty $g_{h}$. Let us denote the following
+        observation.
+        Assume that $e:= u -u_{h} \in L^{2}( \Omega ) $ and $\psi  \in H^{4}( \Omega ) $.
+        Let the corresponding dual problem to \eqref{eq:bi_main_problem} be
+        \begin{equation}
+            \begin{split}
+            \Delta ^2 \psi &= e  \quad  \text{ in } \Omega  \\
+            \partial _{n} \Delta \psi & = 0 \quad  \text{ on } \Gamma   \\
+            \partial _{n} \psi &= 0 \quad \text{ on } \Gamma
+            \end{split}
+        \end{equation}
 
-    Because of the regularity $\phi $ can we write $ (e, \psi  )_{\Omega } = (e, -\Delta \phi )_{\Omega } = a_{h}(e, \phi )  $. Naturally, we can now seek to bound this operator. That is,
-    \[
-    \begin{split}
-        (e, \psi  )_{\Omega } &= a_{h}( e, \phi ) \\
-        &= a_{h}(e, \phi -  C_{h}^{e} \phi   ) + g_{h}(u_{h} - C_{h}^{e} u,   C^{e}_{h} \phi   )  +g_{h}(C^{e} _{h} u, C_{h}^{e} \phi   ) \\
-        & \lesssim h^{r} \| u \|_{ r, \Omega  }^{  } \| \psi  \|_{ \Omega  }^{  }
-    \end{split}
-    \]
+        This implies that it exists a $\psi \in H^{4}( \Omega ) $ such that $a_{h}( \psi, v ) = ( e,v)_{\Omega } \forall v \in V_{h}  $. Hence, we can easily observe that \begin{equation}
+            \begin{split}
+        \| e \|_{ \Omega  }^{ 2 }  & = ( e,e)_\Omega   = ( e, \Delta ^2 \psi )_{\Omega } \\
+        &= a_{h}( e, \psi ) = a_{h}( u-uh, \psi ) \\
+        &= a_{h}( u-u_h, \psi + C^{e}_{h}\psi  - C^{e}_{h}\psi )  \\
+        &= a_{h}( u-u_h, \psi   - C^{e}_{h}\psi ) +  a_{h}( u-uh, C^{e}_{h}\psi )  \\
+        &= a_{h}( u-u_h, \psi  - C^{e}_{h}\psi )  \\
+            \end{split}
+        \end{equation}
 
-    In the first line we used the weak orthogonality, i.e.,
-    \[
-        \begin{split}
-    a_{h}( e, \phi ) & = a_{h}( e, \phi  - C^{e} _{h} \phi ) + a_{h}( u - u_{h}, C^{e} _{h} \phi ) \\
-     & = a_{h}( e, \phi  - C^{e} _{h} \phi ) + g_{h}(  u_{h}, C^{e} _{h} \phi ) \\
-     & = a_{h}( e, \phi  - C^{e} _{h} \phi ) + g_{h}(  u_{h} - C ^{e}_{h}u, C^{e} _{h} \phi )+ g_{h}( C ^{e}_{h}u, C^{e} _{h} \phi ).
-        \end{split}
-    \]
-
-    The last inequality appears after applying Cauchy-Schwartz and Assumption \ref{as:EP2}.
-\[
-    \begin{split}
-        a_{h}( e, \phi  - C _{h} \phi ) &+ g_{h}(  u_{h} - C ^{e}_{h}u, C^{e} _{h} \phi )+ g_{h}( C ^{e}_{h}u, C _{h} \phi ) \\
-                                          &\lesssim \| e \|_{ a_{h},*  }^{  } \| \phi - C _{h}^{e} \phi   \|_{a_{h},*  }^{  }   +
-     \abs{\pi _{h}^{e} u - u_{h} }_{ g_{h}}^{  } \abs{ C^{e} _{h} \phi  }_{g_{h}}+ \abs{ C^{e} _{h} u } _{g_{h}} \abs{ C^{e} _{h} \phi  }_{g_{h}} \\
-.
-    \end{split}
-\]
-
-Using the result from the first part and the Assumption \ref{as:EP2}.
-\[
-    \begin{split}
-        \| e \|_{ a_{h},*  }^{  } &\lesssim h^{r-1} \| u \|_{ r, \Omega  }^{  } \\
-        \abs{ C^{e} _{h} u } _{g_{h}} &\lesssim h^{r-1}\| u \|_{2,\Omega   }^{  } \\
-        \abs{ C^{e} _{h} u - u_{h} } _{g_{h}} &\lesssim \|  C^{e} _{h} u - u_{h} \|_{ A_{h}  }^{  }  \\
-        \abs{ C^{e} _{h} \phi  } _{g_{h}} &\lesssim  \ldots \\
-        \|\phi - C^{e} _{h} \phi  \|_{a_{h},*  }^{  }  &\lesssim  \ldots
-    \end{split}
-\]
-    \todo[inline]{ TODO: Finish proof.  }
-
+        Here we applied the Galerkin Ortghogonality $ a_{h}( u-uh, C^{e}_{h}\psi ) = 0$.
     \end{enumerate}
 \end{proof}
 
 
-% \todo[inline]{
-% We define big-oh $O( h^{r})$ to be a upper bound s.t. it exists an $C>0$ s.t.  $\| e \|_{  }^{  } \le M h^{r} \text{ for all } h$, where $r$ is the order of convergence. Since we only will implement $k=1$.
-% Hence, we have the construct the following Corollary.
-
-
-% \begin{corollary}[Order of convergence]
-%     Let $u \in H^{s}( \Omega ) $ , $s\ge 3$ a solution and let $u \in V_{h}$ of order $k = 2$ be the solution to \eqref{eq:Bi_a_h}. Then for $r = \min_{}\{s, k+1\} $ the error $e = u - u_{h}$ is bounded s.t . $ \| e \|_{ a_{h},* }^{  }$ is in $O( h)
-%     $ and $\| e \|_{ L^{2} }^{  } $ is in $O( h^{2}) $. Or in other words, it exists and $M>0$
-%     \begin{align}
-%             \| e \|_{ a_{h},* }^{  } & \le    M h^{r-1}  \\
-%             \| e \|_{ \Omega  }^{  } & \le    M h^{r}
-%     \end{align}
-% \end{corollary}
-% \begin{proof}
-%     It easily comes from the results $ \| u \|_{ r,\Omega  }^{  } = \| u \|_{r, 2,\Omega  }^{  } \le \| u \|_{r, \infty,\Omega  }^{  } = M $, where $M$ is a constant. The rest follows from the Theorem \ref{thm:apriori_result}.
-% \end{proof}
-% }

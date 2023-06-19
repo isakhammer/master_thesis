@@ -152,7 +152,8 @@ Hence, we have that the active set is the union of the interior and cut elements
 }
 
 
-\caption{Illustration of the background mesh $\widetilde{T}_{h} $, the active set $\mathcal{T} _{h}$, the cut cells $\mathcal{T} _{\Gamma }$ and the interior of the active set $\mathcal{T} _{int}$ }
+\caption{Illustration of the domain $\Omega$ with the corresponding boundary $\Gamma$, the background mesh $\widetilde{\mathcal{T}}_{h} $,  the cut cells $\mathcal{T} _{\Gamma }$, the interior cells $\mathcal{T} _{int}$ and the active set $\mathcal{T} _{h} =
+\mathcal{T}_{ int } \cup \mathcal{T}_{ \Gamma  }  $. }
 \label{fig:background_mesh}
 \end{figure}
 
@@ -163,14 +164,14 @@ Hence, we have that the active set is the union of the interior and cut elements
 \label{sub:cut_cip_method}
 This makes it natural to redefine the biharmonic problem on a unfitted domain.
 Let $\Omega \subseteq    \mathbb{R} ^d$ s.t. $\Gamma  $ be its corresponding boundary in $C^2$. Then is the biharmonic problem on the form,
-\begin{equation}
-\label{eq:bi_main_problem}
-\begin{split}
-    \Delta^2  u  + \alpha  u  & = f( x)  \quad \text{in } \Omega,   \\
-    \partial _{n} u & = g_{1}(x)   \quad \text{on } \Gamma ,  \\
-    \partial _{n} \Delta  u & = g_{2}( x)   \quad \text{on } \Gamma  .  \\
-\end{split}
-\end{equation}
+\begin{subequations}
+\begin{align}
+    \Delta^2  u  + \alpha  u  & = f( x)  \quad \text{in } \Omega,   \label{eq:bi_problem_a}\\
+    \partial _{n} u & = g_{1}(x)   \quad \text{on } \Gamma ,  \label{eq:bi_problem_b}\\
+    \partial _{n} \Delta  u & = g_{2}( x)   \quad \text{on } \Gamma .  \label{eq:bi_problem_c}
+\end{align}
+\label{eq:bi_problem}
+\end{subequations}
 Here is $\Delta ^2 = \Delta  \left( \Delta  \right) $ the biharmonic operator, also known as the bilaplacian. We will assume for the strong form that $u \in H^{4}\left( \Omega  \right) $, $\alpha  >0 $ and $f \in L^{2}\left( \Omega  \right)
 $. For completeness will we also add the corresponding continuous weak formulation.
 Find a $u \in H^2( \Omega ) $ s.t. $a( u,v) = l( v)  \forall v \in H^{2}( \Omega )  $ where
@@ -336,7 +337,7 @@ so-called fat-intersection property, which will be relevant in Section \ref{sec:
 
             \coordinate (T0) at (-0,1.2);
             \coordinate (T1) at (-1.1,-0.4);
-            \node[below] at (T0) {$T$};
+            % \node[below] at (T0) {$T$};
 
             \coordinate (C1) at (-3,0.1);
             \coordinate (C2) at (2.6,0.2);
@@ -358,7 +359,7 @@ We define the underlying norms for $ v \in V_{h} $ as
         \label{eq:bi_Ah_norm}
 \| v \|_{A_{h}  }^{  2}  & = \| v \|_{ a_{h} }^{ 2 } + \abs{ v } _{g_{h}}^{2} \\
     \end{align}
-and for $v \in V + V_{h}$ we get, \[
+and for $v \in V \oplus V_{h}$ we get, \[
     \begin{split}
 \| v \|_{ a_{h}, * }^{  2} & =\| v \|_{ a_{h} }^{ 2 } +  \| h^{\frac{1}{2}} \mean{ \partial _{nn} v }   \|_{\mathcal{F} _{h}^{} \cap \Omega   }^{  2} +  \| h^{\frac{1}{2}} \partial _{nn} v    \|_{ \Gamma }^{  2}  \\
 \| v \|_{A_{h},*  }^{  2}  & = \| v \|_{ a_{h},* }^{ 2 } + \abs{ v } _{g_{h}}^{2}
