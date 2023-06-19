@@ -29,8 +29,24 @@ Hence, we have that the active set is the union of the interior and cut elements
 
 
 \begin{figure}\centering
+\subfloat[]{\label{a1}
+        \begin{tikzpicture}[scale=0.7]
+
+            \draw[fill=blue!30] (0.1, 0.1) circle (1.5cm);
+            % Background mesh
+            \foreach \i in {-2.5, -2, ..., 2.5} {
+                \draw[line width=0.1pt, shift={(-2.5,\i)}, opacity=0.2] (0,0) -- (5,0);
+                \draw[line width=0.1pt, shift={(\i,-2.5)}, opacity=0.2] (0,0) -- (0,5);
+            }
+
+
+            % Labels
+            \node[below right] at (0.0,0.4) {$\Omega$};
+        \end{tikzpicture}
+
+}\hfill
 \subfloat[]{\label{a}
-        \begin{tikzpicture}[scale=0.9]
+        \begin{tikzpicture}[scale=0.7]
 
             \fill[yellow!30] (-2.5,2.5) -- (2.5,2.5) -- (2.5,-2.5) -- (-2.5,-2.5) -- cycle;
 
@@ -48,7 +64,7 @@ Hence, we have that the active set is the union of the interior and cut elements
 
 }\hfill
 \subfloat[]{\label{c}
-        \begin{tikzpicture}[scale=0.9]
+        \begin{tikzpicture}[scale=0.7]
 
             % POTENTIAL ACTIVE MESH
             \fill[blue!30] (2,2) -- (2,-1.5) --(-1.5,-1.5) -- (-1.5,2) -- cycle;
@@ -84,13 +100,13 @@ Hence, we have that the active set is the union of the interior and cut elements
 
 
             % Labels
-            \node[below right] at (0.4,0.5) {$\mathcal{T}_{int}$};
-            \node[below right] at (-1.5,0.5) {$\mathcal{T}_{\Gamma }$};
+            \node[below right] at (0.0,0.5) {$\mathcal{T}_{int}$};
+            \node[below right] at (-1.9,1.6) {$\mathcal{T}_{\Gamma }$};
         \end{tikzpicture}
 }
 \hfill
 \subfloat[]{\label{b}
-        \begin{tikzpicture}[scale=0.9]
+        \begin{tikzpicture}[scale=0.7]
 
             % POTENTIAL ACTIVE MESH
             \fill[orange!30] (2,2) -- (2,-1.5) --(-1.5,-1.5) -- (-1.5,2) -- cycle;
