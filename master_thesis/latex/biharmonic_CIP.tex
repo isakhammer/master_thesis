@@ -342,7 +342,7 @@ and the proof is complete.
 We will now assemble the Laplace CIP formulation.
 The discrete problem is as follows:
  \begin{equation}
-    \text{Find } u_{h} \in V_{h} \text{ such that } a^{H}( u, v_{h})  = l_{h}^{H}( v_{h} )  \quad \forall v_{h} \in  V_{h}.
+    \text{Find } u_{h} \in V_{h} \text{ such that } a^{L}( u, v_{h})  = l_{h}^{L}( v_{h} )  \quad \forall v_{h} \in  V_{h}.
 \end{equation}
 Here is the corresponding bilinear and linear form defined as,
     \begin{equation}
@@ -360,29 +360,31 @@ Here is the corresponding bilinear and linear form defined as,
                                      \begin{equation}
                                          \label{eq:a_cip_energy_norm_lap}
                                          \begin{split}
-                                             \| v \|_{ a_{h} }^{ 2 }& = \alpha \| v\|_{ \Omega  }^{2  }  +  \| \Delta   v \|_{ \Omega   }^{ 2 }  + \|  h^{-\frac{1}{2}} \jump{ \partial _{n} v    }\|_{  \mathcal{F} _{h}^{int} }^{2  } +  \|  h^{-\frac{1}{2}}
+                                             \| v \|_{ a_{h}^{L} }^{ 2 }& = \alpha \| v\|_{ \Omega  }^{2  }  +  \| \Delta   v \|_{ \Omega   }^{ 2 }  + \|  h^{-\frac{1}{2}} \jump{ \partial _{n} v    }\|_{  \mathcal{F} _{h}^{int} }^{2  } +  \|  h^{-\frac{1}{2}}
                                              \partial _{n} v  \|_{  \Gamma  }^{2  },  \quad v \in V_{h}  \\
-                                             \| v \|_{ a_{h},* }^{ 2 } &= \| v \|_{ a_{h} }^{ 2 }  + \| h^{\frac{1}{2}}  \mean{     \partial _{nn } v}  \|_{ \mathcal{F}_{h}^{int}   }^{  2}+ \| h^{\frac{1}{2}}       \partial _{nn } v  \|_{ \Gamma    }^{  2}, \quad  v\in V \oplus V_{h}.
+                                             \| v \|_{ a_{h}^{L},* }^{ 2 } &= \| v \|_{ a_{h} }^{ 2 }  + \| h^{\frac{1}{2}}  \mean{     \partial _{nn } v}  \|_{ \mathcal{F}_{h}^{int}   }^{  2}+ \| h^{\frac{1}{2}}       \partial _{nn } v  \|_{ \Gamma    }^{  2}, \quad  v\in V \oplus V_{h}.
                                          \end{split}
                                          .
                                      \end{equation}
 
 
-This consists of adding a symmetry term and adding an additional stabilization regularisation term \cite{nitsche1971variationsprinzip}.
-It is worth noting that technically is the interior regularisation equivalent to do a Nitsche's method in all interior boundaries of the elements with boundary conditions of each element weakly
-imposed to zero. Thus, we expect the penalty parameter $\gamma$ to be the same interior and exterior elements. Let where $k\ge 2$ is the polynomial order, then for the Hessian formulation is it theoretically proven that $\gamma = 2k ( k-1 ) $
-\cite{brenner2012quadratic, brenner2012}. However, we still prefer to experimentally verify the best parameter.
 
-\subsubsection{Remarks}%
+                                     \begin{remark}
+Again, note that we have the consistent terms $\left( \mean{  \Delta  u }, \jump{ \partial _{n }v_{h}} \right)_{\mathcal{F}_{h}^{int}} $ and $ \left(   \Delta  u ,  \partial _{n }v \right)_{\Gamma }$ naturally appearing in the
+derivation. Also recall the symmetry terms $(  \jump{ \partial _{n} u }, \mean{ \Delta  v })_{\mathcal{F}^{int}_{h} } $ and $(  \partial _{n} u, \Delta  v       )_{\Gamma  } -(  g_{1}, \Delta  v  )_{\Gamma  }  $ and
+the penalty terms $ \frac{\gamma }{h} (  \partial _{n} u, \partial _{n}   v       )_{\Gamma  } -\frac{\gamma }{h}(  g_{1}, \partial _{n} v  )_{\Gamma  }$ and $\frac{\gamma }{h}( \jump{ \partial _{n} u } , \jump{ \partial _{n} v }
+)_{\mathcal{F}^{int}_{h} }  $
+     These terms is essential for making the bilinear form $a^{L}( \cdot,\cdot ) $  symmetric and the problem well-posed.
+                                     \end{remark}
+\subsubsection{Remarks and earlier work}%
 \label{ssub:remarks}
 
-
-
-\begin{remark}
-It should be noted that the Hessian formulation has a substantial limitation in that it is only valid for homogeneous Neumann conditions. This constraint arises from the challenges associated with imposing $g_{1}$ via the tangential derivative terms in Equation \eqref{eq:bi_basic_dg_full_1} during the proof of Lemma \ref{lemma:bh_hessian_identity}.
+It should be noted that the Hessian formulation has a substantial limitation in that it is only valid for homogeneous Neumann conditions. This constraint arises from the challenges associated with imposing $g_{1}$ via the tangential derivative terms
+in Equation \eqref{eq:bi_basic_dg_full_1} during the proof of Lemma \ref{lemma:hessian}.
 From a physical perspective, this is not problematic as it aligns with the boundary conditions of the original CH problem \eqref{eq:strongch}. However, from the standpoint of numerical validation, the homogeneous Neumann condition enforces strict
-rules on the design of manufactured solutions on arbitrary domains. Consequently, the examples illustrated in section \ref{sec:numerical_results} are only demonstrated on simple domains. This particular constraint does not apply to the Laplace formulation.
-\end{remark}
+rules on the design of manufactured solutions on arbitrary domains. One way to fix this is to enforce tangential derivatives of $g_{1}$, i.e., inserting $\partial _{n}u = g_{1}$ for $ ( \partial _{t_{i}}( \partial_{n}  u ) , \partial _{n} v)_\Gamma  $ into
+\eqref{eq:bi_basic_dg_full_1}. A downside with this method is that we must require $g_{1}$ is in $ H^{\frac{3}{2}}( \Gamma ) $.
+Consequently, the examples illustrated in section \ref{sec:numerical_results} are only demonstrated on simple domains. This particular constraint does not apply to the Laplace formulation.
 
 The Hessian formulation is well investigated by Susanne Brenner in several papers for \cite{brenner2012, brenner2012quadratic, brenner2012quadratic_kirk} with a corresponding analysis and numerical validation. Similarly, variants of the Laplace formulation can be found here
 \cite{feng2007fully, georgoulis2009discontinuous}. In these article there also is good theoretical and experimental evidence that both formulation have the following expected a priori estimates. Let  $u \in H^{s}( \Omega ) $ for $s\ge  \frac{5}{2} + \varepsilon$, and $u_{h}\in
@@ -394,9 +396,10 @@ k+2 \right\}$ the a priori estimates are   \[
     \end{split}
 \]
 
-Remark that the $\| \cdot  \|_{\Omega   }^{  } $ norm estimates is suboptimal for $k=2$.
-\red{Need to clarify assumptions on the boundary. Maybe regularity of $g_{1}$ and $g_{2}$.  }
-
+Be aware that the $\| \cdot  \|_{\Omega   }^{  } $ norm estimates is suboptimal for $k=2$.
+It is worth noting that technically is the interior regularisation equivalent to do a Nitsche's method in all interior boundaries of the elements with boundary conditions of each element weakly
+imposed to zero. Thus, we expect the penalty parameter $\gamma$ to be the same interior and exterior elements. Let where $k\ge 2$ is the polynomial order, then for the Hessian formulation is it theoretically proven that $\gamma = 2k ( k-1 ) $
+\cite{brenner2012quadratic, brenner2012}. However, we still prefer to experimentally verify the best parameter.
 
 
 \subsection{Note on the Biharmonic Mixed Formulation}%
