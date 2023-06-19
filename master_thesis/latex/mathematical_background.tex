@@ -776,10 +776,10 @@ Hence, all results holds for both polynomial spaces.
 We now have a well-defined discrete global space  $V_{h} $ consisting of the finite set of basis functions $\left\{ \phi _{i} \right\}_{i=1}^{N} $ associated with the Lagriangian nodes $\left\{ a_{i} \right\}_{i=1}^{N}  $. Let $u_{j} = u_{h}\left(
 a_{j} \right) $, so that $u_{h} = \sum_{j=1}^{N} u_{j} \phi _{j}  $. Then the Problem \ref{def:approx_problem} is equivalent to
  \[
-\sum_{j = 1}^{N} u_{j} a_{h}\left( \phi _{j}, \phi _{i} \right)  = l\left( \phi _{i} \right), \quad \forall
+\sum_{j = 1}^{N} u_{j} a_{h}\left( \phi _{j}, \phi _{i} \right)  = l\left( \phi _{i} \right)
 \]
-Hence, by letting $\mathbf{u} = \left[ u_{j} \right] $ , $\mathbf{f} = \left[ \left( f, \phi _{i}  \right) _{\Omega } \right] $  and $A = \left[ a_{h}\left( \phi _{j}, \phi _{i} \right)  \right] $ can we construct a linear system, \( A
-\mathbf{u} =\mathbf{f} \).
+Hence, by letting $\mathbf{u} = \left[ u_{j} \right] $ , $\mathbf{f} = \left[ \left( f, \phi _{i}  \right) _{\Omega } \right] $  and $A = \left[ a_{h}\left( \phi _{j}, \phi _{i} \right)  \right] $ can we construct a linear system, \[ A
+\mathbf{u} =\mathbf{f}. \]
 Ultimately, the matrix $A$ is shown to be symmetric and positive definite only if $a_{h}( \cdot ,\cdot ) $ is well-posed.
 
 \begin{figure}[]
@@ -1094,11 +1094,13 @@ This result is very useful since it is now sufficient to show that a priori esti
 \label{sub:some_general_inequalities}
 
 
-Choose any triangle $T \in \mathcal{T}_{h} $ and let $v \in V_{h}  $. Then does the local inverse estimate hold,
-$$
-\abs{ v }_{H^{l}( T) } \lesssim h^{m-l} \abs{ v }_{H^{m}( \Omega ) }.
-$$
-for $l \le m$. For proof, see \cite[Lemma 12.1]{ErnGuermond2021}. An essential example is the following inequality.
+Choose any element $T \in \mathcal{T}_{h} $ and let $v \in V_{h}  $. Then does the local inverse estimate hold,
+\begin{equation}
+\label{eq:inv1}
+\abs{ v }_{H^{l}( T) }  \lesssim h^{m-l} \abs{ v }_{H^{m}( \Omega ) }
+\text{ for } l \le m.
+\end{equation}
+ For proof, see \cite[Lemma 12.1]{ErnGuermond2021}. An essential example is the following inequality.
 $$\| D^2v \|_{T  }^{  } \lesssim h^{-1} \| \nabla v  \|_{ T  }^{  } \lesssim h^{-2} \| v \|_{T  }^{  }   $$
 
 Another very useful inequality is the so-called trace inequality which connect the relationship of evaluating the norm on element $ T $ and with any of the corresponding facets $F \in \partial T$. The general form is $\| v \|_{F   }^{  }  \lesssim

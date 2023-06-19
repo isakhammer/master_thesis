@@ -59,8 +59,8 @@ Naturally can we see this is the tools we need to construct an estimate for the 
 
 \begin{lemma}
     \label{lemma:astar_estimate}
-    Let $u \in H^{s}( \Omega ) $ for $s\ge 3$ be a exact solution. Then we have  \[
-    \|  u - C_{h}u \|_{ a_{h},*  }^{  } \lesssim h^{s(s-2)} \| u \|_{ H^{s}( \Omega )  }^{  }
+    Let $u \in H^{s}( \Omega ) $ for $s\ge 3$ be a exact solution to $\eqref{eq:bi_weak_cut} $. Then we have  \[
+    \|  u - C_{h}u \|_{ a_{h},*  }^{  } \lesssim h^{s-2} \| u \|_{ H^{s}( \Omega )  }^{  }
     \]
 
 \end{lemma}
@@ -122,7 +122,7 @@ Naturally can we see this is the tools we need to construct an estimate for the 
 \end{proof}
 
 \begin{lemma}[Weak galerkin orthogonality]
-Let $u \in H^{s}( \Omega )  $, $ s\ge 3 $  be the exact solution and $u_{h} \in V_{h}$ is a discrete solution to \eqref{eq:discrete_CutCIP_prob}. Then is \[
+Let $u \in H^{s}( \Omega )  $, $ s\ge 3 $  be the exact solution to   \eqref{eq:bi_weak_cut} and $u_{h} \in V_{h}$ is a discrete solution to \eqref{eq:discrete_CutCIP_prob}. Then is \[
     a_{h}( u - u_{h}, v) = g_{h} ( u_{h}, v) \quad \forall v \in V_{h}.
     \]
 \end{lemma}
@@ -146,12 +146,12 @@ Let $u \in H^{s}( \Omega )  $, $ s\ge 3 $  be the exact solution and $u_{h} \in 
 
 \begin{theorem}
     \label{thm:apriori_result}
-    Let $u \in H^{s}( \Omega ) $ , $s\ge 3$ a solution to \eqref{eq:bi_weak} and let $u \in V_{h}$ of order $k\ge 2$ be the discrete solution to \eqref{eq:cip_unfitted_hessian_form}. Then for $r = \min_{}\{s, k+1\} $ the error $e = u - u_{h}$ satisfies
+    Let $u \in H^{s}( \Omega ) $ , $s\ge 3$ a solution to \eqref{eq:bi_weak_cut} and let $u \in V_{h}$ of order $k\ge 2$ be the discrete solution to \eqref{eq:cip_unfitted_hessian_form}. Then for $r = \min_{}\{s, k+2\} $ the error $e = u - u_{h}$ satisfies
     \begin{align}
         \label{eq:bi_apriori_1}
-            \| e \|_{ a_{h},* }^{  } &\lesssim   h^{r-1} \| u \|_{ r,\Omega  }^{  }\\
+            \| e \|_{ a_{h},* }^{  } &\lesssim   h^{r-2} \| u \|_{ r,\Omega  }^{  }\\
         \label{eq:bi_apriori_2}
-            \| e \|_{ \Omega  }^{  } &\lesssim   h^{r} \| u \|_{ r,\Omega  }^{  }
+        \| e \|_{ \Omega  }^{  } &\lesssim   h^{r-\mathrm{max}\left\{ 0, 3-k \right\} } \| u \|_{ r,\Omega  }^{  }
     \end{align}
 
 \end{theorem}
@@ -210,12 +210,23 @@ Hence, the first part of the proof is complete.
         \| e \|_{ \Omega  }^{ 2 }  & = ( e,e)_\Omega   = ( e, \Delta ^2 \psi )_{\Omega } \\
         &= a_{h}( e, \psi ) = a_{h}( u-uh, \psi ) \\
         &= a_{h}( u-u_h, \psi + C^{e}_{h}\psi  - C^{e}_{h}\psi )  \\
-        &= a_{h}( u-u_h, \psi   - C^{e}_{h}\psi ) +  a_{h}( u-uh, C^{e}_{h}\psi )  \\
+        &= a_{h}( u-u_h, \psi   - C^{e}_{h}\psi ) +  a_{h}( u-u_h, C^{e}_{h}\psi )  \\
         &= a_{h}( u-u_h, \psi  - C^{e}_{h}\psi )  \\
+        &\le   \|u-u_{h}  \|_{a_{h},*  }^{  }  \| \psi  - C^{e}_{h}\psi \|_{a_{h},*  }^{  }    \\
             \end{split}
         \end{equation}
 
-        Here we applied the Galerkin Ortghogonality $ a_{h}( u-uh, C^{e}_{h}\psi ) = 0$.
+        Here we applied the Galerkin orthogonality $ a_{h}( u-uh, C^{e}_{h}\psi ) = 0$.
+        Using the a priori estimate \eqref{lemma:astar_estimate}  is it clear that
+        \begin{equation}
+        \|u-u_{h}  \|_{a_{h},*  }^{  }  \le h^{r} \| u \|_{r,\Omega  }^{  }\quad  \text{and}\quad  \| \psi  - C^{e}_{h}\psi \|_{a_{h},*  }^{  }  \le h^{r} \| \psi  \|_{4, \Omega   }^{  }.
+        \end{equation}
+
+        And then standard inverse estimate \eqref{eq:inv1} can we see
+        \begin{equation}
+             h^{r} \| u \|_{r,\Omega  }^{  }  \le h^{r-2} \| u \|_{\Omega  }^{  } \quad  \text{and}\quad  h^{4} \| \psi  \|_{4,\Omega  }^{  }  \le h^{r-3} \| \psi  \|_{\Omega }^{  }.
+        \end{equation}
+
     \end{enumerate}
 \end{proof}
 

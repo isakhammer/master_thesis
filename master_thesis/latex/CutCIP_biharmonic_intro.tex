@@ -165,18 +165,18 @@ Hence, we have that the active set is the union of the interior and cut elements
 This makes it natural to redefine the biharmonic problem on a unfitted domain.
 Let $\Omega \subseteq    \mathbb{R} ^d$ s.t. $\Gamma  $ be its corresponding boundary in $C^2$. Then is the biharmonic problem on the form,
 \begin{subequations}
+\label{eq:bi_main_problem2}
 \begin{align}
-    \Delta^2  u  + \alpha  u  & = f( x)  \quad \text{in } \Omega,   \label{eq:bi_problem_a}\\
-    \partial _{n} u & = g_{1}(x)   \quad \text{on } \Gamma ,  \label{eq:bi_problem_b}\\
-    \partial _{n} \Delta  u & = g_{2}( x)   \quad \text{on } \Gamma .  \label{eq:bi_problem_c}
+    \Delta^2  u  + \alpha  u  & = f( x)  \quad \text{in } \Omega,   \label{eq:bi_main_problem_a}\\
+    \partial _{n} u & = g_{1}(x)   \quad \text{on } \Gamma ,  \label{eq:bi_main_problem_b}\\
+    \partial _{n} \Delta  u & = g_{2}( x)   \quad \text{on } \Gamma .  \label{eq:bi_main_problem_c}
 \end{align}
-\label{eq:bi_problem}
 \end{subequations}
 Here is $\Delta ^2 = \Delta  \left( \Delta  \right) $ the biharmonic operator, also known as the bilaplacian. We will assume for the strong form that $u \in H^{4}\left( \Omega  \right) $, $\alpha  >0 $ and $f \in L^{2}\left( \Omega  \right)
 $. For completeness will we also add the corresponding continuous weak formulation.
 Find a $u \in H^2( \Omega ) $ s.t. $a( u,v) = l( v)  \forall v \in H^{2}( \Omega )  $ where
 \begin{equation}
-\label{eq:bi_weak}
+\label{eq:bi_weak_cut}
       \begin{split}
 a( u,v) & = ( \alpha u,v)_{\Omega } +  ( \Delta u, \Delta v)_{\Omega } +  ( \partial _{n} \Delta u, v)_{\Gamma } - ( \partial _{n} v, \Delta u) _{\Gamma } - ( \partial _{n} u, \Delta v) _{\Gamma }\\
 l( v)  &= ( f,v)_{\Omega } - ( g_{2} , v)_\Omega - ( g_{1}, \Delta v) _{\Gamma }
