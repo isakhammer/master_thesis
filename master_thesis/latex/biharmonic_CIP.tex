@@ -81,11 +81,11 @@ Let $u \in H^{4}( \Omega ) $ be the solution to \eqref{eq:bi_problem} and let $ 
 \begin{equation}
 \label{eq:bi_basic_dg_full}
 \begin{split}
-    \left( \Delta  ^{2} u, v_h \right) _{\Omega }  =&   \left( D^2u, D^2v_h \right)_{\Omega } \\
+    \left( \Delta  ^{2} u, v_h \right) _{\Omega }  =&   \left( D^2u, D^2v_h \right)_{\Omega } +  \left(g_{2}, v_h  \right) _{ \Gamma  }\\
     &    -  ( \mean{ \partial _{nn} u }   , \jump{ \partial_{n} v_h } )_{\mathcal{F}_{h}^{int} } -  (  \jump{ \partial_{n} u
     },\mean{ \partial _{nn} v_h } )_{\mathcal{F}_{h}^{int} } + \frac{\gamma }{h} (  \jump{ \partial_{n} u
     },\mean{ \partial _{nn} v_h } )_{\mathcal{F}_{h}^{int} } \\
-    & - ( \partial _{nn} u , \partial _{n} v_h)_{\Gamma  }- ( \partial _{n} u , \partial _{nn} v_h)_{\Gamma  } +  \left(g_{2}, v_h  \right) _{ \Gamma  }+ \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v_{h}      \right)_{\Gamma }
+    & - ( \partial _{nn} u , \partial _{n} v_h)_{\Gamma  }- ( \partial _{n} u , \partial _{nn} v_h)_{\Gamma  } + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v_{h}      \right)_{\Gamma }
 \end{split}
 \end{equation}
 \end{lemma}
@@ -210,18 +210,20 @@ Combining \eqref{eq:dg2_facets} and inserting the boundary condition $g_{2} = \p
                                                   &  - ( \partial _{nn} u , \partial _{n} v_h)_{\mathcal{F}^{ext}_{h} } - \sum_{i =1  }^{d-1} ( \partial   _{t_{i}n} u  ,  \partial   _{t_{i}}  v_h  )_{ \mathcal{F}^{ext} _{h}  }
 \end{split}
 \end{equation}
-Under the assumption that $g_{1} = 0$ on $\Gamma$, and given that the tangential decomposition is orthogonal to $n$, we can assert that $ \partial_{t_{i} n} u = \partial_{t_{i}} ( \partial _{n} u )= \partial_{t_{i}} ( g_{1} ) = 0 $ holds for any $i = 1,\ldots, d$. This implies that the
+Under the assumption that $g_{1} = 0$ on $\Gamma$, and given that the tangential decomposition is orthogonal to $n$, we can assert that $ \partial_{t_{i} n} u = \partial_{t_{i}} ( \partial _{n} u )= \partial_{t_{i}} ( g_{1} ) = 0 $ holds for any $i =
+1,\ldots, d -1$. This implies that the
 last term of the equation vanish.
 
-We also note that we add consistent symmetry terms $( \mean{ \partial _{nn} v_h } ,\jump{ \partial _{n} u }    )_{\mathcal{F}^{int}_{h} } $ and $( \partial _{nn} v_h  , \partial _{n} u     )_{\Gamma  } $, which effectely is adding zero
-because of the regularity of $u$ and the boundary condition $g_{1}=0$. Finally, we have
+We also note that we add consistent symmetry terms $( \mean{ \partial _{nn} v_h } ,\jump{ \partial _{n} u }    )_{\mathcal{F}^{int}_{h} } $ and $( \partial _{nn} v_h  , \partial _{n} u     )_{\Gamma  } $ in addition to the penalty terms $\frac{\gamma
+}{h} ( \partial _{n} u, \partial _{n}v)_{\Gamma }  $ and $\frac{\gamma
+}{h} ( \jump{ \partial _{n} u }  , \jump{    \partial _{n}v})_{\mathcal{F}^{int}_{h} }  $ . Since $u\in H^{4}( \Omega ) $ and the boundary condition,  $\partial _{n} u = g_{1}=0$ on $\Gamma $, is each of these terms effectively zero, but does provide symmetry and will later
+be proven to be essential for well-posedness for the discrete problem. Finally, we have
 \begin{equation}
 \begin{split}
-    \left( \Delta  ^{2} u, v_h \right) _{\Omega }  =&   \left( D^2u, D^2v_h \right)_{\Omega } \\
+    \left( \Delta  ^{2} u, v_h \right) _{\Omega }  =&   \left( D^2u, D^2v_h \right)_{\Omega } + \left(g_{2}, v_h  \right) _{ \Gamma  }\\
     &    -  ( \mean{ \partial _{nn} u }   , \jump{ \partial_{n} v_h } )_{\mathcal{F}_{h}^{int} } -  (  \jump{ \partial_{n} u
-    },\mean{ \partial _{nn} v_h } )_{\mathcal{F}_{h}^{int} } + \frac{\gamma }{h}  (  \jump{ \partial_{n} u
-    },\ump{ \partial _{n} v_h } )_{\mathcal{F}_{h}^{int} } \\
-    & - ( \partial _{nn} u , \partial _{n} v_h)_{\Gamma  } - (\partial _{nn} v_h , \partial _{n} u)_{\Gamma  } +  \left(g_{2}, v_h  \right) _{ \Gamma  } + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{\Gamma }
+    },\mean{ \partial _{nn} v_h } )_{\mathcal{F}_{h}^{int} } + \frac{\gamma }{h}  (  \jump{ \partial_{n} u },\jump{ \partial _{n} v_h } )_{\mathcal{F}_{h}^{int} } \\
+    & - ( \partial _{nn} u , \partial _{n} v_h)_{\Gamma  } - (\partial _{nn} v_h , \partial _{n} u)_{\Gamma  }  + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{\Gamma }
 \end{split}
 \end{equation}
 
@@ -268,8 +270,10 @@ derivation. However, we also added two symmetry terms,  $\left( \mean{  \partial
  Let $u \in H^{4}( \Omega ) $ the solution of \eqref{eq:bi_problem} and $v \in  V_{h}$. Then we have the following identity.
 \[
     \begin{split}
-( \Delta ^2 u, v ) _{\Omega }  =& ( \Delta u, \Delta v)_{\mathcal{T} _{h} }  +  ( \jump{ \partial _{n} u} , \mean{ \Delta v })_{\mathcal{F}_{h}^{int} }+  (  \mean{ \Delta u }, \jump{ \partial _{n} v} )_{\mathcal{F}_{h}^{int} } \\
-& + ( g_{2} , v )_{\Gamma } - ( \partial _{n} v, \Delta u)_{\Gamma }- ( \partial _{n} u, \Delta v)_{\Gamma } +( g_{1} , \Delta v)_{\Gamma } .
+( \Delta ^2 u, v ) _{\Omega }  =& ( \Delta u, \Delta v)_{\mathcal{T} _{h} } \\
+& +  ( \jump{ \partial _{n} u} , \mean{ \Delta v })_{\mathcal{F}_{h}^{int} }+  (  \mean{ \Delta u }, \jump{ \partial _{n} v} )_{\mathcal{F}_{h}^{int} } + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }
+\right)_{\mathcal{F}_{h}^{int} } + \frac{\gamma }{h} ( \partial _{n} u, \partial _{n}v)_{\Gamma }\\
+& - ( \partial _{n} v, \Delta u)_{\Gamma }- ( \partial _{n} u, \Delta v)_{\Gamma } + ( \partial _{n} u, \partial _{n} v)_{\Gamma } + \frac{\gamma }{h} ( g_{1} , \Delta v)_{\Gamma } + ( g_{2} , v )_{\Gamma }  .
     \end{split}
 \]
 \end{lemma}
