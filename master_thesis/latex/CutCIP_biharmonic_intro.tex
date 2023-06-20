@@ -5,13 +5,20 @@
 
 Questions arise when we want to allow for complex geometries where some physical domain $\Omega $ has a smooth boundary $\Gamma $ and, thus, cannot be fully covered of a fitted mesh. This motivated us to define a unfitted finite element method.
 
+    % \begin{enumerate}[label=\arabic*)]
+    %     \item  Write a short introduction of Compuation domain
+    %     \item  Write a short introduction of CutFEM
+    %     \item  Write a short note on required assumptions for the analsysis
+    %     \item  Write a short note on Aggregated FEM
+    % \end{enumerate}
+
 \subsection{Computational domain}%
 \label{sub:unfitted_mesh}
 
-
 Let $\Omega \subseteq    \mathbb{R} ^d$ and be a physical domain and $\Gamma  $ be a sufficiently smooth boundary in $C^2$ .
 
-We want to devise a CutFEM based on the CIP formulation for the biharmonic problem. Let $\widetilde{\mathcal{T}_{h} } $ be a shape-regular and quasi-uniform mesh. Let us denote the active set $\mathcal{T} _{h} \subseteq \widetilde{\mathcal{T}_{h}}$ which intersects the interior of the active domain $\Omega $, that is  \[
+We want to devise a CutFEM based on the CIP formulation for the biharmonic problem. Let $\widetilde{\mathcal{T}_{h} } $ be a shape-regular and quasi-uniform mesh which covers $\Omega $, but which covers $\Omega $, but which does not need to fit the
+domain. Let us denote the active set $\mathcal{T} _{h} \subseteq \widetilde{\mathcal{T}_{h}}$ which intersects the interior of the active domain $\Omega $, that is  \[
 \mathcal{T} _{h} = \left\{ T \in \widetilde{\mathcal{T} }_{h}  \mid  T \cap \Omega   \neq \emptyset    \right\} .
 \]
 We define the corresponding set of interior facets, \[
