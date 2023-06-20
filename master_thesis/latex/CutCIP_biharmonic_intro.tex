@@ -4,37 +4,37 @@
 
 
 Questions arise when we want to allow for complex geometries where some physical domain $\Omega $ has a smooth boundary $\Gamma $ and, thus, cannot be fully covered of a fitted mesh. This motivated us to define a unfitted finite element method.
-
+\red{Write introduction to chapter}
     % \begin{enumerate}[label=\arabic*)]
     %     \item  Write a short introduction of Compuation domain
     %     \item  Write a short introduction of CutFEM
     %     \item  Write a short note on required assumptions for the analsysis
     %     \item  Write a short note on Aggregated FEM
     % \end{enumerate}
-
 \subsection{Computational domain}%
 \label{sub:unfitted_mesh}
 
-Let $\Omega \subseteq    \mathbb{R} ^d$ and be a physical domain and $\Gamma  $ be a sufficiently smooth boundary in $C^2$ .
+Let $\Omega \subseteq    \mathbb{R} ^d$ be open and bounded, and be a physical domain and $\Gamma  $ be a sufficiently smooth boundary in $C^2$ .
 
-We want to devise a CutFEM based on the CIP formulation for the biharmonic problem. Let $\widetilde{\mathcal{T}_{h} } $ be a shape-regular and quasi-uniform mesh which covers $\Omega $, but which covers $\Omega $, but which does not need to fit the
+We want to devise a CutFEM based on the CIP formulation for the biharmonic problem. Let $\widetilde{\mathcal{T}_{h} } $ be a shape-regular and quasi-uniform mesh which covers $\Omega $, but which covers $\Omega $ which covers $\Omega $, but does not need to fit the
 domain. Let us denote the active set $\mathcal{T} _{h} \subseteq \widetilde{\mathcal{T}_{h}}$ which intersects the interior of the active domain $\Omega $, that is  \[
 \mathcal{T} _{h} = \left\{ T \in \widetilde{\mathcal{T} }_{h}  \mid  T \cap \Omega   \neq \emptyset    \right\} .
 \]
 We define the corresponding set of interior facets, \[
     \mathcal{F} _{h}^{int} = \left\{ F = T^{+} \cap T^{-}  \mid  T^{+}, T^{-} \in \mathcal{T} _{h} \text{ and } T^{+} \neq T^{-} \right\},
 \]
-and the set of cut elements \[
+and the set of elements cut by the boundary \[
 \mathcal{T} _{\Gamma } = \left\{ T \in \mathcal{T} _{h}   \mid  T \cap \Gamma \neq \emptyset  \right\}.
 \]
 For convenience, will we define also the interior of the active set as $\mathcal{T} _{int}$.
 \[
-\mathcal{T} _{int} = \left\{ T \in \mathcal{T} _{h}   \mid  T \cap  Int(\Omega ) \neq \emptyset  \right\}.
+\mathcal{T} _{int} = \left\{ T \in \mathcal{T} _{h}   \mid  T \cap  \mathrm{Int}(\Omega ) \neq \emptyset  \right\}.
 \]
 Hence, we have that the active set is the union of the interior and cut elements, $\mathcal{T} _{h} = \mathcal{T} _{int} \cup  \mathcal{T} _{\Gamma }$. For an illustration, see Figure \ref{fig:background_mesh}.
 
 
-\begin{figure}\centering
+\begin{figure}[h!]
+    \centering
 \subfloat[]{\label{a1}
         \begin{tikzpicture}[scale=0.7]
 
@@ -164,41 +164,40 @@ Hence, we have that the active set is the union of the interior and cut elements
 \end{figure}
 
 
-
-
 \subsection{ Cut Continuous Interior Penalty Method }%
 \label{sub:cut_cip_method}
-This makes it natural to redefine the biharmonic problem on a unfitted domain.
-Let $\Omega \subseteq    \mathbb{R} ^d$ s.t. $\Gamma  $ be its corresponding boundary in $C^2$. Then is the biharmonic problem on the form,
-\begin{subequations}
-\label{eq:bi_main_problem2}
-\begin{align}
-    \Delta^2  u  + \alpha  u  & = f( x)  \quad \text{in } \Omega,   \label{eq:bi_main_problem2_a}\\
-    \partial _{n} u & = g_{1}(x)   \quad \text{on } \Gamma ,  \label{eq:bi_main_problem2_b}\\
-    \partial _{n} \Delta  u & = g_{2}( x)   \quad \text{on } \Gamma .  \label{eq:bi_main_problem2_c}
-\end{align}
-\end{subequations}
-Here is $\Delta ^2 = \Delta  \left( \Delta  \right) $ the biharmonic operator, also known as the bilaplacian. We will assume for the strong form that $u \in H^{4}\left( \Omega  \right) $, $\alpha  >0 $ and $f \in L^{2}\left( \Omega  \right)
-$.
 
-For completeness will we also add the corresponding continuous weak formulation.
-Let $ V := \left\{ v \in H^2( \Omega )  \mid \partial _{n} v = g_{1} \right\}  $.
-\begin{equation}
-\label{eq:bi_weak_cut}
-\text{Find } u \in V   \text{ such that } a( u,v) = l( v)  \forall v \in V
-\end{equation}
-where
-\begin{equation}
-    \begin{split}
-a( u,v) & =  ( \alpha u,v)_{\Omega } + ( \Delta u, \Delta v)_{\Omega } - (  \Delta u, \partial _{n} v) _{\Gamma }\\
-l( v)  &= ( f,v)_{\Omega } - ( g_{2} , v)_\Omega
-    \end{split}
-\end{equation}
+% This makes it natural to redefine the biharmonic problem on a unfitted domain.
+% Let $\Omega \subseteq    \mathbb{R} ^d$ s.t. $\Gamma  $ be its corresponding boundary in $C^2$. Then is the biharmonic problem on the form,
+% \begin{subequations}
+% \label{eq:bi_main_problem2}
+% \begin{align}
+%     \Delta^2  u  + \alpha  u  & = f( x)  \quad \text{in } \Omega,   \label{eq:bi_main_problem2_a}\\
+%     \partial _{n} u & = g_{1}(x)   \quad \text{on } \Gamma ,  \label{eq:bi_main_problem2_b}\\
+%     \partial _{n} \Delta  u & = g_{2}( x)   \quad \text{on } \Gamma .  \label{eq:bi_main_problem2_c}
+% \end{align}
+% \end{subequations}
+% Here is $\Delta ^2 = \Delta  \left( \Delta  \right) $ the biharmonic operator, also known as the bilaplacian. We will assume for the strong form that $u \in H^{4}\left( \Omega  \right) $, $\alpha  >0 $ and $f \in L^{2}\left( \Omega  \right)
+% $.
 
-\begin{remark}
-    Be aware that the only difference between the strong BH variants, \eqref{eq:bi_problem} and \eqref{eq:bi_main_problem2}, is that the first one problem is fitted s.t. $\mathcal{T}_{h} = \Omega  $, while the latter is unfitted and equipped with a
-    sufficiently smooth boundary. The continuous weak formulations and \eqref{eq:cont_weak_problem} and \eqref{eq:bi_weak_cut} is entirely identical in its composition.
-\end{remark}
+% For completeness will we also add the corresponding continuous weak formulation.
+% Let $ V := \left\{ v \in H^2( \Omega )  \mid \partial _{n} v = g_{1} \right\}  $.
+% \begin{equation}
+% \label{eq:bi_weak_cut}
+% \text{Find } u \in V   \text{ such that } a( u,v) = l( v)  \forall v \in V
+% \end{equation}
+% where
+% \begin{equation}
+%     \begin{split}
+% a( u,v) & =  ( \alpha u,v)_{\Omega } + ( \Delta u, \Delta v)_{\Omega } - (  \Delta u, \partial _{n} v) _{\Gamma }\\
+% l( v)  &= ( f,v)_{\Omega } - ( g_{2} , v)_\Omega
+%     \end{split}
+% \end{equation}
+
+% \begin{remark}
+%     Be aware that the only difference between the strong BH variants, \eqref{eq:bi_problem} and \eqref{eq:bi_main_problem2}, is that the first one problem is fitted s.t. $\mathcal{T}_{h} = \Omega  $, while the latter is unfitted and equipped with a
+%     sufficiently smooth boundary. The continuous weak formulations and \eqref{eq:cont_weak_problem} and \eqref{eq:bi_weak_cut} is entirely identical in its composition.
+% \end{remark}
 
 
 We denote the $C^{0}$ polynomial space of order $k$ as
