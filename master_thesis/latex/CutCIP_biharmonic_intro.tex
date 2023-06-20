@@ -11,9 +11,10 @@ measure of the volume in dimension $d$.
 The cut elements are identified as a crucial geometric issue since the inverse inequalities outlined in Subsection \ref{sub:some_general_inequalities} do not generalize well to these elements. This highlights challenges in establishing stability and a priori estimates for any geometric arrangement.
 
 One way do this is to introduce the so-called cut finite element method (CutFEM).
-The method is adding an stabilization term, also known as the so-called ghost penalty term, which extends the integration domain outside of the physical domain in the goal of guaranteeing stabilization and geometrical robustness. For more information, see
-\cite{burman2015cutfem, burman2010ghost}.
-Following \cite{gurkan2019stabilized} and starting from the CIP methods introduced in Section \ref{sec:CIP_biharmonic_problem}, is the goal in this section to engineer a suitable ghost penalty term such that the problem is well posed and has the same a priori estimates.
+The method is adding an stabilization term, also known as the so-called ghost penalty term, which extends the finite element space from the interior elements outside the physical domain  stable way which also guarantees stabilization and geometrical robustness.
+optimal approximation properties. For more information, see
+\cite{burman2015cutfem, burman2010ghost, burman2022cutfem, burman2012fictitious}.
+Utilizing a corresponding CutFEM DG elliptic framework \cite{gurkan2019stabilized} and starting from the CIP methods introduced in Section \ref{sec:CIP_biharmonic_problem}, is the goal in this section to engineer a suitable ghost penalty term such that the problem is well posed and has the same a priori estimates.
 
 
 \subsection{Computational domain}%
