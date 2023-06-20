@@ -17,8 +17,8 @@ jobs:
     - uses: actions/checkout@v2
 
 
-    - name: Build the Docker image
-      run: docker build . --file dockerfiles/Dockerfile-julia --tag julia-build
+    #- name: Build the Docker image
+    #  run: docker build . --file dockerfiles/Dockerfile-julia --tag julia-build
 
     # - name: docker login
     #   env:
