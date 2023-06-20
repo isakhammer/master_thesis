@@ -4,13 +4,18 @@
 
 
 Questions arise when we want to allow for complex geometries where some physical domain $\Omega $ has a smooth boundary $\Gamma $ and, thus, cannot be fully covered of a fitted mesh. This motivated us to define a unfitted finite element method.
-\red{Write introduction to chapter}
-    % \begin{enumerate}[label=\arabic*)]
-    %     \item  Write a short introduction of Compuation domain
-    %     \item  Write a short introduction of CutFEM
-    %     \item  Write a short note on required assumptions for the analsysis
-    %     \item  Write a short note on Aggregated FEM
-    % \end{enumerate}
+The concept is to generate a structured background mesh which fully covers $\Omega $ , but does necessarily fit it perfectly. Conceptionally, is the bilinear form $a_{h}( \cdot ,\cdot ) $  and linear form $l_{h}( \cdot ) $  still associated with the
+physical domain with the discrete space $V_{h}$ defined in the unfitted mesh. However, we will run into geometrical problems when
+so-called cut finite elements has a very small intersection of the physical domain, i.e, $\abs{ T \cap \Omega  }_{d} \ll \abs{ T }_{d}  \lesssim h^{d-1}$ and $\abs{ \Gamma \cap T }_{d} \ll  h^{d-1}$, where $\abs{ \cdot  }_{d} $ is the
+measure of the volume in dimension $d$.
+The cut elements are identified as a crucial geometric issue since the inverse inequalities outlined in Subsection \ref{sub:some_general_inequalities} do not generalize well to these elements. This highlights challenges in establishing stability and a priori estimates for any geometric arrangement.
+
+One way do this is to introduce the so-called cut finite element method (CutFEM).
+The method is adding an stabilization term, also known as the so-called ghost penalty term, which extends the integration domain outside of the physical domain in the goal of guaranteeing stabilization and geometrical robustness. For more information, see
+\cite{burman2015cutfem, burman2010ghost}.
+Following \cite{gurkan2019stabilized} and starting from the CIP methods introduced in Section \ref{sec:CIP_biharmonic_problem}, is the goal in this section to engineer a suitable ghost penalty term such that the problem is well posed and has the same a priori estimates.
+
+
 \subsection{Computational domain}%
 \label{sub:unfitted_mesh}
 
@@ -205,7 +210,6 @@ We denote the $C^{0}$ polynomial space of order $k$ as
 V_{h} = \left\{ v \in C^{0}\left( \Omega  \right): v_{T} = v | _{T} \in \mathcal{P} ^{k}\left( T \right), \forall T \in
 \mathcal{T}_{h}    \right\}
 \]
-
 
 Drawing on the principles outlined in Section \ref{sec:CIP_biharmonic_problem}, we can indeed derive two equivalent formulations for the biharmonic equation, specifically adapted to an unfitted mesh. Similarly both formulation is the bilinear form
 $a_{h}:V_{h}
