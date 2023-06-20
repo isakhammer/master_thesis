@@ -173,19 +173,25 @@ Let $\Omega \subseteq    \mathbb{R} ^d$ s.t. $\Gamma  $ be its corresponding bou
 \end{align}
 \end{subequations}
 Here is $\Delta ^2 = \Delta  \left( \Delta  \right) $ the biharmonic operator, also known as the bilaplacian. We will assume for the strong form that $u \in H^{4}\left( \Omega  \right) $, $\alpha  >0 $ and $f \in L^{2}\left( \Omega  \right)
-$. For completeness will we also add the corresponding continuous weak formulation.
-Find a $u \in H^2( \Omega ) $ s.t. $a( u,v) = l( v)  \forall v \in H^{2}( \Omega )  $ where
+$.
+
+For completeness will we also add the corresponding continuous weak formulation.
+Let $ V := \left\{ v \in H^2( \Omega )  \mid \partial _{n} v = g_{1} \right\}  $.
 \begin{equation}
 \label{eq:bi_weak_cut}
-      \begin{split}
-a( u,v) & = ( \alpha u,v)_{\Omega } +  ( \Delta u, \Delta v)_{\Omega } +  ( \partial _{n} \Delta u, v)_{\Gamma } - ( \partial _{n} v, \Delta u) _{\Gamma } - ( \partial _{n} u, \Delta v) _{\Gamma }\\
-l( v)  &= ( f,v)_{\Omega } - ( g_{2} , v)_\Omega - ( g_{1}, \Delta v) _{\Gamma }
-      \end{split}
+\text{Find } u \in V   \text{ such that } a( u,v) = l( v)  \forall v \in V
+\end{equation}
+where
+\begin{equation}
+    \begin{split}
+a( u,v) & =  ( \alpha u,v)_{\Omega } + ( \Delta u, \Delta v)_{\Omega } - (  \Delta u, \partial _{n} v) _{\Gamma }\\
+l( v)  &= ( f,v)_{\Omega } - ( g_{2} , v)_\Omega
+    \end{split}
 \end{equation}
 
 \begin{remark}
     Be aware that the only difference between the strong BH variants, \eqref{eq:bi_problem} and \eqref{eq:bi_main_problem2}, is that the first one problem is fitted s.t. $\mathcal{T}_{h} = \Omega  $, while the latter is unfitted and equipped with a
-    sufficiently smooth boundary. The continuous weak formulations is entirely identical in its composition.
+    sufficiently smooth boundary. The continuous weak formulations and \eqref{eq:cont_weak_problem} and \eqref{eq:bi_weak_cut} is entirely identical in its composition.
 \end{remark}
 
 
