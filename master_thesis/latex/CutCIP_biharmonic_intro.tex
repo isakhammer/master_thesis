@@ -6,7 +6,7 @@
 Questions arise when we want to allow for complex geometries where some physical domain $\Omega $ has a smooth boundary $\Gamma $ and, thus, cannot be fully covered of a fitted mesh. This motivated us to define a unfitted finite element method.
 The concept is to generate a structured background mesh which fully covers $\Omega $ , but does necessarily fit it perfectly. Conceptionally, is the bilinear form $a_{h}( \cdot ,\cdot ) $  and linear form $l_{h}( \cdot ) $  still associated with the
 physical domain with the discrete space $V_{h}$ defined in the unfitted mesh. However, we will run into geometrical problems when
-so-called cut finite elements has a very small intersection of the physical domain, i.e, $\abs{ T \cap \Omega  }_{d} \ll \abs{ T }_{d}  \lesssim h^{d-1}$ and $\abs{ \Gamma \cap T }_{d} \ll  h^{d-1}$, where $\abs{ \cdot  }_{d} $ is the
+so-called cut finite elements has a very small intersection of the physical domain, i.e, $\abs{ T \cap \Omega  }_{d} \ll \abs{ T }_{d}  \lesssim h^{d}$ and $\abs{ \Gamma \cap T }_{d} \ll  h^{d-1}$, where $\abs{ \cdot  }_{d} $ is the
 measure of the volume in dimension $d$.
 The cut elements are identified as a crucial geometric issue since the inverse inequalities outlined in Subsection \ref{sub:some_general_inequalities} do not generalize well to these elements. This highlights challenges in establishing stability and a priori estimates for any geometric arrangement.
 
@@ -257,7 +257,7 @@ Furthermore, drawing on the principles outlined in Section \ref{sec:CIP_biharmon
 To make sure the problem is stabilized will we add a hypothetical consistent symmetric bilinear ghost-penalty term  $g_{h}: V_{h} \times  V_{h} \to \mathbb{R} $ in addition to our bilinear. That is, we define the discrete problem to  s.t.
 \begin{equation}
 \label{eq:discrete_CutCIP_prob}
-\text{ Find } u_{h} \in V_{h} \forall A_{h}( u_{h} ,v ) := a_{h}( u_{h}, v)  + g_{h}( u_{h},v) = l_{h} ( v) \quad  \forall v \in  V_{h}.
+\text{ Find } u_{h} \in V_{h} \quad  A_{h}( u_{h} ,v ) := a_{h}( u_{h}, v)  + g_{h}( u_{h},v) = l_{h} ( v) \quad  \forall v \in  V_{h}.
 \end{equation}
 Here is $a_{h}( \cdot,\cdot  ) $ denoted as either $a_{h}^{L}( \cdot ,\cdot ) $ or $a_{h}^{H}( \cdot ,\cdot ) $.
 
@@ -366,7 +366,7 @@ so-called fat-intersection property, which will be relevant in Section \ref{sec:
 
         \end{tikzpicture}
     \end{minipage}
-        \caption{Two examples of bad cut cells. At some point it is even hard to distinguish between interior and cut cells.}
+        \caption{Two examples of bad cut cells. on the left side is $\abs{ \Gamma \cap T }_{d} \ll  h^{d-1}$ and correspondingly on the right side can we see that, $\abs{ T \cap \Omega  }_{d} \ll \abs{ T }_{d}  \lesssim h^{d}$. At some point is it even hard to distinguish between interior and cut cells.}
         \label{fig:intersection-example}
 \end{figure}
 
