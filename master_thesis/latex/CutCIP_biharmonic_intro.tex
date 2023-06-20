@@ -218,38 +218,38 @@ $a_{h}:V_{h}
 \times V_{h} \to  \mathbb{R}  $ and the linear form $l_{h}: V_{h} \to \mathbb{R} $. Recall the recall the Hessian formulation \eqref{eq:hessian_prob} and the Laplace formulation \eqref{eq:laplace_prob} on a polygonal mesh. Then we have the following
 unfitted variants.
 
-\begin{enumerate}[label=\arabic*)]
-    \item Assume $g_{1}( x) = 0 $. Then unfitted Hessian formulation has the bilinear form
+% \begin{enumerate}[label=\arabic*)]
+%     \item Assume $g_{1}( x) = 0 $. Then unfitted Hessian formulation has the bilinear form
 
-\begin{equation}
-        \label{eq:cip_unfitted_hessian_form}
-\begin{split}
-a_{h}^{H} \left( u, v \right)   =&   \left( \alpha  u, v \right) _{\mathcal{T} _{h} \cap \Omega }   +  \left( D^2 u, D^2v \right) _{\mathcal{T} _{h} \cap \Omega} \\
- & -
-  \left( \mean{  \partial _{n n} u }, \jump{ \partial _{n }v} \right)_{\mathcal{F}_{h}^{} \cap \Omega}  -
- \left( \mean{ \partial _{n n} v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}^{} \cap \Omega} \\
- & - ( \partial _{nn} u, \partial _{n} v)_{\Gamma } - ( \partial _{nn} v, \partial _{n} u)_{\Gamma }
- \\
- & + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v_{}   }   \right)_{\mathcal{F}_{h}^{} \cap \Omega} +  \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v_{}      \right)_{\Gamma } \\
-l_{h}^{H}( v) & =  ( f,v)_{\mathcal{T} _{h} \cap \Omega } - (g_{2},v)
-\end{split}
-.
-\end{equation}
+% \begin{equation}
+%         \label{eq:cip_unfitted_hessian_form}
+% \begin{split}
+% a_{h}^{H} \left( u, v \right)   =&   \left( \alpha  u, v \right) _{\mathcal{T} _{h} \cap \Omega }   +  \left( D^2 u, D^2v \right) _{\mathcal{T} _{h} \cap \Omega} \\
+%  & -
+%   \left( \mean{  \partial _{n n} u }, \jump{ \partial _{n }v} \right)_{\mathcal{F}_{h}^{} \cap \Omega}  -
+%  \left( \mean{ \partial _{n n} v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}^{} \cap \Omega} \\
+%  & - ( \partial _{nn} u, \partial _{n} v)_{\Gamma } - ( \partial _{nn} v, \partial _{n} u)_{\Gamma }
+%  \\
+%  & + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v_{}   }   \right)_{\mathcal{F}_{h}^{} \cap \Omega} +  \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v_{}      \right)_{\Gamma } \\
+% l_{h}^{H}( v) & =  ( f,v)_{\mathcal{T} _{h} \cap \Omega } - (g_{2},v)
+% \end{split}
+% .
+% \end{equation}
 
-    \item The unfitted Laplace formulation has the bilinear form
-    \begin{equation}
-        \label{eq:cip_unfitted_laplace_form}
-        \begin{split}
-            a_{h}^{L} \left( u, v \right)   =&
-            \left( \alpha  u, v \right) _{\Omega }   -  \left( \Delta  u, \Delta v \right) _{ \Omega } \\
-                                             & - \left( \mean{  \Delta  u }, \jump{ \partial _{n }v} \right)_{\mathcal{F}_{h}  }  - \left( \mean{ \Delta  v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}  }  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h} } \\
-                                             & - \left(   \Delta  u ,  \partial _{n }v \right)_{\Gamma   }  - \left(  \Delta  v ,  \partial _{n}u       \right)_{\Gamma  }  + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{ \Gamma } \\
-                                             l^{L}_{h}( v_{h}) & =  \left( f, v \right) _{\Omega } - ( g_{2},  v )_{\Gamma } -  ( g_{1}, \Delta  v  )_{\Gamma }  + \frac{\gamma }{h} ( g_{1}, \partial _{n} v  )_{\Gamma }
-                                         \end{split}
-                                         .
-                                     \end{equation}
+%     \item The unfitted Laplace formulation has the bilinear form
+%     \begin{equation}
+%         \label{eq:cip_unfitted_laplace_form}
+%         \begin{split}
+%             a_{h}^{L} \left( u, v \right)   =&
+%             \left( \alpha  u, v \right) _{\Omega }   -  \left( \Delta  u, \Delta v \right) _{ \Omega } \\
+%                                              & - \left( \mean{  \Delta  u }, \jump{ \partial _{n }v} \right)_{\mathcal{F}_{h}  }  - \left( \mean{ \Delta  v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}  }  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h} } \\
+%                                              & - \left(   \Delta  u ,  \partial _{n }v \right)_{\Gamma   }  - \left(  \Delta  v ,  \partial _{n}u       \right)_{\Gamma  }  + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{ \Gamma } \\
+%                                              l^{L}_{h}( v_{h}) & =  \left( f, v \right) _{\Omega } - ( g_{2},  v )_{\Gamma } -  ( g_{1}, \Delta  v  )_{\Gamma }  + \frac{\gamma }{h} ( g_{1}, \partial _{n} v  )_{\Gamma }
+%                                          \end{split}
+%                                          .
+%                                      \end{equation}
+% \end{enumerate}
 
-\end{enumerate}
 We will in this section do a full proof for the Hessian formulation, however, the proofs should not differ to much for the Laplace formulation. For simplification will we use the notation $a_{h}(u,v ) = a_{h}^{H}( u,v)$ and $l_{h}(v) =l_{h}^{H}(v)$ for the rest of the stability and convergence analysis.
 
 To make sure the problem is stabilized will we add a hypothetical consistent symmetric bilinear ghost-penalty term  $g_{h}: V_{h} \times  V_{h} \to \mathbb{R} $ in addition to our bilinear. That is, we define the discrete problem to find a $u_{h} \in V_{h}$ s.t.
