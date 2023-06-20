@@ -10,12 +10,15 @@ so-called cut finite elements has a very small intersection of the physical doma
 measure of the volume in dimension $d$.
 The cut elements are identified as a crucial geometric issue since the inverse inequalities outlined in Subsection \ref{sub:some_general_inequalities} do not generalize well to these elements. This highlights challenges in establishing stability and a priori estimates for any geometric arrangement.
 
-One way do this is to introduce the so-called cut finite element method (CutFEM).
+One way do handle this issue is to introduce the so-called cut finite element method (CutFEM).
 The method is adding an stabilization term, also known as the so-called ghost penalty term, which extends the finite element space from the interior elements outside the physical domain  stable way which also guarantees stabilization and geometrical robustness.
 optimal approximation properties. For more information, see
 \cite{burman2015cutfem, burman2010ghost, burman2022cutfem, burman2012fictitious}.
 Utilizing a corresponding CutFEM DG elliptic framework \cite{gurkan2019stabilized} and starting from the CIP methods introduced in Section \ref{sec:CIP_biharmonic_problem}, is the goal in this section to engineer a suitable stabilized ghost penalty
 term for the biharmonic problem.
+
+We will show what assumptions that is needed for the ghost-penalty method for the discrete problem to be stable in Subsection \ref{sub:stability_estimate} and obtain optimal convergence in Subsection \ref{sec:a_priori_estimates}.  Once
+this is fulfilled will we propose a $g_{h}$ which fulfills these assumptions in Subsection \ref{sec:constructing_ghost_penalties}.
 
 
 \subsection{Computational domain}%
@@ -152,12 +155,13 @@ term for the biharmonic problem.
 \end{figure}
 
 
-
 We want to devise a CutFEM based on the CIP formulation for the biharmonic problem. Assume that the physical domain $\Omega \subseteq    \mathbb{R} ^d$ to be open and bounded with a corresponding a sufficiently smooth boundary $\Gamma  $.
  Let $\widetilde{\mathcal{T}_{h} } $ be a shape-regular and quasi-uniform mesh which covers $\Omega $, but does not need to fit the
-domain. Let us denote the active set $\mathcal{T} _{h} \subseteq \widetilde{\mathcal{T}_{h}}$ which intersects the interior of the active domain $\Omega $, that is  \[
-\mathcal{T} _{h} = \left\{ T \in \widetilde{\mathcal{T} }_{h}  \mid  T \cap \Omega   \neq \emptyset    \right\} .
-\]
+domain. Let us denote the active set $\mathcal{T} _{h} \subseteq \widetilde{\mathcal{T}_{h}}$ which intersects the interior of the active domain $\Omega $, that is
+\begin{equation}
+\label{eq:active_set}
+\mathcal{T} _{h} = \left\{ T \in \widetilde{\mathcal{T} }_{h}  \mid  T \cap \Omega   \neq \emptyset    \right\}.
+\end{equation}
 We define the corresponding set of interior facets, \[
     \mathcal{F} _{h}^{int} = \left\{ F = T^{+} \cap T^{-}  \mid  T^{+}, T^{-} \in \mathcal{T} _{h} \text{ and } T^{+} \neq T^{-} \right\},
 \]
@@ -208,11 +212,6 @@ Hence, we have that the active set is the union of the interior and cut elements
 % \end{remark}
 
 
-% We denote the $C^{0}$ polynomial space of order $k$ as
-% \[
-% V_{h} = \left\{ v \in C^{0}\left( \Omega  \right): v_{T} = v | _{T} \in \mathcal{P} ^{k}\left( T \right), \forall T \in
-% \mathcal{T}_{h}    \right\}
-% \]
 
 
 % \begin{enumerate}[label=\arabic*)]
@@ -247,20 +246,22 @@ Hence, we have that the active set is the union of the interior and cut elements
 %                                      \end{equation}
 % \end{enumerate}
 
-Drawing on the principles outlined in Section \ref{sec:CIP_biharmonic_problem}, we can indeed derive two equivalent formulations for the biharmonic equation, specifically adapted to an unfitted mesh. Similarly both formulation is the bilinear form
-$a_{h}:V_{h}
-\times V_{h} \to  \mathbb{R}  $ and the linear form $l_{h}: V_{h} \to \mathbb{R} $.
+As $\Omega $ is static is it easy to observe that having a polynomial basis on the full mesh, $\widetilde{\mathcal{T}}_{h}$, is not necessary.
+Hence, we redefine the polynomial space using the active set $\mathcal{T}_{h} $ from \eqref{eq:active_set},
+\[
+V_{h} = \left\{ v \in C^{0}\left( \mathcal{T}_{h}   \right): v_{T} = v | _{T} \in \mathcal{P} ^{k}\left( T \right), \forall T \in
+\mathcal{T}_{h}    \right\}.
+\]
+Furthermore, drawing on the principles outlined in Section \ref{sec:CIP_biharmonic_problem}, we can indeed recall two CIP formulations for the biharmonic equation: the Hessian formulation \eqref{eq:hessian_prob} and the Laplace formulation \eqref{eq:laplace_prob}.
 
-Recall the recall the Hessian formulation \eqref{eq:hessian_prob} and the Laplace formulation \eqref{eq:laplace_prob} on a polygonal mesh. Then we have the following
-unfitted variants.
-We will in this section do a full proof for the Hessian formulation, however, the proofs should not differ to much for the Laplace formulation. For simplification will we use the notation $a_{h}(u,v ) = a_{h}^{H}( u,v)$ and $l_{h}(v) =l_{h}^{H}(v)$ for the rest of the stability and convergence analysis.
-
-To make sure the problem is stabilized will we add a hypothetical consistent symmetric bilinear ghost-penalty term  $g_{h}: V_{h} \times  V_{h} \to \mathbb{R} $ in addition to our bilinear. That is, we define the discrete problem to find a $u_{h} \in V_{h}$ s.t.
+To make sure the problem is stabilized will we add a hypothetical consistent symmetric bilinear ghost-penalty term  $g_{h}: V_{h} \times  V_{h} \to \mathbb{R} $ in addition to our bilinear. That is, we define the discrete problem to  s.t.
 \begin{equation}
 \label{eq:discrete_CutCIP_prob}
-A_{h}( u_{h} ,v ) := a_{h}( u_{h}, v)  + g_{h}( u_{h},v) = l_{h} ( v) \quad  \forall v \in  V_{h}.
+\text{ Find } u_{h} \in V_{h} \forall A_{h}( u_{h} ,v ) := a_{h}( u_{h}, v)  + g_{h}( u_{h},v) = l_{h} ( v) \quad  \forall v \in  V_{h}.
 \end{equation}
-Our overall goal is to show what assumptions that is needed for the ghost-penalty method for the discrete problem to be stable and obtain optimal convergence.  Once this is fulfilled will we propose a $g_{h}$ which fulfills these assumptions.
+Here is $a_{h}( \cdot,\cdot  ) $ denoted as either $a_{h}^{L}( \cdot ,\cdot ) $ or $a_{h}^{H}( \cdot ,\cdot ) $.
+
+We will in this section do a full proof for the Hessian formulation, however, the proofs should not differ to much for the Laplace formulation. For simplification will we use the notation $a_{h}(u,v ) = a_{h}^{H}( u,v)$ and $l_{h}(v) =l_{h}^{H}(v)$ for the rest of the stability and convergence analysis.
 
 Keep in mind that in contrast to the standard CIP methods, this method is defined on an unfitted mesh. As we will see, the analysis is the ghost penalty a method to ensure numerical stability on cut cell $\mathcal{T} _{\Gamma }$. The main reason why
 this numerical instability is happening for a unfitted mesh is that when a cell is badly cut, see examples in Figure \ref{fig:intersection-example}.
