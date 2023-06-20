@@ -21,9 +21,9 @@ term for the biharmonic problem.
 \subsection{Computational domain}%
 \label{sub:unfitted_mesh}
 
-Let $\Omega \subseteq    \mathbb{R} ^d$ be open and bounded, and be a physical domain and $\Gamma  $ be a sufficiently smooth boundary in $C^2$ .
 
-We want to devise a CutFEM based on the CIP formulation for the biharmonic problem. Let $\widetilde{\mathcal{T}_{h} } $ be a shape-regular and quasi-uniform mesh which covers $\Omega $, but which covers $\Omega $ which covers $\Omega $, but does not need to fit the
+We want to devise a CutFEM based on the CIP formulation for the biharmonic problem. Assume that the physical domain $\Omega \subseteq    \mathbb{R} ^d$ to be open and bounded with a corresponding a sufficiently smooth boundary $\Gamma  $.
+ Let $\widetilde{\mathcal{T}_{h} } $ be a shape-regular and quasi-uniform mesh which covers $\Omega $, but does not need to fit the
 domain. Let us denote the active set $\mathcal{T} _{h} \subseteq \widetilde{\mathcal{T}_{h}}$ which intersects the interior of the active domain $\Omega $, that is  \[
 \mathcal{T} _{h} = \left\{ T \in \widetilde{\mathcal{T} }_{h}  \mid  T \cap \Omega   \neq \emptyset    \right\} .
 \]
