@@ -503,24 +503,30 @@ Combing the results we get the following convenient corollary.
 \begin{corollary}
     \label{cor:bi_inverse_thm}
     Let $g_{h}$ satisfy Assumption \ref{as:bi_EP1} then
-    \[
+    \begin{equation}
+        \label{eq:inv_est}
             h\| \partial _{nn}  v \|_{ \mathcal{F}_h^{} \cap \Omega    }^{2 } + h\| \partial _{nn} v \|_{ \mathcal{T} _{h} \cap \Gamma  }^{2  }   \lesssim  \| D^2 v \|_{ \Omega  }^{ 2 } + \abs{ v } _{g_{h}}^{2} \\
               \lesssim \| v \|_{ A_{h} }^{  2}
-    \]
+    \end{equation}
+    From this is it also clear that \begin{equation}
+        \label{eq:asta_Ah}
+    \| v \|_{ a_{h},* }^{  }  \lesssim \| v \|_{ A_{h} }^{  }
+    \end{equation}
 \end{corollary}
 \begin{proof}
-    The first inequality is a direct result of \eqref{eq:bi_identity} and Assumption \ref{as:bi_EP1}. The second inequality is simply a results of the definition \eqref{eq:bi_Ah_norm}.
+    The the first result \eqref{eq:inv_est} is a direct result of \eqref{eq:bi_identity}, Assumption \ref{as:bi_EP1} and the definition of $\| \cdot  \|_{ A_{h} }^{  } $.
+    The second result \eqref{eq:asta_Ah} is simply a observation that the terms in \eqref{eq:inv_est} appears in $\| \cdot   \|_{a_{h},*  }^{  } $, hence, the inequality follows.
 \end{proof}
 
 \begin{lemma}
     \label{lemma:bi_Ah_coercive}
     The discrete form $A_{h}$ is coercive, that is, \[
-    \| v \|_{ A_{h} }^{ 2 }  \lesssim A_{h}( v,v) \forall v \in V_{h}
+    \| v \|_{ A_{h} }^{ 2 }  \lesssim A_{h}( v,v)\quad  \forall v \in V_{h}.
     \]
 \end{lemma}
 
 \begin{proof}
-    Let $v \in V^{h}$.
+    Let $v \in V_{h}$.
     Observe that \[
     A_{h}( v,v) = a_{h}( v,v)  + \abs{ v }_{g_{h}}^{2}
     \]
