@@ -265,7 +265,8 @@ We will in this section do a full proof for the Hessian formulation, however, th
 
 Keep in mind that in contrast to the standard CIP methods, this method is defined on an unfitted mesh. As we will see, the analysis is the ghost penalty a method to ensure numerical stability on cut cell $\mathcal{T} _{\Gamma }$. The main reason why
 this numerical instability is happening for a unfitted mesh is that when a cell is badly cut, see examples in Figure \ref{fig:intersection-example}.
-In other words, when a cell is "badly cut," it means that it is intersected by the boundary $\Gamma$ in such a way that only a very small part of the cell lies inside or outside the domain. This can lead to a very poor condition number of the local system matrix corresponding to such a cell, causing numerical instability.
+In other words, when a cell is "badly cut," it means that it is intersected by the boundary $\Gamma$ in such a way that only a very small part of the interior of an element $T$  intersects with the physical domain $\Omega $ , i.e. $\abs{ \Omega \cap
+T }_{d} \ll h^{d}$. This can lead to a very poor condition number of the local system matrix corresponding to such a cell, causing numerical instability.
 
 The ghost penalty stabilization technique is designed to tackle this issue. Essentially, this approach introduces additional terms into the finite element method that penalize jumps in the discrete solution and its gradients across cell interfaces,
 typically the cut-cells. This penalty not only improves the conditioning of the system matrix but also enhances the robustness of the method with respect to the location of the boundary inside each cell. However, to make this possible, we assume a
@@ -468,7 +469,7 @@ A useful variant is the following inequality that is,
 \end{remark}
 
 
-Since the inequalities above holds for all elements locally is it natural to do a global summation over the over $\mathcal{F}_{h} $ and $\mathcal{T}_{h} $. This implies that
+Since the inequalities above holds for all elements locally is it natural to extend it to the full mesh  $\mathcal{T}_{h} $. This implies that
 \begin{align}
 \label{eq:bi_cut_inverse_1}
 \| \partial _{nn} v \|_{ \mathcal{T} _{h} \cap \Gamma  }^{  } &\lesssim h^{-\frac{1}{2}} \| D^2 v \|_{ \mathcal{T}_h }^{  }, \\
