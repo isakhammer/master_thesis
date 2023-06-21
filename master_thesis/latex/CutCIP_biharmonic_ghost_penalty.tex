@@ -8,13 +8,14 @@ We have the following assumptions for the ghost penalty.
     \item \label{as:EP1} The ghost penalty $g_{h}$ extends the $H^{1}$ norm s.t. \[
     \| D^2v \|_{ \mathcal{T} _{h} }^{ 2 }  \lesssim \| D^2 v \|_{ \Omega  }^{  2} + \abs{ v } _{g_{h}}^2
     \]
-\item \label{as:EP2} For $v \in H^{s}( \Omega ) $ and $r = \min \{s,k+1 \} $, the semi-norm $\abs{ \cdot  }_{g_{h}} $ satisfies the following estimate, \[
-    \abs{ \pi _{h}^{e} v } _{g_{h}} \lesssim  h^{r-1} \| v \|_{ r,\Omega  }^{  }.
+\item \label{as:EP2} For $v \in H^{s}( \Omega ) $ and $r = \min \{s,k+2 \} $, the semi-norm $\abs{ \cdot  }_{g_{h}} $ satisfies the following estimate, \[
+    \abs{ \pi _{h}^{e} v } _{g_{h}} \lesssim  h^{r-2} \| v \|_{ r,\Omega  }^{  }.
     \]
 \end{enumerate}
 
 
-We will construct face-based ghost penalties.
+Our goal is to construct a variant of face-based ghost penalties such that the fulfilled.
+What we will see is the following result is fundamental.
 
 \begin{lemma}
     Let $T_{1},T_{2 } \in  \mathcal{T} _{h}$ be two elements sharing a common face $F$. Then for $v \in V_{h}$  we have \[
@@ -27,11 +28,20 @@ We will construct face-based ghost penalties.
 \end{proof}
 The goal in this chapter is to engineer an ghost penalty which fulfills these assumptions.
 We denote the multi-index $\alpha  = ( \alpha _{1}, \ldots, \alpha _{d})  $ of order $\abs{ \alpha  } = \sum_{i}^{}  \alpha _{i} = k $   and the normal vectors $n^{\alpha } = n_{1}^{\alpha _{1}} \ldots n_{d}^{\alpha _{d}}$.
-Recall the notation for the derivates $D^{\alpha } v$ , that is \[
-D ^{0} v  = v, \quad   D ^{1}v  = \nabla v \text{ and }  D ^{2} v  = J(\nabla v) = Hess(v).
+Recall the notation for the derivates $D^{\alpha } v$
+\footnote{
+Remark that the operator $D^{\alpha }$  is related to with the derivate operator $\partial ^{\alpha } $ introduced in \eqref{eq:der}. For instance, for $d=2$ we have $\alpha = ( \alpha _{1}, \alpha _{2}) $  such that $ D^{1} v =  \nabla v  = \left[ \partial ^{( 1,0 )} v,\partial ^{( 0,1 )}v
+\right]^{T}$ and $   D^2 v  = \begin{bmatrix}
+\partial ^{( 2,0 )} v &  \partial ^{( 1,1) }v \\
+\partial ^{( 1,1 )} v &  \partial ^{( 0,2) }v
+\end{bmatrix}
+ $.
+},
+that is \[
+D ^{0} v  = v, \quad   D ^{1}v  = \nabla v \text{ and }  D ^{2} v  = J(\nabla v) = \mathrm{Hess}(v).
 \]
-% \todo[inline]{ But $\alpha = ( \alpha _{1}, \ldots, \alpha _{d}) $ cannot be a scalar? Ex. How can $D^{\alpha } = D^{1}$ be a consistent notation.  }
-where $J$ is the Jacobian operator. Remark that is is element-wise denoted as $ \left[ \nabla v \right] _{i} = \partial_{x_{i}} v, \quad  \left[ D^2 v \right] _{i,j} = \partial_{x_{i}x_{j}} v $.
+where $J$ is the Jacobian operator .
+
 Hence, from this is it natural to introduce the generalization of the normal derivative, \[
 \partial _{n}^{j} v = \sum_{\abs{ \alpha  } =j }^{k} \frac{D ^{\alpha }v( x) n^{\alpha }}{\alpha !}, \quad \abs{ \alpha  } = \sum_{i=0}^{d} \alpha_{i}.
 \]
@@ -170,7 +180,6 @@ This set is simply all facets that belong to all elements of the active mesh $\m
 
 \begin{lemma}
     \label{lemma:bi_inv_gh_lemma}
-    Assume \ref{as:s2} and \ref{as:s3}.
     For $v \in  V_{h}$ it holds that
         \begin{align}
             \label{eq:bi_inv_gh_1}
