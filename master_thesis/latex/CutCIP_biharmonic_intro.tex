@@ -380,16 +380,14 @@ Note that it holds that $\mathcal{T} _{h} \cap  \Omega   = \Omega  $ and $\mathc
 
             % Reference hexagon vertices
             \coordinate (A1) at (0:2.5);
-            \coordinate (A2) at (60:2.5);
-            \coordinate (A3) at (120:2.5);
+            \coordinate (A2) at (55:2.5);
+            \coordinate (A3) at (125:2.5);
             \coordinate (A4) at (180:2.5);
-            \coordinate (A5) at (240:2.5);
-            \coordinate (A6) at (300:2.5);
-            \coordinate (A7) at (300:2.5);
-
+            \coordinate (A5) at (235:2.5);
+            \coordinate (A6) at (305:2.5);
 
             \fill[green!40] (center) --(A1) -- (A2) -- (A3) -- (A4) -- (A5)  -- cycle;
-            \fill[blue!30] (center) -- (A5)--(A6)-- (A7) -- (A1) -- cycle;
+            \fill[blue!30] (center) -- (A5)--(A6) -- (A1) -- cycle;
 
             % Draw the individual edges
             \draw (center) -- (A1);
@@ -404,19 +402,35 @@ Note that it holds that $\mathcal{T} _{h} \cap  \Omega   = \Omega  $ and $\mathc
             \draw (center) -- (A6) -- (A1);
 
             \coordinate (Ti) at (-0,-1.5);
-            \coordinate (Tg) at (0.5,2.2);
-            \node[below] at (Tg) {$\mathcal{T}_{\Gamma }$};
-            \node[below] at (Ti) {$\mathcal{T}_{int }$};
+            \coordinate (Tg) at (0.5,2.1);
+            % \node[below] at (Tg) {$\mathcal{T}_{\Gamma }$};
+            % \node[below] at (Ti) {$\mathcal{T}_{int }$};
 
-            \coordinate (T0) at (-0,1.2);
+            \coordinate (T0) at (1.1,1.0);
             \coordinate (T1) at (-1.1,-0.4);
-            % \node[below] at (T0) {$T$};
+            \node[below] at (T0) {$T$};
             % \node[below] at (T1) {$T'$};
 
             \coordinate (C1) at (-3,-1.0);
-            \coordinate (C2) at (2.6,0.2);
+            \coordinate (C2) at (2.6,0.4);
             \draw[-, line width=2pt, >=stealth] ($(C2)$) to[bend right=16.9] node[midway,xshift=-2.3cm, yshift=-1.3cm] {$\Gamma $} ($(C1)$);
 
+            \coordinate (D1) at (1,0.0);
+            \coordinate (D2) at (1.0,0.4);
+            \coordinate (D3) at (1.2,0.2);
+            \node at (D3) {$\varepsilon$};
+            \draw[line width=1.3pt, dotted] (D1) -- (D2);
+
+            % Draw the line with brackets
+
+            % Legend
+            % \begin{scope}[shift={(2.3,0.3)}]
+            %     \draw (0,0.4) rectangle (1.3,1.5);
+            %     \fill[green!30] (0.2,1.3) rectangle (0.4,1.1);
+            %     \node[right] at (0.4,1.2) {$\mathcal{T}_{\Gamma}$};
+            %     \fill[blue!30] (0.2,0.8) rectangle (0.4,0.6);
+            %     \node[right] at (0.4,0.7) {$\mathcal{T}_{int}$};
+            % \end{scope}
 
         \end{tikzpicture}
     \end{minipage}
@@ -453,16 +467,30 @@ Note that it holds that $\mathcal{T} _{h} \cap  \Omega   = \Omega  $ and $\mathc
 
             \coordinate (Ti) at (-0,-1.5);
             \coordinate (Tg) at (0.5,2.2);
-            \node[below] at (Tg) {$\mathcal{T}_{\Gamma }$};
-            \node[below] at (Ti) {$\mathcal{T}_{int }$};
+            % \node[below] at (Tg) {$\mathcal{T}_{\Gamma }$};
+            % \node[below] at (Ti) {$\mathcal{T}_{int }$};
 
-            \coordinate (T0) at (-0,1.2);
+            \coordinate (T0) at (-0,1.9);
             \coordinate (T1) at (-1.1,-0.4);
-            % \node[below] at (T0) {$T$};
+            \node[below] at (T0) {$T$};
 
-            \coordinate (C1) at (-3,0.1);
-            \coordinate (C2) at (2.6,0.2);
+            \coordinate (C1) at (-3,0.7);
+            \coordinate (C2) at (2.6,0.7);
             \draw[-, line width=2pt, >=stealth] ($(C2)$) to[bend right=0.9] node[midway,xshift=-2.5cm, yshift=-0.5cm] {$\Gamma $} ($(C1)$);
+            % Legend
+            \begin{scope}[shift={(2.3,0.3)}]
+                \draw (0,0.4) rectangle (1.3,1.5);
+                \fill[green!30] (0.2,1.3) rectangle (0.4,1.1);
+                \node[right] at (0.4,1.2) {$\mathcal{T}_{\Gamma}$};
+                \fill[blue!30] (0.2,0.8) rectangle (0.4,0.6);
+                \node[right] at (0.4,0.7) {$\mathcal{T}_{int}$};
+            \end{scope}
+
+            \coordinate (D1) at (0,0.0);
+            \coordinate (D2) at (0.0,0.7);
+            \coordinate (D3) at (0.3,0.2);
+            \node at (D3) {$\varepsilon$};
+            \draw[line width=1.3pt, dotted] (D1) -- (D2);
 
         \end{tikzpicture}
     \end{minipage}
