@@ -318,11 +318,11 @@ For a $T \in \mathcal{T} _{\Gamma }$ there always exists a patch $\omega ( T) $ 
         \coordinate (C2) at (2.6,0.4);
         \draw[-, line width=2pt, >=stealth] ($(C2)$) to[bend right=16.9] node[midway,xshift=-2.3cm, yshift=-1.3cm] {$\Gamma $} ($(C1)$);
 
-        \coordinate (D1) at (1,0.0);
-        \coordinate (D2) at (1.0,0.4);
-        \coordinate (D3) at (1.2,0.2);
-        \node at (D3) {$\varepsilon$};
-        \draw[line width=1.3pt, dotted] (D1) -- (D2);
+        % \coordinate (D1) at (1,0.0);
+        % \coordinate (D2) at (1.0,0.4);
+        % \coordinate (D3) at (1.2,0.2);
+        % \node at (D3) {$\varepsilon$};
+        % \draw[line width=1.3pt, dotted] (D1) -- (D2);
 
         % Draw the line with brackets
 
@@ -336,8 +336,7 @@ For a $T \in \mathcal{T} _{\Gamma }$ there always exists a patch $\omega ( T) $ 
     \end{scope}
 
     \end{tikzpicture}
-\caption{Illustration of the fat intersection property. Let $T \in \mathcal{T}_{\Gamma } $. Then is it clear that  $\abs{ \Gamma \cap T } \lesssim  h^{d-1}$ and $\abs{ \Omega  \cap T } \lesssim  \varepsilon  h^{d}$, where $\varepsilon $ is arbitrary
-small .  It shows a patch $\omega ( T) $ that contains elements $T \in  \mathcal{T}_{\Gamma } $ and $T'\in \mathcal{T} _{int} \cup \mathcal{T} _{\Gamma } = \mathcal{T} _{h}$, with $T' $ having a sufficiently large intersection with $\Omega$.}
+\caption{Illustration of the fat intersection property. Let $T \in \mathcal{T}_{\Gamma } $. It shows a patch $\omega ( T) $ that contains elements $T \in  \mathcal{T}_{\Gamma } $ and $T'\in \mathcal{T} _{int} \cup \mathcal{T} _{\Gamma } = \mathcal{T} _{h}$, with $T' $ having a sufficiently large intersection with $\Omega$.}
     \label{fig:fat_intersection_property}
 \end{figure}
 
@@ -494,7 +493,8 @@ Note that it holds that $\mathcal{T} _{h} \cap  \Omega   = \Omega  $ and $\mathc
 
         \end{tikzpicture}
     \end{minipage}
-        \caption{Two examples of bad cut cells. on the left side is $\abs{ \Gamma \cap T }_{d} \ll  h^{d-1}$ and correspondingly on the right side can we see that, $\abs{ T \cap \Omega  }_{d} \ll \abs{ T }_{d}  \lesssim h^{d}$. At some point is it even hard to distinguish between interior and cut cells.}
+        \caption{Two examples of bad cut cells.  Then is it clear that  $\abs{ \Gamma \cap T } \lesssim  h^{d-1}$ and $\abs{ \Omega  \cap T } \lesssim  \varepsilon  h^{d}$, where $\varepsilon $ is arbitrary
+small . }
         \label{fig:intersection-example}
 \end{figure}
 
