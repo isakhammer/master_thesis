@@ -588,13 +588,14 @@ Combing the results we get the following convenient corollary.
     \end{equation}
     Firstly, the ghost penalty term is already a part of the $\| \cdot  \|_{ A_{h} }^{  } $ norm, hence, it only remains to check the $a_{h}( \cdot ,\cdot ) $ term.
     \begin{equation}
+        \label{eq:coerciv_ah}
     \begin{split}
-       a_{h}( v,v) &=   \alpha \| v \|_{   \Omega   }^{2} + \| D^2v \|_{   \Omega  }^{2  } + 2 ( \mean{ \partial _{nn} v }, \jump{ \partial _{n} v }    )_{\mathcal{F} ^{}_{h} \cap \Omega }  + 2 (  \partial _{nn} v ,
+       a_{h}( v,v) &=   \alpha \| v \|_{   \Omega   }^{2} + \| D^2v \|_{   \Omega  }^{2  }  + \frac{\gamma }{h}  \|  \jump{ \partial _{n} v }\|_{\mathcal{F} _{h}^{}  }^{ 2 } + \frac{\gamma }{h}  \| \partial _{n} v \|_{ \Gamma  }^{ 2 }. \\
+                   & + 2 ( \mean{ \partial _{nn} v }, \jump{ \partial _{n} v }    )_{\mathcal{F} ^{}_{h} \cap \Omega }  + 2 (  \partial _{nn} v ,
        \partial _{n} v  )_{\Gamma } \\
-                   & \quad+ \frac{\gamma }{h}  \|  \jump{ \partial _{n} v }\|_{\mathcal{F} _{h}^{}  }^{ 2 } + \frac{\gamma }{h}  \| \partial _{n} v \|_{ \Gamma  }^{ 2 }.
     \end{split}
     \end{equation}
-    We first focus on the symmetry terms. Using Cauchy-Schwarz we observe that
+    We first focus on the last two terms in \eqref{eq:coerciv_ah}. Using Cauchy-Schwarz we observe that
     \begin{equation}
         \begin{split}
     ( \mean{ \partial _{nn} v }  , \jump{ \partial _{n} v }  )_{\mathcal{F}^{}_{h}\cap \Omega  } & \ge - \| h^{\frac{1}{2}}\mean{ \partial _{nn} v }   \|_{ \mathcal{F}^{}_{h}\cap \Omega   }^{  }  \|h^{-\frac{1}{2}} \jump{ \partial _{n} v }   \|_{
