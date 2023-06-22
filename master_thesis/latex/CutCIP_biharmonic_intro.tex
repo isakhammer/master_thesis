@@ -595,7 +595,7 @@ Combing the results we get the following convenient corollary.
        \partial _{n} v  )_{\Gamma } \\
     \end{split}
     \end{equation}
-    We first focus on the last two terms in \eqref{eq:coerciv_ah}. Using Cauchy-Schwarz we observe that
+    We first focus on the last two terms in \eqref{eq:coerciv_ah}. Using Cauchy-Schwarz \eqref{eq:cauchy-schwartz}, we observe that
     \begin{equation}
         \begin{split}
     ( \mean{ \partial _{nn} v }  , \jump{ \partial _{n} v }  )_{\mathcal{F}^{}_{h}\cap \Omega  } & \ge - \| h^{\frac{1}{2}}\mean{ \partial _{nn} v }   \|_{ \mathcal{F}^{}_{h}\cap \Omega   }^{  }  \|h^{-\frac{1}{2}} \jump{ \partial _{n} v }   \|_{
@@ -610,7 +610,7 @@ Combing the results we get the following convenient corollary.
      \|  \partial _{nn}v  \|_{ \Gamma     }^{ 2 } & \le C_{2} \| D^2 v \|_{ \mathcal{T} _{h}  }^{2  } \lesssim    \| D^2 v \|_{ \Omega  }^{ 2 }  + \abs{ v } _{ g_{h} }^{2  }
         \end{split}
     \end{equation}
-    Thus, by applying Youngs $\varepsilon $-inequality, $2ab \le  \varepsilon^{-1} a^{2} + \varepsilon b^{2} $, is it natural to see that,
+    Thus, by applying Youngs $\varepsilon $-inequality \eqref{eq:young-epsilon}, is it natural to see that,
     \begin{equation}
         \begin{split}
 - C_{1}^{\frac{1}{2}} \| D^2 v    \|_{ \mathcal{T} _{h}   }^{  }  \|h^{-\frac{1}{2}} \jump{ \partial _{n} v }   \|_{ \mathcal{F}^{}_{h}\cap \Omega   }^{  }
@@ -666,21 +666,20 @@ Combing the results we get the following convenient corollary.
                 By assumption is the ghost penalty $g_{h}$ positive semi-definite, thus, it fulfills the Cauchy-Schwartz inequality \[
                 \abs{ g_{h}(v,w ) } \lesssim \abs{ v } _{g_{h}}\abs{ w }_{g_{h}}
                 \]
-                Hence, by definition is $\abs{ g_{h}(v,w ) } \lesssim \| v \|_{ A_{h} }^{  } \| w \|_{ A_{h} }^{  } $. Now it remains to show that the bilinear term $ a_{h}$ is bounded.
+                Hence, by definition is $\abs{ g_{h}(v,w ) } \lesssim \| v \|_{ A_{h} }^{  } \| w \|_{ A_{h} }^{  } $. It remains to show that the bilinear term $ a_{h}$ is bounded. We numerate the terms in this fashion.
                 \begin{equation}
                     \begin{split}
-                        \abs{ a_{h} \left( v, w \right) }   \le  &   \abs{\left( \alpha  v, w \right) _{\mathcal{T} _{h} \cap \Omega }  }    +  \abs{\left( D^2 v, D^2w \right) _{\mathcal{T} _{h} \cap \Omega}  }  \\
-                                                     & + \abs{\left( \mean{  \partial _{n n} v }, \jump{ \partial _{n }w} \right)_{\mathcal{F}_{h}^{} \cap \Omega}  }   +
-                                                     \abs{\left( \mean{ \partial _{nn } v }, \jump{ \partial _{n}w }      \right)_{\mathcal{F}_{h}^{} \cap \Omega}  } \\
-                                                     & + \abs{\left(  \partial _{n n} v ,  \partial _{n }w \right)_{\Gamma }}     +
-                                                     \abs{\left(  \partial _{n n} w ,  \partial _{n}v       \right)_{\Gamma }  }
-                                                     \\
-                                                     & + \frac{\gamma }{h} \abs{ \left( \jump{ \partial _{n} v}, \jump{ \partial _{n} w   }   \right)_{\mathcal{F}_{h}^{} \cap \Omega}  } + \frac{\gamma }{h} \abs{ \left(  \partial _{n} v,  \partial _{n} w
-                                                     \right)_{\Gamma }  }
+                         a_{h} \left( v, w \right)    \le  &   \left( \alpha  v, w \right) _{\mathcal{T} _{h} \cap \Omega }      +  \left( D^2 v, D^2w \right) _{\mathcal{T} _{h} \cap \Omega}    \\
+                                                     & + \left( \mean{  \partial _{n n} v }, \jump{ \partial _{n }w} \right)_{\mathcal{F}_{h}^{} \cap \Omega}     + \left( \mean{ \partial _{nn } w }, \jump{ \partial _{n}v }
+                                                     \right)_{\mathcal{F}_{h}^{} \cap \Omega}+ \frac{\gamma }{h}  \left( \jump{ \partial _{n} v}, \jump{ \partial _{n} w   }   \right)_{\mathcal{F}_{h}^{} \cap \Omega}   \\
+                                                     & + \left(  \partial _{n n} v ,  \partial _{n }w \right)_{\Gamma } + \left(  \partial _{n n} w ,  \partial _{n}v       \right)_{\Gamma }   + \frac{\gamma }{h}  \left(  \partial _{n} v,  \partial
+                                                     _{n} w \right)_{\Gamma } \\
+                                                     &=  ( \mathrm{I} ) + \ldots+( \mathrm{VIII} )     \\
                     \end{split}
                 \end{equation}
-                The strategy is to bound each term individually using Cauchy-Schwartz. We can easily see that $\abs{\left( \alpha  v, w \right) _{\mathcal{T} _{h} \cap \Omega }  }   \lesssim \| v \|_{a_{h}  }^{  } \| w \|_{ a_{h} }^{  } $ and that
-                $\abs{\left( D^2 v, D^2w \right) _{\mathcal{T} _{h} \cap \Omega}  } \lesssim \| v \|_{a_{h}  }^{  } \| w \|_{ a_{h} }^{  } $ using Cauchy Schwartz. For the symmetric terms we also apply the inverse inequality
+                The strategy is to bound each term individually using Cauchy-Schwartz \eqref{eq:cauchy-schwartz}. From this is it easy to see that $\abs{( \mathrm{I} )   } +  \abs{( \mathrm{II} )   }   \lesssim \| v \|_{a_{h}  }^{  } \| w \|_{ a_{h}
+                }^{  } $. For the terms $(
+                \mathrm{III} ) $ and  $( \mathrm{IV} ) $ we apply the inverse inequality
                 \eqref{eq:bi_cut_inverse_2}.
                 \[
                     \begin{split}
@@ -690,13 +689,13 @@ Combing the results we get the following convenient corollary.
                     & \lesssim  \| v \|_{A_{h}  }^{  } \|w    \|_{ a_{h}}^{  }
                     \end{split}
                 \]
-                Here we used the Corollary \ref{cor:bi_inverse_thm} s.t.  $\|h^{\frac{1}{2}} \partial _{n n}  v \|_{\mathcal{F}_{h}^{} \cap \Omega} \lesssim \| v \|_{ A_{h}  }^{  }  $.
+                Here we used that  $\|h^{\frac{1}{2}} \partial _{n n}  v \|_{\mathcal{F}_{h}^{} \cap \Omega} \lesssim \| v \|_{ A_{h}  }^{  }  $ thanks to Corollary \ref{cor:bi_inverse_thm}.
               The boundedness interior penalty  inequality is showed in this manner, \[
              \frac{\gamma }{h} \abs{ \left( \jump{ \partial _{n} v}, \jump{ \partial _{n} w   }   \right)_{\mathcal{F}_{h}^{} \cap \Omega}  }  \lesssim  \|h^{-\frac{1}{2}} \jump{ \partial _{n} v}  \|_{ \mathcal{F}_{h}^{} \cap \Omega }^{  }
              \|h^{-\frac{1}{2}} \jump{ \partial _{n} w}  \|_{ \mathcal{F}_{h}^{} \cap \Omega }^{  }  \lesssim  \| v  \|_{ a_{h} }^{  }
              \| w  \|_{ a_{h} }^{  }.
              \]
-              Now it remains to handle boundary terms. \[
+              It remains to handle boundary terms. \[
                 \abs{ ( \partial _{nn} v, \partial _{n} w)_{\Gamma } }  \lesssim \| h^{\frac{1}{2}}\partial _{nn} v \|_{\Gamma   }^{  } \| h^{-\frac{1}{2}} \partial _{n}w \|_{\Gamma   }^{  }  \lesssim \|  v \|_{A_{h}  }^{  } \| w \|_{ a_{h}   }^{  }
              \]
              Again, here we used the Corollary \ref{cor:bi_inverse_thm}.
@@ -708,17 +707,14 @@ Combing the results we get the following convenient corollary.
 
              Obviously is $\| v \|_{a_{h}  }^{  } \lesssim \| v \|_{A_{h}  }^{  }$. Hence, we have showed that all terms in $a_{h}$ is bounded in the $\|\cdot   \|_{A_{h}  }^{  } $ norm.
 
-         \textbf{Step 2.} The goal is to prove \eqref{eq:bi_a_h_bounded} using many of the same ideas as in the first part. Let $v \in V_{h} \oplus V $ and $w \in V_{h}$. Next step is to show that the bilinear term $ a_{h}$ is bounded.
+         \textbf{Step 2.} The goal is to prove \eqref{eq:bi_a_h_bounded} using many of the same ideas as in the first part. Let $v \in V_{h} \oplus V $ and $w \in V_{h}$. Next step is to show that the bilinear term $ a_{h}( \cdot ,\cdot ) $ is bounded.
+         Let
                 \begin{equation}
                     \begin{split}
-                        \abs{ a_{h} \left( v, w \right) }   \le  &   \abs{\left( \alpha  v, w \right) _{\mathcal{T} _{h} \cap \Omega }  }    +  \abs{\left( D^2 v, D^2w \right) _{\mathcal{T} _{h} \cap \Omega}  }  \\
-                                                     & + \abs{\left( \mean{  \partial _{n n} v }, \jump{ \partial _{n }w} \right)_{\mathcal{F}_{h}^{} \cap \Omega}  }   + \abs{\left( \mean{ \partial _{nn } w }, \jump{ \partial _{n}v }
-                                                     \right)_{\mathcal{F}_{h}^{} \cap \Omega}  } \\
-                                                     & + \abs{\left(  \partial _{n n} v ,  \partial _{n }w \right)_{\Gamma }}     +
-                                                     \abs{\left(  \partial _{n n} w ,  \partial _{n}v       \right)_{\Gamma }  }
-                                                     \\
-                                                     & + \frac{\gamma }{h} \abs{ \left( \jump{ \partial _{n} v}, \jump{ \partial _{n} w   }   \right)_{\mathcal{F}_{h}^{} \cap \Omega}  } + \frac{\gamma }{h} \abs{ \left(  \partial _{n} v,  \partial _{n} w
-                                                     \right)_{\Gamma }  }
+                         a_{h} \left( v, w \right)    \le  &   \left( \alpha  v, w \right) _{\mathcal{T} _{h} \cap \Omega }      +  \left( D^2 v, D^2w \right) _{\mathcal{T} _{h} \cap \Omega}    \\
+                                                     & + \left( \mean{  \partial _{n n} v }, \jump{ \partial _{n }w} \right)_{\mathcal{F}_{h}^{} \cap \Omega}     + \left( \mean{ \partial _{nn } w }, \jump{ \partial _{n}v }
+                                                     \right)_{\mathcal{F}_{h}^{} \cap \Omega}+ \frac{\gamma }{h}  \left( \jump{ \partial _{n} v}, \jump{ \partial _{n} w   }   \right)_{\mathcal{F}_{h}^{} \cap \Omega}   \\
+                                                     & + \left(  \partial _{n n} v ,  \partial _{n }w \right)_{\Gamma } + \left(  \partial _{n n} w ,  \partial _{n}v       \right)_{\Gamma }   + \frac{\gamma }{h}  \left(  \partial _{n} v,  \partial _{n} w \right)_{\Gamma }
                     \end{split}
                 \end{equation}
                      We can easily observe from the first part that this must holds, \[
