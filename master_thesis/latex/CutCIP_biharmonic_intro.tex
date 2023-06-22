@@ -16,7 +16,6 @@ optimal approximation properties. For more information, see
 \cite{burman2015cutfem, burman2010ghost, burman2022cutfem, burman2012fictitious}.
 Utilizing a corresponding CutFEM DG elliptic framework \cite{gurkan2019stabilized} and starting from the CIP methods introduced in Section \ref{sec:CIP_biharmonic_problem}, is the goal in this section to engineer a suitable stabilized ghost penalty
 term for the biharmonic problem.
-
 We will show what assumptions that is needed for the ghost-penalty method for the discrete problem to be stable in Subsection \ref{sub:stability_estimate} and obtain optimal convergence in Subsection \ref{sec:a_priori_estimates}.  Once
 this is fulfilled will we propose a $g_{h}$ which fulfills these assumptions in Subsection \ref{sec:constructing_ghost_penalties}.
 
@@ -519,8 +518,7 @@ A useful variant is the following inequality that is,
     Figure \ref{fig:intersection-example} we have two cases: i) $\abs{ \Gamma \cap \Omega  }_{d-1} \lesssim \varepsilon h^{d-1}  $ and $\abs{ T \cap \Omega  }_{d-1} \lesssim \varepsilon h^{d-1}  $, and ii)
     $\abs{ \Gamma \cap \Omega  }_{d-1} \lesssim  h^{d-1}  $ and $\abs{ T \cap \Omega  }_{d-1} \lesssim \varepsilon h^{d-1}  $.
     The first first case impacts the condition number since it is introducing almost vanishing entries in the system matrix from \eqref{eq:linear_system}.
-    While for the second case is bad for inverse estimates, and, thus, problematic for proving coercivity. To recover, one in fact must incorporate the full element $T$ into the investe estiamate.
-
+    While for the second case is bad for inverse estimates, and, thus, problematic for proving coercivity. To recover, one in fact must incorporate the full element $T$ into the inverse estimate.
 \end{remark}
 
 
@@ -546,12 +544,13 @@ h\| \partial _{nn}  v \|_{ \mathcal{F}_h \cap \Omega    }^{2 } + h\| \partial _{
 For more information about the derivations of the inequalities, see \cite{gurkan2019stabilized}.
 
 We may introduce our first assumption on the ghost penalty.
-\begin{assumption}[EP1]
+\begin{assumption*}[EP1]
     \label{as:bi_EP1}
-    The ghost penalty $g_{h}$ extends the $H^{1}$ norm s.t. \[
+    The ghost penalty $g_{h}$ extends the $H^{2}$ norm such that
+    \begin{equation*}
     \| D^2 v \|_{ \mathcal{T} _{h} }^{ 2 } \lesssim  \| D^2 v \|_{ \Omega  }^{ 2 } + \abs{ v } _{g_{h}}^{2}.
-    \]
-\end{assumption}
+    \end{equation*}
+\end{assumption*}
 
 
 Combing the results we get the following convenient corollary.
@@ -650,7 +649,7 @@ Combing the results we get the following convenient corollary.
     \label{eq:bi_A_h_bounded}
      A_{h}( v,w) \lesssim \| v \|_{A_{h}  }^{  }\| v \|_{A_{h}  }^{  }  \forall w \in V_{h}
     \end{equation}
-    Moreover, for $v \in V_{h} + V$  and $w \in V_{h}$ the discrete form $a_{h}$ satisfies
+    Moreover, for $v \in V_{h} \oplus V$  and $w \in V_{h}$ the discrete form $a_{h}$ satisfies
     \begin{equation}
         \label{eq:bi_a_h_bounded}
         a_{h} ( v,w) \lesssim \| v \|_{ a_{h},* }^{  } \| w \|_{ A_{h} }^{  }

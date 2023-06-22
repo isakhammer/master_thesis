@@ -42,13 +42,14 @@
 \usepackage{mdframed}
 
 % \newmdtheoremenv{definition}{Definition}[section]
-\newtheorem{definition}{Definition}[section]
-\newtheorem{problem}{Problem}[section]
-\newtheorem{assumption}{Assumption}[section]
-\newtheorem{corollary}{Corollary}[section]
-\newtheorem{proposition}{Proposition}[section]
 \newmdtheoremenv{theorem}{Theorem}[section]
-\newtheorem{lemma}{Lemma}[section]
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{problem}[theorem]{Problem}
+\newtheorem*{assumption*}{Assumption} % unnumbered
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
 
 \DeclareMathOperator{\atantwo}{atan2}
 \DeclareMathOperator{\arctantwo}{arctan2}
