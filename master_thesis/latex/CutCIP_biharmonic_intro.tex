@@ -662,8 +662,9 @@ Combing the results we get the following convenient corollary.
 
 \begin{proof}
     We will divide the proof in two steps.
+
     \begin{enumerate}[label=\arabic*)]
-        \item The goal is to prove the inequality \eqref{eq:bi_A_h_bounded}. \[
+        \item \textbf{Step 1.} The goal is to prove the inequality \eqref{eq:bi_A_h_bounded}. \[
                 \abs{ A_{h}( v ,w ) } \lesssim   \abs{a_{h}( v, w) }   + \abs{g_{h}( v,w)  }          \]
                 By assumption is the ghost penalty $g_{h}$ positive semi-definite, thus, it fulfills the Cauchy-Schwartz inequality \[
                 \abs{ g_{h}(v,w ) } \lesssim \abs{ v } _{g_{h}}\abs{ w }_{g_{h}}
@@ -709,7 +710,7 @@ Combing the results we get the following convenient corollary.
              \]
 
              Obviously is $\| v \|_{a_{h}  }^{  } \lesssim \| v \|_{A_{h}  }^{  }$. Hence, we have showed that all terms in $a_{h}$ is bounded in the $\|\cdot   \|_{A_{h}  }^{  } $ norm.
-         \item The goal is to prove \eqref{eq:bi_a_h_bounded} using many of the same ideas as in the first part. Let $v \in V_{h} +V $ and $v \in V_{h}$. Next step is to show that the bilinear term $ a_{h}$ is bounded.
+         \item \textbf{Step 2.} The goal is to prove \eqref{eq:bi_a_h_bounded} using many of the same ideas as in the first part. Let $v \in V_{h} +V $ and $v \in V_{h}$. Next step is to show that the bilinear term $ a_{h}$ is bounded.
                 \begin{equation}
                     \begin{split}
                         \abs{ a_{h} \left( v, w \right) }   \le  &   \abs{\left( \alpha  v, w \right) _{\mathcal{T} _{h} \cap \Omega }  }    +  \abs{\left( D^2 v, D^2w \right) _{\mathcal{T} _{h} \cap \Omega}  }  \\
