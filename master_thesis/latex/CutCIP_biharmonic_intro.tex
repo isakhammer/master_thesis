@@ -588,12 +588,12 @@ Combing the results we get the following convenient corollary.
     Firstly, the ghost penalty term is already a part of the $\| \cdot  \|_{ A_{h} }^{  } $ norm, hence, it only remains to check the $a_{h}( \cdot ,\cdot ) $ term.
     \[
     \begin{split}
-       a_{h}( v,v) &=   \|\ |\alpha|^{\frac{1}{2}} \cdot v  \|_{   \Omega   }^{2} + \| D^2v \|_{   \Omega  }^{2  } + 2 ( \mean{ \partial _{nn} v }, \jump{ \partial _{n} v }    )_{\mathcal{F} ^{}_{h} \cap \Omega }  + 2 (  \partial _{nn} v ,
+       a_{h}( v,v) &=   \alpha \| v \|_{   \Omega   }^{2} + \| D^2v \|_{   \Omega  }^{2  } + 2 ( \mean{ \partial _{nn} v }, \jump{ \partial _{n} v }    )_{\mathcal{F} ^{}_{h} \cap \Omega }  + 2 (  \partial _{nn} v ,
        \partial _{n} v  )_{\Gamma } \\
-                   & \quad+ \frac{\gamma }{h}  \|  \jump{ \partial _{n} v }\|_{\mathcal{F} _{h}^{}  }^{ 2 } + \frac{\gamma }{h}  \| \partial _{n} v \|_{ \Gamma  }^{ 2 }
+                   & \quad+ \frac{\gamma }{h}  \|  \jump{ \partial _{n} v }\|_{\mathcal{F} _{h}^{}  }^{ 2 } + \frac{\gamma }{h}  \| \partial _{n} v \|_{ \Gamma  }^{ 2 }.
     \end{split}
     \]
-    We will first focus on the symmetry terms. Using Cauchy-Schwarz we observe that \[
+    We first focus on the symmetry terms. Using Cauchy-Schwarz we observe that \[
         \begin{split}
     ( \mean{ \partial _{nn} v }  , \jump{ \partial _{n} v }  )_{\mathcal{F}^{}_{h}\cap \Omega  } & \ge - \| h^{\frac{1}{2}}\mean{ \partial _{nn} v }   \|_{ \mathcal{F}^{}_{h}\cap \Omega   }^{  }  \|h^{-\frac{1}{2}} \jump{ \partial _{n} v }   \|_{
     \mathcal{F}^{}_{h}\cap \Omega   }^{  } \\
@@ -602,8 +602,8 @@ Combing the results we get the following convenient corollary.
     \]
     Using inverse-inequalities \eqref{eq:bi_cut_inverse_1} and \eqref{eq:bi_cut_inverse_2} and the Corollary \ref{cor:bi_inverse_thm} can we easily observe that \[
         \begin{split}
-     \| \mean{ \partial _{nn}v } \|_{ \mathcal{T}_{h} \cap \Omega    }^{  2} & \le C_{1} \| D^2 v \|_{ \mathcal{T}_{h}   }^{2  } \le  C  (\| D^2 v \|_{ \Omega  }^{ 2 }  + \abs{ v } _{ g_{h} }^{2  } )  \\
-     \|  \partial _{nn}v  \|_{ \Gamma     }^{ 2 } & \le C_{2} \| D^2 v \|_{ \mathcal{T} _{h}  }^{2  } \le C  (\| D^2 v \|_{ \Omega  }^{ 2 }  + \abs{ v } _{ g_{h} }^{2  } )
+     \| h^{\frac{1}{2}} \mean{ \partial _{nn}v } \|_{ \mathcal{F}_{h} \cap \Omega    }^{  2} & \le C_{1} \| D^2 v \|_{ \mathcal{T}_{h}   }^{2  } \lesssim   \| D^2 v \|_{ \Omega  }^{ 2 }  + \abs{ v } _{ g_{h} }^{2  }   \\
+     \|  \partial _{nn}v  \|_{ \Gamma     }^{ 2 } & \le C_{2} \| D^2 v \|_{ \mathcal{T} _{h}  }^{2  } \lesssim    \| D^2 v \|_{ \Omega  }^{ 2 }  + \abs{ v } _{ g_{h} }^{2  }
         \end{split}
     \]
     Thus, by applying Youngs $\varepsilon $-inequality, $2ab \le  \varepsilon^{-1} a^{2} + \varepsilon b^{2} $, is it natural to see that,
