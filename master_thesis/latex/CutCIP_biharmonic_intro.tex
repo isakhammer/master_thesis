@@ -519,8 +519,7 @@ A useful variant is the following inequality that is,
     Figure \ref{fig:intersection-example} we have two cases: i) $\abs{ \Gamma \cap \Omega  }_{d-1} \lesssim \varepsilon h^{d-1}  $ and $\abs{ T \cap \Omega  }_{d-1} \lesssim \varepsilon h^{d-1}  $, and ii)
     $\abs{ \Gamma \cap \Omega  }_{d-1} \lesssim  h^{d-1}  $ and $\abs{ T \cap \Omega  }_{d-1} \lesssim \varepsilon h^{d-1}  $.
     The first first case impacts the condition number since it is introducing almost vanishing entries in the system matrix from \eqref{eq:linear_system}.
-    While for the second case is bad for inverse estimates, and, thus, problematic for proving coercivity. This is forcing us the extend the inverse estimates passing the inverse estimates from the intersection of the physical domain $\Omega$ to the
-    active mesh $\mathcal{T} _{h}$.
+    While for the second case is bad for inverse estimates, and, thus, problematic for proving coercivity. To recover, one in fact must incorporate the full element $T$ into the investe estiamate.
 
 \end{remark}
 
