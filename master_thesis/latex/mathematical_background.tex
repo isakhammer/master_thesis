@@ -779,8 +779,11 @@ a_{j} \right) $, so that $u_{h} = \sum_{j=1}^{N} u_{j} \phi _{j}  $. Then the Pr
  \[
 \sum_{j = 1}^{N} u_{j} a_{h}\left( \phi _{j}, \phi _{i} \right)  = l\left( \phi _{i} \right)
 \]
-Hence, by letting $\mathbf{u} = \left[ u_{j} \right] $ , $\mathbf{f} = \left[ \left( f, \phi _{i}  \right) _{\Omega } \right] $  and $A = \left[ a_{h}\left( \phi _{j}, \phi _{i} \right)  \right] $ can we construct a linear system, \[ A
-\mathbf{u} =\mathbf{f}. \]
+Hence, by letting $\mathbf{u} = \left[ u_{j} \right] $ , $\mathbf{f} = \left[ \left( f, \phi _{i}  \right) _{\Omega } \right] $  and $A = \left[ a_{h}\left( \phi _{j}, \phi _{i} \right)  \right] $ can we construct a linear system,
+\begin{equation}
+\label{eq:linear_system}
+    A \mathbf{u} =\mathbf{f}.
+\end{equation}
 Ultimately, the matrix $A$ is shown to be symmetric and positive definite only if $a_{h}( \cdot ,\cdot ) $ is well-posed.
 
 \begin{figure}[]
