@@ -681,15 +681,16 @@ Combing the results we get the following convenient corollary.
                     \end{split}
                 \end{equation}
                 The strategy is to bound each term individually using Cauchy-Schwarz \eqref{eq:cauchy-schwartz}. From this is it easy to see that $\abs{( \mathrm{I} )   } +  \abs{( \mathrm{II} )   }   \lesssim \| v \|_{a_{h}  }^{  } \| w \|_{ a_{h}
-                }^{  } $. For the terms $(
+                }^{  } $. For the terms symmetrical terms $(
                 \mathrm{III} ) $ and  $( \mathrm{IV} ) $ we apply the inverse inequality
                 \eqref{eq:bi_cut_inverse_2}.
                 \begin{equation}
-                    \abs{\left( \mean{ \partial _{n n} v }, \jump{ \partial _{n}w }      \right)_{\mathcal{F}_{h}^{} \cap \Omega}  }  \lesssim  \|h^{\frac{1}{2}} \partial _{n n} v  \|_{ \mathcal{F}_{h}^{} \cap \Omega}^{  }\| h^{-\frac{1}{2}} \jump{ \partial _{n} w }     \|_{\mathcal{F}_{h}^{} \cap \Omega}^{  } \lesssim  \| v \|_{A_{h}  }^{  } \|w    \|_{ a_{h}}^{  }
+                    \abs{(\mathrm{III} )  }  \lesssim  \|h^{\frac{1}{2}} \partial _{n n} v  \|_{ \mathcal{F}_{h}^{} \cap \Omega}^{  }\| h^{-\frac{1}{2}} \jump{ \partial _{n} w }     \|_{\mathcal{F}_{h}^{} \cap \Omega}^{  } \lesssim  \| v \|_{A_{h}
+                    }^{  } \|w    \|_{ a_{h}}^{  }.
                 \end{equation}
                 Here we used that  $\|h^{\frac{1}{2}} \partial _{n n}  v \|_{\mathcal{F}_{h}^{} \cap \Omega} \lesssim \| v \|_{ A_{h}  }^{  }  $ thanks to Corollary \ref{cor:bi_inverse_thm}.
-              The boundedness interior penalty  inequality is showed in this manner, \[
-             \frac{\gamma }{h} \abs{ \left( \jump{ \partial _{n} v}, \jump{ \partial _{n} w   }   \right)_{\mathcal{F}_{h}^{} \cap \Omega}  }  \lesssim  \|h^{-\frac{1}{2}} \jump{ \partial _{n} v}  \|_{ \mathcal{F}_{h}^{} \cap \Omega }^{  }
+              The interior penalty $( \mathrm{V} ) $ can we easily see that, \[
+              \abs{ ( V)  }  \lesssim  \|h^{-\frac{1}{2}} \jump{ \partial _{n} v}  \|_{ \mathcal{F}_{h}^{} \cap \Omega }^{  }
              \|h^{-\frac{1}{2}} \jump{ \partial _{n} w}  \|_{ \mathcal{F}_{h}^{} \cap \Omega }^{  }  \lesssim  \| v  \|_{ a_{h} }^{  }
              \| w  \|_{ a_{h} }^{  }.
              \]
