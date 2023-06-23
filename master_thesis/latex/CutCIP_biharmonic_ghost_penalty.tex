@@ -238,7 +238,9 @@ Summation over the intersected triangles $\mathcal{T} _{\Gamma }$ implies,
         Recall the decomposition procedure done in \eqref{eq:projection} for a facet $F$ , where $P_{F} := I - n_{} \oplus n_{} $ and $Q_{F} = n_{} \oplus n_{}$. We apply this so we can to decompose the Hessian evaluated on the facet  s.t. \[
         D^2 v  \mid _{F} = Q_{F}D^2v + P_{F} D^2 v .
         \]
-        Recall from basic finite element theory that $\| D^2v \|_{F  }^{ 2 }\le h^{-2} \| \nabla v \|_{ F }^{ 2 } \le h^{-4} \| v \|_{ F }^{2  }    $.
+        % Recall from basic finite element theory .
+        \red{
+        Recall from \eqref{eq:fund_inv_est} and \eqref{eq:degrade} the inverse estimates $\| D^2v \|_{T  }^{ 2 }  \le h^{-4} \| v \|_{ T }^{2  }    $ and $ \| D^2v \|_{F  }^{2  } \le h^{-1} \| D^2 v  \|_{T  }^{ 2 }   $.}
         That is, applying the decomposition we get the following estimates \[
             \begin{split}
         \| \jump{ P_{F}   D^2 \partial _{n}^{j} v }\|_{ F }^{ 2 } & = \| P_{F} D^2 \jump{ \partial _{n}^{j} v }   \|_{ F  }^{ 2} = \| (I- n\otimes n) D^2 \jump{ \partial _{n}^{j} v }   \|_{ F  }^{ 2}    \\
@@ -255,10 +257,10 @@ Summation over the intersected triangles $\mathcal{T} _{\Gamma }$ implies,
             &  \lesssim   h^{2j -3}  \| \jump{ \partial ^{j}_{n}v }   \|_{ F }^{ 2 }
              \end{split}
         \]
-        \red{Seems like the projection argument is not necessarry. You can simply prove it using direcetly the estimate $\| D^2v \|_{F  }^{ 2 }\le h^{-2} \| \nabla v \|_{ F }^{ 2 } \le h^{-4} \| v \|_{ F }^{2  }    $ s.t.
-        $$
-        \| D^2 \jump{ \partial _{n}^{j} v } \|_{F  }^{ 2 } \le h^{-4} \| \jump{ \partial _{n}^{j} v } \|_{ F }^{2  }
-    $$ }
+        % \red{Seems like the projection argument is not necessarry. You can simply prove it using direcetly the estimate $\| D^2v \|_{F  }^{ 2 }\le h^{-2} \| \nabla v \|_{ F }^{ 2 } \le h^{-4} \| v \|_{ F }^{2  }    $ s.t.
+        % $$
+        % \| D^2 \jump{ \partial _{n}^{j} v } \|_{F  }^{ 2 } \le h^{-4} \| \jump{ \partial _{n}^{j} v } \|_{ F }^{2  }
+    % $$ }
 
         Thus, fulfilling \eqref{eq:bi_inv_gh_2}.
         \[
