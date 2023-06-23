@@ -18,23 +18,16 @@ Recall that for $v \in H^{1}( \mathcal{T } _{h}) $ these inequalities holds $\fo
 for proof see \cite[Lemma 4.2]{hansbo2003finite}.
 
 Assume that $\Omega $ has a boundary $\Gamma $ in $C^{1}$, then it does exist an bounded extension operator, \[
-    ( \cdot ) ^{e}: W^{m,p}( \Omega )  \to W^{m,p} ( \mathbb{R} ^{d}),
+    ( \cdot ) ^{e}: H^{m}( \Omega )  \to H^{m} ( \mathbb{R} ^{d}),
 \]
-for all  $v \in W^{m,p}( \Omega )$ where $0< m \le \infty$ and $1 \le q \le \infty$ which satisfies \[
+for all  $v \in H^{m}( \Omega )$ which satisfies
+\begin{equation}
     \begin{split}
  v^{e}| _{\Omega } =   v,  \\
-\| v^{e} \|_{ m,q,\mathbb{R} ^{d}  }^{  } & \lesssim \| v \|_{ m,q, \Omega  }^{  }.
+\| v^{e} \|_{ m,\mathbb{R} ^{d}  }^{  } & \lesssim \| v \|_{ m, \Omega  }^{  }.
     \end{split}
-\]
-To simplify, we use the notation $ v := v^{e}   $ for $v \in \mathbb{R} ^{d} \setminus \Omega $.
-For more information, see \cite[Theorem 9.7]{brezis2011functional} and \cite[p.181, p.185]{stein1970singular}.
-% \begin{remark}
-%     Be aware that this theorem requires that we have a sufficiently smooth domain, hence, emphasizing the assumption of a sufficiently smooth boundary. Also keep in mind that the original theorem states the mapping $ ( \cdot ) ^{e}: W^{m,q}(
-%     \Omega )  \to W^{m,q} ( \mathbb{R} ^{d})$, but we restrict ourself to a slightly bigger extension $\Omega^{e} \supset   \Omega $.
-%     This is useful because we are now able to extend the function to the active set, while preserving the Sobolev regularity.
-%     \todo[inline]{ TODO: Not sure if this argument holds. At least from my point of view is this generalization not trivial.}
-% \end{remark}
-% \todo[inline]{ The physical space $\Omega $ is a subset of $\Omega ^{e}$, so I do not understand why $\| v^{e} \|_{ m,q,\Omega ^{e}  }^{  } \lesssim \| v \|_{ m,q, \Omega  }^{  } $ should hold.  I may also make a figure to illustrate $\Omega ^{e}$. }
+\end{equation}
+For more information, see \cite[Theorem 9.7]{brezis2011functional} and \cite[p.181, p.185]{stein1970singular}. To simplify, we use the notation $ v := v^{e}   $ for $v \in \mathbb{R} ^{d} \setminus \Omega $.
 
 Recall the Lemma \ref{lemma:clements}, we construct the Cléments interpolator for the extension operator $C_{h}^{e}: H^{m}( \mathbb{R} ^{d}) \to V_{h}$ such that  $C ^{e} _{h} v := C _{h} v^{e} $.
 We can immediately observe that the interpolation satisfies the global error estimates, that is,
