@@ -59,7 +59,7 @@ Naturally can we see this is the tools we need to construct an estimate for the 
 
 \begin{lemma}
     \label{lemma:astar_estimate}
-    Let $u \in H^{s}( \Omega ) $ for $s\ge 3$ be a exact solution to $\eqref{eq:bi_weak_cut} $. Then we have  \[
+    Let $u \in H^{s}( \Omega ) $ for $s\ge 3$ be a exact solution to the weak problem $\eqref{eq:cont_weak_problem} $. Then we have  \[
     \|  u - C_{h}u \|_{ a_{h},*  }^{  } \lesssim h^{s-2} \| u \|_{ H^{s}( \Omega )  }^{  }
     \]
 
@@ -138,7 +138,7 @@ Let $u \in H^{s}( \Omega )  $, $ s\ge 3 $  be the exact solution to   \eqref{eq:
 
 \begin{assumption}[EP2]
     \label{as:bi_EP2}
-    For $v \in H^{s}( \Omega ) $ and $r = \min \{s,k+1 \} $, the semi-norm $\abs{ \cdot  }_{g_{h}} $ satisfies the following estimate, \[
+    For $v \in H^{s}( \Omega ) $ and $r = \min \{s,k+1 \} $, the semi-norm $\abs{ \ \cdot \  }_{g_{h}} $ satisfies the following estimate, \[
     \abs{ C _{h}^{e} v } _{g_{h}} \lesssim  h^{r-1} \| v \|_{ r,\Omega  }^{  }.
     \]
 \end{assumption}
@@ -146,7 +146,7 @@ Let $u \in H^{s}( \Omega )  $, $ s\ge 3 $  be the exact solution to   \eqref{eq:
 
 \begin{theorem}
     \label{thm:apriori_result}
-    Let $u \in H^{s}( \Omega ) $ , $s\ge 3$ a solution to \eqref{eq:bi_weak_cut} and let $u \in V_{h}$ of order $k\ge 2$ be the discrete solution to \eqref{eq:cip_unfitted_hessian_form}. Then for $r = \min_{}\{s, k+2\} $ the error $e = u - u_{h}$ satisfies
+    Let $u \in H^{s}( \Omega ) $ , $s\ge 3$ a solution to \eqref{eq:bi_weak_cut} and let $u \in V_{h}$ of order $k\ge 2$ be the discrete solution to \eqref{eq:discrete_CutCIP_prob}. Then for $r = \min_{}\{s, k+2\} $ the error $e = u - u_{h}$ satisfies
     \begin{align}
         \label{eq:bi_apriori_1}
             \| e \|_{ a_{h},* }^{  } &\lesssim   h^{r-2} \| u \|_{ r,\Omega  }^{  }\\
