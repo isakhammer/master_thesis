@@ -22,10 +22,11 @@ Assume that $\Omega $ has a boundary $\Gamma $ in $C^{1}$, then it does exist an
 \]
 for all  $v \in W^{m,p}( \Omega )$ where $0< m \le \infty$ and $1 \le q \le \infty$ which satisfies \[
     \begin{split}
- v^{e}| _{\Omega } =   v  \\
+ v^{e}| _{\Omega } =   v,  \\
 \| v^{e} \|_{ m,q,\mathbb{R} ^{d}  }^{  } & \lesssim \| v \|_{ m,q, \Omega  }^{  }.
     \end{split}
 \]
+To simplify, we use the notation $ v := v^{e}   $ for $v \in \mathbb{R} ^{d} \setminus \Omega $.
 For more information, see \cite[Theorem 9.7]{brezis2011functional} and \cite[p.181, p.185]{stein1970singular}.
 % \begin{remark}
 %     Be aware that this theorem requires that we have a sufficiently smooth domain, hence, emphasizing the assumption of a sufficiently smooth boundary. Also keep in mind that the original theorem states the mapping $ ( \cdot ) ^{e}: W^{m,q}(
@@ -38,9 +39,9 @@ For more information, see \cite[Theorem 9.7]{brezis2011functional} and \cite[p.1
 Recall the Lemma \ref{lemma:clements}, we construct the Cléments interpolator for the extension operator $C_{h}^{e}: H^{m}( \mathbb{R} ^{d}) \to V_{h}$ such that  $C ^{e} _{h} v := C _{h} v^{e} $.
 We can immediately observe that the interpolation satisfies the global error estimates, that is,
 \begin{align*}
-    \| v^e - C _{h}^{e} v \|_{  m, \mathcal{T} _{h} }^{  } & \lesssim h^{l-m}\sum_{T \in \mathcal{T}_h} \| v \|_{ l, \omega(T) }^{  }, \quad m\le l\le k+1 \\
-    \| v^e - C ^{e}_{h}v \|_{ m,\mathcal{F} _{h} }^{  } & \lesssim h^{l-m-\frac{1}{2}}\sum_{T \in \mathcal{T}_h} \| v \|_{ l, \omega(F)  }^{  }, \quad m+\frac{1}{2}  \le  l \le   k+1 \\
-\| v^e - C ^{e}_{h}v \|_{ m, \Gamma }^{  } & \lesssim h^{l-m-\frac{1}{2}} \sum_{T \in \mathcal{T}_h}  \| v \|_{ l,  \omega(T)  }^{  }, \quad m+\frac{1}{2}  \le  l \le  k+1
+    \| v - C _{h}^{e} v \|_{  m, \mathcal{T} _{h} }^{  } & \lesssim h^{l-m}\sum_{T \in \mathcal{T}_h} \| v \|_{ l, \omega(T) }^{  }, \quad m\le l\le k+1 \\
+    \| v - C ^{e}_{h}v \|_{ m,\mathcal{F} _{h} }^{  } & \lesssim h^{l-m-\frac{1}{2}}\sum_{T \in \mathcal{T}_h} \| v \|_{ l, \omega(F)  }^{  }, \quad m+\frac{1}{2}  \le  l \le   k+1 \\
+\| v - C ^{e}_{h}v \|_{ m, \Gamma }^{  } & \lesssim h^{l-m-\frac{1}{2}} \sum_{T \in \mathcal{T}_h}  \| v \|_{ l,  \omega(T)  }^{  }, \quad m+\frac{1}{2}  \le  l \le  k+1
 \end{align*}
  and argue that $ \sum_{T}^{} \| v \|_{s,\omega ( T)   }^{  } \le C  \| v \|_{s, \mathcal{T}_{h}   }^{  } $ where $C$ is some constant decided by the maximum number of elements in a patch
     $\omega( T)  $ for all $T \in \mathcal{T} _{h}$. This also holds for the inequality $ \sum_{T}^{} \| v \|_{s,\omega ( F)   }^{  } \le C  \| v \|_{s, \mathcal{T}_{h}   }^{  } $. Hence, we have perhaps an even more useful set of inequalities.
@@ -145,7 +146,7 @@ Let $u \in H^{s}( \Omega )  $, $ s\ge 3 $  be the exact solution to   \eqref{eq:
 
 \begin{theorem}
     \label{thm:apriori_result}
-    Let $u \in H^{s}( \Omega ) $ , $s\ge 3$ a solution to \eqref{eq:bi_weak_cut} and let $u \in V_{h}$ of order $k\ge 2$ be the discrete solution to \eqref{eq:discrete_CutCIP_prob}. Then for $r = \min_{}\{s, k+2\} $ the error $e = u - u_{h}$ satisfies
+    Let $u \in H^{s}( \Omega ) $ , $s\ge 3$ a solution to \eqref{eq:cont_weak_problem} and let $u \in V_{h}$ of order $k\ge 2$ be the discrete solution to \eqref{eq:discrete_CutCIP_prob}. Then for $r = \min_{}\{s, k+2\} $ the error $e = u - u_{h}$ satisfies
     \begin{align}
         \label{eq:bi_apriori_1}
             \| e \|_{ a_{h},* }^{  } &\lesssim   h^{r-2} \| u \|_{ r,\Omega  }^{  }\\

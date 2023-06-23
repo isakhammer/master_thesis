@@ -1076,9 +1076,9 @@ $C_{h}: L^{2}( \Omega )   \to  V_{h}$, where $V_{h}$ has the order $k$. Then doe
 and if the following conditions for an parameter $l$ is satisfied, it exists error estimates such that
 \begin{equation}
     \begin{split}
-      m\le l \le k+1  \implies \| v - C_{h} v \|_{ m,T   }^{  }  &  \lesssim h^{l-m}_{T} \| v \|_{l,\omega \left( T \right)  }^{  } \quad  \forall T \in \mathcal{T} _{h}, \forall v \in H^{l}( \omega \left( T \right)
+      0\le l \le r  \implies \| v - C_{h} v \|_{ m,T   }^{  }  &  \lesssim h^{r-l}_{T} \| v \|_{l,\omega \left( T \right)  }^{  } \quad  \forall T \in \mathcal{T} _{h}, \forall v \in H^{l}( \omega \left( T \right)
       ), \\
-      m +\frac{1}{2}\le l \le k+1  \implies \| v - C_{h} v \|_{ m,F }^{  } & \lesssim h^{l-m- \frac{1}{2}}_{T} \| v \|_{l,\omega \left( F \right)  }^{  } \quad  \forall \partial T \in \mathcal{T} _{h}, \forall v \in H^{l}( \omega \left( F
+      0\le l \le r-\frac{1}{2}  \implies \| v - C_{h} v \|_{ m,F }^{  } & \lesssim h^{r - l - \frac{1}{2}}_{T} \| v \|_{l,\omega \left( F \right)  }^{  } \quad  \forall \partial T \in \mathcal{T} _{h}, \forall v \in H^{l}( \omega \left( F
       \right)).
     \end{split}
 \end{equation}
