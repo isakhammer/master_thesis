@@ -26,35 +26,34 @@ for all  $v \in W^{m,p}( \Omega )$ where $0< m \le \infty$ and $1 \le q \le \inf
 \| v^{e} \|_{ m,q,\mathbb{R} ^{d}  }^{  } & \lesssim \| v \|_{ m,q, \Omega  }^{  }.
     \end{split}
 \]
-This is the so-called \cite[Theorem 9.7]{brezis2011functional} and \cite[p.181, p. 185]{stein1970singular}.
-\begin{remark}
-    Be aware that this theorem requires that we have a sufficiently smooth domain, hence, emphasizing the assumption of a sufficiently smooth boundary. Also keep in mind that the original theorem states the mapping $ ( \cdot ) ^{e}: W^{m,q}(
-    \Omega )  \to W^{m,q} ( \mathbb{R} ^{d})$, but we restrict ourself to a slightly bigger extension $\Omega^{e} \supset   \Omega $.
-    This is useful because we are now able to extend the function to the active set, while preserving the Sobolev regularity.
-    \todo[inline]{ TODO: Not sure if this argument holds. At least from my point of view is this generalization not trivial.}
-\end{remark}
+For more information, see \cite[Theorem 9.7]{brezis2011functional} and \cite[p.181, p.185]{stein1970singular}.
+% \begin{remark}
+%     Be aware that this theorem requires that we have a sufficiently smooth domain, hence, emphasizing the assumption of a sufficiently smooth boundary. Also keep in mind that the original theorem states the mapping $ ( \cdot ) ^{e}: W^{m,q}(
+%     \Omega )  \to W^{m,q} ( \mathbb{R} ^{d})$, but we restrict ourself to a slightly bigger extension $\Omega^{e} \supset   \Omega $.
+%     This is useful because we are now able to extend the function to the active set, while preserving the Sobolev regularity.
+%     \todo[inline]{ TODO: Not sure if this argument holds. At least from my point of view is this generalization not trivial.}
+% \end{remark}
 % \todo[inline]{ The physical space $\Omega $ is a subset of $\Omega ^{e}$, so I do not understand why $\| v^{e} \|_{ m,q,\Omega ^{e}  }^{  } \lesssim \| v \|_{ m,q, \Omega  }^{  } $ should hold.  I may also make a figure to illustrate $\Omega ^{e}$. }
 
-Now construct the extended Sobolev space s.t. that $\Omega _{h}^{e} =\mathcal{T}_{h} \subset  \Omega^{e} $. We define an unfitted Cléments interpolator $C_{h}^{e}: H^{m}( \Omega ^{e}_{h}) \to V_{h}$
-s.t.  $C ^{e} _{h} v := C _{h} v^{e} $.
+Recall the Lemma \ref{lemma:clements}, we construct the Cléments interpolator for the extension operator $C_{h}^{e}: H^{m}( \mathbb{R} ^{d}) \to V_{h}$ such that  $C ^{e} _{h} v := C _{h} v^{e} $.
 We can immediately observe that the interpolation satisfies the global error estimates, that is,
 \begin{align*}
-    \| v - C _{h}^{e} v \|_{  m,2, \mathcal{T} _{h} }^{  } & \lesssim h^{l-m}\sum_{T \in \mathcal{T}_h} \| v \|_{ l,2, \omega(T) }^{  }, \quad m\le l\le k+1 \\
-    \| v - C ^{e}_{h}v \|_{ m,2,\mathcal{F} _{h} }^{  } & \lesssim h^{l-m-\frac{1}{2}}\sum_{T \in \mathcal{T}_h} \| v \|_{ l,2, \omega(F)  }^{  }, \quad m+\frac{1}{2}  \le  l \le   k+1 \\
-\| v - C ^{e}_{h}v \|_{ m,2, \Gamma }^{  } & \lesssim h^{l-m-\frac{1}{2}} \sum_{T \in \mathcal{T}_h}  \| v \|_{ l,2,  \omega(T)  }^{  }, \quad m+\frac{1}{2}  \le  l \le  k+1
+    \| v^e - C _{h}^{e} v \|_{  m, \mathcal{T} _{h} }^{  } & \lesssim h^{l-m}\sum_{T \in \mathcal{T}_h} \| v \|_{ l, \omega(T) }^{  }, \quad m\le l\le k+1 \\
+    \| v^e - C ^{e}_{h}v \|_{ m,\mathcal{F} _{h} }^{  } & \lesssim h^{l-m-\frac{1}{2}}\sum_{T \in \mathcal{T}_h} \| v \|_{ l, \omega(F)  }^{  }, \quad m+\frac{1}{2}  \le  l \le   k+1 \\
+\| v^e - C ^{e}_{h}v \|_{ m, \Gamma }^{  } & \lesssim h^{l-m-\frac{1}{2}} \sum_{T \in \mathcal{T}_h}  \| v \|_{ l,  \omega(T)  }^{  }, \quad m+\frac{1}{2}  \le  l \le  k+1
 \end{align*}
  and argue that $ \sum_{T}^{} \| v \|_{s,\omega ( T)   }^{  } \le C  \| v \|_{s, \mathcal{T}_{h}   }^{  } $ where $C$ is some constant decided by the maximum number of elements in a patch
     $\omega( T)  $ for all $T \in \mathcal{T} _{h}$. This also holds for the inequality $ \sum_{T}^{} \| v \|_{s,\omega ( F)   }^{  } \le C  \| v \|_{s, \mathcal{T}_{h}   }^{  } $. Hence, we have perhaps an even more useful set of inequalities.
 \begin{align}
     \label{eq:bi_projection_estimates_1}
-    \| v - C _{h}^{e} v \|_{  m,2, \mathcal{T} _{h} }^{  } & \lesssim h^{l-m} \| v \|_{ l,2, \mathcal{T} _{h} }^{  }, \quad m\le l\le k+1 \\
+    \| v - C _{h}^{e} v \|_{  m, \mathcal{T} _{h} }^{  } & \lesssim h^{l-m} \| v \|_{ l, \mathcal{T} _{h} }^{  }, \quad m\le l\le k+1 \\
     \label{eq:bi_projection_estimates_2}
-    \| v - C ^{e}_{h}v \|_{ m,2,\mathcal{F} _{h} }^{  } & \lesssim h^{l-m-\frac{1}{2}} \| v \|_{ l,2, \mathcal{T} _{h}  }^{  }, \quad m+\frac{1}{2}  \le  l \le   k+1 \\
+    \| v - C ^{e}_{h}v \|_{ m,\mathcal{F} _{h} }^{  } & \lesssim h^{l-m-\frac{1}{2}} \| v \|_{ l, \mathcal{T} _{h}  }^{  }, \quad m+\frac{1}{2}  \le  l \le   k+1 \\
     \label{eq:bi_projection_estimates_3}
-\| v - C ^{e}_{h}v \|_{ m,2, \Gamma }^{  } & \lesssim h^{l-m-\frac{1}{2}}   \| v \|_{ l,2,  \mathcal{T} _{h}  }^{  }, \quad m+\frac{1}{2}  \le  l \le  k+1
+\| v - C ^{e}_{h}v \|_{ m, \Gamma }^{  } & \lesssim h^{l-m-\frac{1}{2}}   \| v \|_{ l,  \mathcal{T} _{h}  }^{  }, \quad m+\frac{1}{2}  \le  l \le  k+1
 \end{align}
-\todo[inline]{ Maybe hard to argue \eqref{eq:bi_projection_estimates_3} to hold on $\Gamma $, but may be related to some generalization of \eqref{eq:bi_n_cut_inverse_1} and \eqref{eq:bi_cut_inverse_1}. Anyhow, \eqref{eq:bi_projection_estimates_2} and
-\eqref{eq:bi_projection_estimates_3} was never used in the proof of Lemma \ref{lemma:astar_estimate} since we used inverse estimates and ended up with \eqref{eq:bi_projection_estimates_1} instead on all of them.}
+% \todo[inline]{ Maybe hard to argue \eqref{eq:bi_projection_estimates_3} to hold on $\Gamma $, but may be related to some generalization of \eqref{eq:bi_n_cut_inverse_1} and \eqref{eq:bi_cut_inverse_1}. Anyhow, \eqref{eq:bi_projection_estimates_2} and
+% \eqref{eq:bi_projection_estimates_3} was never used in the proof of Lemma \ref{lemma:astar_estimate} since we used inverse estimates and ended up with \eqref{eq:bi_projection_estimates_1} instead on all of them.}
 Naturally can we see this is the tools we need to construct an estimate for the energy norm.
 
 \begin{lemma}
