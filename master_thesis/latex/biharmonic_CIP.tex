@@ -63,14 +63,13 @@ Note that the Neumann boundary condition $g_{1}$ is strongly imposed in $V$, and
 
 \subsection{Detailed construction of Hessian and Laplacian Formulations }%
 \label{sub:construction_of_laplacian_cip}
-The goal is to construct a corresponding discrete formulation for the problem \eqref{eq:cont_weak_problem}, that is to find a $u_{h} \in V_{h}$ such that $a_{h}( u_{h}, v_{h}) = l_{h}( v_{h}) $ for all $v_{h} \in V_{h}$.
-
-To achieve the objective of constructing the Hessian and Laplacian formulations, the following lemmas will be the primary components. This is done by constructing a consistent formulation by assuming the function $u$ is exact with a sufficient
-regularity, and the test function $v_{h}$ defined as an element from the nonconforming set $V_{h} \not\subset V$.
-This asserts when we have a bilinear form and replace the exact solution with $u_{h} \in V_{h}$, the system still remains consistent in $V$. However, due to the nonconformal nature of $V_{h}$, it becomes necessary to introduce penalty terms to ensure the system is well-posed. Keep in mind that the $C^{1}$
+The goal is to construct two CIP formulations for the problem \eqref{eq:cont_weak_problem}, that is: Find $u_{h} \in V_{h} \not\in V$ such that $a_{h}( u_{h}, v_{h}) = l_{h}( v_{h}) $ for all $v_{h} \in V_{h}$. We will follow the ideas presented in \cite{brenner2012} and \cite{feng2007fully}.
+A property that is necessary is that when we have a bilinear form and replace the exact solution with $u_{h} \in V_{h}$, the system still remains consistent in $V$. Hence, we guarantee a consistency of the discrete weak formulation by assuming during
+the construction that $u \in H^{4}( \Omega ) $ and $v_{h} \in  V_{h}$ .
+ However, due to the nonconformal nature of $V_{h}$, it becomes necessary to introduce penalty terms to ensure the discrete system is well-posed when we replace with $u_{h} \in V_{h}$. Keep in mind that the $C^{1}$
 continuity is imposed weakly and in the same way is the Neumann conditions also imposed weakly.
 
-We will derive two CIP formulations following \cite{brenner2012} and \cite{feng2007fully}.
+To achieve the objective of constructing the Hessian and Laplacian formulations, the following lemmas will be the primary components.
 
 \subsubsection{Construction of the Hessian formulation}%
 \label{ssub:construction_of_the_hessian_formulation}
@@ -262,7 +261,8 @@ With the corresponding energy norms,
 \begin{equation}
 \label{eq:a_cip_energy_norm_hes}
     \begin{split}
- \| v \|_{ a_{h}^{H} }^{ 2 }& = \alpha  \| v\|_{ \Omega  }^{2  }  +  \| D ^2 v \|_{ \Omega   }^{ 2 }  + \|  h^{-\frac{1}{2}} \jump{ \partial _{n} v    }\|_{  \mathcal{F} _{h}^{int} }^{2  }+ \|  h^{-\frac{1}{2}}  \partial _{n} v    \|_{  \Gamma  }^{2  },  \quad v \in V_{h}  \\
+ \| v_{h} \|_{ a_{h}^{H} }^{ 2 }& = \alpha  \| v_{h}\|_{ \Omega  }^{2  }  +  \| D ^2 v_{h} \|_{ \Omega   }^{ 2 }  + \|  h^{-\frac{1}{2}} \jump{ \partial _{n} v_{h}    }\|_{  \mathcal{F} _{h}^{int} }^{2  }+ \|  h^{-\frac{1}{2}}  \partial _{n} v_{h}
+ \|_{  \Gamma  }^{2  },  \quad v_{h} \in V_{h}  \\
    \| v \|_{ a_{h}^{H},* }^{ 2 } &= \| v \|_{ a_{h} }^{ 2 }  + \| h^{\frac{1}{2}}  \mean{     \partial _{nn } v}  \|_{ \mathcal{F}_{h}^{int}   }^{  2}+ \| h^{\frac{1}{2}} \partial _{nn } v  \|_{ \Gamma    }^{  2}, \quad  v\in V \oplus V_{h}.
     \end{split}
 \end{equation}
