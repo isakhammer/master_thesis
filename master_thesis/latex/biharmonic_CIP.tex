@@ -373,9 +373,9 @@ The corresponding bilinear and linear form is defined as,
 
                                      \begin{remark}
 Again, note that we have the consistent terms $\left( \mean{  \Delta  u_{h} }, \jump{ \partial _{n }v_{h}} \right)_{\mathcal{F}_{h}^{int}} $ and $ \left(   \Delta  u_{h} ,  \partial _{n }v_{h} \right)_{\Gamma }$ naturally appearing in the
-derivation. Also recall the symmetry terms, $(  \jump{ \partial _{n} u_{h} }, \mean{ \Delta  v_{h} })_{\mathcal{F}^{int}_{h} } $ and $( (  \partial _{n} u_{h}, \Delta  v_{h}       )_{\Gamma  } -(  g_{1}, \Delta  v_{h}  )_{\Gamma  }   )$, and
-the penalty terms $ \frac{\gamma }{h} (  \partial _{n} u_{h}, \partial _{n}   v_{h}       )_{\Gamma  } -\frac{\gamma }{h}(  g_{1}, \partial _{n} v_{h}  )_{\Gamma  }$ and $\frac{\gamma }{h}( \jump{ \partial _{n} u_{h} } , \jump{ \partial _{n} v_{h} }
-_{\mathcal{F}^{int}_{h} }  $, thus making the bilinear form $a^{L}( \cdot,\cdot ) $  symmetric and the problem well-posed.
+derivation. Also recall the symmetry terms, $(  \jump{ \partial _{n} u_{h} }, \mean{ \Delta  v_{h} })_{\mathcal{F}^{int}_{h} } $ and $ (  \partial _{n} u_{h} -  g_{1}, \Delta  v_{h}  )_{\Gamma  } $, with corresponding Nitsche penalty terms, $
+\frac{\gamma }{h}(  \partial _{n} u_{h} - g_{1}, \partial _{n} v_{h}  )_{\Gamma  }$ and $ \\ \frac{\gamma }{h}( \jump{ \partial _{n} u_{h} } , \jump{ \partial _{n} v_{h} }
+_{\mathcal{F}^{int}_{h} }  $, thus making the bilinear form $a^{L}( \cdot,\cdot ) $ symmetric and well-posed.
                                      \end{remark}
 
 \subsubsection{Comments and earlier work}%
