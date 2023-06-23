@@ -17,8 +17,7 @@ $\left\lvert f \right\rvert ^{p}$ is Lebesgue integrable, i.e,
 Let $u \in L^{p}\left( \Omega  \right) $. We define the integral norm of order $p$ to be \[
 \| u \|_{ L^{p}\left( \Omega  \right)  }^{  }  = \left( \int_{\Omega }^{} \left\lvert u \right\rvert ^{p} dx  \right) ^{\frac{1}{p}}.
 \]
-Since $p=2$ is frequently used in this report, we also define for convenience a compact notation $\| u \|_{ \Omega  }^{  }  = \| u \|_{ L^{2}\left( \Omega  \right)  }^{  } $ .  Recall that $L^{2}\left( \Omega  \right) $ is a Hilbert space if it is equipped with a inner
-product of two functions $u,v \in L^{2}\left( \Omega  \right) $ such that
+Since $p=2$ is frequently used in this report, we also define for convenience a compact notation $\| u \|_{ \Omega  }^{  }  = \| u \|_{ L^{2}\left( \Omega  \right)  }^{  } $ .  Recall that $L^{2}\left( \Omega  \right) $ is a Hilbert space since it is equipped with a inner product of two functions $u,v \in L^{2}\left( \Omega  \right) $ such that
     $
 \left( u,v \right) _{\Omega } = \left( u,v \right) _{L^2\left( \Omega  \right) } = \int_{\Omega }^{} u  v dx.
 $
@@ -29,20 +28,21 @@ For $d$ dimensions of order $k$ we define the multi-index $\alpha  = ( \alpha _{
 \partial ^{\alpha} u = \frac{\partial ^{ \alpha_{1}  }  } {\partial^{} x_{1}^{\alpha _{1}}  } \ldots \frac{\partial ^{ \alpha_{d}  }  } {\partial^{} x_{d}^{\alpha _{d}}  } u \quad  \text{for }u \in C^{\left\lvert \alpha  \right\rvert }( \Omega )
 \end{equation}
 
-  Let $m\ge 0$ be an integer and let $1 \le  p \le  \infty$ be a real number. Then the Sobolev space $H^{m}( \Omega ) $ are defined by
-\[
-H^{m}\left( \Omega  \right) = \left\{ u \in L^{2}\left( \Omega  \right)  \mid  \partial ^{\alpha } u \in L^{2}\left( \Omega  \right)  \forall \alpha : \left\lvert \alpha  \right\rvert  \le m \right\}.
-\]
-Equipped with the inner product for $u,v \in H^{m}\left( \Omega  \right) $, \[
-    \left( u,v \right) _{H^{m}\left( \Omega   \right) } = \sum_{\left\lvert \alpha  \right\rvert  \le  m}^{}  \int_{\Omega }^{} \partial ^{\alpha } u \partial ^{\alpha } v dx,
-\]
+  Let $k\ge 0$ be an integer and let $1 \le  p <  \infty$ be a real number, then the Sobolev space $W^{k,p}( \Omega ) $ is defined by
+  \begin{equation}
+W^{k,p}\left( \Omega  \right) = \left\{ u \in L^{p}\left( \Omega  \right)  \mid  \partial ^{\alpha } u \in L^{p}\left( \Omega  \right)  \forall \alpha : \left\lvert \alpha  \right\rvert  \le k \right\}.
+  \end{equation}
 with the corresponding norm
-$
-\| u \|_{ H^{m}\left( \Omega  \right)  }^{2  }  =  \| u \|_{ L^{2}\left( \Omega  \right)    }^{2} + \sum_{k = 1}^{m}  \left\lvert u \right\rvert ^{2} _{  H^{k}\left( \Omega  \right) }.
-$
-Here the seminorm is defined such that, $ \left\lvert u \right\rvert _{H^{k}( \Omega  ) }^{2} =  \sum_{\left\lvert \alpha  \right\rvert  = k}^{} \| \partial ^{\alpha }u \|_{ \Omega  }^{ 2 }  .
-$
-We will often use the shorthand notation $ \| u \|_{ k, \Omega  }^{  } = \| u \|_{ H^{k}( \Omega)  }^{  } $ and $ \abs{ u }_{ k, \Omega  }^{  }  = \abs{ u }_{ H^{k}( \Omega)  }^{  }$.
+\begin{equation}
+\| u \|_{ W^{k,p}\left( \Omega  \right)  }^{  }  = \left(   \sum_{j = 0}^{k}  \left\lvert u \right\rvert ^{p} _{  W^{j,p}\left( \Omega  \right) } \right)^{\frac{1}{p}} .
+\end{equation}
+Here the seminorm is defined such that $ \left\lvert u \right\rvert _{W^{k,p}( \Omega  ) }^{} =  ( \sum_{\left\lvert \alpha  \right\rvert  = k}^{} \| \partial ^{\alpha }u \|_{ L^{p}( \Omega )   }^{ p } )^{\frac{1}{p}} $.  For shorthand, it is
+defined that $\| \cdot
+\|_{k,p}^{  } = \| \cdot  \|_{k,p,\Omega   }^{  } = \| \cdot  \|_{ W^{k,p}( \Omega )   }^{  }  $ and for $p=2$ the usual notation is $H^{m}( \Omega ) = W^{m,2}( \Omega )  $ with corresponding norm $\| \cdot  \|_{H^{m}( \Omega )   }^{  } = \| \cdot
+\|_{k,\Omega   }^{  } = \| \cdot  \|_{k,2,\Omega   }^{  } $.
+Remark that $H^{m}( \Omega ) $ is a Hilbert space equipped with the inner product \[
+    \left( u,v \right) _{H^{m}\left( \Omega   \right) } = \sum_{\left\lvert \alpha  \right\rvert  \le  m}^{}  \int_{\Omega }^{} \partial ^{\alpha } u \  \partial ^{\alpha } v dx, \quad  \forall u,v \in H^{m}\left( \Omega  \right).
+\]
 
 Given the context of Sobolev spaces, we consider the functions $ u \in H^{2}( \Omega )$ and $ v \in H^{1}( \Omega )$. We can denote Greens theorem, which links integrals over a volume and its boundary, as follows,
 \[
@@ -1056,11 +1056,11 @@ C_{h} v = \sum_{i=1}^{N} \widehat{C}_{j( i) } ( v (\mathcal{G} _{A_{i}}) (\mathc
 \]
 where $\phi _{i}$ is the corresponding polynomial basis associated with the node $a_{i}$.
 
-Recall the general Sobolev norm notation,
-\[
-\| u \|_{ m,p,T }^{  } = \left( \sum_{ \left\lvert \alpha  \right\rvert \le m}^{} \int_{T}^{}  \left\lvert  \partial ^{\alpha } u \right\rvert^{p} dx   \right)^{\frac{1}{2}}
-\]
-where we use the convenient notation $\| u \|_{L^2(T) }^{  } = \| u \|_{ T  }^{  } = \| u \|_{ 0,2,T  }^{  } $ and similarly $\| u \|_{ H^r( T )  }^{  } = \| u \|_{ r,T  }^{  } = \| u \|_{ r,2,T  }^{  }  $.
+% Recall the general Sobolev norm notation,
+% \[
+% \| u \|_{ m,p,T }^{  } = \left( \sum_{ \left\lvert \alpha  \right\rvert \le m}^{} \int_{T}^{}  \left\lvert  \partial ^{\alpha } u \right\rvert^{p} dx   \right)^{\frac{1}{2}}
+% \]
+% where we use the convenient notation $\| u \|_{L^2(T) }^{  } = \| u \|_{ T  }^{  } = \| u \|_{ 0,2,T  }^{  } $ and similarly $\| u \|_{ H^r( T )  }^{  } = \| u \|_{ r,T  }^{  } = \| u \|_{ r,2,T  }^{  }  $.
 
 
 Finally, we have the following lemma
