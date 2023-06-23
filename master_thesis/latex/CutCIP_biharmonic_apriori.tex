@@ -1,32 +1,32 @@
 
-\subsection{A priori estimates}%
+\subsection{A priori error estimate}%
 \label{sec:a_priori_estimates}
 
 
-In this section, we will only briefly overview the important assumptions and definitions and then prove that the ghost penalty does affect the convergence rate specifically for the energy norm.
-However, the $C^{0}$ discrete solution is to rough for the standard Lagrange interpolation operator. Hence, this motivates us to introduce a method to interpolate a non-smooth function, the so-called Cléments interpolation operator.
+For the proposed method, we want to derive a priori error estimate with respect to both the  $\| \cdot  \|_{a_{h},*   }^{  } $-norm and the  $\| \cdot  \|_{ \Omega  }^{
+} $-norm.
+We will construct a suitable (quasi-)interpolation operator, here we use the Clement quasi interpolation operator which in contrast to the standard Lagrange nodal interpolation iterator is also defined for low regularity function in $u \in L^{2}(
+\Omega ) $.
+In combination with discrete coercivity this allows you to derive an a priori estimate in the energy norm. Finally, we use a standard duality argument, i.e. Aubin-Nitsche trick, to derive the $L^{2}$ error estimate.
 
-
-\subsubsection{Energy a priori estimates.  }%
-\label{ssub:extension}
-Recall that for $v \in H^{1}( \mathcal{T } _{h}) $ these inequalities holds $\forall T \in \mathcal{T} _{h}$ s.t. \[
+Recall that for $v \in H^{1}( \mathcal{T } _{h}) $ these inequalities holds $\forall T \in \mathcal{T} _{h}$ such that \[
 \begin{split}
     \| v \|_{ \partial T }^{  } &\lesssim h^{-\frac{1}{2}}_{T}\|  v \|_{ T }^{  }+ h^{\frac{1}{2}} \| \nabla v \|_{T  }^{   }  , \\
-    \| v \|_{ \Gamma \cap T }^{  } &\lesssim  h^{-\frac{1}{2}} \| v \|_{T  }^{  }   + h^{\frac{1}{2}}_{T} \| \nabla v \|_{ T }^{  }.
+    \| v \|_{ \Gamma \cap T }^{  } &\lesssim  h^{-\frac{1}{2}} \| v \|_{T  }^{  }   + h^{\frac{1}{2}}_{T} \| \nabla v \|_{ T }^{  },
 \end{split}
 \]
-For proof, see \cite[Lemma 4.2]{hansbo2003finite}.
+for proof see \cite[Lemma 4.2]{hansbo2003finite}.
 
-A key idea is to utilize between the relationship between the physical space $\Omega $ and the active mesh $\mathcal{T}_{h}$. Assume that $\Omega $ has a boundary $\Gamma $ in $C^{1}$, then does it exist an bounded extension operator, \[
-( \cdot ) ^{e}: W^{m,q}( \Omega )  \to W^{m,q} ( \Omega ^{e})
+Assume that $\Omega $ has a boundary $\Gamma $ in $C^{1}$, then it does exist an bounded extension operator, \[
+    ( \cdot ) ^{e}: W^{m,p}( \Omega )  \to W^{m,p} ( \mathbb{R} ^{d}),
 \]
-for all  $v \in W^{m,q}( \Omega )$ where $0< m \le \infty$ and $1 \le q \le \infty$ which satisfies \[
+for all  $v \in W^{m,p}( \Omega )$ where $0< m \le \infty$ and $1 \le q \le \infty$ which satisfies \[
     \begin{split}
  v^{e}| _{\Omega } =   v  \\
-\| v^{e} \|_{ m,q,\Omega ^{e}  }^{  } & \lesssim \| v \|_{ m,q, \Omega  }^{  } \\
+\| v^{e} \|_{ m,q,\mathbb{R} ^{d}  }^{  } & \lesssim \| v \|_{ m,q, \Omega  }^{  }.
     \end{split}
 \]
-This extension theorem primarily utilizes \cite[Theorem 9.7]{brezis2011functional} by Brezis, with valuable context provided by \cite[p.181, p. 185]{stein1970singular}.
+This is the so-called \cite[Theorem 9.7]{brezis2011functional} and \cite[p.181, p. 185]{stein1970singular}.
 \begin{remark}
     Be aware that this theorem requires that we have a sufficiently smooth domain, hence, emphasizing the assumption of a sufficiently smooth boundary. Also keep in mind that the original theorem states the mapping $ ( \cdot ) ^{e}: W^{m,q}(
     \Omega )  \to W^{m,q} ( \mathbb{R} ^{d})$, but we restrict ourself to a slightly bigger extension $\Omega^{e} \supset   \Omega $.
