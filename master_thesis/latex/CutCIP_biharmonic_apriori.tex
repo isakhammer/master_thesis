@@ -31,11 +31,11 @@ For more information, see \cite[Theorem 9.7]{brezis2011functional} and \cite[p.1
 
 Recall the Lemma \ref{lemma:clements}, we construct the Cléments interpolator combined with the extension operator such that $C_{h}^{e}: H^{m}( \mathbb{R} ^{d}) \to V_{h}$ such that  $C ^{e} _{h} v := C _{h} v^{e} $.
 We can immediately observe that the interpolation satisfies the global error estimates, that is,
-\begin{align*}
+\begin{align}
     \| v - C _{h}^{e} v \|_{  m, \mathcal{T} _{h} }^{  } & \lesssim h^{l-m}\sum_{T \in \mathcal{T}_h} \| v \|_{ l, \omega(T) }^{  }, \quad m\le l\le k+1 \\
     \| v - C ^{e}_{h}v \|_{ m,\mathcal{F} _{h} }^{  } & \lesssim h^{l-m-\frac{1}{2}}\sum_{T \in \mathcal{T}_h} \| v \|_{ l, \omega(F)  }^{  }, \quad m+\frac{1}{2}  \le  l \le   k+1 \\
 \| v - C ^{e}_{h}v \|_{ m, \Gamma }^{  } & \lesssim h^{l-m-\frac{1}{2}} \sum_{T \in \mathcal{T}_h}  \| v \|_{ l,  \omega(T)  }^{  }, \quad m+\frac{1}{2}  \le  l \le  k+1
-\end{align*}
+\end{align}
  and arguing that $ \sum_{T}^{} \| v \|_{s,\omega ( T)   }^{  } \le C  \| v \|_{s, \mathcal{T}_{h}   }^{  } $ where $C$ is some constant decided by the maximum number of elements in a patch
     $\omega( T)  $ for all $T \in \mathcal{T} _{h}$. This also holds for the inequality $ \sum_{T}^{} \| v \|_{s,\omega ( F)   }^{  } \le C  \| v \|_{s, \mathcal{T}_{h}   }^{  } $. Hence, we have perhaps an even more useful set of inequalities.
 \begin{align}
