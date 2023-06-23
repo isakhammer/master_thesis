@@ -73,9 +73,9 @@ Naturally can we see this is the tools we need to construct an estimate for the 
     \[
         \begin{split}
             \alpha  \|  ( u - C_{h}^{e}u) \|_{ \mathcal{T} _{h} \cap \Omega  }^{ 2}    & \lesssim \|  ( u - C_{h}^{e}u) \|_{0,\mathcal{T} _{h}  }^{ 2} \\
-             &    \lesssim  h^{2(s-0)}    \| u \|_{s,\mathcal{T}_{h} }^{  2}\lesssim  h^{2(s-2)}    \| u \|_{s,\mathcal{T}_{h} }^{  2} \\
+             &    \lesssim  h^{2(r-0)}    \| u \|_{r,\mathcal{T}_{h} }^{  2}\lesssim  h^{2(r-2)}    \| u \|_{r,\mathcal{T}_{h} }^{  2} \\
             \| D^2 ( u - C_{h}^{e}u ) \|_{\mathcal{T} _{h} \cap \Omega   }^{ 2 } &  \lesssim  \|  u - C_{h}^{e}u  \|_{2,\mathcal{T} _{h}   }^{ 2 }   =  \|  u - C_{h}^{e}u  \|_{2,\mathcal{T} _{h}   }^{ 2 } \\
-                                                                                 & \lesssim  h^{2(s-2)} \| u \|_{ s, \mathcal{T}_{h}}^{ 2 }.
+                                                                                 & \lesssim  h^{2(r-2)} \| u \|_{ r, \mathcal{T}_{h}}^{ 2 }.
         \end{split}
     \]
     Here we simply used \eqref{eq:bi_projection_estimates_1}.
@@ -85,15 +85,15 @@ Naturally can we see this is the tools we need to construct an estimate for the 
         \begin{split}
             \gamma \| h^{-\frac{1}{2}} \jump{ \partial _{n} ( u - C_{h}^{e}u ) }   \|_{ \mathcal{F}_{h} \cap \Omega   }^{  2}   & \lesssim
             h^{-1} \|   \partial _{n} ( u - C_{h}^{e}u )    \|_{  \partial \mathcal{T} _{h} }^{2  } \lesssim  h^{-2} \|   \nabla  ( u - C_{h}^{e}u )    \|_{ \mathcal{T} _{h}\cap \Omega  }^{2  }\\
-&=  h^{-2} \|    u - C_{h}^{e}u     \|_{ 1,\mathcal{T} _{h} }^{2  } \lesssim  h^{ -2 } h^{ 2(s - 1)  } \| u \|_{ s, \mathcal{T}_{h}   }^{  2} \\
-& \lesssim   h^{ 2(s - 2)  } \| u \|_{ s, \mathcal{T}_{h}   }^{  2} \\
+&=  h^{-2} \|    u - C_{h}^{e}u     \|_{ 1,\mathcal{T} _{h} }^{2  } \lesssim  h^{ -2 } h^{ 2(r - 1)  } \| u \|_{ r, \mathcal{T}_{h}   }^{  2} \\
+& \lesssim   h^{ 2(r - 2)  } \| u \|_{ r, \mathcal{T}_{h}   }^{  2} \\
         \end{split}
         .
     \]
     And for the boundary term we do a similar procedure, but instead use the first order inverse estimate \eqref{eq:bi_n_cut_inverse_1}. \[
         \begin{split}
             \gamma \| h^{-\frac{1}{2}}  \partial _{n} ( u - C_{h}^{e}u ) \|_{ \Gamma    }^{  2} & \lesssim h^{-2} \|   \nabla  ( u - C_{h}^{e}u )    \|_{ \mathcal{T}_{h} }^{2  }  \lesssim  h^{-2} \|    u - C_{h}^{e}u     \|_{1,2, \mathcal{T}_{h}   }^{2  } \\
-            & \lesssim h^{-2} h^{2(s-1)}   \| u \|_{s, \mathcal{T}_{h}   }^{  2}  \lesssim  h^{2(s- 2)}   \| u \|_{s, \mathcal{T}_{h}   }^{  2}
+            & \lesssim h^{-2} h^{2(r-1)}   \| u \|_{r, \mathcal{T}_{h}   }^{  2}  \lesssim  h^{2(r- 2)}   \| u \|_{r, \mathcal{T}_{h}   }^{  2}
         \end{split}
     \]
             Recall that $\| \mean{ u }   \|_{ \mathcal{F} _{h} }^{  } \le \| u^{+} \|_{ \mathcal{F} _{h}  }^{  } + \| u^{-} \|_{ \mathcal{F} _{h}  }^{  }   \lesssim  \| u \|_{ \partial\mathcal{T }_{h}  }^{2  }  $ and the second order inverse
@@ -102,16 +102,16 @@ Naturally can we see this is the tools we need to construct an estimate for the 
             \[
                 \begin{split}
  \| h^{\frac{1}{2}} \mean{ \partial _{nn} (u - C_{h}^{e}u) }   \|_{\mathcal{F} _{h}^{} \cap \Omega   }^{  2} &  \lesssim h^{} \|   \partial _{nn} (u - C_{h}^{e}u)    \|_{\partial \mathcal{T} _{h} \cap \Omega    }^{  2}  \lesssim h^{} h^{-1}  \|   D^2 (u - C_{h}^{e}u)    \|_{ \mathcal{T} _{h}   }^{  2} \\
-                                                                                                                &  = \|   u - C_{h}^{e}u    \|_{ 2, \mathcal{T} _{h}   }^{  2}  \lesssim h^{2(s - 2)}  \| u \|_{s, \mathcal{T} _{h} }^{  }
+                                                                                                                &  = \|   u - C_{h}^{e}u    \|_{ 2, \mathcal{T} _{h}   }^{  2}  \lesssim h^{2(r - 2)}  \| u \|_{r, \mathcal{T} _{h} }^{  }
                 \end{split}
             \]
                 Similarly we can easily see by using \eqref{eq:bi_projection_estimates_1} and the second order boundary inverse inequality  \eqref{eq:bi_cut_inverse_1} that this must hold,
 
                 \[
-              \| h^{\frac{1}{2}} \partial _{nn}(u - C_{h}^{e}u)     \|_{ \Gamma }^{  2} \lesssim   \|  D^2(u - C_{h}^{e}u)     \|_{ \mathcal{T}_{h}   }^{  2} \lesssim \|  u - C_{h}^{e}u \|_{ 2, \mathcal{T}_{h} }^{2  } \lesssim h^{2(s-2)}  \| u \|_{ s, \mathcal{T}_{h}   }^{2  }
+              \| h^{\frac{1}{2}} \partial _{nn}(u - C_{h}^{e}u)     \|_{ \Gamma }^{  2} \lesssim   \|  D^2(u - C_{h}^{e}u)     \|_{ \mathcal{T}_{h}   }^{  2} \lesssim \|  u - C_{h}^{e}u \|_{ 2, \mathcal{T}_{h} }^{2  } \lesssim h^{2(r-2)}  \| u \|_{ r, \mathcal{T}_{h}   }^{2  }
             \]
 
-    Thus, all elements is bounded by $ h^{2(s-2)}  \| u \|_{ s, \mathcal{T}_{h}   }^{2  } $  and the proof is complete.
+    Thus, all elements is bounded by $ h^{2(r-2)}  \| u \|_{ r, \mathcal{T}_{h}   }^{2  } $  and the proof is complete.
 \end{proof}
 
 \begin{lemma}[Weak galerkin orthogonality]
