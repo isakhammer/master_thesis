@@ -52,10 +52,10 @@ Naturally can we see this is the tools we need to construct an estimate for the 
 
 \begin{lemma}
     \label{lemma:astar_estimate}
-    Let $u \in H^{s}( \Omega ) $ for $s\ge 3$ be a exact solution to the weak problem $\eqref{eq:cont_weak_problem} $. Then we have  \[
-    \|  u - C_{h}u \|_{ a_{h},*  }^{  } \lesssim h^{s-2} \| u \|_{ H^{s}( \Omega )  }^{  }
-    \]
-
+    Let $u \in H^{s}( \Omega ) $ for $s\ge 3$ be a exact solution to $\eqref{eq:cont_weak_problem} $ and let $k$ be the polynomial order. Then we have
+    \begin{equation}
+    \|  u - C_{h}u \|_{ a_{h},*  }^{  } \lesssim h^{r-2} \| u \|_{ r, \Omega  }^{  }, \quad r = \mathrm{min} ( s, k+1)
+    \end{equation}
 \end{lemma}
 \begin{proof}
     By definition is
