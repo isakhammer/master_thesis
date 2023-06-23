@@ -1068,20 +1068,20 @@ Finally, we have the following a priori estimate.
 \begin{lemma}
     \label{lemma:clements}
 
-We define the Clement interpolation as the projection
-$C_{h}: H^{m} \left( \Omega  \right) \mapsto V_{h}$, where $V_{h}$ has the order $k$. Then does the following stability estimate hold,
+    Let $v \in H^{s}( \Omega ) $. We define the Clement interpolation as the mapping
+$C_{h}: L^{2}( \Omega )   \to  V_{h}$, where $V_{h}$ has the order $k$. Then does the following stability estimate hold,
 \[
- \| C_{h} v \|_{H^{m}\left( \Omega  \right)   }^{  } \lesssim \| v \|_{ H^{m}\left( \Omega  \right)  }^{  } \quad \forall v \in H^{m}\left( \Omega  \right),
+ \| C_{h} v \|_{ s, \Omega     }^{  } \lesssim \| v \|_{ s, \Omega   }^{  } \quad \forall v \in H^{s}( \Omega ) ,
 \]
-and if the following conditions for an parameter $l$ is satisfied, it exists error estimates s.t.,
-\[
+and if the following conditions for an parameter $l$ is satisfied, it exists error estimates such that
+\begin{equation}
     \begin{split}
-      m\le l \le k+1  \implies \| v - C_{h} v \|_{ m,p,T   }^{  }  &  \lesssim h^{l-m}_{T} \| v \|_{l,p,\omega \left( T \right)  }^{  } \quad  \forall T \in \mathcal{T} _{h}, \forall v \in H^{l}( \omega \left( T \right)
+      m\le l \le k+1  \implies \| v - C_{h} v \|_{ m,T   }^{  }  &  \lesssim h^{l-m}_{T} \| v \|_{l,\omega \left( T \right)  }^{  } \quad  \forall T \in \mathcal{T} _{h}, \forall v \in H^{l}( \omega \left( T \right)
       ), \\
-      m +\frac{1}{2}\le l \le k+1  \implies \| v - C_{h} v \|_{ m,p,F }^{  } & \lesssim h^{l-m- \frac{1}{2}}_{T} \| v \|_{l,p,\omega \left( F \right)  }^{  } \quad  \forall \partial T \in \mathcal{T} _{h}, \forall v \in H^{l}( \omega \left( F
+      m +\frac{1}{2}\le l \le k+1  \implies \| v - C_{h} v \|_{ m,F }^{  } & \lesssim h^{l-m- \frac{1}{2}}_{T} \| v \|_{l,\omega \left( F \right)  }^{  } \quad  \forall \partial T \in \mathcal{T} _{h}, \forall v \in H^{l}( \omega \left( F
       \right)).
     \end{split}
-\]
+\end{equation}
 
 \end{lemma}
 
@@ -1089,9 +1089,9 @@ and if the following conditions for an parameter $l$ is satisfied, it exists err
 \begin{corollary}
     \label{cor:celement_apriori}
     Let $0 \le l \le k+1$ and let $0\le m \le \min_{} ( 1,l )$.
-    Given Lemma \ref{lemma:clements}  then there exists an $C > 0$ s.t.
+    Given Lemma \ref{lemma:clements}  then does the following estimate hold
     \[
-    \inf_{v_{h} \in \mathcal{P} ^{k}_{c}( \Omega ) } \| v - v_{h} \|_{  m,p,\Omega }^{  } \le C h^{l-m}  \| v \|_{ l,p,\Omega  }^{  }    \forall v \in W_{l,p}( \Omega ).
+    \inf_{v_{h} \in V_{h} } \| v - v_{h} \|_{  m,\Omega }^{  } \lesssim  C h^{l-m}  \| v \|_{ l,\Omega  }^{  } \quad     \forall v \in H^{l}( \Omega ).
     \]
 \end{corollary}
 This result is very useful since it is now sufficient to show that a priori estimates holds to prove convergence rate. For further detailed information about the Cléments interpolation, please investigate \cite[Chapter 1.6]{ern04}.
