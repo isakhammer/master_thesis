@@ -54,12 +54,12 @@ where we defined $f( u) = F'( u) =u( u^2 -1)  $ for $F( u) = \frac{1}{4}( u^{2} 
 generalized to also holds for for functions $g_{0},g_{1},g_{2}: \Omega \to\mathbb{R}   $. While the standard version may be physical correct, this version creates flexibility so we can easily construct manufactured solution on complex domains.
 
     Designing a manufactured solution using $g_{0}( \cdot ) $ may be temping with the formulation \eqref{eq:ch_gen:a}. However, observe that expanding the Laplacian we get,
-\[
+    \begin{equation}
     \begin{split}
         \Delta  \left(  \varepsilon  \Delta u - \frac{1}{\varepsilon }f( u) \right) & = \varepsilon \Delta^2 u - \frac{1}{\varepsilon } \Delta f( u) \\
                                                                                     &= \varepsilon \Delta ^2 u  - \frac{3}{\varepsilon }( 2u \| \nabla u \|_{ 2 }^{ 2 } + u^{2}  \Delta u )   \\
     \end{split}
-\]
+    \end{equation}
 Here we applied the chain rule twice and inserted the derivatives.
 \begin{equation}
     \label{eq:nonlinear_laplace}
