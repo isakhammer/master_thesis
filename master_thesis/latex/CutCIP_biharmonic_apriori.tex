@@ -52,7 +52,7 @@ Naturally can we see this is the tools we need to construct an estimate for the 
 
 \begin{lemma}
     \label{lemma:astar_estimate}
-    Let $u \in H^{s}( \Omega ) $ for $s\ge 3$ be a exact solution to $\eqref{eq:cont_weak_problem} $ and let $k$ be the polynomial order. Then we have
+    Let $u \in H^{s}( \Omega ) $ for $s\ge 3$ be a exact solution to $\eqref{eq:cont_weak_problem} $ and let $k$ be the polynomial order of $V_{h}$. Then we have
     \begin{equation}
     \|  u - C_{h}u \|_{ a_{h},*  }^{  } \lesssim h^{r-2} \| u \|_{ r, \Omega  }^{  }, \quad r = \mathrm{min} ( s, k+1)
     \end{equation}
@@ -118,17 +118,17 @@ Naturally can we see this is the tools we need to construct an estimate for the 
 
 \begin{lemma}[Weak galerkin orthogonality]
 Let $u \in H^{s}( \Omega )  $, $ s\ge 3 $  be the exact solution to   \eqref{eq:cont_weak_problem} and $u_{h} \in V_{h}$ is a discrete solution to \eqref{eq:discrete_CutCIP_prob}. Then is \[
-    a_{h}( u - u_{h}, v) = g_{h} ( u_{h}, v) \quad \forall v \in V_{h}.
+    a_{h}( u - u_{h}, v_{h}) = g_{h} ( u_{h}, v_{h}) \quad \forall v_{h} \in V_{h}.
     \]
 \end{lemma}
 
 \begin{proof}
-   From the definition of the problem \eqref{eq:discrete_CutCIP_prob} and utilizing that $a_{h}( u,v) = l(v ) \forall v \in V_{h} $ can we easily observe that \[
+   From the definition of the problem \eqref{eq:discrete_CutCIP_prob} and utilizing that $A_{h}( u,v_{h}) = a_{h}( u,v_{h}) = l(v_{h} ) \forall v_{h} \in V_{h} $ can we easily observe that \[
        \begin{split}
-   l(v ) & =  A_{h}( u_{h},v) =  a_{h}( u,v)  = a_{h}( u_{h},v)+g_{h}( u_{h},v)
+   l(v ) & =  A_{h}( u_{h},v) =  a_{h}( u,v_{h})  = a_{h}( u_{h},v_{h})+g_{h}( u_{h},v_{h})
        \end{split}
    \]
-    Hence, it is clear that $a_{h}( u -  u_{h}, v) = g_{h}( u_{h},v)  $.
+    Hence, it is clear that $a_{h}( u -  u_{h}, v_{h}) = g_{h}( u_{h},v_{h})  $.
 \end{proof}
 
 \begin{assumption}[EP2]
@@ -141,7 +141,7 @@ Let $u \in H^{s}( \Omega )  $, $ s\ge 3 $  be the exact solution to   \eqref{eq:
 
 \begin{theorem}
     \label{thm:apriori_result}
-    Let $u \in H^{s}( \Omega ) $ , $s\ge 3$ a solution to \eqref{eq:cont_weak_problem} and let $u \in V_{h}$ of order $k\ge 2$ be the discrete solution to \eqref{eq:discrete_CutCIP_prob}. Then for $r = \min_{}\{s, k+2\} $ the error $e = u - u_{h}$ satisfies
+    Let $u \in H^{s}( \Omega ) $ , $s\ge 3$ a solution to \eqref{eq:cont_weak_problem} and let $u \in V_{h}$ of order $k\ge 2$ be the discrete solution to \eqref{eq:discrete_CutCIP_prob}. Then for $r = \min_{}\{s, k+1\} $ the error $e = u - u_{h}$ satisfies
     \begin{align}
         \label{eq:bi_apriori_1}
             \| e \|_{ a_{h},* }^{  } &\lesssim   h^{r-2} \| u \|_{ r,\Omega  }^{  }\\
@@ -153,8 +153,7 @@ Let $u \in H^{s}( \Omega )  $, $ s\ge 3 $  be the exact solution to   \eqref{eq:
 
 \begin{proof}
     We will divide the proof into two steps.
-    \begin{enumerate}[label=\arabic*)]
-        \item We want to prove that $\| e \|_{ a_{h},* }^{  } \lesssim   h^{r-1} \| u \|_{ r,\Omega  }^{  }$.
+        \textbf{Step 1.} We want to prove that $\| e \|_{ a_{h},* }^{  } \lesssim   h^{r-1} \| u \|_{ r,\Omega  }^{  }$.
     Let $e = u - u_{h}$ consist of $e = e_{h} + e_{\pi }$, where the discrete error has the form $e_{h} = C _{h}^{e} u - u_{h}$ and the interpolation error $e_{\pi } = u - C _{h} ^{e}u$. We can then observe that
     \[
         \begin{split}
@@ -188,7 +187,8 @@ Here we noticed that $\| e_{h} \|_{a_{h}  }^{  } + \abs{e_{h}  }_{g_{h}} \lesssi
 \ref{lemma:astar_estimate}.
 Hence, the first part of the proof is complete.
 
-    \item We want to show that $ \| e \|_{ \Omega  }^{  } \lesssim   h^{r} \| u \|_{ r,\Omega  }^{  }$. The idea is to apply the so-called Aubin-Nitsche duality trick while being aware of the ghost penalty $g_{h}$. Let us denote the following
+        \textbf{Step 2.}
+        We want to show that $ \| e \|_{ \Omega  }^{  } \lesssim   h^{r} \| u \|_{ r,\Omega  }^{  }$. The idea is to apply the so-called Aubin-Nitsche duality trick while being aware of the ghost penalty $g_{h}$. Let us denote the following
         observation.
         Assume that $e:= u -u_{h} \in L^{2}( \Omega ) $ and $\psi  \in H^{4}( \Omega ) $.
         Let the corresponding dual problem to \eqref{eq:bi_problem} be
@@ -208,7 +208,7 @@ Hence, the first part of the proof is complete.
         &= a_{h}( u-u_h, \psi + C^{e}_{h}\psi  - C^{e}_{h}\psi )  \\
         &= a_{h}( u-u_h, \psi   - C^{e}_{h}\psi ) +  a_{h}( u-u_h, C^{e}_{h}\psi )  \\
         &= a_{h}( u-u_h, \psi  - C^{e}_{h}\psi )  \\
-        &\le   \|u-u_{h}  \|_{a_{h},*  }^{  }  \| \psi  - C^{e}_{h}\psi \|_{a_{h},*  }^{  }    \\
+        & \lesssim    \|u-u_{h}  \|_{a_{h},*  }^{  }  \| \psi  - C^{e}_{h}\psi \|_{a_{h},*  }^{  }    \\
             \end{split}
         \end{equation}
 
@@ -219,6 +219,7 @@ Hence, the first part of the proof is complete.
         \|u-u_{h}  \|_{a_{h},*  }^{  }  \le h^{r} \| u \|_{r,\Omega  }^{  }\quad  \text{and}\quad  \| \psi  - C^{e}_{h}\psi \|_{a_{h},*  }^{  }  \le h^{r} \| \psi  \|_{4, \Omega   }^{  }.
         \end{equation}
 
+        \red{Rewrite rest of proof.}
         And then standard inverse estimate \eqref{eq:inv1} can we see
         \begin{equation}
             \label{eq:ni_3}
@@ -233,7 +234,6 @@ Hence, the first part of the proof is complete.
             \| e \|_{\Omega   }^{  } \lesssim  h^{r-2} \| u \|_{\Omega   }^{  }
         \end{equation}
 
-    \end{enumerate}
 \end{proof}
 
 
