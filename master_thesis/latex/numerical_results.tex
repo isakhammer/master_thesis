@@ -33,7 +33,7 @@ Condition numbers are essential to solve linear systems because they help us ass
 sensitive to small changes in the input data, potentially leading to inaccurate results. This underline the importance checking the conditional stability of cut cells, hence, motivating to do a so-called translation test with and without ghost
 penalty.
 
-\subsection{ Convergence study for the CutCIP method for the Biharmonic Problem  }%
+\subsection{Convergence study for the CutCIP method for the Biharmonic Problem  }%
 \label{sub:numerical_results_for_cutcip_biharmonic_equation}
 For the convergence study will we consider a square background domain $\widetilde{\Omega} $ with side lengths $L$ and a physical domain $\Omega \subset \widetilde{\Omega}$ on the form $\Omega  = \left\{ ( x,y)  \mid \phi ( x,y) \le 0    \right\} $,
 where $\phi: \mathbb{R} ^2 \to \mathbb{R}  $ is a given level set function. We will consider two cases; a disk described by $\phi( x,y) = x^{ 2} - y^{2} -1  $ and a flower shaped domain,
@@ -183,7 +183,7 @@ Thus, since these norms are equivalent will we in this report focus on $ \kappa_
  or power iteration, which can be quite expensive operations, particularly for large matrices.
 \end{remark}
 
-\subsubsection{Validation of the a priori estimates }%
+\subsection{Validation of the a priori estimates }%
 \label{ssub:numerical_results}
 
 Our goal it validate the Theorem \ref{thm:apriori_result} for $k= 2$ for the Hessian formulation and show that the Laplace formulation has the same properties.
@@ -252,7 +252,7 @@ Remark that we get a slight drop for high refinements due to high condition numb
 \end{figure}
 
 
-\subsubsection{Translation test}%
+\subsection{Translation test}%
 \label{ssub:translation_test}
 
 In order to evaluate the robustness of the technique during adverse cut configurations (refer to Figure \ref{fig:intersection-example}), we will incorporate what is known as a translation test. The fundamental concept involves conducting precise,
@@ -333,77 +333,3 @@ formulation. It is apparent that the error may not only magnify, but potentially
 \label{fig:trans_lap}
 \end{figure}
 
-\subsection{Demonstration on the Physical Cahn Hilliard Problem}%
-\label{sub:demonstration_on_the_physical_cahn_hilliard}
-
-On the physical CH \eqref{eq:strongch} presented we have no analytical solution to check the solution. However, a way to check that the system does behave like expected based on the physical properties \eqref{eq:mass_cons_energy_decrease}. In other
-words, we can check that our discrete solution satisfies \[
-    \begin{split}
- E( u_{h}( \cdot , t_{2}) ) & \le  E( u_{h}( \cdot , t_{1}) )   \text{ for } 0 < t_{1} < t_{2},  \\
-\int_{\Omega }^{} u_{h} ( x,t)  dx & = \int_{\Omega }^{} u_{0}(x)  dx,
-    \end{split}
-\]
-where $u_{0}( x) = u_{h}( x,t) $. Let us define
-\[
- e_{L^{1}( \Omega)  } = \frac{\| u_h(x,t)- u(0,x)\|_{L^1(\Omega)}}{\|u(x,0)\|_{L^1(\Omega)}}
-\]
-
-\begin{figure}[h!]
-\input{"results/physical_CH_plot.tex"}
-\caption{Evolution of the error measure, $e_{L^{1}(\Omega)}$ and the energy functional $E(u_h)$ over time for two different domains: a circular domain and a flower-shaped domain.  }
-\label{fig:physical_CH_plot}
-\end{figure}
-
-We can observe that both laws is showed to hold both for the flower domain and the circular domain in Figure \ref{fig:physical_CH_plot}.The plots confirm the expected physical properties of the Cahn-Hilliard equation. The error measure
-$e_{L^{1}(\Omega)}$ shows small deviations of the numerical solution $u_h(x, t)$ from the initial condition $u(x, 0)$ is very small is in the order of $10^-5$ demonstrating that the mass is conserved. We also observe that the energy functional
-$E(u_h)$ decreases over time, signifying the system's tendency to seek a state of minimal energy.
-
-
-
-
-\begin{figure}[h!]
-    \centering
-    \subfloat[$t=0\tau$]{\label{sub:fig:ill_c0}
-        \includegraphics[width=0.3\textwidth]{results/illustration/c0.png}
-    }\hfill
-    \subfloat[$t=2\tau$]{\label{sub:fig:ill_c2}
-        \includegraphics[width=0.3\textwidth]{results/illustration/c2.png}
-    }\hfill
-    \subfloat[$t=10\tau$]{\label{sub:fig:ill_c10}
-        \includegraphics[width=0.3\textwidth]{results/illustration/c10.png}
-    }
-    \vspace{10pt}
-    \subfloat[t=50$\tau$]{\label{sub:fig:ill_c50}
-        \includegraphics[width=0.3\textwidth]{results/illustration/c50.png}
-    }\hfill
-    \subfloat[$t=200\tau$]{\label{sub:fig:ill_c200}
-        \includegraphics[width=0.3\textwidth]{results/illustration/c200.png}
-    }\hfill
-    \subfloat[$t=1000\tau$]{\label{sub:fig:ill_c1000}
-        \includegraphics[width=0.3\textwidth]{results/illustration/c1000.png}
-    }
-    \caption{Overall caption for the first set of illustrations.}
-\end{figure}
-
-\begin{figure}[h!]
-    \centering
-    \subfloat[$t=0\tau$]{\label{sub:fig:ill_f0}
-        \includegraphics[width=0.3\textwidth]{results/illustration/f0.png}
-    }\hfill
-    \subfloat[$t=2\tau$]{\label{sub:fig:ill_f2}
-        \includegraphics[width=0.3\textwidth]{results/illustration/f2.png}
-    }\hfill
-    \subfloat[$t=10\tau$]{\label{sub:fig:ill_f10}
-        \includegraphics[width=0.3\textwidth]{results/illustration/f10.png}
-    }
-    \vspace{10pt}
-    \subfloat[$t=50\tau$]{\label{sub:fig:ill_f50}
-        \includegraphics[width=0.3\textwidth]{results/illustration/f50.png}
-    }\hfill
-    \subfloat[$t=200\tau$]{\label{sub:fig:ill_f200}
-        \includegraphics[width=0.3\textwidth]{results/illustration/f200.png}
-    }\hfill
-    \subfloat[$t=1000\tau$]{\label{sub:fig:ill_f1000}
-        \includegraphics[width=0.3\textwidth]{results/illustration/f1000.png}
-    }
-\end{figure}
