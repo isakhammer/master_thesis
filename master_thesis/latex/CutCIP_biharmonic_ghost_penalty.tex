@@ -5,28 +5,20 @@
 
 We have the following assumptions for the ghost penalty.
 \begin{enumerate}[label=\textbf{EP\arabic*}]
-    \item \label{as:EP1} The ghost penalty $g_{h}$ extends the $H^{1}$ norm s.t. \[
-    \| D^2v \|_{ \mathcal{T} _{h} }^{ 2 }  \lesssim \| D^2 v \|_{ \Omega  }^{  2} + \abs{ v } _{g_{h}}^2
-    \]
+    \item \label{as:EP1} The ghost penalty $g_{h}$ extends the $H^{1}$ norm such that
+        \begin{equation}
+    \| D^2v_{h} \|_{ \mathcal{T} _{h} }^{ 2 }  \lesssim \| D^2 v_{h} \|_{ \Omega  }^{  2} + \abs{ v_{h} } _{g_{h}}^2 \quad \forall v_{h} \in V_{h}
+        \end{equation}
 \item \label{as:EP2} For $v \in H^{s}( \Omega ) $ and $r = \min \{s,k+2 \} $, the semi-norm $\abs{ \cdot  }_{g_{h}} $ satisfies the following estimate, \[
     \abs{ \pi _{h}^{e} v } _{g_{h}} \lesssim  h^{r-2} \| v \|_{ r,\Omega  }^{  }.
     \]
 \end{enumerate}
-
-
-Our goal is to construct a variant of face-based ghost penalties such that the fulfilled.
-What we will see is the following result is fundamental.
-
-\begin{lemma}
-    Let $T_{1},T_{2 } \in  \mathcal{T} _{h}$ be two elements sharing a common face $F$. Then for $v \in V_{h}$  we have \[
-    \| v \|_{ T_{1} }^{  }  \lesssim \| v \|_{ T_{2} }^{  } \sum_{0\le j\le k}  {h^{2j +1}}^{} ( \jump{ \partial _{n}^{j} v }, \jump{ \partial ^{j}_{n} v }    )_{F}
-    \]
-
-\end{lemma}
-\begin{proof}
-    See \cite[Lemma 2.19]{gurkan2019stabilized}.
-\end{proof}
 The goal in this chapter is to engineer an ghost penalty which fulfills these assumptions.
+
+Let us denote the generalization of the normal derivative,
+\begin{equation}
+\partial _{n}^{j} v = \sum_{\abs{ \alpha  } =j }^{k} \frac{D ^{\alpha }v( x) n^{\alpha }}{\alpha !}, \quad \abs{ \alpha  } = \sum_{i=0}^{d} \alpha_{i}.
+\end{equation}
 We denote the multi-index $\alpha  = ( \alpha _{1}, \ldots, \alpha _{d})  $ of order $\abs{ \alpha  } = \sum_{i}^{}  \alpha _{i} = k $   and the normal vectors $n^{\alpha } = n_{1}^{\alpha _{1}} \ldots n_{d}^{\alpha _{d}}$.
 Recall the notation for the derivates $D^{\alpha } v$
 \footnote{
@@ -37,14 +29,23 @@ Remark that the operator $D^{\alpha }$  is related to with the derivate operator
 \end{bmatrix}
  $.
 },
-that is \[
+that is
+\begin{equation}
 D ^{0} v  = v, \quad   D ^{1}v  = \nabla v \text{ and }  D ^{2} v  = J(\nabla v) = \mathrm{Hess}(v).
-\]
+\end{equation}
 where $J$ is the Jacobian operator .
 
-Hence, from this is it natural to introduce the generalization of the normal derivative, \[
-\partial _{n}^{j} v = \sum_{\abs{ \alpha  } =j }^{k} \frac{D ^{\alpha }v( x) n^{\alpha }}{\alpha !}, \quad \abs{ \alpha  } = \sum_{i=0}^{d} \alpha_{i}.
-\]
+The following result is the backbone of the face-based ghost penalty.
+\begin{lemma}
+    Let $T_{1},T_{2 } \in  \mathcal{T} _{h}$ be two elements sharing a common face $F$. Then for $v \in V_{h}$  we have \[
+    \| v \|_{ T_{1} }^{  }  \lesssim \| v \|_{ T_{2} }^{  } \sum_{0\le j\le k}  {h^{2j +1}}^{} ( \jump{ \partial _{n}^{j} v }, \jump{ \partial ^{j}_{n} v }    )_{F}
+    \]
+
+\end{lemma}
+\begin{proof}
+    See \cite[Lemma 2.19]{gurkan2019stabilized}.
+\end{proof}
+
 An useful result that may help us design ghost penalty is the following estimate.
 
 \begin{lemma}
