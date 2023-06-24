@@ -26,9 +26,9 @@ function main(;domain="flower")
     L=2.70
     n = 2^7
     h = 2*L/n
-    it = 500
+    it = 1000
     γ = 20
-    τ = ε^2/30
+    τ = ε^2/60
     γg1 = 10
     γg2 = 0.5
 
@@ -142,14 +142,14 @@ function main(;domain="flower")
     pvd[t] = createvtk(Ω, graphicsdir*"/sol_$t"*".vtu",cellfields=["uh"=>uh, "u_ex"=>u_ex(t)])
 
     # Adding initial plotting values
-    e_L1_ts = Float64[]
+    e_u_ts = Float64[]
     Es = Float64[]
     ts = Float64[]
     push!(ts, t)
     E = sum( ∫((ε/2)*( ∇(uh)⋅∇(uh) ) + (1/ε)*(1/4)*((uh*uh - 1)*(uh*uh - 1))  )dΩ)
-    e_L1 = sum( ∫( (u0 - uh ) )dΩ)
+    e_u = sum( ∫( (u0 - uh ) )dΩ)
     push!(Es, E)
-    push!( e_L1_ts, e_L1/u0_L1)
+    push!( e_u_ts, e_u/u0_L1)
 
     println("========================================")
     println("Solving Cahn-Hilliard with t0 = $t0, T = $T and time step τ = $τ with Nt_max = $Nt_max timesteps")
@@ -179,9 +179,9 @@ function main(;domain="flower")
         # Adding initial plotting values
         push!(ts, t)
         E = sum( ∫(( ∇(uh)⋅∇(uh) ) + (1/4)*((uh*uh - 1)*(uh*uh - 1))  )dΩ)
-        e_L1 = sum( ∫( (u0 - uh ) )dΩ)
+        e_u = sum( ∫( (u0 - uh ) )dΩ)
         push!(Es, E)
-        push!( e_L1_ts, e_L1/u0_L1)
+        push!( e_u_ts, e_u/u0_L1)
         pvd[t] = createvtk(Ω, graphicsdir*"/sol_$t"*".vtu",cellfields=["uh"=>uh, "u_ex"=>u_ex(t)])
     end
 
@@ -193,15 +193,8 @@ function main(;domain="flower")
     end
 
     # Save results
-    df = DataFrame(ts=ts, Es=Es, e_L1_ts=e_L1_ts)
+    df = DataFrame(ts=ts, Es=Es, e_u_ts=e_u_ts)
     CSV.write(maindir*"/sol.csv", df, delim=',')
-
-    # Normalize data
-    p1 = plot(ts, e_L1_ts, label = L"$ e_{L^1(\Omega)} $", xlabel="t")
-
-    p2 = plot(ts[2:end], Es[2:end], xscale=:log10, yscale=:log10, label = L"$E(u)$", xlabel="t")
-    savefig(p1,maindir*"/mass_cons.png" )
-    savefig(p2,maindir*"/energy.png" )
 
     parameters = Dict(
         "domain" => domain,
@@ -214,9 +207,15 @@ function main(;domain="flower")
         "n"=> 2^7,
         "it"=> it
     )
-
     YAML.write_file(maindir*"/parameters.yml", parameters)
 
+    # Normalize data
+    p1 = plot(ts, e_u_ts, label = "e_u", xlabel="t")
+    p2 = plot(ts[2:end], Es[2:end], xscale=:log10, yscale=:log10, label = "E(u)", xlabel="t")
+    savefig(p1,maindir*"/mass_cons.png")
+    savefig(p2,maindir*"/energy.png")
+
 end
+
 main(domain="circle")
 main(domain="flower")
