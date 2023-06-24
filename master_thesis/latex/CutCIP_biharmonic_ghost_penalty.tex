@@ -37,9 +37,10 @@ where $J$ is the Jacobian operator .
 
 The following result is the backbone of the face-based ghost penalty.
 \begin{lemma}
-    Let $T_{1},T_{2 } \in  \mathcal{T} _{h}$ be two elements sharing a common face $F$. Then for $v \in V_{h}$  we have \[
-    \| v \|_{ T_{1} }^{  }  \lesssim \| v \|_{ T_{2} }^{  } \sum_{0\le j\le k}  {h^{2j +1}}^{} ( \jump{ \partial _{n}^{j} v }, \jump{ \partial ^{j}_{n} v }    )_{F}
-    \]
+    Let $T_{1},T_{2 } \in  \mathcal{T} _{h}$ be two elements sharing a common face $F$. Then for $v_{h} \in V_{h}$ with polynomial degree $k$  we have
+    \begin{equation}
+    \| v_{h} \|_{ T_{1} }^{  }  \lesssim \| v_{h} \|_{ T_{2} }^{  } + \sum_{0\le j\le k}  {h^{2j +1}}^{} ( \jump{ \partial _{n}^{j} v_{h} }, \jump{ \partial ^{j}_{n} v_{h} }    )_{F}
+    \end{equation}
 
 \end{lemma}
 \begin{proof}
@@ -50,10 +51,11 @@ An useful result that may help us design ghost penalty is the following estimate
 
 \begin{lemma}
     \label{lemma:bi_local_facet_estimate}
-    Let $T_{1}, T_{2} \in  \mathcal{T} _{h} $ share a common facet $F \in \mathcal{F}_{h} $. Then for $v_{} \in  V_{h}$  does this hold \[
-    \| v \|_{ T_{1} }^{  2}  \lesssim  \| v \|_{ T_{2} }^{2  }  + \sum_{j=0}^{k}  h^{2j +1} ( \jump{ \partial _{n}^{j} v}, \jump{ \partial _{n}^{j} v}    )_{F}
-    \]
-        Here is $k$ the polynomial degree.
+    Let $T_{1}, T_{2} \in  \mathcal{T} _{h} $ share a common facet $F \in \mathcal{F}_{h} $ and let $v_{} \in  V_{h}$ with polynomial degree $k$. Then does this hold,
+    \begin{equation}
+    \| v_{h} \|_{ T_{1} }^{  2}  \lesssim  \| v_{h} \|_{ T_{2} }^{2  }  + \sum_{j=0}^{k}  h^{2j +1} ( \jump{ \partial _{n}^{j} v_{h}}, \jump{ \partial _{n}^{j} v_{h}}    )_{F}.
+    \end{equation}
+
 \end{lemma}
 
 \begin{proof}

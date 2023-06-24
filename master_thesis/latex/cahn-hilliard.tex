@@ -40,19 +40,20 @@ We can easily observe that the biharmonic equation is a term of this equation. C
 
 Recall the strong form Cahn-Hilliard equation. Let $ u( x,0) =  u_{0}$ then is the dynamics on the form,
 
-\begin{equation}
-\label{eq:ch_gen}
-    \begin{split}
-\partial _{t} u + \Delta  \left(  \varepsilon  \Delta u - \frac{1}{\varepsilon }f( u) \right)   &= g_{0}( x)   \quad \text{ in } \Omega  \\
-\partial _{n} u &= g_{1}( x)  \quad \text{ on } \Gamma  \\
-\partial _{n}    \Delta u   &= g_{2}(x)  \quad \text{ on } \Gamma  \\
-    \end{split}
-\end{equation}
-where we used the notation $f( u) = F'( u) =u( u^2 -1)  $ for $F( u) = \frac{1}{4}( u^{2} - 1)^{2} $. $\Omega \subset \mathbb{R} ^{d} $  for $d = 2,3$. In contrast to the standard version presented in the introduction \eqref{eq:strongch}, is this version
+
+\begin{subequations}
+    \label{eq:ch_gen}
+    \begin{align}
+    \label{eq:ch_gen:a}
+        \partial _{t} u + \Delta  \left(  \varepsilon  \Delta u - \frac{1}{\varepsilon }f( u) \right)   &= g_{0}( x)   \quad \text{ in } \Omega  \\
+        \partial _{n} u &= g_{1}( x)  \quad \text{ on } \Gamma  \\
+        \partial _{n}    \Delta u   &= g_{2}(x)  \quad \text{ on } \Gamma
+    \end{align}
+\end{subequations}
+where we defined $f( u) = F'( u) =u( u^2 -1)  $ for $F( u) = \frac{1}{4}( u^{2} - 1)^{2} $ and the domain $\Omega \subset \mathbb{R} ^{d} $  for $d = 2,3$. In contrast to the standard version presented in the introduction \eqref{eq:strongch}, is this version
 generalized to also holds for for functions $g_{0},g_{1},g_{2}: \Omega \to\mathbb{R}   $. While the standard version may be physical correct, this version creates flexibility so we can easily construct manufactured solution on complex domains.
 
-\begin{remark}
-    Computing manufactured solution using $g_{0}$ may be temping with the formulation presented in formulation \eqref{eq:ch_gen}. However, observed that expanding the Laplacian we get,
+    Designing a manufactured solution using $g_{0}( \cdot ) $ may be temping with the formulation \eqref{eq:ch_gen:a}. However, observe that expanding the Laplacian we get,
 \[
     \begin{split}
         \Delta  \left(  \varepsilon  \Delta u - \frac{1}{\varepsilon }f( u) \right) & = \varepsilon \Delta^2 u - \frac{1}{\varepsilon } \Delta f( u) \\
@@ -60,14 +61,14 @@ generalized to also holds for for functions $g_{0},g_{1},g_{2}: \Omega \to\mathb
     \end{split}
 \]
 Here we applied the chain rule twice and inserted the derivatives.
-\[
+\begin{equation}
+    \label{eq:nonlinear_laplace}
     \begin{split}
 \Delta f( u)  &= \nabla \cdot \nabla f( u)  = \nabla \cdot  \left[ f' ( u) \partial _{x_{1}}u, \ldots, f' ( u) \partial _{x_{d}}u \right] ^{T} \\
 & =  f'' ( u)( ( \partial _{x_{1}}u )^{2} + \ldots +( \partial _{x_{d}}u )^{2} ) +  f' ( u)( \partial _{x_{1} x_{1}}u + \ldots +   \partial _{x_{d} x_{d}}u ) \\
 &=  f'' ( u) \| \nabla u \|_{ 2 }^{ 2 } + f' ( u)  \Delta u  = 6u \| \nabla u \|_{ 2 }^{ 2 } + 3u^{2}  \Delta u
     \end{split}
-\]
-\end{remark}
+\end{equation}
 
 \subsection{ CIP method for the Cahn Hilliard Equation on a Polygonal mesh}%
 \label{sub:writing_the_cahn_hilliard_equation_of_weak_form}
