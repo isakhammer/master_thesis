@@ -146,7 +146,11 @@ EOC( k) =  \frac{\log \left(  \frac{e^{k-1}}{e^{k}} \right)}{\log \left(  \frac{
 \]
 Here we define the error $e^{k} = \| u - u_{h}^{k} \|_{  }^{  } $, where we choose to measure in the norms $ \|\cdot   \|_{L^2( \Omega )   }^{  },   \|\cdot   \|_{H^1( \Omega )   }^{  } $ and $ \|\cdot   \|_{ a_{h},* }^{  }$.
 
-Recall that $V_{h} = \mathcal{P} ^{k}( \mathcal{T} _{h}) $ is spanned by the polynomial basis $\left\{ \phi _{1}, \ldots, \phi _{N}  \right\} $ s.t. $dim(V_{h}) = N$, where $N$ is the so-called number of degrees of freedom (ndofs). From basic theory
+\subsection{Note on condition number}%
+\label{sub:note_on_condition_number}
+
+
+Recall that $V_{h} $ is spanned by the polynomial basis $\left\{ \phi _{1}, \ldots, \phi _{N}  \right\} $ s.t. $dim(V_{h}) = N$, where $N$ is the so-called number of degrees of freedom (ndofs). From basic theory
 do we know that we can span the discrete solution s.t.
 $u_{h} = \sum_{i=1}^{N}  U_{i} \phi_{i} $ with coefficients $\left\{
 U_{i}\right\} _{i=1}^{N}$ and the stiffness matrix $\left[ A  \right] _{ji} = a_{h}( \phi _{i}, \phi _{j}) $ and vector $\left[ F \right] _{j} = l_{h}( \phi_{j} ) $. Thus, we have the following equivalent linear system of the problem finding a $u_{h} \in  V_{h}$ s.t.
@@ -163,10 +167,10 @@ Assume that $A $ is invertible, then we define the condition number for a matrix
 \]
 Because of the connection of $l^{2}$ norms of a matrix and its eigenvalues is $k_{2}( A) $ preferred in most cases numerical analysis. However, from linear algebra is a well known result that $ \frac{1}{\sqrt{N} }  \| A \|_{ \infty }^{  }  \le \| A \|_{2  }^{  } \le
 \sqrt{N}  \| A \|_{\infty  }^{  }  $ for any matrix $A \in R^{N\times N}$  \footnote{
-    The identity naturally appears from the standard inequality $\| v \|_{ \infty }^{  } \le  \| v \|_{\infty  }^{  } \le \sqrt{N}  \| v \|_{ \infty }^{  }   $ for $v \in R^{N}$, which simply comes from the fact that  $ \| v \|_{\infty  }^{ 2 } = \max_{i} \abs{ v_{i} }^{2} \le \sum_{i}^{n}   \abs{ v_{i} }^{2} = \| v \|_{ 2 }^{2  } \le N      \max_{i} \abs{ v_{i} }^{2} = N \| v \|_{
+    The identity naturally appears from the standard inequality $\| v \|_{ \infty }^{  } \le  \| v \|_{2  }^{  } \le \sqrt{N}  \| v \|_{ \infty }^{  }   $ for $v \in R^{N}$, which simply comes from the fact that  $ \| v \|_{\infty  }^{ 2 } = \max_{i} \abs{ v_{i} }^{2} \le \sum_{i}^{n}   \abs{ v_{i} }^{2} = \| v \|_{ 2 }^{2  } \le N      \max_{i} \abs{ v_{i} }^{2} = N \| v \|_{
     \infty}^{ 2 }$. Now let $A\in \mathbb{R} ^{N \times N}$ be any matrix. We can then deduce that $ \| A \|_{ 2 }^{  } = \max_{v \in \mathbb{R} ^{N}} \frac{\| Av \|_{2  }^{  }}{\| v \|_{ 2 }^{  } } \ge \max_{v \in \mathbb{R} ^{N}}
     \frac{\| Av \|_{ \infty  }^{  }}{ \sqrt{N} \| v \|_{ \infty}^{  } } = \frac{1}{ \sqrt{N} } \| A \|_{ \infty }^{  }    $ and $ \| A \|_{ 2 }^{  } = \max_{v \in \mathbb{R} ^{N}} \frac{\| Av \|_{2  }^{  }}{\| v \|_{ 2 }^{  } } \le  \max_{v \in \mathbb{R} ^{N}}
-    \frac{\sqrt{N} \| Av \|_{ \infty  }^{  }}{  \| v \|_{ \infty}^{  } } =  \sqrt{N} \| A \|_{ \infty }^{  }    $. Hence, the identity is proven.
+    \frac{\sqrt{N} \| Av \|_{ \infty  }^{  }}{  \| v \|_{ \infty}^{  } } =  \sqrt{N} \| A \|_{ \infty }^{  }    $. Hence, the identity $\frac{1}{\sqrt{N} } \| A \|_{\infty  }^{  } \le \| A \|_{ 2 }^{  }\le \sqrt{N} \| A \|_{ \infty  }^{  }   $  is proven.
 
 }. Using this fact, do we have a upper and lower limit of the condition number ,
 \[
