@@ -12,6 +12,7 @@ main.pdf
 main.out
 main.dvi
 main.synctex(busy)
+main.toc
 
 bibliography.aux
 bibliography.fdb_latexmk
