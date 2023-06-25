@@ -172,7 +172,7 @@ Thus, since these norms are equivalent will we in this report focus on $ \kappa_
 \label{ssub:numerical_results}
 
 Our goal it validate the Theorem \ref{thm:apriori_result} for $k= 2$ for the Hessian formulation and show that the Laplace formulation has the same properties.
-The big-oh $O( h^{r})$ is defined to be to be a upper bound such that it exists an $C>0$ s.t.  $\| e \|_{  }^{  } \le M h^{r} \text{ for all } h$, where $r$ is the order of convergence. Since we only will implement $k=2$, we validate that it exists an upper bound $ O( h)  $ for  $\| e \|_{L^{2}( \Omega )   }^{  }$  and $O( h^2)  $ for $\| e \|_{ a_{h},* }^{  } $.
+The big-oh $O( h^{r})$ is defined to be to be a upper bound such that it exists an $C>0$ such that $\| e \|_{  }^{  } \le C h^{r} \text{ for all } h$, where $r$ is the order of convergence. Since we only will implement $k=2$, we validate that it exists an upper bound $ O( h)  $ for  $\| e \|_{L^{2}( \Omega )   }^{  }$  and $O( h^2)  $ for $\| e \|_{ a_{h},* }^{  } $.
 We did the following convergence tests.
 \begin{itemize}
     \item \textbf{Convergence on circe domain}
@@ -185,7 +185,7 @@ We did the following convergence tests.
         and $\| e  \|_{L^2( \Omega )   }^{  } $.  We also get a consistent EOC of 2 for $\| e \|_{ H^{1}(\Omega  )  }^{  } $, even though we do not have theoretical a priori estimates of this norm.
         Remark that we get a slight drop for high refinements due to high condition number, which is expected since it has been shown that the condition number $\kappa_{2} ( A) $  increases with the order of $O( h^{-4}) $\cite{li07}.
     \item \textbf{Convergence on flower domain}
-        We consider the manufactured solution s.t.
+        We consider the manufactured solution such that
         \begin{equation}
         \label{eq:man_sol_2}
             u(x,y) =  \sin\left( 2\pi x \right)\cos\left(2\pi y\right)
