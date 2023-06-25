@@ -57,9 +57,9 @@ function generate_plots(data, path)
     Plots.plot!(p, legendfontsize=12)  # Adjust the value 12 to your desired font size
 
     # Create a new plot for condition numbers
-    p_cond = Plots.plot(size=default_size, legend=:outertopright, xscale=:log2, yscale=:log2, minorgrid=true)
+    p_cond = Plots.plot(size=default_size, legend=:outertopright, xscale=:log2, yscale=:log10, minorgrid=true)
     Plots.plot!(p_cond, hs, data.cond_numbers, color="red", label=L"\kappa_{\infty}(A)")
-    Plots.scatter!(p_cond, hs, data.cond_numbers, primary=false)
+    Plots.scatter!(p_cond, hs, data.cond_numbers, color="red", primary=false)
 
     # Add O(h^-4) series into the condition numbers plot
     Plots.plot!(p_cond, hs_hat, 10^5*hs_hat.^(-4), color="black", label=L"O(h^{-4})")
