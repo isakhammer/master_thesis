@@ -1,14 +1,16 @@
 \newpage
-\section{Cut continuous interior penalty method for the biharmonic problem}%
+\section{Cut continuous interior penalty methods for the biharmonic problem}%
 \label{sec:cutcip_biharmonic_problem}
 
 
-Questions arise when we want to allow for complex geometries where some physical domain $\Omega $ has a smooth boundary $\Gamma $ and, thus, cannot be fully covered of a fitted mesh. This motivated us to define a unfitted finite element method.
-The concept is to generate a structured background mesh which fully covers $\Omega $ , but does necessarily fit it perfectly. Conceptionally, is the bilinear form $a_{h}( \cdot ,\cdot ) $  and linear form $l_{h}( \cdot ) $  still associated with the
-physical domain with the discrete space $V_{h}$ defined in the unfitted mesh. However, we will run into geometrical problems when
-so-called cut finite elements has a very small intersection of the physical domain, i.e, $\abs{ T \cap \Omega  }_{d} \ll \abs{ T }_{d}  \lesssim h^{d}$ and $\abs{ \Gamma \cap T }_{d} \ll  h^{d-1}$, where $\abs{ \cdot  }_{d} $ is the
+Questions arise when we want to allow for complex geometries where some physical domain $\Omega $ has a smooth boundary $\Gamma $.
+We propose using applying the so-called cut finite element method \cite{burman2015cutfem}.
+The concept is to generate a structured background mesh which fully covers $\Omega $, but does not necessarily fit to the boundary perfectly.
+For consistency, integration of the contribution is performed on the physical domain, but the involved discrete test and trial functions in $V_{h}$ are defined on the background mesh.
+However, we will run into geometrical problems when
+so-called cut finite elements has a very small intersection of the physical domain, i.e, $\abs{ T \cap \Omega  }_{d} \ll \abs{ T }_{d}  \lesssim h^{d}$ and $\abs{ \Gamma \cap T }_{d-1} \ll  h^{d-1}$, where $\abs{ \cdot  }_{d} $ is the
 measure of the volume in dimension $d$.
-The cut elements are identified as a crucial geometric issue since the inverse inequalities outlined in Subsection \ref{sub:some_general_inequalities} do not generalize well to these elements. This highlights challenges in establishing stability and a priori estimates for any geometric arrangement.
+The cut elements are identified as a crucial geometric issue since the inverse inequalities outlined in Section \ref{sub:some_general_inequalities} do not generalize well to these elements. This identifies the challenges in establishing theoretical stability and a priori estimates for any geometric arrangement.
 
 One way do handle this issue is to introduce the so-called cut finite element method (CutFEM).
 The method is adding an stabilization term, also known as the so-called ghost penalty term, which extends the finite element space from the interior elements outside the physical domain  stable way which also guarantees stabilization and geometrical robustness.
