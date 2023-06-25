@@ -487,9 +487,9 @@ We may introduce our first assumption on the ghost penalty.  Inspired by the exp
 \begin{assumption*}[EP1]
     \label{as:bi_EP1}
     The ghost penalty $g_{h}$ extends the $H^{2}$ norm such that
-    \begin{equation*}
+    \begin{equation}
     \| D^2 v \|_{ \mathcal{T} _{h} }^{ 2 } \lesssim  \| D^2 v \|_{ \Omega  }^{ 2 } + \abs{ v } _{g_{h}}^{2}.
-    \end{equation*}
+    \end{equation}
 \end{assumption*}
 
 
@@ -509,9 +509,16 @@ Combing the results we get the following convenient corollary.
     \end{equation}
 \end{corollary}
 \begin{proof}
-    The the first result \eqref{eq:inv_est} is a direct result of \eqref{eq:bi_identity}, Assumption \ref{as:bi_EP1} and the definition of $\| \cdot  \|_{ A_{h} }^{  } $.
+    The first result \eqref{eq:inv_est} is a direct result of \eqref{eq:bi_identity}, Assumption \ref{as:bi_EP1} and the definition of $\| \cdot  \|_{ A_{h} }^{  } $.
     The second result \eqref{eq:asta_Ah} is simply a observation that the terms in \eqref{eq:inv_est} appears in $\| \cdot   \|_{a_{h},*  }^{  } $, hence, the inequality follows.
 \end{proof}
+
+\begin{remark}
+    The alternative version the Assumption EP1 \ref{as:bi_EP1} for the Laplace formulation \eqref{eq:laplace_prob} is simply $\| \Delta ^2 v_{h} \|_{ \mathcal{T} _{h} }^{ 2 } \lesssim  \| \Delta ^2 v \|_{\Omega   }^{2  } + \abs{ v_{h} } _{g_{h}} ^{2}
+    $ and, similarly, is it then clear that $ h \| \Delta v  \|_{\mathcal{F} \cap \Omega   }^{ 2 } +h \| \Delta^2 v_{h}  \|_{\mathcal{T} _{h} \Gamma   }^{  } \lesssim  \| \Delta ^2 v \|_{\Omega   }^{2  } + \abs{ v_{h} } _{g_{h}} ^{2} $ would follow  as in
+    \eqref{eq:inv_est}.
+
+\end{remark}
 
 \begin{lemma}
     \label{lemma:bi_Ah_coercive}
