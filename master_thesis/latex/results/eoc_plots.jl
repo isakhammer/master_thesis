@@ -1,6 +1,6 @@
 using Plots
 pgfplotsx()
-default_size = (300, 300)
+default_size = (300, 400)
 
 using CSV
 using YAML
@@ -62,14 +62,16 @@ function generate_plots(data, path)
     Plots.scatter!(p_cond, hs, data.cond_numbers, color="red", primary=false)
 
     # Add O(h^-4) series into the condition numbers plot
-    Plots.plot!(p_cond, hs_hat, 10^5*hs_hat.^(-4), color="black", label=L"O(h^{-4})")
+    Plots.plot!(p_cond, hs_hat, 10^5*hs_hat.^(-4), linestyle = :dash, color="black", label=L"O(h^{-4})")
 
     Plots.xlabel!(p_cond, "h")
     Plots.plot!(p_cond, minorgrid=false)
     Plots.plot!(p_cond, legendfontsize=12)  # Adjust the value 12 to your desired font size
 
     # Combine the two plots into a single plot with a vertical layout
-    p_combined = Plots.plot(p, p_cond, layout=(2, 1), size=default_size)
+    layout_matrix = @layout [a{0.6h}; b{0.4h}]
+    p_combined = Plots.plot(p, p_cond, layout=layout_matrix, size=default_size)
+    # p_combined = Plots.plot(p, p_cond, layout=(2, 1), size=default_size)
 
     savefig(p_combined, "$path-plot.tex")
 
