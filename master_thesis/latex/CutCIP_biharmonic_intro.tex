@@ -413,12 +413,12 @@ Note that it holds that $\mathcal{T} _{h} \cap  \Omega   = \Omega  $ and $\mathc
             \coordinate (C2) at (2.6,0.7);
             \draw[-, line width=2pt, >=stealth] ($(C2)$) to[bend right=0.9] node[midway,xshift=-2.5cm, yshift=-0.5cm] {$\Gamma $} ($(C1)$);
             % Legend
-            \begin{scope}[shift={(2.3,0.3)}]
+            \begin{scope}[shift={(2.3,0.4)}]
                 \draw (0,0.4) rectangle (1.3,1.5);
                 \fill[green!30] (0.2,1.3) rectangle (0.4,1.1);
-                \node[right] at (0.4,1.2) {$\mathcal{T}_{\Gamma}$};
+                \node[right] at (0.4,1.2) {$\mathcal{T}^{\Gamma}_{h}$};
                 \fill[blue!30] (0.2,0.8) rectangle (0.4,0.6);
-                \node[right] at (0.4,0.7) {$\mathcal{T}_{int}$};
+                \node[right] at (0.4,0.7) {$\mathcal{T}^{\mathrm{int} }_{h}$};
             \end{scope}
 
             \coordinate (D1) at (0,0.0);
@@ -429,7 +429,7 @@ Note that it holds that $\mathcal{T} _{h} \cap  \Omega   = \Omega  $ and $\mathc
 
         \end{tikzpicture}
     \end{minipage}
-        \caption{Illustration of two examples of bad cut cells with an arbitrary small length $\varepsilon \ll 1 $. Let $T \in  \mathcal{T}_{\Gamma } $ be a cut cell.  On the left example, is it clear that $\abs{ \Gamma \cap T }
+        \caption{Illustration of two examples of bad cut cells with an arbitrary small length $\varepsilon \ll 1 $. Let $T \in  \mathcal{T}^{\Gamma }_h $ be a cut cell.  On the left example, is it clear that $\abs{ \Gamma \cap T }
             \lesssim  h^{d-1}$ and $  \ \abs{ \Omega  \cap T } \lesssim  \varepsilon  h^{d}$  . However, on the right example is it clear that  $\abs{ \Gamma \cap T }
             \lesssim  \varepsilon h^{d-1}$ and $\abs{ \Omega  \cap T } \lesssim  \varepsilon  h^{d}$.}
         \label{fig:intersection-example}
