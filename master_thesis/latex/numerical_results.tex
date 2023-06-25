@@ -12,7 +12,7 @@ Condition numbers are essential to solve linear systems because they help us ass
 sensitive to small changes in the input data, potentially leading to inaccurate results. This underline the importance checking the conditional stability of cut cells, hence, motivating to do a so-called translation test with and without ghost
 penalty.
 
-\subsection{Convergence study for the cut finite element method method for the Biharmonic Problem  }%
+\subsection{Convergence study for the cut finite element method method for the biharmonic problem  }%
 \label{sub:numerical_results_for_cutcip_biharmonic_equation}
 For the convergence study will we consider a square background domain $\widetilde{\Omega} $ with side lengths $L$ and a physical domain $\Omega \subset \widetilde{\Omega}$ on the form $\Omega  = \left\{ ( x,y)  \mid \phi ( x,y) \le 0    \right\} $,
 where $\phi: \mathbb{R} ^2 \to \mathbb{R}  $ is a given level set function. We will consider two cases; a circular domain,
@@ -184,7 +184,7 @@ We did the following convergence tests.
         The result can be shown on the in Figure \ref{fig:conv_hes_lap} and Table \ref{tab:conv_hes_lap}. Here we observe that for we clearly get optimal convergence, that is, we get a consistent EOC 1 and 2 for the respective norms $\| e  \|_{a_{h},*  }^{  } $
         and $\| e  \|_{L^2( \Omega )   }^{  } $.  We also get a consistent EOC of 2 for $\| e \|_{ H^{1}(\Omega  )  }^{  } $, even though we do not have theoretical a priori estimates of this norm.
         We also see that the condition number $\kappa _{\infty}( A)  $ has a expected
-        convergence of $-4$ and, thus, for small $h\le \frac{1}{512}$ we see a drop in convergence rate.
+        convergence of $-4$ and, thus, for small $h\le \frac{L}{512}$ we see a drop in convergence rate.
     \item \textbf{Convergence on flower domain}
         We consider the manufactured solution such that
         \begin{equation}
@@ -193,7 +193,7 @@ We did the following convergence tests.
         \end{equation}
         In this case must we assume non homogeneous Neumann conditions, and thus we only test the numerical results for the Laplace formulation. The result can be shown on the in Figure \ref{fig:conv_flower_lap} and Table \ref{tab:conv_flower_lap}. Here we
         observe that for we get optimal convergence, that is EOC of order 1 and 2 for $\| e  \|_{a_{h},*  }^{  } $ and  $ \| e  \|_{L^{2}( \Omega )   }^{  } $ norm. Again, we see that the condition number $\kappa _{\infty}( A)  $ has a EOC of order
-        $-4$ and, thus, for small $h\le \frac{1}{512}$ we see a drop in convergence rate for the $\| e_{h} \|_{ L^{2} }^{  } $ norm.
+        $-4$ and, thus, for small $h\le \frac{L}{512}$ we see a drop in convergence rate for the $\| e_{h} \|_{ L^{2} }^{  } $ norm.
 \end{itemize}
 
 \begin{figure}[h!]

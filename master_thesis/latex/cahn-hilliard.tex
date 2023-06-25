@@ -70,17 +70,17 @@ Here we applied the chain rule twice and inserted the derivatives.
     \end{split}
 \end{equation}
 
-\subsection{ CIP method for the Cahn Hilliard Equation on a Polygonal mesh}%
+\subsection{ Numerical scheme for the Cahn Hilliard Equation}%
 \label{sub:writing_the_cahn_hilliard_equation_of_weak_form}
 
 Our goal is to write the Cahn Hilliard equation on weak form.
-Assume that $\Omega  \subset \mathbb{R} ^{d}$ is a polygon.
+Assume that $\Omega  \subset \mathbb{R} ^{d}$ with a $\Gamma $ in $C^2$.
  Let $u \in  H^{4}( \Omega ) $ and $v \in V_{h} $.
 Now, expanding the first Laplace operator from a weak point of view is it clear that
 \[
  ( \Delta ( \varepsilon  \Delta u - \frac{1}{\varepsilon } f( u) ) ,v )_{\Omega } = \varepsilon ( \Delta^{2} u ,v )_{\Omega } - \frac{1}{\varepsilon } ( \Delta f( u)  ,v )_{\Omega }.
 \]
-Hence, this makes it natural to associate the biharmonic $( \Delta ^2 u,v)_{\Gamma } $ with bilinear forms $a_{h}( \cdot ,\cdot ) $ from Section \ref{sec:CIP_biharmonic_problem}, however, in this section will we only consider the Laplace
+Hence, this makes it natural to associate the biharmonic $( \Delta ^2 u,v)_{\Omega } $ with bilinear forms $A_{h}( \cdot ,\cdot ) $ , however, in this section will we only consider the Laplace
 variant $a^{L}( \cdot ,\cdot ) $.
 
 We will now find seek to find a bilinear form of the nonlinear term,
@@ -92,9 +92,9 @@ Then can we rewrite the nonlinear term into the corresponding semi-linear form $
     \item
         $c^{}_{h} ( u,v_{h})  = -( f( u), \Delta v_{h} )_{\Omega }+  ( f( u) , \jump{ \partial _{n}v_{h} }  )_{\mathcal{F} _{h}^{int}} + ( f(u), \partial _{n} v_{h})_{\Gamma  }  - ( f'( u)  g_{1}   ,  v_{h})_{\Gamma }$
 \end{enumerate}
-\begin{remark}
-    Be aware that the both formulations are consistent in a continuous sense, but if we replace $u \in H^{4}( \Omega ) $ with  $u_{h} \in  V_{h}$ we have two different discrete formulations.
-\end{remark}
+% \begin{remark}
+%     Be aware that the both formulations are consistent and if we replace $u \in H^{4}( \Omega ) $ with  $u_{h} \in  V_{h}$ we have two different discrete formulations.
+% \end{remark}
 
 \end{lemma}
 % \todo[inline]{ I criticize \cite[ Remark 4.1d]{feng2007fully} which says that says that finding this weak form is not possible for conforming methods (I guess $C^{0}$ is a conforming method??). }
@@ -177,7 +177,7 @@ The primary aim is to formulate an uncomplicated time iteration scheme. Define t
 and $t_{M} = T$. Here, each time step is an element of the function space, i.e. $u^{m}_{h} \in V_{h}$  with the initial condition defined as $u^{0} = u( t_{0},x )$.
 For the Implicit explicit scheme (IMEX) sceheme we have the following discretization
 \[
-( \overline{\partial } _{t} u^{m}_{h}, v   )_{\Omega } + \varepsilon a^{m}_{h}( u_{h}^{m} , v) + \frac{1}{\varepsilon } c_{h} (  u_{h}^{m-1}, v)  = l_{h}( v) , \quad \forall v \in V_{h}^{m}.
+( \overline{\partial } _{t} u^{m}_{h}, v_{h}   )_{\Omega } + \varepsilon a^{m}_{h}( u_{h}^{m} , v) + \frac{1}{\varepsilon } c_{h} (  u_{h}^{m-1}, v_{h})  = l_{h}( v) , \quad \forall v_{h}, u^{m}_{h} \in V^{}_{h}.
 \]
 
 Here we have define the forward difference operator with time step $\tau $
