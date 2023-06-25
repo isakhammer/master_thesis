@@ -231,11 +231,11 @@ V'  = \left\{ F: V \to \mathbb{R}   \mid  F \text{ is linear and bounded} \right
 
 \begin{definition}[Coercivity and Boundedness]
     \label{def:coercivity}
-    Let $V$ be a Hilbert space and let $a( \cdot ,\cdot )  \in  \mathcal{L} ( V, V,\mathbb{R} )  $. Recall that the bilinear form $a( \cdot ,\cdot ) $ is coercive on $X$ if there exists an constant $C_{1} > 0 $ such that \[
-     a( v,v) \ge  C_{2} \| v \|_{ V }^{  } \quad  \forall v \in  V
+    Let $V$ be a Hilbert space and let $a( \cdot ,\cdot )  \in  \mathcal{L} ( V, V,\mathbb{R} )  $. Recall that the bilinear form $a( \cdot ,\cdot ) $ is coercive if \[
+     a( v,v) \gtrsim  \| v \|_{ V }^{  } \quad  \forall v \in  V.
     \]
-     The bilinear form $a( \cdot ,\cdot ) $ is said to bounded if there exists an constant $C_{2}$  \[
-    a( u,v)  \le C_{1} \| u \|_{ V }^{  }  \| v \|_{V }^{  }
+     The bilinear form $a( \cdot ,\cdot ) $ is said to bounded if   \[
+    a( u,v)  \lesssim  \| u \|_{ V }^{  }  \| v \|_{V }^{  }\quad  \forall u,v \in V.
     \]
 \end{definition}
 
@@ -788,7 +788,7 @@ Hence, by letting $U = \left[ u_{j} \right] $ , $F = \left[ \left( f, \phi _{i} 
 \end{equation}
 Ultimately, the matrix $A$ is shown to be symmetric and positive definite only if $a_{h}( \cdot ,\cdot ) $ is well-posed.
 
-\begin{figure}[]
+\begin{figure}[h!]
 \centering
 \begin{tikzpicture}[node distance=2cm,
                     box1/.style={rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=red!30},
@@ -806,7 +806,7 @@ Ultimately, the matrix $A$ is shown to be symmetric and positive definite only i
 \node (dlp) [box3, below of=alp] {Find $u \in V_{h}$ such that $a_{h}(u,v) = l(v) \  \forall v \in V_{h}$};
 \node[left=0.5cm of dlp,font=\bfseries, align=right] {Discrete weak problem:};
 
-\node (lse) [box4, below of=dlp] {Solve $A \mathbf{u} = \mathbf{f}$};
+\node (lse) [box4, below of=dlp] {Solve $A U = F$};
 \node[left=0.5cm of lse,font=\bfseries, align=right] {Linear system of equations:};
 
 \draw [arrow] (sf) -- (alp);
