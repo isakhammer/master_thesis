@@ -776,7 +776,8 @@ V_{h} =  \left\{ P_{c}^{k}( \mathcal{T}_{h} ) \text{ or }  Q_{c}^{k}( \mathcal{T
  \right\} \end{equation}
 Hence, all results holds for both polynomial spaces.
 
-We now have a well-defined discrete global space  $V_{h} $ consisting of the finite set of basis functions $\left\{ \phi _{i} \right\}_{i=1}^{N} $ associated with the Lagriangian nodes $\left\{ a_{i} \right\}_{i=1}^{N}  $. Let $U_{j} = u_{h}\left(
+We now have a well-defined discrete global space  $V_{h} $ consisting of the finite set of basis functions $\left\{ \phi _{i} \right\}_{i=1}^{N} $ associated with the Lagriangian nodes $\left\{ a_{i} \right\}_{i=1}^{N}  $. The degree of freedoms,
+also known as ndofs, is denoted as $dim(V_{h}) = N$. Let $U_{j} = u_{h}\left(
 a_{j} \right) $, so that $u_{h} = \sum_{j=1}^{N} U_{j} \phi _{j}  $. Then the Problem \ref{def:approx_problem} is equivalent to
  \[
 \sum_{j = 1}^{N} u_{j} a_{h}\left( \phi _{j}, \phi _{i} \right)  = l\left( \phi _{i} \right)
