@@ -442,9 +442,10 @@ Note that it holds that $\mathcal{T} _{h} \cap  \Omega   = \Omega  $ and $\mathc
 % \]
 % where the hidden constant depend on dimension $d$, order $k$ and the shape regularity.
 
-Recall the Subsection \ref{sub:some_general_inequalities} where we discussed standard local inverse estimates.
+In Section \ref{sub:some_general_inequalities} we discussed standard local inverse estimates which plays a crucial role in the theoretical analysis of the classical CIP method for biharmonic problems.
 Similarly for cut elements is it easy to see that this must hold,
 \begin{equation}
+    \label{eq:inv_full1}
      \| \partial _{nn}  v_{h} \|_{F \cap \Omega    }^{  }  \lesssim\| \partial _{nn}  v_{h} \|_{F }^{  }  \lesssim   \| h_{T}^{-\frac{1}{2}} D ^2 v_{h} \|_{ T }^{  }.
 \end{equation}
 A useful variant is the following inequality that is,
@@ -452,16 +453,16 @@ A useful variant is the following inequality that is,
     \label{eq:inv_full}
 \| \partial _{nn} v_{h} \|_{ \Gamma \cap T  }^{  } \lesssim h^{-\frac{1}{2}} \| D^2 v_{h} \|_{ T }^{  }.
 \end{equation}
-\begin{remark}
-    It may be natural to instead look at $\| \partial _{nn} v_{h} \|_{ \Gamma \cap T  }^{  } \lesssim h^{-\frac{1}{2}} \| D^2 v_{h} \|_{ T\cap \Omega  }^{  }$, however, this cannot hold for a arbitary cut configutration for an unfitted mesh. To demonstrate, let $\varepsilon \ll 1$ be a small length. For the examples provided in
+
+For the proposed unfitted version, it may be natural to instead look at $\| \partial _{nn} v_{h} \|_{ \Gamma \cap T  }^{  } \lesssim h^{-\frac{1}{2}} \| D^2 v_{h} \|_{ T\cap \Omega  }^{  }$, however, this cannot hold for an arbitrary cut
+configuration for an unfitted mesh. To demonstrate this, let $\varepsilon \ll 1$ be a small length. For the examples provided in
     Figure \ref{fig:intersection-example} we have two cases: i) $\abs{ \Gamma \cap \Omega  }_{d-1} \lesssim \varepsilon h^{d-1}  $ and $\abs{ T \cap \Omega  }_{d-1} \lesssim \varepsilon h^{d-1}  $, and ii)
     $\abs{ \Gamma \cap \Omega  }_{d-1} \lesssim  h^{d-1}  $ and $\abs{ T \cap \Omega  }_{d-1} \lesssim \varepsilon h^{d-1}  $.
     The first first case impacts the condition number since it is introducing almost vanishing entries in the system matrix from \eqref{eq:linear_system}.
-    While for the second case is bad for inverse estimates, and, thus, problematic for proving coercivity. To recover, one in fact must incorporate the full element $T$ into the inverse estimate.
-\end{remark}
+    The second case is bad for inverse estimates and, thus, problematic for proving discrete coercivity. To recover, one in fact on the other hand must incorporate the full element $T$ into the inverse estimate as done in \eqref{eq:inv_full} and \eqref{eq:inv_full1} .
 
 
-Since the inequalities above holds for all elements locally is it natural to extend it to the full mesh  $\mathcal{T}_{h} $. This implies that
+Since the inequalities above holds for all elements locally is it natural to work with norms which are defined  the full mesh  $\mathcal{T}_{h} $.
 \begin{align}
 \label{eq:bi_cut_inverse_1}
 \| \partial _{nn} v_h \|_{ \mathcal{T} _{h} \cap \Gamma  }^{  } &\lesssim h^{-\frac{1}{2}} \| D^2 v_h \|_{ \mathcal{T}_h }^{  }, \\
