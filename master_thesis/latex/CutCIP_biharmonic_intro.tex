@@ -514,7 +514,7 @@ Combing the results we get the following convenient corollary.
 \end{proof}
 
 \begin{remark}
-    The alternative version the Assumption EP1 \ref{as:bi_EP1} for the Laplace formulation \eqref{eq:laplace_prob} is simply $\| \Delta ^2 v_{h} \|_{ \mathcal{T} _{h} }^{ 2 } \lesssim  \| \Delta ^2 v \|_{\Omega   }^{2  } + \abs{ v_{h} } _{g_{h}} ^{2}
+    The alternative version of the Assumption EP1 \ref{as:bi_EP1} for the Laplace formulation \eqref{eq:laplace_prob} is simply $\| \Delta ^2 v_{h} \|_{ \mathcal{T} _{h} }^{ 2 } \lesssim  \| \Delta ^2 v \|_{\Omega   }^{2  } + \abs{ v_{h} } _{g_{h}} ^{2}
     $ and, similarly, is it then clear that $ h \| \Delta v  \|_{\mathcal{F} \cap \Omega   }^{ 2 } +h \| \Delta^2 v_{h}  \|_{\mathcal{T} _{h} \Gamma   }^{  } \lesssim  \| \Delta ^2 v \|_{\Omega   }^{2  } + \abs{ v_{h} } _{g_{h}} ^{2} $ would follow  as in
     \eqref{eq:inv_est}.
 
@@ -531,49 +531,49 @@ Combing the results we get the following convenient corollary.
     Let $v_{h} \in V_{h}$.
     Observe that
     \begin{equation}
-    A_{h}( v_{h},v_{h}) = a_{h}( v_{h},v_{h})  + \abs{ v_{h} }_{g_{h}}^{2}
+    A_{h}( v_{h},v_{h}) = a_{h}( v_{h},v_{h})  + \abs{ v_{h} }_{g_{h}}^{2}.
     \end{equation}
-    Firstly, the ghost penalty term is already a part of the $\| \cdot  \|_{ A_{h} }^{  } $ norm, hence, it only remains to check the $a_{h}( \cdot ,\cdot ) $ term.
+    Firstly, the ghost penalty term is already a part of the $\| \cdot  \|_{ A_{h} }^{  } $ norm, hence, it only remains to bound the $a_{h}( \cdot ,\cdot ) $ term properly from below.
     \begin{equation}
         \label{eq:coerciv_ah}
     \begin{split}
-       a_{h}( v_{h},v_{h}) &=   \alpha \| v_{h} \|_{   \Omega   }^{2} + \| D^2v_{h} \|_{   \Omega  }^{2  }  + \frac{\gamma }{h}  \|  \jump{ \partial _{n} v_{h} }\|_{\mathcal{F} _{h}^{}  }^{ 2 } + \frac{\gamma }{h}  \| \partial _{n} v_{h} \|_{ \Gamma  }^{ 2 }. \\
-                   & + 2 ( \mean{ \partial _{nn} v_{h} }, \jump{ \partial _{n} v_{h} }    )_{\mathcal{F} ^{}_{h} \cap \Omega }  + 2 (  \partial _{nn} v ,
+       a_{h}( v_{h},v_{h}) &=   \alpha \| v_{h} \|_{   \Omega   }^{2} + \| D^2v_{h} \|_{   \Omega  }^{2  }  + \frac{\gamma }{h}  \|  \jump{ \partial _{n} v_{h} }\|_{\mathcal{F} _{h}^{}  }^{ 2 } + \frac{\gamma }{h}  \| \partial _{n} v_{h} \|_{ \Gamma  }^{ 2 } \\
+                   & \quad + 2 ( \mean{ \partial _{nn} v_{h} }, \jump{ \partial _{n} v_{h} }    )_{\mathcal{F} ^{}_{h} \cap \Omega }  + 2 (  \partial _{nn} v ,
        \partial _{n} v_{h}  )_{\Gamma } \\
     \end{split}
     \end{equation}
     We first focus on the last two terms in \eqref{eq:coerciv_ah}. Using Cauchy-Schwarz \eqref{eq:cauchy-schwartz}, we observe that
     \begin{equation}
         \begin{split}
-    ( \mean{ \partial _{nn} v_{h} }  , \jump{ \partial _{n} v_{h} }  )_{\mathcal{F}^{}_{h}\cap \Omega  } & \ge - \| h^{\frac{1}{2}}\mean{ \partial _{nn} v_{h} }   \|_{ \mathcal{F}^{}_{h}\cap \Omega   }^{  }  \|h^{-\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{
-    \mathcal{F}^{}_{h}\cap \Omega   }^{  } \\
-    (  \partial _{nn} v_{h}   ,  \partial _{n} v_{h}   )_{\Gamma   } & \ge - \| h^{\frac{1}{2}} \partial _{nn} v_{h}    \|_{ \Gamma    }^{  }  \|h^{-\frac{1}{2}}  \partial _{n} v_{h}    \|_{ \Gamma    }^{  }
+    ( \mean{ \partial _{nn} v_{h} }  , \jump{ \partial _{n} v_{h} }  )_{\mathcal{F}^{}_{h}\cap \Omega  } & \geqslant - \| h^{\frac{1}{2}}\mean{ \partial _{nn} v_{h} }   \|_{ \mathcal{F}^{}_{h}\cap \Omega   }^{  }  \|h^{-\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{
+    \mathcal{F}^{}_{h}\cap \Omega   }^{  }, \\
+    (  \partial _{nn} v_{h}   ,  \partial _{n} v_{h}   )_{\Gamma   } & \ge - \| h^{\frac{1}{2}} \partial _{nn} v_{h}    \|_{ \Gamma    }^{  }  \|h^{-\frac{1}{2}}  \partial _{n} v_{h}    \|_{ \Gamma    }^{  }.
         \end{split}
     \end{equation}
-    Using inverse-inequalities \eqref{eq:bi_cut_inverse_1} and \eqref{eq:bi_cut_inverse_2} and the Corollary \ref{cor:bi_inverse_thm} can we easily observe that
+    Using inverse-inequalities \eqref{eq:bi_cut_inverse_1} and \eqref{eq:bi_cut_inverse_2} and the Corollary \ref{cor:bi_inverse_thm} we can easily observe that
     \begin{equation}
         \begin{split}
-     \| h^{\frac{1}{2}} \mean{ \partial _{nn}v_{h} } \|_{ \mathcal{F}_{h} \cap \Omega    }^{  2} & \le C_{1} \| D^2 v_{h} \|_{ \mathcal{T}_{h}   }^{2  } \lesssim   \| D^2 v_{h} \|_{ \Omega  }^{ 2 }  + \abs{ v_{h} } _{ g_{h} }^{2  }   \\
-     \|  \partial _{nn}v_{h}  \|_{ \Gamma     }^{ 2 } & \le C_{2} \| D^2 v_{h} \|_{ \mathcal{T} _{h}  }^{2  } \lesssim    \| D^2 v_{h} \|_{ \Omega  }^{ 2 }  + \abs{ v_{h} } _{ g_{h} }^{2  }
+     \| h^{\frac{1}{2}} \mean{ \partial _{nn}v_{h} } \|_{ \mathcal{F}_{h} \cap \Omega    }^{  2} & \le C_{1} \| D^2 v_{h} \|_{ \mathcal{T}_{h}   }^{2  } \lesssim   \| D^2 v_{h} \|_{ \Omega  }^{ 2 }  + \abs{ v_{h} } _{ g_{h} }^{2  },   \\
+     \|  \partial _{nn}v_{h}  \|_{ \Gamma     }^{ 2 } & \le C_{2} \| D^2 v_{h} \|_{ \mathcal{T} _{h}  }^{2  } \lesssim    \| D^2 v_{h} \|_{ \Omega  }^{ 2 }  + \abs{ v_{h} } _{ g_{h} }^{2  }.
         \end{split}
     \end{equation}
-    Thus, by applying Youngs $\varepsilon $-inequality \eqref{eq:young-epsilon}, is it natural to see that,
+    Thus, by applying Young's $\varepsilon $-inequality \eqref{eq:young-epsilon}, it is natural to see that,
     \begin{equation}
         \begin{split}
 - C_{1}^{\frac{1}{2}} \| D^2 v_{h}    \|_{ \mathcal{T} _{h}   }^{  }  \|h^{-\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{ \mathcal{F}^{}_{h}\cap \Omega   }^{  }
-& \ge - \frac{1}{\varepsilon } C  (\| D^2 v_{h} \|_{ \Omega  }^{ 2 }  + \abs{ v_{h} } _{ g_{h} }^{2  } ) -  \varepsilon \|h^{-\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{ \mathcal{F}^{}_{h}\cap \Omega   }^{2  } \\
+& \ge - \frac{1}{\varepsilon } C  (\| D^2 v_{h} \|_{ \Omega  }^{ 2 }  + \abs{ v_{h} } _{ g_{h} }^{2  } ) -  \varepsilon \|h^{-\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{ \mathcal{F}^{}_{h}\cap \Omega   }^{2  }, \\
 - C_{2}^{\frac{1}{2}}  \| D^2 v_{h} \|_{ \mathcal{T} _{h} }^{  } \| h^{-\frac{1}{2}}  \partial _{n} v_{h}    \|_{ \Gamma    }^{  }
-& \ge - \frac{1}{\varepsilon } C  (\| D^2 v_{h} \|_{ \Omega  }^{ 2 }  + \abs{ v_{h} } _{ g_{h} }^{2  } ) -  \varepsilon \|h^{-\frac{1}{2}}  \partial _{n} v_{h}    \|_{ \Gamma    }^{2  } \\
+& \ge - \frac{1}{\varepsilon } C  (\| D^2 v_{h} \|_{ \Omega  }^{ 2 }  + \abs{ v_{h} } _{ g_{h} }^{2  } ) -  \varepsilon \|h^{-\frac{1}{2}}  \partial _{n} v_{h}    \|_{ \Gamma    }^{2  }.
         \end{split}
     \end{equation}
-    Combining these ideas do we end up with the following inequality,
+    Combining these ideas we end up with the following inequality,
     \begin{equation}
     \begin{split}
        a_{h}( v_{h},v_{h})  \ge& \  \alpha     \|\  v  \|_{   \Omega   }^{2} +\| D^2v_{h}  \|_{   \Omega   }^{2} -  \frac{1}{\varepsilon } 4C  (\| D^2 v_{h} \|_{ \Omega  }^{ 2 }  + \abs{ v_{h} } _{ g_{h} }^{2  } )  \\
-                       & + (\gamma - 2\varepsilon  )\left( \|h^{-\frac{1}{2}}  \jump{ \partial _{n} v_{h} }\|_{\mathcal{F} _{h}^{} \cap \Omega   }^{ 2 } + \| h^{-\frac{1}{2}} \partial _{n} v_{h} \|_{ \Gamma  }^{ 2} \right)        \\
+                       & + (\gamma - 2\varepsilon  )\left( \|h^{-\frac{1}{2}}  \jump{ \partial _{n} v_{h} }\|_{\mathcal{F} _{h}^{} \cap \Omega   }^{ 2 } + \| h^{-\frac{1}{2}} \partial _{n} v_{h} \|_{ \Gamma  }^{ 2} \right).
     \end{split}
     \end{equation}
-    This inequality is useful since if we add a ghost penalty on the left hand side we get,
+    This inequality is useful since by adding a ghost penalty on the left hand side we get,
     \begin{equation}
         \begin{split}
      A_{h}( v_{h},v_{h}) & = a( v_{h},v_{h}) + \abs{ v_{h} }_{g_{h}}^{2} \\
@@ -581,7 +581,7 @@ Combing the results we get the following convenient corollary.
                        & + (\gamma - 2\varepsilon  )\left( \|h^{-\frac{1}{2}}  \jump{ \partial _{n} v_{h} }\|_{\mathcal{F} _{h}^{}\cap \Omega   }^{ 2 } + \| h^{-\frac{1}{2}} \partial _{n} v_{h} \|_{ \Gamma  }^{ 2} \right)        .
         \end{split}
     \end{equation}
-    Setting $\varepsilon = 8C$ and $\gamma = 32C $ we arrive at the desired state,
+    Setting $\varepsilon = 8C$ and $\gamma = 32C $ we arrive at the desired inequality,
     \begin{equation}
         \begin{split}
            A_{h}( v_{h},v_{h})  \gtrsim & \   \| \ |\alpha|^{\frac{1}{2}} \    v_{h}  \|_{  \Omega   }^{2} + \frac{1}{2}  (\| D^2 v_{h} \|_{ \Omega  }^{ 2 }  + \abs{ v_{h} } _{ g_{h} }^{2  } )  \\
@@ -595,7 +595,7 @@ Combing the results we get the following convenient corollary.
 
 \begin{lemma}
     \label{lemma:bi_Ah_bounded}
-    The discrete form $A_{h}$ is bounded, that is,
+    The discrete bilinear form $A_{h}( \cdot ,\cdot ) $ is bounded,
     \begin{equation}
     \label{eq:bi_A_h_bounded}
      A_{h}( v_{h},w_{h}) \lesssim \| v_{h} \|_{A_{h}  }^{  }\| w_{h} \|_{A_{h}  }^{  } \quad   \forall v_{h},w_{h} \in V_{h}
