@@ -101,8 +101,8 @@ this is fulfilled we propose a ghost penalty which fulfills these assumptions in
 
 
             % Labels
-            \node[below right] at (0.0,0.5) {$\mathcal{T}_{int}$};
-            \node[below right] at (-1.9,1.6) {$\mathcal{T}_{\Gamma }$};
+            \node[below right] at (0.0,0.5) {$\mathcal{T}^{\mathrm{int} }_{h}$};
+            \node[below right] at (-1.9,1.6) {$\mathcal{T}^{\Gamma }_{h}$};
         \end{tikzpicture}
 }
 \hfill
@@ -153,7 +153,7 @@ this is fulfilled we propose a ghost penalty which fulfills these assumptions in
 
 
 \caption{Illustration of the domain $\Omega$ with the corresponding boundary $\Gamma$, the background mesh $\widetilde{\mathcal{T}}_{h} $,  the cut cells $\mathcal{T} _{\Gamma }$, the interior cells $\mathcal{T} _{int}$ and the active set $\mathcal{T} _{h} =
-\mathcal{T}_{ int } \cup \mathcal{T}_{ \Gamma  }  $. }
+\mathcal{T}^{ \mathrm{int}  }_{h} \cup \mathcal{T}_{h }^{ \Gamma  }  $. }
 \label{fig:background_mesh}
 \end{figure}
 
@@ -166,50 +166,50 @@ domain. Let us denote the active set $\mathcal{T} _{h} \subseteq \widetilde{\mat
 \mathcal{T} _{h} = \left\{ T \in \widetilde{\mathcal{T} }_{h}  \mid  T \cap \Omega   \neq \emptyset    \right\}.
 \end{equation}
 We define the corresponding set of interior facets, \[
-    \mathcal{F} _{h}^{int} = \left\{ F = T^{+} \cap T^{-}  \mid  T^{+}, T^{-} \in \mathcal{T} _{h} \text{ and } T^{+} \neq T^{-} \right\},
+    \mathcal{F} _{h}^{\mathrm{int} } = \left\{ F = T^{+} \cap T^{-}  \mid  T^{+}, T^{-} \in \mathcal{T} _{h} \text{ and } T^{+} \neq T^{-} \right\},
 \]
 and the set of elements cut by the boundary \[
-\mathcal{T} _{\Gamma } = \left\{ T \in \mathcal{T} _{h}   \mid  T \cap \Gamma \neq \emptyset  \right\}.
+\mathcal{T}_{h} ^{\Gamma } = \left\{ T \in \mathcal{T} _{h}   \mid  T \cap \Gamma \neq \emptyset  \right\}.
 \]
 For convenience, will we define also the interior of the active set as $\mathcal{T} _{int}$.
 \[
-\mathcal{T} _{int} = \left\{ T \in \mathcal{T} _{h}   \mid  T \cap  \mathrm{Int}(\Omega ) \neq \emptyset  \right\}.
+\mathcal{T} ^{\mathrm{int} }_{h} = \left\{ T \in \mathcal{T} _{h}   \mid  T \cap  \mathrm{Int}(\Omega ) \neq \emptyset  \right\}.
 \]
-Hence, we have that the active set is the union of the interior and cut elements, $\mathcal{T} _{h} = \mathcal{T} _{int} \cup  \mathcal{T} _{\Gamma }$. For an illustration, see Figure \ref{fig:background_mesh}.
+Hence, we have that the active set is the union of the interior and cut elements, $\mathcal{T} _{h} = \mathcal{T}_{h} ^{\mathrm{int} } \cup  \mathcal{T} ^{\Gamma }_{h}$. For an illustration, see Figure \ref{fig:background_mesh}.
 
 
 
-\subsection{Cut continuous interior penalty method }%
+\subsection{Cut continuous interior penalty methods }%
 \label{sub:cut_cip_method}
 
-As $\Omega $ is static is it easy to observe that having a polynomial basis on the full mesh, $\widetilde{\mathcal{T}}_{h}$, is not necessary.
-Hence, we redefine the polynomial space using the active set $\mathcal{T}_{h} $ from \eqref{eq:active_set},
+As $\Omega $ is static is it easy to observe that having a polynomial basis on the full mesh, $\widetilde{\mathcal{T}}_{h}$, is not necessary. Restricting us to the active set, we define the domain $\Omega _{h} = \cup _{T \in \mathcal{T} _{h}} T$.
+Hence, we define the polynomial space only on the active set $\mathcal{T}_{h} $ from \eqref{eq:active_set},
 \[
-V_{h} = \left\{ v \in C^{0}\left( \mathcal{T}_{h}   \right): v_{T} = v | _{T} \in \mathcal{P} ^{k}\left( T \right), \forall T \in
+V_{h} = \left\{ v \in C^{0}( \Omega _{h}  ): v_{T} = v | _{T} \in \mathcal{P} ^{k}\left( T \right), \forall T \in
 \mathcal{T}_{h}    \right\}.
 \]
 Furthermore, drawing on the principles outlined in Section \ref{sec:CIP_biharmonic_problem}, we can indeed recall two CIP formulations for the biharmonic equation: the Hessian formulation \eqref{eq:hessian_prob} and the Laplace formulation \eqref{eq:laplace_prob}.
 
-To make sure the problem is stabilized will we add a hypothetical consistent symmetric bilinear ghost-penalty term  $g_{h}: V_{h} \times  V_{h} \to \mathbb{R} $ in addition to our bilinear. That is, we define the discrete problem to  s.t.
+To make sure the problem is stabilized will we add a consistent symmetric positive semi-definite bilinear ghost-penalty term  $g_{h}: V_{h} \times  V_{h} \to \mathbb{R} $ to our bilinear form. That is, we define the discrete problem to be:
 \begin{equation}
 \label{eq:discrete_CutCIP_prob}
-\text{ Find } u_{h} \in V_{h} \quad  A_{h}( u_{h} ,v ) := a_{h}( u_{h}, v)  + g_{h}( u_{h},v) = l_{h} ( v) \quad  \forall v \in  V_{h}.
+\text{ Find } u_{h} \in V_{h}  \text{ such that }    A_{h}( u_{h} ,v ) := a_{h}( u_{h}, v)  + g_{h}( u_{h},v) = l_{h} ( v) \quad  \forall v \in  V_{h}.
 \end{equation}
-Here is $a_{h}( \cdot,\cdot  ) $ denoted as either $a_{h}^{L}( \cdot ,\cdot ) $ or $a_{h}^{H}( \cdot ,\cdot ) $.
+Here $a_{h}( \cdot,\cdot  ) $ stand for either $a_{h}^{L}( \cdot ,\cdot ) $ or $a_{h}^{H}( \cdot ,\cdot ) $.
 
-We will in this section do a full proof for the Hessian formulation, however, the proofs should not differ to much for the Laplace formulation. For simplification will we use the notation $a_{h}(u,v ) = a_{h}^{H}( u,v)$ and $l_{h}(v) =l_{h}^{H}(v)$ for the rest of the stability and convergence analysis.
+In this section, we provide a full proof for the Hessian formulation, however, the proof of the Laplace formulation does not differ too much. For simplification will we use the notation $a_{h}(u,v ) = a_{h}^{H}( u,v)$ and $l_{h}(v) =l_{h}^{H}(v)$ for the rest of the stability and convergence analysis.
 
-Keep in mind that in contrast to the standard CIP methods, this method is defined on an unfitted mesh. As we will see, the analysis is the ghost penalty a method to ensure numerical stability on cut cell $\mathcal{T} _{\Gamma }$. The main reason why
-this numerical instability is happening for a unfitted mesh is that when a cell is badly cut, see examples in Figure \ref{fig:intersection-example}.
+Keep in mind that in contrast to the standard CIP methods our proposed method is defined on an unfitted mesh. As we will see in the analysis, the ghost penalty is a method to ensure numerical stability on cut cell $\mathcal{T} ^{\Gamma }_{h}$. The main reason why
+this numerical instability is happening for a unfitted mesh is when a cell is badly cut, see examples in Figure \ref{fig:intersection-example}.
 In other words, when a cell is "badly cut," it means that it is intersected by the boundary $\Gamma$ in such a way that only a very small part of the interior of an element $T$  intersects with the physical domain $\Omega $ , i.e. $\abs{ \Omega \cap
-T }_{d} \ll h^{d}$. This can lead to a very poor condition number of the local system matrix corresponding to such a cell, causing numerical instability.
+T }_{d} \ll h^{d}$. This can lead to both stability issues and a very poor condition number of the system matrix causing numerical instability.
 
 The ghost penalty stabilization technique is designed to tackle this issue. Essentially, this approach introduces additional terms into the finite element method that penalize jumps in the discrete solution and its gradients across cell interfaces,
 typically the cut-cells. This penalty not only improves the conditioning of the system matrix but also enhances the robustness of the method with respect to the location of the boundary inside each cell. However, to make this possible, we assume a
 so-called fat-intersection property, which will be relevant in Section \ref{sec:constructing_ghost_penalties}.
 
 Our first assumption as as follows;
-For a $T \in \mathcal{T} _{\Gamma }$ there always exists a patch $\omega ( T) $ which contains $T$ and an element $T'$ with a so-called fat intersection $
+for a $T \in \mathcal{T} ^{\Gamma }_{h}$ there always exists a patch $\omega ( T) $ which contains $T$ and an element $T'$ with a so-called fat intersection $
         \abs{ T' \cap \Omega  } _{d} \gtrsim \abs{ T' } _{d}$, where $\abs{ \cdot  }_{d} $ is the measure of an element of dimensions $d =2,3  $ . For an illustration, see Figure \ref{fig:fat_intersection_property}.
 
 \begin{figure}[t]
@@ -283,20 +283,20 @@ We define the underlying norms for $ v \in V_{h} $ as
         \| v \|_{ a_{h} }^{ 2 } & =    \alpha \|   v \|_{ \mathcal{T} _{h} \cap \Omega  }^{ 2}  + \| D^2 v \|_{\mathcal{T} _{h} \cap \Omega   }^{ 2 } +  \| h^{-\frac{1}{2}} \jump{ \partial _{n} v }   \|_{ \mathcal{F}_{h}^{}\cap \Omega    }^{ 2
         } +  \| h^{-\frac{1}{2}}  \partial _{n} v    \|_{ \Gamma   }^{ 2 },    \\
         \label{eq:bi_gh_norm}
-\abs{ v } _{g_{h}}^{2} & = g( v,v) \\
+\abs{ v } _{g_{h}}^{2} & = g( v,v), \\
         \label{eq:bi_Ah_norm}
-\| v \|_{A_{h}  }^{  2}  & = \| v \|_{ a_{h} }^{ 2 } + \abs{ v } _{g_{h}}^{2} \\
+\| v \|_{A_{h}  }^{  2}  & = \| v \|_{ a_{h} }^{ 2 } + \abs{ v } _{g_{h}}^{2}, \\
     \end{align}
-and for $v \in V \oplus V_{h}$ we get,
+and for $v \in V \oplus V_{h}$ we also introduce,
 \begin{equation}
     \label{eq:astarnorm}
-\| v \|_{ a_{h}, * }^{  2}  =\| v \|_{ a_{h} }^{ 2 } +  \| h^{\frac{1}{2}} \mean{ \partial _{nn} v }   \|_{\mathcal{F} _{h}^{} \cap \Omega   }^{  2} +  \| h^{\frac{1}{2}} \partial _{nn} v    \|_{ \Gamma }^{  2}
+\| v \|_{ a_{h}, * }^{  2}  =\| v \|_{ a_{h} }^{ 2 } +  \| h^{\frac{1}{2}} \mean{ \partial _{nn} v }   \|_{\mathcal{F} _{h}^{} \cap \Omega   }^{  2} +  \| h^{\frac{1}{2}} \partial _{nn} v    \|_{ \Gamma }^{  2}.
 \end{equation}
 \begin{remark}
 Note that it holds that $\mathcal{T} _{h} \cap  \Omega   = \Omega  $ and $\mathcal{T} _{h} \cap  \Gamma  = \Gamma $. Depending on context, we choose the best suitable notation.
 \end{remark}
 \begin{remark}
-    The necessity to define the supplementary terms in the $\| \cdot   \|_{a{h},* }^{ } $  may raise certain questions.  The reason is because when $v$ is continious, i.e. $v \in V$, the local inverse estimates  \ref{eq:fund_inv_est} does not hold for $\| \mean{ \partial
+    The necessity to define the supplementary terms in the $\| \cdot   \|_{a{h},* }^{ } $  may raise certain questions.  The reason is because when $v$ is continuous, i.e. $v \in V$, the local inverse estimates  \ref{eq:fund_inv_est} does not hold for $\| \mean{ \partial
     _{nn} v }  \|_{ \mathcal{F}_{h} \cap \Omega    }^{  }  $ and  $\|  \partial
     _{nn} v   \|_{ \Gamma }^{  }  $ when evaluating $a_{h}( v, v) $. Hence, this leads necessity adding the additional terms into the norm.
 \end{remark}
