@@ -281,9 +281,11 @@ Finally, we now have the tools we need to construct an candidate for the ghost p
 
 \begin{proposition}[Face-based ghost penalty]
     Let $k\ge  2$ be the order of the polynomial basis in $V_{h}$ .
-    For any set of positive parameters $\left\{ \gamma _{j} \right\} _{j=0}^{k}$, the ghost penalty defined as \[
+    For any set of positive parameters $\left\{ \gamma _{j} \right\} _{j=0}^{k}$, the ghost penalty defined as
+    \begin{equation}
+        \label{eq:ghost_penalty}
     g^{}_{h}( v_{h},w_{h})  := \sum_{j=1}^{k} \sum_{F \in \mathcal{F} _{h}^{g}}^{} \gamma _{j} h^{2j-3}_{F} ( \jump{ \partial ^{j}_{n} v_{h} }, \jump{ \partial ^{j}_{n} w_{h} }  ) _{F} \text{ for any } v_{h},w_{h} \in V_{h},
-    \]
+    \end{equation}
     satisfies the Assumption \ref{as:EP1} and \ref{as:EP2}.
 \end{proposition}
 

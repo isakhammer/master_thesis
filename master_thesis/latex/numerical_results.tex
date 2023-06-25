@@ -4,36 +4,16 @@
 \label{sec:numerical_results}
 
 
-To validate the proposed CutCIP method for the biharmonic problem will we investigate several numerical results both for the Laplace and Hessian formulation. From the theoretical optimal a priori estimates presented in presented in Theorem \ref{thm:apriori_result} will we provide several
-examples where it holds: circular domain and a flower domain.
-
-% Hva: Verify the robustness of the CutCIP method for the biharmonic equation and its theoreitical a prioiri estimates
-% Hvorfor: Very important to ensure stability, convergence
-% Hvordan: Sjekke kondisjonstall , sjekke EOC
-% Skriv ned definisjonene av EOC, condisjonstall, og at den er bounded
-
-% \begin{figure}[h!]
-%     \centering
-%     % \includesvg[width=0.5\textwidth]{results/eoc-test/eoc-hessian-circle-L-2.7-gamma0-20-gamma1-10-gamma2-1/example.svg}
-
-%     \includesvg[width=0.7\textwidth]{example.svg}
-%     % \centerline{\includesvg[inkscapelatex=false,width=0.75\columnwidth]{results/eoc-test/eoc-hessian-circle-L-2.7-gamma0-20-gamma1-10-gamma2-1/example.svg}}
-%     % \includesvg[width=\textwidth]{p}
-%     \caption{Put your caption here.}
-%     \label{fig:example}
-% \end{figure}
-
-We also demonstrate the effect ghost penalty of stabilization by translating the domain to trigger badly cut cells. Finally, we provide numerical validation of the expected convergence for
-the Cahn-Hilliard problem.
-
-We propose the following penalty parameters $\gamma , \gamma _{g1}, \gamma _{g2} = 20,10, 1$.It is worth noting from the results provided in \cite{brenner2012, brenner2012quadratic_kirk,
+To validate the proposed CutCIP method for the biharmonic problem will we investigate several numerical results both for the Laplace and Hessian formulation. From the theoretical optimal a priori estimates presented in presented in Theorem \ref{thm:apriori_result} will we provide examples where it holds. We also demonstrate the effect ghost penalty of stabilization by translating the domain to trigger badly cut cells. Finally, we provide numerical validation of the expected convergence for
+the Cahn-Hilliard problem. We propose the following penalty parameters $\gamma = 20$ for the Hessian formulation \eqref{eq:hessian_prob} and the Laplace formulation \eqref{eq:laplace_prob}, and $\gamma _{1}, \gamma _{2} = 10, 0.5$ for the
+corresponding ghost penalty \eqref{eq:ghost_penalty}. It is worth noting from the results provided in \cite{brenner2012, brenner2012quadratic_kirk,
 brenner2012quadratic} is it well known that the main requirement for the CIP formulation is that $\gamma = 5( k -1)\frac{k}{2}$.
 
 Condition numbers are essential to solve linear systems because they help us assess the accuracy and stability of the system's solutions. A large condition number indicates that the system is ill-conditioned, meaning the solution can be highly
 sensitive to small changes in the input data, potentially leading to inaccurate results. This underline the importance checking the conditional stability of cut cells, hence, motivating to do a so-called translation test with and without ghost
 penalty.
 
-\subsection{Convergence study for the CutCIP method for the Biharmonic Problem  }%
+\subsection{Convergence study for the cut finite element method method for the Biharmonic Problem  }%
 \label{sub:numerical_results_for_cutcip_biharmonic_equation}
 For the convergence study will we consider a square background domain $\widetilde{\Omega} $ with side lengths $L$ and a physical domain $\Omega \subset \widetilde{\Omega}$ on the form $\Omega  = \left\{ ( x,y)  \mid \phi ( x,y) \le 0    \right\} $,
 where $\phi: \mathbb{R} ^2 \to \mathbb{R}  $ is a given level set function. We will consider two cases; a circular domain,
