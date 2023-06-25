@@ -182,12 +182,13 @@ Hence, we have that the active set is the union of the interior and cut elements
 \subsection{Cut continuous interior penalty methods }%
 \label{sub:cut_cip_method}
 
-As $\Omega $ is static is it easy to observe that having a polynomial basis on the full mesh, $\widetilde{\mathcal{T}}_{h}$, is not necessary. Restricting us to the active set, we define the domain $\Omega _{h} = \cup _{T \in \mathcal{T} _{h}} T$.
+As $\Omega $ is static is it easy to observe that having a polynomial basis on the full mesh, $\widetilde{\mathcal{T}}_{h}$, is not necessary. Restricting us to the active set, we define the domain $\Omega _{h} = \bigcup _{T \in \mathcal{T} _{h}} T$.
 Hence, we define the polynomial space only on the active set $\mathcal{T}_{h} $ from \eqref{eq:active_set},
-\[
-V_{h} = \left\{ v \in C^{0}( \Omega _{h}  ): v_{T} = v | _{T} \in \mathcal{P} ^{k}\left( T \right), \forall T \in
+\begin{equation}
+V_{h} = \left\{ v \in C^{0}( \Omega _{h}  )  \mid  v_{T} = v | _{T} \in \mathcal{P} ^{k}\left( T \right) \text{ or } Q^{k}\left( T \right) \ \ \forall T \in
 \mathcal{T}_{h}    \right\}.
-\]
+\end{equation}
+Here is $k$ the polynomial order.
 Furthermore, drawing on the principles outlined in Section \ref{sec:CIP_biharmonic_problem}, we can indeed recall two CIP formulations for the biharmonic equation: the Hessian formulation \eqref{eq:hessian_prob} and the Laplace formulation \eqref{eq:laplace_prob}.
 
 To make sure the problem is stabilized will we add a consistent symmetric positive semi-definite bilinear ghost-penalty term  $g_{h}: V_{h} \times  V_{h} \to \mathbb{R} $ to our bilinear form. That is, we define the discrete problem to be:
