@@ -172,9 +172,10 @@ Thus, since these norms are equivalent will we in this report focus on $ \kappa_
 
 Our goal it validate the Theorem \ref{thm:apriori_result} for $k= 2$ for the Hessian formulation and show that the Laplace formulation has the same properties.
 The big-oh $O( h^{r})$ is defined to be to be a upper bound such that it exists an $C>0$ such that $\| e \|_{  }^{  } \le C h^{r} \text{ for all } h$, where $r$ is the order of convergence. Since we only will implement $k=2$, we validate that it exists an upper bound $ O( h)  $ for  $\| e \|_{L^{2}( \Omega )   }^{  }$  and $O( h^2)  $ for $\| e \|_{ a_{h},* }^{  } $.
+It has also been shown that for condition number $\kappa_{\infty} ( A) $  increases with the order of $O( h^{-4}) $\cite{li07}, hence, we expect this to hold for both methods as well.
 We did the following convergence tests.
 \begin{itemize}
-    \item \textbf{Convergence on circe domain}
+    \item \textbf{Convergence on circle domain}
         First we consider the manufactured solution s.t.
         \begin{equation}
         \label{eq:man_sol_1}
@@ -182,7 +183,8 @@ We did the following convergence tests.
         \end{equation}
         The result can be shown on the in Figure \ref{fig:conv_hes_lap} and Table \ref{tab:conv_hes_lap}. Here we observe that for we clearly get optimal convergence, that is, we get a consistent EOC 1 and 2 for the respective norms $\| e  \|_{a_{h},*  }^{  } $
         and $\| e  \|_{L^2( \Omega )   }^{  } $.  We also get a consistent EOC of 2 for $\| e \|_{ H^{1}(\Omega  )  }^{  } $, even though we do not have theoretical a priori estimates of this norm.
-        Remark that we get a slight drop for high refinements due to high condition number, which is expected since it has been shown that the condition number $\kappa_{2} ( A) $  increases with the order of $O( h^{-4}) $\cite{li07}.
+        We also see that the condition number $\kappa _{\infty}( A)  $ has a expected
+        convergence of $-4$ and, thus, for small $h\le \frac{1}{512}$ we see a drop in convergence rate.
     \item \textbf{Convergence on flower domain}
         We consider the manufactured solution such that
         \begin{equation}
@@ -190,7 +192,8 @@ We did the following convergence tests.
             u(x,y) =  \sin\left( 2\pi x \right)\cos\left(2\pi y\right)
         \end{equation}
         In this case must we assume non homogeneous Neumann conditions, and thus we only test the numerical results for the Laplace formulation. The result can be shown on the in Figure \ref{fig:conv_flower_lap} and Table \ref{tab:conv_flower_lap}. Here we
-        observe that for we get optimal convergence, that is EOC of order 1 and 2 for $\| e  \|_{a_{h},*  }^{  } $ and  $ \| e  \|_{L^{2}( \Omega )   }^{  } $ norm. However, again we see a slight drop of order of convergence due to a high condition number.
+        observe that for we get optimal convergence, that is EOC of order 1 and 2 for $\| e  \|_{a_{h},*  }^{  } $ and  $ \| e  \|_{L^{2}( \Omega )   }^{  } $ norm. Again, we see that the condition number $\kappa _{\infty}( A)  $ has a EOC of order
+        $-4$ and, thus, for small $h\le \frac{1}{512}$ we see a drop in convergence rate for the $\| e_{h} \|_{ L^{2} }^{  } $ norm.
 \end{itemize}
 
 \begin{figure}[h!]
