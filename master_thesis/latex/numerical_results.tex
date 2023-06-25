@@ -36,7 +36,12 @@ penalty.
 \subsection{Convergence study for the CutCIP method for the Biharmonic Problem  }%
 \label{sub:numerical_results_for_cutcip_biharmonic_equation}
 For the convergence study will we consider a square background domain $\widetilde{\Omega} $ with side lengths $L$ and a physical domain $\Omega \subset \widetilde{\Omega}$ on the form $\Omega  = \left\{ ( x,y)  \mid \phi ( x,y) \le 0    \right\} $,
-where $\phi: \mathbb{R} ^2 \to \mathbb{R}  $ is a given level set function. We will consider two cases; a disk described by $\phi( x,y) = x^{ 2} - y^{2} -1  $ and a flower shaped domain,
+where $\phi: \mathbb{R} ^2 \to \mathbb{R}  $ is a given level set function. We will consider two cases; a circular domain,
+\begin{equation}
+    \label{eq:circle}
+\phi( x,y) = x^{ 2} + y^{2} -1
+\end{equation}
+and a flower shaped domain,
 \begin{equation}
 \label{eq:flower}
 \phi ( x,y) =\sqrt{x^{2} + y^{2}} - r_{0} - r_{1}\cos(\atantwo(y,x)) \text{ where }  r_{0} = 0.3L  \text{ and } \ r_{1} = 0.1L .
@@ -146,11 +151,11 @@ EOC( k) =  \frac{\log \left(  \frac{e^{k-1}}{e^{k}} \right)}{\log \left(  \frac{
 \]
 Here we define the error $e^{k} = \| u - u_{h}^{k} \|_{  }^{  } $, where we choose to measure in the norms $ \|\cdot   \|_{L^2( \Omega )   }^{  },   \|\cdot   \|_{H^1( \Omega )   }^{  } $ and $ \|\cdot   \|_{ a_{h},* }^{  }$.
 
-\subsection{Note on condition number}%
+\subsection{Note on the condition number}%
 \label{sub:note_on_condition_number}
 
 
-Recall that $V_{h} $ is spanned by the polynomial basis $\left\{ \phi _{1}, \ldots, \phi _{N}  \right\} $ s.t. $dim(V_{h}) = N$, where $N$ is the so-called number of degrees of freedom (ndofs). From basic theory
+Recall that $V_{h} $ is spanned by the polynomial basis $\left\{ \phi _{1}, \ldots, \phi _{N}  \right\} $ such that $dim(V_{h}) = N$, where $N$ is the so-called number of degrees of freedom (ndofs). From basic theory
 do we know that we can span the discrete solution s.t.
 $u_{h} = \sum_{i=1}^{N}  U_{i} \phi_{i} $ with coefficients $\left\{
 U_{i}\right\} _{i=1}^{N}$ and the stiffness matrix $\left[ A  \right] _{ji} = a_{h}( \phi _{i}, \phi _{j}) $ and vector $\left[ F \right] _{j} = l_{h}( \phi_{j} ) $. Thus, we have the following equivalent linear system of the problem finding a $u_{h} \in  V_{h}$ s.t.
