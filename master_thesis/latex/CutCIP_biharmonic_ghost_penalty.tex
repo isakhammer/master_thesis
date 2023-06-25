@@ -183,14 +183,13 @@ This set is simply all facets that belong to all elements of the active mesh $\m
 
 \begin{lemma}
     \label{lemma:bi_inv_gh_lemma}
-    For $v \in  V_{h}$ it holds that
+    For $v_{h} \in  V_{h}$ of polynomial degree $k$.
         \begin{align}
             \label{eq:bi_inv_gh_1}
-        \| v \|_{ \mathcal{T} _{h} }^{ 2 }  & \lesssim  \| v \|_{ \Omega  }^{ 2 }  + \sum_{j=0}^{k} h^{2j+1} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n} v}    )_{\mathcal{F}_{h}^{g}}\\
+        \| v_h \|_{ \mathcal{T} _{h} }^{ 2 }  & \lesssim  \| v_h \|_{ \Omega  }^{ 2 }  + \sum_{j=0}^{k} h^{2j+1} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n} v_h}    )_{\mathcal{F}_{h}^{g}}\\
             \label{eq:bi_inv_gh_2}
-        \| D ^2 v \|_{ \mathcal{T} _{h} }^{ 2 }  & \lesssim  \| D^2 v \|_{ \Omega  }^{ 2 }  + \sum_{j=0}^{k} h^{2j-3} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n}v }    )_{\mathcal{F}_{h}^{g}}
+        \| D ^2 v_h \|_{ \mathcal{T} _{h} }^{ 2 }  & \lesssim  \| D^2 v_h \|_{ \Omega  }^{ 2 }  + \sum_{j=0}^{k} h^{2j-3} ( \jump{ \partial ^{j}_{n} v_h }, \jump{ \partial ^{j}_{n}v_h }    )_{\mathcal{F}_{h}^{g}}
         \end{align}
-        Here is $k$ the polynomial degree.
 \end{lemma}
 
 \begin{proof}
@@ -201,63 +200,63 @@ This set is simply all facets that belong to all elements of the active mesh $\m
             intersection.
 
             Let us define the following norm \[
-            g_{F_{i}}^{L^{2}}( v,v)  = \sum_{j=0}^{k} h^{2j+1}( \jump{ \partial ^{j}_{n}v }, \jump{ \partial ^{j}_{n}v }    )_{F_{i} }
+            g_{F_{i}}^{L^{2}}( v_{h},v_{h})  = \sum_{j=0}^{k} h^{2j+1}( \jump{ \partial ^{j}_{n}v_{h} }, \jump{ \partial ^{j}_{n}v_{h} }    )_{F_{i} }
             \]
             where $F_{i} \in  \mathcal{F} ^{g}_{h}$ and polynomial degree $ k$. Using Lemma \ref{lemma:bi_local_facet_estimate} can we see that \[
-            \| v \|_{ T_{i} }^{  } \lesssim \| v \|_{ T_{i+1} }^{ 2 } + g_{F_{i}}^{L^{2}}( v,v).
+            \| v_{h} \|_{ T_{i} }^{  } \lesssim \| v_{h} \|_{ T_{i+1} }^{ 2 } + g_{F_{i}}^{L^{2}}( v,v).
             \]
     Consequently, using induction over each pair $\left\{ T_{i}, T_{i+1} \right\} $ with a corresponding $F_{i}$, we obtain
             \[
                 \begin{split}
-            \| v \|_{ T_{1} }^{2  }  & \le  C \| v \|_{ T_{2} }^{ 2 } + g_{F_{1}}^{L^{2}}( v,v)\\
-              & \le  C( C( \| v \|_{ T_{3} }^{ 2 } + g_{F_{2}}^{L^{2}}( v,v) ) + g_{F_{1}}^{L^{2}}( v,v) )\\
-              & \lesssim    \| v \|_{ T_{l} }^{ 2 }  + \sum_{i=1}^{l-1} g_{F_{i}}^{L^{2}}( v,v)  \\
-              & \lesssim    \| v \|_{ T_{l} \cap \Omega  }^{ 2 }  + \sum_{i=1}^{l-1} g_{F_{i}}^{L^{2}}( v,v)
+            \| v_{h} \|_{ T_{1} }^{2  }  & \le  C \| v_{h} \|_{ T_{2} }^{ 2 } + g_{F_{1}}^{L^{2}}( v_{h},v_{h})\\
+              & \le  C( C( \| v_{h} \|_{ T_{3} }^{ 2 } + g_{F_{2}}^{L^{2}}( v_{h},v_{h}) ) + g_{F_{1}}^{L^{2}}( v_{h},v_{h}) )\\
+              & \lesssim    \| v_{h} \|_{ T_{l} }^{ 2 }  + \sum_{i=1}^{l-1} g_{F_{i}}^{L^{2}}( v_{h},v_{h})  \\
+              & \lesssim    \| v_{h} \|_{ T_{l} \cap \Omega  }^{ 2 }  + \sum_{i=1}^{l-1} g_{F_{i}}^{L^{2}}( v_{h},v_{h})
                 \end{split}
             \]
-            Here the last steps arise from the fact that $\|  v \|_{ T_{l} }^{  } \lesssim  \|  v \|_{ T_{l} \cap \Omega  }^{  }  $, which is a consequence of the fat intersection property.
+            Here the last steps arise from the fact that $\|  v_{h} \|_{ T_{l} }^{  } \lesssim  \|  v_{h} \|_{ T_{l} \cap \Omega  }^{  }  $, which is a consequence of the fat intersection property.
 Summation over the intersected triangles $\mathcal{T} _{\Gamma }$ implies,
             \[
-                    \| v \|_{ \mathcal{T} _{\Gamma } }^{2  } \lesssim \| v \|_{ \mathcal{T} _{\Gamma}\cap \Omega  }^{2  }+ \sum_{i=1}^{l-1} g_{F_{l}}^{L^{2}}( v,v) \\
-                     = \| v \|_{ \mathcal{T}_{\Gamma } \cap \Omega   }^{ 2 }  + \sum_{j=0}^{k} h^{2j+1} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n}v }    )_{\mathcal{F}_{h}^{g}}
+                    \| v_{h} \|_{ \mathcal{T} _{\Gamma } }^{2  } \lesssim \| v_{h} \|_{ \mathcal{T} _{\Gamma}\cap \Omega  }^{2  }+ \sum_{i=1}^{l-1} g_{F_{l}}^{L^{2}}( v_{h},v_{h}) \\
+                     = \| v_{h} \|_{ \mathcal{T}_{\Gamma } \cap \Omega   }^{ 2 }  + \sum_{j=0}^{k} h^{2j+1} ( \jump{ \partial ^{j}_{n} v_{h} }, \jump{ \partial ^{j}_{n}v_{h} }    )_{\mathcal{F}_{h}^{g}}
         \]
         And as a trivial extension this now also holds for the active mesh $\mathcal{T} _{h}$ , that is, \[
-                    \| v \|_{ \mathcal{T} _{h } }^{2  } \lesssim  \| v \|_{ \mathcal{T}_{h } \cap \Omega   }^{ 2 }  + \sum_{j=0}^{k} h^{2j+1} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n}v }    )_{\mathcal{F}_{h}^{g}}.
+                    \| v_{h} \|_{ \mathcal{T} _{h } }^{2  } \lesssim  \| v_{h} \|_{ \mathcal{T}_{h } \cap \Omega   }^{ 2 }  + \sum_{j=0}^{k} h^{2j+1} ( \jump{ \partial ^{j}_{n} v_{h} }, \jump{ \partial ^{j}_{n}v_{h} }    )_{\mathcal{F}_{h}^{g}}.
         \]
         Hence, \eqref{eq:bi_inv_gh_1} holds and the first part of the proof is complete.
 
     \item We will simply start by replacing $v$  by $D^2 v$ and use the Proposition \ref{prop:hessian_change}.
         \[
             \begin{split}
-                    \| D^2 v \|_{ \mathcal{T} _{h} }^{2  }&  \lesssim \| D^2 v \|_{ \Omega  }^{ 2 }  + \sum_{j=0}^{k} h^{2j+1} ( \jump{   \partial ^{j}_{n} D^2 v }, \jump{  \partial ^{j}_{n} D^2 v}    )_{\mathcal{F}_{h}^{g}} \\
-                    &=  \| D^2 v \|_{ \Omega  }^{ 2 }  + \sum_{j=0}^{k} h^{2j+1} ( \jump{   D^2 \partial ^{j}_{n}  v }, \jump{  D^2 \partial ^{j}_{n}  v}    )_{\mathcal{F}_{h}^{g}}
+                    \| D^2 v_{h} \|_{ \mathcal{T} _{h} }^{2  }&  \lesssim \| D^2 v_{h} \|_{ \Omega  }^{ 2 }  + \sum_{j=0}^{k} h^{2j+1} ( \jump{   \partial ^{j}_{n} D^2 v_{h} }, \jump{  \partial ^{j}_{n} D^2 v_{h}}    )_{\mathcal{F}_{h}^{g}} \\
+                    &=  \| D^2 v_{h} \|_{ \Omega  }^{ 2 }  + \sum_{j=0}^{k} h^{2j+1} ( \jump{   D^2 \partial ^{j}_{n}  v_{h} }, \jump{  D^2 \partial ^{j}_{n}  v_{h}}    )_{\mathcal{F}_{h}^{g}}
             \end{split}
         \]
-        Remark that $\|  D^2 v \|_{ T_{l} }^{  } \lesssim  \|  D^2 v \|_{ T_{l} \cap \Omega  }^{  }  $ using the fat-intersection property.
+        Remark that $\|  D^2 v_{h} \|_{ T_{l} }^{  } \lesssim  \|  D^2 v_{h} \|_{ T_{l} \cap \Omega  }^{  }  $ using the fat-intersection property.
         Thus, it remains to show that \[
-        \sum_{j=0}^{k} h^{2j+1} ( \jump{   D^2 \partial ^{j}_{n}  v }, \jump{  D^2 \partial ^{j}_{n}  v}    )_{\mathcal{F}_{h}^{g}} \lesssim  \sum_{j=0}^{k} h^{2j-3} ( \jump{    \partial ^{j}_{n}  v }, \jump{  \partial ^{j}_{n}  v}
+        \sum_{j=0}^{k} h^{2j+1} ( \jump{   D^2 \partial ^{j}_{n}  v_{h} }, \jump{  D^2 \partial ^{j}_{n}  v_{h}}    )_{\mathcal{F}_{h}^{g}} \lesssim  \sum_{j=0}^{k} h^{2j-3} ( \jump{    \partial ^{j}_{n}  v_{h} }, \jump{  \partial ^{j}_{n}  v_{h}}
         )_{\mathcal{F}_{h}^{g}}.
         \]
-        Recall the decomposition procedure done in \eqref{eq:projection} for a facet $F$ , where $P_{F} := I - n_{} \oplus n_{} $ and $Q_{F} = n_{} \oplus n_{}$. We apply this so we can to decompose the Hessian evaluated on the facet  s.t. \[
-        D^2 v  \mid _{F} = Q_{F}D^2v + P_{F} D^2 v .
+        Recall the decomposition procedure done in \eqref{eq:projection} for a facet $F$ , where $P_{F} := I - n_{} \oplus n_{} $ and $Q_{F} = n_{} \oplus n_{}$. We apply this so we can to decompose the Hessian evaluated on the facet  such that, \[
+        D^2 v_{h}  \mid _{F} = Q_{F}D^2v_{h} + P_{F} D^2 v_{h} .
         \]
         % Recall from basic finite element theory .
         \red{
-        Recall from \eqref{eq:fund_inv_est} and \eqref{eq:degrade} the inverse estimates $\| D^2v \|_{T  }^{ 2 }  \le h^{-4} \| v \|_{ T }^{2  }    $ and $ \| D^2v \|_{F  }^{2  } \le h^{-1} \| D^2 v  \|_{T  }^{ 2 }   $.}
+        Recall from \eqref{eq:fund_inv_est} and \eqref{eq:degrade} the inverse estimates $\| D^2v_h \|_{T  }^{ 2 }  \le h^{-4} \| v_h \|_{ T }^{2  }    $ and $ \| D^2v_h \|_{F  }^{2  } \le h^{-1} \| D^2 v_h  \|_{T  }^{ 2 }   $.}
         That is, applying the decomposition we get the following estimates \[
             \begin{split}
-        \| \jump{ P_{F}   D^2 \partial _{n}^{j} v }\|_{ F }^{ 2 } & = \| P_{F} D^2 \jump{ \partial _{n}^{j} v }   \|_{ F  }^{ 2} = \| (I- n\otimes n) D^2 \jump{ \partial _{n}^{j} v }   \|_{ F  }^{ 2}    \\
-        & \lesssim  \|  (I- n\otimes n) \|_{l^{\infty} }^{  } \| D^2 \jump{ \partial _{n}^{j} v }   \|_{ F  }^{ 2} \lesssim   \|  D^2 \jump{ \partial _{n}^{j} v }   \|_{ F  }^{ 2} \lesssim h^{-4} \|  \jump{ \partial ^{j}_{n} v }   \|_{ F }^{  2}. \\
-        \| \jump{ Q_{F}   D^2 \partial _{n}^{j} v }\|_{ F }^{ 2 } & = \| Q_{F} D^2 \jump{ \partial _{n}^{j} v }   \|_{ F  }^{ 2} = \| n\otimes n D^2 \jump{ \partial _{n}^{j} v }   \|_{ F  }^{ 2}    \\
-        & \lesssim  \| n \otimes n \|_{l^{\infty} }^{  }  \|  D^2 \jump{ \partial _{n}^{j} v }   \|_{ F  }^{ 2} \lesssim h^{-4} \|  \jump{ \partial ^{j}_{n} v }   \|_{ F }^{  2}.
+        \| \jump{ P_{F}   D^2 \partial _{n}^{j} v_{h} }\|_{ F }^{ 2 } & = \| P_{F} D^2 \jump{ \partial _{n}^{j} v_{h} }   \|_{ F  }^{ 2} = \| (I- n\otimes n) D^2 \jump{ \partial _{n}^{j} v_{h} }   \|_{ F  }^{ 2}    \\
+        & \lesssim  \|  (I- n\otimes n) \|_{l^{\infty} }^{  } \| D^2 \jump{ \partial _{n}^{j} v_{h} }   \|_{ F  }^{ 2} \lesssim   \|  D^2 \jump{ \partial _{n}^{j} v_{h} }   \|_{ F  }^{ 2} \lesssim h^{-4} \|  \jump{ \partial ^{j}_{n} v_{h} }   \|_{ F }^{  2}. \\
+        \| \jump{ Q_{F}   D^2 \partial _{n}^{j} v_{h} }\|_{ F }^{ 2 } & = \| Q_{F} D^2 \jump{ \partial _{n}^{j} v_{h} }   \|_{ F  }^{ 2} = \| n\otimes n D^2 \jump{ \partial _{n}^{j} v_{h} }   \|_{ F  }^{ 2}    \\
+        & \lesssim  \| n \otimes n \|_{l^{\infty} }^{  }  \|  D^2 \jump{ \partial _{n}^{j} v_{h} }   \|_{ F  }^{ 2} \lesssim h^{-4} \|  \jump{ \partial ^{j}_{n} v_{h} }   \|_{ F }^{  2}.
             \end{split}
         \]
         Here is $\| \cdot  \|_{l^{\infty}  }^{  } $ denoted as the discrete matrix inf-norm.
         Thus, using this on the decomposition can we admit that
          \[
              \begin{split}
-            h^{2j +1} \| \jump{D^2 \partial ^{j}_{n}  v}  \|_{ F }^{2  } & \lesssim h^{2j +1} \| Q_{F} \jump{ \partial ^{j}_{n}  v }  \|_{ F }^{2  } + h^{2j +1} \| P_{F} D^2 \jump{ \partial ^{j}_{n}  v }       \|_{ F }^{2  } \\
-            &  \lesssim   h^{2j -3}  \| \jump{ \partial ^{j}_{n}v }   \|_{ F }^{ 2 }
+            h^{2j +1} \| \jump{D^2 \partial ^{j}_{n}  v_{h}}  \|_{ F }^{2  } & \lesssim h^{2j +1} \| Q_{F} \jump{ \partial ^{j}_{n}  v_{h} }  \|_{ F }^{2  } + h^{2j +1} \| P_{F} D^2 \jump{ \partial ^{j}_{n}  v_{h} }       \|_{ F }^{2  } \\
+            &  \lesssim   h^{2j -3}  \| \jump{ \partial ^{j}_{n}v_{h} }   \|_{ F }^{ 2 }
              \end{split}
         \]
         % \red{Seems like the projection argument is not necessarry. You can simply prove it using direcetly the estimate $\| D^2v \|_{F  }^{ 2 }\le h^{-2} \| \nabla v \|_{ F }^{ 2 } \le h^{-4} \| v \|_{ F }^{2  }    $ s.t.
@@ -268,7 +267,7 @@ Summation over the intersected triangles $\mathcal{T} _{\Gamma }$ implies,
         Thus, fulfilling \eqref{eq:bi_inv_gh_2}.
         \[
             \begin{split}
-         \sum_{j=0}^{k} h^{2j+1} ( \jump{   D^2 \partial ^{j}_{n}  v }, \jump{  D^2 \partial ^{j}_{n}  v}    )_{\mathcal{F}_{h}^{g}} & \lesssim  \sum_{j=0}^{k} h^{2j-3}  (\jump{    \partial ^{j}_{n}  v }, \jump{ \partial ^{j}_{n}  v }  )_{\mathcal{F} _{h}^{g}  }^{2  }
+         \sum_{j=0}^{k} h^{2j+1} ( \jump{   D^2 \partial ^{j}_{n}  v_{h} }, \jump{  D^2 \partial ^{j}_{n}  v_{h}}    )_{\mathcal{F}_{h}^{g}} & \lesssim  \sum_{j=0}^{k} h^{2j-3}  (\jump{    \partial ^{j}_{n}  v_{h} }, \jump{ \partial ^{j}_{n}  v_{h} }  )_{\mathcal{F} _{h}^{g}  }^{2  }
             \end{split}
         \]
 
@@ -276,7 +275,6 @@ Summation over the intersected triangles $\mathcal{T} _{\Gamma }$ implies,
     Hence, the proof is complete.
 
 \end{proof}
-
 
 
 Finally, we now have the tools we need to construct an candidate for the ghost penalty for which satisfies all assumptions.
