@@ -16,11 +16,9 @@ The method involves adding a stabilization term, commonly referred to as the gho
 This term serves the purpose of controlling the energy norm associated with the bilinear form, utilizing the entire background mesh to ensure stabilization and geometric robustness.
 For more information, see
 \cite{burman2015cutfem, burman2010ghost, burman2022cutfem, burman2012fictitious}.
-
-Inspired by a corresponding CutFEM DG elliptic framework \cite{gurkan2019stabilized} and starting from the CIP methods introduced in Section \ref{sec:CIP_biharmonic_problem}, is the goal in this section to engineer suitable stabilized ghost penalty
-terms for the biharmonic problem.
-We will show what assumptions that is needed for the ghost-penalty method for the discrete problem to be stable in Subsection \ref{sub:stability_estimate} and obtain optimal convergence in Subsection \ref{sec:a_priori_estimates}.  Once
-this is fulfilled will we propose a $g_{h}$ which fulfills these assumptions in Subsection \ref{sec:constructing_ghost_penalties}.
+Inspired by the corresponding CutFEM DG elliptic framework outlined in \cite{gurkan2019stabilized}, the objective of this section is to engineer suitable stabilized ghost penalty terms for the biharmonic problem, starting from the CIP methods introduced in Section \ref{sec:CIP_biharmonic_problem}.
+We will show what assumptions are needed for the ghost-penalty method for the discrete problem to be stable in Section \ref{sub:stability_estimate} and derive optimal convergence in Section \ref{sec:a_priori_estimates}.  Once
+this is fulfilled we propose a ghost penalty which fulfills these assumptions in Subsection \ref{sec:constructing_ghost_penalties}.
 
 
 \subsection{Computational domain}%
