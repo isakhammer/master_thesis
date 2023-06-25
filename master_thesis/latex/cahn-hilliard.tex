@@ -85,12 +85,12 @@ variant $a^{L}( \cdot ,\cdot ) $.
 
 We will now find seek to find a bilinear form of the nonlinear term,
 \begin{lemma}[Semi-linear form]
-    Let $u \in H^4( \Omega ) $ be solution to \eqref{eq:ch_gen} and $v \in V_{h}$ the test function.
-Then can we rewrite the nonlinear term into the corresponding semi-linear form $c_{h}:V_{h} \times  V_{h} \to \mathbb{R} $  for the nonlinear term $( -\Delta f( u) , v)_{\Omega }$ into two consistent formulations.
+    Let $u \in H^4( \Omega ) $ be solution to \eqref{eq:ch_gen} and $v_{h} \in V_{h}$ the test function.
+Then can we rewrite the nonlinear term into the corresponding semi-linear form $c_{h}( \cdot ,\cdot )  $ for the nonlinear term $( -\Delta f( u) , v_{h})_{\Omega }$ into two consistent formulations.
 \begin{enumerate}[label=\arabic*)]
-    \item  $c^{}_{h} ( u,v)  = ( f' ( u) \nabla u, v )_{\Omega }  - ( f'( u)  g_{1}   ,  v)_{\Gamma }$
+    \item  $c^{}_{h} ( u,v_{h})  = ( f' ( u) \nabla u, v_{h} )_{\Omega }  - ( f'( u)  g_{1}   ,  v_{h})_{\Gamma }$
     \item
-        $c^{}_{h} ( u,v)  = -( f( u), \Delta v )_{\Omega }+  ( f( u) , \jump{ \partial _{n}v }  )_{\mathcal{F} _{h}^{int}} + ( f(u), \partial _{n} v)_{\Gamma  }  - ( f'( u)  g_{1}   ,  v)_{\Gamma }$
+        $c^{}_{h} ( u,v_{h})  = -( f( u), \Delta v_{h} )_{\Omega }+  ( f( u) , \jump{ \partial _{n}v_{h} }  )_{\mathcal{F} _{h}^{int}} + ( f(u), \partial _{n} v_{h})_{\Gamma  }  - ( f'( u)  g_{1}   ,  v_{h})_{\Gamma }$
 \end{enumerate}
 \begin{remark}
     Be aware that the both formulations are consistent in a continuous sense, but if we replace $u \in H^{4}( \Omega ) $ with  $u_{h} \in  V_{h}$ we have two different discrete formulations.
@@ -101,61 +101,65 @@ Then can we rewrite the nonlinear term into the corresponding semi-linear form $
 
 \begin{proof}
 
-    We will first show the first formulation, and then the second. The equivalence follows in a weak sense for $u \in H^{4}( \Omega ) $  when this is shown.
+    We will first show the first formulation, and then the second.
         \\ \textbf{Step 1.}  We want to construct the first formulation. Let $T$ be an element in $\mathcal{T}_{h}$. From Greens theorem is it easy to see that
             \begin{equation}
             \label{eq:1_gr}
--(\Delta f( u) , v)_{T } = (\nabla f( u), \nabla v  )_{T } - ( \partial _{n}  f( u), v )_{\partial T }
+-(\Delta f( u) , v_{h})_{T } = (\nabla f( u), \nabla v_{h}  )_{T } - ( \partial _{n}  f( u), v_{h} )_{\partial T }
             \end{equation}
             First by utilizing that $\nabla f( u) = f' ( u) \nabla u $ and $\partial _{n}f( u)  = f' ( u)  \partial _{n}u$  and doing a summation over the triangles  is it clear that \[
-            ( -\Delta f( u),v )_{\Omega  } =(f' ( u) \nabla u, \nabla v  )_{\Omega  } - (   f' ( u)\partial _{n}u, v )_{\partial \mathcal{T}_{h}  }
+            ( -\Delta f( u),v_{h} )_{\Omega  } =(f' ( u) \nabla u, \nabla v_{h}  )_{\Omega  } - (   f' ( u)\partial _{n}u, v_{h} )_{\partial \mathcal{T}_{h}  }
             \]
             Iterating over the facets is it clear that \[
                 \begin{split}
-            (   f' ( u)\partial _{n}u, v )_{\partial \mathcal{T}_{h}  } & = \sum_{F \in \mathcal{F}_{h}  }^{} \int_{F}^{}   \jump{ f' ( u)\partial _{n}u, v } \\
-                                                                        & =  ( \jump{ f' ( u) \partial _{n}u },  \mean{v}    )_{\mathcal{F}^{int}_{h} } + ( \mean{ f' ( u) \partial _{n}u }, \jump{ v }    )_{\mathcal{F}^{int}_{h} } +  ( f' ( u) \partial _{n}u, v) _{\Gamma } \\
-                                                                        & =  ( f' ( u) \partial _{n}u, v) _{\Gamma }
+            (   f' ( u)\partial _{n}u, v_{h} )_{\partial \mathcal{T}_{h}  } & = \sum_{F \in \mathcal{F}_{h}  }^{} \int_{F}^{}   \jump{ f' ( u)\partial _{n}u, v_{h} } \\
+                                                                        & =  ( \jump{ f' ( u) \partial _{n}u },  \mean{v_{h}}    )_{\mathcal{F}^{int}_{h} } + ( \mean{ f' ( u) \partial _{n}u }, \jump{ v_{h} }    )_{\mathcal{F}^{int}_{h} } +  ( f' ( u)
+                                                                        \partial _{n}u, v_{h}) _{\Gamma } \\
+                                                                        & =  ( f' ( u) \partial _{n}u, v_{h}) _{\Gamma }
                 \end{split}
             \]
-            The jump terms vanishes by the regularity of $u$ and $v$. Hence, by inserting $g_{1}$ we have shown that the first formulation holds.
+            The jump terms vanishes by the regularity of $u$ and $v_{h}$. Hence, by inserting $g_{1}$ we have shown that the first formulation holds.
          \\ \textbf{Step 2.}  Applying a extra iteration of Greens theorem on \eqref{eq:1_gr} we get the following terms.
 \[
     \begin{split}
--(\Delta f( u) , v)_{T }  = -( f( u), \Delta v )_{T} + (f( u), \partial _{n} v  )_{\partial T} - (   f'( u)\partial _{n}u, v )_{\partial T } .
+-(\Delta f( u) , v_{h})_{T }  = -( f( u), \Delta v_{h} )_{T} + (f( u), \partial _{n} v_{h}  )_{\partial T} - (   f'( u)\partial _{n}u, v_{h} )_{\partial T } .
     \end{split}
 \]
 Now, by doing a summation of all triangles it is clear that this holds.
 \begin{equation}
 \label{eq:f_g2}
--(\Delta f( u) , v)_{\Omega  }  = -( f( u), \Delta v )_{\Omega } + (f( u), \partial _{n} v  )_{\partial \mathcal{T}_{h} } - (   f'( u)\partial _{n}u, v )_{\partial \mathcal{T}_{h}  }
+-(\Delta f( u) , v_{h})_{\Omega  }  = -( f( u), \Delta v_{h} )_{\Omega } + (f( u), \partial _{n} v_{h}  )_{\partial \mathcal{T}_{h} } - (   f'( u)\partial _{n}u, v_{h} )_{\partial \mathcal{T}_{h}  }
 \end{equation}
-It comes evident from the first step of the proof that $ (   f'( u)\partial _{n}u, v )_{\partial \mathcal{T}_{h}  } = (   f'( u)\partial _{n}u, v )_{\Gamma }$, hence, we only need to compute the term $(f( u), \partial _{n} v  )_{\partial
+It comes evident from the first step of the proof that $ (   f'( u)\partial _{n}u, v_{h} )_{\partial \mathcal{T}_{h}  } = (   f'( u)\partial _{n}u, v_{h} )_{\Gamma }$, hence, we only need to compute the term $(f( u), \partial _{n} v_{h}  )_{\partial
 \mathcal{T}_{h} }$ on the facets. \[
     \begin{split}
-(f( u), \partial _{n} v  )_{\partial
-\mathcal{T}_{h} } & = \sum_{F\in \mathcal{F} _{h}}^{} \int_{F}^{}\jump{ f( u), \partial _{n} v  } \\
-& =  (\jump{ f( u)  }  , \mean{ \partial _{n} v }    )_{ \mathcal{F}_{h}^{int} } +(\mean{ f( u)  }  , \jump{ \partial _{n} v }    )_{ \mathcal{F}_{h}^{int} } + (f( u), \partial _{n} v  )_{\Gamma } \\
-&=  (\mean{ f( u)  }  , \jump{ \partial _{n} v }    )_{ \mathcal{F}_{h}^{int} } + (f( u), \partial _{n} v  )_{\Gamma }
+(f( u), \partial _{n} v_{h}  )_{\partial
+\mathcal{T}_{h} } & = \sum_{F\in \mathcal{F} _{h}}^{} \int_{F}^{}\jump{ f( u), \partial _{n} v_{h}  } \\
+& =  (\jump{ f( u)  }  , \mean{ \partial _{n} v_{h} }    )_{ \mathcal{F}_{h}^{int} } +(\mean{ f( u)  }  , \jump{ \partial _{n} v_{h} }    )_{ \mathcal{F}_{h}^{int} } + (f( u), \partial _{n} v_{h}  )_{\Gamma } \\
+&=  (\mean{ f( u)  }  , \jump{ \partial _{n} v_{h} }    )_{ \mathcal{F}_{h}^{int} } + (f( u), \partial _{n} v_{h}  )_{\Gamma }
     \end{split}
 \]
 Again one of the jump terms vanishes because of the regularity of $u$.
 Inserting the result into \eqref{eq:f_g2} have we shown that the second formulation also holds.
+
+The consistency follows in a weak sense for $u \in H^{4}( \Omega ) $.
 \end{proof}
 
-Hence, we have a scheme for nonlinear spatial discretization. Let $u \in \left[ 0,T \right] \times V_{h}  $ and $v \in V_{h}$. We define the following CIP discretization
+Hence, we have a scheme for nonlinear spatial discretization. Let $u_{h} \in \left[ 0,T \right] \times V_{h}  $ and $v_{h} \in V_{h}$. We define the following CIP discretization
 \begin{equation}
     \label{eq:cip_ch}
     \begin{split}
-        a_{h} \left( u, v \right)   =& ( \Delta  u, \Delta v ) _{ \Omega } \\
-                                     & + \left( \mean{  \Delta  u }, \jump{ \partial _{n }v} \right)_{\mathcal{F}_{h}  }  + \left( \mean{ \Delta  v }, \jump{ \partial _{n}u }      \right)_{\mathcal{F}_{h}  }  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v   }   \right)_{\mathcal{F}_{h} } \\
-                                     & + \left(   \Delta  u ,  \partial _{n }v \right)_{\Gamma   }  + \left(  \Delta  v ,  \partial _{n}u       \right)_{\Gamma  }  + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{ \Gamma } \\
-    c^{}_{h} ( u,v)  & = -( f( u), \Delta v )_{\mathcal{T} _{h}}+  ( f( u) , \jump{ \partial _{n}v }  )_{\mathcal{F} _{h}^{int}} + ( f(u), \partial _{n} v)_{\Gamma  }  + ( f'( u)  g_{1}   ,  v)_{\Gamma } \\
-    l_{h}( v_{}) & =  \left( g_{0}, v \right) _{\Omega } -  \varepsilon ( g_{2},  v )_{\Gamma }  -  \varepsilon ( g_{1}, \Delta  v  )_{\Gamma }  + \varepsilon \frac{\gamma }{h} ( g_{1}, \partial _{n} v  )_{\Gamma }
+        a_{h} \left( u_{h}, v_{h} \right)   =& ( \Delta  u_{h}, \Delta v_{h} ) _{ \Omega } \\
+                                     & + \left( \mean{  \Delta  u_{h} }, \jump{ \partial _{n }v_{h}} \right)_{\mathcal{F}_{h}  }  + \left( \mean{ \Delta  v_{h} }, \jump{ \partial _{n}u_{h} }      \right)_{\mathcal{F}_{h}  }  + \frac{\gamma }{h}
+                                     \left( \jump{ \partial _{n} u_{h}}, \jump{ \partial _{n} v_{h}   }   \right)_{\mathcal{F}_{h} } \\
+                                     & + \left(   \Delta  u_{h} ,  \partial _{n }v_{h} \right)_{\Gamma   }  + \left(  \Delta  v_{h} ,  \partial _{n}u_{h}       \right)_{\Gamma  }  + \frac{\gamma }{h}  \left(  \partial _{n} u_{h},  \partial _{n} v_{h}      \right)_{ \Gamma } \\
+    c^{}_{h} ( u_{h},v_{h})  & = -( f( u_{h}), \Delta v_{h} )_{\mathcal{T} _{h}}+  ( f( u_{h}) , \jump{ \partial _{n}v_{h} }  )_{\mathcal{F} _{h}^{int}} + ( f(u_{h}), \partial _{n} v_{h})_{\Gamma  }  + ( f'( u_{h})  g_{1}   ,  v_{h})_{\Gamma } \\
+    l_{h}( v_{h}) & =  \left( g_{0}, v_{h} \right) _{\Omega } -  \varepsilon ( g_{2},  v_{h} )_{\Gamma }  -  \varepsilon ( g_{1}, \Delta  v_{h}  )_{\Gamma }  + \varepsilon \frac{\gamma }{h} ( g_{1}, \partial _{n} v_{h}  )_{\Gamma }
     \end{split}
 \end{equation}
-s.t. that the following relation ship holds.
+such that that the following relationship holds.
 \[
-    ( \partial _{t}u, v)_\Omega + \varepsilon  a_{h}( u,v) + \frac{1}{\varepsilon }c_{h}( u,v)   =  l_{h}(v)
+    ( \partial _{t}u_{h}, v_{h})_\Omega + \varepsilon  a_{h}( u_{h},v_{h}) + \frac{1}{\varepsilon }c_{h}( u_{h},v_{h})   =  l_{h}(v_{h}) \quad  \forall u_{h}, v_{h} \in V_{h}
 \]
 
 \subsection{Constructing the Unfitted CIP version}%
