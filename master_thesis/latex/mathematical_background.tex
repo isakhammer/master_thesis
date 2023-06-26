@@ -434,7 +434,7 @@ element as $\mathcal{P} ^{k}(T )$ and $\mathcal{Q} ^{k}( T)$, both of polynomial
     }
     % And so on for $\mathcal{P}^{3}( S)  $, $\mathcal{P}^{4}( S)  $, etc.
     \hfill
-    \subfloat[ $\mathcal{Q} _{3}( T)  $]{
+    \subfloat[ $\mathcal{Q} ^{3}( T)  $]{
         \begin{tikzpicture}[scale=1.0]
             % Define the coordinates
             \coordinate (A) at (0,0);
@@ -799,7 +799,7 @@ We now have a well-defined discrete global space  $V_{h} $ consisting of the fin
 also known as ndofs, is denoted as $dim(V_{h}) = N$. Let $U_{j} = u_{h}\left(
 a_{j} \right) $, so that $u_{h} = \sum_{j=1}^{N} U_{j} \phi _{j}  $. Then the Problem \ref{def:approx_problem} is equivalent to
  \[
-\sum_{j = 1}^{N} u_{j} a_{h}\left( \phi _{j}, \phi _{i} \right)  = l\left( \phi _{i} \right)
+\sum_{j = 1}^{N} u_{j} a_{h}\left( \phi _{j}, \phi _{i} \right)  = l_{h}\left( \phi _{i} \right)
 \]
 Hence, by letting $U = \left[ U_{j} \right] $ , $F = \left[ \left( f, \phi _{i}  \right) _{\Omega } \right] $  and $A = \left[ a_{h}\left( \phi _{j}, \phi _{i} \right)  \right] $ can we construct a linear system,
 \begin{equation}
