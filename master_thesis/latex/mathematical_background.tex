@@ -641,6 +641,24 @@ We may introduce the reference element $\hat{T} $ in $d$ dimensions. The referen
     \draw[dashed] (E') -- (H');
     \draw[dashed] (F') -- (G');
 
+    \fill (A') circle (2pt);
+    \fill (B') circle (2pt);
+    \fill (C') circle (2pt);
+    \fill (D') circle (2pt);
+    \fill (E') circle (2pt);
+    \fill [opacity=0.5] (F') circle (2pt);
+    \fill (G') circle (2pt);
+    \fill (H') circle (2pt);
+
+    \fill (A) circle (2pt);
+    \fill (B) circle (2pt);
+    \fill (C) circle (2pt);
+    \fill (D) circle (2pt); % D has half opacity now
+    \fill [opacity=0.5](E) circle (2pt);
+    \fill (F) circle (2pt);
+    \fill (G) circle (2pt);
+    \fill (H) circle (2pt);
+
     % Draw arrow to signify the mapping G
     \draw[->, thick, >=stealth] ($(A)+(0.8,0.5)$) to[bend left] node[midway, above, yshift=0.1cm] {$\mathcal{G}$} ($(A')+(-0.5,0.8)$);
 \end{tikzpicture}
