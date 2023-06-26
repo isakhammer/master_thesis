@@ -859,6 +859,7 @@ Also recall the definition of the matrix norm,
 \end{equation}
 Assume that $A $ is invertible, then we define the condition number for a matrix in $l^{p}  $ norm defined such that
 \begin{equation}
+    \label{eq:condition_num}
  \forall A \in \mathbb{R} ^{N\times N}, 1\le p \le  \infty, \quad  \kappa_{p} ( A) = \| A  \|_{ p }^{  } \| A ^{-1} \|_{ p }.
 \end{equation}
 
@@ -876,10 +877,10 @@ It is well established that $ \frac{1}{\sqrt{N} }  \| A \|_{ \infty }^{  }  \le 
     \frac{\| Av \|_{ \infty  }^{  }}{ \sqrt{N} \| v \|_{ \infty}^{  } } = \frac{1}{ \sqrt{N} } \| A \|_{ \infty }^{  }    $ and $ \| A \|_{ 2 }^{  } = \max_{v \in \mathbb{R} ^{N}} \frac{\| Av \|_{2  }^{  }}{\| v \|_{ 2 }^{  } } \le  \max_{v \in \mathbb{R} ^{N}}
     \frac{\sqrt{N} \| Av \|_{ \infty  }^{  }}{  \| v \|_{ \infty}^{  } } =  \sqrt{N} \| A \|_{ \infty }^{  }    $. Hence, the identity $\frac{1}{\sqrt{N} } \| A \|_{\infty  }^{  } \le \| A \|_{ 2 }^{  }\le \sqrt{N} \| A \|_{ \infty  }^{  }   $  is proven.
 
-}. Applying this identity, we conclude upper and lower bound of $\kappa _{2}( A)  $.
-\[
+}. Applying this identity, we obtain the upper and lower bounds for $\kappa_{2}(A)$. Specifically, we have
+\begin{equation}
 \frac{1}{N} \kappa_{\infty} ( A) \le  \kappa_{2} ( A) \le N \kappa _{\infty}(A)
-\]
+\end{equation}
 Thus, since these norms are equivalent, will we in this thesis focus on $ \kappa_{\infty}( A)  $ because of the efficiency of computing $\| A \|_{ \infty }^{  } $  .
 
 \subsection{Cléments interpolation}%

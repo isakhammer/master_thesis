@@ -126,9 +126,11 @@ $k=0, \ldots, 6$. For the circular domain is this illustrated in the Figure \ref
 \end{figure}
 
 On each mesh $\widetilde{\mathcal{T}}^{k}_{h}  $ we compute a numerical solution $u_{h}^{k}$, hence, motivating us to define the convergence rate. Let $u $ be the exact solution, then do we define the so-called Experimental Order of Convergence (EOC) as \[
-EOC( k) =  \frac{\log \left(  \frac{e^{k-1}}{e^{k}} \right)}{\log \left(  \frac{h^{k-1}}{h^{k}} \right)}, \quad    k>0
+EOC( j) =  \frac{\log \left(  \frac{e^{k-1}}{e^{j}} \right)}{\log \left(  \frac{h^{j-1}}{h^{j}} \right)}, \quad    j = 2,\ldots, 8
 \]
-Here we define the error $e^{k} = \| u - u_{h}^{k} \|_{  }^{  } $, where we choose to measure in the norms $ \|\cdot   \|_{L^2( \Omega )   }^{  },   \|\cdot   \|_{H^1( \Omega )   }^{  } $ and $ \|\cdot   \|_{ a_{h},* }^{  }$.
+Here we define the error $e^{j} = \| u - u_{h}^{j} \|_{  }^{  } $, where we choose to measure in the norms $ \|\cdot   \|_{L^2( \Omega )   }^{  },   \|\cdot   \|_{H^1( \Omega )   }^{  } $ and $ \|\cdot   \|_{ a_{h},* }^{  }$.
+Recall the definition of the condition number $\kappa_{\infty} ( A)$ from \eqref{eq:condition_num}, where $A$ is the system matrix defined in \eqref{eq:linear_system}. Let $A^{j}$ be defined to be the associated system matrix the discrete solution
+$u_{h}^{j}$. Hence, when computing EOC specifically for the condition number we define $e^{j} = \kappa _{\infty}( A^{j})  $.
 
 
 \subsection{Validation of the a priori estimates }%
