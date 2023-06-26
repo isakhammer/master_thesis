@@ -63,9 +63,9 @@ For an illustration of the flower domain, see Figure \ref{fig:flower}.
 \end{figure}
 
 
-We want to test spatial convergence for the method by doing a numerous of mesh refinements. Let $ \widetilde{\mathcal{T}}_{h}^{k} $ be the associated regular square mesh of the background domain $\widetilde{\Omega }$ with the mesh size  $h^{k} = L/2^{3+k} $
+We want to test spatial convergence for the method by doing a numerous of mesh refinements. Let $ \widetilde{\mathcal{T}}_{h}^{j} $ be the associated regular square mesh of the background domain $\widetilde{\Omega }$ with the mesh size  $h^{k} = L/2^{3+j} $
 for the side length $L=2.7$ and refinements
-$k=0, \ldots, 6$. For the circular domain is this illustrated in the Figure \ref{fig:refinement}.
+$j=1, \ldots, 8$. For the circular domain is this illustrated in the Figure \ref{fig:refinement}.
 
 \begin{figure}[hpbt!]
     \centering
@@ -121,16 +121,20 @@ $k=0, \ldots, 6$. For the circular domain is this illustrated in the Figure \ref
 
         \end{tikzpicture}
 }
-    \caption{Illustration of the domain $\Omega $ defined as a circle with radius $R$. The regular square background mesh $ \widetilde{\mathcal{T}}_{h}^{k} $ with side lengths $L$ with three refinements of the mesh size $h^{k}$.}
+    \caption{Illustration of the domain $\Omega $ defined as a circle with radius $R$. The regular square background mesh $ \widetilde{\mathcal{T}}_{h}^{j} $ with side lengths $L$ with three refinements of the mesh size $h^{j}$.}
     \label{fig:refinement}
 \end{figure}
 
-On each mesh $\widetilde{\mathcal{T}}^{k}_{h}  $ we compute a numerical solution $u_{h}^{k}$, hence, motivating us to define the convergence rate. Let $u $ be the exact solution, then do we define the so-called Experimental Order of Convergence (EOC) as \[
-EOC( j) =  \frac{\log \left(  \frac{e^{k-1}}{e^{j}} \right)}{\log \left(  \frac{h^{j-1}}{h^{j}} \right)}, \quad    j = 2,\ldots, 8
-\]
+On each mesh $\widetilde{\mathcal{T}}^{k}_{h}  $ we compute a numerical solution $u_{h}^{k}$, hence, motivating us to define the convergence rate. Let $u $ be the exact solution, then do we define the so-called Experimental Order of Convergence (EOC) as
+\begin{equation}
+EOC( j) =  \frac{\log \left(  \frac{e^{j-1}}{e^{j}} \right)}{\log \left(  \frac{h^{j-1}}{h^{j}} \right)}, \quad    j = 2,\ldots, 8
+\end{equation}
 Here we define the error $e^{j} = \| u - u_{h}^{j} \|_{  }^{  } $, where we choose to measure in the norms $ \|\cdot   \|_{L^2( \Omega )   }^{  },   \|\cdot   \|_{H^1( \Omega )   }^{  } $ and $ \|\cdot   \|_{ a_{h},* }^{  }$.
 Recall the definition of the condition number $\kappa_{\infty} ( A)$ from \eqref{eq:condition_num}, where $A$ is the system matrix defined in \eqref{eq:linear_system}. Let $A^{j}$ be defined to be the associated system matrix the discrete solution
-$u_{h}^{j}$. Hence, when computing EOC specifically for the condition number we define $e^{j} = \kappa _{\infty}( A^{j})  $.
+$u_{h}^{j}$. Hence, when computing EOC specifically for the condition number we define,
+\begin{equation}
+EOC( j) =  \frac{\log \left(  \frac{\kappa _{\infty}( A^{j-1})}{\kappa _{\infty}( A^{j})} \right)}{\log \left(  \frac{h^{j-1}}{h^{j}} \right)}, \quad    j = 2,\ldots, 8
+\end{equation}
 
 
 \subsection{Validation of the a priori estimates }%
