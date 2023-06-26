@@ -9,17 +9,19 @@ We will construct a suitable (quasi-)interpolation operator, here we use the Cle
 \Omega ) $.
 In combination with discrete coercivity this allows you to derive an a priori estimate in the energy norm. Finally, we use a standard duality argument, i.e. Aubin-Nitsche trick, to derive the $L^{2}$ error estimate.
 
-Recall that for $v \in H^{1}( \mathcal{T } _{h}) $ these inequalities holds $\forall T \in \mathcal{T} _{h}$ such that \[
-\begin{split}
+Recall that for $v \in H^{1}( \mathcal{T } _{h}) $ these inequalities holds $\forall T \in \mathcal{T} _{h}$ such that
+\begin{align}
     \| v \|_{ \partial T }^{  } &\lesssim h^{-\frac{1}{2}}_{T}\|  v \|_{ T }^{  }+ h^{\frac{1}{2}} \| \nabla v \|_{T  }^{   }  , \\
-    \| v \|_{ \Gamma \cap T }^{  } &\lesssim  h^{-\frac{1}{2}} \| v \|_{T  }^{  }   + h^{\frac{1}{2}}_{T} \| \nabla v \|_{ T }^{  },
-\end{split}
-\]
+    \| v \|_{ \Gamma \cap T }^{  } &\lesssim  h^{-\frac{1}{2}} \| v \|_{T  }^{  }   + h^{\frac{1}{2}}_{T} \| \nabla v \|_{ T }^{  },\\
+    \| \nabla v \|_{ \partial T }^{  } &\lesssim h^{-\frac{1}{2}}_{T}\|  \nabla v \|_{ T }^{  }+ h^{\frac{1}{2}} \| D^2 v \|_{T  }^{   }  , \\
+    \| \nabla v \|_{ \Gamma \cap T }^{  } &\lesssim  h^{-\frac{1}{2}} \| \nabla v \|_{T  }^{  }   + h^{\frac{1}{2}}_{T} \| D^2 v \|_{ T }^{  },
+\end{align}
 for proof see \cite[Lemma 4.2]{hansbo2003finite}.
 
-Assume that $\Omega $ has a boundary $\Gamma $ in $C^{1}$, then it does exist an bounded extension operator, \[
+Assume that $\Omega $ has a boundary $\Gamma $ in $C^{1}$, then it does exist an bounded extension operator,
+\begin{equation}
     ( \cdot ) ^{e}: H^{m}( \Omega )  \to H^{m} ( \mathbb{R} ^{d}),
-\]
+\end{equation}
 for all  $v \in H^{m}( \Omega )$ which satisfies
 \begin{equation}
     \begin{split}
