@@ -285,14 +285,15 @@ We denote the functional $a_{h}: V_{h} \times V_{h} \to \mathbb{R} $ as an consi
 \end{definition}
 For more information about the local polynomial spaces, see \cite[Chapter 6.4, 7.3]{ErnGuermond2021}
 
-Following Ciarlet \cite[pp.93]{ciarlet1991basic}, the abstract definition of a finite element is defined as the triplet $( T, \mathcal{P}, \Sigma ) $. In our case is $T$ a simplex or a quadrilateral geometry and the $\mathcal{P} $ a finite dimensional polynomial space consisting of $N$ shape
-functions $\left\{ \phi_{i}  \right\}_{i\in N} $ such as \eqref{eq:pol_space}.
-On the other hand, $\Sigma $ is the so-called dual of $\mathcal{P}$, that is, the set of linear forms $\left\{ \sigma _{i} \right\} $ such that. $ \sigma_{j} ( \phi_{i} ) = \delta _{ij}$ and $p( x) = \sum_{i\in N}^{} \sigma_{i} ( p) p_{i} $.
-If there is a set of points $\left\{ a_{i} \right\}_{i \in N} $  in $T$ such that
-$\sigma_{i}( p) = p( a_{i}) \  \forall p \in \mathcal{P}$,  then the triple $( T, \mathcal{P}, \Sigma  ) $ is called a Lagrangian finite element. The set of points $\left\{ a_{i} \right\}_{i \in N}  $ is called nodes and is associated with the
-so-called nodal basis of $\mathcal{P} $ such that  $\phi ( a_{i}) = \delta _{ij} \ \forall i,j  \in N$
+Following Ciarlet \cite[pp.93]{ciarlet1991basic}, the abstract definition of a finite element is defined as the triplet $( T, \mathcal{P}, \Sigma ) $.
+In our case, $T$ represents either a simplex or a quadrilateral geometry, and $\mathcal{P}$ denotes a finite-dimensional polynomial space consisting of $N$ shape functions $\left\{ \phi_{i} \right\}_{i\in \mathcal{I} } $, where $\mathcal{I} = \left\{
+1, \ldots, N \right\} $, as depicted in Definition \ref{def:local_space}.
+On the other hand, $\Sigma $ is the so-called dual of $\mathcal{P}$, that is, the set of linear forms $\left\{ \sigma _{i} \right\}_{i \in \mathcal{I} } $ such that. $ \sigma_{j} ( \phi_{i} ) = \delta _{ij}$ and $p( x) = \sum_{i\in \mathcal{I} }^{} \sigma_{i} ( p) p_{i} $.
+If there is a set of points $\left\{ a_{i} \right\}_{i \in \mathcal{I} } $  in $T$ such that
+$\sigma_{i}( p) = p( a_{i}) \  \forall p \in \mathcal{P}$,  then the triple $( T, \mathcal{P}, \Sigma  ) $ is called a Lagrangian finite element. The set of points $\left\{ a_{i} \right\}_{i \in \mathcal{I} }  $ is called nodes and is associated with the
+so-called nodal basis of $\mathcal{P} $ such that  $\phi ( a_{i}) = \delta _{ij} \ \forall i,j  \in \mathcal{I} $
 
-As anticipated, the local node configuration of the polynomial space, denoted as $\mathcal{P}^{k}( T)$, is influenced by the form of $T$. For the purpose of our discussion, let us represent the polynomial basis for a simplicial element and a quadrilateral
+As anticipated, the local node configuration of the polynomial space is influenced by the form of $T$. For the purpose of our discussion, let us represent the polynomial basis for a simplicial element and a quadrilateral
 element as $\mathcal{P} ^{k}(T )$ and $\mathcal{Q} ^{k}( T)$, both of polynomial order $k$. In Figure \ref{fig:ill_nodes} is it illustrated for  $k=1,2,3$ in dimension $d=2$ on how the node configuration evolve.
 
 \begin{figure}[h!]
@@ -782,7 +783,7 @@ a_{j} \right) $, so that $u_{h} = \sum_{j=1}^{N} U_{j} \phi _{j}  $. Then the Pr
  \[
 \sum_{j = 1}^{N} u_{j} a_{h}\left( \phi _{j}, \phi _{i} \right)  = l\left( \phi _{i} \right)
 \]
-Hence, by letting $U = \left[ u_{j} \right] $ , $F = \left[ \left( f, \phi _{i}  \right) _{\Omega } \right] $  and $A = \left[ a_{h}\left( \phi _{j}, \phi _{i} \right)  \right] $ can we construct a linear system,
+Hence, by letting $U = \left[ U_{j} \right] $ , $F = \left[ \left( f, \phi _{i}  \right) _{\Omega } \right] $  and $A = \left[ a_{h}\left( \phi _{j}, \phi _{i} \right)  \right] $ can we construct a linear system,
 \begin{equation}
 \label{eq:linear_system}
     A U =F.
