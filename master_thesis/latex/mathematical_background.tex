@@ -5,7 +5,7 @@
 In this section, we revisit the established definitions and provide a brief overview of Sobolev spaces. Afterward, we briefly review the finite element method and discuss the necessary tools required for calculating a priori estimates.
 
 
-\subsection{Notation}%
+\subsection{Sobolev spaces}%
 \label{sub:notation}
 
 We will in this report assume $\Omega $ to be a compact and open set in $\mathbb{R} ^{d}$. Let $p \in \mathbb{R} $, $ 1 \le  p \le  \infty$, and  define the space $L^{p}\left( \Omega  \right) $ to be the set of all measurable functions $u: \Omega  \mapsto \mathbb{R} $ such that
@@ -771,18 +771,18 @@ workaround for proving nonaffine local interpolation estimates, but the necessar
 Hence, affine meshes is essential for the error analysis which utilize the interpolation estimates, but it limits us to work on structure mesh if we specifically choose on quadrilateral meshes..
 
 \begin{definition}[Broken polynomial spaces]
-    Let $\mathcal{T}_{h} $ be a mesh of $\Omega \in \mathbb{R} ^{d} $. Let $\mathcal{P}^{k}(T) $ be the space of all polynomials of order $k$ in the mesh element $T$ in $\mathcal{T}_{h}$ . We define the broken polynomial space and the global $C^{0}$ continuous polynomial space as
+    Let $\mathcal{T}_{h} $ be a mesh of $\Omega \in \mathbb{R} ^{d} $ and $\Omega _{h} = \bigcup_{T \in \mathcal{T}_{h} } T$ . Let $\mathcal{P}^{k}(T) $ be the space of all polynomials of order $k$ in the mesh element $T$ in $\mathcal{T}_{h}$ . We define the broken polynomial space and the global $C^{0}$ continuous polynomial space as
     \begin{equation}
         \begin{split}
-    \mathcal{P}^{k} ( \mathcal{T}_{h} ) & := \left\{ v \in L^{2}( \mathcal{T}_{h} )    \mid  v|_{T} \in \mathcal{P}^k( T) \quad  \forall T \in  \mathcal{T}_{h}   \right\}. \\
-    \mathcal{P}^{k}_{c} ( \mathcal{T}_{h} ) & := \left\{ v \in C^{0}( \mathcal{T}_{h}  )   \mid  v|_{T} \in \mathcal{P}^k( T) \quad  \forall T \in  \mathcal{T}_{h}   \right\}.
+    \mathcal{P}^{k} ( \mathcal{T}_{h} ) & := \left\{ v \in L^{2}( \Omega _{h} )    \mid  v|_{T} \in \mathcal{P}^k( T) \quad  \forall T \in  \mathcal{T}_{h}   \right\}. \\
+    \mathcal{P}^{k}_{c} ( \mathcal{T}_{h} ) & := \left\{ v \in C^{0}( \Omega _{h}  )   \mid  v|_{T} \in \mathcal{P}^k( T) \quad  \forall T \in  \mathcal{T}_{h}   \right\}.
         \end{split}
     \end{equation}
     Similarly, for quadrilatural elements is the polynomial spaces defined as,
     \begin{equation}
         \begin{split}
-    \mathcal{Q}^{k} ( \mathcal{T}_{h} ) & := \left\{ v \in L^{2}( \mathcal{T}_{h} )    \mid  v|_{T} \in \mathcal{Q}^k( T) \quad  \forall T \in  \mathcal{T}_{h}   \right\}. \\
-    \mathcal{Q}^{k}_{c} ( \mathcal{T}_{h} ) & := \left\{ v \in C^{0}( \mathcal{T}_{h} )   \mid  v|_{T} \in \mathcal{Q}^k( T) \quad  \forall T \in  \mathcal{T}_{h}   \right\}.
+    \mathcal{Q}^{k} ( \mathcal{T}_{h} ) & := \left\{ v \in L^{2}( \Omega _{h} )    \mid  v|_{T} \in \mathcal{Q}^k( T) \quad  \forall T \in  \mathcal{T}_{h}   \right\}. \\
+    \mathcal{Q}^{k}_{c} ( \mathcal{T}_{h} ) & := \left\{ v \in C^{0}( \Omega _{h} )   \mid  v|_{T} \in \mathcal{Q}^k( T) \quad  \forall T \in  \mathcal{T}_{h}   \right\}.
         \end{split}
     \end{equation}
 
@@ -806,7 +806,7 @@ Hence, by letting $U = \left[ U_{j} \right] $ , $F = \left[ \left( f, \phi _{i} 
 \label{eq:linear_system}
     A U =F.
 \end{equation}
-Ultimately, the matrix $A$ is shown to be symmetric and positive definite only if $a_{h}( \cdot ,\cdot ) $ is well-posed.
+Ultimately, the matrix $A$ is shown to be symmetric positive definite only if $a_{h}( \cdot ,\cdot ) $ is well-posed.
 
 \begin{figure}[h!]
 \centering
@@ -823,7 +823,7 @@ Ultimately, the matrix $A$ is shown to be symmetric and positive definite only i
 \node (alp) [box2, below of=sf] {Find $u \in V$ such that $a(u,v) = l(v) \  \forall v \in V$};
 \node[left=0.5cm of alp,font=\bfseries, align=right] {Abstract weak problem:};
 
-\node (dlp) [box3, below of=alp] {Find $u \in V_{h}$ such that $a_{h}(u,v) = l(v) \  \forall v \in V_{h}$};
+\node (dlp) [box3, below of=alp] {Find $u_h \in V_{h}$ such that $a_{h}(u_h,v_h) = l_h(v) \  \forall v_h \in V_{h}$};
 \node[left=0.5cm of dlp,font=\bfseries, align=right] {Discrete weak problem:};
 
 \node (lse) [box4, below of=dlp] {Solve $A U = F$};
@@ -852,11 +852,11 @@ Recall the discrete $l^{p}$ norm for a vector,
    &  \max_{i}  \abs{ U_i },  \quad  p= \infty
      \end{cases}
  \end{equation}
-Remark that this notation is not to be confused with Sobolev norms.
 Also recall the definition of the matrix norm,
 \begin{equation}
  \forall A \in \mathbb{R} ^{N\times N}, 1\le p \le  \infty, \quad  \| A  \|_{p  }^{  }  = \max_{U \in \mathbb{R} ^{N} \setminus 0} \frac{\| AU \|_{ p }^{  } }{\| U \|_{p}^{  } }.
 \end{equation}
+Remark that this notation is not to be confused with Sobolev norms.
 Assume that $A $ is invertible, then we define the condition number for a matrix in $l^{p}  $ norm defined such that
 \begin{equation}
     \label{eq:condition_num}
