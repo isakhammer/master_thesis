@@ -38,29 +38,29 @@ We can immediately observe that the interpolation satisfies the following global
     \| v - C ^{e}_{h}v \|_{ l,\mathcal{F} _{h} }^{  } & \lesssim h^{r-l-\frac{1}{2}}\sum_{T \in \mathcal{T}_h} \| v \|_{ r, \omega(F)  }^{  }, \quad 0  \le  l \le   r-\frac{1}{2}, \\
 \| v - C ^{e}_{h}v \|_{ l, \Gamma }^{  } & \lesssim h^{r-l-\frac{1}{2}} \sum_{T \in \mathcal{T}_h}  \| v \|_{ r,  \omega(T)  }^{  }, \quad 0  \le  l \le  r-\frac{1}{2}.
 \end{align}
- Next we recall that $ \sum_{T}^{} \| v \|_{s,\omega ( T)   }^{  } \le C  \| v \|_{s, \mathcal{T}_{h}   }^{  } $ where $C$ is some constant decided by the maximum number of elements in a patch
-    $\omega( T)  $ for all $T \in \mathcal{T} _{h}$. This also holds for the inequality $ \sum_{T}^{} \| v \|_{s,\omega ( F)   }^{  } \le C  \| v \|_{s, \mathcal{T}_{h}   }^{  } $. Hence, we have perhaps an even more useful set of inequalities.
+ Next we recall that $ \sum_{T}^{} \| v \|_{s,\omega ( T)   }^{  } \le C  \| v \|_{s, \mathcal{T}_{h}   }^{  } $ where $C$ is some constant decided by shape regularity of the mesh and the maximal number of different patches a single element can
+ belong to. This also holds for the inequality $ \sum_{T}^{} \| v \|_{s,\omega ( F)   }^{  } \le C  \| v \|_{s, \mathcal{T}_{h}   }^{  } $. Hence, we obtain the following set of estimates.
 \begin{align}
     \label{eq:bi_projection_estimates_1}
-    \| v - C _{h}^{e} v \|_{  l, \mathcal{T} _{h} }^{  } & \lesssim h^{r-l} \| v \|_{ r, \mathcal{T} _{h} }^{  }, \quad 0\le l\le r \\
+    \| v - C _{h}^{e} v \|_{  l, \mathcal{T} _{h} }^{  } & \lesssim h^{r-l} \| v \|_{ r, \mathcal{T} _{h} }^{  }, \quad 0\le l\le r, \\
     \label{eq:bi_projection_estimates_2}
-    \| v - C ^{e}_{h}v \|_{ l,\mathcal{F} _{h} }^{  } & \lesssim h^{r-l-\frac{1}{2}} \| v \|_{ r, \mathcal{T} _{h}  }^{  }, \quad 0  \le  l \le   r-\frac{1}{2} \\
+    \| v - C ^{e}_{h}v \|_{ l,\mathcal{F} _{h} }^{  } & \lesssim h^{r-l-\frac{1}{2}} \| v \|_{ r, \mathcal{T} _{h}  }^{  }, \quad 0  \le  l \le   r-\frac{1}{2}, \\
     \label{eq:bi_projection_estimates_3}
-\| v - C ^{e}_{h}v \|_{ l, \Gamma }^{  } & \lesssim h^{r-l-\frac{1}{2}}   \| v \|_{ r,  \mathcal{T} _{h}  }^{  }, \quad 0  \le  l \le  r-\frac{1}{2}
+\| v - C ^{e}_{h}v \|_{ l, \Gamma }^{  } & \lesssim h^{r-l-\frac{1}{2}}   \| v \|_{ r,  \mathcal{T} _{h}  }^{  }, \quad 0  \le  l \le  r-\frac{1}{2}.
 \end{align}
 % \todo[inline]{ Maybe hard to argue \eqref{eq:bi_projection_estimates_3} to hold on $\Gamma $, but may be related to some generalization of \eqref{eq:bi_n_cut_inverse_1} and \eqref{eq:bi_cut_inverse_1}. Anyhow, \eqref{eq:bi_projection_estimates_2} and
 % \eqref{eq:bi_projection_estimates_3} was never used in the proof of Lemma \ref{lemma:astar_estimate} since we used inverse estimates and ended up with \eqref{eq:bi_projection_estimates_1} instead on all of them.}
-Naturally can we see this is the tools we need to construct an estimate for the energy norm.
+Naturally, we can are the crucial in deriving the interpolation estimates for the energy norm.
 
 \begin{lemma}
     \label{lemma:astar_estimate}
-    Let $u \in H^{s}( \Omega ) $ for $s\ge 3$ be a exact solution to $\eqref{eq:cont_weak_problem} $ and let $k$ be the polynomial order of $V_{h}$. Then we have
+    Let $u \in H^{s}( \Omega ) $ for $s\ge 3$ be a exact solution to $\eqref{eq:cont_weak_problem} $ and let $k$ be the polynomial order of $V_{h}$. Set $r = \mathrm{min} ( s, k+1)$, then we have the final a priori estimates
     \begin{equation}
-    \|  u - C_{h}u \|_{ a_{h},*  }^{  } \lesssim h^{r-2} \| u \|_{ r, \Omega  }^{  }, \quad r = \mathrm{min} ( s, k+1)
+    \|  u - C_{h}u \|_{ a_{h},*  }^{  } \lesssim h^{r-2} \| u \|_{ r, \Omega  }^{  }.
     \end{equation}
 \end{lemma}
 \begin{proof}
-    By definition is
+    By definition,
     \begin{equation}
         \begin{split}
             \| u - C_{h}^{e}u \|_{ a_{h}, * }^{  2}  =& \ \alpha  \|  ( u - C_{h}^{e}u) \|_{ \mathcal{T} _{h} \cap \Omega  }^{ 2}  + \| D^2 ( u - C_{h}^{e}u ) \|_{\mathcal{T} _{h} \cap \Omega   }^{ 2 } \\  &  + \gamma \| h^{-\frac{1}{2}} \jump{ \partial _{n} (u -
