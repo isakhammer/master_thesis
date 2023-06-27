@@ -5,20 +5,20 @@
 
 For the proposed method, we want to derive a priori error estimate with respect to both the  $\| \cdot  \|_{a_{h},*   }^{  } $-norm and the  $\| \cdot  \|_{ \Omega  }^{
 } $-norm.
-We will construct a suitable (quasi-)interpolation operator, here we use the Clement quasi interpolation operator which in contrast to the standard Lagrange nodal interpolation iterator is also defined for low regularity function in $u \in L^{2}(
+We will construct a suitable (quasi-)interpolation operator, here we use the Clement quasi interpolation operator which in contrast to the standard Lagrange nodal interpolation iterator is also defined for low regularity function $u \in L^{2}(
 \Omega ) $.
-In combination with discrete coercivity this allows you to derive an a priori estimate in the energy norm. Finally, we use a standard duality argument, i.e. Aubin-Nitsche trick, to derive the $L^{2}$ error estimate.
+In combination with discrete coercivity this allows you to derive an a priori error estimate in the energy norm. Finally, we use a standard duality argument, also known as Aubin-Nitsche trick, to derive the $L^{2}( \Omega ) $-error estimate.
 
-Recall that for $v \in H^{1}( \mathcal{T } _{h}) $ these inequalities holds $\forall T \in \mathcal{T} _{h}$ such that
+Recall that for $v \in H^{1}( \mathcal{T } _{h}) $ the inequalities,
 \begin{align}
     \| v \|_{ \partial T }^{  } &\lesssim h^{-\frac{1}{2}}_{T}\|  v \|_{ T }^{  }+ h^{\frac{1}{2}} \| \nabla v \|_{T  }^{   }  , \\
     \| v \|_{ \Gamma \cap T }^{  } &\lesssim  h^{-\frac{1}{2}} \| v \|_{T  }^{  }   + h^{\frac{1}{2}}_{T} \| \nabla v \|_{ T }^{  },\\
     \| \nabla v \|_{ \partial T }^{  } &\lesssim h^{-\frac{1}{2}}_{T}\|  \nabla v \|_{ T }^{  }+ h^{\frac{1}{2}} \| D^2 v \|_{T  }^{   }  , \\
     \| \nabla v \|_{ \Gamma \cap T }^{  } &\lesssim  h^{-\frac{1}{2}} \| \nabla v \|_{T  }^{  }   + h^{\frac{1}{2}}_{T} \| D^2 v \|_{ T }^{  },
 \end{align}
-for proof see \cite[Lemma 4.2]{hansbo2003finite}.
+holds $\forall T \in \mathcal{T} _{h}$, for proof see \cite[Lemma 4.2]{hansbo2003finite}.
 
-Assume that $\Omega $ has a boundary $\Gamma $ in $C^{1}$, then it does exist an bounded extension operator,
+Assume that $\Omega $ has a boundary $\Gamma $ in $C^{1}$, then there exists a bounded extension operator,
 \begin{equation}
     ( \cdot ) ^{e}: H^{m}( \Omega )  \to H^{m} ( \mathbb{R} ^{d}),
 \end{equation}
@@ -29,16 +29,16 @@ for all  $v \in H^{m}( \Omega )$ which satisfies
 \| v^{e} \|_{ m,\mathbb{R} ^{d}  }^{  } & \lesssim \| v \|_{ m, \Omega  }^{  }.
     \end{split}
 \end{equation}
-For more information, see \cite[Theorem 9.7]{brezis2011functional} and \cite[p.181, p.185]{stein1970singular}. To simplify, we use the notation $ v := v^{e}   $ for $v \in \mathbb{R} ^{d} \setminus \Omega $.
+For more information, see \cite[Theorem 9.7]{brezis2011functional} and \cite[p.181, p.185]{stein1970singular}. For the notation we simply write $ v := v^{e}   $ for $v \in \mathbb{R} ^{d} \setminus \Omega $.
 
-Recall the Lemma \ref{lemma:clements}, we construct the Cléments interpolator combined with the extension operator such that $C_{h}^{e}: H^{m}( \mathbb{R} ^{d}) \to V_{h}$ such that  $C ^{e} _{h} v := C _{h} v^{e} $.
-We can immediately observe that the interpolation satisfies the global error estimates. Let $v \in H^{s}( \Omega ) $ and $r = \mathrm{min}(s , k+1) $  that is,
+Recall definition $V_{h}$ in \eqref{eq:vh_energy} of polynomial degree $k$ and starting from Lemma \ref{lemma:clements}, we combine the Clément interpolator with the extension operator to construct $C_{h}^{e}: H^{m}( \mathbb{R} ^{d}) \to V_{h}$ such that $C ^{e} _{h} v := C _{h} v^{e} $.
+We can immediately observe that the interpolation satisfies the following global error estimates. Let $v \in H^{s}( \Omega ) $ and $r = \mathrm{min}(s , k+1) $  that is,
 \begin{align}
-    \| v - C _{h}^{e} v \|_{  l, \mathcal{T} _{h} }^{  } & \lesssim h^{r-l}\sum_{T \in \mathcal{T}_h} \| v \|_{ r, \omega(T) }^{  }, \quad 0\le l\le r \\
-    \| v - C ^{e}_{h}v \|_{ l,\mathcal{F} _{h} }^{  } & \lesssim h^{r-l-\frac{1}{2}}\sum_{T \in \mathcal{T}_h} \| v \|_{ r, \omega(F)  }^{  }, \quad 0  \le  l \le   r-\frac{1}{2} \\
-\| v - C ^{e}_{h}v \|_{ l, \Gamma }^{  } & \lesssim h^{r-l-\frac{1}{2}} \sum_{T \in \mathcal{T}_h}  \| v \|_{ r,  \omega(T)  }^{  }, \quad 0  \le  l \le  r-\frac{1}{2}
+    \| v - C _{h}^{e} v \|_{  l, \mathcal{T} _{h} }^{  } & \lesssim h^{r-l}\sum_{T \in \mathcal{T}_h} \| v \|_{ r, \omega(T) }^{  }, \quad 0\le l\le r, \\
+    \| v - C ^{e}_{h}v \|_{ l,\mathcal{F} _{h} }^{  } & \lesssim h^{r-l-\frac{1}{2}}\sum_{T \in \mathcal{T}_h} \| v \|_{ r, \omega(F)  }^{  }, \quad 0  \le  l \le   r-\frac{1}{2}, \\
+\| v - C ^{e}_{h}v \|_{ l, \Gamma }^{  } & \lesssim h^{r-l-\frac{1}{2}} \sum_{T \in \mathcal{T}_h}  \| v \|_{ r,  \omega(T)  }^{  }, \quad 0  \le  l \le  r-\frac{1}{2}.
 \end{align}
- and arguing that $ \sum_{T}^{} \| v \|_{s,\omega ( T)   }^{  } \le C  \| v \|_{s, \mathcal{T}_{h}   }^{  } $ where $C$ is some constant decided by the maximum number of elements in a patch
+ Next we recall that $ \sum_{T}^{} \| v \|_{s,\omega ( T)   }^{  } \le C  \| v \|_{s, \mathcal{T}_{h}   }^{  } $ where $C$ is some constant decided by the maximum number of elements in a patch
     $\omega( T)  $ for all $T \in \mathcal{T} _{h}$. This also holds for the inequality $ \sum_{T}^{} \| v \|_{s,\omega ( F)   }^{  } \le C  \| v \|_{s, \mathcal{T}_{h}   }^{  } $. Hence, we have perhaps an even more useful set of inequalities.
 \begin{align}
     \label{eq:bi_projection_estimates_1}

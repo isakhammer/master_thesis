@@ -185,6 +185,7 @@ Hence, we have that the active set is the union of the interior and cut elements
 As $\Omega $ is static is it easy to observe that having a polynomial basis on the full mesh $\widetilde{\mathcal{T}}_{h}$ is not necessary. Restricting us to the active set, we define the domain $\Omega _{h} = \bigcup _{T \in \mathcal{T} _{h}} T$.
 Hence, we define the polynomial space only on the active set $\mathcal{T}_{h} $ from \eqref{eq:active_set},
 \begin{equation}
+    \label{eq:vh_energy}
 V_{h} = \left\{ v \in C^{0}( \Omega _{h}  )  \mid  v_{T} = v | _{T} \in \left\{ \mathcal{P} ^{k} ( T ) \text{ or } \mathcal{Q} ^{k}( T ) \right\}  \  \forall T \in
 \mathcal{T}_{h}    \right\}.
 \end{equation}
@@ -194,11 +195,12 @@ Furthermore, drawing on the principles outlined in Section \ref{sec:CIP_biharmon
 To make sure the problem is stabilized will we add a consistent symmetric positive semi-definite bilinear ghost-penalty term  $g_{h}: V_{h} \times  V_{h} \to \mathbb{R} $ to our bilinear form. That is, we define the discrete problem to be:
 \begin{equation}
 \label{eq:discrete_CutCIP_prob}
-\text{ Find } u_{h} \in V_{h}  \text{ such that }    A_{h}( u_{h} ,v ) := a_{h}( u_{h}, v)  + g_{h}( u_{h},v) = l_{h} ( v) \quad  \forall v \in  V_{h}.
+\text{ Find } u_{h} \in V_{h}  \text{ such that }    A_{h}( u_{h} ,v_{h} ) := a_{h}( u_{h}, v_{h})  + g_{h}( u_{h},v_{h}) = l_{h} ( v_{h}) \quad  \forall v_{h} \in  V_{h}.
 \end{equation}
 Here $a_{h}( \cdot,\cdot  ) $ stand for either $a_{h}^{L}( \cdot ,\cdot ) $ or $a_{h}^{H}( \cdot ,\cdot ) $.
 
-In this section, we provide a full proof for the Hessian formulation, however, the proof of the Laplace formulation does not differ too much. For simplification will we use the notation $a_{h}(u,v ) = a_{h}^{H}( u,v)$ and $l_{h}(v) =l_{h}^{H}(v)$ for the rest of the stability and convergence analysis.
+In this section, we provide a full proof for the Hessian formulation, however, the proof of the Laplace formulation does not differ too much. For simplification will we use the notation $a_{h}(\cdot ,\cdot  ) = a_{h}^{H}(\cdot  ,\cdot )$ and
+$l_{h}(\cdot ) =l_{h}^{H}(\cdot )$ for the rest of the stability and convergence analysis.
 
 Keep in mind that in contrast to the standard CIP methods our proposed method is defined on an unfitted mesh. As we will see in the analysis, the ghost penalty is a method to ensure numerical stability on cut cell $\mathcal{T} ^{\Gamma }_{h}$. The main reason why
 this numerical instability is happening for a unfitted mesh is when a cell is badly cut, see examples in Figure \ref{fig:intersection-example}.
@@ -279,15 +281,15 @@ for a $T \in \mathcal{T} ^{\Gamma }_{h}$ there always exists a patch $\omega ( T
 \end{figure}
 
 
-We define the underlying norms for $ v \in V_{h} $ as
+We define the underlying norms for $ v_{h} \in V_{h} $ as
     \begin{align}
         \label{eq:bi_ah_norm}
-        \| v \|_{ a_{h} }^{ 2 } & =    \alpha \|   v \|_{ \mathcal{T} _{h} \cap \Omega  }^{ 2}  + \| D^2 v \|_{\mathcal{T} _{h} \cap \Omega   }^{ 2 } +  \| h^{-\frac{1}{2}} \jump{ \partial _{n} v }   \|_{ \mathcal{F}_{h}^{}\cap \Omega    }^{ 2
-        } +  \| h^{-\frac{1}{2}}  \partial _{n} v    \|_{ \Gamma   }^{ 2 },    \\
+        \| v_h \|_{ a_{h} }^{ 2 } & =    \alpha \|   v_h \|_{ \mathcal{T} _{h} \cap \Omega  }^{ 2}  + \| D^2 v_h \|_{\mathcal{T} _{h} \cap \Omega   }^{ 2 } +  \| h^{-\frac{1}{2}} \jump{ \partial _{n} v_h }   \|_{ \mathcal{F}_{h}^{}\cap \Omega    }^{ 2
+        } +  \| h^{-\frac{1}{2}}  \partial _{n} v_h    \|_{ \Gamma   }^{ 2 },    \\
         \label{eq:bi_gh_norm}
-\abs{ v } _{g_{h}}^{2} & = g( v,v), \\
+\abs{ v } _{g_{h}}^{2} & = g( v_h,v_h), \\
         \label{eq:bi_Ah_norm}
-\| v \|_{A_{h}  }^{  2}  & = \| v \|_{ a_{h} }^{ 2 } + \abs{ v } _{g_{h}}^{2}, \\
+\| v_h \|_{A_{h}  }^{  2}  & = \| v_h \|_{ a_{h} }^{ 2 } + \abs{ v_h } _{g_{h}}^{2}, \\
     \end{align}
 and for $v \in V \oplus V_{h}$ we also introduce,
 \begin{equation}
