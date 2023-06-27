@@ -125,9 +125,9 @@ Let $u \in H^{s}( \Omega )  $, $ s\ge 3 $  be the exact solution to   \eqref{eq:
 \end{proof}
 
 \begin{assumption*}[EP2]
-    \label{as:bi_EP2}
     For $v \in H^{s}( \Omega ) $ and $r = \min \{s,k+1 \} $, the semi-norm $\abs{ \ \cdot \  }_{g_{h}} $ is weakly consistent in the sense that
     \begin{equation}
+        \label{as:bi_EP2}
         \abs{ C _{h}^{e} v } _{g_{h}} \lesssim  h^{r-2} \| v \|_{ r,\Omega  }^{  }.
     \end{equation}
 \end{assumption*}
@@ -160,7 +160,7 @@ Let $u \in H^{s}( \Omega )  $, $ s\ge 3 $  be the exact solution to   \eqref{eq:
         \end{split}
     \]
     Using Lemma \ref{lemma:astar_estimate}, is it clear that $\| e_{\pi } \|_{a_{h},*}^{  } \lesssim h^{r-2} \| u \|_{ r,\Omega  }^{  }  $ is already fulfilled, hence, it remains to check $e_{h}$. From Lemma \ref{lemma:bi_Ah_coercive},
-    \ref{lemma:bi_Ah_bounded}, the weak Galerkin orthogonality and Assumption \ref{as:bi_EP2} is it natural to arrive at,
+    \ref{lemma:bi_Ah_bounded}, the weak Galerkin orthogonality and Assumption EP2 \eqref{as:bi_EP2} is it natural to arrive at,
     \begin{equation}
         \label{eq:apriori_energy1}
     \begin{split}
@@ -170,7 +170,7 @@ Let $u \in H^{s}( \Omega )  $, $ s\ge 3 $  be the exact solution to   \eqref{eq:
  % & \lesssim h^{r-2} \| u \|_{ r, \Omega  }^{  } \| e_{h} \|_{ A_{h} }^{  }.
     \end{split}
     \end{equation}
-Hence, now utilizing the Assumption \ref{as:bi_EP2} is it clear that
+Hence, now utilizing the Assumption EP2 \eqref{as:bi_EP2} is it clear that
 \begin{equation}
         \label{eq:apriori_energy2}
     \begin{split}
