@@ -13,7 +13,9 @@ Recall that for $v \in H^{1}( \mathcal{T } _{h}) $ the inequalities,
 \begin{align}
     \| v \|_{ \partial T }^{  } &\lesssim h^{-\frac{1}{2}}_{T}\|  v \|_{ T }^{  }+ h^{\frac{1}{2}} \| \nabla v \|_{T  }^{   }  , \\
     \| v \|_{ \Gamma \cap T }^{  } &\lesssim  h^{-\frac{1}{2}} \| v \|_{T  }^{  }   + h^{\frac{1}{2}}_{T} \| \nabla v \|_{ T }^{  },\\
+    \label{eq:trace:1}
     \| \nabla v \|_{ \partial T }^{  } &\lesssim h^{-\frac{1}{2}}_{T}\|  \nabla v \|_{ T }^{  }+ h^{\frac{1}{2}} \| D^2 v \|_{T  }^{   }  , \\
+    \label{eq:trace:2}
     \| \nabla v \|_{ \Gamma \cap T }^{  } &\lesssim  h^{-\frac{1}{2}} \| \nabla v \|_{T  }^{  }   + h^{\frac{1}{2}}_{T} \| D^2 v \|_{ T }^{  },
 \end{align}
 holds $\forall T \in \mathcal{T} _{h}$, for proof see \cite[Lemma 4.2]{hansbo2003finite}.
@@ -63,57 +65,37 @@ Naturally, we can are the crucial in deriving the interpolation estimates for th
     By definition,
     \begin{equation}
         \begin{split}
-            \| u - C_{h}^{e}u \|_{ a_{h}, * }^{  2}  =& \ \alpha  \|  ( u - C_{h}^{e}u) \|_{ \mathcal{T} _{h} \cap \Omega  }^{ 2}  + \| D^2 ( u - C_{h}^{e}u ) \|_{\mathcal{T} _{h} \cap \Omega   }^{ 2 } \\  &  + \gamma \| h^{-\frac{1}{2}} \jump{ \partial _{n} (u -
+            \| u - C_{h}^{e}u \|_{ a_{h}, * }^{  2}  =& \ \alpha  \overbrace{\|  ( u - C_{h}^{e}u) \|_{ \mathcal{T} _{h} \cap \Omega  }^{ 2}}^{\mathrm{I} }   + \overbrace{\| D^2 ( u - C_{h}^{e}u ) \|_{\mathcal{T} _{h} \cap \Omega   }^{ 2
+            }}^{\mathrm{II} }  \\  &  +
+            \overbrace{\gamma \| h^{-\frac{1}{2}} \jump{ \partial _{n} (u -
         C_{h}^{e} u) }   \|_{ \mathcal{F}_{h}^{}\cap \Omega    }^{ 2
-        } + \gamma \| h^{-\frac{1}{2}}  \partial _{n} (u - C_{h}^{e}u)    \|_{ \Gamma   }^{ 2 } \\
-          & + \| h^{\frac{1}{2}} \mean{ \partial _{nn} (u - C_{h}^{e}u) }   \|_{\mathcal{F} _{h}^{} \cap \Omega   }^{  2} +  \| h^{\frac{1}{2}} \partial _{nn}(u - C_{h}^{e}u)     \|_{ \Gamma }^{  2}.
+        }}^{\mathrm{III} }  + \overbrace{\gamma \| h^{-\frac{1}{2}}  \partial _{n} (u - C_{h}^{e}u)    \|_{ \Gamma   }^{ 2 }}^{\mathrm{IV} }  \\
+          & + \overbrace{\| h^{\frac{1}{2}} \mean{ \partial _{nn} (u - C_{h}^{e}u) }   \|_{\mathcal{F} _{h}^{} \cap \Omega   }^{  2}}^{\mathrm{V} }  +  \overbrace{\| h^{\frac{1}{2}} \partial _{nn}(u - C_{h}^{e}u)     \|_{ \Gamma }^{  2}}^{\mathrm{VI}
+          } \\
+          =& \  \mathrm{I}  + \ldots + \mathrm{VI}.
         \end{split}
     \end{equation}
-
     The strategy is to bound each term individually.
-             Starting with the first two terms we get
+    By initially focusing on the first two terms and employing equation \eqref{eq:bi_projection_estimates_1}, we can easily observe
              \begin{equation}
         \begin{split}
-            \alpha  \|  ( u - C_{h}^{e}u) \|_{ \mathcal{T} _{h} \cap \Omega  }^{ 2}    & \lesssim \|  ( u - C_{h}^{e}u) \|_{0,\mathcal{T} _{h}  }^{ 2} \\
-             &    \lesssim  h^{2(r-0)}    \| u \|_{r,\mathcal{T}_{h} }^{  2}\lesssim  h^{2(r-2)}    \| u \|_{r,\mathcal{T}_{h} }^{  2} \\
-            \| D^2 ( u - C_{h}^{e}u ) \|_{\mathcal{T} _{h} \cap \Omega   }^{ 2 } &  \lesssim  \|  u - C_{h}^{e}u  \|_{2,\mathcal{T} _{h}   }^{ 2 }   =  \|  u - C_{h}^{e}u  \|_{2,\mathcal{T} _{h}   }^{ 2 } \\
-                                                                                 & \lesssim  h^{2(r-2)} \| u \|_{ r, \mathcal{T}_{h}}^{ 2 }.
+            \mathrm{I} +\mathrm{II}  & \lesssim \|   u - C_{h}^{e}u \|_{ \mathcal{T} _{h}  }^{ 2} + \|  u - C_{h}^{e}u  \|_{2,\mathcal{T} _{h} }^{ 2 }  \lesssim  ( h^{2r}  + h^{2(r-2)} )\| u \|_{r,\mathcal{T}_{h} }^{  2}.
         \end{split}
              \end{equation}
-    Here we simply used \eqref{eq:bi_projection_estimates_1}.
-    Recall the first order inverse estimate \eqref{eq:bi_n_cut_inverse_2} and that $\| \jump{ \partial _{n} u }   \|_{ \mathcal{F} _{h} }^{  } \le \| \partial _{n^{+}} u^{+}   \|_{ \mathcal{F} _{h} }^{  } +
-    \|\partial _{n^{-}} u^{-}   \|_{ \mathcal{F} _{h} }^{  } \lesssim  \|\partial _{n} u \|_{ \partial\mathcal{T }_{h}  }^{2  }  $, hence, this implies $\| \jump{ \partial _{n} u }   \|_{   \mathcal{F}_{h}\cap \Omega    }^{2} \lesssim h^{-1} \| \nabla u \|_{ \mathcal{T}
-        _{h} }^{2  }  $. Using this and the inequality \eqref{eq:bi_projection_estimates_1} we therefore can observe,
-            \begin{equation}
+    From \eqref{eq:mean_jump_estimate} is it clear that $\| \mean{ \partial _{n} u }   \|_{ \Omega  }^{  } \lesssim \| \nabla  u \|_{ \mathcal{T} _{h} }^{  }   $. Hence, first applying the trace inequality \eqref{eq:trace:1}  and then
+    \eqref{eq:bi_projection_estimates_1} is it clear that,
+    \begin{equation}
         \begin{split}
-            \gamma \| h^{-\frac{1}{2}} \jump{ \partial _{n} ( u - C_{h}^{e}u ) }   \|_{ \mathcal{F}_{h} \cap \Omega   }^{  2}   & \lesssim
-            h^{-1} \|   \partial _{n} ( u - C_{h}^{e}u )    \|_{  \partial \mathcal{T} _{h} }^{2  } \lesssim  h^{-2} \|   \nabla  ( u - C_{h}^{e}u )    \|_{ \mathcal{T} _{h}\cap \Omega  }^{2  }\\
-&=  h^{-2} \|    u - C_{h}^{e}u     \|_{ 1,\mathcal{T} _{h} }^{2  } \lesssim  h^{ -2 } h^{ 2(r - 1)  } \| u \|_{ r, \mathcal{T}_{h}   }^{  2} \\
-& \lesssim   h^{ 2(r - 2)  } \| u \|_{ r, \mathcal{T}_{h}   }^{  2} . \\
-        \end{split}
-            \end{equation}
-    And for the boundary term we do a similar procedure, but instead use the first order inverse estimate \eqref{eq:bi_n_cut_inverse_1}.
+            \mathrm{III}  & \lesssim  \|h^{-\frac{1}{2}}  \nabla ( u - C_{h}^{e})  \|_{  }^{  }  \lesssim h^{-2} \| \nabla ( u - C^{e}_{h}u)  \|_{ \mathcal{T} _{h}
+                          }^{ 2 } + \| h^{-\frac{1}{2}} D^2  ( u - C_{h}^{e})  \|_{  }^{  } \\
+    \end{split}
+\end{equation}
+    And for the boundary term we apply .
         \begin{equation}
         \begin{split}
-            \gamma \| h^{-\frac{1}{2}}  \partial _{n} ( u - C_{h}^{e}u ) \|_{ \Gamma    }^{  2} & \lesssim h^{-2} \|   \nabla  ( u - C_{h}^{e}u )    \|_{ \mathcal{T}_{h} }^{2  }  \lesssim  h^{-2} \|    u - C_{h}^{e}u     \|_{1,2, \mathcal{T}_{h}   }^{2  } \\
-            & \lesssim h^{-2} h^{2(r-1)}   \| u \|_{r, \mathcal{T}_{h}   }^{  2}  \lesssim  h^{2(r- 2)}   \| u \|_{r, \mathcal{T}_{h}   }^{  2}
+            \mathrm{IV}  & \lesssim \| h^{-\frac{1}{2}} \nabla  ( u - C_{h}^{e}u ) \|_{ \Gamma  }^{2  }  \lesssim  h^{-2} \|    u - C_{h}^{e}u     \|_{1,2, \mathcal{T}_{h}   }^{2  } \\
         \end{split}
         \end{equation}
-            Recall that $\| \mean{ u }   \|_{ \mathcal{F} _{h} }^{  } \le \| u^{+} \|_{ \mathcal{F} _{h}  }^{  } + \| u^{-} \|_{ \mathcal{F} _{h}  }^{  }   \lesssim  \| u \|_{ \partial\mathcal{T }_{h}  }^{2  }  $ and the second order inverse
-            inequality \eqref{eq:bi_cut_inverse_2}. It is clear
-            by using \eqref{eq:bi_projection_estimates_1} that this holds.
-            \begin{equation}
-                \begin{split}
- \| h^{\frac{1}{2}} \mean{ \partial _{nn} (u - C_{h}^{e}u) }   \|_{\mathcal{F} _{h}^{} \cap \Omega   }^{  2} &  \lesssim h^{} \|   \partial _{nn} (u - C_{h}^{e}u)    \|_{\partial \mathcal{T} _{h} \cap \Omega    }^{  2}  \lesssim h^{} h^{-1}  \|   D^2 (u - C_{h}^{e}u)    \|_{ \mathcal{T} _{h}   }^{  2} \\
-                                                                                                                &  = \|   u - C_{h}^{e}u    \|_{ 2, \mathcal{T} _{h}   }^{  2}  \lesssim h^{2(r - 2)}  \| u \|_{r, \mathcal{T} _{h} }^{  }
-                \end{split}
-            \end{equation}
-                Similarly we can easily see by using \eqref{eq:bi_projection_estimates_1} and the second order boundary inverse inequality  \eqref{eq:bi_cut_inverse_1} that this must hold,
-
-                \begin{equation}
-              \| h^{\frac{1}{2}} \partial _{nn}(u - C_{h}^{e}u)     \|_{ \Gamma }^{  2} \lesssim   \|  D^2(u - C_{h}^{e}u)     \|_{ \mathcal{T}_{h}   }^{  2} \lesssim \|  u - C_{h}^{e}u \|_{ 2, \mathcal{T}_{h} }^{2  } \lesssim h^{2(r-2)}  \| u \|_{ r, \mathcal{T}_{h}   }^{2  }
-                \end{equation}
-
     Thus, all elements is bounded by $ h^{2(r-2)}  \| u \|_{ r, \mathcal{T}_{h}   }^{2  } $  and the proof is complete.
 \end{proof}
 
