@@ -4,7 +4,7 @@
 
 We have the following assumptions for the ghost penalty.
 \begin{enumerate}[label=\textbf{EP\arabic*}]
-    \item \label{as:EP1} The ghost penalty $g_{h}$ extends the $H^{1}$ norm such that
+    \item \label{as:EP1} The ghost penalty $g_{h}$ extends the $H^{2}$ norm such that
         \begin{equation}
     \| D^2v_{h} \|_{ \mathcal{T} _{h} }^{ 2 }  \lesssim \| D^2 v_{h} \|_{ \Omega  }^{  2} + \abs{ v_{h} } _{g_{h}}^2 \quad \forall v_{h} \in V_{h}
         \end{equation}
@@ -66,13 +66,12 @@ We will now introduce the so-called ghost penalty faces, that is, \[
 \]
 This set is simply all facets that belong to all elements of the active mesh $\mathcal{T} _{h}$  intersected with $\Gamma $, i.e., all triangles to the cut cells $\mathcal{T} _{\Gamma }$. For an illustration, see Figure \ref{fig:illustration_F_g}.
 
-
-
-
 \begin{proposition}
     \label{prop:hessian_change}
-    The following identity holds for $j=0,1,2$.
-    $$\partial ^{j}_{n} (D^2v) = D^2 ( \partial ^{j}_{n} v)  $$
+    Let $v_{h} \in V_{h} $, then the following identity holds.
+    \begin{equation}
+    \partial ^{j}_{n} (D^2v) = D^2 ( \partial ^{j}_{n} v), \quad  j=0,1,2.
+    \end{equation}
 \end{proposition}
 
 \begin{proof}
@@ -182,7 +181,7 @@ This set is simply all facets that belong to all elements of the active mesh $\m
 
 \begin{lemma}
     \label{lemma:bi_inv_gh_lemma}
-    For $v_{h} \in  V_{h}$ of polynomial degree $k$.
+    For $v_{h} \in  V_{h}$ of polynomial degree $k$, the following estimates hold.
         \begin{align}
             \label{eq:bi_inv_gh_1}
         \| v_h \|_{ \mathcal{T} _{h} }^{ 2 }  & \lesssim  \| v_h \|_{ \Omega  }^{ 2 }  + \sum_{j=0}^{k} h^{2j+1} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n} v_h}    )_{\mathcal{F}_{h}^{g}}\\
@@ -224,7 +223,7 @@ Summation over the intersected triangles $\mathcal{T} _{\Gamma }$ implies,
         \]
         Hence, \eqref{eq:bi_inv_gh_1} holds and the first part of the proof is complete.
 
-    \item We will simply start by replacing $v$  by $D^2 v$ and use the Proposition \ref{prop:hessian_change}.
+    \item We will simply start by replacing $v_{h}$ by $D^2 v_{h}$ and use the Proposition \ref{prop:hessian_change}.
         \[
             \begin{split}
                     \| D^2 v_{h} \|_{ \mathcal{T} _{h} }^{2  }&  \lesssim \| D^2 v_{h} \|_{ \Omega  }^{ 2 }  + \sum_{j=0}^{k} h^{2j+1} ( \jump{   \partial ^{j}_{n} D^2 v_{h} }, \jump{  \partial ^{j}_{n} D^2 v_{h}}    )_{\mathcal{F}_{h}^{g}} \\
