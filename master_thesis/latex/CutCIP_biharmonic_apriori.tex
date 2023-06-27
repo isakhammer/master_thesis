@@ -33,7 +33,7 @@ for all  $v \in H^{m}( \Omega )$ which satisfies
 \end{equation}
 For more information, see \cite[Theorem 9.7]{brezis2011functional} and \cite[p.181, p.185]{stein1970singular}. For the notation we simply write $ v := v^{e}   $ for $v \in \mathbb{R} ^{d} \setminus \Omega $.
 
-Recall definition $V_{h}$ in \eqref{eq:vh_energy} of polynomial degree $k$ and starting from Lemma \ref{lemma:clements}, we combine the Clément interpolator with the extension operator to construct $C_{h}^{e}: H^{m}( \mathbb{R} ^{d}) \to V_{h}$ such that $C ^{e} _{h} v := C _{h} v^{e} $.
+Recall definition $V_{h}$ in \eqref{eq:vh_energy} of polynomial degree $k$ and starting from Lemma \ref{lemma:clements} and the corresponding estimates \eqref{eq:clement_estimates}, we combine the Clément interpolator with the extension operator to construct $C_{h}^{e}: H^{m}( \mathbb{R} ^{d}) \to V_{h}$ such that $C ^{e} _{h} v := C _{h} v^{e} $.
 \begin{align}
     \label{eq:bi_projection_estimates_1}
     \| v - C _{h}^{e} v \|_{  l, \mathcal{T} _{h} }^{  } & \lesssim h^{r-l} \| v \|_{ r, \mathcal{T} _{h} }^{  }, \quad 0\le l\le r, \\
@@ -98,15 +98,15 @@ And for the boundary term we apply \eqref{eq:trace:2} and then \eqref{eq:bi_proj
             \end{split}
         \end{equation}
     }
-Again, from \eqref{eq:mean_jump_estimate} is it clear that $\| \mean{ \partial _{nn} u }   \|_{ \mathcal{F}_{h}   }^{  } \lesssim \| D^2  u \|_{ \partial  \mathcal{T} _{h} }^{  }   $, hence,
+Again, from \eqref{eq:mean_jump_estimate} is it clear that $\| \mean{ \partial _{nn} u }   \|_{ \mathcal{F}_{h}   }^{  } \lesssim \| D^2  u \|_{ \partial  \mathcal{T} _{h} }^{  }   $, thus we see that,
         \begin{equation}
             \mathrm{V}   \lesssim h \|  D^2  ( u - C_{h}^{e}u ) \|_{\partial \mathcal{T}_{h}}^{2  }  \lesssim  h^{2( r - 2 )} \| u \|_{r, \mathcal{T}_{h}   }^{ 2 }.
         \end{equation}
         The final term we use the estimate \eqref{eq:bi_projection_estimates_3},
         \begin{equation}
-            \mathrm{VI}   \lesssim h \|  D^2  ( u - C_{h}^{e}u ) \|_{\partial \mathcal{T}_{h}}^{2  }  \lesssim  h^{2( r - \frac{5}{2} ) + 1} \| u \|_{r, \Gamma    }^{  }   .
+            \mathrm{VI}   \lesssim h \|  D^2  ( u - C_{h}^{e}u ) \|_{\Gamma }^{2  }  \lesssim  h^{2( r - \frac{5}{2} ) + 1} \| u \|_{r, \Gamma    }^{  2} \lesssim h^{2( r - 2 )} \| u \|_{r, \mathcal{T}_{h}   }^{ 2 } .
         \end{equation}
-    Thus, $ \| u - C_{h}^{e} u \|_{a_{h},*  }^{  } \lesssim   h^{2(r-2)}  \| u \|_{ r, \mathcal{T}_{h}   }^{2  } $  and the proof is complete.
+    Hence, we have $ \| u - C_{h}^{e} u \|_{a_{h},*  }^{  } \lesssim   h^{r-2}  \| u \|_{ r, \mathcal{T}_{h}   }^{2  } $.
 \end{proof}
 
 \begin{lemma}[Weak galerkin orthogonality]
@@ -116,13 +116,12 @@ Let $u \in H^{s}( \Omega )  $, $ s\ge 3 $  be the exact solution to   \eqref{eq:
 \end{lemma}
 
 \begin{proof}
-   From the definition of the problem \eqref{eq:discrete_CutCIP_prob} and utilizing that for $u \in H^{s}( \Omega ) $ we have the identity  $A_{h}( u,v_{h}) = a_{h}( u,v_{h}) = l(v_{h} ) \forall v_{h} \in V_{h} $. Consequently we have the following
-   sequence of equalities,  \[
+   From the definition of the problem \eqref{eq:discrete_CutCIP_prob} and utilizing that for $u \in H^{s}( \Omega ) $ we have the identity  $A_{h}( u,v_{h}) = a_{h}( u,v_{h}) = l(v_{h} )  \ \forall v_{h} \in V_{h} $. Consequently, it follows that \[
        \begin{split}
-   l(v_{h} ) & =  A_{h}( u_{h},v_{h}) =  a_{h}( u,v_{h})  = a_{h}( u_{h},v_{h})+g_{h}( u_{h},v_{h})  \quad  u_{h},v_{h} \in  V_{h}.
+   l(v_{h} ) & =  A_{h}( u_{h},v_{h}) =  a_{h}( u,v_{h})  = a_{h}( u_{h},v_{h})+g_{h}( u_{h},v_{h})  \quad \forall  v_{h} \in  V_{h}.
        \end{split}
    \]
-    From this, it is clear that $a_{h}( u -  u_{h}, v_{h}) = g_{h}( u_{h},v_{h})  $.
+    Hence, we have $a_{h}( u -  u_{h}, v_{h}) = g_{h}( u_{h},v_{h})  $.
 \end{proof}
 
 \begin{assumption}[EP2]
