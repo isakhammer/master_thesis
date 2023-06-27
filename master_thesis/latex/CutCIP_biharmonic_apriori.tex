@@ -134,7 +134,7 @@ Let $u \in H^{s}( \Omega )  $, $ s\ge 3 $  be the exact solution to   \eqref{eq:
 
 \begin{theorem}
     \label{thm:apriori_result}
-    Let $u \in H^{s}( \Omega ) $ , $s\ge 3$ a solution to \eqref{eq:cont_weak_problem} and let $u \in V_{h}$ of order $k\ge 2$ be the discrete solution to \eqref{eq:discrete_CutCIP_prob}. Then for $r = \min_{}\{s, k+1\} $ the error $e = u - u_{h}$ satisfies
+    Let $u \in H^{s}( \Omega ) $ , $s\ge 3$ be a solution to \eqref{eq:cont_weak_problem} and let $u_{h} \in V_{h}$ of order $k\ge 2$ be the discrete solution to \eqref{eq:discrete_CutCIP_prob}. Then with $r = \min_{}\{s, k+1\} $ the error $e = u - u_{h}$ satisfies
     \begin{align}
         \label{eq:bi_apriori_1}
             \| e \|_{ a_{h},* }^{  } &\lesssim   h^{r-2} \| u \|_{ r,\Omega  }^{  }\\
@@ -144,22 +144,22 @@ Let $u \in H^{s}( \Omega )  $, $ s\ge 3 $  be the exact solution to   \eqref{eq:
 
 \end{theorem}
 \begin{remark}
-    Be aware that for $k=2$ is the estimate \eqref{eq:bi_apriori_2} suboptimal.
+    Be aware that for $k=2$ the estimate \eqref{eq:bi_apriori_2} is suboptimal with $1$ order.
 \end{remark}
 
 \begin{proof}
     We will divide the proof into two steps.
     \\
         \textbf{Step 1.} We want to prove that $\| e \|_{ a_{h},* }^{  } \lesssim   h^{r-2} \| u \|_{ r,\Omega  }^{  }$.
-    Let $e = u - u_{h}$ consist of $e = e_{h} + e_{\pi }$, where we denote the discrete error $e_{h} = C _{h}^{e} u - u_{h}$ and the interpolation error $e_{\pi } = u - C _{h} ^{e}u$. We can then observe that
-    \[
+    Decompose $e = u - u_{h}$ intro $e = e_{h} + e_{\pi }$, where we denote the discrete error $e_{h} = C _{h}^{e} u - u_{h}$ and the interpolation error $e_{\pi } = u - C _{h} ^{e}u$. We can then observe that
+    \begin{equation}
         \begin{split}
-    \| u - u_{h} \|_{ a_{h} }^{  } & \lesssim  \| u - C_{h}^{e} u + C_{h}^{e}u - u_{h} \|_{ a_{h},* }^{  } \\
+    \| u - u_{h} \|_{ a_{h} }^{  } & \le   \| u - C_{h}^{e} u + C_{h}^{e}u - u_{h} \|_{ a_{h},* }^{  } \\
     & \le \|  u - C_{h}^{e} u \|_{a_{h},*  }^{  } +  \| C_{h}^{e}u - u_{h} \|_{a_{h},*  }^{  }\\
-                                     & \le \| e_{\pi } \|_{a_{h},*}^{  } + \| e_{h} \|_{A_{h}  }^{  }
+                                     & \lesssim  \| e_{\pi } \|_{a_{h},*}^{  } + \| e_{h} \|_{A_{h}  }^{  }
         \end{split}
-    \]
-    Using Lemma \ref{lemma:astar_estimate}, is it clear that $\| e_{\pi } \|_{a_{h},*}^{  } \lesssim h^{r-2} \| u \|_{ r,\Omega  }^{  }  $ is already fulfilled, hence, it remains to check $e_{h}$. From Lemma \ref{lemma:bi_Ah_coercive},
+    \end{equation}
+    Using Lemma \ref{lemma:astar_estimate}, is it clear that $\| e_{\pi } \|_{a_{h},*}^{  } \lesssim h^{r-2} \| u \|_{ r,\Omega  }^{  }  $ is already fulfilled, hence, it remains to estimate $e_{h}$. From Lemma \ref{lemma:bi_Ah_coercive} and
     \ref{lemma:bi_Ah_bounded}, the weak Galerkin orthogonality and Assumption EP2 \eqref{as:bi_EP2} is it natural to arrive at,
     \begin{equation}
         \label{eq:apriori_energy1}
@@ -181,7 +181,7 @@ Hence, now utilizing the Assumption EP2 \eqref{as:bi_EP2} is it clear that
          &\lesssim  h^{r-2} \| u \|_{r, \Omega   }^{  } \|e_{h}\|_{A_{h}}.
     \end{split}
 \end{equation}
-Here we noticed that $\| e_{h} \|_{a_{h}  }^{  } + \abs{e_{h}  }_{g_{h}} \lesssim \| e_{h} \|_{ A_{h} }^{  }  $. We also argued that $\| C _{h}^{e} u - u \|_{a_{h},*  }^{  } \lesssim h^{r-2}\| u \|_{ r,\Omega  }^{  }  $ from Lemma
+Here we noticed that $\| e_{h} \|_{a_{h}  }^{  } + \abs{e_{h}  }_{g_{h}} \lesssim \| e_{h} \|_{ A_{h} }^{  }  $, and used that $\| C _{h}^{e} u - u \|_{a_{h},*  }^{  } \lesssim h^{r-2}\| u \|_{ r,\Omega  }^{  }  $ from Lemma
 \ref{lemma:astar_estimate}.
 
 Finally, combining \eqref{eq:apriori_energy1} and \eqref{eq:apriori_energy2} is it clear that $\| e_{h} \|_{ A_{h}  }^{  } \lesssim h^{r-2} \| u \|_{r, \Omega   }^{  }  $.
