@@ -68,29 +68,22 @@ This set is simply all facets that belong to all elements of the active mesh $\m
 
 \begin{proposition}
     \label{prop:hessian_change}
-    Let $v_{h} \in V_{h} $, then the following identity holds.
+    Let $v_{h} \in V_{h} $ and $F \in  \mathcal{F} _{h}$. Assume that $ v_{h} = v_{h} |_{F}$,  then the following identity holds.
     \begin{equation}
-    \partial ^{j}_{n} (D^2v) = D^2 ( \partial ^{j}_{n} v), \quad  j=0,1,2.
+    \partial ^{j}_{n} (D^2v_{h}) = D^2 ( \partial ^{j}_{n} v_{h}), \quad  j=0,1,2.
     \end{equation}
 \end{proposition}
 
 \begin{proof}
-        Recall that $\left[ D^2 v \right]_{i,j} = \partial _{x_{i}x_{j}} v $. We will compute each index individually.
-    \begin{enumerate}[label=\arabic*)]
-        \item $j = 0$ is trivially true.
-        \item Let $j=1$. We can then easily see that, \[
-        \partial ^{}_{n} ( \partial _{x_{i} x_{j}} v)  = \nabla  ( \partial _{x_{i} x_{j}} v)   n = \partial _{x_{i} x_{j}} (\nabla  v) n =\partial _{x_{i} x_{j}} (\partial _{n} v)
-        \]
-        Hence, $\partial _{n} (D^2v) = D^2( \partial _{n}v)$.
-        \item Let $j=2$. Similarly can we see that, \[
+
+        Recall that $\left[ D^2 v \right]_{i,j} = \partial _{x_{i}x_{j}} v $. The case $j=0$ is trivial. For the case $j=2$ we have,
+        \begin{equation}
                 \begin{split}
                 \partial^{2} _{n} (\partial _{x_{i} x_{j}} v) & = n^{T}  D^2(\partial _{x_{i} x_{j}} v) n = n^{T}  J( \nabla (\partial _{x_{i} x_{j}}v) ) n \\
                 & =  n^{T}  J(\partial _{x_{i} x_{j}}(\nabla v) ) n = \partial _{x_{i} x_{j}} n^{T} J(\nabla v) n
-                \end{split}
-            \]
-            Thus, taking account for all elements in the matrix we get $\partial^{2} _{n} (D^2v) = D^2( \partial^{2} _{n}v)$.
-    \end{enumerate}
-    Proof is complete.
+                \end{split}.
+        \end{equation}
+            Thus, taking account for all elements in the matrix we get $\partial^{2} _{n} (D^2v) = D^2( \partial^{2} _{n}v)$. The case $j=1$ is computed similarly.
 
 \end{proof}
 
@@ -191,53 +184,58 @@ This set is simply all facets that belong to all elements of the active mesh $\m
 \end{lemma}
 
 \begin{proof}
-    We will dive the proof in two parts where we first prove \eqref{eq:bi_inv_gh_1} and then in the second part prove \eqref{eq:bi_inv_gh_2}.
-    \begin{enumerate}[label=\arabic*)]
-        \item
+        \textbf{Estimate \eqref{eq:bi_inv_gh_1}.}
             First of all, notice that there is a patch $P(T) $ consisting of $\left\{ T_{i} \right\}_{i=1}^{l} $ mesh elements s.t. each pair $ \left\{ T_{i}, T_{i+1} \right\} $ share a facet $F_{i}$ and the last element $T_{l}$ has a so-called "fat"
             intersection.
 
-            Let us define the following norm \[
+            Let us define the following norm
+            \begin{equation}
             g_{F_{i}}^{L^{2}}( v_{h},v_{h})  = \sum_{j=0}^{k} h^{2j+1}( \jump{ \partial ^{j}_{n}v_{h} }, \jump{ \partial ^{j}_{n}v_{h} }    )_{F_{i} }
-            \]
-            where $F_{i} \in  \mathcal{F} ^{g}_{h}$ and polynomial degree $ k$. Using Lemma \ref{lemma:bi_local_facet_estimate} can we see that \[
+            \end{equation}
+            where $F_{i} \in  \mathcal{F} ^{g}_{h}$ and polynomial degree $ k$. Using Lemma \ref{lemma:bi_local_facet_estimate} can we see that
+            \begin{equation}
             \| v_{h} \|_{ T_{i} }^{  } \lesssim \| v_{h} \|_{ T_{i+1} }^{ 2 } + g_{F_{i}}^{L^{2}}( v,v).
-            \]
+            \end{equation}
     Consequently, using induction over each pair $\left\{ T_{i}, T_{i+1} \right\} $ with a corresponding $F_{i}$, we obtain
-            \[
+    \begin{equation}
                 \begin{split}
             \| v_{h} \|_{ T_{1} }^{2  }  & \le  C \| v_{h} \|_{ T_{2} }^{ 2 } + g_{F_{1}}^{L^{2}}( v_{h},v_{h})\\
               & \le  C( C( \| v_{h} \|_{ T_{3} }^{ 2 } + g_{F_{2}}^{L^{2}}( v_{h},v_{h}) ) + g_{F_{1}}^{L^{2}}( v_{h},v_{h}) )\\
               & \lesssim    \| v_{h} \|_{ T_{l} }^{ 2 }  + \sum_{i=1}^{l-1} g_{F_{i}}^{L^{2}}( v_{h},v_{h})  \\
               & \lesssim    \| v_{h} \|_{ T_{l} \cap \Omega  }^{ 2 }  + \sum_{i=1}^{l-1} g_{F_{i}}^{L^{2}}( v_{h},v_{h})
                 \end{split}
-            \]
+    \end{equation}
             Here the last steps arise from the fact that $\|  v_{h} \|_{ T_{l} }^{  } \lesssim  \|  v_{h} \|_{ T_{l} \cap \Omega  }^{  }  $, which is a consequence of the fat intersection property.
-Summation over the intersected triangles $\mathcal{T} _{\Gamma }$ implies,
-            \[
-                    \| v_{h} \|_{ \mathcal{T} _{\Gamma } }^{2  } \lesssim \| v_{h} \|_{ \mathcal{T} _{\Gamma}\cap \Omega  }^{2  }+ \sum_{i=1}^{l-1} g_{F_{l}}^{L^{2}}( v_{h},v_{h}) \\
-                     = \| v_{h} \|_{ \mathcal{T}_{\Gamma } \cap \Omega   }^{ 2 }  + \sum_{j=0}^{k} h^{2j+1} ( \jump{ \partial ^{j}_{n} v_{h} }, \jump{ \partial ^{j}_{n}v_{h} }    )_{\mathcal{F}_{h}^{g}}
-        \]
-        And as a trivial extension this now also holds for the active mesh $\mathcal{T} _{h}$ , that is, \[
+            Summation over the intersected triangles $\mathcal{T} _{\Gamma }$ implies,
+            \begin{equation}
+                \begin{split}
+                    \| v_{h} \|_{ \mathcal{T} _{\Gamma } }^{2  } & \lesssim \| v_{h} \|_{ \mathcal{T} _{\Gamma}\cap \Omega  }^{2  }+ \sum_{i=1}^{l-1} g_{F_{l}}^{L^{2}}( v_{h},v_{h}) \\
+                                                                 & = \| v_{h} \|_{ \mathcal{T}_{\Gamma } \cap \Omega   }^{ 2 }  + \sum_{j=0}^{k} h^{2j+1} ( \jump{ \partial ^{j}_{n} v_{h} }, \jump{ \partial ^{j}_{n}v_{h} }    )_{\mathcal{F}_{h}^{g}}
+                \end{split}
+            \end{equation}
+        And as a trivial extension this now also holds for the active mesh $\mathcal{T} _{h}$ , that is,
+        \begin{equation}
                     \| v_{h} \|_{ \mathcal{T} _{h } }^{2  } \lesssim  \| v_{h} \|_{ \mathcal{T}_{h } \cap \Omega   }^{ 2 }  + \sum_{j=0}^{k} h^{2j+1} ( \jump{ \partial ^{j}_{n} v_{h} }, \jump{ \partial ^{j}_{n}v_{h} }    )_{\mathcal{F}_{h}^{g}}.
-        \]
+        \end{equation}
         Hence, \eqref{eq:bi_inv_gh_1} holds and the first part of the proof is complete.
 
-    \item We will simply start by replacing $v_{h}$ by $D^2 v_{h}$ and use the Proposition \ref{prop:hessian_change}.
-        \[
+        \textbf{Estimate} \eqref{eq:bi_inv_gh_2} \textbf{.}  We will simply start by replacing $v_{h}$ by $D^2 v_{h}$ and use the Proposition \ref{prop:hessian_change}.
+        \begin{equation}
             \begin{split}
                     \| D^2 v_{h} \|_{ \mathcal{T} _{h} }^{2  }&  \lesssim \| D^2 v_{h} \|_{ \Omega  }^{ 2 }  + \sum_{j=0}^{k} h^{2j+1} ( \jump{   \partial ^{j}_{n} D^2 v_{h} }, \jump{  \partial ^{j}_{n} D^2 v_{h}}    )_{\mathcal{F}_{h}^{g}} \\
                     &=  \| D^2 v_{h} \|_{ \Omega  }^{ 2 }  + \sum_{j=0}^{k} h^{2j+1} ( \jump{   D^2 \partial ^{j}_{n}  v_{h} }, \jump{  D^2 \partial ^{j}_{n}  v_{h}}    )_{\mathcal{F}_{h}^{g}}
             \end{split}
-        \]
+        \end{equation}
         Remark that $\|  D^2 v_{h} \|_{ T_{l} }^{  } \lesssim  \|  D^2 v_{h} \|_{ T_{l} \cap \Omega  }^{  }  $ using the fat-intersection property.
-        Thus, it remains to show that \[
+        Thus, it remains to show that
+        \begin{equation}
         \sum_{j=0}^{k} h^{2j+1} ( \jump{   D^2 \partial ^{j}_{n}  v_{h} }, \jump{  D^2 \partial ^{j}_{n}  v_{h}}    )_{\mathcal{F}_{h}^{g}} \lesssim  \sum_{j=0}^{k} h^{2j-3} ( \jump{    \partial ^{j}_{n}  v_{h} }, \jump{  \partial ^{j}_{n}  v_{h}}
         )_{\mathcal{F}_{h}^{g}}.
-        \]
-        Recall the decomposition procedure done in \eqref{eq:projection} for a facet $F$ , where $P_{F} := I - n_{} \oplus n_{} $ and $Q_{F} = n_{} \oplus n_{}$. We apply this so we can to decompose the Hessian evaluated on the facet  such that, \[
+        \end{equation}
+        Recall the decomposition procedure done in \eqref{eq:projection} for a facet $F$ , where $P_{F} := I - n_{} \oplus n_{} $ and $Q_{F} = n_{} \oplus n_{}$. We apply this so we can to decompose the Hessian evaluated on the facet  such that,
+        \begin{equation}
         D^2 v_{h}  \mid _{F} = Q_{F}D^2v_{h} + P_{F} D^2 v_{h} .
-        \]
+        \end{equation}
         % Recall from basic finite element theory .
         \red{
         Recall from \eqref{eq:fund_inv_est} and \eqref{eq:degrade} the inverse estimates $\| D^2v_h \|_{T  }^{ 2 }  \le h^{-4} \| v_h \|_{ T }^{2  }    $ and $ \| D^2v_h \|_{F  }^{2  } \le h^{-1} \| D^2 v_h  \|_{T  }^{ 2 }   $.}
@@ -251,25 +249,24 @@ Summation over the intersected triangles $\mathcal{T} _{\Gamma }$ implies,
         \]
         Here is $\| \cdot  \|_{l^{\infty}  }^{  } $ denoted as the discrete matrix inf-norm.
         Thus, using this on the decomposition can we admit that
-         \[
+        \begin{equation}
              \begin{split}
             h^{2j +1} \| \jump{D^2 \partial ^{j}_{n}  v_{h}}  \|_{ F }^{2  } & \lesssim h^{2j +1} \| Q_{F} \jump{ \partial ^{j}_{n}  v_{h} }  \|_{ F }^{2  } + h^{2j +1} \| P_{F} D^2 \jump{ \partial ^{j}_{n}  v_{h} }       \|_{ F }^{2  } \\
             &  \lesssim   h^{2j -3}  \| \jump{ \partial ^{j}_{n}v_{h} }   \|_{ F }^{ 2 }
              \end{split}
-        \]
+        \end{equation}
         % \red{Seems like the projection argument is not necessarry. You can simply prove it using direcetly the estimate $\| D^2v \|_{F  }^{ 2 }\le h^{-2} \| \nabla v \|_{ F }^{ 2 } \le h^{-4} \| v \|_{ F }^{2  }    $ s.t.
         % $$
         % \| D^2 \jump{ \partial _{n}^{j} v } \|_{F  }^{ 2 } \le h^{-4} \| \jump{ \partial _{n}^{j} v } \|_{ F }^{2  }
     % $$ }
 
         Thus, fulfilling \eqref{eq:bi_inv_gh_2}.
-        \[
+        \begin{equation}
             \begin{split}
          \sum_{j=0}^{k} h^{2j+1} ( \jump{   D^2 \partial ^{j}_{n}  v_{h} }, \jump{  D^2 \partial ^{j}_{n}  v_{h}}    )_{\mathcal{F}_{h}^{g}} & \lesssim  \sum_{j=0}^{k} h^{2j-3}  (\jump{    \partial ^{j}_{n}  v_{h} }, \jump{ \partial ^{j}_{n}  v_{h} }  )_{\mathcal{F} _{h}^{g}  }^{2  }
             \end{split}
-        \]
+        \end{equation}
 
-    \end{enumerate}
     Hence, the proof is complete.
 
 \end{proof}
