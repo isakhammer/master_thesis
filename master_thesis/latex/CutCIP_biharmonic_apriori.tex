@@ -34,14 +34,6 @@ for all  $v \in H^{m}( \Omega )$ which satisfies
 For more information, see \cite[Theorem 9.7]{brezis2011functional} and \cite[p.181, p.185]{stein1970singular}. For the notation we simply write $ v := v^{e}   $ for $v \in \mathbb{R} ^{d} \setminus \Omega $.
 
 Recall definition $V_{h}$ in \eqref{eq:vh_energy} of polynomial degree $k$ and starting from Lemma \ref{lemma:clements}, we combine the Clément interpolator with the extension operator to construct $C_{h}^{e}: H^{m}( \mathbb{R} ^{d}) \to V_{h}$ such that $C ^{e} _{h} v := C _{h} v^{e} $.
-We can immediately observe that the interpolation satisfies the following global error estimates. Let $v \in H^{s}( \Omega ) $ and $r = \mathrm{min}(s , k+1) $  that is,
-\begin{align}
-    \| v - C _{h}^{e} v \|_{  l, \mathcal{T} _{h} }^{  } & \lesssim h^{r-l}\sum_{T \in \mathcal{T}_h} \| v \|_{ r, \omega(T) }^{  }, \quad 0\le l\le r, \\
-    \| v - C ^{e}_{h}v \|_{ l,\mathcal{F} _{h} }^{  } & \lesssim h^{r-l-\frac{1}{2}}\sum_{T \in \mathcal{T}_h} \| v \|_{ r, \omega(F)  }^{  }, \quad 0  \le  l \le   r-\frac{1}{2}, \\
-\| v - C ^{e}_{h}v \|_{ l, \Gamma }^{  } & \lesssim h^{r-l-\frac{1}{2}} \sum_{T \in \mathcal{T}_h}  \| v \|_{ r,  \omega(T)  }^{  }, \quad 0  \le  l \le  r-\frac{1}{2}.
-\end{align}
- Next we recall that $ \sum_{T}^{} \| v \|_{s,\omega ( T)   }^{  } \le C  \| v \|_{s, \mathcal{T}_{h}   }^{  } $ where $C$ is some constant decided by shape regularity of the mesh and the maximal number of different patches a single element can
- belong to. This also holds for the inequality $ \sum_{T}^{} \| v \|_{s,\omega ( F)   }^{  } \le C  \| v \|_{s, \mathcal{T}_{h}   }^{  } $. Hence, we obtain the following set of estimates.
 \begin{align}
     \label{eq:bi_projection_estimates_1}
     \| v - C _{h}^{e} v \|_{  l, \mathcal{T} _{h} }^{  } & \lesssim h^{r-l} \| v \|_{ r, \mathcal{T} _{h} }^{  }, \quad 0\le l\le r, \\
