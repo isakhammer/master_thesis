@@ -33,15 +33,22 @@ for all  $v \in H^{m}( \Omega )$ which satisfies
 \end{equation}
 For more information, see \cite[Theorem 9.7]{brezis2011functional} and \cite[p.181, p.185]{stein1970singular}. For the notation we simply write $ v := v^{e}   $ for $v \in \mathbb{R} ^{d} \setminus \Omega $.
 
-Recall definition $V_{h}$ in \eqref{eq:vh_energy} of polynomial degree $k$.  Starting from Lemma \ref{lemma:clements} and the corresponding estimates \eqref{eq:clement_estimates}, we combine the Clément interpolator with the extension operator to construct $C_{h}^{e}: H^{m}( \mathbb{R} ^{d}) \to V_{h}$ such that $C ^{e} _{h} v := C _{h} v^{e} $.
+
+
+Starting from Lemma \ref{lemma:clements}, assume $v \in H^{s}( \Omega ) $ and let $r = \mathrm{min}(s , k+1) $. Revisit the definition of $V_{h}$ from \eqref{eq:vh_energy}, which is a polynomial of degree $k$. We can then employ the combination of the Clément interpolator with the extension operator to create $C_{h}^{e}: H^{m}( \mathbb{R} ^{d}) \to V_{h}$, such that $C ^{e} _{h} v := C _{h} v^{e}$.
+ Next, recall that $ \sum_{T}^{} \| v \|_{s,\omega ( T)   }^{  } \le C  \| v \|_{s, \mathcal{T}_{h}   }^{  } $ where $C$ is some constant decided by shape regularity of the mesh and the maximal number of different patches a single element can
+ belong to. This also holds for the inequality $ \sum_{T}^{} \| v \|_{s,\omega ( F)   }^{  } \le C  \| v \|_{s, \mathcal{T}_{h}   }^{  } $.
+The following estimates are thereby established.
+
 \begin{align}
     \label{eq:bi_projection_estimates_1}
-    \| v - C _{h}^{e} v \|_{  l, \mathcal{T} _{h} }^{  } & \lesssim h^{r-l} \| v \|_{ r, \Omega }^{  }, \quad 0\le l\le r, \\
+    \| v - C _{h}^{e} v \|_{  l, \mathcal{T} _{h} }^{  } & \lesssim h^{r-l}\sum_{T \in \mathcal{T}_h} \| v \|_{ r, \omega(T) }^{  } \lesssim  h^{r-l-\frac{1}{2}}  \| v \|_{ r, \Omega  }^{  }, \quad 0\le l\le r, \\
     \label{eq:bi_projection_estimates_2}
-    \| v - C ^{e}_{h}v \|_{ l,\mathcal{F} _{h} }^{  } & \lesssim h^{r-l-\frac{1}{2}} \| v \|_{ r, \Omega  }^{  }, \quad 0  \le  l \le   r-\frac{1}{2}, \\
+    \| v - C ^{e}_{h}v \|_{ l,\mathcal{F} _{h} }^{  } & \lesssim h^{r-l-\frac{1}{2}}\sum_{T \in \mathcal{T}_h} \| v \|_{ r, \omega(F)  }^{  } \lesssim h^{r-l-\frac{1}{2}} \| v \|_{ r, \Omega   }^{  }, \quad 0  \le  l \le   r-\frac{1}{2}, \\
     \label{eq:bi_projection_estimates_3}
-\| v - C ^{e}_{h}v \|_{ l, \Gamma }^{  } & \lesssim h^{r-l-\frac{1}{2}}   \| v \|_{ r,  \Omega  }^{  }, \quad 0  \le  l \le  r-\frac{1}{2}.
+    \| v - C ^{e}_{h}v \|_{ l, \Gamma }^{  } & \lesssim h^{r-l-\frac{1}{2}} \sum_{T \in \mathcal{T}_h}  \| v \|_{ r,  \omega(T)  }^{  }\lesssim h^{r-l-\frac{1}{2}} \lesssim    \| v \|_{ r,  \Omega   }^{  }, \quad 0  \le  l \le  r-\frac{1}{2}.
 \end{align}
+
 % \todo[inline]{ Maybe hard to argue \eqref{eq:bi_projection_estimates_3} to hold on $\Gamma $, but may be related to some generalization of \eqref{eq:bi_n_cut_inverse_1} and \eqref{eq:bi_cut_inverse_1}. Anyhow, \eqref{eq:bi_projection_estimates_2} and
 % \eqref{eq:bi_projection_estimates_3} was never used in the proof of Lemma \ref{lemma:astar_estimate} since we used inverse estimates and ended up with \eqref{eq:bi_projection_estimates_1} instead on all of them.}
 
