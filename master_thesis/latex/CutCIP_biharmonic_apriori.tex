@@ -44,8 +44,8 @@ The following estimates are thereby established.
     \| v - C _{h}^{e} v \|_{  l, \mathcal{T} _{h} }^{  } & \lesssim h^{r-l}\sum_{T \in \mathcal{T}_h} \| v \|_{ r, \omega(T) }^{  } \lesssim  h^{r-l-\frac{1}{2}}  \| v \|_{ r, \Omega  }^{  }, \quad 0\le l\le r, \\
     \label{eq:bi_projection_estimates_2}
     \| v - C ^{e}_{h}v \|_{ l,\mathcal{F} _{h} }^{  } & \lesssim h^{r-l-\frac{1}{2}}\sum_{T \in \mathcal{T}_h} \| v \|_{ r, \omega(F)  }^{  } \lesssim h^{r-l-\frac{1}{2}} \| v \|_{ r, \Omega   }^{  }, \quad 0  \le  l \le   r-\frac{1}{2}, \\
-    \label{eq:bi_projection_estimates_3}
-    \| v - C ^{e}_{h}v \|_{ l, \Gamma }^{  } & \lesssim h^{r-l-\frac{1}{2}} \sum_{T \in \mathcal{T}_h}  \| v \|_{ r,  \omega(T)  }^{  }\lesssim h^{r-l-\frac{1}{2}} \lesssim    \| v \|_{ r,  \Omega   }^{  }, \quad 0  \le  l \le  r-\frac{1}{2}.
+    % \label{eq:bi_projection_estimates_3}
+    % \| v - C ^{e}_{h}v \|_{ l, \Gamma }^{  } & \lesssim h^{r-l-\frac{1}{2}} \sum_{T \in \mathcal{T}_h}  \| v \|_{ r,  \omega(T)  }^{  }\lesssim h^{r-l-\frac{1}{2}} \lesssim    \| v \|_{ r,  \Omega   }^{  }, \quad 0  \le  l \le  r-\frac{1}{2}.
 \end{align}
 
 % \todo[inline]{ Maybe hard to argue \eqref{eq:bi_projection_estimates_3} to hold on $\Gamma $, but may be related to some generalization of \eqref{eq:bi_n_cut_inverse_1} and \eqref{eq:bi_cut_inverse_1}. Anyhow, \eqref{eq:bi_projection_estimates_2} and
@@ -112,7 +112,7 @@ Again, from \eqref{eq:mean_jump_estimate} is it clear that $\| \mean{ \partial _
     Hence, we have $ \| u - C_{h}^{e} u \|_{a_{h},*  }^{  } \lesssim   h^{r-2}  \| u \|_{ r, \mathcal{T}_{h}   }^{2  } $.
 \end{proof}
 
-\begin{lemma}[Weak galerkin orthogonality]
+\begin{lemma}[Weak Galerkin orthogonality]
 Let $u \in H^{s}( \Omega )  $, $ s\ge 3 $  be the exact solution to   \eqref{eq:cont_weak_problem} and $u_{h} \in V_{h}$ is a discrete solution to \eqref{eq:discrete_CutCIP_prob}. Then is \[
     a_{h}( u - u_{h}, v_{h}) = g_{h} ( u_{h}, v_{h}) \quad \forall v_{h} \in V_{h}.
     \]
