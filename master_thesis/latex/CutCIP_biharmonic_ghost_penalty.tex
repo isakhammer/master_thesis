@@ -190,10 +190,10 @@ By employing induction on each pair $\left\{ T_{i}, T_{i+1} \right\}$ along with
               & \lesssim    \| v_{h} \|_{ T_{l} \cap \Omega  }^{ 2 }  + \sum_{i=1}^{l-1} g_{F_{i}}^{L^{2}}( v_{h},v_{h})
     \end{align}
             Here the last steps arise from the fact that $\|  v_{h} \|_{ T_{l} }^{  } \lesssim  \|  v_{h} \|_{ T_{l} \cap \Omega  }^{  }  $, which is a consequence of the fat intersection property.
-            Summation over the intersected triangles $\mathcal{T} _{\Gamma }$ implies,
+            Summation over the cut elements $\mathcal{T} ^{\Gamma }_{h}$ implies,
             \begin{align}
-                    \| v_{h} \|_{ \mathcal{T} _{\Gamma } }^{2  } & \lesssim \| v_{h} \|_{ \mathcal{T} _{\Gamma}\cap \Omega  }^{2  }+ \sum_{i=1}^{l-1} g_{F_{l}}^{L^{2}}( v_{h},v_{h}) \\
-                                                                 & = \| v_{h} \|_{ \mathcal{T}_{\Gamma } \cap \Omega   }^{ 2 }  + \sum_{j=0}^{k} h^{2j+1} ( \jump{ \partial ^{j}_{n} v_{h} }, \jump{ \partial ^{j}_{n}v_{h} }    )_{\mathcal{F}_{h}^{g}}
+                    \| v_{h} \|_{ \mathcal{T} ^{\Gamma }_h }^{2  } & \lesssim \| v_{h} \|_{ \mathcal{T} ^{\Gamma }_h\cap \Omega  }^{2  }+ \sum_{i=1}^{l-1} g_{F_{l}}^{L^{2}}( v_{h},v_{h}) \\
+                                                                 & = \| v_{h} \|_{ \mathcal{T}^{\Gamma }_h \cap \Omega   }^{ 2 }  + \sum_{j=0}^{k} h^{2j+1} ( \jump{ \partial ^{j}_{n} v_{h} }, \jump{ \partial ^{j}_{n}v_{h} }    )_{\mathcal{F}_{h}^{g}}
             \end{align}
         And as a trivial extension this now also holds for the active mesh $\mathcal{T} _{h}$ , that is,
         \begin{equation}
