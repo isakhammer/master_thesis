@@ -36,10 +36,22 @@ with the corresponding norm
 \begin{equation}
 \| u \|_{ W^{k,p}\left( \Omega  \right)  }^{  }  = \left(   \sum_{j = 0}^{k}  \left\lvert u \right\rvert ^{p} _{  W^{j,p}\left( \Omega  \right) } \right)^{\frac{1}{p}} .
 \end{equation}
-Here the seminorm is defined such that $ \left\lvert u \right\rvert _{W^{k,p}( \Omega  ) }^{} =  ( \sum_{\left\lvert \alpha  \right\rvert  = k}^{} \| \partial ^{\alpha }u \|_{ L^{p}( \Omega )   }^{ p } )^{\frac{1}{p}} $.  For shorthand, it is
-defined that $\| \cdot
-\|_{k,p}^{  } = \| \cdot  \|_{k,p,\Omega   }^{  } = \| \cdot  \|_{ W^{k,p}( \Omega )   }^{  }  $ and for $p=2$ the usual notation is $H^{m}( \Omega ) = W^{m,2}( \Omega )  $ with corresponding norm $\| \cdot  \|_{H^{m}( \Omega )   }^{  } = \| \cdot
-\|_{k,\Omega   }^{  } = \| \cdot  \|_{k,2,\Omega   }^{  } $.
+Here the seminorm is defined such that $ \left\lvert u \right\rvert _{W^{k,p}( \Omega  ) }^{} =  ( \sum_{\left\lvert \alpha  \right\rvert  = k}^{} \| \partial ^{\alpha }u \|_{ L^{p}( \Omega )   }^{ p } )^{\frac{1}{p}} $.
+
+For shorthand notation, we denote
+\begin{equation}
+    \begin{split}
+\| \cdot \|_{k,p}^{  } & = \| \cdot  \|_{k,p,\Omega   }^{  } = \| \cdot  \|_{ W^{k,p}( \Omega )   }^{  }, \\
+   \abs{ \  \cdot \ }_{k,p}^{  } &= \abs{ \   \cdot \ }_{k,p,\Omega   }^{  } = \abs{ \  \cdot \ }_{ W^{k,p}( \Omega )   }^{  },
+    \end{split}
+\end{equation}
+and specifically for $p=2$ we define $H^{m}( \Omega ) = W^{m,2}( \Omega )  $ with such that,
+\begin{equation}
+\begin{split}
+\| \cdot  \|_{H^{m}( \Omega )   }^{  } & = \|   \cdot  \|_{k,\Omega   }^{  } = \|   \cdot  \|_{k,2,\Omega   }^{  },  \\
+\abs{ \   \cdot \  }_{H^{m}( \Omega )   }^{  } & = \abs{ \   \cdot \  } _{k,\Omega   }^{  } =  \abs{ \ \cdot \   } _{k,2,\Omega   }^{  }.
+\end{split}
+\end{equation}
 Remark that $H^{m}( \Omega ) $ is a Hilbert space equipped with the inner product \[
     \left( u,v \right) _{H^{m}\left( \Omega   \right) } = \sum_{\left\lvert \alpha  \right\rvert  \le  m}^{}  \int_{\Omega }^{} \partial ^{\alpha } u \  \partial ^{\alpha } v dx, \quad  \forall u,v \in H^{m}\left( \Omega  \right).
 \]
@@ -1175,7 +1187,7 @@ This result is very useful since it is now sufficient to show that a priori esti
 \label{sub:some_general_inequalities}
 
 
-Choose any element $T \in \mathcal{T}_{h} $ and let $v_{h} \in V_{h}  $. Then does the local inverse estimate hold,
+    Choose any element $T \in \mathcal{T}_{h} $ and let $v_{h} \in \mathcal{P} ^{m}( T)   $. Then does the local inverse estimate hold,
 \begin{equation}
 \label{eq:inv1}
 \abs{ v_{h} }_{H^{l}( T) }  \lesssim h^{m-l} \abs{ v_{h} }_{H^{m}( T  ) }
@@ -1187,15 +1199,28 @@ Choose any element $T \in \mathcal{T}_{h} $ and let $v_{h} \in V_{h}  $. Then do
 \| D^2v_{h} \|_{T  }^{  } \lesssim h^{-1} \| \nabla v_{h}  \|_{ T  }^{  } \lesssim h^{-2} \| v_{h} \|_{T  }^{  }
  \end{equation}
 
-Another very useful inequality is the so-called trace inequality which connect the relationship of evaluating the norm on element $ T $ and with any of the corresponding facets $F \in \partial T$. The general form is $\| v_{h} \|_{F   }^{  }  \lesssim
-h^{-\frac{1}{2}} \| v_{h} \|_{ T  }^{  } $, see \cite[Lemma 12.8]{ErnGuermond2021}. Let $\partial _{n} v = \nabla v \ n$ and $\partial_{nn} v = n^{T} D^2 v \ n $. Keeping in mind that the normal vector has a unit length and, thus, evidently applying the
-trace inverse inequality we have,
+Another very useful inequality is the so-called trace inequality which connect the relationship of evaluating the norm on element $ T $ and with any of the corresponding facets $F \in \partial T$. The general form is
+\begin{equation}
+    \label{eq:inv2}
+\| v_{h} \|_{F   }^{  }  \lesssim
+h^{-\frac{1}{2}} \| v_{h} \|_{ T  }^{  },
+\end{equation}
+For proof, see \cite[Lemma 12.8]{ErnGuermond2021}.
+
+Let $\partial _{n} v = \nabla v \ n$ and $\partial_{nn} v = n^{T} D^2 v \ n $. Keeping in mind that the normal vector has a unit length and, thus, evidently applying the
+trace inverse inequality we have two present useful examples,
 \begin{equation}
     \label{eq:fund_inv_est}
 \begin{split}
     \| \partial _{n} v_{h} \|_{F  }^{  }  & \le \| \nabla v_{h} \|_{F  }^{  }  \le h^{-\frac{1}{2}} \| \nabla  v_{h} \|_{T  }^{  },  \\
     \| \partial _{nn} v_{h} \|_{ F }^{  } & \le  \| D^2 v_{h} \|_{ F }^{  }   \le  h^{-\frac{1}{2}} \| D^2 v_{h} \|_{ T }^{  }.
 \end{split}
+\end{equation}
+Combining \eqref{eq:inv1} and \eqref{eq:inv2}, we establish that
+\begin{equation}
+    \label{eq:general}
+\abs{ v_{h} }_{l,F}  \lesssim h^{m-l - \frac{1}{2}} \abs{ v_{h} }_{m, T}
+\text{ for } l \le m.
 \end{equation}
 
 \subsection{Cea's lemma}%
