@@ -9,16 +9,19 @@ First, we construct a suitable (quasi-)interpolation operator, here we use the C
 \Omega ) $.
 In combination with discrete coercivity this allows us to derive an a priori error estimate in the energy norm. Finally, we use a standard duality argument, also known as Aubin-Nitsche trick, to derive the $L^{2}( \Omega ) $-error estimate.
 
-Recall that for $v \in H^{1}( \mathcal{T } _{h}) $ the following inequalities hold.
+Recall that for $v \in H^{3}( \mathcal{T } _{h}) $ the following inequalities.
 \begin{align}
-    % \| v \|_{ \partial T }^{  } &\lesssim h^{-\frac{1}{2}}_{T}\|  v \|_{ T }^{  }+ h^{\frac{1}{2}} \| \nabla v \|_{T  }^{   }  , \\
-    % \| v \|_{ \Gamma \cap T }^{  } &\lesssim  h^{-\frac{1}{2}} \| v \|_{T  }^{  }   + h^{\frac{1}{2}}_{T} \| \nabla v \|_{ T }^{  },\\
     \label{eq:trace:1}
     \| \nabla v \|_{ \partial T }^{  } &\lesssim h^{-\frac{1}{2}}_{T}\|  \nabla v \|_{ T }^{  }+ h^{\frac{1}{2}} \| D^2 v \|_{T  }^{   }  , \\
     \label{eq:trace:2}
-    \| \nabla v \|_{ \Gamma \cap T }^{  } &\lesssim  h^{-\frac{1}{2}} \| \nabla v \|_{T  }^{  }   + h^{\frac{1}{2}}_{T} \| D^2 v \|_{ T }^{  },
+    \| \nabla v \|_{ \Gamma \cap T }^{  } &\lesssim  h^{-\frac{1}{2}} \| \nabla v \|_{T  }^{  }   + h^{\frac{1}{2}}_{T} \| D^2 v \|_{ T }^{  },\\
+    \label{eq:trace:3}
+    \| D^2 v \|_{ \Gamma \cap T }^{  } &\lesssim  h^{-\frac{1}{2}} \| D^2 v \|_{T  }^{  }   + h^{\frac{1}{2}}_{T} \| D^3 v \|_{ T }^{  },
 \end{align}
 holds $\forall T \in \mathcal{T} _{h}$, for proof see \cite[Lemma 4.2]{hansbo2003finite}.
+In this context is $D^3v$ a tensor of third partial derivates, $\left[ D^3v \right] _{ijk} = \frac{\partial^3 v}{\partial x_i \partial x_j \partial x_k} \forall i,j,k \in \left\{ 1,\ldots,d \right\} $ where the norm $\| D^3 v\|_{\Omega   }^{ 2 } =
+\int_{\Omega }^{} D^3 v : D^3 v \ dx   $ is defined via the standard Frobenius inner product.
+
 
 Assume that $\Omega $ has a boundary $\Gamma $ in $C^{1}$, then there exists a bounded extension operator,
 \begin{equation}
@@ -43,7 +46,7 @@ The following estimates are thereby established.
     \label{eq:bi_projection_estimates_1}
     \| v - C _{h}^{e} v \|_{  l, \mathcal{T} _{h} }^{  } & \lesssim h^{r-l}\sum_{T \in \mathcal{T}_h} \| v \|_{ r, \omega(T) }^{  } \lesssim  h^{r-l-\frac{1}{2}}  \| v \|_{ r, \Omega  }^{  }, \quad 0\le l\le r, \\
     \label{eq:bi_projection_estimates_2}
-    \| v - C ^{e}_{h}v \|_{ l,\mathcal{F} _{h} }^{  } & \lesssim h^{r-l-\frac{1}{2}}\sum_{T \in \mathcal{T}_h} \| v \|_{ r, \omega(F)  }^{  } \lesssim h^{r-l-\frac{1}{2}} \| v \|_{ r, \Omega   }^{  }, \quad 0  \le  l \le   r-\frac{1}{2}, \\
+    \| v - C ^{e}_{h}v \|_{ l,\mathcal{F} _{h} }^{  } & \lesssim h^{r-l-\frac{1}{2}}\sum_{T \in \mathcal{T}_h} \| v \|_{ r, \omega(F)  }^{  } \lesssim h^{r-l-\frac{1}{2}} \| v \|_{ r, \Omega   }^{  }, \quad 0  \le  l \le   r-\frac{1}{2}.
     % \label{eq:bi_projection_estimates_3}
     % \| v - C ^{e}_{h}v \|_{ l, \Gamma }^{  } & \lesssim h^{r-l-\frac{1}{2}} \sum_{T \in \mathcal{T}_h}  \| v \|_{ r,  \omega(T)  }^{  }\lesssim h^{r-l-\frac{1}{2}} \lesssim    \| v \|_{ r,  \Omega   }^{  }, \quad 0  \le  l \le  r-\frac{1}{2}.
 \end{align}
@@ -105,9 +108,16 @@ Again, from \eqref{eq:mean_jump_estimate} is it clear that $\| \mean{ \partial _
         \begin{equation}
             \mathrm{V}   \lesssim h \|  D^2  ( u - C_{h}^{e}u ) \|_{\partial \mathcal{T}_{h}}^{2  }  \lesssim  h^{2( r - 2 )} \| u \|_{r, \mathcal{T}_{h}   }^{ 2 }.
         \end{equation}
-        The final term we use the estimate \eqref{eq:bi_projection_estimates_3},
+        The final term we we apply \eqref{eq:trace:3} and then \eqref{eq:bi_projection_estimates_1}
+
         \begin{equation}
-            \mathrm{VI}   \lesssim h \|  D^2  ( u - C_{h}^{e}u ) \|_{\Gamma }^{2  }  \lesssim  h^{2( r - \frac{5}{2} ) + 1} \| u \|_{r, \Gamma    }^{  2} \lesssim h^{2( r - 2 )} \| u \|_{r, \mathcal{T}_{h}   }^{ 2 } .
+            \begin{split}
+            \mathrm{VI} &    \lesssim h \|  D^2  ( u - C_{h}^{e}u ) \|_{\Gamma }^{2  }  \\
+            & \lesssim  h^{-2} \| D^2 ( u - C_{h}^{e}u )  \|_{ \mathcal{T}_{h}   }^{2  } + \| D^3( u - C_{h}^{e}u ) \|_{ \mathcal{T}_{h}   }^{ 2 } \\
+            % & \lesssim h^{-2}( \| u- C_{h}^{e} \|_{2,\mathcal{T}_{h}   }^{2  } + \| u- C_{h}^{e} \|_{3,\mathcal{T}_{h}   }^{2  }  )\\
+            &  \lesssim h^{-2}( h^{2(r - 2 - \frac{1}{2})} + h^{2(r - 3 - \frac{1}{2})})\| u \|_{r,\Omega   }^{  } \\
+            &  \lesssim ( h^{2r - 5)} + h^{2r - 6)})\| u \|_{r,\Omega   }^{  } \lesssim h^{2(r-2)} \| u \|_{r,\Omega   }^{  }
+            \end{split}
         \end{equation}
     Hence, we have $ \| u - C_{h}^{e} u \|_{a_{h},*  }^{  } \lesssim   h^{r-2}  \| u \|_{ r, \mathcal{T}_{h}   }^{2  } $.
 \end{proof}
