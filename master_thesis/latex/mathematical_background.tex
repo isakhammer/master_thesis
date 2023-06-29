@@ -17,10 +17,7 @@ $\left\lvert f \right\rvert ^{p}$ is Lebesgue integrable, i.e,
 Let $u \in L^{p}\left( \Omega  \right) $. We define the integral norm of order $p$ to be \[
 \| u \|_{ L^{p}\left( \Omega  \right)  }^{  }  = \left( \int_{\Omega }^{} \left\lvert u \right\rvert ^{p} dx  \right) ^{\frac{1}{p}}.
 \]
-Since $p=2$ is frequently used in this report, we also define for convenience a compact notation $\| u \|_{ \Omega  }^{  }  = \| u \|_{ L^{2}\left( \Omega  \right)  }^{  } $ .  Recall that $L^{2}\left( \Omega  \right) $ is a Hilbert space since it is equipped with a inner product of two functions $u,v \in L^{2}\left( \Omega  \right) $ such that
-    $
-\left( u,v \right) _{\Omega } = \left( u,v \right) _{L^2\left( \Omega  \right) } = \int_{\Omega }^{} u  v dx.
-$
+
 The following definition for derivatives is employed.
 For $d$ dimensions of order $k$ we define the multi-index $\alpha  = ( \alpha _{1}, \ldots, \alpha _{d})  $ with the absolute value $\abs{ \alpha  } = \sum_{i=1}^{d}  \alpha _{i} = k $ s.t.
 \begin{equation}
@@ -45,16 +42,22 @@ For shorthand notation, we denote
    \abs{ \  \cdot \ }_{k,p}^{  } &= \abs{ \   \cdot \ }_{k,p,\Omega   }^{  } = \abs{ \  \cdot \ }_{ W^{k,p}( \Omega )   }^{  },
     \end{split}
 \end{equation}
-and specifically for $p=2$ we define $H^{m}( \Omega ) = W^{m,2}( \Omega )  $ with such that,
+
+Since $p=2$ is frequently used in this report, we also define for convenience a compact notation $\| u \|_{ \Omega  }^{  }  = \| u \|_{ L^{2}\left( \Omega  \right)  }^{  } $ and $H^{m}( \Omega ) = W^{m,2}( \Omega )  $ such that,
 \begin{equation}
 \begin{split}
 \| \cdot  \|_{H^{m}( \Omega )   }^{  } & = \|   \cdot  \|_{k,\Omega   }^{  } = \|   \cdot  \|_{k,2,\Omega   }^{  },  \\
 \abs{ \   \cdot \  }_{H^{m}( \Omega )   }^{  } & = \abs{ \   \cdot \  } _{k,\Omega   }^{  } =  \abs{ \ \cdot \   } _{k,2,\Omega   }^{  }.
 \end{split}
 \end{equation}
-Remark that $H^{m}( \Omega ) $ is a Hilbert space equipped with the inner product \[
-    \left( u,v \right) _{H^{m}\left( \Omega   \right) } = \sum_{\left\lvert \alpha  \right\rvert  \le  m}^{}  \int_{\Omega }^{} \partial ^{\alpha } u \  \partial ^{\alpha } v dx, \quad  \forall u,v \in H^{m}\left( \Omega  \right).
-\]
+
+Recall that $L^{2}( \Omega ) $ and $H^{m}( \Omega ) $ are Hilbert spaces equipped with the inner products
+\begin{equation}
+    \begin{split}
+\left( u,v \right) _{\Omega } & = \left( u,v \right) _{L^2\left( \Omega  \right) } = \int_{\Omega }^{} u  v dx, \quad \forall u,v \in L^{2}( \Omega )  \\
+    \left( u,v \right) _{m,\Omega } & = \sum_{\left\lvert \alpha  \right\rvert  \le  m}^{}  ( \partial ^{\alpha } u ,  \partial ^{\alpha } v )_{\Omega }, \quad  \forall u,v \in H^{m}( \Omega  ).
+    \end{split}
+\end{equation}
 
 Given the context of Sobolev spaces, we consider the functions $ u \in H^{2}( \Omega )$ and $ v \in H^{1}( \Omega )$. We can denote Greens theorem, which links integrals over a volume and its boundary, as follows,
 \[
