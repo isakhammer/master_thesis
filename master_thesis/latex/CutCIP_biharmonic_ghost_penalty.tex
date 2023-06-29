@@ -8,7 +8,7 @@ We have the following assumptions for the ghost penalty.
         \begin{equation}
     \| D^2v_{h} \|_{ \mathcal{T} _{h} }^{ 2 }  \lesssim \| D^2 v_{h} \|_{ \Omega  }^{  2} + \abs{ v_{h} } _{g_{h}}^2 \quad \forall v_{h} \in V_{h}
         \end{equation}
-\item \label{as:EP2} For $v \in H^{s}( \Omega ) $ and $r = \min \{s,k+2 \} $, the semi-norm $\abs{ \cdot  }_{g_{h}} $ satisfies the following estimate, \[
+\item \label{as:EP2} For $v \in H^{s}( \Omega ) $ and $r = \mathrm{ min} (s,k+2) $, the semi-norm $\abs{ \cdot  }_{g_{h}} $ satisfies the following estimate, \[
     \abs{ \pi _{h}^{e} v } _{g_{h}} \lesssim  h^{r-2} \| v \|_{ r,\Omega  }^{  }.
     \]
 \end{enumerate}
@@ -72,6 +72,34 @@ This set is simply all facets that belong to all elements of the active mesh $\m
             Thus, taking account for all elements in the matrix we get $\partial^{2} _{n} (D^2v) = D^2( \partial^{2} _{n}v)$. The case $j=1$ is computed similarly.
 
 \end{proof}
+
+\begin{lemma}[]
+    \label{lemma:bi_local_facet_estimate}
+    Let $T_{1},T_{2 } \in  \mathcal{T} _{h}$ be two elements sharing a common face $F$. Then for $v_{h} \in V_{h}$ with polynomial degree $k$ we have
+    \begin{equation}
+        \label{eq:estimate_1}
+        \| \partial _{x_{i}} v \|_{ T_{1} }^{  }  \lesssim \| \partial_{ x_{i} } v_{h} \|_{ T_{2} }^{  } + \sum_{0\le j\le k}  {h^{2j +1}}^{} ( \jump{ \partial _{n}^{j} \partial _{x_{i}} v_{h} }, \jump{ \partial ^{j}_{n} \partial _{x_{i}} v_{h} }    )_{F}
+    \end{equation}
+    Similarly, this is generalized to \begin{equation}
+        \begin{split}
+        \| \nabla  v \|_{ T_{1} }^{  }  & \lesssim \| D^2 v_{h} \|_{ T_{2} }^{  } + \sum_{0\le j\le k}  {h^{2j +1}}^{} ( \jump{ \partial _{n}^{j} D^2 v_{h} }, \jump{ \partial ^{j}_{n} \nabla  v_{h} }    )_{F} \\
+        \| D^2  v \|_{ T_{1} }^{  }  & \lesssim \| D^2 v_{h} \|_{ T_{2} }^{  } + \sum_{0\le j\le k}  {h^{2j +1}}^{} ( \jump{ \partial _{n}^{j} D^2 v_{h} }, \jump{ \partial ^{j}_{n} D^2  v_{h} }    )_{F} \\
+        \end{split}
+    \end{equation}
+
+\end{lemma}
+
+\begin{proof}
+\textbf{Estimate \eqref{eq:estimate_1}.} Apply the substitution $\widetilde{v} = \partial _{x_{i}} v$  and recall the projection \eqref{eq:projection}.
+$
+     \widetilde{v}_{h}   \lesssim P_{F} \widetilde{v}_{h} + Q_{F} \widetilde{v}_{h}
+$
+such that along the jump of facet $F$ we have $ \jump{ \partial _{n} \widetilde{v} } = P_{F} \partial _{n} \widetilde{v}_{h} + Q_{F} \partial _{n} \widetilde{v}_{h} $
+
+
+
+\end{proof}
+
 
 
 \begin{figure}
