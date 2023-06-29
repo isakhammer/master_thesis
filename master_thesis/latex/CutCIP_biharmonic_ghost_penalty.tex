@@ -209,46 +209,34 @@ By employing induction on each pair $\left\{ T_{i}, T_{i+1} \right\}$ along with
         Remark that $\|  D^2 v_{h} \|_{ T_{l} }^{  } \lesssim  \|  D^2 v_{h} \|_{ T_{l} \cap \Omega  }^{  }  $ using the fat-intersection property.
         Thus, it remains to show that
         \begin{equation}
-        \sum_{j=0}^{k} h^{2j+1} ( \jump{   D^2 \partial ^{j}_{n}  v_{h} }, \jump{  D^2 \partial ^{j}_{n}  v_{h}}    )_{\mathcal{F}_{h}^{g}} \lesssim  \sum_{j=0}^{k} h^{2j-3} ( \jump{    \partial ^{j}_{n}  v_{h} }, \jump{  \partial ^{j}_{n}  v_{h}}
+        \sum_{j=1}^{k} h^{2j+1} ( \jump{   D^2 \partial ^{j}_{n}  v_{h} }, \jump{  D^2 \partial ^{j}_{n}  v_{h}}    )_{\mathcal{F}_{h}^{g}} \lesssim  \sum_{j=1}^{k} h^{2j-3} ( \jump{    \partial ^{j}_{n}  v_{h} }, \jump{  \partial ^{j}_{n}  v_{h}}
         )_{\mathcal{F}_{h}^{g}}.
+        \end{equation}
+        It is clear that it is sufficient to prove that the following estimate holds.
+          \begin{equation}
+\| \jump{   D^2 \partial ^{j}_{n}  v_{h} } \|_{F  }^{ 2 } \lesssim h^{-4} \|  \jump{ \partial ^{j}_{n} v_{h} }   \|_{ F }^{  2}.
         \end{equation}
         Recall the decomposition procedure done in \eqref{eq:projection} for a facet $F$ , where $P_{F} := I - n_{} \oplus n_{} $ and $Q_{F} = n_{} \oplus n_{}$. We apply this so we can to decompose the Hessian evaluated on the facet  such that,
         \begin{equation}
         D^2 v_{h}  \mid _{F} = Q_{F}D^2v_{h} + P_{F} D^2 v_{h} .
         \end{equation}
-        % Recall from basic finite element theory .
-        \red{
-        Recall from \eqref{eq:fund_inv_est} and \eqref{eq:degrade} the inverse estimates $\| D^2v_h \|_{T  }^{ 2 }  \le h^{-4} \| v_h \|_{ T }^{2  }    $ and $ \| D^2v_h \|_{F  }^{2  } \le h^{-1} \| D^2 v_h  \|_{T  }^{ 2 }   $.}
         That is, applying the decomposition we get the following estimates
-        \begin{align}
-            \| \jump{ P_{F}   D^2 \partial _{n}^{j} v_{h} }\|_{ F }^{ 2 } & = \| P_{F} D^2 \jump{ \partial _{n}^{j} v_{h} }   \|_{ F  }^{ 2} = \| (I- n\otimes n) D^2 \jump{ \partial _{n}^{j} v_{h} }   \|_{ F  }^{ 2}    \\
-                                                                          & \lesssim  \|  (I- n\otimes n) \|_{l^{\infty} }^{  } \| D^2 \jump{ \partial _{n}^{j} v_{h} }   \|_{ F  }^{ 2} \lesssim   \|  D^2 \jump{ \partial _{n}^{j} v_{h} }   \|_{ F  }^{
-                                                                          2} \\
-                                                                          & \lesssim h^{-4} \|  \jump{ \partial ^{j}_{n} v_{h} }   \|_{ F }^{  2}. \\
-            \| \jump{ Q_{F}   D^2 \partial _{n}^{j} v_{h} }\|_{ F }^{ 2 } & = \| Q_{F} D^2 \jump{ \partial _{n}^{j} v_{h} }   \|_{ F  }^{ 2} = \| n\otimes n D^2 \jump{ \partial _{n}^{j} v_{h} }   \|_{ F  }^{ 2}    \\
-                                                                          & \lesssim  \| n \otimes n \|_{l^{\infty} }^{  }  \|  D^2 \jump{ \partial _{n}^{j} v_{h} }   \|_{ F  }^{ 2} \lesssim h^{-4} \|  \jump{ \partial ^{j}_{n} v_{h} }   \|_{ F }^{  2}.
-        \end{align}
-        Here is $\| \cdot  \|_{l^{\infty}  }^{  } $ denoted as the discrete matrix inf-norm.
-        Thus, using this on the decomposition can we admit that
-        \begin{equation}
-             \begin{split}
-            h^{2j +1} \| \jump{D^2 \partial ^{j}_{n}  v_{h}}  \|_{ F }^{2  } & \lesssim h^{2j +1} \| Q_{F} \jump{ \partial ^{j}_{n}  v_{h} }  \|_{ F }^{2  } + h^{2j +1} \| P_{F} D^2 \jump{ \partial ^{j}_{n}  v_{h} }       \|_{ F }^{2  } \\
-            &  \lesssim   h^{2j -3}  \| \jump{ \partial ^{j}_{n}v_{h} }   \|_{ F }^{ 2 }
-             \end{split}
-        \end{equation}
-        % \red{Seems like the projection argument is not necessarry. You can simply prove it using direcetly the estimate $\| D^2v \|_{F  }^{ 2 }\le h^{-2} \| \nabla v \|_{ F }^{ 2 } \le h^{-4} \| v \|_{ F }^{2  }    $ s.t.
-        % $$
-        % \| D^2 \jump{ \partial _{n}^{j} v } \|_{F  }^{ 2 } \le h^{-4} \| \jump{ \partial _{n}^{j} v } \|_{ F }^{2  }
-    % $$ }
-
-        Thus, fulfilling \eqref{eq:bi_inv_gh_2}.
         \begin{equation}
             \begin{split}
-         \sum_{j=1}^{k} h^{2j+1} ( \jump{   D^2 \partial ^{j}_{n}  v_{h} }, \jump{  D^2 \partial ^{j}_{n}  v_{h}}    )_{\mathcal{F}_{h}^{g}} & \lesssim  \sum_{j=0}^{k} h^{2j-3}  (\jump{    \partial ^{j}_{n}  v_{h} }, \jump{ \partial ^{j}_{n}  v_{h} }  )_{\mathcal{F} _{h}^{g}  }^{2  }
+            \| \jump{ P_{F}   D^2 \partial _{n}^{j} v_{h} }\|_{ F }^{ 2 } & = \| P_{F} D^2 \jump{ \partial _{n}^{j} v_{h} }   \|_{ F  }^{ 2} = \| (I- n\otimes n) D^2 \jump{ \partial _{n}^{j} v_{h} }   \|_{ F  }^{ 2}    \\
+            \end{split}
+        \end{equation}
+        and
+        \begin{equation}
+            \begin{split}
+            \| \jump{ Q_{F}   D^2 \partial _{n}^{j} v_{h} }\|_{ F }^{ 2 } & = \| Q_{F} D^2 \jump{ \partial _{n}^{j} v_{h} }   \|_{ F  }^{ 2}  = \| \partial _{nn} \jump{ \partial _{n}^{j} v_{h} }   \|_{ F  }^{ 2}    \\
             \end{split}
         \end{equation}
 
-    Hence, the proof is complete.
+
+        \red{Finish proof.}
+        Thus, fulfilling \eqref{eq:bi_inv_gh_2}.
+
 
 \end{proof}
 
