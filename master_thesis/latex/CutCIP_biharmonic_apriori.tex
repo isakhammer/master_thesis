@@ -34,7 +34,6 @@ for all  $v \in H^{m}( \Omega )$ which satisfies
 For more information, see \cite[Theorem 9.7]{brezis2011functional} and \cite[p.181, p.185]{stein1970singular}. For the notation we simply write $ v := v^{e}   $ for $v \in \mathbb{R} ^{d} \setminus \Omega $.
 
 
-
 Starting from Lemma \ref{lemma:clements}, assume $v \in H^{s}( \Omega ) $ and let $r = \mathrm{min}(s , k+1) $. Revisit the definition of $V_{h}$ from \eqref{eq:vh_energy}, which is a polynomial of degree $k$. We can then employ the combination of the Clément interpolator with the extension operator to create $C_{h}^{e}: H^{m}( \mathbb{R} ^{d}) \to V_{h}$, such that $C ^{e} _{h} v := C _{h} v^{e}$.
  Next, recall that $ \sum_{T}^{} \| v \|_{s,\omega ( T)   }^{  } \le C  \| v \|_{s, \mathcal{T}_{h}   }^{  } $ where $C$ is some constant decided by shape regularity of the mesh and the maximal number of different patches a single element can
  belong to. This also holds for the inequality $ \sum_{T}^{} \| v \|_{s,\omega ( F)   }^{  } \le C  \| v \|_{s, \mathcal{T}_{h}   }^{  } $.
@@ -54,11 +53,12 @@ The following estimates are thereby established.
 
 \begin{lemma}
     \label{lemma:astar_estimate}
-    Let $u \in H^{s}( \Omega ) $ for $s\ge 3$ be a exact solution to $\eqref{eq:cont_weak_problem} $ and let $k$ be the polynomial order of $V_{h}$. Set $r = \mathrm{min} ( s, k+1)$, then we have the final a priori estimates
+    Let $u \in H^{s}( \Omega ) $ for $s\ge 3$ be the exact solution to $\eqref{eq:cont_weak_problem} $ and let $k$ be the polynomial order of $V_{h}$. Set $r = \mathrm{min} ( s, k+1)$, then we have the interpolation estimates
     \begin{equation}
     \|  u - C_{h}u \|_{ a_{h},*  }^{  } \lesssim h^{r-2} \| u \|_{ r, \Omega  }^{  }.
     \end{equation}
 \end{lemma}
+
 \begin{proof}
     By definition,
     \begin{equation}
@@ -91,19 +91,16 @@ The following estimates are thereby established.
                           & \lesssim  ( h ^{2( r-1) -2 } + h^{2( r-2) } ) \| u  \|_{r, \mathcal{T}_{h}   }^{2  }  \lesssim  h^{2( r-2) }  \| u  \|_{r, \mathcal{T}_{h}   }^{ 2 }
     \end{split}
 \end{equation}
-And for the boundary term we apply estimate \eqref{eq:bi_projection_estimates_3}
-        \begin{equation}
-            \mathrm{IV}   \lesssim h^{-1} \|  \nabla  ( u - C_{h}^{e}u ) \|_{ \Gamma  }^{2  }  \lesssim  h^{2( r - 2 )} \| u \|_{r, \mathcal{T}_{h}   }^{  }
-        \end{equation}
-\red{
-     \textbf{Version 2.}
+% And for the boundary term we apply estimate \eqref{eq:bi_projection_estimates_3}
+%         \begin{equation}
+%             \mathrm{IV}   \lesssim h^{-1} \|  \nabla  ( u - C_{h}^{e}u ) \|_{ \Gamma  }^{2  }  \lesssim  h^{2( r - 2 )} \| u \|_{r, \mathcal{T}_{h}   }^{  }
+%         \end{equation}
 And for the boundary term we apply \eqref{eq:trace:2} and then \eqref{eq:bi_projection_estimates_1}
         \begin{equation}
             \begin{split}
             \mathrm{IV}   & \lesssim h^{-1} \|  \nabla  ( u - C_{h}^{e}u ) \|_{ \Gamma  }^{2  }    \lesssim h^{-2} \| \nabla ( u - C_{h}^{e}u )  \|_{ \mathcal{T}_{h}   }^{2  } + \| D^2( u - C_{h}^{e}u ) \|_{ \mathcal{T}_{h}   }^{ 2 } \\   & \lesssim  h^{2( r-2) }  \| u  \|_{r, \mathcal{T}_{h}   }^{ 2 }
             \end{split}
         \end{equation}
-    }
 Again, from \eqref{eq:mean_jump_estimate} is it clear that $\| \mean{ \partial _{nn} u }   \|_{ \mathcal{F}_{h}   }^{  } \lesssim \| D^2  u \|_{ \partial  \mathcal{T} _{h} }^{  }   $, thus we see that,
         \begin{equation}
             \mathrm{V}   \lesssim h \|  D^2  ( u - C_{h}^{e}u ) \|_{\partial \mathcal{T}_{h}}^{2  }  \lesssim  h^{2( r - 2 )} \| u \|_{r, \mathcal{T}_{h}   }^{ 2 }.
