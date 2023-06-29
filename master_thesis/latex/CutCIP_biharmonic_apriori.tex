@@ -4,12 +4,12 @@
 
 
 For the proposed method, we want to derive a priori error estimate with respect to both the  $\| \cdot  \|_{a_{h},*   }^{  } $-norm and the  $\| \cdot  \|_{ \Omega  }^{
-} $-norm.
-We will construct a suitable (quasi-)interpolation operator, here we use the Clement quasi interpolation operator which in contrast to the standard Lagrange nodal interpolation iterator is also defined for low regularity function $u \in L^{2}(
+} $-norm.  These estimates are geometrically robust in that they remain unaffected by specific cut configurations, thanks to the ghost penalty they incorporate.
+First, we construct a suitable (quasi-)interpolation operator, here we use the Clement quasi interpolation operator which in contrast to the standard Lagrange nodal interpolation operator is also defined for low regularity function $u \in L^{2}(
 \Omega ) $.
-In combination with discrete coercivity this allows you to derive an a priori error estimate in the energy norm. Finally, we use a standard duality argument, also known as Aubin-Nitsche trick, to derive the $L^{2}( \Omega ) $-error estimate.
+In combination with discrete coercivity this allows us to derive an a priori error estimate in the energy norm. Finally, we use a standard duality argument, also known as Aubin-Nitsche trick, to derive the $L^{2}( \Omega ) $-error estimate.
 
-Recall that for $v \in H^{1}( \mathcal{T } _{h}) $ the inequalities,
+Recall that for $v \in H^{1}( \mathcal{T } _{h}) $ the following inequalities hold.
 \begin{align}
     % \| v \|_{ \partial T }^{  } &\lesssim h^{-\frac{1}{2}}_{T}\|  v \|_{ T }^{  }+ h^{\frac{1}{2}} \| \nabla v \|_{T  }^{   }  , \\
     % \| v \|_{ \Gamma \cap T }^{  } &\lesssim  h^{-\frac{1}{2}} \| v \|_{T  }^{  }   + h^{\frac{1}{2}}_{T} \| \nabla v \|_{ T }^{  },\\
