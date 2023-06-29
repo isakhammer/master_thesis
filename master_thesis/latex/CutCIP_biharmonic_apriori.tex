@@ -213,37 +213,48 @@ Hence, the first part of the proof is complete.
             \end{split}
         \end{equation}
 
-        This implies that it exists a $\psi \in H^{4}( \Omega ) $ such that $a_{h}( \psi, v ) = ( e,v)_{\Omega } \ \forall v \in V_{h}  $. Hence, we can easily observe that \begin{equation}
+        This implies that it exists a $\psi \in H^{4}( \Omega ) $ such that $a_{h}(v, \psi ) = ( e,v)_{\Omega } \ \forall v \in V_{h}  $. Hence, we can easily observe that \begin{equation}
             \label{eq:ni_1}
             \begin{split}
         \| e \|_{ \Omega  }^{ 2 }  & = ( e,e)_\Omega   = ( e, \Delta ^2 \psi )_{\Omega } \\
-        &= a_{h}( e, \psi ) = a_{h}( u-u_h, \psi ) \\
+        &= a_{h}(  \psi, e ) = a_{h}( u-u_h, \psi ) \\
         &= a_{h}( u-u_h, \psi + C^{e}_{h}\psi  - C^{e}_{h}\psi )  \\
         &= a_{h}( u-u_h, \psi   - C^{e}_{h}\psi ) +  a_{h}( u-u_h, C^{e}_{h}\psi )  \\
         &= a_{h}( u-u_h, \psi  - C^{e}_{h}\psi )  \\
-        & \lesssim    \|u-u_{h}  \|_{a_{h},*  }^{  }  \| \psi  - C^{e}_{h}\psi \|_{a_{h},*  }^{  }    \\
+        & \lesssim    \underbrace{\|u-u_{h}  \|_{a_{h},*  }^{  }}_{\mathrm{I} }   \underbrace{\| \psi  - C^{e}_{h}\psi \|_{a_{h},*  }^{  }}_{\mathrm{II} }
             \end{split}
         \end{equation}
 
-        Here we applied the Galerkin orthogonality $ a_{h}( u-u_{h}, C^{e}_{h}\psi ) = 0$.
-        Using the a priori estimate \eqref{lemma:astar_estimate}  is it clear that
+        Now, for $\mathrm{I} $ we simply use the energy a priori estimate
         \begin{equation}
             \label{eq:ni_2}
-        \|u-u_{h}  \|_{a_{h},*  }^{  }  \le h^{r} \| u \|_{r,\Omega  }^{  }\quad  \text{and}\quad  \| \psi  - C^{e}_{h}\psi \|_{a_{h},*  }^{  }  \le h^{r} \| \psi  \|_{4, \Omega   }^{  }.
+            \mathrm{I} \lesssim h^{r-2} \| u \|_{ r,\Omega   }^{  }
         \end{equation}
-
-        And then standard inverse estimate \eqref{eq:inv1} can we see
+        However, to estimate $\mathrm{II} $ we set $\widetilde{r} = \mathrm{min} ( 4, k+1)  $, where $4$ comes from the regularity $\psi \in H^{4}( \Omega ) $ and $\| \psi \|_{4,\Omega   }^{  } \lesssim \| e \|_{ \Omega   }^{  }  $, thus,
         \begin{equation}
             \label{eq:ni_3}
-             h^{r} \| u \|_{r,\Omega  }^{  }  \le h^{r-2} \| u \|_{\Omega  }^{  } \quad  \text{and}\quad  h^{\widetilde{r} -2} \| \psi  \|_{4,\Omega  }^{  }  \le h^{\widetilde{r}-2} \| \psi  \|_{\Omega }^{  }.
+            \mathrm{II} \lesssim h^{\widetilde{r} -2} \| \psi \|_{ \widetilde{r},\Omega   }^{  } \lesssim h^{\widetilde{r} -2} \| e \|_{ \Omega   }^{  }.
         \end{equation}
-        Here is $r = \mathrm{max}(3,k+1)$ and $ \widetilde{r} = \mathrm{max}(4,k+1)$.
-        Combining \eqref{eq:ni_1}, \eqref{eq:ni_2} and \eqref{eq:ni_3} we have, \begin{equation}
-            \| e \|_{\Omega   }^{ 2 } \lesssim  h^{r-2} \| u \|_{\Omega   }^{  } \|  \psi \|_{ \Omega  }^{  }.
+        Hence, combining \eqref{eq:ni_1}, \eqref{eq:ni_2} and \eqref{eq:ni_3}  can we conclude \begin{equation}
+            \| e \|_{\Omega   }^{  } \lesssim h^{r+ \widetilde{r} -4} \| u \|_{ r,\Omega   }^{  }
         \end{equation}
-        Using that $\| \psi  \|_{ \Omega  }^{  } \le \| e \|_{ \Omega   }^{  }  $ is it easy to see that \begin{equation}
-            \| e \|_{\Omega   }^{  } \lesssim  h^{r- \mathrm{max}(0, k-3) } \| u \|_{r, \Omega   }^{  }
+
+
+        Having a clear look at $\widetilde{r}$, wee see that \begin{equation}
+            \widetilde{r} = \mathrm{min}(4, k+1) = \begin{cases}
+                & 3, \quad  k=2 \\
+                & 4, \quad  k\ge 3 \\
+            \end{cases}
         \end{equation}
+
+        So we have the following estimate,\begin{equation}
+            \| e \|_{ \Omega  }^{  }  \lesssim  \| u \|_{ r,\Omega  }^{  }  \begin{cases}
+                h^{r-1}, \quad k=2 \\
+                h^{r-2}, \quad k\ge 3
+            \end{cases}
+        \end{equation}
+        or equivalently $\| e \|_{\Omega   }^{  } \lesssim \| u \|_{\Omega   }^{r- \mathrm{max}(0,k-3)   } $.
+
 
 \end{proof}
 
