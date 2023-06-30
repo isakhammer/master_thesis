@@ -110,10 +110,20 @@ Since $\abs{e_{x_{i}} \cdot n  }\le 1 $ and $\abs{e_{x_{i}} \cdot  t_{j} }\le 1 
 \end{equation}
 From the local inverse inequality \eqref{eq:inv1} can we conclude that $\| \partial _{t_{j}} v_{h} \|_{F  }^{  } \lesssim h^{-1} \|  v_{h} \|_{F  }^{  }  $.
 
-Inserting $w_{h} = \partial ^{j} _{n} v_{h}$, we get $ \| \jump{ \partial _{x_{i}} \partial ^{j}_{n} v_{h} }   \|_{F  }^{2  } = \| \jump{\partial ^{j+1} v \  e_{x_{i}} \cdot n  }   \|_{  }^{  } $
+Inserting $w_{h} = \partial ^{j} _{n} v_{h}$ we conclude
+\begin{equation}
+    \label{eq:jump_estimate}
+    \begin{split}
+   \| \jump{ \partial _{x_{i}} \partial ^{j} _{n} v_{h} }   \|_{F  }^{2  } & \lesssim \| \jump{ \partial _{n} \partial ^{j} _{n} v_{h} }   \|_{F  }^{ 2 } +  h^{-2} \| \jump{ \partial ^{j} _{n} v_{h} }   \|_{ F }^{ 2 } \\
+                                                                           & \lesssim \| \jump{  \partial ^{j+1} _{n} v_{h} }   \|_{F  }^{ 2 } +  h^{-2} \| \jump{ \partial ^{j} _{n} v_{h} }   \|_{ F }^{ 2 } \\
+    \end{split}
+\end{equation}
 
-Utilizing Lemma \ref{lemma:bi_local_facet_estimate} is it clear that \begin{equation}
-    \| \partial _{x_{i}} v_{h} \|_{  T_{1}}^{2  } \lesssim \| \partial _{x_{i}} v \|_{ T_{2} }^{  2} + \sum_{j=0}^{k}
+Combining Lemma \ref{lemma:bi_local_facet_estimate} and \eqref{eq:jump_estimate} is it clear that \begin{equation}
+    \begin{split}
+    \| \partial _{x_{i}} v_{h} \|_{  T_{1}}^{2  } & \lesssim \| \partial _{x_{i}} v_{h} \|_{ T_{2} }^{  2} + \sum_{j=0}^{k} \| \jump{ \partial _{n}^{j} \partial _{x_{i}} v_{h} }   \|_{F  }^{2  } \\
+                                                  & \lesssim \| \partial _{x_{i}} v_{h} \|_{ T_{2} }^{  2} + \sum_{j=0}^{k} \| \jump{  \partial ^{j+1} _{n} v_{h} }   \|_{F  }^{ 2 } +  h^{-2} \| \jump{ \partial ^{j} _{n} v_{h} }   \|_{ F }^{ 2 }
+    \end{split}
 \end{equation}
 
 
