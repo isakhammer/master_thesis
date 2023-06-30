@@ -114,7 +114,7 @@ Since $\abs{e_{x_{i}} \cdot n  }\le 1 $ and $\abs{e_{x_{i}} \cdot  t_{j} }\le 1 
     & \lesssim \| \jump{ \partial _{n} w_{h} }   \|_{F  }^{ 2 } +  h^{-2} \| \jump{ w_{h} }   \|_{ F }^{ 2 }
     \end{split}
 \end{equation}
-From the local inverse inequality \eqref{eq:inv1} can we conclude that $\| \partial _{t_{j}} v_{h} \|_{F  }^{  } \lesssim h^{-1} \|  v_{h} \|_{F  }^{  }  $.
+Here we used the local inverse inequality \eqref{eq:inv1} applied on the facet $F$, i.e. $\| \partial _{t_{j}} v_{h} \|_{F  }^{  } \lesssim h^{-1} \|  v_{h} \|_{F  }^{  }  $.
 Inserting $w_{h} = \partial ^{j} _{n} v_{h}$ we conclude
 \begin{equation}
     \label{eq:jump_estimate}
@@ -327,10 +327,8 @@ Finally, we now have the tools we need to construct an candidate for the ghost p
     \begin{equation}
         \label{eq:est_gh:1}
         \begin{split}
-        \abs{ C^{e}_{h} v }_{g_{h}}^{2} & = \sum_{j=1}^{k}  \gamma _{j} h^{2j-3}  \| \jump{ \partial ^{j}_{n} C^{e}_{h} v }  \|_{\mathcal{F}_{h}^{g} }^{2} \\
-                                        & = \sum_{j=1}^{k}  \gamma _{j} h^{2j-3}  \| \jump{ \partial ^{j}_{n} C^{e}_{h} v }  \|_{\mathcal{F}_{h}^{g} }^{2} \\
-% & = \sum_{j=1}^{r-1}  \gamma _{j} h^{2j-3} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n} v }  ) _{\mathcal{F}_{h}^{g} } + \sum_{j=r}^{k}  \gamma _{j} h^{2j-3} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n} v }  ) _{\mathcal{F}_{h}^{g} } \\
-% &= \sum_{j=r}^{k}  \gamma _{j} h^{2j-3} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n} v }  ) _{\mathcal{F}_{h}^{g} } \\
+        \abs{ C^{e}_{h} v }_{g_{h}}^{2} & = \sum_{j=0}^{k}  \gamma _{j} h^{2j-3}  \| \jump{ \partial ^{j}_{n} C^{e}_{h} v }  \|_{\mathcal{F}_{h}^{g} }^{2} \\
+                                        & = \sum_{j=r}^{k}  \gamma _{j} h^{2j-3}  \| \jump{ \partial ^{j}_{n} C^{e}_{h} v }  \|_{\mathcal{F}_{h}^{g} }^{2} \\
         \end{split}
     \end{equation}
     where the jump vanishes for the for the first $r-1$ terms, that is,  $\jump{ \partial ^{j}_{n} v } = 0  \  \forall s \le r-1$.
@@ -339,9 +337,8 @@ Finally, we now have the tools we need to construct an candidate for the ghost p
         \label{eq:est_gh:2}
         \| \partial _{n}^{j}v_{h} \|_{ F }^{2  } \lesssim \| D^{j}v_{h} \|_{ F }^{2  } \lesssim h^{2( r- j ) - 1}\| D^{r}v_{h} \|_{  T}^{2  } = h^{2( r- j ) - 1} \| v_{h} \|_{r, T  }^{  }   .
     \end{equation}
-    Hence, combining \eqref{eq:est_gh:1} and \eqref{eq:est_gh:2} we have \begin{equation}
-        \abs{ C^{e}_{h} v }_{g_{h}}^{2} \lesssim \sum_{j=r}^{k}  \gamma _{j} h^{2j-3}
-    \end{equation}
-
+    % Hence, combining \eqref{eq:est_gh:1} and \eqref{eq:est_gh:2} we have \begin{equation}
+    %     \abs{ C^{e}_{h} v }_{g_{h}}^{2} \lesssim \sum_{j=r}^{k}  \gamma _{j} h^{2j-3}
+    % \end{equation}
 
 \end{proof}
