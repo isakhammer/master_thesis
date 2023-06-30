@@ -76,19 +76,22 @@ This set is simply all facets that belong to all elements of the active mesh $\m
 \begin{lemma}[]
     \label{lemma:bi_local_facet_estimate_2}
     Let $T_{1},T_{2 } \in  \mathcal{T} _{h}$ be two elements sharing a common face $F$. Then for $v_{h} \in V_{h}$ with polynomial degree $k$ we have
-    \begin{equation}
+    \begin{subequations}
+    \begin{align}
         \label{eq:local_ghost:0}
-        \| \partial _{x_{i}} v \|_{ T_{1} }^{  }  \lesssim \| \partial_{ x_{i} } v_{h} \|_{ T_{2} }^{  } + \sum_{0\le j\le k}  {h^{2j +1}}^{} ( \jump{ \partial _{n}^{j} \partial _{x_{i}} v_{h} }, \jump{ \partial ^{j}_{n} \partial _{x_{i}} v_{h} }    )_{F}
-    \end{equation}
+        \| \partial _{x_{i}} v \|_{ T_{1} }^{  }  &\lesssim \| \partial_{ x_{i} } v_{h} \|_{ T_{2} }^{  } + \sum_{0\le j\le k}  {h^{2j -1}}^{} ( \jump{ \partial _{n}^{j} \partial _{x_{i}} v_{h} }, \jump{ \partial ^{j}_{n} \partial _{x_{i}} v_{h} }
+        )_{F} \\
+        \label{eq:local_ghost:1}
+        \| \nabla  v \|_{ T_{1} }^{  }  & \lesssim \| \nabla  v_{h} \|_{ T_{2} }^{  } + \sum_{0\le j\le k}  {h^{2j -1}}^{} ( \jump{ \partial _{n}^{j} \nabla v_{h} }, \jump{ \partial ^{j}_{n} \nabla  v_{h} }    )_{F}
+    \end{align}
+    \end{subequations}
     Similarly, this is generalized to
     \begin{subequations}
         \begin{align}
-        \label{eq:local_ghost:1}
-        \| \nabla  v \|_{ T_{1} }^{  }  & \lesssim \| \nabla  v_{h} \|_{ T_{2} }^{  } + \sum_{0\le j\le k}  {h^{2j +1}}^{} ( \jump{ \partial _{n}^{j} \nabla v_{h} }, \jump{ \partial ^{j}_{n} \nabla  v_{h} }    )_{F} \\
         \label{eq:local_ghost:2}
-        \| \Delta   v \|_{ T_{1} }^{  }  & \lesssim \| \Delta  v_{h} \|_{ T_{2} }^{  } + \sum_{0\le j\le k}  {h^{2j +1}}^{} ( \jump{ \partial _{n}^{j}\Delta  v_{h} }, \jump{ \partial ^{j}_{n} \Delta   v_{h} }    )_{F} \\
+        \| \Delta   v \|_{ T_{1} }^{  }  & \lesssim \| \Delta  v_{h} \|_{ T_{2} }^{  } + \sum_{0\le j\le k}  {h^{2j -3}}^{} ( \jump{ \partial _{n}^{j}\Delta  v_{h} }, \jump{ \partial ^{j}_{n} \Delta   v_{h} }    )_{F} \\
         \label{eq:local_ghost:3}
-        \| D^2  v \|_{ T_{1} }^{  }  & \lesssim \| D^2 v_{h} \|_{ T_{2} }^{  } + \sum_{0\le j\le k}  {h^{2j +1}}^{} ( \jump{ \partial _{n}^{j} D^2 v_{h} }, \jump{ \partial ^{j}_{n} D^2  v_{h} }    )_{F}
+        \| D^2  v \|_{ T_{1} }^{  }  & \lesssim \| D^2 v_{h} \|_{ T_{2} }^{  } + \sum_{0\le j\le k}  {h^{2j -3}}^{} ( \jump{ \partial _{n}^{j} D^2 v_{h} }, \jump{ \partial ^{j}_{n} D^2  v_{h} }    )_{F}
         \end{align}
     \end{subequations}
 
@@ -144,6 +147,24 @@ Thus, combining \eqref{eq:ghost_estimate:1} and \eqref{eq:ghost_estimate:2} we g
 \end{equation}
         Hence, estimate \eqref{eq:local_ghost:0} holds.
 
+        \textbf{Estimate \eqref{eq:local_ghost:1}.} Using that $\| \nabla  v \|_{T_{}  }^{ 2 } =  \sum_{i=1}^{d} \|  \partial _{x_{i}} v  \|_{T_{}  }^{ 2 }$, can we directly apply the estimate \eqref{eq:local_ghost:0} element-wise.
+        \begin{equation}
+            \begin{split}
+\| \nabla v \|_{T_{1}  }^{2  } = \sum_{i=1}^{d} \| \partial _{x_{i}}  v_{h} \|_{ T_{1} }^{  2} & \lesssim  \sum_{i=1}^{d} \| \partial _{x_{i}}  v_{h} \|_{ T_{2} }^{  2} + h^{2j-1}\sum_{j=0}^{k} \| \jump{ \partial _{n}^{j} v_{h} }   \|_{F  }^{2  }  \\
+         &  = \| \nabla  v_{h} \|_{ T_{2} }^{  2} + h^{2j-1}\sum_{j=0}^{k} \| \jump{ \partial _{n}^{j} v_{h} }   \|_{F  }^{2  }
+            \end{split}
+        \end{equation}
+        Hence, estimate \eqref{eq:local_ghost:1} holds.
+
+
+\textbf{Estimate \eqref{eq:local_ghost:2} and \eqref{eq:local_ghost:3}.}
+Following exactly the same steps as in \textbf{Estimate \eqref{eq:local_ghost:0}}, but changing out Lemma \ref{lemma:bi_local_facet_estimate} with estimate \eqref{eq:local_ghost:0}, it is easy to conclude the following. For any  $i_{1},i_{2} \in
+\left\{ 1,\ldots, d \right\}$ we have,
+\begin{equation}
+        \| \partial _{x_{i_1} x_{i_2}} v \|_{ T_{1} }^{  }  \lesssim \| \partial_{ x_{i_1} x_{i_2} } v_{h} \|_{ T_{2} }^{  } + \sum_{0\le j\le k}  {h^{2j +1}}^{} ( \jump{ \partial _{n}^{j} \partial _{x_{i_1} x_{i_2}} v_{h} }, \jump{ \partial ^{j}_{n}
+        \partial _{x_{i_1} x_{i_2}} v_{h} }    )_{F}
+\end{equation}
+Using the element-wise argument as in \textbf{Estimate \eqref{eq:local_ghost:1}} for the Hessian and the Laplace operator, we can conclude that \eqref{eq:local_ghost:2} and \eqref{eq:local_ghost:3} hold.
 
 \end{proof}
 
