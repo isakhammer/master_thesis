@@ -257,12 +257,16 @@ Now it remains to make this Lemma hold for the active mesh.
 \begin{lemma}
     \label{lemma:bi_inv_gh_lemma}
     For $v_{h} \in  V_{h}$ of polynomial degree $k$, the following estimates hold.
-        \begin{align}
-            \label{eq:bi_inv_gh_1}
-        \| v_h \|_{ \mathcal{T} _{h} }^{ 2 }  & \lesssim  \| v_h \|_{ \Omega  }^{ 2 }  + \sum_{j=1}^{k} h^{2j+1} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n} v_h}    )_{\mathcal{F}_{h}^{g}}\\
-            \label{eq:bi_inv_gh_2}
-        \| D ^2 v_h \|_{ \mathcal{T} _{h} }^{ 2 }  & \lesssim  \| D^2 v_h \|_{ \Omega  }^{ 2 }  + \sum_{j=1}^{k} h^{2j-3} ( \jump{ \partial ^{j}_{n} v_h }, \jump{ \partial ^{j}_{n}v_h }    )_{\mathcal{F}_{h}^{g}}
-        \end{align}
+        \begin{subequations}
+            \begin{align}
+                \label{eq:bi_inv_gh_1}
+                \| v_h \|_{ \mathcal{T} _{h} }^{ 2 }  & \lesssim  \| v_h \|_{ \Omega  }^{ 2 }  + \sum_{j=1}^{k} h^{2j+1} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n} v_h}    )_{\mathcal{F}_{h}^{g}}\\
+                \label{eq:bi_inv_gh_2}
+                \| D ^2 v_h \|_{ \mathcal{T} _{h} }^{ 2 }  & \lesssim  \| D^2 v_h \|_{ \Omega  }^{ 2 }  + \sum_{j=1}^{k} h^{2j-3} ( \jump{ \partial ^{j}_{n} v_h }, \jump{ \partial ^{j}_{n}v_h }    )_{\mathcal{F}_{h}^{g}} \\
+                \label{eq:bi_inv_gh_3}
+                \| \Delta v_h \|_{ \mathcal{T} _{h} }^{ 2 }  & \lesssim  \| \Delta v_h \|_{ \Omega  }^{ 2 }  + \sum_{j=1}^{k} h^{2j-3} ( \jump{ \partial ^{j}_{n} v_h }, \jump{ \partial ^{j}_{n}v_h }    )_{\mathcal{F}_{h}^{g}}
+            \end{align}
+        \end{subequations}
 \end{lemma}
 
 \begin{proof}
@@ -298,17 +302,9 @@ By employing induction on each pair $\left\{ T_{i}, T_{i+1} \right\}$ along with
         \end{equation}
         Hence, \eqref{eq:bi_inv_gh_1} holds and the first part of the proof is complete.
 
-        \textbf{Estimate} \eqref{eq:bi_inv_gh_2}\textbf{.}  We will simply start by replacing $v_{h}$ by $D^2 v_{h}$ and use the Proposition \ref{prop:hessian_change}.
-        Here is the equation \eqref{eq:local_ghost:3}.
-        \begin{align}
-                    \| D^2 v_{h} \|_{ \mathcal{T} _{h} }^{2  }&  \lesssim \| D^2 v_{h} \|_{ \Omega  }^{ 2 }  + \sum_{j=1}^{k} h^{2j+1} ( \jump{   \partial ^{j}_{n} D^2 v_{h} }, \jump{  \partial ^{j}_{n} D^2 v_{h}}    )_{\mathcal{F}_{h}^{g}} \\
-                    &=  \| D^2 v_{h} \|_{ \Omega  }^{ 2 }  + \sum_{j=1}^{k} h^{2j+1} ( \jump{   D^2 \partial ^{j}_{n}  v_{h} }, \jump{  D^2 \partial ^{j}_{n}  v_{h}}    )_{\mathcal{F}_{h}^{g}}
-        \end{align}
-        Remark that $\|  D^2 v_{h} \|_{ T_{l} }^{  } \lesssim  \|  D^2 v_{h} \|_{ T_{l} \cap \Omega  }^{  }  $ using the fat-intersection property.
-
-        Thus, fulfilling \eqref{eq:bi_inv_gh_2}.
-\end{proof}
-
+        \textbf{Estimate \eqref{eq:bi_inv_gh_2} and \eqref{eq:bi_inv_gh_2}.}
+        We will simply use the exact same procedure as \textbf{Estimate \eqref{eq:bi_inv_gh_1}}  for the estimates with \eqref{eq:local_ghost:2}  and \eqref{eq:local_ghost:3}.
+    \end{proof}
 
 Finally, we now have the tools we need to construct an candidate for the ghost penalty for which satisfies all assumptions.
 
