@@ -161,8 +161,8 @@ Thus, combining \eqref{eq:ghost_estimate:1} and \eqref{eq:ghost_estimate:2} we g
 Following exactly the same steps as in \textbf{Estimate \eqref{eq:local_ghost:0}}, but replacing Lemma \ref{lemma:bi_local_facet_estimate} with estimate \eqref{eq:local_ghost:0}, it is straight forward to conclude the following. For any  $i_{1},i_{2} \in
 \left\{ 1,\ldots, d \right\}$ we have,
 \begin{equation}
-        \| \partial _{x_{i_1} x_{i_2}} v \|_{ T_{1} }^{  }  \lesssim \| \partial_{ x_{i_1} x_{i_2} } v_{h} \|_{ T_{2} }^{  } + \sum_{0\le j\le k}  {h^{2j +1}}^{} ( \jump{ \partial _{n}^{j} \partial _{x_{i_1} x_{i_2}} v_{h} }, \jump{ \partial ^{j}_{n}
-        \partial _{x_{i_1} x_{i_2}} v_{h} }    )_{F}
+    \| \partial _{x_{i_1} x_{i_2}} v \|_{ T_{1} }^{  }  \lesssim \| \partial_{ x_{i_1} x_{i_2} } v_{h} \|_{ T_{2} }^{  } + \sum_{0\le j\le k}  {h^{2j -3}}^{} \left(  \jump{ \partial _{n}^{j} \partial _{x_{i_1} x_{i_2}} v_{h} }, \jump{ \partial ^{j}_{n}
+        \partial _{x_{i_1} x_{i_2}} v_{h} } \right)     _{F}
 \end{equation}
 Finally, applying the element-wise argument, demonstrated in the proof for \textbf{Estimate \eqref{eq:local_ghost:1}}, for the Hessian and the Laplace operator, we conclude that \eqref{eq:local_ghost:2} and \eqref{eq:local_ghost:3} hold.
 
@@ -267,6 +267,7 @@ Now it remains to make this Lemma hold for the active mesh.
 
 \begin{proof}
         \textbf{Estimate \eqref{eq:bi_inv_gh_1}.}
+        This estimate is proven in \cite[Lemma 2.20]{gurkan2019stabilized}, but we will include it for completeness.
             First of all, notice that there is a patch $P(T) $ consisting of $\left\{ T_{i} \right\}_{i=1}^{l} $ mesh elements such that each pair $ \left\{ T_{i}, T_{i+1} \right\} $ share a facet $F_{i}$ and the last element $T_{l}$ has a fat intersection.
 
             Let us define the following norm
@@ -298,42 +299,14 @@ By employing induction on each pair $\left\{ T_{i}, T_{i+1} \right\}$ along with
         Hence, \eqref{eq:bi_inv_gh_1} holds and the first part of the proof is complete.
 
         \textbf{Estimate} \eqref{eq:bi_inv_gh_2}\textbf{.}  We will simply start by replacing $v_{h}$ by $D^2 v_{h}$ and use the Proposition \ref{prop:hessian_change}.
+        Here is the equation \eqref{eq:local_ghost:3}.
         \begin{align}
                     \| D^2 v_{h} \|_{ \mathcal{T} _{h} }^{2  }&  \lesssim \| D^2 v_{h} \|_{ \Omega  }^{ 2 }  + \sum_{j=1}^{k} h^{2j+1} ( \jump{   \partial ^{j}_{n} D^2 v_{h} }, \jump{  \partial ^{j}_{n} D^2 v_{h}}    )_{\mathcal{F}_{h}^{g}} \\
                     &=  \| D^2 v_{h} \|_{ \Omega  }^{ 2 }  + \sum_{j=1}^{k} h^{2j+1} ( \jump{   D^2 \partial ^{j}_{n}  v_{h} }, \jump{  D^2 \partial ^{j}_{n}  v_{h}}    )_{\mathcal{F}_{h}^{g}}
         \end{align}
         Remark that $\|  D^2 v_{h} \|_{ T_{l} }^{  } \lesssim  \|  D^2 v_{h} \|_{ T_{l} \cap \Omega  }^{  }  $ using the fat-intersection property.
-        Thus, it remains to show that
-        \begin{equation}
-        \sum_{j=1}^{k} h^{2j+1} ( \jump{   D^2 \partial ^{j}_{n}  v_{h} }, \jump{  D^2 \partial ^{j}_{n}  v_{h}}    )_{\mathcal{F}_{h}^{g}} \lesssim  \sum_{j=1}^{k} h^{2j-3} ( \jump{    \partial ^{j}_{n}  v_{h} }, \jump{  \partial ^{j}_{n}  v_{h}}
-        )_{\mathcal{F}_{h}^{g}}.
-        \end{equation}
-        It is clear that it is sufficient to prove that the following estimate holds.
-          \begin{equation}
-\| \jump{   D^2 \partial ^{j}_{n}  v_{h} } \|_{F  }^{ 2 } \lesssim h^{-4} \|  \jump{ \partial ^{j}_{n} v_{h} }   \|_{ F }^{  2}.
-        \end{equation}
-        Recall the decomposition procedure done in \eqref{eq:projection} for a facet $F$ , where $P_{F} := I - n_{} \oplus n_{} $ and $Q_{F} = n_{} \oplus n_{}$. We apply this so we can to decompose the Hessian evaluated on the facet  such that,
-        \begin{equation}
-        D^2 v_{h}  \mid _{F} = Q_{F}D^2v_{h} + P_{F} D^2 v_{h} .
-        \end{equation}
-        That is, applying the decomposition we get the following estimates
-        \begin{equation}
-            \begin{split}
-            \| \jump{ P_{F}   D^2 \partial _{n}^{j} v_{h} }\|_{ F }^{ 2 } & = \| P_{F} D^2 \jump{ \partial _{n}^{j} v_{h} }   \|_{ F  }^{ 2} = \| (I- n\otimes n) D^2 \jump{ \partial _{n}^{j} v_{h} }   \|_{ F  }^{ 2}    \\
-            \end{split}
-        \end{equation}
-        and
-        \begin{equation}
-            \begin{split}
-            \| \jump{ Q_{F}   D^2 \partial _{n}^{j} v_{h} }\|_{ F }^{ 2 } & = \| Q_{F} D^2 \jump{ \partial _{n}^{j} v_{h} }   \|_{ F  }^{ 2}  = \| \partial _{nn} \jump{ \partial _{n}^{j} v_{h} }   \|_{ F  }^{ 2}    \\
-            \end{split}
-        \end{equation}
 
-
-        \red{TODO: Finish proof.}
         Thus, fulfilling \eqref{eq:bi_inv_gh_2}.
-
-
 \end{proof}
 
 
