@@ -303,7 +303,7 @@ By employing induction on each pair $\left\{ T_{i}, T_{i+1} \right\}$ along with
         Hence, \eqref{eq:bi_inv_gh_1} holds and the first part of the proof is complete.
 
         \textbf{Estimate \eqref{eq:bi_inv_gh_2} and \eqref{eq:bi_inv_gh_2}.}
-        We will simply use the exact same procedure as \textbf{Estimate \eqref{eq:bi_inv_gh_1}}  for the estimates with \eqref{eq:local_ghost:2}  and \eqref{eq:local_ghost:3}.
+        We will simply use the exact same procedure as \textbf{Estimate \eqref{eq:bi_inv_gh_1}}  for the estimates with \eqref{eq:local_ghost:2}  and \eqref{eq:local_ghost:3}. Hence, proof is complete.
     \end{proof}
 
 Finally, we now have the tools we need to construct an candidate for the ghost penalty for which satisfies all assumptions.
@@ -323,20 +323,24 @@ Finally, we now have the tools we need to construct an candidate for the ghost p
     \| D^2v_{h} \|_{ \mathcal{T} _{h} }^{  }  \lesssim \| D^2 v_{h} \|_{ \Omega   }^{  } + \abs{ v_{h} } _{g_{h}}
     $, hence, Assumption \ref{as:EP1} holds.
     Therefore, we only need to verify Assumption \ref{as:EP2}, which states that $ \abs{ C^{e}_{h} v }_{g_{h}} \lesssim h^{r-2} \| v \|_{r, \Omega   }^{  }$.
-    Let $v  \in H^{s}( \Omega ) $, $s\ge 3$,  and $r = \min\{s,k+1\} $. From definition is \[
+    Let $v  \in H^{s}( \Omega ) $, $s\ge 3$,  and $r = \min\{s,k+1\} $. From definition is
+    \begin{equation}
+        \label{eq:est_gh:1}
         \begin{split}
         \abs{ C^{e}_{h} v }_{g_{h}}^{2} & = \sum_{j=1}^{k}  \gamma _{j} h^{2j-3} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n} v }  ) _{\mathcal{F}_{h}^{g} } \\
-& = \sum_{j=1}^{r-1}  \gamma _{j} h^{2j-3} ( \jump{ \partial ^{j}_{n} v_{h} }, \jump{ \partial ^{j}_{n} v_{h} }  ) _{\mathcal{F}_{h}^{g} } + \sum_{j=r}^{k}  \gamma _{j} h^{2j-3} ( \jump{ \partial ^{j}_{n} v_{h} }, \jump{ \partial ^{j}_{n} v_{h} }  ) _{\mathcal{F}_{h}^{g} } \\
-&= \sum_{j=r}^{k}  \gamma _{j} h^{2j-3} ( \jump{ \partial ^{j}_{n} v_{h} }, \jump{ \partial ^{j}_{n} v_{h} }  ) _{\mathcal{F}_{h}^{g} } \\
+& = \sum_{j=1}^{r-1}  \gamma _{j} h^{2j-3} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n} v }  ) _{\mathcal{F}_{h}^{g} } + \sum_{j=r}^{k}  \gamma _{j} h^{2j-3} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n} v }  ) _{\mathcal{F}_{h}^{g} } \\
+&= \sum_{j=r}^{k}  \gamma _{j} h^{2j-3} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n} v }  ) _{\mathcal{F}_{h}^{g} } \\
         \end{split}
-    \]
-
+    \end{equation}
     where the jump vanishes for the for the first $r-1$ terms, that is,  $\jump{ \partial ^{j}_{n} v } = 0  \  \forall s \le r-1$.
     From the inverse estimate \eqref{eq:general} is it clear that,
     \begin{equation}
-        \| \partial _{n}^{j}v_{h} \|_{ F }^{  } \lesssim \| D^{j}v_{h} \|_{ F }^{  } \lesssim h^{r- j - \frac{1}{2}}\| D^{r}v_{h} \|_{  T}^{  } = h^{r- j - \frac{1}{2}} \| v_{h} \|_{r, T  }^{  }   .
+        \label{eq:est_gh:2}
+        \| \partial _{n}^{j}v_{h} \|_{ F }^{2  } \lesssim \| D^{j}v_{h} \|_{ F }^{2  } \lesssim h^{2( r- j ) - 1}\| D^{r}v_{h} \|_{  T}^{2  } = h^{2( r- j ) - 1} \| v_{h} \|_{r, T  }^{  }   .
+    \end{equation}
+    Hence, combining \eqref{eq:est_gh:1} and \eqref{eq:est_gh:2} we have \begin{equation}
+        \abs{ C^{e}_{h} v }_{g_{h}}^{2} \lesssim \sum_{j=r}^{k}  \gamma _{j} h^{2j-3}
     \end{equation}
 
-    \red{TODO: finish proof}
 
 \end{proof}
