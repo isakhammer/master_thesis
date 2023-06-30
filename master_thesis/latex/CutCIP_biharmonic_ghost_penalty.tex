@@ -9,7 +9,7 @@ We have the following assumptions for the ghost penalty.
     \| D^2v_{h} \|_{ \mathcal{T} _{h} }^{ 2 }  \lesssim \| D^2 v_{h} \|_{ \Omega  }^{  2} + \abs{ v_{h} } _{g_{h}}^2 \quad \forall v_{h} \in V_{h}
         \end{equation}
 \item \label{as:EP2} For $v \in H^{s}( \Omega ) $ and $r = \mathrm{ min} (s,k+2) $, the semi-norm $\abs{ \cdot  }_{g_{h}} $ satisfies the following estimate, \[
-    \abs{ \pi _{h}^{e} v } _{g_{h}} \lesssim  h^{r-2} \| v \|_{ r,\Omega  }^{  }.
+    \abs{ C _{h}^{e} v } _{g_{h}} \lesssim  h^{r-2} \| v \|_{ r,\Omega  }^{  }.
     \]
 \end{enumerate}
 The goal in this chapter is to engineer an ghost penalty which fulfills these assumptions.
@@ -327,9 +327,10 @@ Finally, we now have the tools we need to construct an candidate for the ghost p
     \begin{equation}
         \label{eq:est_gh:1}
         \begin{split}
-        \abs{ C^{e}_{h} v }_{g_{h}}^{2} & = \sum_{j=1}^{k}  \gamma _{j} h^{2j-3} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n} v }  ) _{\mathcal{F}_{h}^{g} } \\
-& = \sum_{j=1}^{r-1}  \gamma _{j} h^{2j-3} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n} v }  ) _{\mathcal{F}_{h}^{g} } + \sum_{j=r}^{k}  \gamma _{j} h^{2j-3} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n} v }  ) _{\mathcal{F}_{h}^{g} } \\
-&= \sum_{j=r}^{k}  \gamma _{j} h^{2j-3} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n} v }  ) _{\mathcal{F}_{h}^{g} } \\
+        \abs{ C^{e}_{h} v }_{g_{h}}^{2} & = \sum_{j=1}^{k}  \gamma _{j} h^{2j-3}  \| \jump{ \partial ^{j}_{n} C^{e}_{h} v }  \|_{\mathcal{F}_{h}^{g} }^{2} \\
+                                        & = \sum_{j=1}^{k}  \gamma _{j} h^{2j-3}  \| \jump{ \partial ^{j}_{n} C^{e}_{h} v }  \|_{\mathcal{F}_{h}^{g} }^{2} \\
+% & = \sum_{j=1}^{r-1}  \gamma _{j} h^{2j-3} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n} v }  ) _{\mathcal{F}_{h}^{g} } + \sum_{j=r}^{k}  \gamma _{j} h^{2j-3} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n} v }  ) _{\mathcal{F}_{h}^{g} } \\
+% &= \sum_{j=r}^{k}  \gamma _{j} h^{2j-3} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n} v }  ) _{\mathcal{F}_{h}^{g} } \\
         \end{split}
     \end{equation}
     where the jump vanishes for the for the first $r-1$ terms, that is,  $\jump{ \partial ^{j}_{n} v } = 0  \  \forall s \le r-1$.
