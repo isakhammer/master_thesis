@@ -62,11 +62,11 @@ This set is simply all facets that belong to all elements of the active mesh $\m
 
 \begin{proof}
 
-        Recall that $\left[ D^2 v \right]_{i,j} = \partial _{x_{i}x_{j}} v $. The case $j=0$ is trivial. For the case $j=2$ we have,
+        Recall that $\left[ D^2 v \right]_{i_{1},i_{2}} = \partial _{x_{i_{1}}x_{i_{2}}} v $ for $i_{1}, i_{2} \in \left\{ 1,\ldots,d \right\} $ for $d$ dimensions. The case $j=0$ is trivial. For the case $j=2$ we have,
         \begin{equation}
                 \begin{split}
-                \partial^{2} _{n} (\partial _{x_{i} x_{j}} v) & = n^{T}  D^2(\partial _{x_{i} x_{j}} v) n = n^{T}  J( \nabla (\partial _{x_{i} x_{j}}v) ) n \\
-                & =  n^{T}  J(\partial _{x_{i} x_{j}}(\nabla v) ) n = \partial _{x_{i} x_{j}} n^{T} J(\nabla v) n
+                \partial^{2} _{n} (\partial _{x_{i_{1}} x_{i_{2}}} v) & = n^{T}  D^2(\partial _{x_{i_{1}} x_{i_{2}}} v) n = n^{T}  J( \nabla (\partial _{x_{i_{1}} x_{i_{2}}}v) ) n \\
+                & =  n^{T}  J(\partial _{x_{i_{1}} x_{i_{2}}}(\nabla v) ) n = \partial _{x_{i_{1}} x_{i_{2}}} n^{T} J(\nabla v) n
                 \end{split}.
         \end{equation}
             Thus, taking account for all elements in the matrix we get $\partial^{2} _{n} (D^2v) = D^2( \partial^{2} _{n}v)$. The case $j=1$ is computed similarly.
