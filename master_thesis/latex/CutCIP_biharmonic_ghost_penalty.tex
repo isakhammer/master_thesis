@@ -82,19 +82,39 @@ This set is simply all facets that belong to all elements of the active mesh $\m
     \end{equation}
     Similarly, this is generalized to \begin{equation}
         \begin{split}
-        \| \nabla  v \|_{ T_{1} }^{  }  & \lesssim \| D^2 v_{h} \|_{ T_{2} }^{  } + \sum_{0\le j\le k}  {h^{2j +1}}^{} ( \jump{ \partial _{n}^{j} D^2 v_{h} }, \jump{ \partial ^{j}_{n} \nabla  v_{h} }    )_{F} \\
-        \| D^2  v \|_{ T_{1} }^{  }  & \lesssim \| D^2 v_{h} \|_{ T_{2} }^{  } + \sum_{0\le j\le k}  {h^{2j +1}}^{} ( \jump{ \partial _{n}^{j} D^2 v_{h} }, \jump{ \partial ^{j}_{n} D^2  v_{h} }    )_{F} \\
+        \| \nabla  v \|_{ T_{1} }^{  }  & \lesssim \| \nabla  v_{h} \|_{ T_{2} }^{  } + \sum_{0\le j\le k}  {h^{2j +1}}^{} ( \jump{ \partial _{n}^{j} \nabla v_{h} }, \jump{ \partial ^{j}_{n} \nabla  v_{h} }    )_{F} \\
+        \| \Delta   v \|_{ T_{1} }^{  }  & \lesssim \| \Delta  v_{h} \|_{ T_{2} }^{  } + \sum_{0\le j\le k}  {h^{2j +1}}^{} ( \jump{ \partial _{n}^{j}\Delta  v_{h} }, \jump{ \partial ^{j}_{n} \Delta   v_{h} }    )_{F} \\
+        \| D^2  v \|_{ T_{1} }^{  }  & \lesssim \| D^2 v_{h} \|_{ T_{2} }^{  } + \sum_{0\le j\le k}  {h^{2j +1}}^{} ( \jump{ \partial _{n}^{j} D^2 v_{h} }, \jump{ \partial ^{j}_{n} D^2  v_{h} }    )_{F}
         \end{split}
     \end{equation}
 
 \end{lemma}
 
 \begin{proof}
-\textbf{Estimate \eqref{eq:estimate_1}.} Apply the substitution $\widetilde{v} = \partial _{x_{i}} v$  and recall the projection \eqref{eq:projection}.
-$
-     \widetilde{v}_{h}   \lesssim P_{F} \widetilde{v}_{h} + Q_{F} \widetilde{v}_{h}
-$
-such that along the jump of facet $F$ we have $ \jump{ \partial _{n} \widetilde{v} } = P_{F} \partial _{n} \widetilde{v}_{h} + Q_{F} \partial _{n} \widetilde{v}_{h} $
+\textbf{Estimate \eqref{eq:estimate_1}.} Let $w_{h} = w_{h}|_F$ and recall the projection \eqref{eq:projection}, then is
+\begin{equation}
+    \begin{split}
+\jump{ \partial _{x_{i}} w_{h}} & = \jump{ \nabla w_{h} }   \cdot e_{x_{i}}    \\
+ &   = ( P_{F} \jump{ \nabla w_{h} }   + Q_{F}  \jump{ \nabla w_{h} }   )e_{x_{i}} \\
+ &   = ( \jump{\partial _{n}    w_{h} }    n + \sum_{j=1}^{d-1}  \jump{\partial_{ t_{j} } w_{h} }    t_{j} )e_{x_{i}}
+    \end{split}
+\end{equation}
+Here is $e_{x_{i}}, i= 1,\ldots,d$ one of the elementary unit vectors in $\mathbb{R} ^{d}$.
+Since $\abs{e_{x_{i}} \cdot n  }\le 1 $ and $\abs{e_{x_{i}} \cdot  t_{j} }\le 1 \ \forall i,j $ is it clear that this estimate holds.
+
+\begin{equation}
+    \begin{split}
+   \| \jump{ \partial _{x_{i}} w_{h} }   \|_{F  }^{2  } & \lesssim \| \jump{ \partial _{n} w_{h} }   \|_{F  }^{ 2 } + \sum_{j=1}^{d-1} \| \jump{ \partial _{t_{j}} w_{h} }   \|_{ F }^{ 2 } \\
+    & \lesssim \| \jump{ \partial _{n} w_{h} }   \|_{F  }^{ 2 } +  h^{-2} \| \jump{ w_{h} }   \|_{ F }^{ 2 }
+    \end{split}
+\end{equation}
+From the local inverse inequality \eqref{eq:inv1} can we conclude that $\| \partial _{t_{j}} v_{h} \|_{F  }^{  } \lesssim h^{-1} \|  v_{h} \|_{F  }^{  }  $.
+
+Inserting $w_{h} = \partial ^{j} _{n} v_{h}$, we get $ \| \jump{ \partial _{x_{i}} \partial ^{j}_{n} v_{h} }   \|_{F  }^{2  } = \| \jump{\partial ^{j+1} v \  e_{x_{i}} \cdot n  }   \|_{  }^{  } $
+
+Utilizing Lemma \ref{lemma:bi_local_facet_estimate} is it clear that \begin{equation}
+    \| \partial _{x_{i}} v_{h} \|_{  T_{1}}^{2  } \lesssim \| \partial _{x_{i}} v \|_{ T_{2} }^{  2} + \sum_{j=0}^{k}
+\end{equation}
 
 
 
