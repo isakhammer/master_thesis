@@ -8,9 +8,10 @@ We have the following assumptions for the ghost penalty.
         \begin{equation}
     \| D^2v_{h} \|_{ \mathcal{T} _{h} }^{ 2 }  \lesssim \| D^2 v_{h} \|_{ \Omega  }^{  2} + \abs{ v_{h} } _{g_{h}}^2 \quad \forall v_{h} \in V_{h}
         \end{equation}
-\item \label{as:EP2} For $v \in H^{s}( \Omega ) $ and $r = \mathrm{ min} (s,k+2) $, the semi-norm $\abs{ \cdot  }_{g_{h}} $ satisfies the following estimate, \[
+\item \label{as:EP2} For $v \in H^{s}( \Omega ) $ and $r = \mathrm{ min} (s,k+2) $, the semi-norm $\abs{ \cdot  }_{g_{h}} $ satisfies the following estimate,
+    \begin{equation}
     \abs{ C _{h}^{e} v } _{g_{h}} \lesssim  h^{r-2} \| v \|_{ r,\Omega  }^{  }.
-    \]
+    \end{equation}
 \end{enumerate}
 The goal in this chapter is to engineer an ghost penalty which fulfills these assumptions.
 
@@ -323,22 +324,25 @@ Finally, we now have the tools we need to construct an candidate for the ghost p
     \| D^2v_{h} \|_{ \mathcal{T} _{h} }^{  }  \lesssim \| D^2 v_{h} \|_{ \Omega   }^{  } + \abs{ v_{h} } _{g_{h}}
     $, hence, Assumption \ref{as:EP1} holds.
     Therefore, we only need to verify Assumption \ref{as:EP2}, which states that $ \abs{ C^{e}_{h} v }_{g_{h}} \lesssim h^{r-2} \| v \|_{r, \Omega   }^{  }$.
-    Let $v  \in H^{s}( \Omega ) $, $s\ge 3$,  and $r = \min\{s,k+1\} $. From definition is
+    Let $v  \in H^{s}( \Omega ) $, $s\ge 3$,  and $r = \min\{s,k+1\} $. We can see that from definition is,
     \begin{equation}
         \label{eq:est_gh:1}
         \begin{split}
         \abs{ C^{e}_{h} v }_{g_{h}}^{2} & = \sum_{j=0}^{k}  \gamma _{j} h^{2j-3}  \| \jump{ \partial ^{j}_{n} C^{e}_{h} v }  \|_{\mathcal{F}_{h}^{g} }^{2} \\
-                                        & = \sum_{j=r}^{k}  \gamma _{j} h^{2j-3}  \| \jump{ \partial ^{j}_{n} C^{e}_{h} v }  \|_{\mathcal{F}_{h}^{g} }^{2} \\
+                                        & = \sum_{j=0}^{r-1}  \gamma _{j} h^{2j-3}   \| \jump{ \partial ^{j}_{n}  C^{e}_{h} v  }  \|_{\mathcal{F}_{h}^{g} }^{2} + \sum_{j=r}^{k}  \gamma _{j} h^{2j-3}  \| \jump{ \partial ^{j}_{n} C^{e}_{h} v }
+                                        \|_{\mathcal{F}_{h}^{g} }^{2} = \mathrm{I} + \mathrm{II}
         \end{split}
     \end{equation}
-    where the jump vanishes for the for the first $r-1$ terms, that is,  $\jump{ \partial ^{j}_{n} v } = 0  \  \forall s \le r-1$.
-    From the inverse estimate \eqref{eq:general} is it clear that,
+
+    What we can see is that the first term can easily be estimated using the a priori estimate \eqref{eq:bi_projection_estimates_2},
     \begin{equation}
-        \label{eq:est_gh:2}
-        \| \partial _{n}^{j}v_{h} \|_{ F }^{2  } \lesssim \| D^{j}v_{h} \|_{ F }^{2  } \lesssim h^{2( r- j ) - 1}\| D^{r}v_{h} \|_{  T}^{2  } = h^{2( r- j ) - 1} \| v_{h} \|_{r, T  }^{  }   .
+        \begin{split}
+        \mathrm{I}  & \lesssim \sum_{j=0}^{r-1} h^{2j-3}   \| \jump{ \partial ^{j}_{n}  ( C^{e}_{h} v - v^{e})   }  \|_{\mathcal{F}_{h}^{g} }^{2} \\
+        & \lesssim \sum_{j=0}^{r-1} h^{2j-3}  h^{2r - j - 1}\| v  \|_{r,\Omega  }^{2} \\
+        & \lesssim \sum_{j=0}^{r-1}  h^{2r + j - 4}\| v  \|_{r,\Omega  }^{2} \lesssim   h^{3r - 5}\| v  \|_{r,\Omega  }^{2}
+        \end{split}
     \end{equation}
-    % Hence, combining \eqref{eq:est_gh:1} and \eqref{eq:est_gh:2} we have \begin{equation}
-    %     \abs{ C^{e}_{h} v }_{g_{h}}^{2} \lesssim \sum_{j=r}^{k}  \gamma _{j} h^{2j-3}
-    % \end{equation}
+    Here we added a zero term $v^{e} \in H^{s}( \Omega_{h} ) $  since jump vanishes for the for the first $r-1$ terms, i.e. $\jump{ \partial ^{j}_{n} v^{e} } = 0  \  \forall s \le r-1$.
+
 
 \end{proof}
