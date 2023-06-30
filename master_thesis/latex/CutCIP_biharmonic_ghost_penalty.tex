@@ -74,28 +74,31 @@ This set is simply all facets that belong to all elements of the active mesh $\m
 \end{proof}
 
 \begin{lemma}[]
-    \label{lemma:bi_local_facet_estimate}
+    \label{lemma:bi_local_facet_estimate_2}
     Let $T_{1},T_{2 } \in  \mathcal{T} _{h}$ be two elements sharing a common face $F$. Then for $v_{h} \in V_{h}$ with polynomial degree $k$ we have
     \begin{equation}
-        \label{eq:estimate_1}
+        \label{eq:local_ghost:0}
         \| \partial _{x_{i}} v \|_{ T_{1} }^{  }  \lesssim \| \partial_{ x_{i} } v_{h} \|_{ T_{2} }^{  } + \sum_{0\le j\le k}  {h^{2j +1}}^{} ( \jump{ \partial _{n}^{j} \partial _{x_{i}} v_{h} }, \jump{ \partial ^{j}_{n} \partial _{x_{i}} v_{h} }    )_{F}
     \end{equation}
-    Similarly, this is generalized to \begin{equation}
-        \begin{split}
+    Similarly, this is generalized to
+    \begin{subequations}
+        \begin{align}
+        \label{eq:local_ghost:1}
         \| \nabla  v \|_{ T_{1} }^{  }  & \lesssim \| \nabla  v_{h} \|_{ T_{2} }^{  } + \sum_{0\le j\le k}  {h^{2j +1}}^{} ( \jump{ \partial _{n}^{j} \nabla v_{h} }, \jump{ \partial ^{j}_{n} \nabla  v_{h} }    )_{F} \\
+        \label{eq:local_ghost:2}
         \| \Delta   v \|_{ T_{1} }^{  }  & \lesssim \| \Delta  v_{h} \|_{ T_{2} }^{  } + \sum_{0\le j\le k}  {h^{2j +1}}^{} ( \jump{ \partial _{n}^{j}\Delta  v_{h} }, \jump{ \partial ^{j}_{n} \Delta   v_{h} }    )_{F} \\
+        \label{eq:local_ghost:3}
         \| D^2  v \|_{ T_{1} }^{  }  & \lesssim \| D^2 v_{h} \|_{ T_{2} }^{  } + \sum_{0\le j\le k}  {h^{2j +1}}^{} ( \jump{ \partial _{n}^{j} D^2 v_{h} }, \jump{ \partial ^{j}_{n} D^2  v_{h} }    )_{F}
-        \end{split}
-    \end{equation}
+        \end{align}
+    \end{subequations}
 
 \end{lemma}
 
 \begin{proof}
-\textbf{Estimate \eqref{eq:estimate_1}.} Let $w_{h} = w_{h}|_F$ and recall the projection \eqref{eq:projection}, then is
+\textbf{Estimate \eqref{eq:local_ghost:0}.} Let $w_{h} = w_{h}|_F$ and recall the projection \eqref{eq:projection}, then is
 \begin{equation}
     \begin{split}
-\jump{ \partial _{x_{i}} w_{h}} & = \jump{ \nabla w_{h} }   \cdot e_{x_{i}}    \\
- &   = ( P_{F} \jump{ \nabla w_{h} }   + Q_{F}  \jump{ \nabla w_{h} }   )e_{x_{i}} \\
+\jump{ \partial _{x_{i}} w_{h}} & = \jump{ \nabla w_{h} }   \cdot e_{x_{i}}  = ( P_{F} \jump{ \nabla w_{h} }   + Q_{F}  \jump{ \nabla w_{h} }   )e_{x_{i}} \\
  &   = ( \jump{\partial _{n}    w_{h} }    n + \sum_{j=1}^{d-1}  \jump{\partial_{ t_{j} } w_{h} }    t_{j} )e_{x_{i}}
     \end{split}
 \end{equation}
@@ -109,7 +112,6 @@ Since $\abs{e_{x_{i}} \cdot n  }\le 1 $ and $\abs{e_{x_{i}} \cdot  t_{j} }\le 1 
     \end{split}
 \end{equation}
 From the local inverse inequality \eqref{eq:inv1} can we conclude that $\| \partial _{t_{j}} v_{h} \|_{F  }^{  } \lesssim h^{-1} \|  v_{h} \|_{F  }^{  }  $.
-
 Inserting $w_{h} = \partial ^{j} _{n} v_{h}$ we conclude
 \begin{equation}
     \label{eq:jump_estimate}
@@ -118,14 +120,29 @@ Inserting $w_{h} = \partial ^{j} _{n} v_{h}$ we conclude
                                                                            & \lesssim \| \jump{  \partial ^{j+1} _{n} v_{h} }   \|_{F  }^{ 2 } +  h^{-2} \| \jump{ \partial ^{j} _{n} v_{h} }   \|_{ F }^{ 2 } \\
     \end{split}
 \end{equation}
-
-Combining Lemma \ref{lemma:bi_local_facet_estimate} and \eqref{eq:jump_estimate} is it clear that \begin{equation}
+Next, we see that the Lemma \ref{lemma:bi_local_facet_estimate} implies
+\begin{equation}
+    \label{eq:ghost_estimate:1}
     \begin{split}
-    \| \partial _{x_{i}} v_{h} \|_{  T_{1}}^{2  } & \lesssim \| \partial _{x_{i}} v_{h} \|_{ T_{2} }^{  2} + \sum_{j=0}^{k} \| \jump{ \partial _{n}^{j} \partial _{x_{i}} v_{h} }   \|_{F  }^{2  } \\
-                                                  & \lesssim \| \partial _{x_{i}} v_{h} \|_{ T_{2} }^{  2} + \sum_{j=0}^{k} \| \jump{  \partial ^{j+1} _{n} v_{h} }   \|_{F  }^{ 2 } +  h^{-2} \| \jump{ \partial ^{j} _{n} v_{h} }   \|_{ F }^{ 2 }
+    \| \partial _{x_{i}} v_{h} \|_{  T_{1}}^{2  } & \lesssim \| \partial _{x_{i}} v_{h} \|_{ T_{2} }^{  2} + h^{2j+1}\sum_{j=0}^{k} \| \jump{ \partial _{n}^{j} \partial _{x_{i}} v_{h} }   \|_{F  }^{2  }.
+    \end{split}
+\end{equation}
+Hence, by using \eqref{eq:jump_estimate} can we rewrite the sum such that
+\begin{equation}
+    \label{eq:ghost_estimate:2}
+    \begin{split}
+                                                  \sum_{j=0}^{k} \| \jump{ \partial _{n}^{j} \partial _{x_{i}} v_{h} }   \|_{F  }^{2  } & \lesssim  \sum_{j=0}^{k} \| \jump{  \partial ^{j+1} _{n} v_{h} }   \|_{F  }^{ 2 } +  h^{-2} \| \jump{ \partial ^{j} _{n} v_{h} }   \|_{ F }^{ 2 } \\
+                                                  & \lesssim  \sum_{j=1}^{k-1} \| \jump{  \partial ^{j} _{n} v_{h} }   \|_{F  }^{ 2 } +\sum_{j=0}^{k}  h^{-2} \| \jump{ \partial ^{j} _{n} v_{h} }   \|_{ F
+                                                  }^{ 2 } \\
+                                                  & \lesssim  \sum_{j=0}^{k}  h^{-2} \| \jump{ \partial ^{j} _{n} v_{h} }   \|_{ F }^{ 2 }
     \end{split}
 \end{equation}
 
+Thus, combining \eqref{eq:ghost_estimate:1} and \eqref{eq:ghost_estimate:2} we get
+\begin{equation}
+    \| \partial _{x_{i}} v_{h} \|_{  T_{1}}^{2  }  \lesssim \| \partial _{x_{i}} v_{h} \|_{ T_{2} }^{  2} + h^{2j-1}\sum_{j=0}^{k} \| \jump{ \partial _{n}^{j} v_{h} }   \|_{F  }^{2  } \\
+\end{equation}
+        Hence, estimate \eqref{eq:local_ghost:0} holds.
 
 
 \end{proof}
