@@ -4,37 +4,6 @@
 \label{sec:cahn_hilliard_equation}
 
 
-% \begin{itemize}
-%     \item Explain the full discretization scheme including Follow \cite{feng2007fully}
-%     \item CutFEMCIP for spatial discretization
-%     \item implicit Euler for temporal discretization
-%     \item linearization of nonlinearity (IMEX)
-% \end{itemize}
-
-
-\subsection{The linear Cahn-Hilliard}%
-
-We will consider linear Cahn Hilliard problem. Let $ u( x,0) =  u_{0}$ then is the formulations
-
-\begin{equation}
-\label{eq:ch_exact}
-    \begin{split}
-        \partial _{t} u  + \varepsilon \Delta^2   u -   & =  g_{0}(x)  \quad \text{in} \Omega \\
-        \partial _{n} u & =  g_{1}(x)  \quad \text{ on } \Gamma \\
-         \partial _{n} \Delta u & = g_{2}(x)  \quad \text{ on } \Gamma  \\
-    \end{split}
-\end{equation}
-
-
-
-We can see that the simplest weak formulation for $u,v \in H^{4}( \Omega ) $ is on the form,
-\[
-( \partial _{t}u, v )_{\Omega }  - \varepsilon ( \Delta^2 u, v)_{\Omega } = ( h,v)_{\Omega }   \\
-\]
-We can easily observe that the biharmonic equation is a term of this equation. Combining the theory from \ref{sec:cutcip_biharmonic_problem} and can we see that the Laplace formulation
-
-
-
 \subsection{The general Cahn-Hilliard problem}%
 \label{sub:the_problem}
 
@@ -200,18 +169,6 @@ Here we have define the forward difference operator with time step $\tau $
  %        \end{split}
  %    \]
  %    s.t. $  ( I  + \tau \varepsilon A ) U^{m} = b(U^{m-1}, V )  $
-
-
-\subsection{Introduction to numerical methods for Cahn Hilliard}%
-\label{sub:introduction_to_numerical_methods_for_cahn_hilliard}
-
-Present numerical results for CH in separate chapter including
-\begin{itemize}
-    \item Your numerical EOC for  manufactured solution for \textbf{linear} 4th order parabolic
-    \item Your numerical EOC for  manufactured solution for \textbf{full} C-H
-    \item Nice numerical example in 2d (flower)
-    \item Nice numerical example in 3d (popcorn/doughnut geometries)
-\end{itemize}
 
 
 \subsection{Demonstration on the physical Cahn-Hilliard problem}%
