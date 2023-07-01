@@ -4,7 +4,7 @@
 
 We have the following assumptions for the ghost penalty.
 \begin{enumerate}[label=\textbf{EP\arabic*}]
-    \item \label{as:EP1} The ghost penalty $g_{h}$ extends the $H^{2}$ norm such that
+    \item \label{as:EP1} The ghost penalty $g_{h}( \cdot ,\cdot ) $ extends the $H^{2}$ norm such that
         \begin{equation}
     \| D^2v_{h} \|_{ \mathcal{T} _{h} }^{ 2 }  \lesssim \| D^2 v_{h} \|_{ \Omega  }^{  2} + \abs{ v_{h} } _{g_{h}}^2 \quad \forall v_{h} \in V_{h}
         \end{equation}
@@ -344,14 +344,19 @@ Finally, we now have the tools we need to construct an candidate for the ghost p
     \end{equation}
 \red{Not sure if this estimate makes sense since we must extend to the full space $\partial \mathcal{T} _{h}$, see \eqref{eq:mean_jump_estimate} }
 
-\red{\textbf{Version 2.} Using the inverse estimate \eqref{eq:general}
+\red{\textbf{Version 2.} Using the trace inequality \eqref{eq:trace:1}, i.e.,
+    \begin{equation}
+\|  D ^{j} v     \|_{ \partial T }^{2} \lesssim h^{-\frac{1}{2}}\|  D ^{j} v     \|_{  T }^{2} + h^{\frac{1}{2}}\|  D ^{j+1} v     \|_{  T }^{2}, \quad v \in H^{j+1}( T )
+    \end{equation}
+    such that
     \begin{equation}
         \begin{split}
-        \mathrm{I}  & \lesssim \sum_{j=0}^{r-1} h^{2j-3}   \|  D ^{j}  ( C^{e}_{h} v - v^{e}     \|_{ \partial \mathcal{T}_{h} }^{2} \\
-          & \lesssim \sum_{j=0}^{r-1} h^{2j-3}  h^{2( r - j ) - 1} \|   C^{e}_{h} v - v^{e}     \|_{ \mathcal{T}_{h} }^{2} \\
-       % &  \lesssim h^{2( r-2) } \| C^{e}_{h}v \|_{r,\Omega}^{2}
+        \mathrm{I}  & \lesssim \sum_{j=0}^{r-1} h^{2j-3}   \|  D ^{j}  ( C^{e}_{h} v - v^{e})     \|_{ \partial \mathcal{T}_{h} }^{2} \\
+                    & \lesssim \sum_{j=0}^{r-1} h^{2j-3}   h^{-1}( \|  D ^{j} ( C^{e}_{h} v - v^{e})     \|_{  T }^{2} + h \|  D ^{j+1} ( C^{e}_{h} v - v^{e})     \|_{  T }^{2} )
         \end{split}
     \end{equation}
+
+    Here we applied \eqref{eq:bi_projection_estimates_1}.
 }
     Here we added a zero term $v^{e} \in H^{s}( \Omega_{h} ) $  since jump vanishes for the for the first $r-1$ terms, i.e. $\jump{ \partial ^{j}_{n} v^{e} } = 0  \  \forall s \le r-1$. For the second term are we allowed to use the basic inverse
     estimate \eqref{eq:general} on the Clément operator,
