@@ -208,8 +208,9 @@ A very useful lemma when working with estimates on broken Sobolev spaces is that
 if $ \jump{ v }   = 0 \  \forall F \in \mathcal{F}^{int}_{h}$, see \cite[Lemma 1.23]{pietro2012}.
 
 Recall, the "$\lesssim$" symbol often denotes an inequality up to a constant factor. That is, given $a,b >0 $, the statement $a \lesssim b$ is true if there exists a constant $C>0$ such that $a \leq Cb$. Generally, this constant will contain
-information related to the properties of the mesh, such as shape regularity and quasi-uniformity, but it often also includes the maximum finite number or measure of a quantity. For instance, let  $a , b_{i}> 0 \text{ for } i = 1,\ldots,N  $ and  $a =  \sum_{i}^{N} b_{i}$, then is $ a
-\lesssim \mathrm{max}_{i} \  b_{i}  $. To maintain clarity and avoid unnecessary complexity, we will not delve into this particular detail related to the constant.
+information related to the properties of the mesh, such as shape regularity and quasi-uniformity, but it often also includes the maximum finite number or measure of a quantity. For instance, let  $w , v_{i} \in L^{2}( \Omega ), \ a_{i} \in \mathbb{R}  \text{ for } i =
+1,\ldots,N  $   and  $ \| w \|_{\Omega   }^{  }  =  \| \sum_{i}^{N} a_{i}  v_{i} \|_{\Omega   }^{  } $, then is $ \| w \|_{\Omega   }^{  }
+\lesssim \sum_{i}^{N}  \  \| v_{i} \|_{\Omega   }^{  }  $. To maintain clarity and avoid unnecessary complexity, we will not delve into this particular detail related to the constant.
 
 We can express several general useful
 basic inequalities and estimates.
@@ -1223,7 +1224,7 @@ Let $r = \mathrm{min} ( s, k+1) $. If the following conditions for an parameter 
     Let $0 \le l \le k+1$ and let $0\le m \le \min_{} ( 1,l )$.
     Given Lemma \ref{lemma:clements}  then does the following estimate hold
     \[
-    \inf_{v_{h} \in V_{h} } \| v - v_{h} \|_{  m,\Omega }^{  } \lesssim  C h^{l-m}  \| v \|_{ l,\Omega  }^{  } \quad     \forall v \in H^{l}( \Omega ).
+    \inf_{v_{h} \in V_{h} } \| v - v_{h} \|_{  m,\Omega }^{  } \lesssim   h^{l-m}  \| v \|_{ l,\Omega  }^{  } \quad     \forall v \in H^{l}( \Omega ).
     \]
 \end{corollary}
 This result is very useful since it is now sufficient to show that a priori estimates holds to prove convergence rate. For further detailed information about the Cléments interpolation, please investigate \cite[Chapter 1.6]{ern04}.
