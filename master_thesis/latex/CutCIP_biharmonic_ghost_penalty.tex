@@ -20,8 +20,8 @@ Let $  v \in H^{k}( \Omega ) $. The generalization of the normal derivative is d
 \begin{equation}
     \partial _{n}^{k} v = \sum_{   \abs{ \alpha    } =  k}^{} \frac{ \partial^{\alpha } v \  n^{\alpha } }{\alpha !},
 \end{equation}
-where the component-wise product of the normal vector is $n^{\alpha } = n_{1}^{\alpha _{1}} \ldots n_{d}^{\alpha _{d}}$ and the derivative $\partial ^{\alpha }v $ is as defined in Equation \eqref{eq:der}. Observe that $\partial ^{0}_{n} v = v $, $ \partial ^{1}_{n} v = \nabla v
- \ n $ and $ \partial ^{2}_{n} v = \frac{1}{2} n^{T} D^2 v \ n$.
+where the component-wise product of the normal vector is $n^{\alpha } = n_{1}^{\alpha _{1}} \ldots n_{d}^{\alpha _{d}}$ and the derivative $\partial ^{\alpha }v $ is as defined in Equation \eqref{eq:der}. Remark that $\partial ^{0}_{n} v = v $, $ \partial ^{1}_{n} v = \nabla v
+ \ n = \partial _{n}v $ and $ \partial ^{2}_{n} v = \frac{1}{2} n^{T} D^2 v \ n = \frac{1}{2} \partial _{nn} v$.
 % \footnote{
 % Remark that the operator $D^{\alpha }$  is related to with the derivate operator $\partial ^{\alpha } $ introduced in \eqref{eq:der}. For instance, for $d=2$ we have $\alpha = ( \alpha _{1}, \alpha _{2}) $  such that $ D^{1} v =  \nabla v  = \left[ \partial ^{( 1,0 )} v,\partial ^{( 0,1 )}v
 % \right]^{T}$ and $   D^2 v  = \begin{bmatrix}
@@ -329,23 +329,23 @@ Finally, we now have the tools we need to construct an candidate for the ghost p
                                         \|_{\mathcal{F}_{h}^{g} }^{2} = \mathrm{I} + \mathrm{II}
         \end{split}
     \end{equation}
-Here we added a zero term $v^{e} \in H^{s}( \Omega_{h} ) $  since jump vanishes for the for the first $r-1$ terms, i.e. $\jump{ \partial ^{j}_{n} v^{e} } = 0  \  \forall s \le r-1$.
+    Here we added a zero term $v^{e} \in H^{s}( \Omega_{h} ) $  since jump vanishes for the for the first $r-1$ terms, i.e. $\jump{ \partial ^{j}_{n} v^{e} } = 0  \  \forall j \le r-1$.
 
 
     What we can see is that the first term can easily be estimated using the a priori estimate \eqref{eq:bi_projection_estimates_2} ,
     \begin{equation}
         \begin{split}
         \mathrm{I}  & \lesssim \sum_{j=0}^{r-1} h^{2j-3}   \| \jump{ \partial ^{j}_{n}  ( C^{e}_{h} v - v^{e})   }  \|_{\mathcal{F}_{h}^{g} }^{2} \lesssim \sum_{j=0}^{r-1} h^{2j-3}   \| D ^{j}  ( C^{e}_{h} v - v^{e})     \|_{\partial \mathcal{T}_{h}  }^{2} \\
-        & \lesssim \sum_{j=0}^{r-1} h^{2j-3}  h^{2r - 2j - 1}\| v  \|_{r,\Omega  }^{2} \lesssim  \sum_{j=0}^{r-1}   h^{2( r  - 2 )}\| v  \|_{r,\Omega  }^{2}
+        & \lesssim \sum_{j=0}^{r-1} h^{2j-3}  h^{2r - 2j - 1}\| v  \|_{r,\Omega  }^{2} \lesssim     h^{2( r  - 2 )}\| v  \|_{r,\Omega  }^{2}
         \end{split}
     \end{equation}
-    Here we applied \eqref{eq:bi_projection_estimates_2}.
+    Here we applied the estimate \eqref{eq:bi_projection_estimates_2}.
 
-     For the second term are we allowed to use the basic inverse
-    estimate \eqref{eq:general} on the Clément operator,
+     For the second term are we allowed to use the basic discrete inverse
+    estimate \eqref{eq:general} times since we work on the Clément operator,
     \begin{equation}
         \begin{split}
-       \mathrm{II}  & \lesssim \sum_{j=r}^{k} h^{2j-3}  \|  \partial ^{j}_{n} C^{e}_{h} v \|_{\partial \mathcal{T}_{h} }^{2} \lesssim \sum_{j=r}^{k} h^{2j-3} h^{2( r - j ) - 1}  \|  C^{e}_{h} v \|_{ r,\Omega  }^{2}  \\
+       \mathrm{II}  & \lesssim \sum_{j=r}^{k} h^{2j-3}  \|  \partial ^{j}_{n} C^{e}_{h} v \|_{\partial \mathcal{T}_{h} }^{2} \lesssim \sum_{j=r}^{k} h^{2j-3} h^{2( r-j -\frac{1}{2}) }  \|  D^r ( C^{e}_{h} v ) \|_{ \Omega  }^{2}  \\
        &  \lesssim h^{2( r-2) } \| C^{e}_{h}v \|_{r,\Omega}^{2}
         \end{split}
     \end{equation}
