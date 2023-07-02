@@ -58,18 +58,8 @@ where $u_{0}( x) = u_{h}( x,t) $. Let us define
  e_{u} = \frac{ \int_{\Omega }^{}  u_h(x,t)- u(0,x) dx}{ \int_{\Omega }^{}  u(x,0) dx}
 \]
 
-\begin{figure}[h!]
-\input{"results/physical_CH_plot.tex"}
-\caption{Evolution of the error measure, $e_{L^{1}(\Omega)}$ and the energy functional $E(u_h)$ over time for two different domains: a circular domain and a flower-shaped domain.  }
-\label{fig:physical_CH_plot}
-\end{figure}
 
-We ran the simulation on the for the flower domain \eqref{eq:flower} and the circular domain \eqref{eq:circle}, illustrated in Figure \ref{sub:fig:ill_circle_flower} . The corresponding plots of the mass conservation and energy decrease are presented
-in the Figure \ref{fig:physical_CH_plot}, and confirm the expected physical properties of the Cahn-Hilliard equation. The relative error $e_{u}$ shows small deviations of the numerical solution in the order of $10^{ -10 }$ demonstrating that the mass is conserved. We also observe that the energy functional
-$E(u_h)$ decreases over time, signifying the system's tendency to seek a state of minimal energy.
-
-
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
     \subfloat[$t=0\tau$]{\label{sub:fig:ill_c0}
         \includegraphics[width=0.3\textwidth]{results/illustration/c0.png}
@@ -116,13 +106,25 @@ $E(u_h)$ decreases over time, signifying the system's tendency to seek a state o
 \end{figure}
 
 
+
+We ran the simulation on the for the flower domain \eqref{eq:flower} and the circular domain \eqref{eq:circle}, illustrated in Figure \ref{sub:fig:ill_circle_flower} . The corresponding plots of the mass conservation and energy decrease are presented
+in the Figure \ref{fig:physical_CH_plot}, and confirm the expected physical properties of the Cahn-Hilliard equation. The relative error $e_{u}$ shows small deviations of the numerical solution in the order of $10^{ -10 }$ demonstrating that the mass is conserved. We also observe that the energy functional
+$E(u_h)$ decreases over time, signifying the system's tendency to seek a state of minimal energy.
+
+
+\begin{figure}[h!]
+\input{"results/physical_CH_plot.tex"}
+\caption{Evolution of the error measure, $e_{L^{1}(\Omega)}$ and the energy functional $E(u_h)$ over time for two different domains: a circular domain and a flower-shaped domain.  }
+\label{fig:physical_CH_plot}
+\end{figure}
+
+
 \subsection{Note on the manufactured solution}%
 \label{sub:the_problem}
 
-While the report is not consisting of a full worthy convergence analysis, we still present a framework for manufactured solutions.
+While the report is not consisting of a full worthy experiments of convergence analysis, we still present a framework for manufactured solutions.
 
 Recall the strong form Cahn-Hilliard equation. Let $ u( x,0) =  u_{0}$ then is the dynamics on the form,
-
 \begin{subequations}
     \label{eq:ch_gen}
     \begin{align}
