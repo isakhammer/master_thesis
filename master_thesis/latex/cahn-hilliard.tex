@@ -1,135 +1,7 @@
 
 \newpage
-\section{Cahn Hilliard equation }%
+\section{Demonstration of solving the Cahn Hilliard equation }%
 \label{sec:cahn_hilliard_equation}
-
-
-\subsection{The general Cahn-Hilliard problem}%
-\label{sub:the_problem}
-
-Recall the strong form Cahn-Hilliard equation. Let $ u( x,0) =  u_{0}$ then is the dynamics on the form,
-
-
-\begin{subequations}
-    \label{eq:ch_gen}
-    \begin{align}
-    \label{eq:ch_gen:a}
-        \partial _{t} u + \Delta  \left(  \varepsilon  \Delta u - \frac{1}{\varepsilon }f( u) \right)   &= g_{0}( x)   \quad \text{ in } \Omega  \\
-        \partial _{n} u &= g_{1}( x)  \quad \text{ on } \Gamma  \\
-        \partial _{n}    \Delta u   &= g_{2}(x)  \quad \text{ on } \Gamma
-    \end{align}
-\end{subequations}
-where we defined $f( u) = F'( u) =u( u^2 -1)  $ for $F( u) = \frac{1}{4}( u^{2} - 1)^{2} $ and the domain $\Omega \subset \mathbb{R} ^{d} $  for $d = 2,3$. In contrast to the standard version presented in the introduction \eqref{eq:strongch}, is this version
-generalized to also holds for for functions $g_{0},g_{1},g_{2}: \Omega \to\mathbb{R}   $. While the standard version may be physical correct, this version creates flexibility so we can easily construct manufactured solution on complex domains.
-
-    Designing a manufactured solution using $g_{0}( \cdot ) $ may be temping with the formulation \eqref{eq:ch_gen:a}. However, observe that expanding the Laplacian we get,
-    \begin{equation}
-    \begin{split}
-        \Delta  \left(  \varepsilon  \Delta u - \frac{1}{\varepsilon }f( u) \right) & = \varepsilon \Delta^2 u - \frac{1}{\varepsilon } \Delta f( u) \\
-                                                                                    &= \varepsilon \Delta ^2 u  - \frac{3}{\varepsilon }( 2u \| \nabla u \|_{ 2 }^{ 2 } + u^{2}  \Delta u )   \\
-    \end{split}
-    \end{equation}
-Here we applied the chain rule twice and inserted the derivatives.
-\begin{equation}
-    \label{eq:nonlinear_laplace}
-    \begin{split}
-\Delta f( u)  &= \nabla \cdot \nabla f( u)  = \nabla \cdot  \left[ f' ( u) \partial _{x_{1}}u, \ldots, f' ( u) \partial _{x_{d}}u \right] ^{T} \\
-& =  f'' ( u)( ( \partial _{x_{1}}u )^{2} + \ldots +( \partial _{x_{d}}u )^{2} ) +  f' ( u)( \partial _{x_{1} x_{1}}u + \ldots +   \partial _{x_{d} x_{d}}u ) \\
-&=  f'' ( u) \| \nabla u \|_{ 2 }^{ 2 } + f' ( u)  \Delta u  = 6u \| \nabla u \|_{ 2 }^{ 2 } + 3u^{2}  \Delta u
-    \end{split}
-\end{equation}
-
-\subsection{ Numerical scheme for the Cahn Hilliard Equation}%
-\label{sub:writing_the_cahn_hilliard_equation_of_weak_form}
-
-Our goal is to write the Cahn Hilliard equation on weak form.
-Assume that $\Omega  \subset \mathbb{R} ^{d}$ with a $\Gamma $ in $C^2$.
- Let $u \in  H^{4}( \Omega ) $ and $v \in V_{h} $.
-Now, expanding the first Laplace operator from a weak point of view is it clear that
-\[
- ( \Delta ( \varepsilon  \Delta u - \frac{1}{\varepsilon } f( u) ) ,v )_{\Omega } = \varepsilon ( \Delta^{2} u ,v )_{\Omega } - \frac{1}{\varepsilon } ( \Delta f( u)  ,v )_{\Omega }.
-\]
-Hence, this makes it natural to associate the biharmonic $( \Delta ^2 u,v)_{\Omega } $ with bilinear forms $A_{h}( \cdot ,\cdot ) $ , however, in this section will we only consider the Laplace
-variant $a^{L}( \cdot ,\cdot ) $.
-
-We will now find seek to find a bilinear form of the nonlinear term,
-\begin{lemma}[Semi-linear form]
-    Let $u \in H^4( \Omega ) $ be solution to \eqref{eq:ch_gen} and $v_{h} \in V_{h}$ the test function.
-Then can we rewrite the nonlinear term into the corresponding semi-linear form $c_{h}( \cdot ,\cdot )  $ for the nonlinear term $( -\Delta f( u) , v_{h})_{\Omega }$ into two consistent formulations.
-\begin{enumerate}[label=\arabic*)]
-    \item  $c^{}_{h} ( u,v_{h})  = ( f' ( u) \nabla u, v_{h} )_{\Omega }  - ( f'( u)  g_{1}   ,  v_{h})_{\Gamma }$
-    \item
-        $c^{}_{h} ( u,v_{h})  = -( f( u), \Delta v_{h} )_{\Omega }+  ( f( u) , \jump{ \partial _{n}v_{h} }  )_{\mathcal{F} _{h}^{int}} + ( f(u), \partial _{n} v_{h})_{\Gamma  }  - ( f'( u)  g_{1}   ,  v_{h})_{\Gamma }$
-\end{enumerate}
-% \begin{remark}
-%     Be aware that the both formulations are consistent and if we replace $u \in H^{4}( \Omega ) $ with  $u_{h} \in  V_{h}$ we have two different discrete formulations.
-% \end{remark}
-
-\end{lemma}
-% \todo[inline]{ I criticize \cite[ Remark 4.1d]{feng2007fully} which says that says that finding this weak form is not possible for conforming methods (I guess $C^{0}$ is a conforming method??). }
-
-\begin{proof}
-
-    We will first show the first formulation, and then the second.
-        \\ \textbf{Step 1.}  We want to construct the first formulation. Let $T$ be an element in $\mathcal{T}_{h}$. From Greens theorem is it easy to see that
-            \begin{equation}
-            \label{eq:1_gr}
--(\Delta f( u) , v_{h})_{T } = (\nabla f( u), \nabla v_{h}  )_{T } - ( \partial _{n}  f( u), v_{h} )_{\partial T }
-            \end{equation}
-            First by utilizing that $\nabla f( u) = f' ( u) \nabla u $ and $\partial _{n}f( u)  = f' ( u)  \partial _{n}u$  and doing a summation over the triangles  is it clear that \[
-            ( -\Delta f( u),v_{h} )_{\Omega  } =(f' ( u) \nabla u, \nabla v_{h}  )_{\Omega  } - (   f' ( u)\partial _{n}u, v_{h} )_{\partial \mathcal{T}_{h}  }
-            \]
-            Iterating over the facets is it clear that \[
-                \begin{split}
-            (   f' ( u)\partial _{n}u, v_{h} )_{\partial \mathcal{T}_{h}  } & = \sum_{F \in \mathcal{F}_{h}  }^{} \int_{F}^{}   \jump{ f' ( u)\partial _{n}u, v_{h} } \\
-                                                                        & =  ( \jump{ f' ( u) \partial _{n}u },  \mean{v_{h}}    )_{\mathcal{F}^{int}_{h} } + ( \mean{ f' ( u) \partial _{n}u }, \jump{ v_{h} }    )_{\mathcal{F}^{int}_{h} } +  ( f' ( u)
-                                                                        \partial _{n}u, v_{h}) _{\Gamma } \\
-                                                                        & =  ( f' ( u) \partial _{n}u, v_{h}) _{\Gamma }
-                \end{split}
-            \]
-            The jump terms vanishes by the regularity of $u$ and $v_{h}$. Hence, by inserting $g_{1}$ we have shown that the first formulation holds.
-         \\ \textbf{Step 2.}  Applying a extra iteration of Greens theorem on \eqref{eq:1_gr} we get the following terms.
-\[
-    \begin{split}
--(\Delta f( u) , v_{h})_{T }  = -( f( u), \Delta v_{h} )_{T} + (f( u), \partial _{n} v_{h}  )_{\partial T} - (   f'( u)\partial _{n}u, v_{h} )_{\partial T } .
-    \end{split}
-\]
-Now, by doing a summation of all triangles it is clear that this holds.
-\begin{equation}
-\label{eq:f_g2}
--(\Delta f( u) , v_{h})_{\Omega  }  = -( f( u), \Delta v_{h} )_{\Omega } + (f( u), \partial _{n} v_{h}  )_{\partial \mathcal{T}_{h} } - (   f'( u)\partial _{n}u, v_{h} )_{\partial \mathcal{T}_{h}  }
-\end{equation}
-It comes evident from the first step of the proof that $ (   f'( u)\partial _{n}u, v_{h} )_{\partial \mathcal{T}_{h}  } = (   f'( u)\partial _{n}u, v_{h} )_{\Gamma }$, hence, we only need to compute the term $(f( u), \partial _{n} v_{h}  )_{\partial
-\mathcal{T}_{h} }$ on the facets. \[
-    \begin{split}
-(f( u), \partial _{n} v_{h}  )_{\partial
-\mathcal{T}_{h} } & = \sum_{F\in \mathcal{F} _{h}}^{} \int_{F}^{}\jump{ f( u), \partial _{n} v_{h}  } \\
-& =  (\jump{ f( u)  }  , \mean{ \partial _{n} v_{h} }    )_{ \mathcal{F}_{h}^{int} } +(\mean{ f( u)  }  , \jump{ \partial _{n} v_{h} }    )_{ \mathcal{F}_{h}^{int} } + (f( u), \partial _{n} v_{h}  )_{\Gamma } \\
-&=  (\mean{ f( u)  }  , \jump{ \partial _{n} v_{h} }    )_{ \mathcal{F}_{h}^{int} } + (f( u), \partial _{n} v_{h}  )_{\Gamma }
-    \end{split}
-\]
-Again one of the jump terms vanishes because of the regularity of $u$.
-Inserting the result into \eqref{eq:f_g2} have we shown that the second formulation also holds.
-
-The consistency follows in a weak sense for $u \in H^{4}( \Omega ) $.
-\end{proof}
-
-Hence, we have a scheme for nonlinear spatial discretization. Let $u_{h} \in \left[ 0,T \right] \times V_{h}  $ and $v_{h} \in V_{h}$. We define the following CIP discretization
-\begin{equation}
-    \label{eq:cip_ch}
-    \begin{split}
-        a_{h} \left( u_{h}, v_{h} \right)   =& ( \Delta  u_{h}, \Delta v_{h} ) _{ \Omega } \\
-                                     & + \left( \mean{  \Delta  u_{h} }, \jump{ \partial _{n }v_{h}} \right)_{\mathcal{F}_{h}  }  + \left( \mean{ \Delta  v_{h} }, \jump{ \partial _{n}u_{h} }      \right)_{\mathcal{F}_{h}  }  + \frac{\gamma }{h}
-                                     \left( \jump{ \partial _{n} u_{h}}, \jump{ \partial _{n} v_{h}   }   \right)_{\mathcal{F}_{h} } \\
-                                     & + \left(   \Delta  u_{h} ,  \partial _{n }v_{h} \right)_{\Gamma   }  + \left(  \Delta  v_{h} ,  \partial _{n}u_{h}       \right)_{\Gamma  }  + \frac{\gamma }{h}  \left(  \partial _{n} u_{h},  \partial _{n} v_{h}      \right)_{ \Gamma } \\
-    c^{}_{h} ( u_{h},v_{h})  & = -( f( u_{h}), \Delta v_{h} )_{\mathcal{T} _{h}}+  ( f( u_{h}) , \jump{ \partial _{n}v_{h} }  )_{\mathcal{F} _{h}^{int}} + ( f(u_{h}), \partial _{n} v_{h})_{\Gamma  }  + ( f'( u_{h})  g_{1}   ,  v_{h})_{\Gamma } \\
-    l_{h}( v_{h}) & =  \left( g_{0}, v_{h} \right) _{\Omega } -  \varepsilon ( g_{2},  v_{h} )_{\Gamma }  -  \varepsilon ( g_{1}, \Delta  v_{h}  )_{\Gamma }  + \varepsilon \frac{\gamma }{h} ( g_{1}, \partial _{n} v_{h}  )_{\Gamma }
-    \end{split}
-\end{equation}
-such that that the following relationship holds.
-\[
-    ( \partial _{t}u_{h}, v_{h})_\Omega + \varepsilon  a_{h}( u_{h},v_{h}) + \frac{1}{\varepsilon }c_{h}( u_{h},v_{h})   =  l_{h}(v_{h}) \quad  \forall u_{h}, v_{h} \in V_{h}
-\]
 
 \subsection{Constructing the Unfitted CIP version}%
 \label{sub:constructing_the_unfitted_cip_version}
@@ -192,10 +64,9 @@ where $u_{0}( x) = u_{h}( x,t) $. Let us define
 \label{fig:physical_CH_plot}
 \end{figure}
 
-We ran the simulation on the for the flower domain \eqref{eq:flower} and the circular domain \eqref{eq:circle} in Figure \ref{fig:physical_CH_plot}.The plots confirm the expected physical properties of the Cahn-Hilliard equation. The relative error $e_{u}$ shows small deviations of the numerical solution in the order of $10^{ -10 }$ demonstrating that the mass is conserved. We also observe that the energy functional
+We ran the simulation on the for the flower domain \eqref{eq:flower} and the circular domain \eqref{eq:circle}, illustrated in Figure \ref{sub:fig:ill_circle_flower} . The corresponding plots of the mass conservation and energy decrease are presented
+in the Figure \ref{fig:physical_CH_plot}, and confirm the expected physical properties of the Cahn-Hilliard equation. The relative error $e_{u}$ shows small deviations of the numerical solution in the order of $10^{ -10 }$ demonstrating that the mass is conserved. We also observe that the energy functional
 $E(u_h)$ decreases over time, signifying the system's tendency to seek a state of minimal energy.
-
-
 
 
 \begin{figure}[h!]
@@ -219,10 +90,8 @@ $E(u_h)$ decreases over time, signifying the system's tendency to seek a state o
     \subfloat[$t=1000\tau$]{\label{sub:fig:ill_c1000}
         \includegraphics[width=0.3\textwidth]{results/illustration/c1000.png}
     }
-    \caption{Overall caption for the first set of illustrations.}
-\end{figure}
-
-\begin{figure}[h!]
+% \end{figure}
+% \begin{figure}[h!]
     \centering
     \subfloat[$t=0\tau$]{\label{sub:fig:ill_f0}
         \includegraphics[width=0.3\textwidth]{results/illustration/f0.png}
@@ -243,4 +112,135 @@ $E(u_h)$ decreases over time, signifying the system's tendency to seek a state o
     \subfloat[$t=1000\tau$]{\label{sub:fig:ill_f1000}
         \includegraphics[width=0.3\textwidth]{results/illustration/f1000.png}
     }
+    \caption{Illustration of simulations of the Cahn-Hilliard equation on the circle and a flower domain for $t\in \left[ 0, 1000\tau  \right] $.}
+    \label{sub:fig:ill_circle_flower}
 \end{figure}
+
+
+\subsection{Note on the manufactured solution}%
+\label{sub:the_problem}
+
+While the report is not consisting of a full worthy convergence analysis, we still present a framework for manufactured solutions.
+
+Recall the strong form Cahn-Hilliard equation. Let $ u( x,0) =  u_{0}$ then is the dynamics on the form,
+
+\begin{subequations}
+    \label{eq:ch_gen}
+    \begin{align}
+    \label{eq:ch_gen:a}
+        \partial _{t} u + \Delta  \left(  \varepsilon  \Delta u - \frac{1}{\varepsilon }f( u) \right)   &= g_{0}( x)   \quad \text{ in } \Omega  \\
+        \partial _{n} u &= g_{1}( x)  \quad \text{ on } \Gamma  \\
+        \partial _{n}    \Delta u   &= g_{2}(x)  \quad \text{ on } \Gamma
+    \end{align}
+\end{subequations}
+where we defined $f( u) = F'( u) =u( u^2 -1)  $ for $F( u) = \frac{1}{4}( u^{2} - 1)^{2} $ and the domain $\Omega \subset \mathbb{R} ^{d} $  for $d = 2,3$. In contrast to the standard version presented in the introduction \eqref{eq:strongch}, is this version
+generalized to also holds for for functions $g_{0},g_{1},g_{2}: \Omega \to\mathbb{R}   $. While the standard version may be physical correct, this version creates flexibility so we can easily construct manufactured solution on complex domains.
+
+    Designing a manufactured solution using $g_{0}( \cdot ) $ may be temping with the formulation \eqref{eq:ch_gen:a}. However, observe that expanding the Laplacian we get,
+    \begin{equation}
+    \begin{split}
+        \Delta  \left(  \varepsilon  \Delta u - \frac{1}{\varepsilon }f( u) \right) & = \varepsilon \Delta^2 u - \frac{1}{\varepsilon } \Delta f( u) \\
+                                                                                    &= \varepsilon \Delta ^2 u  - \frac{3}{\varepsilon }( 2u \| \nabla u \|_{ 2 }^{ 2 } + u^{2}  \Delta u )   \\
+    \end{split}
+    \end{equation}
+Here we applied the chain rule twice and inserted the derivatives.
+\begin{equation}
+    \label{eq:nonlinear_laplace}
+    \begin{split}
+\Delta f( u)  &= \nabla \cdot \nabla f( u)  = \nabla \cdot  \left[ f' ( u) \partial _{x_{1}}u, \ldots, f' ( u) \partial _{x_{d}}u \right] ^{T} \\
+& =  f'' ( u)( ( \partial _{x_{1}}u )^{2} + \ldots +( \partial _{x_{d}}u )^{2} ) +  f' ( u)( \partial _{x_{1} x_{1}}u + \ldots +   \partial _{x_{d} x_{d}}u ) \\
+&=  f'' ( u) \| \nabla u \|_{ 2 }^{ 2 } + f' ( u)  \Delta u  = 6u \| \nabla u \|_{ 2 }^{ 2 } + 3u^{2}  \Delta u
+    \end{split}
+\end{equation}
+
+Our goal is to write the Cahn Hilliard equation on weak form.
+Assume that $\Omega  \subset \mathbb{R} ^{d}$ with a $\Gamma $ in $C^2$.
+ Let $u \in  H^{4}( \Omega ) $ and $v \in V_{h} $.
+Now, expanding the first Laplace operator from a weak point of view is it clear that
+\[
+ ( \Delta ( \varepsilon  \Delta u - \frac{1}{\varepsilon } f( u) ) ,v )_{\Omega } = \varepsilon ( \Delta^{2} u ,v )_{\Omega } - \frac{1}{\varepsilon } ( \Delta f( u)  ,v )_{\Omega }.
+\]
+Hence, this makes it natural to associate the biharmonic $( \Delta ^2 u,v)_{\Omega } $ with bilinear forms $A_{h}( \cdot ,\cdot ) $ , however, in this section will we only consider the Laplace
+variant $a^{L}( \cdot ,\cdot ) $.
+
+We will now find seek to find a bilinear form of the nonlinear term,
+\begin{lemma}[Semi-linear form]
+    Let $u \in H^4( \Omega ) $ be solution to \eqref{eq:ch_gen} and $v_{h} \in V_{h}$ the test function.
+Then can we rewrite the nonlinear term into the corresponding semi-linear form $c_{h}( \cdot ,\cdot )  $ for the nonlinear term $( -\Delta f( u) , v_{h})_{\Omega }$ into two consistent formulations.
+\begin{align}
+    \label{eq:ch:1}
+      c^{1}_{h} ( u,v_{h})  & = ( f' ( u) \nabla u, v_{h} )_{\Omega }  - ( f'( u)  g_{1}   ,  v_{h})_{\Gamma } \\
+    \label{eq:ch:2}
+        c^{2}_{h} ( u,v_{h})  & = -( f( u), \Delta v_{h} )_{\Omega }+  ( f( u) , \jump{ \partial _{n}v_{h} }  )_{\mathcal{F} _{h}^{int}} + ( f(u), \partial _{n} v_{h})_{\Gamma  }  - ( f'( u)  g_{1}   ,  v_{h})_{\Gamma }
+\end{align}
+% \begin{remark}
+%     Be aware that the both formulations are consistent and if we replace $u \in H^{4}( \Omega ) $ with  $u_{h} \in  V_{h}$ we have two different discrete formulations.
+% \end{remark}
+
+\end{lemma}
+% \todo[inline]{ I criticize \cite[ Remark 4.1d]{feng2007fully} which says that says that finding this weak form is not possible for conforming methods (I guess $C^{0}$ is a conforming method??). }
+
+\begin{proof}
+
+         \textbf{Derivation of \eqref{eq:ch:1}.  }  We want to construct the first formulation. Let $T$ be an element in $\mathcal{T}_{h}$. From Greens theorem is it easy to see that
+            \begin{equation}
+            \label{eq:1_gr}
+-(\Delta f( u) , v_{h})_{T } = (\nabla f( u), \nabla v_{h}  )_{T } - ( \partial _{n}  f( u), v_{h} )_{\partial T }
+            \end{equation}
+            First by utilizing that $\nabla f( u) = f' ( u) \nabla u $ and $\partial _{n}f( u)  = f' ( u)  \partial _{n}u$  and doing a summation over the triangles  is it clear that \[
+            ( -\Delta f( u),v_{h} )_{\Omega  } =(f' ( u) \nabla u, \nabla v_{h}  )_{\Omega  } - (   f' ( u)\partial _{n}u, v_{h} )_{\partial \mathcal{T}_{h}  }
+            \]
+            Iterating over the facets is it clear that \[
+                \begin{split}
+            (   f' ( u)\partial _{n}u, v_{h} )_{\partial \mathcal{T}_{h}  } & = \sum_{F \in \mathcal{F}_{h}  }^{} \int_{F}^{}   \jump{ f' ( u)\partial _{n}u, v_{h} } \\
+                                                                        & =  ( \jump{ f' ( u) \partial _{n}u },  \mean{v_{h}}    )_{\mathcal{F}^{int}_{h} } + ( \mean{ f' ( u) \partial _{n}u }, \jump{ v_{h} }    )_{\mathcal{F}^{int}_{h} } +  ( f' ( u)
+                                                                        \partial _{n}u, v_{h}) _{\Gamma } \\
+                                                                        & =  ( f' ( u) \partial _{n}u, v_{h}) _{\Gamma }
+                \end{split}
+            \]
+            The jump terms vanishes by the regularity of $u$ and $v_{h}$. Hence, by inserting $g_{1}$ we have shown that the first formulation holds.
+
+         \textbf{Derivation of \eqref{eq:ch:2}.  }  Applying a extra iteration of Greens theorem on \eqref{eq:1_gr} we get the following terms.
+\[
+    \begin{split}
+-(\Delta f( u) , v_{h})_{T }  = -( f( u), \Delta v_{h} )_{T} + (f( u), \partial _{n} v_{h}  )_{\partial T} - (   f'( u)\partial _{n}u, v_{h} )_{\partial T } .
+    \end{split}
+\]
+Now, by doing a summation of all triangles it is clear that this holds.
+\begin{equation}
+\label{eq:f_g2}
+-(\Delta f( u) , v_{h})_{\Omega  }  = -( f( u), \Delta v_{h} )_{\Omega } + (f( u), \partial _{n} v_{h}  )_{\partial \mathcal{T}_{h} } - (   f'( u)\partial _{n}u, v_{h} )_{\partial \mathcal{T}_{h}  }
+\end{equation}
+It comes evident from the first step of the proof that $ (   f'( u)\partial _{n}u, v_{h} )_{\partial \mathcal{T}_{h}  } = (   f'( u)\partial _{n}u, v_{h} )_{\Gamma }$, hence, we only need to compute the term $(f( u), \partial _{n} v_{h}  )_{\partial
+\mathcal{T}_{h} }$ on the facets. \[
+    \begin{split}
+(f( u), \partial _{n} v_{h}  )_{\partial
+\mathcal{T}_{h} } & = \sum_{F\in \mathcal{F} _{h}}^{} \int_{F}^{}\jump{ f( u), \partial _{n} v_{h}  } \\
+& =  (\jump{ f( u)  }  , \mean{ \partial _{n} v_{h} }    )_{ \mathcal{F}_{h}^{int} } +(\mean{ f( u)  }  , \jump{ \partial _{n} v_{h} }    )_{ \mathcal{F}_{h}^{int} } + (f( u), \partial _{n} v_{h}  )_{\Gamma } \\
+&=  (\mean{ f( u)  }  , \jump{ \partial _{n} v_{h} }    )_{ \mathcal{F}_{h}^{int} } + (f( u), \partial _{n} v_{h}  )_{\Gamma }
+    \end{split}
+\]
+Again one of the jump terms vanishes because of the regularity of $u$.
+Inserting the result into \eqref{eq:f_g2} have we shown that the second formulation also holds.
+
+The consistency follows in a weak sense for $u \in H^{4}( \Omega ) $.
+\end{proof}
+
+Hence, we have a scheme for nonlinear spatial discretization. Let $u_{h} \in \left[ 0,T \right] \times V_{h}  $ and $v_{h} \in V_{h}$. We define the following CIP discretization
+\begin{equation}
+    \label{eq:cip_ch}
+    \begin{split}
+        a_{h} \left( u_{h}, v_{h} \right)   =& ( \Delta  u_{h}, \Delta v_{h} ) _{ \Omega } \\
+                                     & + \left( \mean{  \Delta  u_{h} }, \jump{ \partial _{n }v_{h}} \right)_{\mathcal{F}_{h}  }  + \left( \mean{ \Delta  v_{h} }, \jump{ \partial _{n}u_{h} }      \right)_{\mathcal{F}_{h}  }  + \frac{\gamma }{h}
+                                     \left( \jump{ \partial _{n} u_{h}}, \jump{ \partial _{n} v_{h}   }   \right)_{\mathcal{F}_{h} } \\
+                                     & + \left(   \Delta  u_{h} ,  \partial _{n }v_{h} \right)_{\Gamma   }  + \left(  \Delta  v_{h} ,  \partial _{n}u_{h}       \right)_{\Gamma  }  + \frac{\gamma }{h}  \left(  \partial _{n} u_{h},  \partial _{n} v_{h}      \right)_{ \Gamma } \\
+    c^{}_{h} ( u_{h},v_{h})  & = -( f( u_{h}), \Delta v_{h} )_{\mathcal{T} _{h}}+  ( f( u_{h}) , \jump{ \partial _{n}v_{h} }  )_{\mathcal{F} _{h}^{int}} + ( f(u_{h}), \partial _{n} v_{h})_{\Gamma  }  + ( f'( u_{h})  g_{1}   ,  v_{h})_{\Gamma } \\
+    l_{h}( v_{h}) & =  \left( g_{0}, v_{h} \right) _{\Omega } -  \varepsilon ( g_{2},  v_{h} )_{\Gamma }  -  \varepsilon ( g_{1}, \Delta  v_{h}  )_{\Gamma }  + \varepsilon \frac{\gamma }{h} ( g_{1}, \partial _{n} v_{h}  )_{\Gamma }
+    \end{split}
+\end{equation}
+such that that the following relationship holds.
+\[
+    ( \partial _{t}u_{h}, v_{h})_\Omega + \varepsilon  a_{h}( u_{h},v_{h}) + \frac{1}{\varepsilon }c_{h}( u_{h},v_{h})   =  l_{h}(v_{h}) \quad  \forall u_{h}, v_{h} \in V_{h}
+\]
+
+
