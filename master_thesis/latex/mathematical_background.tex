@@ -19,7 +19,7 @@ Let $u \in L^{p}\left( \Omega  \right) $. We define the integral norm of order $
 \]
 
 The following definition for derivatives is employed.
-For $d$ dimensions of order $k$ we define the multi-index $\alpha  = ( \alpha _{1}, \ldots, \alpha _{d})  $ with the absolute value $\abs{ \alpha  } = \sum_{i=1}^{d}  \alpha _{i} = k $ s.t.
+For $d$ dimensions of order $k$ we define the multi-index $\alpha  = ( \alpha _{1}, \ldots, \alpha _{d})  $ with the absolute value $\abs{ \alpha  } = \sum_{i=1}^{d}  \alpha _{i} = k $ such that
 \begin{equation}
     \label{eq:der}
 \partial ^{\alpha} u = \frac{\partial ^{ \alpha_{1}  }  } {\partial^{} x_{1}^{\alpha _{1}}  } \ldots \frac{\partial ^{ \alpha_{d}  }  } {\partial^{} x_{d}^{\alpha _{d}}  } u \quad  \text{for }u \in C^{\left\lvert \alpha  \right\rvert }( \Omega )
@@ -73,7 +73,7 @@ Here, $\nabla v \cdot \nabla u$ and $D^2 v : D^2 u$ represent the inner product 
 The Frobenius inner product for for two tensors $A, B \in \mathbb{R} ^{\overbrace{n \times n \times \ldots \times n}^{r \text{ times }} } $ is defined such that $ A:B = \sum_{1\le  i_{1}, \ldots, i_{r} \le  d}^{} A_{i_{1} \ldots i_{r}} B_{i_{1}
     \ldots
 i_{r}}  $.
-} of Jacobian matrices, respectively.
+} of Hessian matrices, respectively.
 
 Let $v \in H^{r}( \Omega ) $, we define $D^r v$ to be a tensor of order $r$ such that
 \begin{equation}
@@ -81,7 +81,7 @@ Let $v \in H^{r}( \Omega ) $, we define $D^r v$ to be a tensor of order $r$ such
 \left[ D^r v \right] _{i_{1} \ldots i_{r}} = \frac{\partial^r v}{\partial x_{ i_{1} } \ldots \partial x_{ i_{r} } } \quad  \forall i_{1}, \ldots, i_{r} \in \left\{ 1,\ldots,d \right\}
 \end{equation}
 where the norm $\| D^r v\|_{\Omega   }^{ 2 } =
-\int_{\Omega }^{} D^r v : D^r v \ dx$ is defined via the standard Frobenius inner product. Observe that this notations holds such that $D^{0} v = v$ and $ D^{1} v = \nabla v $.
+\int_{\Omega }^{} D^r v : D^r v \ dx$ is defined via the standard Frobenius inner product. Observe that this notations holds such that $D^{0} v = v$, $ D^{1} v = \nabla v $ and $D ^{2} v  = J(\nabla v) = \mathrm{Hess}(v)$, where $J$ is the Jacobian operator .
 
 Given the context of Sobolev spaces, we consider the functions $ u \in H^{2}( \Omega )$ and $ v \in H^{1}( \Omega )$. We can denote Greens theorem, which links integrals over a volume and its boundary, as follows,
 \[
@@ -207,17 +207,20 @@ Often  it is needed to integrate over boundaries of elements $\partial \mathcal{
 A very useful lemma when working with estimates on broken Sobolev spaces is that a if a function is continuous, then the jump between the mesh elements is zero. Keep in mind a function $ v \in  H^{1}( \mathcal{T}_{h} ) $ belongs to $ H^{1}( \Omega )  $ if and only
 if $ \jump{ v }   = 0 \  \forall F \in \mathcal{F}^{int}_{h}$, see \cite[Lemma 1.23]{pietro2012}.
 
-We can express several general useful basic inequalities.
+Recall, the "$\lesssim$" symbol often denotes an inequality up to a constant factor. That is, given $a,b >0 $, the statement $a \lesssim b$ is true if there exists a constant $C>0$ such that $a \leq Cb$.
+
+We can express several general useful
+basic inequalities and estimates.
 \begin{enumerate}[label=(\roman*)]
     \item A fundamental property of the inner-product the so-called Cauchy-Schwarz inequality
         \begin{equation}
             \label{eq:cauchy-schwartz}
-     ( u,v)_{m,\Omega   }   \le \| u \|_{m,\Omega    }^{  } \| v \|_{m,\Omega     }^{  }\quad  \forall u,v \in H^{m}( \Omega )
+     ( u,v)_{m,\Omega   }   \le \| u \|_{m,\Omega    }^{  } \| v \|_{m,\Omega     }^{  }\quad  \forall u,v \in H^{m}( \Omega ).
         \end{equation}
 
-    \item Let $v \in  H^{r}( \Omega ) $, then is
+    \item Let $v \in  H^{m}( \Omega ) $, then is
         \begin{equation}
-            \| D^{r}v \|_{\Omega   }^{  }  \lesssim \| v \|_{r,\Omega   }^{  }.
+            \| D^{r}v \|_{\Omega   }^{  }  \lesssim \| v \|_{m,\Omega   }^{  }.
         \end{equation}
 
         \red{Proof???}

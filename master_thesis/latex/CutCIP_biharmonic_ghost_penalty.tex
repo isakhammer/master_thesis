@@ -15,25 +15,21 @@ We have the following assumptions for the ghost penalty.
 \end{enumerate}
 The goal in this chapter is to engineer an ghost penalty which fulfills these assumptions.
 
-Let us denote the generalization of the normal derivative,
+Let $k$ be a positive integer. Recall the multi-index $\alpha  = ( \alpha _{1}, \ldots, \alpha _{d})  $ of order $\abs{ \alpha  } = \sum_{i}^{}  \alpha _{i} = k $ with a corresponding component-wise factorial $\alpha ! = \alpha_{1}! \ldots \alpha _{d}!$ .
+Let $  v \in H^{k}( \Omega ) $. The generalization of the normal derivative is denoted as,
 \begin{equation}
-\partial _{n}^{j} v = \sum_{\abs{ \alpha  } =j }^{k} \frac{D ^{\alpha }v( x) n^{\alpha }}{\alpha !}, \quad \abs{ \alpha  } = \sum_{i=0}^{d} \alpha_{i}.
+    \partial _{n}^{k} v = \sum_{   \abs{ \alpha    } =  k}^{} \frac{ \partial^{\alpha } v \  n^{\alpha } }{\alpha !},
 \end{equation}
-We denote the multi-index $\alpha  = ( \alpha _{1}, \ldots, \alpha _{d})  $ of order $\abs{ \alpha  } = \sum_{i}^{}  \alpha _{i} = k $   and the normal vectors $n^{\alpha } = n_{1}^{\alpha _{1}} \ldots n_{d}^{\alpha _{d}}$.
-Recall the notation for the derivates $D^{\alpha } v$
-\footnote{
-Remark that the operator $D^{\alpha }$  is related to with the derivate operator $\partial ^{\alpha } $ introduced in \eqref{eq:der}. For instance, for $d=2$ we have $\alpha = ( \alpha _{1}, \alpha _{2}) $  such that $ D^{1} v =  \nabla v  = \left[ \partial ^{( 1,0 )} v,\partial ^{( 0,1 )}v
-\right]^{T}$ and $   D^2 v  = \begin{bmatrix}
-\partial ^{( 2,0 )} v &  \partial ^{( 1,1) }v \\
-\partial ^{( 1,1 )} v &  \partial ^{( 0,2) }v
-\end{bmatrix}
- $.
-},
-that is
-\begin{equation}
-D ^{0} v  = v, \quad   D ^{1}v  = \nabla v \text{ and }  D ^{2} v  = J(\nabla v) = \mathrm{Hess}(v).
-\end{equation}
-where $J$ is the Jacobian operator .
+where the component-wise product of the normal vector is $n^{\alpha } = n_{1}^{\alpha _{1}} \ldots n_{d}^{\alpha _{d}}$ and the derivative $\partial ^{\alpha }v $ as in Equation \eqref{eq:der}. Observe that $\partial ^{k}_{n} v = v $, $ \partial ^{1}_{n} v = \nabla v
+ \ n $ and $ \partial ^{2}_{n} v = \frac{1}{2} n^{T} D^2 v \ n$. Remark that the factor $\frac{1}{2}$  is often hidden in the $ \lesssim 1$ inequality.
+% \footnote{
+% Remark that the operator $D^{\alpha }$  is related to with the derivate operator $\partial ^{\alpha } $ introduced in \eqref{eq:der}. For instance, for $d=2$ we have $\alpha = ( \alpha _{1}, \alpha _{2}) $  such that $ D^{1} v =  \nabla v  = \left[ \partial ^{( 1,0 )} v,\partial ^{( 0,1 )}v
+% \right]^{T}$ and $   D^2 v  = \begin{bmatrix}
+% \partial ^{( 2,0 )} v &  \partial ^{( 1,1) }v \\
+% \partial ^{( 1,1 )} v &  \partial ^{( 0,2) }v
+% \end{bmatrix}
+%  $.
+% },
 
 The following result is the backbone of the face-based ghost penalty.
 \begin{lemma}
@@ -53,26 +49,26 @@ We will now introduce the so-called ghost penalty faces, that is, \[
 \]
 This set is simply all facets that belong to all elements of the active mesh $\mathcal{T} _{h}$  intersected with $\Gamma $, i.e., all triangles to the cut cells $\mathcal{T} _{\Gamma }$. For an illustration, see Figure \ref{fig:illustration_F_g}.
 
-\begin{proposition}
-    \label{prop:hessian_change}
-    Let $v_{h} \in V_{h} $ and $F \in  \mathcal{F} _{h}$. Assume that $ v_{h} = v_{h} |_{F}$,  then the following identity holds.
-    \begin{equation}
-    \partial ^{j}_{n} (D^2v_{h}) = D^2 ( \partial ^{j}_{n} v_{h}), \quad  j=0,1,2.
-    \end{equation}
-\end{proposition}
+% \begin{proposition}
+%     \label{prop:hessian_change}
+%     Let $v_{h} \in V_{h} $ and $F \in  \mathcal{F} _{h}$. Assume that $ v_{h} = v_{h} |_{F}$,  then the following identity holds.
+%     \begin{equation}
+%     \partial ^{j}_{n} (D^2v_{h}) = D^2 ( \partial ^{j}_{n} v_{h}), \quad  j=0,1,2.
+%     \end{equation}
+% \end{proposition}
 
-\begin{proof}
+% \begin{proof}
 
-        Recall that $\left[ D^2 v \right]_{i_{1},i_{2}} = \partial _{x_{i_{1}}x_{i_{2}}} v $ for $i_{1}, i_{2} \in \left\{ 1,\ldots,d \right\} $ for $d$ dimensions. The case $j=0$ is trivial. For the case $j=2$ we have,
-        \begin{equation}
-                \begin{split}
-                \partial^{2} _{n} (\partial _{x_{i_{1}} x_{i_{2}}} v) & = n^{T}  D^2(\partial _{x_{i_{1}} x_{i_{2}}} v) n = n^{T}  J( \nabla (\partial _{x_{i_{1}} x_{i_{2}}}v) ) n \\
-                & =  n^{T}  J(\partial _{x_{i_{1}} x_{i_{2}}}(\nabla v) ) n = \partial _{x_{i_{1}} x_{i_{2}}} n^{T} J(\nabla v) n
-                \end{split}.
-        \end{equation}
-            Thus, taking account for all elements in the matrix we get $\partial^{2} _{n} (D^2v) = D^2( \partial^{2} _{n}v)$. The case $j=1$ is computed similarly.
+%         Recall that $\left[ D^2 v \right]_{i_{1},i_{2}} = \partial _{x_{i_{1}}x_{i_{2}}} v $ for $i_{1}, i_{2} \in \left\{ 1,\ldots,d \right\} $ for $d$ dimensions. The case $j=0$ is trivial. For the case $j=2$ we have,
+%         \begin{equation}
+%                 \begin{split}
+%                 \partial^{2} _{n} (\partial _{x_{i_{1}} x_{i_{2}}} v) & = n^{T}  D^2(\partial _{x_{i_{1}} x_{i_{2}}} v) n = n^{T}  J( \nabla (\partial _{x_{i_{1}} x_{i_{2}}}v) ) n \\
+%                 & =  n^{T}  J(\partial _{x_{i_{1}} x_{i_{2}}}(\nabla v) ) n = \partial _{x_{i_{1}} x_{i_{2}}} n^{T} J(\nabla v) n
+%                 \end{split}.
+%         \end{equation}
+%             Thus, taking account for all elements in the matrix we get $\partial^{2} _{n} (D^2v) = D^2( \partial^{2} _{n}v)$. The case $j=1$ is computed similarly.
 
-\end{proof}
+% \end{proof}
 
 \begin{lemma}[]
     \label{lemma:bi_local_facet_estimate_2}
@@ -340,12 +336,10 @@ Here we added a zero term $v^{e} \in H^{s}( \Omega_{h} ) $  since jump vanishes 
     \begin{equation}
         \begin{split}
         \mathrm{I}  & \lesssim \sum_{j=0}^{r-1} h^{2j-3}   \| \jump{ \partial ^{j}_{n}  ( C^{e}_{h} v - v^{e})   }  \|_{\mathcal{F}_{h}^{g} }^{2} \lesssim \sum_{j=0}^{r-1} h^{2j-3}   \| D ^{j}  ( C^{e}_{h} v - v^{e})     \|_{\partial \mathcal{T}_{h}  }^{2} \\
-        & \lesssim \sum_{j=0}^{r-1} h^{2j-3}  h^{2r - 2j - 1}\| v  \|_{r,\Omega  }^{2} \\
+        & \lesssim \sum_{j=0}^{r-1} h^{2j-3}  h^{2r - 2j - 1}\| v  \|_{r,\Omega  }^{2} \lesssim  \sum_{j=0}^{r-1}   h^{2( r  - 2 )}\| v  \|_{r,\Omega  }^{2}
         \end{split}
     \end{equation}
-
     Here we applied \eqref{eq:bi_projection_estimates_2}.
-
 
      For the second term are we allowed to use the basic inverse
     estimate \eqref{eq:general} on the Clément operator,
