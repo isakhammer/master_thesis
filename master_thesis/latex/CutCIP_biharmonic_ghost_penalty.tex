@@ -329,17 +329,14 @@ Finally, we now have the tools we need to construct an candidate for the ghost p
                                         \|_{\mathcal{F}_{h}^{g} }^{2} = \mathrm{I} + \mathrm{II}
         \end{split}
     \end{equation}
-    Here we added a zero term $v^{e} \in H^{s}( \Omega_{h} ) $  since jump vanishes for the for the first $r-1$ terms, i.e. $\jump{ \partial ^{j}_{n} v^{e} } = 0  \  \forall j \le r-1$.
+    Here we added a zero term $v^{e} \in H^{s}( \Omega_{h} ) $  since jump vanishes for the for the first $r-1$ terms, i.e. $\jump{ \partial ^{j}_{n} v^{e} } = 0  \  \forall j \le r-1$. The given expression suggests that the first term can be readily estimated by utilizing the a priori estimate provided in equation \eqref{eq:bi_projection_estimates_2}.
 
-
-    What we can see is that the first term can easily be estimated using the a priori estimate \eqref{eq:bi_projection_estimates_2} ,
     \begin{equation}
         \begin{split}
         \mathrm{I}  & \lesssim \sum_{j=0}^{r-1} h^{2j-3}   \| \jump{ \partial ^{j}_{n}  ( C^{e}_{h} v - v^{e})   }  \|_{\mathcal{F}_{h}^{g} }^{2} \lesssim \sum_{j=0}^{r-1} h^{2j-3}   \| D ^{j}  ( C^{e}_{h} v - v^{e})     \|_{\partial \mathcal{T}_{h}  }^{2} \\
         & \lesssim \sum_{j=0}^{r-1} h^{2j-3}  h^{2r - 2j - 1}\| v  \|_{r,\Omega  }^{2} \lesssim     h^{2( r  - 2 )}\| v  \|_{r,\Omega  }^{2}
         \end{split}
     \end{equation}
-    Here we applied the estimate \eqref{eq:bi_projection_estimates_2}.
 
      For the second term are we allowed to use the basic discrete inverse
     estimate \eqref{eq:general} times since we work on the Clément operator,
