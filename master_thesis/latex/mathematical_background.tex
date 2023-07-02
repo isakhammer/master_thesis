@@ -59,7 +59,7 @@ Recall that $L^{2}( \Omega ) $ and $H^{m}( \Omega ) $ are Hilbert spaces equippe
     \end{split}
 \end{equation}
 
-Let $u,v \in H^{2}(\Omega)$ be scalar functions. The following are the definition for their corresponding operator inner products.
+ let $u,v \in H^{2}(\Omega)$ be scalar functions. The following are the definition for their corresponding operator inner products.
 
 \begin{equation}
 \begin{split}
@@ -69,7 +69,19 @@ Let $u,v \in H^{2}(\Omega)$ be scalar functions. The following are the definitio
 \end{split}
 \end{equation}
 Also, $ \|  \nabla v\|_{  \Omega}^{2} = ( \nabla v, \nabla v)_{\Omega}$, $ \|   \Delta v \|_{\Omega}^{2} = (\Delta v, \Delta v)_{\Omega}$, and $ \| D^2 v \|_{ \Omega}^{2} = (D^2 v, D^2 v)_{\Omega}$.
-Here, $\nabla v \cdot \nabla u$ and $D^2 v : D^2 u$ represent the inner product and the Frobenius inner product, respectively.
+Here, $\nabla v \cdot \nabla u$ and $D^2 v : D^2 u$ represent the inner product of the gradients and the Frobenius inner product \footnote{
+The Frobenius inner product for for two tensors $A, B \in \mathbb{R} ^{\overbrace{n \times n \times \ldots \times n}^{r \text{ times }} } $ is defined such that $ A:B = \sum_{1\le  i_{1}, \ldots, i_{r} \le  d}^{} A_{i_{1} \ldots i_{r}} B_{i_{1}
+    \ldots
+i_{r}}  $.
+} of Jacobian matrices, respectively.
+
+Let $v \in H^{r}( \Omega ) $, we define $D^r v$ to be a tensor of order $r$ such that
+\begin{equation}
+    \label{eq:tensor}
+\left[ D^r v \right] _{i_{1} \ldots i_{r}} = \frac{\partial^r v}{\partial x_{ i_{1} } \ldots \partial x_{ i_{r} } } \quad  \forall i_{1}, \ldots, i_{r} \in \left\{ 1,\ldots,d \right\}
+\end{equation}
+where the norm $\| D^r v\|_{\Omega   }^{ 2 } =
+\int_{\Omega }^{} D^r v : D^r v \ dx$ is defined via the standard Frobenius inner product. Observe that this notations holds such that $D^{0} v = v$ and $ D^{1} v = \nabla v $.
 
 Given the context of Sobolev spaces, we consider the functions $ u \in H^{2}( \Omega )$ and $ v \in H^{1}( \Omega )$. We can denote Greens theorem, which links integrals over a volume and its boundary, as follows,
 \[
