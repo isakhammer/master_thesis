@@ -20,8 +20,8 @@ Let $  v \in H^{k}( \Omega ) $. The generalization of the normal derivative is d
 \begin{equation}
     \partial _{n}^{k} v = \sum_{   \abs{ \alpha    } =  k}^{} \frac{ \partial^{\alpha } v \  n^{\alpha } }{\alpha !},
 \end{equation}
-where the component-wise product of the normal vector is $n^{\alpha } = n_{1}^{\alpha _{1}} \ldots n_{d}^{\alpha _{d}}$ and the derivative $\partial ^{\alpha }v $ as in Equation \eqref{eq:der}. Observe that $\partial ^{k}_{n} v = v $, $ \partial ^{1}_{n} v = \nabla v
- \ n $ and $ \partial ^{2}_{n} v = \frac{1}{2} n^{T} D^2 v \ n$. Remark that the factor $\frac{1}{2}$  is often hidden in the $ \lesssim 1$ inequality.
+where the component-wise product of the normal vector is $n^{\alpha } = n_{1}^{\alpha _{1}} \ldots n_{d}^{\alpha _{d}}$ and the derivative $\partial ^{\alpha }v $ is as defined in Equation \eqref{eq:der}. Observe that $\partial ^{0}_{n} v = v $, $ \partial ^{1}_{n} v = \nabla v
+ \ n $ and $ \partial ^{2}_{n} v = \frac{1}{2} n^{T} D^2 v \ n$.
 % \footnote{
 % Remark that the operator $D^{\alpha }$  is related to with the derivate operator $\partial ^{\alpha } $ introduced in \eqref{eq:der}. For instance, for $d=2$ we have $\alpha = ( \alpha _{1}, \alpha _{2}) $  such that $ D^{1} v =  \nabla v  = \left[ \partial ^{( 1,0 )} v,\partial ^{( 0,1 )}v
 % \right]^{T}$ and $   D^2 v  = \begin{bmatrix}
@@ -147,7 +147,7 @@ Thus, combining \eqref{eq:ghost_estimate:1} and \eqref{eq:ghost_estimate:2} we g
         \textbf{Estimate \eqref{eq:local_ghost:1}.} Using that $\| \nabla  v \|_{T_{}  }^{ 2 } =  \sum_{i=1}^{d} \|  \partial _{x_{i}} v  \|_{T_{}  }^{ 2 }$, can we directly apply the estimate \eqref{eq:local_ghost:0} element-wise.
         \begin{equation}
             \begin{split}
-\| \nabla v \|_{T_{1}  }^{2  } = \sum_{i=1}^{d} \| \partial _{x_{i}}  v_{h} \|_{ T_{1} }^{  2} & \lesssim  \sum_{i=1}^{d} \| \partial _{x_{i}}  v_{h} \|_{ T_{2} }^{  2} + h^{2j-1}\sum_{j=0}^{k} \| \jump{ \partial _{n}^{j} v_{h} }   \|_{F  }^{2  }  \\
+\| \nabla v \|_{T_{1}  }^{2  } &= \sum_{i=1}^{d} \| \partial _{x_{i}}  v_{h} \|_{ T_{1} }^{  2}  \lesssim  \sum_{i=1}^{d} \| \partial _{x_{i}}  v_{h} \|_{ T_{2} }^{  2} + h^{2j-1}\sum_{j=0}^{k} \| \jump{ \partial _{n}^{j} v_{h} }   \|_{F  }^{2  }  \\
          &  = \| \nabla  v_{h} \|_{ T_{2} }^{  2} + h^{2j-1}\sum_{j=0}^{k} \| \jump{ \partial _{n}^{j} v_{h} }   \|_{F  }^{2  }
             \end{split}
         \end{equation}
