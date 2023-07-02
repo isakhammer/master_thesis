@@ -207,7 +207,9 @@ Often  it is needed to integrate over boundaries of elements $\partial \mathcal{
 A very useful lemma when working with estimates on broken Sobolev spaces is that a if a function is continuous, then the jump between the mesh elements is zero. Keep in mind a function $ v \in  H^{1}( \mathcal{T}_{h} ) $ belongs to $ H^{1}( \Omega )  $ if and only
 if $ \jump{ v }   = 0 \  \forall F \in \mathcal{F}^{int}_{h}$, see \cite[Lemma 1.23]{pietro2012}.
 
-Recall, the "$\lesssim$" symbol often denotes an inequality up to a constant factor. That is, given $a,b >0 $, the statement $a \lesssim b$ is true if there exists a constant $C>0$ such that $a \leq Cb$.
+Recall, the "$\lesssim$" symbol often denotes an inequality up to a constant factor. That is, given $a,b >0 $, the statement $a \lesssim b$ is true if there exists a constant $C>0$ such that $a \leq Cb$. Generally, this constant will contain
+information related to the properties of the mesh, such as shape regularity and quasi-uniformity, but it often also includes the maximum finite number or measure of a quantity. For instance, let  $a , b_{i}> 0 \text{ for } i = 1,\ldots,N  $ and  $a =  \sum_{i}^{N} b_{i}$, then is $ a
+\lesssim \mathrm{max}_{i} \  b_{i}  $. To maintain clarity and avoid unnecessary complexity, we will not delve into this particular detail related to the constant.
 
 We can express several general useful
 basic inequalities and estimates.
