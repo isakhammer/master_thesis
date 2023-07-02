@@ -248,45 +248,40 @@ iterative diagonal translations of the background mesh while keeping the domain 
 choose to do the test on the circle domain and translate a distance $\delta = 2\sqrt{2}h  $ diagonally for $500$ iterations for a background mesh $h = \frac{L}{n}$ where $n=16$ using the manufactured solution \eqref{eq:man_sol_1}. For a sketch of the experiment see Figure \ref{fig:illustration_translation}.
 
 In this context, due to the symmetry of the domain and background mesh, we expect a periodic pattern of bad cut configurations being triggered. This affords us the opportunity to assess the impact of stabilisation with and without the ghost penalty
-term. As illustrated in the numerical experiments provided in Figure \ref{fig:trans_hes} and $\ref{fig:trans_lap} $, the ghost penalty demonstrated significant enhancements regarding the stability of the system for both the Laplace and Hessian
+term. As illustrated in the numerical experiments provided in Figure \ref{fig:trans_lap_hes}, the ghost penalty demonstrated significant enhancements regarding the stability of the system for both the Laplace and Hessian
 formulation. It is apparent that the error may not only magnify, but potentially exceed an order of magnitude if the ghost penalty is not considered. Hence, this demonstrating that the method is robust in handling bad cut configurations for both the Laplace and Hessian formulation.
 
 
 
-
-
-
-\begin{figure}[hpbt!]
+\begin{figure}[h!]
 \centering
 
-\subfloat[]{%
+\subfloat[Hessian]{%
 \input{"results/translation-test/hessian_no_penalty/translation-cond.tex"}
 }
 
-\subfloat[]{%
+\subfloat[Hessian]{%
 \input{"results/translation-test/hessian_no_penalty/translation-error.tex"}
 }
 
+\vspace{10pt}
 
-\caption{ Translation results for Hessian $n=16$ for $500$ iterations, $\delta =(0, 2 \sqrt{2}h) $ for $L=2.7$ with a circle $R=1$       }
+% \caption{ Translation results for Hessian $n=16$ for $500$ iterations, $\delta =(0, 2 \sqrt{2}h) $ for $L=2.7$ with a circle $R=1$       }
 
-\label{fig:trans_hes}
-\end{figure}
+% \label{fig:trans_hes}
+% \end{figure}
 
-\begin{figure}[hpbt!]
-\centering
-
-\subfloat[]{%
+\subfloat[Laplace ]{%
 \input{"results/translation-test/laplace_no_penalty/translation-cond.tex"}
 }
 
-\subfloat[]{%
+\subfloat[Laplace ]{%
 \input{"results/translation-test/laplace_no_penalty/translation-error.tex"}
 }
 
 
-\caption{ Translation results for Laplace $n=16$ for $500$ iterations, $\delta =(0, 2 \sqrt{2}h) $ for $L=2.7$ with a circle $R=1$       }
+\caption{Translation results of the Laplace and Hessian formulations for n=16 and 500 iterations, with $\delta = ( 0, 2\sqrt{2}h) $  for L=2.7, inside a circle with radius R=1.}
 
-\label{fig:trans_lap}
+\label{fig:trans_lap_hes}
 \end{figure}
 
