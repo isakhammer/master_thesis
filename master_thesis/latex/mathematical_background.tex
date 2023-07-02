@@ -207,7 +207,7 @@ Often  it is needed to integrate over boundaries of elements $\partial \mathcal{
 A very useful lemma when working with estimates on broken Sobolev spaces is that a if a function is continuous, then the jump between the mesh elements is zero. Keep in mind a function $ v \in  H^{1}( \mathcal{T}_{h} ) $ belongs to $ H^{1}( \Omega )  $ if and only
 if $ \jump{ v }   = 0 \  \forall F \in \mathcal{F}^{int}_{h}$, see \cite[Lemma 1.23]{pietro2012}.
 
-Recall, the "$\lesssim$" symbol often denotes an inequality up to a constant factor. That is, given $a,b >0 $, the statement $a \lesssim b$ is true if there exists a constant $C>0$ such that $a \leq Cb$. Generally, this constant will contain
+Recall, the "$\lesssim$" symbol denotes an inequality up to a constant factor. That is, given $a,b >0 $, the statement $a \lesssim b$ is true if there exists a constant $C>0$ such that $a \leq Cb$. Generally, this constant will contain
 information related to the properties of the mesh, such as shape regularity and quasi-uniformity, but it often also includes the maximum finite number or measure of a quantity. For instance, let  $w , v_{i} \in L^{2}( \Omega ), \ a_{i} \in \mathbb{R}  \text{ for } i =
 1,\ldots,N  $   and  $ \| w \|_{\Omega   }^{  }  =  \| \sum_{i}^{N} a_{i}  v_{i} \|_{\Omega   }^{  } $, then is $ \| w \|_{\Omega   }^{  }
 \lesssim \sum_{i}^{N}  \  \| v_{i} \|_{\Omega   }^{  }  $. To maintain clarity and avoid unnecessary complexity, we will not delve into this particular detail related to the constant.
@@ -223,10 +223,10 @@ basic inequalities and estimates.
 
     \item Let $v \in  H^{m}( \Omega ) $, then is
         \begin{equation}
-            \| D^{r}v \|_{\Omega   }^{  }  \lesssim \| v \|_{m,\Omega   }^{  }.
+            \| D^{m}v \|_{\Omega   }^{  }  \lesssim \| v \|_{m,\Omega   }^{  }.
         \end{equation}
+        Similarly is $\| \Delta  v \|_{\Omega   }^{  } \lesssim \| v \|_{2,\Omega   }^{  }  $.
 
-        \red{Proof???}
 
     \item For all  $u \in L ^{2}( \mathcal{T} _{h})$ we have,
 \begin{equation}
@@ -238,7 +238,7 @@ basic inequalities and estimates.
     \end{split}
 \end{equation}
 
-    \item For any $a,b >\mathbb{R} $ the well known Young's $\varepsilon $-inequality is on the form,
+    \item For any $a,b > 0 $ the well known Young's $\varepsilon $-inequality is on the form,
         \begin{equation}
             \label{eq:young-epsilon}
             2ab \le \varepsilon a^2+ \frac{1}{\varepsilon } b^2.
