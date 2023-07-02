@@ -11,6 +11,8 @@ Condition numbers are essential to solve linear systems because they help us ass
 sensitive to small changes in the input data, potentially leading to inaccurate results. This underline the importance checking the conditional stability of cut cells, hence, motivating to do a so-called translation test with and without ghost
 penalty.
 
+All numerical experiments are conducted using the open-source finite element method (FEM) framework Gridap \cite{verdugo22}.
+
 \subsection{Convergence study for the cut finite element method method for the biharmonic problem  }%
 \label{sub:numerical_results_for_cutcip_biharmonic_equation}
 For the convergence study will we consider a square background domain $\widetilde{\Omega} $ with side lengths $L$ and a physical domain $\Omega \subset \widetilde{\Omega}$ on the form $\Omega  = \left\{ ( x,y)  \mid \phi ( x,y) \le 0    \right\} $,
