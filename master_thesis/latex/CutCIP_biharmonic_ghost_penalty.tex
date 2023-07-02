@@ -47,7 +47,7 @@ The following result is the backbone of the face-based ghost penalty.
 We will now introduce the so-called ghost penalty faces, that is, \[
 \mathcal{F} ^{g}_{h} = \left\{ F\in \mathcal{F} _{h} : T^{+}\cap \Gamma \neq \emptyset  \vee T^{-}\cap \Gamma \neq \emptyset  \right\}.
 \]
-This set is simply all facets that belong to all elements of the active mesh $\mathcal{T} _{h}$  intersected with $\Gamma $, i.e., all triangles to the cut cells $\mathcal{T} _{\Gamma }$. For an illustration, see Figure \ref{fig:illustration_F_g}.
+This set is simply all facets that belong to all elements of the active mesh $\mathcal{T} _{h}$  intersected with $\Gamma $, i.e., all triangles to the cut cells $\mathcal{T} ^{\Gamma }_{h}$. For an illustration, see Figure \ref{fig:illustration_F_g}.
 
 % \begin{proposition}
 %     \label{prop:hessian_change}
@@ -300,7 +300,7 @@ By employing induction on each pair $\left\{ T_{i}, T_{i+1} \right\}$ along with
         Hence, \eqref{eq:bi_inv_gh_1} holds and the first part of the proof is complete.
 
         \textbf{Estimate \eqref{eq:bi_inv_gh_2} and \eqref{eq:bi_inv_gh_2}.}
-        We will simply use the exact same procedure as \textbf{Estimate \eqref{eq:bi_inv_gh_1}}  for the estimates with \eqref{eq:local_ghost:2}  and \eqref{eq:local_ghost:3}. Hence, proof is complete.
+        We simply use the exact same procedure as \textbf{Estimate \eqref{eq:bi_inv_gh_1}}  for the estimates with \eqref{eq:local_ghost:2}  and \eqref{eq:local_ghost:3}. Hence by defining the bilinear form $g_{h}( \cdot ,\cdot ) $ similarly. Proof is complete.
     \end{proof}
 
 Finally, we now have the tools we need to construct an candidate for the ghost penalty for which satisfies all assumptions.
