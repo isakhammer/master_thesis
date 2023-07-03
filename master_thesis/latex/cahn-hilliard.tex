@@ -11,6 +11,7 @@ In this section, we will demonstrate that the proposed cut finite element method
 \label{sub:revisiting_the_strong_formulation}
 
  Recall the strong formulation of the Cahn-Hilliard equation.
+Let $ u( x,0) =  u_{0}$ then is the dynamics on the form,
 \begin{subequations}
 \label{eq:strong_ch}
     \begin{align}
@@ -19,7 +20,7 @@ In this section, we will demonstrate that the proposed cut finite element method
 \partial _{n}    \Delta u       &= 0 \quad \text{ on } \Gamma
     \end{align}
 \end{subequations}
-Here we define $f( u) = u( u^{2} -1)  = F' ( u)  $ where $F( u) = ( 1 / 4 ) ( u^2 -1 ) ^{2} $. With the corresponding energy. We now define the parameter $\varepsilon  = \frac{1}{30}$
+Here we define $f( u) = u( u^{2} -1)  = F' ( u)  $ where $F( u) = ( 1 / 4 ) ( u^2 -1 ) ^{2} $. With the corresponding energy. We define the small parameter to be $\varepsilon  = 1 / 30$.
 \begin{equation}
 E( u)  = \int_{\Omega }^{} \frac{\varepsilon }{2} \abs{ \nabla u } ^2 + \frac{1}{\varepsilon } F( u) dx
 \end{equation}
@@ -32,10 +33,10 @@ We also recall that the energy functional monotonically decreasing and that the 
 
 Now assume that $u \in L^2( [0,T], H^{4}( \Omega ) ) $ and $v_{h} \in  V_{h}$ of order $k$. It is clear that the initial weak formulation is,
 \begin{equation}
-    ( \partial_{t} u,v_{h} )_{\Omega }  + ( \Delta ^2u, v_{h})_{\Omega } - ( f( u), v_{h} )_{\Omega } = 0.
+    ( \partial_{t} u,v_{h} )_{\Omega }  + \varepsilon ( \Delta ^2u, v_{h})_{\Omega } - \frac{1}{\varepsilon } ( f( u), v_{h} )_{\Omega } = 0.
 \end{equation}
 
-As we can see did the biharmonic equation appear and, thus, we can apply the cut finite element framework developed in Section \ref{sec:cutcip_biharmonic_problem}. By also utilizing the can we discretize the problem.
+As we can see did the biharmonic equation appear and, thus, we can apply the cut finite element framework developed in Section \ref{sec:cutcip_biharmonic_problem}. We define the discrete weak problem as follows.
 \begin{equation}
     \begin{split}
         & \text{Find  }u_{h} \in L^{2}( [0,T],V_{h})  \text{ such that } \forall v_{h} \in V_{h} \\
@@ -49,21 +50,23 @@ Here we have followed the nonlinear weak formulation \cite[Equation
     A_{h}( u_{h}, v_{h})  & =  a_{h}( u_{h}, v_{h}) + g_{h}( u_{h}, v_{h})
 \end{align}
 
-The primary aim is to formulate demonstrate that this problem can be solved using a simple scheme. Define the index $m$ to range over the set ${0, 1, \ldots, M}$, which corresponds to uniformly distributed time points $t_{m}$ that satisfy the boundary conditions $t_{0} = 0$
+The primary aim is to formulate demonstrate that this problem can be solved using a simple time-integration scheme. Define the index $m$ to range over the set ${0, 1, \ldots, M}$, which corresponds to uniformly distributed time points $t_{m}$ that satisfy the boundary conditions $t_{0} = 0$
 and $t_{M} = T$. Here, each time step is an element of the function space, i.e. $u^{m}_{h} \in V_{h}$  with the initial condition defined as $u^{0} = u( t_{0},x )$.
-For the Implicit explicit scheme (IMEX) sceheme we have the following discretization
-\[
-( \overline{\partial } _{t} u^{m}_{h}, v_{h}   )_{\Omega } + \varepsilon a^{m}_{h}( u_{h}^{m} , v) + \frac{1}{\varepsilon } c_{h} (  u_{h}^{m-1}, v_{h})  = l_{h}( v) , \quad \forall v_{h}, u^{m}_{h} \in V^{}_{h}.
-\]
-
-Here we have define the forward difference operator with time step $\tau $
-\[
+Define the forward difference operator with time step $\tau = ε^2/60 $ such that
+\begin{equation}
 \overline{\partial } _{t} u_{h}^{m} = \frac{u_{h}^{m} - u_{h}^{m-1}}{ \tau }
-\]
-, then we have the following scheme.
-\[
-( u_{h}^{m},v )_{\Omega }  + \tau \varepsilon a_{h}( u_{h}^{m} , v)   = \tau  l_{h}( v) +   ( u_{h}^{m-1},v )_{\Omega } - \frac{\tau}{\varepsilon } c_{h} (  u_{h}^{m-1}, v) .
-\]
+\end{equation}
+
+We define the Implicit explicit scheme (IMEX) scheme to have the following discretization,
+\begin{equation}
+( \overline{\partial } _{t} u^{m}_{h}, v_{h}   )_{\Omega } + \varepsilon a^{m}_{h}( u_{h}^{m} , v) + \frac{1}{\varepsilon } c_{h} (  u_{h}^{m-1}, v_{h})  = 0 , \quad \forall v_{h}, u^{m}_{h} \in V^{}_{h}.
+\end{equation}
+which equivalently can be rewritten as
+\begin{equation}
+( u_{h}^{m},v )_{\Omega }  + \tau \varepsilon a_{h}( u_{h}^{m} , v)   =  ( u_{h}^{m-1},v )_{\Omega } - \frac{\tau}{\varepsilon } c_{h} (  u_{h}^{m-1}, v) .
+\end{equation}
+Hence, we have a complete scheme.
+
 
  % Recall that $V_{h}$ is spanned by the orthonormal polynomial basis $ \left\{ \phi _{j} \right\}_{i=1}^{ N}  $ with $N$ degrees of freedom  s.t.  $v = \sum_{i}^{N} V_{i} \phi_{i}   $ and $u_{h} = \sum_{i}^{N} U_{i} \phi_{i}   $.
  %    Let  $U^{m} = \left[ U_{1}, \ldots, U^{N} \right]^{T} $ and $V= \left[ V_{1}, \ldots, V_{M} \right]^{T} $. Writing the matrices $[ A ]_{i,j} =  a( \phi _{i}, \phi _{j})  $ and $\left[ F \right] _{j} = l_{h}( \phi _{j})  $ and $ \left[ C \right]_{ij}
