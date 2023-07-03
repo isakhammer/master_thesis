@@ -1,16 +1,16 @@
 
 \newpage
-\section{Demonstration of solving the Cahn Hilliard equation }%
+\section{Application to the Cahn Hilliard equation }%
 \label{sec:cahn_hilliard_equation}
 
-In this paper, we will demonstrate that the proposed cut finite element method can be used to solve the Cahn-Hilliard problem. Firstly, we will recall the strong form and illustrate how it can be recast into a weak form following the approach in
+In this section, we will demonstrate that the proposed cut finite element method can be used to solve the Cahn-Hilliard problem. Firstly, we will recall the strong form and illustrate how it can be recast into a weak form following the approach in
 \cite{feng2007fully}. Subsequently, we will derive a simplistic numerical time iteration scheme to demonstrate that the solution to the problem can indeed be found. Again, all numerical experiments are conducted using the open-source finite element method (FEM) framework, Gridap, as documented in \cite{verdugo22}.
 
 
 \subsection{Revisiting the strong formulation}%
 \label{sub:revisiting_the_strong_formulation}
 
-
+We will do a short revisit of the strong Cahn-Hilliard equation. Recall that,
 \begin{equation}
 \label{eq:strong_ch}
     \begin{split}
@@ -19,10 +19,36 @@ In this paper, we will demonstrate that the proposed cut finite element method c
 \partial _{n}    \Delta u       &= 0 \quad \text{ on } \Gamma  \\
     \end{split}
 \end{equation}
-Where we define $f( u) = F' ( u)  $ where $F( u) = ( 1 / 4 ) ( u^2 -1 ) ^{2} $. With the corresponding energy.
+Where we defined $f( u) = u( u^{2} -1)  = F' ( u)  $ where $F( u) = ( 1 / 4 ) ( u^2 -1 ) ^{2} $. With the corresponding energy.
 \begin{equation}
 E( u)  = \int_{\Omega }^{} \frac{\varepsilon }{2} \abs{ \nabla u } ^2 + \frac{1}{\varepsilon } F( u) dx
 \end{equation}
+
+We also recall that the energy functional monotonically decreasing and that the global mass concentration is conserved, i.e.
+\begin{equation}
+\label{eq:mass_cons_energy_decrease}
+\frac{d}{dt} E( u)  <  0 \text{ and }\frac{d}{dt} \int_{\Omega }^{}  u dx = 0.
+\end{equation}
+
+Now assume that $u \in L^2( [0,T], H^{4}( \Omega ) ) $ and $v_{h} \in  V_{h}$ of order $k$. It is clear that the initial weak formulation is,
+\begin{equation}
+    ( \partial_{t} u,v_{h} )_{\Omega }  + ( \Delta ^2u, v_{h})_{\Omega } - ( f( u), v_{h} )_{\Omega } = 0.
+\end{equation}
+
+As we can see did the biharmonic equation appear and, thus, we can apply the cut finite element bilinear form proposed in Equation \eqref{eq:discrete_CutCIP_prob}. By also utilizing the  can we discretize the problem.
+\begin{equation}
+    \begin{split}
+        & \text{Find  }u_{h} \in L^{2}( [0,T],V_{h})  \text{ such that } \forall v_{h} \in V_{h} \\
+        & ( \partial_{t} u_{h},v_{h} )_{\Omega }   + \frac{1}{\varepsilon }A_{h}( u_{h},v_{h})   + \varepsilon c_{h}( u_{h},v_{h})  = 0.
+    \end{split}
+\end{equation}
+Here we have followed the nonlinear weak formulation \cite[Equation
+4.2]{feng2007fully} such that
+\begin{equation}
+    c_{h}( u_{h}, v_{h})  = ( f( u_{h}) ,\Delta v_{h})_{\Omega } +  ( f( u_{h}) , \partial _{n}v)_{\mathcal{F}_{h} }
+\end{equation}
+
+
 
 
 
