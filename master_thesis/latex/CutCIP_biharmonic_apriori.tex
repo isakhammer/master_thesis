@@ -207,28 +207,27 @@ Hence, the first part of the proof is complete.
             \partial _{n} \Delta \psi & = 0 \quad  \text{ on } \Gamma   \\
             \end{split}
         \end{equation}
- Here is the regularity of $\psi $ and $e$ a consequence of the assumptions\cite[pp. 113]{brenner2012}.
+ Here is the regularity of $\psi $ and $e$ a consequence of the assumptions of the regularity of $u$ and $u_{h}$  \cite[pp. 113]{brenner2012}.
         This implies that it exists a $\psi \in H^{4}( \Omega ) $ such that $a_{h}(v, \psi ) = ( e,v)_{\Omega } \ \forall v \in V_{h}  $. Hence, we can easily observe that \begin{equation}
             \label{eq:ni_1}
             \begin{split}
         \| e \|_{ \Omega  }^{ 2 }  & = ( e,e)_\Omega   = ( e, \Delta ^2 \psi )_{\Omega } \\
-        &= a_{h}(  \psi, e ) = a_{h}( u-u_h, \psi ) \\
+        &= a_{h}( e, \psi  ) = a_{h}( u-u_h, \psi ) \\
         &= a_{h}( u-u_h, \psi + C^{e}_{h}\psi  - C^{e}_{h}\psi )  \\
         &= a_{h}( u-u_h, \psi   - C^{e}_{h}\psi ) +  a_{h}( u-u_h, C^{e}_{h}\psi )  \\
         &= a_{h}( u-u_h, \psi  - C^{e}_{h}\psi )  \\
-        & \lesssim    \underbrace{\|u-u_{h}  \|_{a_{h},*  }^{  }}_{\mathrm{I} }   \underbrace{\| \psi  - C^{e}_{h}\psi \|_{a_{h},*  }^{  }}_{\mathrm{II} }
+        & \lesssim    \underbrace{\|u-u_{h}  \|_{a_{h},*  }^{  }}_{\mathrm{I}_{a} }   \underbrace{\| \psi  - C^{e}_{h}\psi \|_{a_{h},*  }^{  }}_{\mathrm{I}_{b} }
             \end{split}
         \end{equation}
-
-        Now, for $\mathrm{I} $ we simply use the energy a priori estimate
+        Now, for $\mathrm{I} $ we simply apply the energy a priori estimate \eqref{eq:bi_apriori_1}
         \begin{equation}
             \label{eq:ni_2}
-            \mathrm{I} \lesssim h^{r-2} \| u \|_{ r,\Omega   }^{  }
+            \mathrm{I}_{a} \lesssim h^{r-2} \| u \|_{ r,\Omega   }^{  }
         \end{equation}
-        However, to estimate $\mathrm{II} $ we set $\widetilde{r} = \mathrm{min} ( 4, k+1)  $, where $4$ comes from the regularity $\psi \in H^{4}( \Omega ) $ and $\| \psi \|_{4,\Omega   }^{  } \lesssim \| e \|_{ \Omega   }^{  }  $, thus,
+        However, to estimate $\mathrm{I}_{b} $ we set $\widetilde{r} = \mathrm{min} ( 4, k+1)  $, where $4$ comes from the regularity $\psi \in H^{4}( \Omega ) $ and $\| \psi \|_{4,\Omega   }^{  } \lesssim \| e \|_{ \Omega   }^{  }  $, thus,
         \begin{equation}
             \label{eq:ni_3}
-            \mathrm{II} \lesssim h^{\widetilde{r} -2} \| \psi \|_{ \widetilde{r},\Omega   }^{  } \lesssim h^{\widetilde{r} -2} \| e \|_{ \Omega   }^{  }.
+            \mathrm{I}_{b} \lesssim h^{\widetilde{r} -2} \| \psi \|_{ \widetilde{r},\Omega   }^{  } \lesssim h^{\widetilde{r} -2} \| e \|_{ \Omega   }^{  }.
         \end{equation}
         Hence, combining \eqref{eq:ni_1}, \eqref{eq:ni_2} and \eqref{eq:ni_3}  can we conclude \begin{equation}
             \| e \|_{\Omega   }^{  } \lesssim h^{r+ \widetilde{r} -4} \| u \|_{ r,\Omega   }^{  }
