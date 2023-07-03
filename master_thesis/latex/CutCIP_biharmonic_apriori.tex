@@ -166,7 +166,7 @@ Let $u \in H^{s}( \Omega )  $, $ s\ge 3 $  be the exact solution to   \eqref{eq:
         \begin{split}
     \| u - u_{h} \|_{ a_{h} }^{  } & \le   \| u - C_{h}^{e} u + C_{h}^{e}u - u_{h} \|_{ a_{h},* }^{  } \\
     & \le \|  u - C_{h}^{e} u \|_{a_{h},*  }^{  } +  \| C_{h}^{e}u - u_{h} \|_{a_{h},*  }^{  }\\
-                                     & \lesssim  \| e_{\pi } \|_{a_{h},*}^{  } + \| e_{h} \|_{A_{h}  }^{  }
+                                     & \lesssim  \| e_{\pi } \|_{a_{h},*}^{  } + \| e_{h} \|_{A_{h}  }^{  }.
         \end{split}
     \end{equation}
     Using Lemma \ref{lemma:astar_estimate}, is it clear that $\| e_{\pi } \|_{a_{h},*}^{  } \lesssim h^{r-2} \| u \|_{ r,\Omega  }^{  }  $ is already fulfilled, hence, it remains to estimate $e_{h}$. From Lemma \ref{lemma:bi_Ah_coercive} and
@@ -198,8 +198,8 @@ Hence, the first part of the proof is complete.
         \textbf{Step 2.}
         We want to show that $ \| e \|_{ \Omega  }^{  } \lesssim   h^{r- \mathrm{max}(0,3-k)} \| u \|_{ r ,\Omega  }^{  }$. The idea is to apply the so-called Aubin-Nitsche duality trick while being aware of the ghost penalty $g_{h}$. Let us denote the following
         observation.
-        Assume that $e:= u -u_{h} \in L^{2}( \Omega ) $ and $\psi  \in H^{4}( \Omega ) $.
-        Let the corresponding dual problem to \eqref{eq:bi_problem} be
+        Let $e:= u -u_{h} \in L^{2}( \Omega ) $ and $\psi  \in H^{4}( \Omega ) $.
+        Then is the corresponding dual problem to \eqref{eq:bi_problem} be
         \begin{equation}
             \begin{split}
             \Delta ^2 \psi &= e  \quad  \text{ in } \Omega  \\
@@ -207,7 +207,7 @@ Hence, the first part of the proof is complete.
             \partial _{n} \Delta \psi & = 0 \quad  \text{ on } \Gamma   \\
             \end{split}
         \end{equation}
-
+ Here is the regularity of $\psi $ and $e$ a consequence of the assumptions\cite[pp. 113]{brenner2012}.
         This implies that it exists a $\psi \in H^{4}( \Omega ) $ such that $a_{h}(v, \psi ) = ( e,v)_{\Omega } \ \forall v \in V_{h}  $. Hence, we can easily observe that \begin{equation}
             \label{eq:ni_1}
             \begin{split}
