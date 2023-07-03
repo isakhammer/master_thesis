@@ -1,9 +1,9 @@
 
-\section{Numerical results}%
+\subsection{Numerical experiments}%
 \label{sec:numerical_results}
 
 
-To validate the proposed CutCIP method for the biharmonic problem will we investigate several numerical results both for the Laplace and Hessian formulation. From the theoretical optimal a priori estimates presented in presented in Theorem \ref{thm:apriori_result} will we provide examples where it holds. We also demonstrate the effect ghost penalty of stabilization by translating the domain to trigger badly cut cells. Finally, we provide numerical validation of the expected convergence for
+To validate the proposed cut finite element methods for the biharmonic problem will we investigate several numerical experiments both for the Laplace and Hessian formulation. From the theoretical optimal a priori estimates presented in presented in Theorem \ref{thm:apriori_result} will we provide examples where it holds. We also demonstrate the effect ghost penalty of stabilization by translating the domain to trigger badly cut cells. Finally, we provide numerical validation of the expected convergence for
 the Cahn-Hilliard problem. We propose the following penalty parameters $\gamma = 20$ for the Hessian formulation \eqref{eq:hessian_prob} and the Laplace formulation \eqref{eq:laplace_prob}, and $\gamma _{1}, \gamma _{2} = 10, 0.5$ for the
 corresponding ghost penalty \eqref{eq:ghost_penalty}.
 
@@ -11,9 +11,9 @@ Condition numbers are essential to solve linear systems because they help us ass
 sensitive to small changes in the input data, potentially leading to inaccurate results. This underline the importance checking the conditional stability of cut cells, hence, motivating to do a so-called translation test with and without ghost
 penalty.
 
-All numerical experiments are conducted using the open-source finite element method (FEM) framework Gridap \cite{verdugo22}.
+All numerical experiments are conducted using the open-source finite element method framework Gridap \cite{verdugo22}.
 
-\subsection{Convergence study for the cut finite element method method for the biharmonic problem  }%
+\subsubsection{Numerical setup}%
 \label{sub:numerical_results_for_cutcip_biharmonic_equation}
 For the convergence study will we consider a square background domain $\widetilde{\Omega} $ with side lengths $L$ and a physical domain $\Omega \subset \widetilde{\Omega}$ on the form $\Omega  = \left\{ ( x,y)  \mid \phi ( x,y) \le 0    \right\} $,
 where $\phi: \mathbb{R} ^2 \to \mathbb{R}  $ is a given level set function. We will consider two cases; a circular domain,
@@ -138,7 +138,7 @@ EOC( j) =  \frac{\log \left(  \frac{\kappa _{\infty}( A^{j-1})}{\kappa _{\infty}
 \end{equation}
 
 
-\subsection{Validation of the a priori estimates }%
+\subsubsection{Validation of the a priori estimates }%
 \label{ssub:numerical_results}
 
 Our goal it validate the Theorem \ref{thm:apriori_result} for $k= 2$ for the Hessian formulation and show that the Laplace formulation has the same properties.
@@ -210,7 +210,7 @@ We did the following convergence tests.
 
 
 \newpage
-\subsection{Translation test}%
+\subsubsection{Translation test}%
 \label{ssub:translation_test}
 
 \begin{figure}[h!]
