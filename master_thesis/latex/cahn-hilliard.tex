@@ -1,7 +1,6 @@
 
 \newpage
 \section{Application to the Cahn Hilliard equation }%
-\label{sec:cahn_hilliard_equation}
 
 In this section, we will demonstrate that the proposed cut finite element method can be used to solve the Cahn-Hilliard problem. Firstly, we will recall the strong form and illustrate how it can be recast into a weak form following the approach in
 \cite{feng2007fully}. Subsequently, we will derive a simplistic numerical time iteration scheme to demonstrate that the solution to the problem can indeed be found. Again, all numerical experiments are conducted using the open-source finite element method (FEM) framework, Gridap, as documented in \cite{verdugo22}.
@@ -27,7 +26,7 @@ E( u)  = \int_{\Omega }^{} \frac{\varepsilon }{2} \abs{ \nabla u } ^2 + \frac{1}
 
 We also recall that the energy functional monotonically decreasing and that the global mass concentration is conserved, i.e.
 \begin{equation}
-\label{eq:mass_cons_energy_decrease}
+\label{eq:mass_cons_energy_decrease2}
 \frac{d}{dt} E( u)  <  0 \text{ and }\frac{d}{dt} \int_{\Omega }^{}  u dx = 0.
 \end{equation}
 
@@ -52,7 +51,7 @@ Here we have followed the nonlinear weak formulation \cite[Equation
 
 The primary aim is to formulate demonstrate that this problem can be solved using a simple time-integration scheme. Define the index $m$ to range over the set ${0, 1, \ldots, M}$, which corresponds to uniformly distributed time points $t_{m}$ that satisfy the boundary conditions $t_{0} = 0$
 and $t_{M} = T$. Here, each time step is an element of the function space, i.e. $u^{m}_{h} \in V_{h}$  with the initial condition defined as $u^{0} = u( t_{0},x )$.
-Define the forward difference operator with time step $\tau = ε^2/60 $ such that
+Define the forward difference operator with time step $\tau = \varepsilon^{2} /60 $ such that
 \begin{equation}
 \overline{\partial } _{t} u_{h}^{m} = \frac{u_{h}^{m} - u_{h}^{m-1}}{ \tau }
 \end{equation}
