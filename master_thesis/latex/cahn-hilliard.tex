@@ -58,14 +58,13 @@ Define the forward difference operator with time step $\tau = \varepsilon^{2} /6
 
 We define the Implicit explicit scheme (IMEX) scheme to have the following discretization,
 \begin{equation}
-( \overline{\partial } _{t} u^{m}_{h}, v_{h}   )_{\Omega } + \varepsilon a^{m}_{h}( u_{h}^{m} , v) + \frac{1}{\varepsilon } c_{h} (  u_{h}^{m-1}, v_{h})  = 0 , \quad \forall v_{h}, u^{m}_{h} \in V^{}_{h}.
+( \overline{\partial } _{t} u^{m}_{h}, v_{h}   )_{\Omega } + \varepsilon A^{m}_{h}( u_{h}^{m} , v) + \frac{1}{\varepsilon } c_{h} (  u_{h}^{m-1}, v_{h})  = 0 , \quad \forall v_{h}, u^{m}_{h} \in V^{}_{h}.
 \end{equation}
 which equivalently can be rewritten as
 \begin{equation}
-( u_{h}^{m},v )_{\Omega }  + \tau \varepsilon a_{h}( u_{h}^{m} , v)   =  ( u_{h}^{m-1},v )_{\Omega } - \frac{\tau}{\varepsilon } c_{h} (  u_{h}^{m-1}, v) .
+( u_{h}^{m},v )_{\Omega }  + \tau \varepsilon A_{h}( u_{h}^{m} , v)   =  ( u_{h}^{m-1},v )_{\Omega } - \frac{\tau}{\varepsilon } c_{h} (  u_{h}^{m-1}, v) .
 \end{equation}
-Hence, we have a complete scheme.
-
+Hence, we have a complete space time scheme.
 
  % Recall that $V_{h}$ is spanned by the orthonormal polynomial basis $ \left\{ \phi _{j} \right\}_{i=1}^{ N}  $ with $N$ degrees of freedom  s.t.  $v = \sum_{i}^{N} V_{i} \phi_{i}   $ and $u_{h} = \sum_{i}^{N} U_{i} \phi_{i}   $.
  %    Let  $U^{m} = \left[ U_{1}, \ldots, U^{N} \right]^{T} $ and $V= \left[ V_{1}, \ldots, V_{M} \right]^{T} $. Writing the matrices $[ A ]_{i,j} =  a( \phi _{i}, \phi _{j})  $ and $\left[ F \right] _{j} = l_{h}( \phi _{j})  $ and $ \left[ C \right]_{ij}
