@@ -176,7 +176,7 @@ Let $u \in H^{s}( \Omega )  $, $ s\ge 3 $  be the exact solution to   \eqref{eq:
     \begin{split}
 \| e_{h} \|_{ A_{h} }^{ 2 } & \lesssim a_{h}( C _{h}^{e} u - u_{h}, e_{h}) + g_{h}( C _{h}^{e}u - u_{h}, e_{h}) \\
  & = a_{h}( C _{h}^{e} u - u, e_{h}) + a_{h}( u - u_{h}, e_{h}) + g_{h}( C _{h}^{e}u - u_{h}, e_{h}) \\
- & = a_{h}( C _{h}^{e} u - u, e_{h}) + g_{h}( C _{h}^{e}u, e_{h}) \\
+ & = a_{h}( C _{h}^{e} u - u, e_{h}) + g_{h}( C _{h}^{e}u, e_{h}).
  % & \lesssim h^{r-2} \| u \|_{ r, \Omega  }^{  } \| e_{h} \|_{ A_{h} }^{  }.
     \end{split}
     \end{equation}
@@ -186,15 +186,13 @@ Hence, now utilizing the Assumption EP2 \eqref{as:bi_EP2} is it clear that
     \begin{split}
         a_{h}( C _{h}^{e} u - u, e_{h}) + g_{h}( C _{h}^{e}u, e_{h}) &\lesssim \| C _{h}^{e} u - u \|_{a_{h},*  }^{  } \| e_{h} \|_{a_{h}  }^{  }
         + \abs{ C _{h}^{e}u }_{g_{h}} \abs{e_{h}  }_{g_{h}} \\
-         &\lesssim \| C _{h}^{e} u - u \|_{a_{h},*  }^{  } \| e_{h} \|_{a_{h}  }^{  } + h^{r-2} \| e_{h} \|_{r, \Omega   }^{  }\abs{e_{h}  }_{g_{h}} \\
-         &\lesssim (\| C _{h}^{e} u - u \|_{a_{h},*  }^{  } + h^{r-2} \| e_{h} \|_{r, \Omega   }^{  }) \|e_{h}\|_{A_{h}} \\
+         &\lesssim \| C _{h}^{e} u - u \|_{a_{h},*  }^{  } \| e_{h} \|_{a_{h}  }^{  } + h^{r-2} \| u \|_{r, \Omega   }^{  }\abs{e_{h}  }_{g_{h}} \\
+         &\lesssim (\| C _{h}^{e} u - u \|_{a_{h},*  }^{  } + h^{r-2} \| u \|_{r, \Omega   }^{  }) \|e_{h}\|_{A_{h}} \\
          &\lesssim  h^{r-2} \| u \|_{r, \Omega   }^{  } \|e_{h}\|_{A_{h}}.
     \end{split}
 \end{equation}
 Here we noticed that $\| e_{h} \|_{a_{h}  }^{  } + \abs{e_{h}  }_{g_{h}} \lesssim \| e_{h} \|_{ A_{h} }^{  }  $, and used that $\| C _{h}^{e} u - u \|_{a_{h},*  }^{  } \lesssim h^{r-2}\| u \|_{ r,\Omega  }^{  }  $ from Lemma
-\ref{lemma:astar_estimate}.
-
-Finally, combining \eqref{eq:apriori_energy1} and \eqref{eq:apriori_energy2} is it clear that $\| e_{h} \|_{ A_{h}  }^{  } \lesssim h^{r-2} \| u \|_{r, \Omega   }^{  }  $.
+\ref{lemma:astar_estimate}. Combining \eqref{eq:apriori_energy1} and \eqref{eq:apriori_energy2} and dividing by $\| e_{h} \|_{ A_{h} }^{  } $  is it clear that $\| e_{h} \|_{ A_{h}  }^{  } \lesssim h^{r-2} \| u \|_{r, \Omega   }^{  }  $.
 Hence, the first part of the proof is complete.
 
         \textbf{Step 2.}
