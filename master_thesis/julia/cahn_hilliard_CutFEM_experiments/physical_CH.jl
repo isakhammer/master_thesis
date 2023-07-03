@@ -7,6 +7,8 @@ using DataFrames
 using CSV
 using YAML
 using LaTeXStrings
+using Random
+Random.seed!(1234)  # Set the seed to a specific value
 
 function main(;domain="flower")
 
@@ -26,7 +28,7 @@ function main(;domain="flower")
     L=2.70
     n = 2^7
     h = 2*L/n
-    it = 1000
+    it = 100
     γ = 20
     τ = ε^2/60
     γg1 = 10
@@ -137,19 +139,23 @@ function main(;domain="flower")
     # uh = interpolate_everywhere(u_ex(0),U)
     u0 = FEFunction(U, deepcopy(u_dof_vals))
     uh = FEFunction(U, u_dof_vals)
-    u0_L1 = sum( ∫(u0)dΩ )
+    u0_L1 = abs( sum( ∫(u0)dΩ ) )
     pvd = Dict()
     pvd[t] = createvtk(Ω, graphicsdir*"/sol_$t"*".vtu",cellfields=["uh"=>uh, "u_ex"=>u_ex(t)])
 
     # Adding initial plotting values
-    e_u_ts = Float64[]
+    δuhs = []
+    Δuhs = []
     Es = Float64[]
     ts = Float64[]
     push!(ts, t)
     E = sum( ∫((ε/2)*( ∇(uh)⋅∇(uh) ) + (1/ε)*(1/4)*((uh*uh - 1)*(uh*uh - 1))  )dΩ)
-    e_u = sum( ∫( (u0 - uh ) )dΩ)
+
     push!(Es, E)
-    push!( e_u_ts, e_u/u0_L1)
+    # First step is not defined
+    push!( δuhs, missing)
+    push!( Δuhs, missing)
+
 
     println("========================================")
     println("Solving Cahn-Hilliard with t0 = $t0, T = $T and time step τ = $τ with Nt_max = $Nt_max timesteps")
@@ -163,6 +169,8 @@ function main(;domain="flower")
     # Time loop
     println("----------------------------------------")
     println("Solving Cahn-Hilliard for step $(Nt_max), n = $n, τ = $τ")
+
+    uh0 = FEFunction(U, deepcopy( uh.free_values ))
     while t < T
         Nt += 1
         t += τ
@@ -179,9 +187,13 @@ function main(;domain="flower")
         # Adding initial plotting values
         push!(ts, t)
         E = sum( ∫(( ∇(uh)⋅∇(uh) ) + (1/4)*((uh*uh - 1)*(uh*uh - 1))  )dΩ)
-        e_u = sum( ∫( (u0 - uh ) )dΩ)
+        δuh =  sum( ∫( (uh0 - uh ) )dΩ) /u0_L1
+        Δuh =  abs(sum( ∫( (u0 - uh ) )dΩ)) /u0_L1
+        push!( δuhs, δuh)
+        push!( Δuhs, Δuh)
+        uh0 = FEFunction(U, deepcopy( uh.free_values ))
+
         push!(Es, E)
-        push!( e_u_ts, e_u/u0_L1)
         pvd[t] = createvtk(Ω, graphicsdir*"/sol_$t"*".vtu",cellfields=["uh"=>uh, "u_ex"=>u_ex(t)])
     end
 
@@ -193,7 +205,7 @@ function main(;domain="flower")
     end
 
     # Save results
-    df = DataFrame(ts=ts, Es=Es, e_u_ts=e_u_ts)
+    df = DataFrame(ts=ts, Es=Es, delta_uhs=δuhs, Delta_uhs=Δuhs)
     CSV.write(maindir*"/sol.csv", df, delim=',')
 
     parameters = Dict(
@@ -210,7 +222,7 @@ function main(;domain="flower")
     YAML.write_file(maindir*"/parameters.yml", parameters)
 
     # Normalize data
-    p1 = plot(ts, e_u_ts, label = "e_u", xlabel="t")
+    p1 = plot(ts, δuhs, label = "e_u", xlabel="t")
     p2 = plot(ts[2:end], Es[2:end], xscale=:log10, yscale=:log10, label = "E(u)", xlabel="t")
     savefig(p1,maindir*"/mass_cons.png")
     savefig(p2,maindir*"/energy.png")

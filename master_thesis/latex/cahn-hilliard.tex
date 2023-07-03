@@ -70,23 +70,23 @@ Hence, we have a complete space time scheme.
 \subsection{Demonstration on the physical Cahn-Hilliard problem}%
 \label{sub:demonstration_on_the_physical_cahn_hilliard}
 
-On the physical CH \eqref{eq:strongch} presented we have no analytical solution to check the solution. However, a way to check that the system does behave like expected based on the physical properties \eqref{eq:mass_cons_energy_decrease}. In other
-words, we can check that our discrete solution satisfies the following conditions \[
+On the strong form of the Cahn-Hilliard \eqref{eq:strong_ch} we have no analytical solution, so we cannot construct a manufactured solution. However, a way to check that the system does behave like expected based on the physical properties \eqref{eq:mass_cons_energy_decrease}. In other
+words, we can check that our discrete solution satisfies the following conditions. Let $E^m = E( u_{h}^{m})$ then is  \[
     \begin{split}
- E( u_{h}^{m}) & <  E( u_{h}^{m-1}),  \\
-\int_{\Omega }^{} u_{h}^{m}   dx & = \int_{\Omega }^{} u_{0}(x)  dx,
+ E^m  & <  E^{ m-1 }  \\
+\int_{\Omega }^{} u_{h}^{m}   dx & = \int_{\Omega }^{} u_{0}  dx,
     \end{split}
 \]
 where $u_{0} = u( x,0) $. Let us define global mass conservation
 \[
- \Delta u_{h}^{m} = \frac{ \int_{\Omega }^{}  ( u_h^{m} - u_{0} ) dx}{ \int_{\Omega }^{}  u_{0} dx}
+ \Delta u_{h}^{m} = \frac{ \abs{ \int_{\Omega }^{}  ( u_h^{m} - u_{0} ) dx } }{ \abs{ \int_{\Omega }^{}  u_{0} dx } }
 \]
 and local mass conservation
 \[
- \delta u_{h}^{m} = \frac{ \int_{\Omega }^{}  ( u_h^{m} - u^{m-1}_{h} ) dx}{ \int_{\Omega }^{}  u_{0} dx}
+ \delta u_{h}^{m} = \frac{  \int_{\Omega }^{}  ( u_h^{m} - u^{m-1}_{h} ) dx  }{ \abs{ \int_{\Omega }^{}  u_{0} dx } }
 \]
 
-We also denote the local energy decrease parameter as
+We also denote the local positive difference as
 
 \begin{equation}
  \delta E^{m} = E( u_{h}^{m}) -  E( u_{h}^{m-1}),  \\
