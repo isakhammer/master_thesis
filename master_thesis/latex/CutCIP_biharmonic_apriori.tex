@@ -120,6 +120,7 @@ Again, from \eqref{eq:mean_jump_estimate} is it clear that $\| \mean{ \partial _
 \end{proof}
 
 \begin{lemma}[Weak Galerkin orthogonality]
+    \label{lemma:weak_galerkin_ort}
 Let $u \in H^{s}( \Omega )  $, $ s\ge 3 $  be the exact solution to   \eqref{eq:cont_weak_problem} and $u_{h} \in V_{h}$ is a discrete solution to \eqref{eq:discrete_CutCIP_prob}. Then is \[
     a_{h}( u - u_{h}, v_{h}) = g_{h} ( u_{h}, v_{h}) \quad \forall v_{h} \in V_{h}.
     \]
@@ -208,7 +209,7 @@ Hence, the first part of the proof is complete.
             \end{split}
         \end{equation}
  Here is the regularity of $\psi $ and $e$ a consequence of the assumptions of the regularity of $u$ and $u_{h}$  \cite[pp. 113]{brenner2012}.
-        This implies that it exists a $\psi \in H^{4}( \Omega ) $ such that $a_{h}(v, \psi ) = ( e,v)_{\Omega } \ \forall v \in V_{h}  $. Hence, we can easily observe that \begin{equation}
+        This implies that it exists a $\psi \in H^{4}( \Omega ) $ such that $a_{h}(v, \psi ) = ( e,v)_{\Omega } \ \forall v \in V_{h}  $. Hence, we can easily observe that from the weak Galerkin orthogonality \ref{lemma:weak_galerkin_ort} we have  \begin{equation}
             \label{eq:ni_1}
             \begin{split}
         \| e \|_{ \Omega  }^{ 2 }  & = ( e,e)_\Omega   = ( e, \Delta ^2 \psi )_{\Omega } \\
@@ -221,22 +222,20 @@ Hence, the first part of the proof is complete.
             \end{split}
         \end{equation}
 
-
+        Recall the \eqref{eq:bi_apriori_1}.
+        We set $\widetilde{r} = \mathrm{min} ( 4, k+1)  $, where $4$ comes from the regularity $\psi \in H^{4}( \Omega ) $ and $\| \psi \|_{4,\Omega   }^{  } \lesssim \| e \|_{ \Omega   }^{  }  $
         For the first term we know by Cauchy-Schwartz inequality that
         \begin{equation}
-             \mathrm{I}    \lesssim     \|u-u_{h}  \|_{a_{h},*  }^{  }    \| \psi  - C^{e}_{h}\psi \|_{a_{h},*  }^{  } = \mathrm{I} _{a} \mathrm{I} _{b}.
-        \end{equation}
-        Now, for $\mathrm{I}_{a} $ we simply apply the energy a priori estimate \eqref{eq:bi_apriori_1}
-        \begin{equation}
             \label{eq:ni_2}
-            \mathrm{I}_{a} \lesssim h^{r-2} \| u \|_{ r,\Omega   }^{  }
+            \begin{split}
+             \mathrm{I}    & \lesssim     \|u-u_{h}  \|_{a_{h},*  }^{  }    \| \psi  - C^{e}_{h}\psi \|_{a_{h},*  }^{  } \\
+                & \lesssim     h^{r-2} \| u \|_{ r,\Omega   }^{  }    \| \psi  - C^{e}_{h}\psi \|_{a_{h},*  }^{  } \\
+ & \lesssim h^{\widetilde{r} -2} \| \psi \|_{ \widetilde{r},\Omega   }^{  } \lesssim h^{\widetilde{r} -2} \| e \|_{ \Omega   }^{  }.
+            \end{split}
         \end{equation}
-        However, to estimate $\mathrm{I}_{b} $ we set $\widetilde{r} = \mathrm{min} ( 4, k+1)  $, where $4$ comes from the regularity $\psi \in H^{4}( \Omega ) $ and $\| \psi \|_{4,\Omega   }^{  } \lesssim \| e \|_{ \Omega   }^{  }  $, thus,
-        \begin{equation}
-            \label{eq:ni_3}
-            \mathrm{I}_{b} \lesssim h^{\widetilde{r} -2} \| \psi \|_{ \widetilde{r},\Omega   }^{  } \lesssim h^{\widetilde{r} -2} \| e \|_{ \Omega   }^{  }.
-        \end{equation}
+
         Specifically for the term $\mathrm{II} $ we have \begin{equation}
+            \label{eq:ni_3}
             \begin{split}
                 \mathrm{II}  & \lesssim \abs{ u_{h} - C_{h}^{e}u } _{g_{h}} \abs{ C^{e}_{h} \psi }_{g_{h}}  \\
                 & \lesssim  \| u_{h} - C_{h}^{e}u  \|_{A_{h}} \abs{ C^{e}_{h} \psi }_{g_{h}} \\
