@@ -66,34 +66,31 @@ which equivalently can be rewritten as
 \end{equation}
 Hence, we have a complete space time scheme.
 
- % Recall that $V_{h}$ is spanned by the orthonormal polynomial basis $ \left\{ \phi _{j} \right\}_{i=1}^{ N}  $ with $N$ degrees of freedom  s.t.  $v = \sum_{i}^{N} V_{i} \phi_{i}   $ and $u_{h} = \sum_{i}^{N} U_{i} \phi_{i}   $.
- %    Let  $U^{m} = \left[ U_{1}, \ldots, U^{N} \right]^{T} $ and $V= \left[ V_{1}, \ldots, V_{M} \right]^{T} $. Writing the matrices $[ A ]_{i,j} =  a( \phi _{i}, \phi _{j})  $ and $\left[ F \right] _{j} = l_{h}( \phi _{j})  $ and $ \left[ C \right]_{ij}
- %    = c_{h}( U^{m-1} \phi _{j}, \phi _{j}) $  .
- %    Subsequently, we can express the system in an equivalent explicit system.
- %    \[
- %        \begin{split}
- %            U^{m}  + \tau \varepsilon A U^{m} & = ( I  + \tau \varepsilon A ) U^{m}   \\
- %            b(U^{m-1}, V) &:=   \tau  F +   ( u_{h}^{m-1},v )_{\Omega } - \frac{\tau}{\varepsilon } c_{h} (  u_{h}^{m-1}, v)
- %        \end{split}
- %    \]
- %    s.t. $  ( I  + \tau \varepsilon A ) U^{m} = b(U^{m-1}, V )  $
-
 
 \subsection{Demonstration on the physical Cahn-Hilliard problem}%
 \label{sub:demonstration_on_the_physical_cahn_hilliard}
 
 On the physical CH \eqref{eq:strongch} presented we have no analytical solution to check the solution. However, a way to check that the system does behave like expected based on the physical properties \eqref{eq:mass_cons_energy_decrease}. In other
-words, we can check that our discrete solution satisfies \[
+words, we can check that our discrete solution satisfies the following conditions \[
     \begin{split}
- E( u_{h}( \cdot , t_{2}) ) & \le  E( u_{h}( \cdot , t_{1}) )   \text{ for } 0 < t_{1} < t_{2},  \\
-\int_{\Omega }^{} u_{h} ( x,t)  dx & = \int_{\Omega }^{} u_{0}(x)  dx,
+ E( u_{h}^{m}) & <  E( u_{h}^{m-1}),  \\
+\int_{\Omega }^{} u_{h}^{m}   dx & = \int_{\Omega }^{} u_{0}(x)  dx,
     \end{split}
 \]
-where $u_{0}( x) = u_{h}( x,t) $. Let us define
+where $u_{0} = u( x,0) $. Let us define global mass conservation
 \[
- e_{u} = \frac{ \int_{\Omega }^{}  u_h(x,t)- u(0,x) dx}{ \int_{\Omega }^{}  u(x,0) dx}
+ \Delta u_{h}^{m} = \frac{ \int_{\Omega }^{}  ( u_h^{m} - u_{0} ) dx}{ \int_{\Omega }^{}  u_{0} dx}
+\]
+and local mass conservation
+\[
+ \delta u_{h}^{m} = \frac{ \int_{\Omega }^{}  ( u_h^{m} - u^{m-1}_{h} ) dx}{ \int_{\Omega }^{}  u_{0} dx}
 \]
 
+We also denote the local energy decrease parameter as
+
+\begin{equation}
+ \delta E^{m} = E( u_{h}^{m}) -  E( u_{h}^{m-1}),  \\
+\end{equation}
 
 \begin{figure}[H]
     \centering
