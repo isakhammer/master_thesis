@@ -160,12 +160,13 @@ Let $u \in H^{s}( \Omega )  $, $ s\ge 3 $  be the exact solution to   \eqref{eq:
 
 \begin{proof}
     We will divide the proof into two steps.
-    \\
+
         \textbf{Step 1.} We want to prove that $\| e \|_{ a_{h},* }^{  } \lesssim   h^{r-2} \| u \|_{ r,\Omega  }^{  }$.
     Decompose $e = u - u_{h}$ intro $e = e_{h} + e_{\pi }$, where we denote the discrete error $e_{h} = C _{h}^{e} u - u_{h}$ and the interpolation error $e_{\pi } = u - C _{h} ^{e}u$. We can then observe that
     \begin{equation}
+        \label{eq:astar_est}
         \begin{split}
-    \| u - u_{h} \|_{ a_{h} }^{  } & \le   \| u - C_{h}^{e} u + C_{h}^{e}u - u_{h} \|_{ a_{h},* }^{  } \\
+    \| u - u_{h} \|_{ a_{h},* }^{  } & \le   \| u - C_{h}^{e} u + C_{h}^{e}u - u_{h} \|_{ a_{h},* }^{  } \\
     & \le \|  u - C_{h}^{e} u \|_{a_{h},*  }^{  } +  \| C_{h}^{e}u - u_{h} \|_{a_{h},*  }^{  }\\
                                      & \lesssim  \| e_{\pi } \|_{a_{h},*}^{  } + \| e_{h} \|_{A_{h}  }^{  }.
         \end{split}
@@ -193,8 +194,12 @@ Hence, now utilizing the Assumption EP2 \eqref{as:bi_EP2} is it clear that
     \end{split}
 \end{equation}
 Here we noticed that $\| e_{h} \|_{a_{h}  }^{  } + \abs{e_{h}  }_{g_{h}} \lesssim \| e_{h} \|_{ A_{h} }^{  }  $, and used that $\| C _{h}^{e} u - u \|_{a_{h},*  }^{  } \lesssim h^{r-2}\| u \|_{ r,\Omega  }^{  }  $ from Lemma
-\ref{lemma:astar_estimate}. Combining \eqref{eq:apriori_energy1} and \eqref{eq:apriori_energy2} and dividing by $\| e_{h} \|_{ A_{h} }^{  } $  is it clear that $\| e_{h} \|_{ A_{h}  }^{  } \lesssim h^{r-2} \| u \|_{r, \Omega   }^{  }  $.
-Hence, the first part of the proof is complete.
+\ref{lemma:astar_estimate}. Combining \eqref{eq:apriori_energy1} and \eqref{eq:apriori_energy2} and dividing by $\| e_{h} \|_{ A_{h} }^{  } $  is it clear that
+\begin{equation}
+    \label{eq:ni_4}
+\| e_{h} \|_{ A_{h}  }^{  } \lesssim h^{r-2} \| u \|_{r, \Omega   }^{  }  .
+\end{equation}
+Hence, inserting \eqref{eq:ni_4} into \eqref{eq:astar_est} we conclude the energy a priori estimate \eqref{eq:bi_apriori_1} holds.
 
         \textbf{Step 2.}
         We want to show that $ \| e \|_{ \Omega  }^{  } \lesssim   h^{r- \mathrm{max}(0,3-k)} \| u \|_{ r ,\Omega  }^{  }$. The idea is to apply the so-called Aubin-Nitsche duality trick while being aware of the ghost penalty $g_{h}$. Let us denote the following
@@ -209,7 +214,8 @@ Hence, the first part of the proof is complete.
             \end{split}
         \end{equation}
  Here is the regularity of $\psi $ and $e$ a consequence of the assumptions of the regularity of $u$ and $u_{h}$  \cite[pp. 113]{brenner2012}.
-        This implies that it exists a $\psi \in H^{4}( \Omega ) $ such that $a_{h}(v, \psi ) = ( e,v)_{\Omega } \ \forall v \in V_{h}  $. Hence, we can easily observe that from the weak Galerkin orthogonality \ref{lemma:weak_galerkin_ort} we have  \begin{equation}
+        This implies that it exists a $\psi \in H^{4}( \Omega ) $ such that $a_{h}(v, \psi ) = ( e,v)_{\Omega } \ \forall v \in V_{h}  $. Hence, we can easily observe that from the Lemma \ref{lemma:weak_galerkin_ort} we have
+        \begin{equation}
             \label{eq:ni_1}
             \begin{split}
         \| e \|_{ \Omega  }^{ 2 }  & = ( e,e)_\Omega   = ( e, \Delta ^2 \psi )_{\Omega } \\
@@ -222,19 +228,19 @@ Hence, the first part of the proof is complete.
             \end{split}
         \end{equation}
 
-        Recall the \eqref{eq:bi_apriori_1}.
-        We set $\widetilde{r} = \mathrm{min} ( 4, k+1)  $, where $4$ comes from the regularity $\psi \in H^{4}( \Omega ) $ and $\| \psi \|_{4,\Omega   }^{  } \lesssim \| e \|_{ \Omega   }^{  }  $
-        For the first term we know by Cauchy-Schwartz inequality that
+        We set $\widetilde{r} = \mathrm{min} ( 4, k+1)  $. Additionally, we have the regularity estimate $\| \psi \|_{\widetilde{r},\Omega   }^{  } \lesssim \| e \|_{ \Omega   }^{  } $.
+        Hence, by also  utilizing the energy a priori estimate \eqref{eq:bi_apriori_1} we can observe
         \begin{equation}
             \label{eq:ni_2}
             \begin{split}
              \mathrm{I}    & \lesssim     \|u-u_{h}  \|_{a_{h},*  }^{  }    \| \psi  - C^{e}_{h}\psi \|_{a_{h},*  }^{  } \\
-                & \lesssim     h^{r-2} \| u \|_{ r,\Omega   }^{  }    \| \psi  - C^{e}_{h}\psi \|_{a_{h},*  }^{  } \\
- & \lesssim h^{\widetilde{r} -2} \| \psi \|_{ \widetilde{r},\Omega   }^{  } \lesssim h^{\widetilde{r} -2} \| e \|_{ \Omega   }^{  }.
+                & \lesssim     h^{r-2} \| u \|_{ r,\Omega   }^{  } h^{\widetilde{r}-2}   \| \psi   \|_{\widetilde{r},\Omega  }^{  } \\
+                & \lesssim     h^{r-2} \| u \|_{ r,\Omega   }^{  }  h^{\widetilde{r}-2}  \| e   \|_{\Omega }^{  }
             \end{split}
         \end{equation}
 
-        Specifically for the term $\mathrm{II} $ we have \begin{equation}
+        Specifically for the term $\mathrm{II} $ we apply Assumption EP2 \eqref{as:bi_EP2} and the estimate \eqref{eq:ni_4}
+        \begin{equation}
             \label{eq:ni_3}
             \begin{split}
                 \mathrm{II}  & \lesssim \abs{ u_{h} - C_{h}^{e}u } _{g_{h}} \abs{ C^{e}_{h} \psi }_{g_{h}}  \\
