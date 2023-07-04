@@ -71,7 +71,7 @@ Hence, we have a complete space time scheme.
 \label{sub:demonstration_on_the_physical_cahn_hilliard}
 
 On the strong form of the Cahn-Hilliard \eqref{eq:strong_ch} we have no analytical solution, so we cannot construct a manufactured solution. However, a way to check that the system does behave like expected based on the physical properties \eqref{eq:mass_cons_energy_decrease}. In other
-words, we can check that our discrete solution satisfies the following conditions. Let $E^m = E( u_{h}^{m})$ do we expect that
+words, we can check that our discrete solution satisfies the following conditions. Let $E^m = E( u_{h}^{m})$, then we expect that
 \begin{equation}
  E^m   <  E^{ m-1 }
 \end{equation}
@@ -85,7 +85,7 @@ Let $u_{0} = u( x,0) $, then for the mass conservation do we expect
 \begin{equation}
 \int_{\Omega }^{} u_{h}^{m}   dx = \int_{\Omega }^{} u_{0}  dx,
 \end{equation}
- Let us define global mass error and local mass error.
+ Let us define the relative global mass error and local mass error.
  \begin{equation}
  \Delta u_{h}^{m}  = \frac{ \abs{ \int_{\Omega }^{}  ( u_h^{m} - u_{0} ) dx } }{ \abs{ \int_{\Omega }^{}  u_{0} dx } } \quad \text{ and } \quad
  \delta u_{h}^{m}  = \frac{  \int_{\Omega }^{}  ( u_h^{m} - u^{m-1}_{h} ) dx  }{ \abs{ \int_{\Omega }^{}  u_{0} dx } }.
@@ -139,6 +139,8 @@ Let $u_{0} = u( x,0) $, then for the mass conservation do we expect
 \end{figure}
 
 
+In our experiments, we defined the initial function $u_{0}(x)$ as the uniform samples from the interval $[-1, 1]$ for each node. That is, for each node $a_{i}$, $u_{0}(a_{i})$ is a sample from the uniform distribution on the interval $[-1, 1]$. This
+applies for all $i = 1, \ldots, N$, where $N$ is the total number of degrees of freedom in our system. The node $a_{i}$ is associated with the nodal basis for all $N$ degrees of freedom, as discussed for the discrete system \eqref{eq:discretized_system}.
 
 We ran the simulation on the for the flower domain \eqref{eq:flower} and the circular domain \eqref{eq:circle}, illustrated in Figure \ref{sub:fig:ill_circle_flower} . The corresponding plots of the mass conservation and energy decrease are presented
 in the Figure \ref{fig:physical_CH_plot}, and confirm the expected physical properties of the Cahn-Hilliard equation. The relative error $e_{u}$ shows small deviations of the numerical solution in the order of $10^{ -10 }$ demonstrating that the mass is conserved. We also observe that the energy functional
