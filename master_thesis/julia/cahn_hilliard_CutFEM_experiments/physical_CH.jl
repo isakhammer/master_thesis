@@ -149,7 +149,7 @@ function main(;domain="flower")
     ts = Float64[]
 
     # Adding initial plotting values
-    E = sum( ∫(( ∇(uh)⋅∇(uh) ) + (1/4)*((uh*uh - 1)*(uh*uh - 1))  )dΩ)
+    E = sum( ∫(( ε^2/2 )*( ∇(uh)⋅∇(uh) ) + (1/4)*((uh*uh - 1)*(uh*uh - 1))  )dΩ)
     E1 = sum( ∫(( ∇(uh)⋅∇(uh) ) )dΩ)
     E2 = sum( ∫((1/4)*((uh*uh - 1)*(uh*uh - 1))  )dΩ)
     push!(ts, t)
@@ -189,7 +189,7 @@ function main(;domain="flower")
         end
 
         # Adding plotting values
-        E = sum( ∫(( ∇(uh)⋅∇(uh) ) + (1/4)*((uh*uh - 1)*(uh*uh - 1))  )dΩ)
+        E = sum( ∫(ε^2/2*( ∇(uh)⋅∇(uh) ) + (1/4)*((uh*uh - 1)*(uh*uh - 1))  )dΩ)
         E1 = sum( ∫(( ∇(uh)⋅∇(uh) ) )dΩ)
         E2 = sum( ∫((1/4)*((uh*uh - 1)*(uh*uh - 1))  )dΩ)
         push!(ts, t)
@@ -239,11 +239,11 @@ function main(;domain="flower")
     scatter!(its[1:end-1], Δuhs[2:end], markersize = 2)
     p3 = plot(its, Es, size=default_size, yscale=:log10, xscale=:log10, legend=false, ylabel=L"$E^m$", xlabel=L"$t/\tau$")
     scatter!(its, Es, markersize = 2)
-    p4 = plot(its[1:end-1], Es[1:end-1] .- Es[2:end], size=default_size, legend=false,  yscale=:log10,  xscale=:log10,  xlabel=L"$t/\tau$", ylabel=L"$\Delta E^m$")
+    p4 = plot(its[1:end-1], Es[1:end-1] .- Es[2:end], size=default_size, legend=false,  xscale=:log10,  xlabel=L"$t/\tau$", ylabel=L"$\Delta E^m$")
     scatter!(its[1:end-1], Es[1:end-1] .- Es[2:end], markersize = 2)
     p5 = plot(its, E1s, size=default_size, yscale=:log10, xscale=:log10, legend=false, ylabel=L"$E_1^m$", xlabel=L"$t/\tau$")
     scatter!(its, E1s, markersize = 2)
-    p6 = plot(its, E2s, size=default_size, yscale=:log10, xscale=:log10, legend=false, ylabel=L"$E_2^m$", xlabel=L"$t/\tau$")
+    p6 = plot(its, E2s, size=default_size, xscale=:log10, legend=false, ylabel=L"$E_2^m$", xlabel=L"$t/\tau$")
     scatter!(its, E2s, markersize = 2)
     p = plot(p1, p2, p3, p4, p5, p6, layout = (6, 1))
     savefig(p,maindir*"/physical_CH_plot.pdf" )
