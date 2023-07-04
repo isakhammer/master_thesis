@@ -3,7 +3,7 @@ domain: "circle"
 epsilon: 0.03333333333333333
 gamma: 20
 gamma2: 0.5
-it: 100
+it: 1000
 L: 2.7
 tau: "epsilon^2/10"
 n: 128
