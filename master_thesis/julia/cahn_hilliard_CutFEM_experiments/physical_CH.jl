@@ -130,12 +130,16 @@ function main(;domain="flower")
 
     # Initial data
     u_dof_vals = (rand(Float64, num_free_dofs(U)) .-0.5)*2.0
-    # x_vals = range(0, stop=2, length=num_free_dofs(U))
-    # u_dof_vals = sin.(4π*x_vals)
+    u0 = FEFunction(U, u_dof_vals)
 
-    # uh = interpolate_everywhere(u_ex(0),U)
-    u0 = FEFunction(U, deepcopy(u_dof_vals))
-    uh = FEFunction(U, u_dof_vals)
+    # u_ex(x) = sin(2π*x[1])*sin(2π*x[2])
+    # u0 = interpolate_everywhere(u_ex, U)
+
+    # Initializing discrete function and its dof cals
+    uh = FEFunction(U,deepcopy( u0.free_values ) )
+    u_dof_vals = uh.free_values
+
+    # defining
     u0_L1 = abs( sum( ∫(u0)dΩ ) )
     pvd = Dict()
     pvd[t] = createvtk(Ω, graphicsdir*"/sol_$t"*".vtu",cellfields=["uh"=>uh])
@@ -246,7 +250,9 @@ function main(;domain="flower")
     p6 = plot(its, E2s, size=default_size, xscale=:log10, legend=false, ylabel=L"$E_2^m$", xlabel=L"$t/\tau$")
     scatter!(its, E2s, markersize = 2)
     p = plot(p1, p2, p3, p4, p5, p6, layout = (6, 1))
+
     savefig(p,maindir*"/physical_CH_plot.pdf" )
+    plot(p)
 
 end
 
