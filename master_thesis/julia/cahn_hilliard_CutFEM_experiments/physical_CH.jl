@@ -140,15 +140,22 @@ function main(;domain="flower")
     pvd = Dict()
     pvd[t] = createvtk(Ω, graphicsdir*"/sol_$t"*".vtu",cellfields=["uh"=>uh])
 
-    # Adding initial plotting values
+    # Defining plotting values
     δuhs = []
     Δuhs = []
     Es = Float64[]
+    E1s = Float64[]
+    E2s = Float64[]
     ts = Float64[]
-    push!(ts, t)
-    E = sum( ∫(( ∇(uh)⋅∇(uh) ) + (1/4)*((uh*uh - 1)*(uh*uh - 1))  )dΩ)
 
+    # Adding initial plotting values
+    E = sum( ∫(( ∇(uh)⋅∇(uh) ) + (1/4)*((uh*uh - 1)*(uh*uh - 1))  )dΩ)
+    E1 = sum( ∫(( ∇(uh)⋅∇(uh) ) )dΩ)
+    E2 = sum( ∫((1/4)*((uh*uh - 1)*(uh*uh - 1))  )dΩ)
+    push!(ts, t)
     push!(Es, E)
+    push!(E1s, E1)
+    push!(E2s, E2)
     # First step is not defined
     push!( δuhs, missing)
     push!( Δuhs, missing)
@@ -181,16 +188,21 @@ function main(;domain="flower")
             uh = FEFunction(U, u_dof_vals)
         end
 
-        # Adding initial plotting values
-        push!(ts, t)
+        # Adding plotting values
         E = sum( ∫(( ∇(uh)⋅∇(uh) ) + (1/4)*((uh*uh - 1)*(uh*uh - 1))  )dΩ)
+        E1 = sum( ∫(( ∇(uh)⋅∇(uh) ) )dΩ)
+        E2 = sum( ∫((1/4)*((uh*uh - 1)*(uh*uh - 1))  )dΩ)
+        push!(ts, t)
+        push!(Es, E)
+        push!(E1s, E1)
+        push!(E2s, E2)
         δuh =  sum( ∫( (uh0 - uh ) )dΩ) /u0_L1
         Δuh =  abs(sum( ∫( (u0 - uh ) )dΩ)) /u0_L1
         push!( δuhs, δuh)
         push!( Δuhs, Δuh)
-        uh0 = FEFunction(U, deepcopy( uh.free_values ))
 
-        push!(Es, E)
+        # Updating previous step
+        uh0 = FEFunction(U, deepcopy( uh.free_values ))
         pvd[t] = createvtk(Ω, graphicsdir*"/sol_$t"*".vtu",cellfields=["uh"=>uh])
     end
 
@@ -220,7 +232,7 @@ function main(;domain="flower")
 
     its = LinRange(1, length(ts), length(ts))
 
-    default_size = (800, 800)
+    default_size = (800, 1000)
     p1 = plot(its[1:end-1], δuhs[2:end], size=default_size, xscale=:log10, legend=false, ylabel=L"$\delta u$", xlabel=L"$t/\tau$")
     scatter!(its[1:end-1], δuhs[2:end], markersize = 2)
     p2 = plot(its[1:end-1], Δuhs[2:end], size=default_size, yscale=:log10, legend=false, xscale=:log10, ylabel=L"$\Delta u$", xlabel=L"$t/\tau$")
@@ -229,12 +241,11 @@ function main(;domain="flower")
     scatter!(its, Es, markersize = 2)
     p4 = plot(its[1:end-1], Es[1:end-1] .- Es[2:end], size=default_size, legend=false,  yscale=:log10,  xscale=:log10,  xlabel=L"$t/\tau$", ylabel=L"$\Delta E^m$")
     scatter!(its[1:end-1], Es[1:end-1] .- Es[2:end], markersize = 2)
-    # p4 = plot(its, E1s, size=default_size, yscale=:log10, xscale=:log10, legend=false, ylabel=L"$E_1^m$", xlabel=L"$t/\tau$")
-    # scatter!(its, E1s, markersize = 2)
-    # p5 = plot(its, E2s, size=default_size, yscale=:log10, xscale=:log10, legend=false, ylabel=L"$E_2^m$", xlabel=L"$t/\tau$")
-    # scatter!(its, E2s, markersize = 2)
-    p = plot(p1, p2, p3, p4, layout = (4, 1))
-    # p = plot(p1, p2, p3, p4, layout = (6, 1))
+    p5 = plot(its, E1s, size=default_size, yscale=:log10, xscale=:log10, legend=false, ylabel=L"$E_1^m$", xlabel=L"$t/\tau$")
+    scatter!(its, E1s, markersize = 2)
+    p6 = plot(its, E2s, size=default_size, yscale=:log10, xscale=:log10, legend=false, ylabel=L"$E_2^m$", xlabel=L"$t/\tau$")
+    scatter!(its, E2s, markersize = 2)
+    p = plot(p1, p2, p3, p4, p5, p6, layout = (6, 1))
     savefig(p,maindir*"/physical_CH_plot.pdf" )
 
 end
