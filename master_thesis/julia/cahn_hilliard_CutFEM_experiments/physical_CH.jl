@@ -112,10 +112,10 @@ function main(;domain="flower")
                      ∫( (γg2*h^3)*jump_nn(u,n_Fg)*jump_nn(v,n_Fg) ) * dFg)
 
     A_h(u,v) = a_CIP(u,v) + g(u,v)
-    lhs(u,v) = ∫(u*v)*dΩ + τ*ε*A_h(u,v)
+    lhs(u,v) = ∫(u*v)*dΩ + τ*ε^2*A_h(u,v)
 
     c_h(u,v) = ( ∫(f(u)*Δ(v))*dΩ - ∫(f(mean(u))*jump(∇(v)⋅n_Λ))*dΛ - ∫(f(u)*∇(v)⋅n_Γ )*dΓ)
-    rhs(u, v) =  ∫(u*v)*dΩ + ( τ/ε) *c_h(u,v)
+    rhs(u, v) =  ∫(u*v)*dΩ +  τ*c_h(u,v)
     rhs(u) = v -> rhs(u,v)
 
     ## time loop
