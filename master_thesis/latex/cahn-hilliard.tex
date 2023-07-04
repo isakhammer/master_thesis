@@ -14,14 +14,15 @@ Let $ u( x,0) =  u_{0}$ then is the dynamics on the form,
 \begin{subequations}
 \label{eq:strong_ch}
     \begin{align}
-\partial _{t} u + \Delta  \left(  \varepsilon  \Delta u - \frac{1}{\varepsilon }f( u) \right)   &=0  \quad \text{ in } \Omega  \\
+\partial _{t} u + \Delta  \left(  \varepsilon^2  \Delta u - f( u) \right)   &=0  \quad \text{ in } \Omega  \\
 \partial _{n} u &= 0 \quad \text{ on } \Gamma  \\
 \partial _{n}    \Delta u       &= 0 \quad \text{ on } \Gamma
     \end{align}
 \end{subequations}
 Here we define $f( u) = u( u^{2} -1)  = F' ( u)  $ where $F( u) = ( 1 / 4 ) ( u^2 -1 ) ^{2} $. With the corresponding energy. We define the small parameter to be $\varepsilon  = 1 / 30$.
 \begin{equation}
-E( u)  = \int_{\Omega }^{} \frac{\varepsilon }{2} \abs{ \nabla u } ^2 + \frac{1}{\varepsilon } F( u) dx
+    \label{eq:physical_prop}
+E( u)  = \int_{\Omega }^{} \frac{\varepsilon^{2} }{2} \abs{ \nabla u } ^2 +  F( u) dx
 \end{equation}
 
 We also recall that the energy functional monotonically decreasing and that the global mass concentration is conserved, i.e.
@@ -32,14 +33,14 @@ We also recall that the energy functional monotonically decreasing and that the 
 
 Now assume that $u \in L^2( [0,T], H^{4}( \Omega ) ) $ and $v_{h} \in  V_{h}$ of order $k$. It is clear that the initial weak formulation is,
 \begin{equation}
-    ( \partial_{t} u,v_{h} )_{\Omega }  + \varepsilon ( \Delta ^2u, v_{h})_{\Omega } - \frac{1}{\varepsilon } ( f( u), v_{h} )_{\Omega } = 0.
+    ( \partial_{t} u,v_{h} )_{\Omega }  + \varepsilon^{2} ( \Delta ^2u, v_{h})_{\Omega } -  ( f( u), v_{h} )_{\Omega } = 0.
 \end{equation}
 
 As we can see did the biharmonic equation appear and, thus, we can apply the cut finite element framework developed in Section \ref{sec:cutcip_biharmonic_problem}. We define the discrete weak problem as follows.
 \begin{equation}
     \begin{split}
         & \text{Find  }u_{h} \in L^{2}( [0,T],V_{h})  \text{ such that } \forall v_{h} \in V_{h} \\
-        & ( \partial_{t} u_{h},v_{h} )_{\Omega }   + \frac{1}{\varepsilon }A_{h}( u_{h},v_{h})   + \varepsilon c_{h}( u_{h},v_{h})  = 0.
+        & ( \partial_{t} u_{h},v_{h} )_{\Omega }   + \varepsilon^{2} A_{h}( u_{h},v_{h})   +  c_{h}( u_{h},v_{h})  = 0.
     \end{split}
 \end{equation}
 Here we have followed the nonlinear weak formulation \cite[Equation
@@ -58,25 +59,24 @@ Define the forward difference operator with time step $\tau = \varepsilon^{2} /6
 
 We define the Implicit explicit scheme (IMEX) scheme to have the following discretization,
 \begin{equation}
-( \overline{\partial } _{t} u^{m}_{h}, v_{h}   )_{\Omega } + \varepsilon A^{m}_{h}( u_{h}^{m} , v) + \frac{1}{\varepsilon } c_{h} (  u_{h}^{m-1}, v_{h})  = 0 , \quad \forall v_{h}, u^{m}_{h} \in V^{}_{h}.
+( \overline{\partial } _{t} u^{m}_{h}, v_{h}   )_{\Omega } + \varepsilon^{2} A^{m}_{h}( u_{h}^{m} , v) +  c_{h} (  u_{h}^{m-1}, v_{h})  = 0 , \quad \forall v_{h}, u^{m}_{h} \in V^{}_{h}.
 \end{equation}
 which equivalently can be rewritten as
 \begin{equation}
-( u_{h}^{m},v )_{\Omega }  + \tau \varepsilon A_{h}( u_{h}^{m} , v)   =  ( u_{h}^{m-1},v )_{\Omega } - \frac{\tau}{\varepsilon } c_{h} (  u_{h}^{m-1}, v) .
+( u_{h}^{m},v )_{\Omega }  + \tau \varepsilon^{2} A_{h}( u_{h}^{m} , v)   =  ( u_{h}^{m-1},v )_{\Omega } - \tau c_{h} (  u_{h}^{m-1}, v) .
 \end{equation}
 Hence, we have a complete space time scheme.
 
 
-\subsection{Demonstration on the physical Cahn-Hilliard problem}%
+\subsection{Demonstration on the Cahn-Hilliard problem}%
 \label{sub:demonstration_on_the_physical_cahn_hilliard}
 
-On the strong form of the Cahn-Hilliard \eqref{eq:strong_ch} we have no analytical solution, so we cannot construct a manufactured solution. However, a way to check that the system does behave like expected based on the physical properties \eqref{eq:mass_cons_energy_decrease}. In other
+For the strong form of the Cahn-Hilliard \eqref{eq:strong_ch} we have no analytical solution, so we cannot construct a manufactured solution. However, a way to check that the system does behave like expected based on the physical properties \eqref{eq:physical_prop}. In other
 words, we can check that our discrete solution satisfies the following conditions. Let $E^m = E( u_{h}^{m})$, then we expect that
 \begin{equation}
  E^m   <  E^{ m-1 }
 \end{equation}
-
-Hence, we have
+Hence, the discrete solution must satisfy
 \begin{equation}
  \delta E^{m} = E( u_{h}^{m-1}) -  E( u_{h}^{m}) > 0,  \\
 \end{equation}
@@ -180,7 +180,7 @@ Recall the strong form Cahn-Hilliard equation. Let $ u( x,0) =  u_{0}$ then is t
     \label{eq:ch_gen}
     \begin{align}
     \label{eq:ch_gen:a}
-        \partial _{t} u + \Delta  \left(  \varepsilon  \Delta u - \frac{1}{\varepsilon }f( u) \right)   &= g_{0}( x)   \quad \text{ in } \Omega  \\
+        \partial _{t} u + \Delta  \left(  \varepsilon^2  \Delta u - f( u) \right)   &= g_{0}( x)   \quad \text{ in } \Omega  \\
         \partial _{n} u &= g_{1}( x)  \quad \text{ on } \Gamma  \\
         \partial _{n}    \Delta u   &= g_{2}(x)  \quad \text{ on } \Gamma
     \end{align}
@@ -191,8 +191,8 @@ generalized to also holds for for functions $g_{0},g_{1},g_{2}: \Omega \to\mathb
     Designing a manufactured solution using $g_{0}( \cdot ) $ may be temping with the formulation \eqref{eq:ch_gen:a}. However, observe that expanding the Laplacian we get,
     \begin{equation}
     \begin{split}
-        \Delta  \left(  \varepsilon  \Delta u - \frac{1}{\varepsilon }f( u) \right) & = \varepsilon \Delta^2 u - \frac{1}{\varepsilon } \Delta f( u) \\
-                                                                                    &= \varepsilon \Delta ^2 u  - \frac{3}{\varepsilon }( 2u \| \nabla u \|_{ 2 }^{ 2 } + u^{2}  \Delta u )   \\
+        \Delta  \left(  \varepsilon^2  \Delta u - f( u) \right) & = \varepsilon^2 \Delta^2 u -  \Delta f( u) \\
+                                                                                    &= \varepsilon^{2} \Delta ^2 u  - 3( 2u \| \nabla u \|_{ 2 }^{ 2 } + u^{2}  \Delta u )   \\
     \end{split}
     \end{equation}
 Here we applied the chain rule twice and inserted the derivatives.
@@ -205,17 +205,16 @@ Here we applied the chain rule twice and inserted the derivatives.
     \end{split}
 \end{equation}
 
-Our goal is to write the Cahn Hilliard equation on weak form.
-Assume that $\Omega  \subset \mathbb{R} ^{d}$ with a $\Gamma $ in $C^2$.
- Let $u \in  H^{4}( \Omega ) $ and $v \in V_{h} $.
-Now, expanding the first Laplace operator from a weak point of view is it clear that
-\[
- ( \Delta ( \varepsilon  \Delta u - \frac{1}{\varepsilon } f( u) ) ,v )_{\Omega } = \varepsilon ( \Delta^{2} u ,v )_{\Omega } - \frac{1}{\varepsilon } ( \Delta f( u)  ,v )_{\Omega }.
-\]
-Hence, this makes it natural to associate the biharmonic $( \Delta ^2 u,v)_{\Omega } $ with bilinear forms $A_{h}( \cdot ,\cdot ) $ , however, in this section will we only consider the Laplace
-variant $a^{L}( \cdot ,\cdot ) $.
-
-We will now find seek to find a bilinear form of the nonlinear term,
+% Our goal is to write the Cahn Hilliard equation on weak form.
+% Assume that $\Omega  \subset \mathbb{R} ^{d}$ with a $\Gamma $ in $C^2$.
+%  Let $u \in  H^{4}( \Omega ) $ and $v \in V_{h} $.
+% Now, expanding the first Laplace operator from a weak point of view is it clear that
+% \[
+%  ( \Delta ( \varepsilon  \Delta u - \frac{1}{\varepsilon } f( u) ) ,v )_{\Omega } = \varepsilon ( \Delta^{2} u ,v )_{\Omega } - \frac{1}{\varepsilon } ( \Delta f( u)  ,v )_{\Omega }.
+% \]
+% Hence, this makes it natural to associate the biharmonic $( \Delta ^2 u,v)_{\Omega } $ with bilinear forms $A_{h}( \cdot ,\cdot ) $ , however, in this section will we only consider the Laplace
+% variant $a^{L}( \cdot ,\cdot ) $.
+We now seek to find a weak form of the nonlinear term with non homogeneous boundary conditions.
 \begin{lemma}[Semi-linear form]
     Let $u \in H^4( \Omega ) $ be solution to \eqref{eq:ch_gen} and $v_{h} \in V_{h}$ the test function.
 Then can we rewrite the nonlinear term into the corresponding semi-linear form $c_{h}( \cdot ,\cdot )  $ for the nonlinear term $( -\Delta f( u) , v_{h})_{\Omega }$ into two consistent formulations.
