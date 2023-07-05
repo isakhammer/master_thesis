@@ -217,7 +217,8 @@ function main(;domain="flower")
         # Updating previous step
         uh0 = FEFunction(U, deepcopy( uh.free_values ))
         pvd[t] = createvtk(Ω, graphicsdir*"/sol_$t"*".vtu",cellfields=["uh"=>uh])
-        if Nt%50==0
+        if Nt%20==0
+            println("Update pvd")
             update_pvd_file(pvd)
         end
     end
@@ -250,7 +251,7 @@ function main(;domain="flower")
     scatter!(its[1:end-1], Δuhs[2:end], markersize = 2)
     p3 = plot(its, Es, size=default_size, yscale=:log10, xscale=:log10, legend=false, ylabel=L"$E^m$", xlabel=L"$t/\tau$")
     scatter!(its, Es, markersize = 2)
-    p4 = plot(its[1:end-1], Es[1:end-1] .- Es[2:end], size=default_size, legend=false,  xscale=:log10,  xlabel=L"$t/\tau$", ylabel=L"$\Delta E^m$")
+    p4 = plot(its[1:end-1], Es[1:end-1] .- Es[2:end], size=default_size, legend=false,  xscale=:log10, yscale=:log10,  xlabel=L"$t/\tau$", ylabel=L"$\Delta E^m$")
     scatter!(its[1:end-1], Es[1:end-1] .- Es[2:end], markersize = 2)
     p5 = plot(its, E1s, size=default_size, yscale=:log10, xscale=:log10, legend=false, ylabel=L"$E_1^m$", xlabel=L"$t/\tau$")
     scatter!(its, E1s, markersize = 2)
