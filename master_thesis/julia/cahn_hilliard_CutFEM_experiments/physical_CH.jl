@@ -180,6 +180,16 @@ function main(;domain="flower")
     println("Solving Cahn-Hilliard for step $(Nt_max), n = $n, τ = $τ")
 
     uh0 = FEFunction(U, deepcopy( uh.free_values ))
+
+    function update_pvd_file(pvd)
+        # Construct pvd file
+        createpvd(graphicsdir*"/sol") do pvd_file
+            for (t, vtk) in pvd
+                pvd_file[t] = vtk
+            end
+        end
+    end
+
     while t < T
         Nt += 1
         t += τ
@@ -209,14 +219,13 @@ function main(;domain="flower")
         # Updating previous step
         uh0 = FEFunction(U, deepcopy( uh.free_values ))
         pvd[t] = createvtk(Ω, graphicsdir*"/sol_$t"*".vtu",cellfields=["uh"=>uh])
-    end
-
-    # Construct pvd file
-    createpvd(graphicsdir*"/sol") do pvd_file
-        for (t, vtk) in pvd
-            pvd_file[t] = vtk
+        if Nt%20==0
+            println("Update pvd")
+            update_pvd_file(pvd)
         end
     end
+    update_pvd_file(pvd)
+
 
     # Save results
     df = DataFrame(ts=ts, Es=Es, delta_uhs=δuhs, Delta_uhs=Δuhs)
@@ -244,7 +253,7 @@ function main(;domain="flower")
     scatter!(its[1:end-1], Δuhs[2:end], markersize = 2)
     p3 = plot(its, Es, size=default_size, yscale=:log10, xscale=:log10, legend=false, ylabel=L"$E^m$", xlabel=L"$t/\tau$")
     scatter!(its, Es, markersize = 2)
-    p4 = plot(its[1:end-1], Es[1:end-1] .- Es[2:end], size=default_size, legend=false,  xscale=:log10,  xlabel=L"$t/\tau$", ylabel=L"$\Delta E^m$")
+    p4 = plot(its[1:end-1], Es[1:end-1] .- Es[2:end], size=default_size, legend=false,  xscale=:log10, yscale=:log10,  xlabel=L"$t/\tau$", ylabel=L"$\Delta E^m$")
     scatter!(its[1:end-1], Es[1:end-1] .- Es[2:end], markersize = 2)
     p5 = plot(its, E1s, size=default_size, yscale=:log10, xscale=:log10, legend=false, ylabel=L"$E_1^m$", xlabel=L"$t/\tau$")
     scatter!(its, E1s, markersize = 2)
