@@ -10,6 +10,38 @@ using LaTeXStrings
 using Random
 Random.seed!(1234)  # Set the seed to a specific value
 
+module ImageLoader
+    using Images, Interpolations, ImageMagick
+
+    function load_jpg()
+        # Load the image
+        img = load("dog.jpg") # Put the path to your image file here
+        # img = load("smiley.jpg") # Put the path to your image file here
+
+        # Convert to grayscale to simplify the image to a 2D array
+        img_gray = Gray.(img)
+
+        # Get the image data as an array
+        array =  float.(channelview(img_gray))
+        array = 2 * (array .- 0.5)
+
+        array[200:202, :] .= 0
+        array[:, 200:202] .= 0
+
+        # Create ranges for x and y
+        xs = LinRange(-1, 1, size(array, 2)) # x corresponds to width (columns)
+        ys = LinRange(-1, 1, size(array, 1)) # y corresponds to height (rows)
+
+        # Create a grid for interpolation
+        grid = (collect(ys), collect(xs))
+
+        # Create an interpolation function
+        f = extrapolate(interpolate(grid, array, Gridded(Linear())), 0)
+        return f, xs, ys
+
+    end
+end
+
 function main(;domain="flower")
 
     ## Cahn-hilliard
@@ -20,11 +52,11 @@ function main(;domain="flower")
 
     ##
     L= 2.70
-    n = 2^6
+    n = 2^7
     h = 2*L/n
-    it = 1000
+    it = 400
     γ = 20
-    τ = ε^2/60
+    τ = ε^2/100
     γg1 = 10
     γg2 = 0.5
 
@@ -131,8 +163,11 @@ function main(;domain="flower")
     u_dof_vals = (rand(Float64, num_free_dofs(U)) .-0.5)*2.0
     u0 = FEFunction(U, u_dof_vals)
 
-    # u_ex(x) = sin(2π*x[1])*sin(2π*x[2])
-    # u0 = interpolate_everywhere(u_ex, U)
+
+    f_jpg, _, _ = ImageLoader.load_jpg()
+    # u_ex(x) = sin(1000*x[1])*sin(2π*x[2])
+    u_ex(x) = f_jpg(x[1], x[2])
+    u0 = interpolate_everywhere(u_ex, U)
 
     # Initializing discrete function and its dof cals
     uh = FEFunction(U,deepcopy( u0.free_values ) )
@@ -253,7 +288,7 @@ function main(;domain="flower")
     scatter!(its, Es, markersize = 2)
     p4 = plot(its[1:end-1], Es[1:end-1] .- Es[2:end], size=default_size, legend=false,  xscale=:log10, yscale=:log10,  xlabel=L"$t/\tau$", ylabel=L"$\Delta E^m$")
     scatter!(its[1:end-1], Es[1:end-1] .- Es[2:end], markersize = 2)
-    p5 = plot(its, E1s, size=default_size, yscale=:log10, xscale=:log10, legend=false, ylabel=L"$E_1^m$", xlabel=L"$t/\tau$")
+    p5 = plot(its, E1s, size=default_size, xscale=:log10, legend=false, ylabel=L"$E_1^m$", xlabel=L"$t/\tau$")
     scatter!(its, E1s, markersize = 2)
     p6 = plot(its, E2s, size=default_size, xscale=:log10, legend=false, ylabel=L"$E_2^m$", xlabel=L"$t/\tau$")
     scatter!(its, E2s, markersize = 2)
