@@ -20,7 +20,7 @@ function main(;domain="flower")
 
     ##
     L= 2.70
-    n = 2^7
+    n = 2^6
     h = 2*L/n
     it = 1000
     γ = 20
