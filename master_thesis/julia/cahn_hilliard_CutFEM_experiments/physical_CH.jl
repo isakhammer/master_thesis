@@ -137,7 +137,7 @@ function main(;domain="flower")
 
     # Initializing discrete function and its dof cals
     uh = FEFunction(U,deepcopy( u0.free_values ) )
-    u_dof_vals = uh.free_values
+    # u_dof_vals = uh.free_values
 
     # defining
     u0_L1 = abs( sum( ∫(u0)dΩ ) )
@@ -188,8 +188,8 @@ function main(;domain="flower")
             k += 1
             b = assemble_vector(rhs(uh), V)
             op = AffineOperator(A, b)
-            cache = solve!(u_dof_vals, lu, op, cache, isnothing(cache))
-            uh = FEFunction(U, u_dof_vals)
+            # Updating the dof values to uh
+            cache = solve!(uh.free_values, lu, op, cache, isnothing(cache))
         end
 
         # Adding plotting values
