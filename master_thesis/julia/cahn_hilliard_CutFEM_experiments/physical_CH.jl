@@ -178,6 +178,16 @@ function main(;domain="flower")
     println("Solving Cahn-Hilliard for step $(Nt_max), n = $n, τ = $τ")
 
     uh0 = FEFunction(U, deepcopy( uh.free_values ))
+
+    function update_pvd_file(pvd)
+        # Construct pvd file
+        createpvd(graphicsdir*"/sol") do pvd_file
+            for (t, vtk) in pvd
+                pvd_file[t] = vtk
+            end
+        end
+    end
+
     while t < T
         Nt += 1
         t += τ
@@ -207,14 +217,12 @@ function main(;domain="flower")
         # Updating previous step
         uh0 = FEFunction(U, deepcopy( uh.free_values ))
         pvd[t] = createvtk(Ω, graphicsdir*"/sol_$t"*".vtu",cellfields=["uh"=>uh])
-    end
-
-    # Construct pvd file
-    createpvd(graphicsdir*"/sol") do pvd_file
-        for (t, vtk) in pvd
-            pvd_file[t] = vtk
+        if Nt%50==0
+            update_pvd_file(pvd)
         end
     end
+    update_pvd_file(pvd)
+
 
     # Save results
     df = DataFrame(ts=ts, Es=Es, delta_uhs=δuhs, Delta_uhs=Δuhs)
