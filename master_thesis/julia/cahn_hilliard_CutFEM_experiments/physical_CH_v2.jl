@@ -199,14 +199,17 @@ function main(;ε = 1/100, domain="flower", L=2.70, τ=1/10^5, n=2^6, it=10, res
 
         # Time loop
         println("----------------------------------------")
-        println("Solving Cahn-Hilliard for step $(Nt_max), n = $n, τ = $τ")
+        println("Solving Cahn-Hilliard for $domain with step $(Nt_max), n = $n, τ = $τ")
 
         uh0 = FEFunction(U, deepcopy( uh.free_values ))
         while t < T
             Nt += 1
             t += τ
             k = 0
-            println("$(Nt)/$(Nt_max)")
+            if Nt%10 == 0
+                println("$(Nt)/$(Nt_max)")
+            end
+
             while k < kmax
                 k += 1
                 b = assemble_vector(rhs(uh), V)
@@ -238,7 +241,7 @@ function main(;ε = 1/100, domain="flower", L=2.70, τ=1/10^5, n=2^6, it=10, res
     end
 
     # Save results
-    df = DataFrame(ts=ts, Es=Es, delta_uhs=δuhs, Delta_uhs=Δuhs)
+    df = DataFrame(ts=ts, Es=Es, E1s=E1s, E2s=E2s, delta_uhs=δuhs, Delta_uhs=Δuhs)
     CSV.write(maindir*"/sol.csv", df, delim=',')
 
     parameters = Dict(

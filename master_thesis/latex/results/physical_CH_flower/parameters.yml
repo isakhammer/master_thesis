@@ -1,9 +1,9 @@
 gamma1: 10
 domain: "flower"
-epsilon: 0.03333333333333333
+epsilon: 0.01
 gamma: 20
 gamma2: 0.5
-it: 1000
+it: 100
 L: 2.7
 tau: "epsilon^2/10"
 n: 128
