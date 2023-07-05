@@ -1,6 +1,8 @@
 ##
 using Gridap
 using Gridap.Algebra
+using Gridap.CellData
+using Gridap.Visualization
 using GridapEmbedded
 using Plots
 using DataFrames
@@ -8,23 +10,25 @@ using CSV
 using YAML
 using LaTeXStrings
 using Random
+using Dates
 Random.seed!(1234)  # Set the seed to a specific value
 
-function main(;domain="flower")
+# function main(;ε::Float64 = 1/100, domain="flower", L::Float64=1.1, τ=1/10^5, n::Int64=2^6, it::Int64=10, result_dir_suffix::String ="")
+function main(;ε = 1/100, domain="flower", L=2.70, τ=1/10^5, n=2^6, it=10, result_dir_suffix ="")
 
     ## Cahn-hilliard
-    ε = 1/100
+    # ε = 1/100
     # ε = 1
     # Gibb's potential
     f(u) = mean(u)*(mean(u)*mean(u) - 1)
 
     ##
-    L= 2.70
-    n = 2^6
+    # L= 2.70
+    # n = 2^6
     h = 2*L/n
-    it = 10000
+    # it = 10000
     γ = 20
-    τ = ε^2/60
+    # τ = ε^2/60
     γg1 = 10
     γg2 = 0.5
 
@@ -33,7 +37,8 @@ function main(;domain="flower")
     partition = (n,n)
     bgmodel = CartesianDiscreteModel(pmin, pmax, partition)
 
-    maindir = "figures/physical_CH_$domain"
+    # Define maindir, add result_dir_suffix if not trivial
+    maindir = "figures"*(s-> all(isspace, s) ? "" : "_$(s)")(result_dir_suffix)*"/physical_CH_$(domain)"
     if isdir(maindir)
         rm(maindir; recursive=true)
         mkpath(maindir)
@@ -61,7 +66,6 @@ function main(;domain="flower")
     # Cut the background model
     cutgeo = cut(bgmodel, geo)
     cutgeo_facets = cut_facets(bgmodel,geo)
-
     # Set up interpolation mesh and function spaces
     Ω_act = Triangulation(cutgeo, ACTIVE)
     Ω = Triangulation(cutgeo, PHYSICAL)
@@ -70,12 +74,27 @@ function main(;domain="flower")
     writevtk(Ω,         graphicsdir*"/Omega")
     writevtk(Ω_act,     graphicsdir*"/Omega_act")
 
+    # Refined model for plotting P2 properly
+
+    partition_ref = (2n,2n)
+    bgmodel_ref = CartesianDiscreteModel(pmin, pmax, partition_ref)
+    cutgeo_ref = cut(bgmodel_ref, geo)
+    # Set up interpolation mesh and function spaces
+    Ω_act_ref = Triangulation(cutgeo_ref, ACTIVE)
+    Ω_ref = Triangulation(cutgeo_ref, PHYSICAL)
+    Ω_bg_ref = Triangulation(bgmodel_ref)
+    writevtk(Ω_bg_ref,   graphicsdir*"/Omega_bg_ref")
+    writevtk(Ω_ref,         graphicsdir*"/Omega_ref")
+    writevtk(Ω_act_ref,     graphicsdir*"/Omega_act_ref")
+
     ## Function spaces
     order = 2
     # Construct function spaces
     V = TestFESpace(Ω_act, ReferenceFE(lagrangian, Float64, order), conformity=:H1)
     U = TrialFESpace(V)
 
+    # Construct refined spaces for output
+    V_ref = FESpace(Ω_act_ref, ReferenceFE(lagrangian, Float64, order), conformity=:H1)
 
     # Set up integration meshes, measures and normals
     Ω = Triangulation(cutgeo, PHYSICAL)
@@ -113,37 +132,11 @@ function main(;domain="flower")
     A_h(u,v) = a_CIP(u,v) + g(u,v)
     lhs(u,v) = ∫(u*v)*dΩ + τ*ε^2*A_h(u,v)
     # Properly scaled ghost penalty including mass matrix scaling
-    # lhs(u,v) = ∫(u*v)*dΩ + τ*ε^2*a_CIP(u,v) + (τ*ε^2+h^(-4))*g(u,v)
+    # lhs(u,v) = ∫(u*v)*dΩ + τ*ε^2*a_CIP(u,v) + (τ*ε^2+h^4)*g(u,v)
 
     c_h(u,v) = ( ∫(f(u)*(-1)*Δ(v))*dΩ + ∫(f(mean(u))*jump(∇(v)⋅n_Λ))*dΛ + ∫(f(u)*∇(v)⋅n_Γ )*dΓ)
     rhs(u, v) =  ∫(u*v)*dΩ -τ*c_h(u,v)
     rhs(u) = v -> rhs(u,v)
-
-    ## time loop
-    t0 = 0.0
-    T = it*τ
-    Nt_max = convert(Int64, ceil((T - t0)/τ))
-    Nt = 0
-    t = t0
-
-    # Maximal number of Picard iterations
-    kmax = 1
-
-    # Initial data
-    u_dof_vals = (rand(Float64, num_free_dofs(U)) .-0.5)*2.0
-    u0 = FEFunction(U, u_dof_vals)
-
-    # u_ex(x) = sin(2π*x[1])*sin(2π*x[2])
-    # u0 = interpolate_everywhere(u_ex, U)
-
-    # Initializing discrete function and its dof cals
-    uh = FEFunction(U,deepcopy( u0.free_values ) )
-    # u_dof_vals = uh.free_values
-
-    # defining
-    u0_L1 = abs( sum( ∫(u0)dΩ ) )
-    pvd = Dict()
-    pvd[t] = createvtk(Ω, graphicsdir*"/sol_$t"*".vtu",cellfields=["uh"=>uh])
 
     # Defining plotting values
     δuhs = []
@@ -153,68 +146,94 @@ function main(;domain="flower")
     E2s = Float64[]
     ts = Float64[]
 
-    # Adding initial plotting values
-    E = sum( ∫(( ε^2/2 )*( ∇(uh)⋅∇(uh) ) + (1/4)*((uh*uh - 1)*(uh*uh - 1))  )dΩ)
-    E1 = sum( ∫(( ε^2/2*∇(uh)⋅∇(uh) ) )dΩ)
-    E2 = sum( ∫((1/4)*((uh*uh - 1)*(uh*uh - 1))  )dΩ)
-    push!(ts, t)
-    push!(Es, E)
-    push!(E1s, E1)
-    push!(E2s, E2)
-    # First step is not defined
-    push!( δuhs, missing)
-    push!( Δuhs, missing)
+    createpvd(graphicsdir*"/sol") do pvd
 
+        ## time loop
+        t0 = 0.0
+        T = it*τ
+        Nt_max = convert(Int64, ceil((T - t0)/τ))
+        Nt = 0
+        t = t0
 
-    println("========================================")
-    println("Solving Cahn-Hilliard with t0 = $t0, T = $T and time step τ = $τ with Nt_max = $Nt_max timesteps")
-    println("========================================")
+        # Maximal number of Picard iterations
+        kmax = 1
 
-    ## Set up linear algebra system
-    A = assemble_matrix(lhs, U, V)
-    lu = LUSolver()
-    cache = nothing
+        # Initial data
+        u_dof_vals = (rand(Float64, num_free_dofs(U)) .-0.5)*2.0
+        u0 = FEFunction(U, u_dof_vals)
 
-    # Time loop
-    println("----------------------------------------")
-    println("Solving Cahn-Hilliard for step $(Nt_max), n = $n, τ = $τ")
+        # u_ex(x) = sin(2π*x[1])*sin(2π*x[2])
+        # u0 = interpolate_everywhere(u_ex, U)
 
-    uh0 = FEFunction(U, deepcopy( uh.free_values ))
-    while t < T
-        Nt += 1
-        t += τ
-        k = 0
-        println("$(Nt)/$(Nt_max)")
-        while k < kmax
-            k += 1
-            b = assemble_vector(rhs(uh), V)
-            op = AffineOperator(A, b)
-            # Updating the dof values to uh
-            cache = solve!(uh.free_values, lu, op, cache, isnothing(cache))
-        end
+        # Initializing discrete function and its dof cals
+        uh = FEFunction(U,deepcopy( u0.free_values ) )
+        iuh = Interpolable(uh)
+        uh_ref = interpolate_everywhere(iuh, V_ref)
 
-        # Adding plotting values
-        E = sum( ∫(ε^2/2*( ∇(uh)⋅∇(uh) ) + (1/4)*((uh*uh - 1)*(uh*uh - 1))  )dΩ)
-        E1 = sum( ∫((ε^2/2*∇(uh)⋅∇(uh) ) )dΩ)
+        # defining
+        u0_L1 = abs( sum( ∫(u0)dΩ ) )
+        # pvd[t] = createvtk(Ω, graphicsdir*"/sol_$t"*".vtu",cellfields=["uh"=>uh])
+        pvd[t] = createvtk(Ω_ref, graphicsdir*"/sol_$t"*".vtu",cellfields=["uh"=>uh_ref])
+
+        # Adding initial plotting values
+        E = sum( ∫(( ε^2/2 )*( ∇(uh)⋅∇(uh) ) + (1/4)*((uh*uh - 1)*(uh*uh - 1))  )dΩ)
+        E1 = sum( ∫(( ε^2/2*∇(uh)⋅∇(uh) ) )dΩ)
         E2 = sum( ∫((1/4)*((uh*uh - 1)*(uh*uh - 1))  )dΩ)
         push!(ts, t)
         push!(Es, E)
         push!(E1s, E1)
         push!(E2s, E2)
-        δuh =  sum( ∫( (uh0 - uh ) )dΩ) /u0_L1
-        Δuh =  abs(sum( ∫( (u0 - uh ) )dΩ)) /u0_L1
-        push!( δuhs, δuh)
-        push!( Δuhs, Δuh)
+        # First step is not defined
+        push!( δuhs, missing)
+        push!( Δuhs, missing)
 
-        # Updating previous step
+
+        println("========================================")
+        println("Solving Cahn-Hilliard with ε = $ε, t0 = $t0, T = $T and time step τ = $τ with Nt_max = $Nt_max timesteps")
+        println("========================================")
+
+        ## Set up linear algebra system
+        A = assemble_matrix(lhs, U, V)
+        lu = LUSolver()
+        cache = nothing
+
+        # Time loop
+        println("----------------------------------------")
+        println("Solving Cahn-Hilliard for step $(Nt_max), n = $n, τ = $τ")
+
         uh0 = FEFunction(U, deepcopy( uh.free_values ))
-        pvd[t] = createvtk(Ω, graphicsdir*"/sol_$t"*".vtu",cellfields=["uh"=>uh])
-    end
+        while t < T
+            Nt += 1
+            t += τ
+            k = 0
+            println("$(Nt)/$(Nt_max)")
+            while k < kmax
+                k += 1
+                b = assemble_vector(rhs(uh), V)
+                op = AffineOperator(A, b)
+                # Updating the dof values to uh
+                cache = solve!(uh.free_values, lu, op, cache, isnothing(cache))
+            end
 
-    # Construct pvd file
-    createpvd(graphicsdir*"/sol") do pvd_file
-        for (t, vtk) in pvd
-            pvd_file[t] = vtk
+            # Adding plotting values
+            E = sum( ∫(ε^2/2*( ∇(uh)⋅∇(uh) ) + (1/4)*((uh*uh - 1)*(uh*uh - 1))  )dΩ)
+            E1 = sum( ∫((ε^2/2*∇(uh)⋅∇(uh) ) )dΩ)
+            E2 = sum( ∫((1/4)*((uh*uh - 1)*(uh*uh - 1))  )dΩ)
+            push!(ts, t)
+            push!(Es, E)
+            push!(E1s, E1)
+            push!(E2s, E2)
+            δuh =  sum( ∫( (uh0 - uh ) )dΩ) /u0_L1
+            Δuh =  abs(sum( ∫( (u0 - uh ) )dΩ)) /u0_L1
+            push!( δuhs, δuh)
+            push!( Δuhs, Δuh)
+
+            # Updating previous step
+            uh0 = FEFunction(U, deepcopy( uh.free_values ))
+            iuh = Interpolable(uh)
+            uh_ref = interpolate_everywhere(iuh, V_ref)
+            # pvd[t] = createvtk(Ω, graphicsdir*"/sol_$t"*".vtu",cellfields=["uh"=>uh])
+            pvd[t] = createvtk(Ω_ref, graphicsdir*"/sol_$t"*".vtu",cellfields=["uh"=>uh_ref])
         end
     end
 
@@ -257,5 +276,14 @@ function main(;domain="flower")
 
 end
 
-main(domain="circle")
-# main(domain="flower")
+ε = 1/100
+domain="circle"
+L=2.70
+τ = ε^2
+n=2^6
+it=10000
+result_dir_suffix = string(Dates.now())
+# result_dir_suffix = "test"
+main(;ε, domain, L, τ, n, it, result_dir_suffix)
+# function main(;ε = 1/100, domain="flower", L=1.1, τ=1/10^5, n=2^6, it=10, result_dir_suffix ="")
+# main(;domain)
