@@ -228,7 +228,7 @@ function main(;domain="flower")
 
 
     # Save results
-    df = DataFrame(ts=ts, Es=Es, delta_uhs=δuhs, Delta_uhs=Δuhs)
+    df = DataFrame(ts=ts, Es=Es, E1s=E1s, E2s=E2s, delta_uhs=δuhs, Delta_uhs=Δuhs)
     CSV.write(maindir*"/sol.csv", df, delim=',')
 
     parameters = Dict(
