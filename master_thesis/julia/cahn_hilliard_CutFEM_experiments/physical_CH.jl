@@ -13,17 +13,16 @@ Random.seed!(1234)  # Set the seed to a specific value
 function main(;domain="flower")
 
     ## Cahn-hilliard
-    ε = 1/30
+    ε = 1/100
     # ε = 1
     # Gibb's potential
-    f(u) = mean(u)*(1 - mean(u)*mean(u))
-    # f(u) = u*(1-u^2)
+    f(u) = mean(u)*(mean(u)*mean(u) - 1)
 
     ##
     L= 2.70
     n = 2^7
     h = 2*L/n
-    it = 40
+    it = 1000
     γ = 20
     τ = ε^2/60
     γg1 = 10
@@ -114,8 +113,8 @@ function main(;domain="flower")
     A_h(u,v) = a_CIP(u,v) + g(u,v)
     lhs(u,v) = ∫(u*v)*dΩ + τ*ε^2*A_h(u,v)
 
-    c_h(u,v) = ( ∫(f(u)*Δ(v))*dΩ - ∫(f(mean(u))*jump(∇(v)⋅n_Λ))*dΛ - ∫(f(u)*∇(v)⋅n_Γ )*dΓ)
-    rhs(u, v) =  ∫(u*v)*dΩ +  τ*c_h(u,v)
+    c_h(u,v) = ( ∫(f(u)*(-1)*Δ(v))*dΩ + ∫(f(mean(u))*jump(∇(v)⋅n_Λ))*dΛ + ∫(f(u)*∇(v)⋅n_Γ )*dΓ)
+    rhs(u, v) =  ∫(u*v)*dΩ -τ*c_h(u,v)
     rhs(u) = v -> rhs(u,v)
 
     ## time loop
@@ -154,7 +153,7 @@ function main(;domain="flower")
 
     # Adding initial plotting values
     E = sum( ∫(( ε^2/2 )*( ∇(uh)⋅∇(uh) ) + (1/4)*((uh*uh - 1)*(uh*uh - 1))  )dΩ)
-    E1 = sum( ∫(( ∇(uh)⋅∇(uh) ) )dΩ)
+    E1 = sum( ∫(( ε^2/2*∇(uh)⋅∇(uh) ) )dΩ)
     E2 = sum( ∫((1/4)*((uh*uh - 1)*(uh*uh - 1))  )dΩ)
     push!(ts, t)
     push!(Es, E)
@@ -194,7 +193,7 @@ function main(;domain="flower")
 
         # Adding plotting values
         E = sum( ∫(ε^2/2*( ∇(uh)⋅∇(uh) ) + (1/4)*((uh*uh - 1)*(uh*uh - 1))  )dΩ)
-        E1 = sum( ∫(( ∇(uh)⋅∇(uh) ) )dΩ)
+        E1 = sum( ∫((ε^2/2*∇(uh)⋅∇(uh) ) )dΩ)
         E2 = sum( ∫((1/4)*((uh*uh - 1)*(uh*uh - 1))  )dΩ)
         push!(ts, t)
         push!(Es, E)
