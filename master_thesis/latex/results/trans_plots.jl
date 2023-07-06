@@ -1,6 +1,6 @@
 using Plots
 pgfplotsx()
-default_size = (600, 200)
+default_size = (600, 175)
 
 using CSV
 using DataFrames

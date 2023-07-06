@@ -12,55 +12,56 @@
 %
 % \title{Project Thesis\\ Solving the Biharmonic Equation using \\ a Continuous Interior Penalty Method}
 % \author{Isak Hammer, \\[1cm]{\small Advisor: André Massing} }
+\usepackage{pdfpages}
 
 \begin{document}
 
 
-\begin{titlepage}
-    \begin{center}
-        \vspace*{1cm}
+% \begin{titlepage}
+    % \begin{center}
+    %     \vspace*{1cm}
 
-        \Huge
-        \textbf{Master thesis}
+    %     \Huge
+    %     \textbf{Master's  thesis}
 
-        \vspace{0.5cm}
-        \Large
-        A cut finite element method for the biharmonic problem and
-        its application to the Cahn-Hilliard equation
+    %     \vspace{0.5cm}
+    %     \Large
+    %     A cut finite element method for the biharmonic problem and
+    %     its application to the Cahn-Hilliard equation
 
-        \vspace{1.5cm}
+    %     \vspace{1.5cm}
 
-        \textbf{Isak Hammer} \\
-        \vspace{0.5cm}
-        Supervisor: André Massing \\
-        \vspace{0.5cm}
-        \today
+    %     \textbf{Isak Hammer} \\
+    %     \vspace{0.5cm}
+    %     Supervisor: André Massing \\
+    %     \vspace{0.5cm}
+    %     \today
 
 
-        \vfill
+    %     \vfill
 
-        \vspace{0.8cm}
+    %     \vspace{0.8cm}
 
-        \begin{figure}[H]
-            \centering
-            \includegraphics[width=0.3\textwidth]{results/illustration/f0.png}
-            \includegraphics[width=0.3\textwidth]{results/illustration/f10.png}
-            \includegraphics[width=0.3\textwidth]{results/illustration/f50.png}
-            \vspace{10pt}
-            \includegraphics[width=0.3\textwidth]{results/illustration/f200.png}
-            \includegraphics[width=0.3\textwidth]{results/illustration/f1000.png}
-            \includegraphics[width=0.3\textwidth]{results/illustration/f10000.png}
-            % \caption{Illustration of simulations of the Cahn-Hilliard equation on the circle and a flower domain for $t\in \left[ 0, 1000\tau  \right] $.}
-            % \label{sub:fig:ill_circle_flower}
-        \end{figure}
+    %     \begin{figure}[H]
+    %         \centering
+    %         \includegraphics[width=0.3\textwidth]{results/illustration/f0.png}
+    %         \includegraphics[width=0.3\textwidth]{results/illustration/f10.png}
+    %         \includegraphics[width=0.3\textwidth]{results/illustration/f50.png}
+    %         \vspace{10pt}
+    %         \includegraphics[width=0.3\textwidth]{results/illustration/f200.png}
+    %         \includegraphics[width=0.3\textwidth]{results/illustration/f1000.png}
+    %         \includegraphics[width=0.3\textwidth]{results/illustration/f10000.png}
+    %         % \caption{Illustration of simulations of the Cahn-Hilliard equation on the circle and a flower domain for $t\in \left[ 0, 1000\tau  \right] $.}
+    %         % \label{sub:fig:ill_circle_flower}
+    %     \end{figure}
 
-        \Large
-        Department of Mathematical Sciences\\
-        Norwegian University of Science and Technology\\
+    %     \Large
+    %     Department of Mathematical Sciences\\
+    %     Norwegian University of Science and Technology\\
 
-    \end{center}
+    % \end{center}
 
-\end{titlepage}
+% \end{titlepage}
     % \begin{titlepage}
     %     \maketitle
     %     \begin{figure}
@@ -71,6 +72,8 @@
     %     \thispagestyle{empty}
     % \end{titlepage}
 
+
+    \includepdf[pages=-]{results/illustration/front_page.pdf}
 
     \newpage
 
@@ -97,5 +100,7 @@
 
     % \newpage
     \printbibliography
+
+    \includepdf[pages=-]{results/illustration/back_page.pdf}
 
 \end{document}
