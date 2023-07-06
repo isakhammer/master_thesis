@@ -286,8 +286,9 @@ see Figure \ref{fig:domain_mesh}.
 This greatly reduces the need to generate an unstructured mesh and makes it very applicable for parallelization and moving domains
 since it avoids the need of remeshing entirely. However, without paying attention to the so-called cut cells, which are the elements intersecting with the boundary, the method quickly leads to instability and ill-conditioning.
 One of the methods to counter this is the cut finite element method (CutFEM), where the focus is to penalize the cut-cells weakly by adding an additional ghost penalty term to ensure well-posedness and optimal convergence properties \cite{burman2015cutfem}. Notably, there exist related methods, sometimes considered equivalent, named Extended FEM and Trace FEM \cite{cai2021nitsche,zonca2018unfitted}.
-This has been successfully implemented for the BH problem for the
-mixed formulation \cite{cai2023nitsche} and the CIP formulation \cite{chen2023arbitrary, cai2021nitsche}. However,  both implementations are considering an interface problem between two domains. Specifically for the CH problem, the mixed formulation \cite{karatzas2021reduced} has been shown to be successful.
+This method has been successfully implemented for the BH problem for the
+mixed formulation \cite{cai2023nitsche}, the CIP formulation \cite{chen2023arbitrary, cai2021nitsche} or using so-called $C^{1}$ continuous Bogner-Fox-Schmit elements \cite{burman2020cut}.
+However, both implementations are considering an interface problem between two domains. Specifically for the CH problem, the mixed formulation \cite{karatzas2021reduced} has been shown to be successful.
  Aggregated unfitted finite element method (AgFEM) is a close relative to CutFEM and has also shown to
 be promising \cite{badia2018aggregated, badia2022linking}. The method is an alternative way to the ghost penalty, which instead applies a so-called cell aggregation with respect to a cut cell ( assuming each cell has enough support with interior elements) and,
 thus, the badly cut cells are removed, ensuring robustness and well-posedness.
@@ -299,9 +300,9 @@ Recent results have shown that investigations on unfitted versions of IGA
 \subsection{Outline of the report}%
 \label{sub:outline_of_the_report}
 In this thesis, we propose an novel stabilized unfitted cut continuous interior penalty method (CutCIP) specifically for the BH problem with Cahn-Hilliard type boundary conditions, which incorporates the CutFEM methodology in combination with a CIP
-formulation. Our approach is inspired by the theoretical
+formulation. We then extend this method to a CIP CutFEM solver for CH, giving the first CIP CutFEM formulation applied for the problem.
+Our approach is inspired by the theoretical
 procedure as presented in the DG Poisson formulation proposed by \cite{gurkan2019stabilized}, but instead apply the CIP BH formulation while taking into account and extending the to analytical results provided in \cite{feng2007fully, brenner2012quadratic}.
-\todo[inline]{ Add Box FEM elements as reference. }
 
 The structure of this thesis is as follows. Firstly, in Section \ref{sec:mathematical_background}, we aim to establish notation by reviewing necessary mathematical tools. In Section \ref{sec:CIP_biharmonic_problem} the basic construction of the CIP
 BH formulations and the related properties is reviewed. Subsequently, in Section \ref{sec:cutcip_biharmonic_problem} we propose the corresponding CutCIP BH method and provide a theoretical analysis showing that the stability and convergence
