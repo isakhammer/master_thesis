@@ -31,6 +31,8 @@ We also recall that the energy functional monotonically decreasing and that the 
 \frac{d}{dt} E( u)  <  0 \text{ and }\frac{d}{dt} \int_{\Omega }^{}  u dx = 0.
 \end{equation}
 
+For convenience, we decompose the functional so that $E(u) = E_{1}(u) + E_{2}(u)$. Here, $E_{1}(u) = \int_{\Omega } \frac{\varepsilon^{2}}{2} |\nabla u|^2 , dx$ represents the smoothing contribution, while $E_{2}(u) = \int_{\Omega } F(u) , dx$ represents the separation contribution.
+
 Now assume that $u \in L^2( [0,T], H^{4}( \Omega ) ) $ and $v_{h} \in  V_{h}$ of order $k$. It is clear that the initial weak formulation is,
 \begin{equation}
     ( \partial_{t} u,v_{h} )_{\Omega }  + \varepsilon^{2} ( \Delta ^2u, v_{h})_{\Omega } -  ( f( u), v_{h} )_{\Omega } = 0.
@@ -72,24 +74,21 @@ Hence, we have a complete space time scheme.
 \label{sub:demonstration_on_the_physical_cahn_hilliard}
 
 For the strong form of the Cahn-Hilliard \eqref{eq:strong_ch} we have no analytical solution, so we cannot construct a manufactured solution. However, a way to check that the system does behave like expected based on the physical properties \eqref{eq:physical_prop}. In other
-words, we can check that our discrete solution satisfies the following conditions. Let $E^m = E( u_{h}^{m})$, then we expect that
+words, we can check that our discrete solution satisfies the following conditions. We define the discrete values $E^m = E( u_{h}^{m})$, $E_{1}^m = E_{1}( u_{h}^{m})$ and $E_{2}^m = E_{2}( u_{h}^{m})$ and the initial function  $u_{0} = u( x,0) $. From
+the physical properties \eqref{eq:physical_prop} to we expect the discrete equivalent to hold, i.e.
 \begin{equation}
- E^m   <  E^{ m-1 }
+    E^m   <  E^{ m-1 } \text{ and }   \int_{\Omega }^{} u_{h}^{m}   dx \approx \int_{\Omega }^{} u_{0}  dx.
 \end{equation}
-Hence, the discrete solution must satisfy
+To test this, we check that $ \delta E^{m} >0 $ generally holds, where
 \begin{equation}
- \delta E^{m} = E( u_{h}^{m-1}) -  E( u_{h}^{m}) > 0,  \\
+ \delta E^{m} = E( u_{h}^{m-1}) -  E( u_{h}^{m}) ,  \\
 \end{equation}
-
-Let $u_{0} = u( x,0) $, then for the mass conservation do we expect
-\begin{equation}
-\int_{\Omega }^{} u_{h}^{m}   dx = \int_{\Omega }^{} u_{0}  dx,
-\end{equation}
- Let us define the relative global mass error and local mass error.
+ Similarly, let us define the relative cumulative global mass error and local mass error.
  \begin{equation}
  \Delta u_{h}^{m}  = \frac{ \abs{ \int_{\Omega }^{}  ( u_h^{m} - u_{0} ) dx } }{ \abs{ \int_{\Omega }^{}  u_{0} dx } } \quad \text{ and } \quad
  \delta u_{h}^{m}  = \frac{  \int_{\Omega }^{}  ( u_h^{m} - u^{m-1}_{h} ) dx  }{ \abs{ \int_{\Omega }^{}  u_{0} dx } }.
  \end{equation}
+ To test mass conservation we expect the error $\Delta u_{h}^{m}$ and $\delta u_{h}^{m}$   to be close to zero.
 
 \begin{figure}[]
     \includegraphics{results/physical_CH_plot.pdf}
@@ -191,7 +190,23 @@ Let $u_{0} = u( x,0) $, then for the mass conservation do we expect
 
 
 In our experiments, we defined the initial function $u_{0}(x)$ as the uniform samples from the interval $[-1, 1]$ for each node. That is, for each node $a_{i}$, $u_{0}(a_{i})$ is a sample from the uniform distribution on the interval $[-1, 1]$. This
-applies for all $i = 1, \ldots, N$, where $N$ is the total number of degrees of freedom in our system. The node $a_{i}$ is associated with the nodal basis for all $N$ degrees of freedom, as discussed for the discrete system \eqref{eq:discretized_system}.
+applies for all $i = 1, \ldots, N$, where $N$ is the total number of degrees of freedom in our system. The node $a_{i}$ is associated with the nodal basis for all $N$ degrees of freedom, as discussed for the discrete system
+\eqref{eq:discretized_system}. For our mesh we applied a quadratic background mesh $L=2.7$ and $n2^{7}$ for a illustration of the active mesh $\mathcal{T}_{h} $, see
+
+\begin{figure}[H]
+    \centering
+    \hfill
+    % \subfloat[]{
+        \includegraphics[width=0.45\textwidth]{results/illustration/active_circle.png}
+    % }
+    \hfill
+    % \subfloat[]{
+        \includegraphics[width=0.45\textwidth]{results/illustration/active_flower.png}
+    % }
+    \caption{Illustration of the active mesh $\mathcal{T}_{h} $.}
+    % \label{sub:fig:ill_circle_flower}
+\end{figure}
+
 
 We ran the simulation on the for the flower domain \eqref{eq:flower} and the circular domain \eqref{eq:circle}, illustrated in Figure \ref{sub:fig:ill_flower} and \ref{sub:fig:ill_circle}. The corresponding plots of the mass conservation and energy decrease are presented
 in the Figure \ref{fig:physical_CH_plot}, and confirm the expected physical properties of the Cahn-Hilliard equation. The relative error $e_{u}$ shows small deviations of the numerical solution in the order of $10^{ -10 }$ demonstrating that the mass is conserved. We also observe that the energy functional
