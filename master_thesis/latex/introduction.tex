@@ -196,7 +196,9 @@ Another rising method is the virtual finite element method (VFEM), which has app
         % \node[anchor=west] at (4.0,3.1) {$u$}; % Label for u
     \end{tikzpicture}
     \end{minipage}
-    \caption{ Illustration of global $C^{0}$ continuous elements (left) and global $C^{1}$ elements (right) in 1 dimension. Here, $u_{h}$ is a discrete solution in $\mathcal{P}^2$, where the jump between the elements is denoted as $ \jump{ u_{h} } = u_{+} - u_{-}$. }
+    \caption{ Illustration of global $C^{0}$ continuous elements (left) and global $C^{1}$ elements (right) in 1 dimension. Here, $u_{h}$ is a discrete solution
+    % in $\mathcal{P}^2$
+, where the jump between the elements is denoted as $ \jump{ u_{h} } = u_{+} - u_{-}$. }
 \label{fig:global_C0}
 \end{figure}
 
@@ -296,9 +298,11 @@ Recent results have shown that investigations on unfitted versions of IGA
 
 \subsection{Outline of the report}%
 \label{sub:outline_of_the_report}
-In this article, we propose an novel stabilized unfitted cut continuous interior penalty method (CutCIP) specifically for the BH problem, which incorporates the CutFEM methodology in combination with a CIP formulation. We will follow the work theoretical
-procedure as presented in the DG Poisson formulation proposed by \cite{gurkan2019stabilized}, but instead apply the CIP BH formulation while taking account to analytical results provided in \cite{feng2007fully, brenner2012quadratic}.
+In this thesis, we propose an novel stabilized unfitted cut continuous interior penalty method (CutCIP) specifically for the BH problem with Cahn-Hilliard type boundary conditions, which incorporates the CutFEM methodology in combination with a CIP
+formulation. Our approach is inspired by the theoretical
+procedure as presented in the DG Poisson formulation proposed by \cite{gurkan2019stabilized}, but instead apply the CIP BH formulation while taking into account and extending the to analytical results provided in \cite{feng2007fully, brenner2012quadratic}.
+\todo[inline]{ Add Box FEM elements as reference. }
 
-The main results in this thesis is as follows. In Section \ref{sec:CIP_biharmonic_problem} the basic construction of the CIP BH formulations and the related properties is established. Subsequently, in Section \ref{sec:cutcip_biharmonic_problem} we propose the corresponding CutCIP BH method, but also
-provide a theoretical proof to show that the stability and convergence properties from the original CIP method are conserved. In Section \ref{sec:cahn_hilliard_equation} we briefly extend the method to handle the CH problem. Finally, Section
-\ref{sec:numerical_results} is dedicated to numerical experiments.
+The structure of this thesis is as follows. Firstly, in Section \ref{sec:mathematical_background}, we aim to establish notation by reviewing necessary mathematical tools. In Section \ref{sec:CIP_biharmonic_problem} the basic construction of the CIP
+BH formulations and the related properties is reviewed. Subsequently, in Section \ref{sec:cutcip_biharmonic_problem} we propose the corresponding CutCIP BH method and provide a theoretical analysis showing that the stability and convergence
+properties from the original CIP method are conserved. To verify these theoretical properties, we also presented numerical experiments as validation. Finally, in Section \ref{sec:cahn_hilliar_applications} we demonstrate how to extend the method to handle the CH problem.
