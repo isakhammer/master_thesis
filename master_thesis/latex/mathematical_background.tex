@@ -275,23 +275,25 @@ The intention is to introduce a abstract framework which can handle various type
 conditions and $X,Y$ are spaces of functions. Then we denote the abstract strong formulation as the equation
 \begin{equation}
 \label{eq:strong_abs}
-\mathcal{A} u = f.
+\mathcal{A} u = f
 \end{equation}
-Where the function $f: \Omega \subset \mathbb{R}^d \mapsto \mathbb{R}$. We assume that the function $u: \Omega \rightarrow \mathbb{R}$ satisfies the relation \eqref{eq:strong_abs} pointwise so that $\mathcal{A} u(x)=f(x) \forall x \in \Omega$.
+for a given function $f: \Omega \subset \mathbb{R}^d \mapsto \mathbb{R}$. We assume that the function $u: \Omega \rightarrow \mathbb{R}$ satisfies the relation \eqref{eq:strong_abs} pointwise so that $\mathcal{A} u(x)=f(x) \forall x \in \Omega$.
 We will discover that Sobolev spaces are specifically engineered to study these kinds of problems.
 
 \begin{definition}[Linear bounded functional]
     \label{def:linear_function}
-Let $V$ be a Hilbert space. Furthermore, we define the dual space $V' $ to be the space of linear and bounded functionals $F: V  \mapsto \mathbb{R} $, i.e., \[
-V'  = \left\{ F: V \to \mathbb{R}   \mid  F \text{ is linear and bounded} \right\}
-\]
+Let $V$ be a Hilbert space. Furthermore, we define the dual space $V' $ to be the space of linear and bounded functionals $F: V  \mapsto \mathbb{R} $, i.e.,
+\begin{equation}
+V'  = \left\{ F: V \to \mathbb{R}   \mid  F \text{ is linear and bounded} \right\}.
+\end{equation}
 \end{definition}
 
 \begin{problem}[Abstract linear problem]
     \label{def:abstract_linear_problem}
-    Assume $X$ and $Y$  to be two Hilbert spaces. Let the vector space $\mathcal{L}( X,Y)  $ be all linear bounded operators spanned from $V$ to $Y$. We define the abstract linear problem as follows; find $u \in V$ s.t. \[
-    a( u,v)  = l(v ) := \left<f,v \right>_{V' , V}  \forall v \in V
-    \]
+    Assume $X$ and $Y$  to be two Hilbert spaces. Let the vector space $\mathcal{L}( X,Y)  $ be all linear bounded operators spanned from $V$ to $Y$. We define the abstract linear problem as follows; find $u \in V$ such that
+    \begin{equation}
+    a( u,v)  = l(v ) := \left<f,v \right>_{V' , V}  \quad  \forall v \in V
+    \end{equation}
     Where $a \in  \mathcal{L} ( V, V,\mathbb{R} ) $ is a bounded bilinear form and $f \in V':= \mathcal{L} ( V,\mathbb{R} )  $ is a bounded linear form associated with the abstract strong formulation \eqref{eq:strong_abs}. Here we denote by $\left<\cdot ,\cdot  \right>_{V',V} $ the duality pairing between $V'$ and $V$.
 
 \end{problem}
@@ -303,7 +305,7 @@ V'  = \left\{ F: V \to \mathbb{R}   \mid  F \text{ is linear and bounded} \right
      a( v,v) \gtrsim  \| v \|_{ V }^{  } \quad  \forall v \in  V.
     \]
      The bilinear form $a( \cdot ,\cdot ) $ is said to bounded if   \[
-    a( u,v)  \lesssim  \| u \|_{ V }^{  }  \| v \|_{V }^{  }\quad  \forall u,v \in V.
+    a( w,v)  \lesssim  \| w \|_{ V }^{  }  \| v \|_{V }^{  }\quad  \forall w,v \in V.
     \]
 \end{definition}
 
@@ -311,7 +313,7 @@ V'  = \left\{ F: V \to \mathbb{R}   \mid  F \text{ is linear and bounded} \right
 \begin{lemma}[Lax-Milgram]
     \label{def:lax-milgram}
     The abstract linear problem \ref{def:abstract_linear_problem} is well-posed if $a(\cdot , \cdot  ) $ is bounded and coercive. Moreover, the following a priori estimate holds true.\[
-    \| v \|_{ V }^{  } \lesssim  \| f \|_{ V'  }^{  }
+    \| u \|_{ V }^{  } \lesssim  \| f \|_{ V'  }^{  }
     \]
 \end{lemma}
 \begin{proof}
@@ -319,10 +321,8 @@ V'  = \left\{ F: V \to \mathbb{R}   \mid  F \text{ is linear and bounded} \right
 \end{proof}
 
 
-
 \subsection{Finite element method}%
 \label{sub:finite_element_method}
-
 
 The finite element method (FEM) is a numerical method to solve partial differential equation by finding an approximation of the Problem \ref{def:abstract_linear_problem}.  Let $V_{h}$ be a finite-dimensional (polynomial) approximation space on the mesh
 $\mathcal{T} _{h}$. We say that a method is conform if $V_{h}\subset V $ and non-conform if $V _{h} \not\subset V$. We define the approximate problem as follows.
