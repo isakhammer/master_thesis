@@ -191,7 +191,7 @@ To test this, we check that $ \delta E^{m} >0 $ generally holds, where
 
 In our experiments, we defined the initial function $u_{0}(x)$ as the uniform samples from the interval $[-1, 1]$ for each node. That is, for each node $a_{i}$, $u_{0}(a_{i})$ is a sample from the uniform distribution on the interval $[-1, 1]$. This
 applies for all $i = 1, \ldots, N$, where $N$ is the total number of degrees of freedom in our system. The node $a_{i}$ is associated with the nodal basis for all $N$ degrees of freedom, as discussed for the discrete system
-\eqref{eq:discretized_system}. For our mesh we applied a quadratic background mesh $L=2.7$ and $n2^{7}$ for a illustration of the active mesh $\mathcal{T}_{h} $, see
+\eqref{eq:discretized_system}. We again used a square background mesh with length $L=2.7$ and mesh size $h=\frac{L}{n}$ for $n=2^{7}$. For an illustration of the active set $\mathcal{T}_{h} $ (defined in Section \ref{sub:unfitted_mesh}), see Figure \ref{sub:fig:active_mesh}.
 
 \begin{figure}[H]
     \centering
@@ -204,7 +204,7 @@ applies for all $i = 1, \ldots, N$, where $N$ is the total number of degrees of 
         \includegraphics[width=0.45\textwidth]{results/illustration/active_flower.png}
     % }
     \caption{Illustration of the active mesh $\mathcal{T}_{h} $.}
-    % \label{sub:fig:ill_circle_flower}
+    \label{sub:fig:active_mesh}
 \end{figure}
 
 
