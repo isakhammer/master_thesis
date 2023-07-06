@@ -92,6 +92,12 @@ Let $u_{0} = u( x,0) $, then for the mass conservation do we expect
  \end{equation}
 
 \begin{figure}[]
+    \includegraphics{results/physical_CH_plot.pdf}
+    \caption{Evolution of the total discrete energy $E^m$ and the local energy difference $\delta E^m$, global mass conservation $\Delta u^m$, and the local mass difference $\delta u^m$ on a circular domain and a flower-shaped domain. }
+    \label{fig:physical_CH_plot}
+\end{figure}
+
+\begin{figure}[]
     \centering
     \hfill
     \subfloat[$t=0\tau$]{
@@ -134,6 +140,7 @@ Let $u_{0} = u( x,0) $, then for the mass conservation do we expect
         \includegraphics[width=0.8\textwidth]{results/illustration/colobar.png}
 
     \caption{Illustration of simulations of the Cahn-Hilliard equation on the circle domain for $t\in \left[ 0, 10000\tau  \right] $.}
+        \label{sub:fig:ill_circle}
 \end{figure}
 
 \begin{figure}[]
@@ -177,8 +184,8 @@ Let $u_{0} = u( x,0) $, then for the mass conservation do we expect
     }
     \vspace{10pt}
         \includegraphics[width=0.8\textwidth]{results/illustration/colobar.png}
-
     \caption{Illustration of simulations of the Cahn-Hilliard equation on the flower domain for $t\in \left[ 0, 10000\tau  \right] $.}
+        \label{sub:fig:ill_flower}
 \end{figure}
 
 
@@ -186,16 +193,11 @@ Let $u_{0} = u( x,0) $, then for the mass conservation do we expect
 In our experiments, we defined the initial function $u_{0}(x)$ as the uniform samples from the interval $[-1, 1]$ for each node. That is, for each node $a_{i}$, $u_{0}(a_{i})$ is a sample from the uniform distribution on the interval $[-1, 1]$. This
 applies for all $i = 1, \ldots, N$, where $N$ is the total number of degrees of freedom in our system. The node $a_{i}$ is associated with the nodal basis for all $N$ degrees of freedom, as discussed for the discrete system \eqref{eq:discretized_system}.
 
-We ran the simulation on the for the flower domain \eqref{eq:flower} and the circular domain \eqref{eq:circle}, illustrated in Figure \ref{sub:fig:ill_circle_flower} . The corresponding plots of the mass conservation and energy decrease are presented
+We ran the simulation on the for the flower domain \eqref{eq:flower} and the circular domain \eqref{eq:circle}, illustrated in Figure \ref{sub:fig:ill_flower} and \ref{sub:fig:ill_circle}. The corresponding plots of the mass conservation and energy decrease are presented
 in the Figure \ref{fig:physical_CH_plot}, and confirm the expected physical properties of the Cahn-Hilliard equation. The relative error $e_{u}$ shows small deviations of the numerical solution in the order of $10^{ -10 }$ demonstrating that the mass is conserved. We also observe that the energy functional
 $E(u_h)$ decreases over time, signifying the system's tendency to seek a state of minimal energy.
 
 
-\begin{figure}[H!]
-    \includegraphics{results/physical_CH_plot.pdf}
-    \caption{Evolution of the total discrete energy $E^m$ and the local energy difference $\delta E^m$, global mass conservation $\Delta u^m$, and the local mass difference $\delta u^m$ on a circular domain and a flower-shaped domain. }
-    \label{fig:physical_CH_plot}
-\end{figure}
 
 
 \subsection{Note on the manufactured solution}%
