@@ -196,11 +196,11 @@ Another rising method is the virtual finite element method (VFEM), which has app
         % \node[anchor=west] at (4.0,3.1) {$u$}; % Label for u
     \end{tikzpicture}
     \end{minipage}
-\caption{ Illustration of global $C^{0}$ continuous elements (left) and global $C^{1}$ elements (right) in 1 dimension. Here is $u$ the exact solution and $u_{h}$ the approximated solution. We define the jump between the elements as $ \jump{ u_{h} } = u_{+} - u_{-}$. }
+    \caption{ Illustration of global $C^{0}$ continuous elements (left) and global $C^{1}$ elements (right) in 1 dimension. Here, $u_{h}$ is a discrete solution in $\mathcal{P}^2$, where the jump between the elements is denoted as $ \jump{ u_{h} } = u_{+} - u_{-}$. }
 \label{fig:global_C0}
 \end{figure}
 
-An alternative approach is to avoid global $C^1$ continuity weakend it to global $C^{0}$ continuity, see Figure \ref{fig:global_C0} . As a result, this strategy has led to the development of two distinct families of methods for solving the CH problem.
+An alternative approach is to avoid global $C^1$ continuity and weakend it to global $C^{0}$ continuity, see Figure \ref{fig:global_C0} . As a result, this strategy has led to the development of two distinct families of methods for solving the CH problem.
 % Paragraph of CIP
 The first involves the Continuous Interior Penalty (CIP) methods, which uses the standard weak formulation but penalizes the discontinuity of the derivative between elements as a form of regularization. The method has been designed for several interesting
 stable variants for the BH problem, that is \cite{brenner2012, brenner2012quadratic, brenner2012quadratic_kirk, mu2014weak, georgoulis2009discontinuous}, and recently also for tri-harmonic problems \cite{diegel2023c0}.
