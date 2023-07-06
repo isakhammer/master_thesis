@@ -123,9 +123,9 @@ reference, see \cite{kapl2021family, percell1976cubic, argyris1968tuba}.
 
 % Describe the isogeometric analysis and virtual elements methods as alternatives.
 There exist several promising alternative methods that guarantee $C^{1}$ continuity, and these have shown potential for solving the CH problem. A notable mention is isogeometric analysis (IGA), a technique that leverages Non-Uniform
-Rational B-Splines (NURBS) to efficiently handle complex geometries and smooth boundaries without the need for mesh refinement. Thus, IGA makes a desirable alternative for problems dealing with intricate and smooth domains
+Rational B-Splines (NURBS) to efficiently handle complex geometries and smooth boundaries without the need for translating CAD-based geometry description into classical FEM meshes. Thus, IGA presents a desirable alternative for problems dealing with intricate and smooth domains
 \cite{hughes2005isogeometric}. Specifically for the CH problem, has IGA successfully been implemented \cite{kastner2016isogeometric, gomez2008isogeometric}.
-Another rising method is the virtual finite element method (VFEM), which has applied so-called virtual $C^{1}$ elements to handle the continuity requirement \cite{antonietti2016c}.
+Another rising method is the virtual finite element method (VFEM), which has applied so-called virtual $C^{1}$ elements to handle the $C^{1}$ continuity requirement \cite{antonietti2016c}.
 
 \begin{figure}[h!]
     \centering
@@ -145,7 +145,7 @@ Another rising method is the virtual finite element method (VFEM), which has app
             }
 
             % Exact solution
-            \draw[red, thick] (0,2.5) .. controls (0.5,0.5) and (0.5,3) .. (1,1.7) .. controls (1.5,0) and (1.5,6) .. (2,2.5) .. controls (2.5,1) and (2.5,3.5) .. (3,1.2);
+            % \draw[red, thick] (0,2.5) .. controls (0.5,0.5) and (0.5,3) .. (1,1.7) .. controls (1.5,0) and (1.5,6) .. (2,2.5) .. controls (2.5,1) and (2.5,3.5) .. (3,1.2);
             \node at (1,0.6) [above] {$\jump{ \partial _{n} u_{h} } \neq 0$};
             \node at (1,0.7) [below] {$\jump{ u_{h} }   = 0$};
 
@@ -154,11 +154,11 @@ Another rising method is the virtual finite element method (VFEM), which has app
             .. controls (1.7,3.9) .. (2,2.5)
             .. controls (2.7,1.9) .. (3,1.2); Second
 
-            \draw (3.2,2.8) rectangle (4.8,3.8); % Legend box
+            \draw (3.2,3.2) rectangle (4.8,3.8); % Legend box
             \draw[blue, thick] (3.4,3.5) -- (3.9,3.5); % Blue line for u_h
-            \draw[red, thick] (3.4,3.1) -- (3.9,3.1); % Red line for u
+            % \draw[red, thick] (3.4,3.1) -- (3.9,3.1); % Red line for u
             \node[anchor=west] at (4.0,3.5) {$u_h$}; % Label for u_h
-            \node[anchor=west] at (4.0,3.1) {$u$}; % Label for u
+            % \node[anchor=west] at (4.0,3.1) {$u$}; % Label for u
 
         \end{tikzpicture}
     \end{minipage}
@@ -179,7 +179,7 @@ Another rising method is the virtual finite element method (VFEM), which has app
         }
 
         % Exact solution
-        \draw[red, thick] (0,2.5) .. controls (0.5,0.5) and (0.5,3) .. (1,1.7) .. controls (1.5,0) and (1.5,6) .. (2,2.5) .. controls (2.5,1) and (2.5,3.5) .. (3,1.2);
+        % \draw[red, thick] (0,2.5) .. controls (0.5,0.5) and (0.5,3) .. (1,1.7) .. controls (1.5,0) and (1.5,6) .. (2,2.5) .. controls (2.5,1) and (2.5,3.5) .. (3,1.2);
         \node at (1,0.6) [above] {$\jump{ \partial _{n} u_{h} } = 0$};
         \node at (1,0.7) [below] {$\jump{ u_{h} }   = 0$};
 
@@ -189,11 +189,11 @@ Another rising method is the virtual finite element method (VFEM), which has app
         (1,1.7) .. controls (1.5,1.7) .. (2,2.5)
         (2,2.5) .. controls (2.5,3.3) .. (3,1.2);
 
-        \draw (3.2,2.8) rectangle (4.8,3.8); % Legend box
+        \draw (3.2,3.2) rectangle (4.8,3.8); % Legend box
         \draw[blue, thick] (3.4,3.5) -- (3.9,3.5); % Blue line for u_h
-        \draw[red, thick] (3.4,3.1) -- (3.9,3.1); % Red line for u
+        % \draw[red, thick] (3.4,3.1) -- (3.9,3.1); % Red line for u
         \node[anchor=west] at (4.0,3.5) {$u_h$}; % Label for u_h
-        \node[anchor=west] at (4.0,3.1) {$u$}; % Label for u
+        % \node[anchor=west] at (4.0,3.1) {$u$}; % Label for u
     \end{tikzpicture}
     \end{minipage}
 \caption{ Illustration of global $C^{0}$ continuous elements (left) and global $C^{1}$ elements (right) in 1 dimension. Here is $u$ the exact solution and $u_{h}$ the approximated solution. We define the jump between the elements as $ \jump{ u_{h} } = u_{+} - u_{-}$. }
@@ -291,7 +291,7 @@ mixed formulation \cite{cai2023nitsche} and the CIP formulation \cite{chen2023ar
 be promising \cite{badia2018aggregated, badia2022linking}. The method is an alternative way to the ghost penalty, which instead applies a so-called cell aggregation with respect to a cut cell ( assuming each cell has enough support with interior elements) and,
 thus, the badly cut cells are removed, ensuring robustness and well-posedness.
 Recent results have shown that investigations on unfitted versions of IGA
-\cite{zhao2017variational} and its applicability to moving surfaces \cite{zimmermann2019isogeometric} also is possible.
+\cite{zhao2017variational} and its applicability to moving surfaces \cite{zimmermann2019isogeometric} is also possible.
 
 
 
