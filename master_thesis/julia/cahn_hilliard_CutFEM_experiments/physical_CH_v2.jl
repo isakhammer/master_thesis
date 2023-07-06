@@ -285,8 +285,10 @@ L=2.70
 τ = ε^2
 n=2^6
 it=10000
-result_dir_suffix = string(Dates.now())
+# result_dir_suffix = string(Dates.now())
+result_dir_suffix = ""
 # result_dir_suffix = "test"
-main(;ε, domain, L, τ, n, it, result_dir_suffix)
+main(;ε, domain="circle", L, τ, n, it, result_dir_suffix)
+main(;ε, domain="flower", L, τ, n, it, result_dir_suffix)
 # function main(;ε = 1/100, domain="flower", L=1.1, τ=1/10^5, n=2^6, it=10, result_dir_suffix ="")
 # main(;domain)
