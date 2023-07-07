@@ -20,3 +20,9 @@ bibliography.fls
 bibliography.log
 
 *.fls
+
+full_main-blx.bib
+full_main.bbl
+full_main.pdf
+full_main.run.xml
+full_main.synctex.gz
