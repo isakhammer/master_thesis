@@ -1,0 +1,9 @@
+gamma1: 10
+domain: "circle"
+epsilon: 0.01
+gamma: 20
+gamma2: 0.5
+it: 10000
+L: 2.7
+tau: "epsilon^2/10"
+n: 128
