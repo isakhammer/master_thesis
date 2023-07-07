@@ -92,47 +92,48 @@ To test this, we check that $ \delta E^{m} >0 $ generally holds, where
 
 \begin{figure}[]
     \includegraphics{results/physical_CH_plot.pdf}
-    \caption{Evolution of the total discrete energy $E^m$ and the local energy difference $\delta E^m$, global mass conservation $\Delta u^m$, and the local mass difference $\delta u^m$ on a circular domain and a flower-shaped domain. }
+    \caption{Evolution of the  global mass conservation $\Delta u^m$, and the local mass difference $\delta u^m$ total discrete energies $E^m$,$E^m_{1}$,$E^m_{2}$, with the corresponding local energy difference $\delta E^m$, on a circular domain and a flower-shaped domain. }
     \label{fig:physical_CH_plot}
 \end{figure}
+
 
 \begin{figure}[]
     \centering
     \hfill
-    \subfloat[$t=0\tau$]{
+    \subfloat[$m=0$]{
         \includegraphics[width=0.3\textwidth]{results/illustration/c0.png}
     }\hfill
-    \subfloat[$t=2\tau$]{
+    \subfloat[$m=2$]{
         \includegraphics[width=0.3\textwidth]{results/illustration/c2.png}
     }
     \hfill
-    \subfloat[$t=10\tau$]{
+    \subfloat[$m=10$]{
         \includegraphics[width=0.3\textwidth]{results/illustration/c10.png}
     }
     \\
     \vspace{10pt}
     \hfill
-    \subfloat[t=50$\tau$]{
+    \subfloat[$m=50$]{
         \includegraphics[width=0.3\textwidth]{results/illustration/c50.png}
     }
     \hfill
-    \subfloat[$t=200\tau$]{
+    \subfloat[$m=200$]{
         \includegraphics[width=0.3\textwidth]{results/illustration/c200.png}
     }\hfill
-    \subfloat[$t=1000\tau$]{
+    \subfloat[$m=500$]{
         \includegraphics[width=0.3\textwidth]{results/illustration/c500.png}
     }
     \\
     \vspace{10pt}
     \hfill
-    \subfloat[$t=50\tau$]{
+    \subfloat[$m=1000$]{
         \includegraphics[width=0.3\textwidth]{results/illustration/c1000.png}
     }
     \hfill
-    \subfloat[$t=200\tau$]{
+    \subfloat[$m=5000$]{
         \includegraphics[width=0.3\textwidth]{results/illustration/c5000.png}
     }\hfill
-    \subfloat[$t=1000\tau$]{
+    \subfloat[$m=10000$]{
         \includegraphics[width=0.3\textwidth]{results/illustration/c10000.png}
     }
     \vspace{10pt}
@@ -145,40 +146,40 @@ To test this, we check that $ \delta E^{m} >0 $ generally holds, where
 \begin{figure}[]
     \centering
     \hfill
-    \subfloat[$t=0\tau$]{
+    \subfloat[$m=0$]{
         \includegraphics[width=0.3\textwidth]{results/illustration/f0.png}
     }\hfill
-    \subfloat[$t=2\tau$]{
+    \subfloat[$m=2$]{
         \includegraphics[width=0.3\textwidth]{results/illustration/f2.png}
     }
     \hfill
-    \subfloat[$t=10\tau$]{
+    \subfloat[$m=10$]{
         \includegraphics[width=0.3\textwidth]{results/illustration/f10.png}
     }
     \\
     \vspace{10pt}
     \hfill
-    \subfloat[t=50$\tau$]{
+    \subfloat[$m=50$]{
         \includegraphics[width=0.3\textwidth]{results/illustration/f50.png}
     }
     \hfill
-    \subfloat[$t=200\tau$]{
+    \subfloat[$m=200$]{
         \includegraphics[width=0.3\textwidth]{results/illustration/f200.png}
     }\hfill
-    \subfloat[$t=1000\tau$]{
+    \subfloat[$m=500$]{
         \includegraphics[width=0.3\textwidth]{results/illustration/f500.png}
     }
     \\
     \vspace{10pt}
     \hfill
-    \subfloat[$t=50\tau$]{
+    \subfloat[$m=1000$]{
         \includegraphics[width=0.3\textwidth]{results/illustration/f1000.png}
     }
     \hfill
-    \subfloat[$t=200\tau$]{
+    \subfloat[$m=5000$]{
         \includegraphics[width=0.3\textwidth]{results/illustration/f5000.png}
     }\hfill
-    \subfloat[$t=1000\tau$]{
+    \subfloat[$m=10000$]{
         \includegraphics[width=0.3\textwidth]{results/illustration/f10000.png}
     }
     \vspace{10pt}
@@ -209,9 +210,8 @@ applies for all $i = 1, \ldots, N$, where $N$ is the total number of degrees of 
 
 
 We ran the simulation on the for the flower domain \eqref{eq:flower} and the circular domain \eqref{eq:circle}, illustrated in Figure \ref{sub:fig:ill_flower} and \ref{sub:fig:ill_circle}. The corresponding plots of the mass conservation and energy decrease are presented
-in the Figure \ref{fig:physical_CH_plot}, and confirm the expected physical properties of the Cahn-Hilliard equation. The relative error $e_{u}$ shows small deviations of the numerical solution in the order of $10^{ -10 }$ demonstrating that the mass is conserved. We also observe that the energy functional
-$E(u_h)$ decreases over time, signifying the system's tendency to seek a state of minimal energy.
-
+in the Figure \ref{fig:physical_CH_plot}, and confirm the expected physical properties of the Cahn-Hilliard equation. The global relative error $\Delta u^{m}_{h}$ and $\delta u^{m}_{h}$ demonstrating that the mass is conserved. We also observe that the energy functional
+$E(u_h)$ monotonically decreases over time and that $\delta E^{m} >0$, signifying the systems tendency to seek a state of minimal energy. Take note that $E^{m}{1}$ and $E^{m}{2}$ are interconnected in such a way that if the value of one increases, the other will correspondingly decrease to maintain balance, and vice versa.
 
 
 
