@@ -227,7 +227,7 @@ where $\mathcal{J} $ denotes the flux governed by the physical dynamics. Hence, 
 \label{eq:bc2}
 \partial _{n} u & = 0 \text{ on } \Gamma.
 \end{align}
- A well-accepted law for the flux is that it is proportional to the chemical energy gradient, $\mathcal{J} = - M  \nabla \mu  $ for a parameter $M$. For the simplicity we assume $M=1$. This implies that we can rewrite the boundary condition
+ A well-accepted law for the flux is that it is proportional to the chemical energy gradient, $\mathcal{J} = - M  \nabla \mu  $ for a parameter $M$. For simplicity, we assume $M=1$. This implies that we can rewrite the boundary condition
  \eqref{eq:bc1} such that
  \begin{equation}
      \mathcal{J}  \cdot n  = \partial _{n} \left(  \varepsilon^2 \Delta u - f( u)   \right)  = \varepsilon^2  \partial _{n} \Delta u -  f' ( u) \partial _{n}u =  \varepsilon^2  \partial _{n} \Delta u    ,
@@ -262,7 +262,7 @@ references, see \cite{abels2007convergence, cherfils2011cahn, elliott1986cahn}.
 \subsection{Numerical methods}%
 \label{sub:numerical_methods}
 
-One of the key challenges with the CH problem is that it involves fourth-order spatial derivatives. It has, for simple domains, successfully been implemented using Finite Difference Methods \cite{furihata2001stable,
+One of the key challenges with the CH problem is that it involves fourth-order spatial derivatives. For simple domains, it has successfully been implemented using Finite Difference Methods \cite{furihata2001stable,
 cheng2019energy} and Spectral Methods \cite{liu2003phase, he2009class}. However, these methods are generally constrained to simple domains (with some notable exceptions \cite{li2013conservative, shen2009efficient, feng2009fourier}).
 
 As a further evolution to address the CH problem, it is common to consider a corresponding biharmonic (BH) problem as a numerical testbed in the spatial discretization schemes. This problem is defined as follows: Find $u:\Omega \to \mathbb{R}   $
@@ -276,7 +276,7 @@ such that
 \end{split}
 \end{equation}
 for given $f,g_{1} ,g_{2}: \Omega  \to \mathbb{R} $ and constant $\alpha >0  $.
-The BH problem holds relevance since it is provide a proper spatial-discretization test framework prior to moving on solving the nonlinearities and timeintegration.
+The BH problem holds relevance since it provides a proper spatial-discretization test framework prior to moving on solving the nonlinearities and time-integration.
 
 The early Finite Element Methods (FEM) for CH were proposed in \cite{elliott1987numerical, elliott1986cahn} utilizing global $C^{1}$ and $C^{2}$ in one spatial dimension, but later it has been shown that making $C^{1}$ (or higher order) elements in
 multiple space dimensions is far from being trivial. For
