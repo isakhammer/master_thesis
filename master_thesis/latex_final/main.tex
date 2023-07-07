@@ -1328,15 +1328,16 @@ Then the Lagrange interpolation follows,  \[
     p (x) = \sum_{i \in N }^{} \sigma ( a_{i}) \phi_{i}( x) \quad \text{for } a_{i} = \mathcal{G}( \hat{a}_{i}) \quad  \forall i \in N     .
 \]
 Hence, the finite element $( T, \mathcal{P}, \Sigma  ) $, associated with the notes $\left\{ a_{i} \right\}_{i\in N} $, is reconstructed via the reference finite element $( \hat{T}, \hat{\mathcal{P} }, \hat{\Sigma} ) $.
-Thus, using the affine transformation can the definition of the local polynomial space be extended to dependent on the reference element. That is, \[
+Thus, the definition of the local polynomial space can be extended to using the affine transformation depending on the reference element.
+That is, \[
     \begin{split}
 \mathcal{P}^{k}( T) & = \left\{ \hat{v} \circ  \mathcal{G}^{-1}( T)   \mid  \hat{v} \in \mathcal{P}^{k}( \hat{T})      \right\} \\
 \mathcal{Q}^{k}( T) & = \left\{ \hat{v} \circ  \mathcal{G}^{-1}( T)     \mid  \hat{v} \in \mathcal{Q}^{k}( \hat{T})      \right\} \\
     \end{split}
 \]
-Working on shape-regular and affine geometries has shown to greatly simplify and generalise local interpolation estimates, see \cite[Theorem 11.12]{ErnGuermond2021}, and thus is very useful for deriving a priori estimates.
-Please note that workarounds exist for proving nonaffine local interpolation estimates, but they require key assumptions on the relationship between the nodes $a_{i}$ and the regularity of the mapping $\mathcal{G} $ \cite[Chapter 13]{ErnGuermond2021}.
-Hence, affine meshes is essential for the error analysis which utilize the interpolation estimates, but it limits us to work on structure mesh if we specifically choose on quadrilateral meshes.
+Working on shape-regular and affine geometries has been shown to greatly simplify and generalise local interpolation estimates, see \cite[Theorem 11.12]{ErnGuermond2021}, and thus is very useful for deriving a priori estimates.
+Please note that workarounds exist for proving non-affine local interpolation estimates. However, they require key assumptions on the relationship between the nodes $a_{i}$ and the regularity of the mapping $\mathcal{G} $ \cite[Chapter 13]{ErnGuermond2021}.
+Hence, affine meshes are essential for the error analysis, which utilize the interpolation estimates, but it limits us to work on structure mesh if we specifically choose quadrilateral meshes.
 
 \begin{definition}[Broken polynomial spaces]
     Let $\mathcal{T}_{h} $ be a mesh of $\Omega \in \mathbb{R} ^{d} $ and $\Omega _{h} = \bigcup_{T \in \mathcal{T}_{h} } T$ . Let $\mathcal{P}^{k}(T) $ be the space of all polynomials of order $k$ in the mesh element $T$ in $\mathcal{T}_{h}$ . We define the broken polynomial space and the global $C^{0}$ continuous polynomial space as
@@ -1346,7 +1347,7 @@ Hence, affine meshes is essential for the error analysis which utilize the inter
     \mathcal{P}^{k}_{c} ( \mathcal{T}_{h} ) & := \left\{ v \in C^{0}( \Omega _{h}  )   \mid  v|_{T} \in \mathcal{P}^k( T) \quad  \forall T \in  \mathcal{T}_{h}   \right\}.
         \end{split}
     \end{equation}
-    Similarly, for quadrilatural elements is the polynomial spaces defined as,
+    Similarly, for quadrilateral elements is the polynomial spaces defined as,
     \begin{equation}
         \begin{split}
     \mathcal{Q}^{k} ( \mathcal{T}_{h} ) & := \left\{ v \in L^{2}( \Omega _{h} )    \mid  v|_{T} \in \mathcal{Q}^k( T) \quad  \forall T \in  \mathcal{T}_{h}   \right\}. \\
@@ -1357,12 +1358,12 @@ Hence, affine meshes is essential for the error analysis which utilize the inter
 \end{definition}
 
 
-In this thesis will we generally utilize the global $C^{0}$ continuity, hence, for the rest of the thesis do we define
+In this thesis, we will generally utilize the global $C^{0}$ continuity. Thus, for the rest of the thesis do we define
 \begin{equation}
     \label{def:Vh_background}
 V_{h} =  \left\{ P_{c}^{k}( \mathcal{T}_{h} ) \text{ or }  Q_{c}^{k}( \mathcal{T}_{h} )
  \right\} \end{equation}
-Hence, all results holds for both polynomial spaces.
+Hence, all results hold for both polynomial spaces.
 
 \begin{figure}[h!]
 \centering
@@ -1423,7 +1424,7 @@ Recall the discrete $l^{p}$ norm for a vector,
    &  \max_{i}  \abs{ U_i },  \quad  p= \infty
      \end{cases}
  \end{equation}
-Also recall the definition of the matrix norm,
+Also, recall the definition of the matrix norm,
 \begin{equation}
  \forall A \in \mathbb{R} ^{N\times N}, 1\le p \le  \infty, \quad  \| A  \|_{p  }^{  }  = \max_{U \in \mathbb{R} ^{N} \setminus 0} \frac{\| AU \|_{ p }^{  } }{\| U \|_{p}^{  } }.
 \end{equation}
@@ -1434,11 +1435,11 @@ Assume that $A $ is invertible, then we define the condition number for a matrix
  \forall A \in \mathbb{R} ^{N\times N}, 1\le p \le  \infty, \quad  \kappa_{p} ( A) = \| A  \|_{ p }^{  } \| A ^{-1} \|_{ p }.
 \end{equation}
 
-From basic theory is it known that $\| A \|_{ 2 }^{  } $   is equal to the maximum singular value of $A$ , where singular values of $ A$  are the square roots of the eigenvalues of $A^TA$ \cite[Theorem 2.9]{ suli2003introduction}. Because of the connection
+From basic theory, is it known that $\| A \|_{ 2 }^{  } $   is equal to the maximum singular value of $A$, where singular values of $ A$  are the square roots of the eigenvalues of $A^TA$ \cite[Theorem 2.9]{ suli2003introduction}. Because of the connection
 between $\| A \|_{ 2 }^{  } $ norms and its singular values, is $k_{2}( A) $ is often in preferred numerical analysis.
-A challenge is that the computations generally involves performing Singular Value Decomposition (SVD)
- or power iteration, which can be quite expensive operations particularly for large sparse matrices.
- However,  $\| A \|_{ \infty }^{  } $ is computed as the maximum absolute row sum and ,hence, only necessary to compute the sum for the non-zero elements in each row. Thus, we seek to estimate
+A challenge is that the computations generally involve performing Singular Value Decomposition (SVD)
+ or power iteration, which can be  expensive particularly for large sparse matrices.
+ However,  $\| A \|_{ \infty }^{  } $ is computed as the maximum absolute row sum and, hence, only necessary to compute the sum for the non-zero elements in each row. Thus, we seek to estimate
  $\kappa_{2}( A) $ using $ \kappa _{\infty}( A) $.
 
 It is well established that $ \frac{1}{\sqrt{N} }  \| A \|_{ \infty }^{  }  \le \| A \|_{2  }^{  } \le
@@ -1452,7 +1453,7 @@ It is well established that $ \frac{1}{\sqrt{N} }  \| A \|_{ \infty }^{  }  \le 
 \begin{equation}
 \frac{1}{N} \kappa_{\infty} ( A) \le  \kappa_{2} ( A) \le N \kappa _{\infty}(A)
 \end{equation}
-Thus, since these norms are equivalent, will we in this thesis focus on $ \kappa_{\infty}( A)  $ because of the efficiency of computing $\| A \|_{ \infty }^{  } $  .
+Thus, since these norms are equivalent, will we in this thesis focus on $ \kappa_{\infty}( A)  $ because of the efficiency of computing $\| A \|_{ \infty }^{  } $.
 
 \subsection{Cléments interpolation}%
 \label{ssub:clement_operator}
