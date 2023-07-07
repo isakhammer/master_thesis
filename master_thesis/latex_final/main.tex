@@ -482,7 +482,7 @@ generally follow the formulations presented in \cite{pietro2012, ErnGuermond2021
 \subsection{Sobolev spaces}%
 \label{sub:notation}
 
-We will in this report assume $\Omega $ to be a compact and open set in $\mathbb{R} ^{d}$. Let $p \in \mathbb{R} $, $ 1 \le  p \le  \infty$, and  define the space $L^{p}\left( \Omega  \right) $ to be the set of all measurable functions $u: \Omega  \mapsto \mathbb{R} $ such that
+We will, in this thesis, assume $\Omega $ to be a compact and open set in $\mathbb{R} ^{d}$. Let $p \in \mathbb{R} $, $ 1 \le  p \le  \infty$, and  define the space $L^{p}\left( \Omega  \right) $ to be the set of all measurable functions $u: \Omega  \mapsto \mathbb{R} $ such that
 $\left\lvert f \right\rvert ^{p}$ is Lebesgue integrable, i.e,
 
 \begin{equation*}
@@ -533,7 +533,7 @@ Recall that $L^{2}( \Omega ) $ and $H^{m}( \Omega ) $ are Hilbert spaces equippe
     \end{split}
 \end{equation}
 
- let $u,v \in H^{2}(\Omega)$ be scalar functions. The following are the definition for their corresponding operator inner products.
+ let $u,v \in H^{2}(\Omega)$ be scalar functions. The following is the definition for their corresponding operator inner products.
 
 \begin{equation}
 \begin{split}
@@ -557,10 +557,10 @@ Let $v \in H^{r}( \Omega ) $, we define $D^r v$ to be a tensor of order $r$ such
 where the norm $\| D^r v\|_{\Omega   }^{ 2 } =
 \int_{\Omega }^{} D^r v : D^r v \ dx$ is defined via the standard Frobenius inner product. Observe that this notations holds such that $D^{0} v = v$, $ D^{1} v = \nabla v $ and $D ^{2} v  = J(\nabla v) = \mathrm{Hess}(v)$, where $J$ is the Jacobian operator .
 
-Given the context of Sobolev spaces, we consider the functions $ u \in H^{2}( \Omega )$ and $ v \in H^{1}( \Omega )$. We can denote Greens theorem, which links integrals over a volume and its boundary, as follows,
-\[
-( \Delta u, v) _{\Omega } = -( \nabla u, \nabla v)_{\Omega } + ( u, \partial _{n}v)_{\Gamma }
-\]
+Given the context of Sobolev spaces, we consider the functions $ u \in H^{2}( \Omega )$ and $ v \in H^{1}( \Omega )$. We can denote the Greens theorem, which links integrals over a volume and its boundary, as follows,
+\begin{equation}
+( \Delta u, v) _{\Omega } = -( \nabla u, \nabla v)_{\Omega } + ( u, \partial _{n}v)_{\Gamma }.
+\end{equation}
 This identity serves as an essential tool for the calculations done.
 
 
