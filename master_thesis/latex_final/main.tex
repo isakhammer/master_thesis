@@ -567,15 +567,15 @@ This identity serves as an essential tool for the calculations done.
 
 \subsection{Computational domains}%
 \label{sub:computational_domain}
-Assume that $\Omega \subset \mathbb{R} ^{d} $ is an open and bounded domain with a boundary $\Gamma $. In standard FEM methods a key assumption is that the set $\Omega $ is a polyhedra. This is useful since a polyhedra can be fully covered by a collection of polyhedra and, hence, motivating us to define a fitted mesh.
+Assume that $\Omega \subset \mathbb{R} ^{d} $ is an open and bounded domain with a boundary $\Gamma $. In standard FEM methods, a key assumption is that the set $\Omega $ is a polyhedra. This is useful since a polyhedra can be fully covered by a collection of polyhedra and, hence, motivating us to define a fitted mesh.
 We define a fitted mesh $\mathcal{T} $ of the domain $\Omega $ to be a collection of closed polyhedra $\left\{ T \right\}  $ with disjoint interior forming a partition of $\Omega $ such that $\overline{\Omega } = \bigcup _{T \in \mathcal{T} } T $, for illustration see Figure
 \ref{fig:domain_mesh}.
-Here we say that each $T \in  \mathcal{T} $ is a mesh element or an element.
+We say that each $T \in  \mathcal{T} $ is a mesh element or an element.
 The mesh size is defined as the maximum diameter $h := h_{max} $ of any polyhedra in the mesh $\mathcal{T} = \left\{ T \right\}  $, that is, $ h_{max} = \max_{T \in \mathcal{T} }  h_{T}$ s.t.
 $h _{T}  = \mathrm{diam}\left( T \right)   = \mathrm{max}_{x_1, x_{2} \in T} \ \mathrm{ dist }(x_{1}, x_{2})$
-Hence, motivating us to use the notation $\mathcal{T} _{h}$ for a mesh $\mathcal{T} $ with size $h$.
+Hence, motivates us to use the notation $\mathcal{T} _{h}$ for a mesh $\mathcal{T} $ with size $h$.
 
-For simplicity we restrict ourself to simplicial and quadrilateral elements.
+For simplicity, we restrict ourselves to simplicial and quadrilateral elements.
 A mesh $\mathcal{T}_{h}$ in $ \mathbb{R} ^{d}$ is said to be matching if
 for all neighbouring elements $T_{1}, T_{2} \in \mathcal{T} _{h}$ such that the intersection is non-empty, $T_{1} \cap T_{2} \neq \emptyset  $, then $T_{1}\cap T_{2}$ is for $d=2$ either a common vertex, edge, and for $d=3$ a common vertex, edge or a face.
 
@@ -583,9 +583,10 @@ Let the chunkiness parameter $c_{T} := h_{T}/r_{T}$, where $r_{T}$  is the large
 A mesh is said to be shape regular if $c_{T}\le  c$ is independent of $T$  and $h$. We also say that the mesh is quasi-uniform only if it is shape regular and $h_{\mathrm{ max }} \le  c h_{\mathrm{ min }}$.
 For a more complete description of meshes, see \cite[Chapter 8]{ErnGuermond2021}.
 
-In this thesis will we assume that a mesh $\mathcal{T}_{h} $ is matching, shape regular and quasi-uniform unless specified.
- The fact that the mesh is conform makes is a useful property since the interface between mesh elements has come into contact in the sense
-that it is either a vertex or a facet. This with the combination of shape regularity and quasi-uniformity is a major key to prove important inequalities in broken Sobolev spaces \cite[Chapter 1.4.1]{pietro2012}. Hence, the assumptions are very handy when proving convergence.
+In this thesis, we will assume that a mesh $\mathcal{T}_{h} $ is matching, shape regular and quasi-uniform unless specified.
+ The fact that the mesh is conform makes it an useful property since the interface between mesh elements has come into contact in the sense
+that it is either a vertex or a facet. This, with the combination of shape regularity and quasi-uniformity, is a major key to prove important inequalities in broken Sobolev spaces \cite[Chapter 1.4.1]{pietro2012}. Hence, the assumptions are
+convenient when proving convergence.
 
 
 Let $\mathcal{T}_{h}  = \left\{ T \right\} $ be a mesh of $\Omega \subset  \mathbb{R} ^d $ consisting of polygons $T \in \mathbb{R} ^{d}$.
