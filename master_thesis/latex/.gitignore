@@ -26,3 +26,12 @@ full_main.bbl
 full_main.pdf
 full_main.run.xml
 full_main.synctex.gz
+
+full_main.aux
+full_main.blg
+full_main.fdb_latexmk
+full_main.log
+full_main.out
+full_main.toc
+
+
