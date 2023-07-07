@@ -1778,488 +1778,6 @@ Note that in combination with Corollary \ref{cor:celement_apriori} is this very 
 
 
 
-\section{Continuous interior penalty methods for the biharmonic problem with Cahn-Hilliard type boundary conditions}%
-\label{sec:CIP_biharmonic_problem}
-
-One of the objective of this section is to discuss the strong formulation for the biharmonic problem.
-Following this, we will present both the continuous weak formulation and the derivation of the two proposed discrete weak formulations, specifically the continuous interior penalty methods.
-We then present a short discussion of the current status of the properties of the methods.
-
-\subsection{The biharmonic equation}
-\label{sub:the_biharmonic_problem_with_c_h_boundary_conditions}
-
-Let $\Omega \subseteq    \mathbb{R} ^d$ be a bounded polygonal domain and $\Gamma $ be its corresponding boundary. Also let $\mathcal{T}_{h} = \left\{ T \right\} $ be a shape-regular fitted mesh s.t. $\mathcal{T}_{h} = \Omega $. Let the biharmonic problem have the form,
-\begin{subequations}
-\begin{align}
-    \Delta^2  u  + \alpha  u  & = f( x)  \quad \text{in } \Omega,   \label{eq:bi_problem_a}\\
-    \partial _{n} u & = g_{1}(x)   \quad \text{on } \Gamma ,  \label{eq:bi_problem_b}\\
-    \partial _{n} \Delta  u & = g_{2}( x)   \quad \text{on } \Gamma .  \label{eq:bi_problem_c}
-\end{align}
-\label{eq:bi_problem}
-\end{subequations}
-Here is $\Delta ^2 = \Delta  \left( \Delta  \right) $ the biharmonic operator, also known as the bilaplacian. We will assume for the strong form that $u \in H^{4}\left( \Omega  \right) $, $\alpha  >0 $ and $f \in L^{2}\left( \Omega  \right)
-$. The functions $g_{1},g_{2}: \Omega  \to \mathbb{R}$ are denoted as boundary conditions similar to the CH problem.
-
-\begin{remark}
-It is worth noting that the problem is closely related to the Kirchhoff's plate problem by changing the boundary conditions such that $u = \partial _{n } u = 0$ on $\Gamma $, which is in the literature known as so-called clamped boundary conditions.
-Many of the papers we refer to may consider clamped boundary condition and not the CH boundary conditions. The main difference relies on if the problem is treated with homogeneous or non-homogeneous boundary conditions and if the discrete space is
-imposing the Dirichlet and Neumann conditions strongly in the discrete solution space or weakly using the Nitsche's method \cite{nitsche1971variationsprinzip}.
-\end{remark}
-
-We want to construct a weak form for the strong biharmonic problem \eqref{eq:bi_problem}. Let $v \in H^{2}( \Omega ) $  Using Greens Theorem is it obvious that \(
-\left( \Delta ^2 u,v \right) _{ \Omega  }   = ( \partial _{n} \Delta u, v ) _{\Gamma   } - ( \nabla \left( \Delta  u \right) , \nabla v ) _{ \Omega }
-\).
-Next, applying a new iteration of the Greens theorem we get
-$ -( \nabla ( \Delta u ) , \nabla v ) _{\Omega  }  =   ( \Delta u, \Delta v ) _{\Omega } - ( \Delta u, \partial _{n}v )_{\Gamma } $.
-Hence, we obtain the identity
-\begin{equation}
-\label{eq:iden_bi}
-( \Delta ^2 u, v ) _{\Omega } = ( \Delta u, \Delta v)_{\Omega } +  ( \partial _{n} \Delta u, v)_{\Gamma } - ( \partial _{n} v, \Delta u) _{\Gamma }
-\end{equation}
-Taking into account the boundary conditions, we end up with the following corresponding weak formulation of the biharmonic problem \eqref{eq:bi_problem}.
-
-\begin{equation}
-\label{eq:V_deg}
-V := \left\{ v \in  H^s( \Omega ), \  s \ge  5  /2 + \varepsilon   \mid \partial _{n} v  = g_{1}     \right\}
-\end{equation}
-Consider the bilinear form $a:V\times V \to \mathbb{R}$ and the linear form $l: V \to \mathbb{R}$. We define the continuous weak formulation problem formulation as follows.
-
-
-\begin{equation}
-\label{eq:cont_weak_problem}
-\text{Find } u \in V   \text{ such that } a( u,v) = l( v)  \forall v \in V
-\end{equation}
-where
-\begin{equation}
-    \begin{split}
-a( u,v) & =  ( \alpha u,v)_{\Omega } + ( \Delta u, \Delta v)_{\Omega } - (  \Delta u, \partial _{n} v) _{\Gamma }\\
-l( v)  &= ( f,v)_{\Omega } - ( g_{2} , v)_\Omega
-    \end{split}
-\end{equation}
-Note that the Neumann boundary condition $g_{1}$ is strongly imposed in $V$, and $g_{2}$ is naturally incorporated in the weak formulation.
-
-
-\subsection{Detailed construction of Hessian and Laplacian Formulations }%
-\label{sub:construction_of_laplacian_cip}
-The goal is to construct two CIP formulations for the problem \eqref{eq:cont_weak_problem}, that is: Find $u_{h} \in V_{h} \not\in V$ such that $a_{h}( u_{h}, v_{h}) = l_{h}( v_{h}) $ for all $v_{h} \in V_{h}$. We will follow the ideas presented in \cite{brenner2012} and \cite{feng2007fully}.
-A property that is necessary is that when we have a bilinear form and replace the exact solution with $u_{h} \in V_{h}$, the system still remains consistent in $V$. Hence, we guarantee a consistency of the discrete weak formulation by assuming during
-the construction that $u \in H^{4}( \Omega ) $ and $v_{h} \in  V_{h}$ .
- However, due to the nonconformal nature of $V_{h}$, it becomes necessary to introduce penalty terms to ensure the discrete system is well-posed when we replace with $u_{h} \in V_{h}$. Keep in mind that the $C^{1}$
-continuity is imposed weakly and in the same way is the Neumann conditions also imposed weakly.
-
-To achieve the objective of constructing the Hessian and Laplacian formulations, the following lemmas will be the primary components.
-
-\subsubsection{Construction of the Hessian formulation}%
-\label{ssub:construction_of_the_hessian_formulation}
-
-
-
-\begin{lemma}
-    \label{lemma:hessian}
-    Assume the homogeneous Neumann conditions $g_1 = 0 $.
-Let $u \in H^{4}( \Omega ) $ be the solution to \eqref{eq:bi_problem}, let $ v_{h} \in V_{h}$ and a constant $\gamma >0$. Then does the following identity hold.
-\begin{equation}
-\label{eq:bi_basic_dg_full}
-\begin{split}
-    \left( \Delta  ^{2} u, v_h \right) _{\Omega }  =&   \left( D^2u, D^2v_h \right)_{\Omega } +  \left(g_{2}, v_h  \right) _{ \Gamma  }\\
-    &    -  ( \mean{ \partial _{nn} u }   , \jump{ \partial_{n} v_h } )_{\mathcal{F}_{h}^{int} } -  (  \jump{ \partial_{n} u
-    },\mean{ \partial _{nn} v_h } )_{\mathcal{F}_{h}^{int} } + \frac{\gamma }{h} (  \jump{ \partial_{n} u
-    },\mean{ \partial _{nn} v_h } )_{\mathcal{F}_{h}^{int} } \\
-    & - ( \partial _{nn} u , \partial _{n} v_h)_{\Gamma  }- ( \partial _{n} u , \partial _{nn} v_h)_{\Gamma  } + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v_{h}      \right)_{\Gamma }
-\end{split}
-\end{equation}
-\end{lemma}
-
-
-\begin{figure}[h]
-\centering
-    \begin{tikzpicture}
-        % Define points for square
-        \coordinate (A) at (-0.5,-0.5);
-        \coordinate (B) at (1.0,0.0);
-        \coordinate (C) at (1.5,1.5);
-        \coordinate (D) at (-1.5,1.5);
-        \filldraw[fill=blue!30,draw=black] (A) to[out=0,in=-90] (B) to[out=90,in=0] (C) to[out=180,in=90] (D) to[out=-90,in=180] cycle;
-
-
-        \def\lenfactorn{4.5} % change this value to easily adjust the length of n
-        \def\lenfactort{4.5} % change this value to easily adjust the length of t
-        \draw[->, line width=0.5pt] ({1.8*cos(90)}, {1.8*sin(90)}) -- ({1.8*cos(90) + \lenfactorn*(2.5*cos(85) - 1.8*cos(90))}, {1.8*sin(90) + \lenfactorn*(2.5*sin(85) - 1.8*sin(90))}) node[below right, xshift=-0.0cm] {$n $};
-        \draw[->, line width=0.5pt, rotate around={90:({1.8*cos(90)}, {1.8*sin(90)})}] ({1.8*cos(90)}, {1.8*sin(90)}) -- ({1.8*cos(90) + \lenfactort*(2.5*cos(85) - 1.8*cos(90))}, {1.8*sin(90) + \lenfactort*(2.5*sin(85) - 1.8*sin(90))}) node[below left, xshift=-0.2cm] {$t $};
-
-        \def\lenfactorPf{2.5} % change this value to easily adjust the length of Pf
-        \def\lenfactorQf{2.1} % change this value to easily adjust the length of Qf
-        \draw[->, line width=1.0pt] ({1.8*cos(90)}, {1.8*sin(90)}) -- ({1.8*cos(90) + \lenfactorPf*(2.5*cos(85) - 1.8*cos(90))}, {1.8*sin(90) + \lenfactorPf*(2.5*sin(85) - 1.8*sin(90))}) node[below right, xshift=-0.0cm] {$Q_F\nabla u$};
-        \draw[->, line width=1.0pt, rotate around={90:({1.8*cos(90)}, {1.8*sin(90)})}] ({1.8*cos(90)}, {1.8*sin(90)}) -- ({1.8*cos(90) + \lenfactorQf*(2.5*cos(85) - 1.8*cos(90))}, {1.8*sin(90) + \lenfactorQf*(2.5*sin(85) - 1.8*sin(90))}) node[below left, xshift=-0.2cm] {$P_F\nabla u$};
-        \def\lenfactorGradu{1.3} % change this value to easily adjust the length of \nabla u
-        \draw[->, line width=1.0pt] ({1.8*cos(90)}, {1.8*sin(90)}) -- ({1.8*cos(90) + \lenfactorGradu*(3.5*cos(100) - 1.8*cos(90))}, {1.8*sin(90) + \lenfactorGradu*(3.5*sin(100) - 1.8*sin(90))}) node[below right, xshift=-0.0cm] {$\nabla u$};
-
-        \node[circle,fill,inner sep=1pt,label={below:$x_0$}] at ({1.8*cos(90)}, {1.8*sin(90)}) {};
-        \node at (0,0) {$\Omega$};
-        \node at (2,1.7) {$\Gamma$};
-
-    \end{tikzpicture}
-\caption{Let $x_{0}$ be a point at the boundary $\Gamma $ for dimension $d=2$. Here is a illustration of the gradient $\nabla u$ with the corresponding normal and tangential decomposition, $Q_{F} \nabla  u$ and $P_{F} \nabla  u$.    }
-\label{fig:projection_QF_PF}
-\end{figure}
-\begin{proof}
-
- We will start constructing a local theory for a element $T$ and then extend it to the full mesh
-$\mathcal{T}_{h} $. Using Greens Theorem is it obvious that
-\begin{equation}
-    \label{eq:id1}
-\left( \Delta ^2 u,v_h \right) _{T }   = \left( \partial _{n} \Delta u, v_h \right) _{\partial T  } - \left( \nabla \left( \Delta  u \right) , \nabla v_h \right) _{T }
-\end{equation}
-
-We can expand the second term in the following way.
-\begin{equation}
-    \label{eq:id2}
-    \begin{split}
-( \nabla ( \Delta u ) , \nabla v_h ) _{T } & = \sum_{i = 1}^{ d}  ( \Delta  \partial _{x_{i}} u, \partial _{x_{i}}v_h ) _{T }
-                                           = \sum_{i = 1}^{d}  ( \nabla \cdot ( \nabla \partial _{x_{i}} u ) , \partial _{x_{i}} v_h )_{T }  \\
-&= \sum_{i = 1}^{d}  \left( ( \partial_n  \partial _{x_{i}} u,  \partial _{x_{i}} v_h ) _{\partial T } -   ( \nabla \partial _{x_{i}} u, \nabla \partial _{x_{i}} v_h )_{T } \right) \\
-& = (  \partial_n\nabla u, \nabla v_h ) _{\partial_{} T  } - ( D^2 u, D^2v_h ) _{T }
-    \end{split}
-.\end{equation}
-Hence, the normal flux of $\Delta u$ appears naturally into the formulation. It can be denoted that $D^2$ is the Hessian matrix operator. Also remark that we apply the notation
-$( D^2u, D^2v_h )_{\Omega } = \int_{\Omega }^{} D^{2}u : D^2v_h  dx$ for the inner product $D^2u:D^2v_h$.
-
-Next, we want to decompose the evaluation of $\nabla  u $ on the boundary $\partial T$ in the tangential and normal direction. Pick a facet  $F \in \partial T$, then we define the following decomposition of linear transformation $\nabla u = P_{F}\nabla u  + Q_{F}  \nabla u  $ s.t. the
-orthogonality, $
-P_{F} \nabla u  \cdot Q_{F}  \nabla u = 0$, holds. Here, the normal projection matrix is defined as $Q_{F} = n \otimes n $ and the tangential decomposition follows from $ P_{F} = I - Q_{F} = I - n \otimes n  =  \sum_{i=1}^{d-1} t_{i} \otimes t_i$,
-where we defined a orthonormal basis $t_{i}$, $i = 1, \ldots, d-1$ for the space orthogonal to the outer normal vector $n$ on a facet $F$. For demonstration in $d=2$, see Figure \ref{fig:projection_QF_PF}. Let $ a_{1}, a_{2}, a_{3} \in \mathbb{R} ^{d}$ be any vectors, then it is well known that the following identity holds $ ( a_{1}
-\otimes a_{2}  ) a_{3} = ( a_{2}^{T}  a_{3}) a_{1} $. Hence, we have
-\begin{equation}
-\label{eq:projection}
-    \begin{split}
-   Q_{F} \nabla u & = ( n \otimes n ) \nabla u =  (n^{T} \nabla u)n \\
-   P_{F} \nabla u & =( I - n \otimes n ) \nabla u =   \nabla u  - (n^{T}  \nabla u)n =  \sum_{ i =1 }^{d-1} ( t_{i}^{T}  \nabla u ) t_{i}
-    \end{split}
-\end{equation}
-
-Given that $u$ is evaluated only on $\partial T$ can we write
-$\nabla u = \left( n^{T} \nabla u   \right) n + \sum_i^{d-1} \left( t_i^{T} \nabla u   \right) t_i$ such that,
-\begin{equation}
-\label{eq:id3}
-    \begin{split}
-(  \partial_n\nabla u, \nabla v_h ) _{\partial_{} T  } & =  ( \partial _{n} ( \partial_{n}u \ n), \partial _{n} v_h \ n )_{\partial T}   +\sum_{i,j=1}^{d-1} ( \partial _{n} ( \partial_{t_{i}}u \ t_{i}), \partial _{t_{j}} v_h \ t_{j} )_{\partial T} \\
-& =  ( \partial _{nn} u, \partial _{n} v_h  )_{\partial T}+\sum_{i=1}^{d-1} ( \partial _{n t_{i}}u , \partial _{t_{i}} v_h  )_{\partial T}
-    \end{split}
-\end{equation}
-Here we used that $n^{T} n = 1$ and $t_{i}^{T} t_{j} = \delta_{ij}$.
-Remark that simple relation was applied,
-    \begin{align*}
-\partial_n (\partial_n u)  & = n^T \nabla (\partial_n u)  = n ^T (D^2 u \ n)  = n^{T} D^2 u \ n = \partial _{nn} u, \\
-\partial_n (\partial_{t_{i}} u)  & = t_{i}^T \nabla (\partial_n u)  = t_i^T (D^2 u \ n )   = n^{T} D^2 u \ t_{i} = \partial _{n t_{i}} u.
-    \end{align*}
-We may also deduce the relationship $\partial _{nt_{i}} u = \partial _{t_{i}n}u$ which arise from the fact that $n^{T} D^2u \ t_{i} = ( t_{i}^{T} D^2u \  n)^T = t_{i}^{T}  D^2u \  n$, where we utilized the symmetry $D^2u = ( D^2u) ^{T} $ and that the
-product is a scalar.
-Combining \eqref{eq:id1}, \eqref{eq:id2} and \eqref{eq:id3} we see that,
-\[
-    ( \Delta ^2 u, v_h) _{T}   = ( D^2 u, D^2v_h)_{T } + ( \partial _{n}  \Delta u, v_h )_{\partial T} -( \partial _{nn}u , \partial _{n} v_h  )_{\partial T}-\sum_{i=1}^{d-1} ( \partial _{n t_{i}}u, \partial _{t_{i}} v_h  )_{\partial T}
-\]
-Since we aim construct a identity for the full mesh $\mathcal{T} _{h}$, we sum over the elements.
-\begin{equation}
-\label{eq:bi_basic_dg2}
-\left( \Delta  ^{2} u,v_h \right) _{\Omega } = \sum_{T \in  \mathcal{T} _{h}}^{}  ( D^2 u, D^2v_h)_{T } + ( \partial _{n}  \Delta u, v_h )_{\partial T} -( \partial _{nn}u , \partial _{n} v_h  )_{\partial T}-\sum_{i=1}^{d-1} ( \partial _{n t_{i}} u , \partial _{t_{i}} v_h  )_{\partial T}
-\end{equation}
-Our goal is to simplify the equation above so we can take account for discontinuities of the derivatives.
-By integrating over exterior facets $\mathcal{F} _{h}^{ext}$ and interior facets $\mathcal{F} _{h}^{int}$ we will get e more suitable formulation which makes it easier to control the jumps between the elements, hence makes it possible to penalize discontinuities.
-
-\begin{equation*}
-    \begin{split}
- ( \Delta  ^{2} u,v_h ) _{\Omega }  =&\sum_{T\in \mathcal{T} _{h}}^{} ( D^2u,D^2v_h ) _{T }  + (\partial _{n} \Delta  u,v_h)_{\partial T} - (\partial _{nn} u, \partial _{n}v_h )_{\partial T}  - \sum_{i=1}^{d-1} ( \partial _{t_{i}n}u , \partial _{t_{i}} v_h  )_{\partial T}   \\
-= &\sum_{T\in \mathcal{T} _{h}}^{} ( D^2u,D^2v_h ) _{T }  + \sum_{F \in \mathcal{F}_{h}^{ext} }^{}  (\partial _{n} \Delta  u,v_h)_{F} - (\partial _{nn} u, \partial _{n}v_h )_{F}  - \sum_{i=1}^{d-1} ( \partial _{ t_{i}n} u , \partial _{t_{i}} v_h
-)_{F}     \\
-   &  + \sum_{F \in \mathcal{F} _{h}^{int}}^{} \underbrace{\left( (\partial _{n^{+}} \Delta  u^{+}
-        ,v_h^{+} )_{F}
-+ \left(\partial _{n^{-}} \Delta  u^{+} ,v_h^{-}\right)_{F}  \right)}_{(I)}    \\
-    &\quad \quad  -
-\underbrace{\left( \left(\partial _{n^{+}n^{+}} u^{+}, \partial _{n^{+}} v_h^{+} \right) _{F} + \left(\partial _{n^{-}n^{-}} u^{-}, \partial _{n^{-}} v_h^{-}
-\right) _{F} \right) }_{(II)} \\
-   &  \quad \quad - \sum_{i=1}^{d-1}\underbrace{( (\partial _{n^{+}t_{i}} u^{+}, \partial_{t_{i}} v_h^{+} )_{F} +  \left(\partial _{n^{-}t_{i}} u^{-},
-        \partial_{t_{i}} v_h^{-}
-\right)_{F} ) }_{(III)} \\
-    \end{split}
-.\end{equation*}
-
-Where integration of the interior facets is computed in the following fashion.
-\begin{equation}
-    \label{eq:dg2_facets}
-    \begin{split}
-        (I) &  =    \left(\partial _{n^{+}} \Delta  u^{+} ,v_h^{+}\right)_{F} +
-        \left(\partial _{n^{-}} \Delta  u^{-} ,v_h^{-}\right)_{F}  \\
-            & =   \int_{F}^{}
-            \jump{ \partial _{n} \Delta  u \cdot v_h } =
-            \int_{F}^{}
-            \mean{ \partial _{n} \Delta  u } \underbrace{\jump{ v_h }}_{= 0}    + \underbrace{\jump{ \partial _{n} \Delta  u
-            }}_{= 0}    \mean{ v_h } = 0 \\
-            (II) &  =     \left(\partial _{n^{+}n^{+}} u^{+}, \partial_{n^{+}} v_h^{+} \right)_{F} +  \left(\partial _{n^{-}n^{-}} u^{-}, \partial_{n^{-}} v_h^{-} \right)_{F}    \\
-                 &= \int_{F}^{} \jump{ \partial _{nn} u \cdot  \partial_{n} v_h }   = \int_{F}^{}
-                       \mean{ \partial _{nn} u    } \underbrace{\jump{ \partial_{n} v_h }  }_{\neq 0}    + \underbrace{\jump{ \partial
-                               _{nn}  u
-                       }}_{= 0}    \mean{ \partial _{n}v_h } \\
-            (III) &  =     \left(\partial _{n^{+}t_{i}} u^{+}, \partial_{t_{i}} v_h^{+}
-                \right)_{F} +  \left(\partial _{n^{-}t_{i}} u^{-}, \partial_{t_{i}} v_h^{-}
-                \right)_{F}   \\
-                 &  =   \int_{F}^{}
-                 \jump{ \partial _{nt_{i}} u \cdot  \partial_{t_{i}} v_h } =
-                 \int_{F}^{}
-                 \mean{ \partial _{nt_{i}} u    } \underbrace{\jump{ \partial_{t_{i}} v_h }  }_{= 0}    + \underbrace{\jump{ \partial
-                         _{nt_{i}}  u
-                 }}_{= 0}    \mean{ \partial _{t_{i}}v_h }  = 0
-                   \end{split}
-.\end{equation}
-Observe that the cancellations in the term $(I)$ and term $(III)$  appears of the continuity of $v_h\in V_{h} $ and $u\in H^{4}( \Omega ) $ which makes the jumps and derivative jumps zero. On the other hand, the second term $(II)$  does not vanish
-since the derivative of $v_h \in V_{h}$ has a nonzero jump. It can also be raised that $\mean{
-\partial _{nn} u } = \partial _{nn} u  $ holds of $H^{4}( \Omega  ) $.
-
-Combining \eqref{eq:dg2_facets} and inserting the boundary condition $g_{2} = \partial _{n} \Delta u $ is it clear that the formulation presented in \eqref{eq:bi_basic_dg2} is equivalent to the following formulation.
-\begin{equation}
-\label{eq:bi_basic_dg_full_1}
-\begin{split}
-    \left( \Delta  ^{2} u, v_h \right) _{\Omega }  =&   \left( D^2u, D^2v_h \right)_{\mathcal{T} _{h}} +  \left(g_{2}, v_h  \right) _{\Gamma  }  -  ( \mean{ \partial _{nn} u }   , \jump{ \partial_{n} v_h } )_{\mathcal{F}_{h}^{int} } \\
-                                                  &  - ( \partial _{nn} u , \partial _{n} v_h)_{\mathcal{F}^{ext}_{h} } - \sum_{i =1  }^{d-1} ( \partial   _{t_{i}n} u  ,  \partial   _{t_{i}}  v_h  )_{ \mathcal{F}^{ext} _{h}  }
-\end{split}
-\end{equation}
-Under the assumption that $g_{1} = 0$ on $\Gamma$, and given that the tangential decomposition is orthogonal to $n$, we can assert that $ \partial_{t_{i} n} u = \partial_{t_{i}} ( \partial _{n} u )= \partial_{t_{i}} ( g_{1} ) = 0 $ holds for any $i =
-1,\ldots, d -1$. This implies that the
-last term of the equation vanish.
-
-We also note that we add consistent symmetry terms $( \mean{ \partial _{nn} v_h } ,\jump{ \partial _{n} u }    )_{\mathcal{F}^{int}_{h} } $ and $( \partial _{nn} v_h  , \partial _{n} u     )_{\Gamma  } $ in addition to the penalty terms $\frac{\gamma
-}{h} ( \partial _{n} u, \partial _{n}v)_{\Gamma }  $ and $\frac{\gamma
-}{h} ( \jump{ \partial _{n} u }  , \jump{    \partial _{n}v})_{\mathcal{F}^{int}_{h} }  $ . Since $u\in H^{4}( \Omega ) $ and the boundary condition,  $\partial _{n} u = g_{1}=0$ on $\Gamma $, is each of these terms effectively zero, but does provide symmetry and will later
-be proven to be essential for well-posedness for the discrete problem. Finally, we have
-\begin{equation}
-\begin{split}
-    \left( \Delta  ^{2} u, v_h \right) _{\Omega }  =&   \left( D^2u, D^2v_h \right)_{\Omega } + \left(g_{2}, v_h  \right) _{ \Gamma  }\\
-    &    -  ( \mean{ \partial _{nn} u }   , \jump{ \partial_{n} v_h } )_{\mathcal{F}_{h}^{int} } -  (  \jump{ \partial_{n} u
-    },\mean{ \partial _{nn} v_h } )_{\mathcal{F}_{h}^{int} } + \frac{\gamma }{h}  (  \jump{ \partial_{n} u },\jump{ \partial _{n} v_h } )_{\mathcal{F}_{h}^{int} } \\
-    & - ( \partial _{nn} u , \partial _{n} v_h)_{\Gamma  } - (\partial _{n} u, \partial _{nn} v_h )_{\Gamma  }  + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v      \right)_{\Gamma }
-\end{split}
-\end{equation}
-
-The proof is complete.
-
-\end{proof}
-
-Note that since $V_{h} \not\subset V $ is it necessary to define the space $V \oplus V_{h}$, which essentially is the direct sum of these two spaces. This new space includes all elements from $V$ and $V_h$ and all possible linear combinations of these elements. i.e., let $u \in V$ and $u_{h} \in V_{h}$, then $u + u_{h} \in V \oplus V_{h} $.
-
-We will now assemble the Hessian CIP formulation.
-Assume that the homogeneous boundary condition $g_{1}=0$.
-The discrete problem is as follows:
- \begin{equation}
-    \label{eq:hessian_prob}
-    \text{Find } u_{h} \in V_{h} \text{ such that } a^{H}( u_{h}, v_{h})  = l_{h}^{H}( v_{h} )  \quad \forall v_{h} \in  V_{h}.
-\end{equation}
-Here is the corresponding bilinear and linear form  defined as,
-\begin{equation}
-    \label{eq:hessian_form}
-\begin{split}
-a_{h}^{H} \left( u_{h}, v_{h} \right)   =&
-    \left( \alpha  u_{h}, v_{h} \right) _{\Omega }   +  \left( D^2 u_{h}, D^2v_{h} \right) _{\Omega } \\
- & - \left( \mean{  \partial _{n n} u_{h} }, \jump{ \partial _{n }v_{h}} \right)_{\mathcal{F}_{h}^{int}}  -
- \left( \jump{ \partial _{n}u_{h} }, \mean{ \partial _{n n} v_{h} } \right)_{\mathcal{F}_{h}^{int}}  + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u_{h}}, \jump{ \partial _{n} v_{h}   }   \right)_{\mathcal{F}_{h}^{int}} \\
- & - \left(   \partial _{n n} u_{h} ,  \partial _{n }v_{h} \right)_{\Gamma }  -
- \left( \partial _{n}u_{h} , \partial _{n n} v_{h}       \right)_{\Gamma }  + \frac{\gamma }{h}  \left(  \partial _{n} u_{h},  \partial _{n} v_{h}      \right)_{\Gamma }   \\
- l_{h}^{H}( v_{h})  =&  \left( f, v_{h} \right) _{\Omega }  - \left(g_{2}, v_{h}  \right) _{\Gamma }
-\end{split}
-.
-\end{equation}
-
-With the corresponding energy norms,
-\begin{equation}
-\label{eq:a_cip_energy_norm_hes}
-    \begin{split}
- \| v_{h} \|_{ a_{h}^{H} }^{ 2 }& = \alpha  \| v_{h}\|_{ \Omega  }^{2  }  +  \| D ^2 v_{h} \|_{ \Omega   }^{ 2 }  + \|  h^{-\frac{1}{2}} \jump{ \partial _{n} v_{h}    }\|_{  \mathcal{F} _{h}^{int} }^{2  }+ \|  h^{-\frac{1}{2}}  \partial _{n} v_{h}
- \|_{  \Gamma  }^{2  },  \quad v_{h} \in V_{h}  \\
-   \| v \|_{ a_{h}^{H},* }^{ 2 } &= \| v \|_{ a_{h} }^{ 2 }  + \| h^{\frac{1}{2}}  \mean{     \partial _{nn } v}  \|_{ \mathcal{F}_{h}^{int}   }^{  2}+ \| h^{\frac{1}{2}} \partial _{nn } v  \|_{ \Gamma    }^{  2}, \quad  v\in V \oplus V_{h}.
-    \end{split}
-\end{equation}
-
-\begin{remark}
-    This formulation accommodates the nonconformity of $V_{h}$ by factoring in the discontinuities among the facets, yet it preserves consistency when $u$ exhibits sufficient regularity, specifically when $u\in H^{s}( \Omega ), s\ge \frac{5}{2} +
-\varepsilon $. This implies that the solution $u$  is continuous across the boundaries of interior elements, i.e.,  $\jump{ \partial _{n} u }   = 0 $ and  $\mean{ \partial _{nn} u }   = \partial _{nn} u $ on any $ F \in \mathcal{F} ^{int}_{h} $ .
-
-It is noteworthy that we have the consistent terms $\left( \mean{  \partial _{n n} u_{h} }, \jump{ \partial _{n }v_{h}} \right)_{\mathcal{F}_{h}^{int}} $ and $ \left(   \partial _{n n} u_{h} ,  \partial _{n }v_h \right)_{\Gamma }$ naturally appear in the
-derivation. However, we also added two symmetry terms,  $\left( \mean{  \partial _{n n} u_{h} }, \jump{ \partial _{n }v_{h}}
-\right)_{\mathcal{F}_{h}^{int}} $ and $ \left(   \partial _{n n} u_{h} ,  \partial _{n }v_{h} \right)_{\Gamma }$, and the so-called penalty terms, $ \frac{\gamma }{h}  \left( \jump{ \partial _{n} u_{h}}, \jump{ \partial _{n} v_{h}   }   \right)_{\mathcal{F}_{h}^{int}}$ and $ \frac{\gamma }{h}  \left(  \partial _{n} u_{h},  \partial _{n} v_{h}      \right)_{\Gamma }$.
-     These terms is essential for making the problem well-posed, hence, the name interior penalty method or symmetric interior penalty method. For more information of  nonconformal CIP error analysis, see \cite[Chapter 1.3]{pietro2012}.
-\end{remark}
-
-\subsubsection{Construction of the Laplacian formulation}%
-\label{ssub:construction_of_the_laplacian_formulation}
-
-
-\begin{lemma}
-
- Let $u \in H^{4}( \Omega ) $ the solution of \eqref{eq:bi_problem}, $v_{h} \in  V_{h}$ and a constant $\gamma >0$. Then we have the following identity.
-\[
-    \begin{split}
-( \Delta ^2 u, v_{h} ) _{\Omega }  =& ( \Delta u, \Delta v_{h})_{\mathcal{T} _{h} }  + ( g_{2} , v_{h} )_{\Gamma }  - ( g_{1} , \Delta v_{h})_{\Gamma } + \frac{\gamma }{h} ( g_{1} ,  \partial _{n}v_{h})_{\Gamma }\\
-& -  ( \jump{ \partial _{n} u} , \mean{ \Delta v_{h} })_{\mathcal{F}_{h}^{int} }-  (  \mean{ \Delta u }, \jump{ \partial _{n} v_{h}} )_{\mathcal{F}_{h}^{int} } + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v_{h}   }
-\right)_{\mathcal{F}_{h}^{int} } \\
-& - (  \Delta u, \partial _{n} v_{h})_{\Gamma }- ( \partial _{n} u, \Delta v_{h})_{\Gamma } + \frac{\gamma }{h}( \partial _{n} u, \partial _{n} v_{h})_{\Gamma }   .
-    \end{split}
-\]
-\end{lemma}
-
-\begin{proof}
-
-  Similarly, we start by constructing integration by parts identities locally for a element $T$ and then extend it to the full mesh $\mathcal{T}_{h} $.
-Utilizing \eqref{eq:iden_bi} can we see that \[
-( \Delta ^2 u, v_{h} ) _{T} = ( \Delta u, \Delta v_{h}) +  ( \partial _{n} \Delta u, v_{h})_{\partial T} - ( \partial _{n} v_{h}, \Delta u) _{\partial T}
-\]
-Now, summing over all elements we get \[
-    \begin{split}
-( \Delta ^2 u, v_{h} ) _{\Omega } & = \sum_{T \in \mathcal{T}_{h} }^{}  \left( ( \Delta u, \Delta v_{h})_{T}
-+  ( \partial _{n} \Delta u, v_{h})_{\partial T} - ( \partial _{n} v_{h}, \Delta u) _{\partial T} \right)  \\
- & =   ( \Delta u, \Delta v_{h})_{\mathcal{T} _{h}} +  \sum_{F \in \mathcal{F}_{h}^{ext} }^{}
- (\overbrace{( \partial _{n} \Delta u, v_{h})_{ F}}^{=( g_{2},v_{h})_{F} }  - ( \partial _{n} v_{h}, \Delta u) _{F}) \\
-  &   \quad + \sum_{F \in \mathcal{F}_{h}^{int} }^{} \underbrace{( ( \partial _{n^{+}} \Delta u, v_{h})_{ F} + ( \partial _{n^{-}} \Delta u, v_{h})_{ F} )}_{(I)}  - \underbrace{( ( \partial _{n^{+}} v_{h}, \Delta u) _{F} + ( \partial _{n^{-}} v_{h}, \Delta u) _{F}
-  )}_{(II)}   \\
-    \end{split}
-\]
-Decomposing the terms and utilizing the regularity of $u \in H^{4}( \Omega ) $ and the $C^{0}$ continuity of $v_{h}\in V_{h}$ is it easy to see that,    \[
-\begin{split}
-    (I) & = ( \partial _{n^{+}} \Delta u, v_{h})_{ F} + ( \partial _{n^{-}} \Delta u, v_{h})_{ F}  = \int_{F}^{} \left[ \partial _{n} \Delta u \  v_{h} \right] =  (  \mean{ \partial _{n^{+}} \Delta u } , \underbrace{\jump{v_{h}  }}_{ = 0}      )_{ F} + (  \underbrace{\jump{ \partial _{n}
-    \Delta u }}_{=0}  , \mean{v_{h}  }     )_{ F} \\
-    (II) &=  ( \partial _{n^{+}} v_{h}, \Delta u) _{F} + ( \partial _{n^{-}} v_{h}, \Delta u) _{F} = \int_{F}^{} \jump{ \partial _{n} v_{h} \ \Delta u } =  ( \underbrace{\jump{ \partial _{n} v_{h}}}_{ \neq 0 } , \mean{ \Delta u })_{F}  + ( \mean{
-    \partial _{n} v_{h}}, \underbrace{\jump{ \Delta u
-    }}_{=0} )_{F}
-\end{split} .
-\]
-Hence, we end up with the identity,
-\[
-( \Delta ^2 u, v_{h} ) _{\Omega } = ( \Delta u, \Delta v_{h})_{\mathcal{T} _{h} }  +  ( \jump{ \partial _{n} v_{h}} , \mean{ \Delta u })_{\mathcal{F}_{h} }  + ( g_{2} , v_{h} )_{\Gamma } - ( \partial _{n} v_{h}, \Delta u)_{\Gamma }.
-\]
-
-Similarly as for Lemma \ref{lemma:hessian}, we add consistent symmetry terms $(  \jump{ \partial _{n} u }, \mean{ \Delta  v_{h} })_{\mathcal{F}^{int}_{h} } $ and $(  \partial _{n} u, \Delta  v_{h}       )_{\Gamma  } -(  g_{1}, \Delta  v_{h}  )_{\Gamma  }  $ and
-the penalty terms $ \frac{\gamma }{h} (  \partial _{n} u, \partial _{n}   v_{h}       )_{\Gamma  } -\frac{\gamma }{h}(  g_{1}, \partial _{n} v_{h}  )_{\Gamma  }$ and $\frac{\gamma }{h}( \jump{ \partial _{n} u } , \jump{ \partial _{n} v_{h} }
-)_{\mathcal{F}^{int}_{h} }  $  . Effectively is the terms adding zero
-because of the regularity $ u \in H^{4}( \Omega ) $ and the boundary condition $\partial _{n} u = g_{1}$.
-Finally we have
-\[
-    \begin{split}
-( \Delta ^2 u, v_{h} ) _{\Omega }  =& ( \Delta u, \Delta v_{h})_{\mathcal{T} _{h} }  + ( g_{2} , v_{h} )_{\Gamma }  - ( g_{1} , \Delta v_{h})_{\Gamma } + \frac{\gamma }{h} ( g_{1} ,  \partial _{n}v_{h})_{\Gamma }\\
-& -  ( \jump{ \partial _{n} u} , \mean{ \Delta v_{h} })_{\mathcal{F}_{h}^{int} }-  (  \mean{ \Delta u }, \jump{ \partial _{n} v_{h}} )_{\mathcal{F}_{h}^{int} } + \frac{\gamma }{h}  \left( \jump{ \partial _{n} u}, \jump{ \partial _{n} v_{h}   }
-\right)_{\mathcal{F}_{h}^{int} } \\
-& - (  \Delta u , \partial _{n} v_{h})_{\Gamma }- ( \partial _{n} u, \Delta v_{h})_{\Gamma } + \frac{\gamma }{h}( \partial _{n} u, \partial _{n} v_{h})_{\Gamma }   .
-    \end{split}
-\]
-and the proof is complete.
-\end{proof}
-
-We will now assemble the Laplace CIP formulation.
-The discrete problem is as follows:
- \begin{equation}
-     \label{eq:laplace_prob}
-    \text{Find } u_{h} \in V_{h} \text{ such that } a^{L}( u_{h}, v_{h})  = l_{h}^{L}( v_{h} )  \quad \forall v_{h} \in  V_{h}.
-\end{equation}
-The corresponding bilinear and linear form is defined as,
-    \begin{equation}
-        \label{eq:cip_laplace_form}
-        \begin{split}
-            a_{h}^{L} \left( u_{h}, v_{h} \right)   =&
-            \left( \alpha  u_{h}, v_{h} \right) _{\Omega }   +  \left( \Delta  u_{h}, \Delta v_{h} \right) _{ \Omega } \\
-                                             & - \left( \mean{  \Delta  u_{h} }, \jump{ \partial _{n }v_{h}} \right)_{\mathcal{F}_{h}^{int}  }  - \left( \mean{ \Delta  v_{h} }, \jump{ \partial _{n}u_{h} }      \right)_{\mathcal{F}_{h}^{int}  }  + \frac{\gamma }{h}
-                                             \left( \jump{ \partial _{n} u_{h}}, \jump{ \partial _{n} v_{h}   }   \right)_{\mathcal{F}_{h}^{int} } \\
-                                             & - \left(   \Delta  u_{h} ,  \partial _{n }v_{h} \right)_{\Gamma   }  - \left(  \partial _{n}u_{h},  \Delta  v_{h} \right)_{\Gamma  }  + \frac{\gamma }{h}  \left(  \partial _{n} u_{h},  \partial _{n} v_{h}      \right)_{ \Gamma } \\
-                                             l^{L}_{h}( v_{h})  =&  \left( f, v_{h} \right) _{\Omega } - ( g_{2},  v_{h} )_{\Gamma } -  ( g_{1}, \Delta  v_{h}  )_{\Gamma }  + \frac{\gamma }{h} ( g_{1}, \partial _{n} v_{h}  )_{\Gamma }
-                                         \end{split}
-                                     \end{equation}
-                                     With the corresponding energy norms
-                                     \begin{equation}
-                                         \label{eq:a_cip_energy_norm_lap}
-                                         \begin{split}
-                                             \| v \|_{ a_{h}^{L} }^{ 2 }& = \alpha \| v\|_{ \Omega  }^{2  }  +  \| \Delta   v \|_{ \Omega   }^{ 2 }  + \|  h^{-\frac{1}{2}} \jump{ \partial _{n} v    }\|_{  \mathcal{F} _{h}^{int} }^{2  } +  \|  h^{-\frac{1}{2}}
-                                             \partial _{n} v  \|_{  \Gamma  }^{2  },  \quad v \in V_{h}  \\
-                                             \| v \|_{ a_{h}^{L},* }^{ 2 } &= \| v \|_{ a_{h} }^{ 2 }  + \| h^{\frac{1}{2}}  \mean{     \partial _{nn } v}  \|_{ \mathcal{F}_{h}^{int}   }^{  2}+ \| h^{\frac{1}{2}}       \partial _{nn } v  \|_{ \Gamma    }^{  2}, \quad  v\in V \oplus V_{h}.
-                                         \end{split}
-                                         .
-                                     \end{equation}
-
-
-
-                                     \begin{remark}
-Again, note that we have the consistent terms $\left( \mean{  \Delta  u_{h} }, \jump{ \partial _{n }v_{h}} \right)_{\mathcal{F}_{h}^{int}} $ and $ \left(   \Delta  u_{h} ,  \partial _{n }v_{h} \right)_{\Gamma }$ naturally appearing in the
-derivation. Also recall the symmetry terms, $(  \jump{ \partial _{n} u_{h} }, \mean{ \Delta  v_{h} })_{\mathcal{F}^{int}_{h} } $ and $ (  \partial _{n} u_{h} -  g_{1}, \Delta  v_{h}  )_{\Gamma  } $, with corresponding Nitsche penalty terms, $
-\frac{\gamma }{h}(  \partial _{n} u_{h} - g_{1}, \partial _{n} v_{h}  )_{\Gamma  }$ and $ \\ \frac{\gamma }{h}( \jump{ \partial _{n} u_{h} } , \jump{ \partial _{n} v_{h} }
-_{\mathcal{F}^{int}_{h} }  $, thus making the bilinear form $a^{L}( \cdot,\cdot ) $ symmetric and well-posed.
-                                     \end{remark}
-
-\subsubsection{Comments and earlier work}%
-\label{ssub:remarks}
-
-It should be noted that the Hessian formulation has a substantial limitation in that it is only valid for homogeneous Neumann conditions. This constraint arises from the challenges associated with imposing $g_{1}$ via the tangential derivative terms
-in Equation \eqref{eq:bi_basic_dg_full_1} during the proof of Lemma \ref{lemma:hessian}.
-From a physical perspective, this is not problematic as it aligns with the boundary conditions of the original CH problem \eqref{eq:strongch}. However, from the standpoint of numerical validation, the homogeneous Neumann condition enforces strict
-rules on the design of manufactured solutions on arbitrary domains. One way to fix this is to enforce tangential derivatives of $g_{1}$, i.e., inserting $\partial _{n}u = g_{1}$ for $ ( \partial _{t_{i}}( \partial_{n}  u ) , \partial _{n} v)_\Gamma  $ into
-\eqref{eq:bi_basic_dg_full_1}. A downside with this method is that we must require $g_{1}$ in $ H^{\frac{3}{2}}( \Gamma ) $.
-Consequently, the examples illustrated in section \ref{sec:numerical_results} are only demonstrated on simple domains. This particular constraint does not apply to the Laplace formulation.
-
-The Hessian formulation is well investigated by Susanne Brenner in several papers for \cite{brenner2012, brenner2012quadratic, brenner2012quadratic_kirk} with a corresponding analysis and numerical validation. Similarly, variants of the Laplace formulation can be found here
-\cite{feng2007fully, georgoulis2009discontinuous}. In these article there also is good theoretical and experimental evidence that both formulation have the following expected a priori estimates. Let  $u \in H^{s}( \Omega ) $ for $s\ge  \frac{5}{2} + \varepsilon$, and $u_{h}\in
-V_{h}  $ of order $k\ge 2$. Then with $r = \min\left\{ s,
-k+2 \right\}$ the a priori estimates are   \[
-    \begin{split}
-\| u - u_{h} \|_{ a_{h},*  }^{  }  & \lesssim  h^{r-2} \| u \|_{ r, \Omega  }^{  } \\
-\| u - u_{h} \|_{ \Omega   }^{  }  & \lesssim  h^{r- \max_{}\left\{ 0, 3-k \right\}  } \| u \|_{ r,\Omega  }^{  }
-    \end{split}
-\]
-
-Be aware that the $\| \cdot  \|_{\Omega   }^{  } $ norm estimates is suboptimal for $k=2$.
-It is worth noting that technically is the interior regularisation equivalent to do a Nitsche's method in all interior boundaries of the elements with boundary conditions of each element weakly
-imposed to zero. Thus, we expect the penalty parameter $\gamma$ to be the same interior and exterior elements. Let where $k\ge 2$ is the polynomial order, then for the Hessian formulation is it theoretically proven that $\gamma = 2k ( k-1 ) $
-\cite{brenner2012quadratic, brenner2012}. However, we still prefer to experimentally verify the best parameter.
-
-
-\subsection{Note on the biharmonic mixed formulation}%
-\label{subsec:biharmonic_mixed_formulation}
-
-It is easy to see that the biharmonic problem can be rewritten into an equivalent mixed formulation , that is, to find $\sigma, \tau  \in H^2( \Omega ) $ s.t. \[
-    \begin{split}
-\Delta \sigma  & = f \quad  \text{in } \Omega \\
-\sigma   & = \Delta u  \text{ in } \Omega \\
-\partial _{n} \sigma  & = g_{1} \text{ on } \Gamma  \\
-\partial _{n} u   & = g_{2} \text{ on } \Gamma
-    \end{split}
-\]
-The goal is to obtain an useful weak formulation. Using Greens theorem on the first equation we get,
-\[
-( \sigma, v)_{\Omega } = ( \nabla  u , \nabla v  )_{\Omega } - ( \nabla _{n} u , v) _{\Gamma }.
-\]
-Similarly for the second equation we obtain
-\[
-( \nabla \sigma , \nabla \varphi  )_{\Omega} - ( \partial _{n} \sigma ,  \varphi )_{\Gamma } = ( f,\varphi ) _{\Omega}
-\]
-Putting it all together we have the following mixed weak formulation; Find $( u, \sigma ) \in H^{1}( \Omega ) \times H^{1}( \Omega )  $ s.t. \[
-    \begin{split}
-     ( \nabla  u , \nabla v  )_{\Omega } -( \sigma, v)_{\Omega }  & =   ( g_{1} , v) _{\Gamma } \quad  \forall v \in H^{1}( \Omega ) \\
-( \nabla \sigma , \nabla \varphi  )_{\Omega}  & = ( f,\varphi ) _{\Omega} + ( g_{2} ,  \varphi )_{\Gamma } \quad  \forall \varphi \in H^{1}( \Omega )
-    \end{split}
-\]
-Now we want to relate this formulation to the abstract saddle point problem (SPP).
-Let $V = H^{1}( \Omega ) $  and $W=H^{1}( \Omega ) $ be  Hilbert spaces and define the bilinear form $a: V\times V \to \mathbb{R}  $ and $b: V \times W \to \mathbb{R} $ s.t. $a( \sigma,v ) = - ( \sigma , v) _{\Omega }  $ and $b( u,v) = ( \nabla u,
-\nabla v)_{\Omega  }  $. We also may define the linear forms, $G,F: V \to \mathbb{R} $ s.t. $ G( v)  = ( g_{1}, v) _{\Gamma } $ and $F( \varphi ) = ( f, \varphi )_{\Omega } + ( g_{2}, \varphi )_{\Gamma } $.
-
-Hence, we obtain the following SPP. Find $( u,\sigma ) \in V \times W$ s.t.  \[
-    \begin{cases}
-       a( \sigma ,v) + b ( u, v )  & = G( v)   \quad  \forall v \in V \\
-       b( u, \varphi  )  & = F( \varphi )     \quad \forall \phi \in W
-    \end{cases}
-\]
-This is useful since we can now apply standard saddle point theory to do an analysis for the problem. We will see that it is now easier to handle the boundary constraints naturally, but with the cost of a more challenging time discretization
-procedure.
-For more information about the biharmonic mixed formulation, see \cite{babuvska1980analysis,cai2023nitsche}.
-However, in this thesis is the focus on solving the biharmonic equation avoiding the mixed formulation using the CIP formulation, which does in fact handle the downsides with the SPP problem.
-
-
-% A well known and mature application for SPP is the well known Stokes equation, hence, a good place to start \cite{john2016finite, knabner2003numerical}.
-
-
-
-\newpage
 \section{Cut continuous interior penalty methods for the biharmonic problem}%
 \label{sec:cutcip_biharmonic_problem}
 
@@ -3208,17 +2726,979 @@ Hence, inserting \eqref{eq:ni_4} into \eqref{eq:astar_est} we conclude the energ
 \end{proof}
 
 
-    % \input{CutCIP_biharmonic_ghost_penalty}
+
+\subsection{Constructing ghost penalties}%
+\label{sec:constructing_ghost_penalties}
+
+We have the following assumptions for the ghost penalty.
+\begin{enumerate}[label=\textbf{EP\arabic*}]
+    \item \label{as:EP1} The ghost penalty $g_{h}( \cdot ,\cdot ) $ extends the $H^{2}$ norm such that
+        \begin{equation}
+    \| D^2v_{h} \|_{ \mathcal{T} _{h} }^{ 2 }  \lesssim \| D^2 v_{h} \|_{ \Omega  }^{  2} + \abs{ v_{h} } _{g_{h}}^2 \quad \forall v_{h} \in V_{h}
+        \end{equation}
+\item \label{as:EP2} For $v \in H^{s}( \Omega ) $ and $r = \mathrm{ min} (s,k+2) $, the semi-norm $\abs{ \cdot  }_{g_{h}} $ satisfies the following estimate,
+    \begin{equation}
+    \abs{ C _{h}^{e} v } _{g_{h}} \lesssim  h^{r-2} \| v \|_{ r,\Omega  }^{  }.
+    \end{equation}
+\end{enumerate}
+The goal in this chapter is to engineer an ghost penalty which fulfills these assumptions.
+
+Let $k$ be a positive integer. Recall the multi-index $\alpha  = ( \alpha _{1}, \ldots, \alpha _{d})  $ of order $\abs{ \alpha  } = \sum_{i}^{}  \alpha _{i} = k $ with a corresponding component-wise factorial $\alpha ! = \alpha_{1}! \ldots \alpha _{d}!$ .
+Let $  v \in C^{k}( \Omega ) $. The generalization of the normal derivative is denoted as,
+\begin{equation}
+    \partial _{n}^{k} v = \sum_{   \abs{ \alpha    } =  k}^{} \frac{ \partial^{\alpha } v \  n^{\alpha } }{\alpha !},
+\end{equation}
+where the component-wise product of the normal vector is $n^{\alpha } = n_{1}^{\alpha _{1}} \ldots n_{d}^{\alpha _{d}}$ and the derivative $\partial ^{\alpha }v $ is as defined in Equation \eqref{eq:der}. Remark that $\partial ^{0}_{n} v = v $, $ \partial ^{1}_{n} v = \nabla v
+ \ n = \partial _{n}v $ and $ \partial ^{2}_{n} v = \frac{1}{2} n^{T} D^2 v \ n = \frac{1}{2} \partial _{nn} v$.
+% \footnote{
+% Remark that the operator $D^{\alpha }$  is related to with the derivate operator $\partial ^{\alpha } $ introduced in \eqref{eq:der}. For instance, for $d=2$ we have $\alpha = ( \alpha _{1}, \alpha _{2}) $  such that $ D^{1} v =  \nabla v  = \left[ \partial ^{( 1,0 )} v,\partial ^{( 0,1 )}v
+% \right]^{T}$ and $   D^2 v  = \begin{bmatrix}
+% \partial ^{( 2,0 )} v &  \partial ^{( 1,1) }v \\
+% \partial ^{( 1,1 )} v &  \partial ^{( 0,2) }v
+% \end{bmatrix}
+%  $.
+% },
+
+The following result is the backbone of the face-based ghost penalty.
+\begin{lemma}
+    \label{lemma:bi_local_facet_estimate}
+    Let $T_{1},T_{2 } \in  \mathcal{T} _{h}$ be two elements sharing a common face $F$. Then for $v_{h} \in V_{h}$ with polynomial degree $k$  we have
+    \begin{equation}
+    \| v_{h} \|_{ T_{1} }^{  }  \lesssim \| v_{h} \|_{ T_{2} }^{  } + \sum_{0\le j\le k}  {h^{2j +1}}^{} ( \jump{ \partial _{n}^{j} v_{h} }, \jump{ \partial ^{j}_{n} v_{h} }    )_{F}
+    \end{equation}
+
+\end{lemma}
+\begin{proof}
+    See \cite[Lemma 2.19]{gurkan2019stabilized}.
+\end{proof}
+
+We will now introduce the so-called ghost penalty faces, that is, \[
+\mathcal{F} ^{g}_{h} = \left\{ F\in \mathcal{F} _{h} : T^{+}\cap \Gamma \neq \emptyset  \vee T^{-}\cap \Gamma \neq \emptyset  \right\}.
+\]
+This set is simply all facets that belong to all elements of the active mesh $\mathcal{T} _{h}$  intersected with $\Gamma $, i.e., all triangles to the cut cells $\mathcal{T} ^{\Gamma }_{h}$. For an illustration, see Figure \ref{fig:illustration_F_g}.
+
+
+\begin{lemma}[]
+    \label{lemma:bi_local_facet_estimate_2}
+    Let $T_{1},T_{2 } \in  \mathcal{T} _{h}$ be two elements sharing a common face $F$. Then for $v_{h} \in V_{h}$ with polynomial degree $k$ we have
+    \begin{subequations}
+    \begin{align}
+        \label{eq:local_ghost:0}
+        \| \partial _{x_{i}} v \|_{ T_{1} }^{  }  &\lesssim \| \partial_{ x_{i} } v_{h} \|_{ T_{2} }^{  } + \sum_{0\le j\le k}  {h^{2j -1}}^{} ( \jump{ \partial _{n}^{j} \partial _{x_{i}} v_{h} }, \jump{ \partial ^{j}_{n} \partial _{x_{i}} v_{h} }
+        )_{F} \\
+        \label{eq:local_ghost:1}
+        \| \nabla  v \|_{ T_{1} }^{  }  & \lesssim \| \nabla  v_{h} \|_{ T_{2} }^{  } + \sum_{0\le j\le k}  {h^{2j -1}}^{} ( \jump{ \partial _{n}^{j} \nabla v_{h} }, \jump{ \partial ^{j}_{n} \nabla  v_{h} }    )_{F}
+    \end{align}
+    \end{subequations}
+    Similarly, this is generalized to
+    \begin{subequations}
+        \begin{align}
+        \label{eq:local_ghost:2}
+        \| \Delta   v \|_{ T_{1} }^{  }  & \lesssim \| \Delta  v_{h} \|_{ T_{2} }^{  } + \sum_{0\le j\le k}  {h^{2j -3}}^{} ( \jump{ \partial _{n}^{j}\Delta  v_{h} }, \jump{ \partial ^{j}_{n} \Delta   v_{h} }    )_{F} \\
+        \label{eq:local_ghost:3}
+        \| D^2  v \|_{ T_{1} }^{  }  & \lesssim \| D^2 v_{h} \|_{ T_{2} }^{  } + \sum_{0\le j\le k}  {h^{2j -3}}^{} ( \jump{ \partial _{n}^{j} D^2 v_{h} }, \jump{ \partial ^{j}_{n} D^2  v_{h} }    )_{F}
+        \end{align}
+    \end{subequations}
+
+\end{lemma}
+
+\begin{proof}
+\textbf{Estimate \eqref{eq:local_ghost:0}.} Let $w_{h} = w_{h}|_F$ and recall the projection \eqref{eq:projection}, then is
+\begin{equation}
+    \begin{split}
+\jump{ \partial _{x_{i}} w_{h}} & = \jump{ \nabla w_{h} }   \cdot e_{x_{i}}  = ( P_{F} \jump{ \nabla w_{h} }   + Q_{F}  \jump{ \nabla w_{h} }   )e_{x_{i}} \\
+ &   = ( \jump{\partial _{n}    w_{h} }    n + \sum_{j=1}^{d-1}  \jump{\partial_{ t_{j} } w_{h} }    t_{j} )e_{x_{i}}
+    \end{split}
+\end{equation}
+Here is $e_{x_{i}}, i= 1,\ldots,d$ one of the elementary unit vectors in $\mathbb{R} ^{d}$.
+Since $\abs{e_{x_{i}} \cdot n  }\le 1 $ and $\abs{e_{x_{i}} \cdot  t_{j} }\le 1 \ \forall i,j $ is it clear that this estimate holds.
+
+\begin{equation}
+    \begin{split}
+   \| \jump{ \partial _{x_{i}} w_{h} }   \|_{F  }^{2  } & \lesssim \| \jump{ \partial _{n} w_{h} }   \|_{F  }^{ 2 } + \sum_{j=1}^{d-1} \| \jump{ \partial _{t_{j}} w_{h} }   \|_{ F }^{ 2 } \\
+    & \lesssim \| \jump{ \partial _{n} w_{h} }   \|_{F  }^{ 2 } +  h^{-2} \| \jump{ w_{h} }   \|_{ F }^{ 2 }
+    \end{split}
+\end{equation}
+Here we used the local inverse inequality \eqref{eq:inv1} applied on the facet $F$, i.e. $\| \partial _{t_{j}} v_{h} \|_{F  }^{  } \lesssim h^{-1} \|  v_{h} \|_{F  }^{  }  $.
+Inserting $w_{h} = \partial ^{j} _{n} v_{h}$ we conclude
+\begin{equation}
+    \label{eq:jump_estimate}
+    \begin{split}
+   \| \jump{ \partial _{x_{i}} \partial ^{j} _{n} v_{h} }   \|_{F  }^{2  } & \lesssim \| \jump{ \partial _{n} \partial ^{j} _{n} v_{h} }   \|_{F  }^{ 2 } +  h^{-2} \| \jump{ \partial ^{j} _{n} v_{h} }   \|_{ F }^{ 2 } \\
+                                                                           & \lesssim \| \jump{  \partial ^{j+1} _{n} v_{h} }   \|_{F  }^{ 2 } +  h^{-2} \| \jump{ \partial ^{j} _{n} v_{h} }   \|_{ F }^{ 2 } \\
+    \end{split}
+\end{equation}
+Next, we see that the Lemma \ref{lemma:bi_local_facet_estimate} implies
+\begin{equation}
+    \label{eq:ghost_estimate:1}
+    \begin{split}
+    \| \partial _{x_{i}} v_{h} \|_{  T_{1}}^{2  } & \lesssim \| \partial _{x_{i}} v_{h} \|_{ T_{2} }^{  2} + h^{2j+1}\sum_{j=0}^{k} \| \jump{ \partial _{n}^{j} \partial _{x_{i}} v_{h} }   \|_{F  }^{2  }.
+    \end{split}
+\end{equation}
+Hence, by using \eqref{eq:jump_estimate} can we rewrite the sum such that
+\begin{equation}
+    \label{eq:ghost_estimate:2}
+    \begin{split}
+                                                  \sum_{j=0}^{k} \| \jump{ \partial _{n}^{j} \partial _{x_{i}} v_{h} }   \|_{F  }^{2  } & \lesssim  \sum_{j=0}^{k} \| \jump{  \partial ^{j+1} _{n} v_{h} }   \|_{F  }^{ 2 } +  h^{-2} \| \jump{ \partial ^{j} _{n} v_{h} }   \|_{ F }^{ 2 } \\
+                                                  & \lesssim  \sum_{j=1}^{k-1} \| \jump{  \partial ^{j} _{n} v_{h} }   \|_{F  }^{ 2 } +\sum_{j=0}^{k}  h^{-2} \| \jump{ \partial ^{j} _{n} v_{h} }   \|_{ F
+                                                  }^{ 2 } \\
+                                                  & \lesssim  \sum_{j=0}^{k}  h^{-2} \| \jump{ \partial ^{j} _{n} v_{h} }   \|_{ F }^{ 2 }
+    \end{split}
+\end{equation}
+
+Thus, combining \eqref{eq:ghost_estimate:1} and \eqref{eq:ghost_estimate:2} we get
+\begin{equation}
+    \| \partial _{x_{i}} v_{h} \|_{  T_{1}}^{2  }  \lesssim \| \partial _{x_{i}} v_{h} \|_{ T_{2} }^{  2} + h^{2j-1}\sum_{j=0}^{k} \| \jump{ \partial _{n}^{j} v_{h} }   \|_{F  }^{2  } \\
+\end{equation}
+        Hence, estimate \eqref{eq:local_ghost:0} holds.
+
+        \textbf{Estimate \eqref{eq:local_ghost:1}.} Using that $\| \nabla  v \|_{T_{}  }^{ 2 } =  \sum_{i=1}^{d} \|  \partial _{x_{i}} v  \|_{T_{}  }^{ 2 }$, can we directly apply the estimate \eqref{eq:local_ghost:0} element-wise.
+        \begin{equation}
+            \begin{split}
+\| \nabla v \|_{T_{1}  }^{2  } &= \sum_{i=1}^{d} \| \partial _{x_{i}}  v_{h} \|_{ T_{1} }^{  2}  \lesssim  \sum_{i=1}^{d} \| \partial _{x_{i}}  v_{h} \|_{ T_{2} }^{  2} + h^{2j-1}\sum_{j=0}^{k} \| \jump{ \partial _{n}^{j} v_{h} }   \|_{F  }^{2  }  \\
+         &  = \| \nabla  v_{h} \|_{ T_{2} }^{  2} + h^{2j-1}\sum_{j=0}^{k} \| \jump{ \partial _{n}^{j} v_{h} }   \|_{F  }^{2  }
+            \end{split}
+        \end{equation}
+        Hence, estimate \eqref{eq:local_ghost:1} holds.
+
+
+\textbf{Estimate \eqref{eq:local_ghost:2} and \eqref{eq:local_ghost:3}.}
+Following exactly the same steps as in \textbf{Estimate \eqref{eq:local_ghost:0}}, but replacing Lemma \ref{lemma:bi_local_facet_estimate} with estimate \eqref{eq:local_ghost:0}, it is straight forward to conclude the following. For any  $i_{1},i_{2} \in
+\left\{ 1,\ldots, d \right\}$ we have,
+\begin{equation}
+    \| \partial _{x_{i_1} x_{i_2}} v \|_{ T_{1} }^{  }  \lesssim \| \partial_{ x_{i_1} x_{i_2} } v_{h} \|_{ T_{2} }^{  } + \sum_{0\le j\le k}  {h^{2j -3}}^{} \left(  \jump{ \partial _{n}^{j} \partial _{x_{i_1} x_{i_2}} v_{h} }, \jump{ \partial ^{j}_{n}
+        \partial _{x_{i_1} x_{i_2}} v_{h} } \right)     _{F}
+\end{equation}
+Finally, applying the element-wise argument, demonstrated in the proof for \textbf{Estimate \eqref{eq:local_ghost:1}}, for the Hessian and the Laplace operator, we conclude that \eqref{eq:local_ghost:2} and \eqref{eq:local_ghost:3} hold.
+
+\end{proof}
+
+
+
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \coordinate (center) at (0, 0);
+
+        % Reference hexagon vertices
+        \coordinate (A1) at (0:2.5);
+        \coordinate (A2) at (60:2.5);
+        \coordinate (A3) at (120:2.5);
+        \coordinate (A4) at (180:2.5);
+        \coordinate (A5) at (240:2.5);
+        \coordinate (A6) at (300:2.5);
+        \coordinate (A7) at (300:2.5);
+
+
+        \fill[green!40] (center) --(A1) -- (A2) -- (A3) -- (A4)  -- cycle;
+        \fill[blue!30] (center) -- (A4) --(A5)--(A6)-- (A7) -- (A1) -- cycle;
+
+        % Draw the individual edges
+        \draw[dotted, line width=1.5pt] (center) -- (A1);
+        \draw[dotted, line width=1.5pt] (center) -- (A2);
+        \draw[dotted, line width=1.5pt] (center) -- (A3) -- (A4) -- (center);
+        \draw (A2) -- (A3);
+        \draw (A4) -- (A5);
+        \draw (center) -- (A5) -- (A6) ;
+        \draw (center) -- (A6) -- (A1);
+
+
+        \begin{scope}[shift={(2.5,0)}]
+            % Shifted
+            \coordinate (center) at (0, 0);
+
+            % Reference hexagon vertices
+            \coordinate (B1) at (0:2.5);
+            \coordinate (B2) at (60:2.5);
+            \coordinate (B3) at (120:2.5);
+            \coordinate (B5) at (240:2.5);
+            \coordinate (B6) at (300:2.5);
+
+            \fill[green!40] (center) --(B6) -- (B1) -- (B2) --(B3) -- cycle;
+            \fill[blue!30] (center) -- (B5) --(B6) -- cycle;
+
+
+            % Draw the individual edges
+            \draw[dotted, line width=1.5pt] (center) -- (B2);
+            \draw[dotted, line width=1.5pt] (center) -- (B3); % double
+            \draw[dotted, line width=1.5pt] (center) -- (B1);
+            \draw (B1) -- (B2);
+            \draw (B2) -- (B3);
+            \draw (B5) -- (B6);
+            \draw[dotted, line width=1.5pt] (center) -- (B6) -- (B1);
+        \end{scope}
+
+
+        \coordinate (Ti) at (-0,-1.0);
+        \coordinate (Tg) at (3.0,2.0);
+        \node[below] at (Tg) {$\mathcal{T}^{\Gamma }_h$};
+        \node[below] at (Ti) {$\mathcal{T}^{\mathrm{int} }_h$};
+
+        \coordinate (C1) at (-3,0);
+        \coordinate (C2) at (5.2,-0.5);
+        \draw[-, line width=2pt, >=stealth] ($(C2)$) to[bend right] node[midway, yshift=-0.3cm] {$\Gamma $} ($(C1)$);
+
+        \begin{scope}[shift={(6.0,1.7)}]
+            \draw[dotted, line width=1.5pt] (-1.5,0) -- (-1,0);
+            \node[anchor=west] at (-1.0,0) {$\mathcal{F}_h^g$};
+        \end{scope}
+
+        % Symbol visualization
+        % \draw[dotted, line width=1.5pt] (3.4,3.1) -- (3.9,3.1);
+        % \node[anchor=west] at (4.0,3.1) {$\mathcal{F}_h^g$};
+        %% Legend
+        \draw (4.4,1.3) rectangle (5.8,2.1); % Legend box
+
+\end{tikzpicture}
+
+\caption{Illustration of $\mathcal{F} _{h}^{g}$ denoted as the dotted lines. The set is defined as all facets which belongs to cut cells $\mathcal{T} ^{\Gamma }_{h}$ sharing a node with interior elements $\mathcal{T} ^{\mathrm{int}  }_{h}$ .  }
+\label{fig:illustration_F_g}
+\end{figure}
+
+
+Now it remains to make this Lemma hold for the active mesh.
+
+
+\begin{lemma}
+    \label{lemma:bi_inv_gh_lemma}
+    For $v_{h} \in  V_{h}$ of polynomial degree $k$, the following estimates hold.
+        \begin{subequations}
+            \begin{align}
+                \label{eq:bi_inv_gh_1}
+                \| v_h \|_{ \mathcal{T} _{h} }^{ 2 }  & \lesssim  \| v_h \|_{ \Omega  }^{ 2 }  + \sum_{j=1}^{k} h^{2j+1} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n} v_h}    )_{\mathcal{F}_{h}^{g}}\\
+                \label{eq:bi_inv_gh_2}
+                \| D ^2 v_h \|_{ \mathcal{T} _{h} }^{ 2 }  & \lesssim  \| D^2 v_h \|_{ \Omega  }^{ 2 }  + \sum_{j=1}^{k} h^{2j-3} ( \jump{ \partial ^{j}_{n} v_h }, \jump{ \partial ^{j}_{n}v_h }    )_{\mathcal{F}_{h}^{g}} \\
+                \label{eq:bi_inv_gh_3}
+                \| \Delta v_h \|_{ \mathcal{T} _{h} }^{ 2 }  & \lesssim  \| \Delta v_h \|_{ \Omega  }^{ 2 }  + \sum_{j=1}^{k} h^{2j-3} ( \jump{ \partial ^{j}_{n} v_h }, \jump{ \partial ^{j}_{n}v_h }    )_{\mathcal{F}_{h}^{g}}
+            \end{align}
+        \end{subequations}
+\end{lemma}
+
+\begin{proof}
+        \textbf{Estimate \eqref{eq:bi_inv_gh_1}.}
+        This estimate is proven in \cite[Lemma 2.20]{gurkan2019stabilized}, but we will include it for completeness.
+            First of all, notice that there is a patch $P(T) $ consisting of $\left\{ T_{i} \right\}_{i=1}^{l} $ mesh elements such that each pair $ \left\{ T_{i}, T_{i+1} \right\} $ share a facet $F_{i}$ and the last element $T_{l}$ has a fat intersection.
+
+            Let us define the following norm
+            \begin{equation}
+            g_{F_{i}}^{L^{2}}( v_{h},v_{h})  = \sum_{j=1}^{k} h^{2j+1}( \jump{ \partial ^{j}_{n}v_{h} }, \jump{ \partial ^{j}_{n}v_{h} }    )_{F_{i} }
+            \end{equation}
+            where $F_{i} \in  \mathcal{F} ^{g}_{h}$ and polynomial degree $ k$. Using Lemma \ref{lemma:bi_local_facet_estimate} can we see that
+            \begin{equation}
+            \| v_{h} \|_{ T_{i} }^{  } \lesssim \| v_{h} \|_{ T_{i+1} }^{ 2 } + g_{F_{i}}^{L^{2}}( v,v).
+            \end{equation}
+By employing induction on each pair $\left\{ T_{i}, T_{i+1} \right\}$ along with its corresponding $F_{i}$, we achieve the following outcome.
+
+    \begin{align}
+            \| v_{h} \|_{ T_{1} }^{2  }  & \le  C \| v_{h} \|_{ T_{2} }^{ 2 } + g_{F_{1}}^{L^{2}}( v_{h},v_{h})\\
+              & \le  C( C( \| v_{h} \|_{ T_{3} }^{ 2 } + g_{F_{2}}^{L^{2}}( v_{h},v_{h}) ) + g_{F_{1}}^{L^{2}}( v_{h},v_{h}) )\\
+              & \lesssim    \| v_{h} \|_{ T_{l} }^{ 2 }  + \sum_{i=1}^{l-1} g_{F_{i}}^{L^{2}}( v_{h},v_{h})  \\
+              & \lesssim    \| v_{h} \|_{ T_{l} \cap \Omega  }^{ 2 }  + \sum_{i=1}^{l-1} g_{F_{i}}^{L^{2}}( v_{h},v_{h})
+    \end{align}
+            Here the last steps arise from the fact that $\|  v_{h} \|_{ T_{l} }^{  } \lesssim  \|  v_{h} \|_{ T_{l} \cap \Omega  }^{  }  $, which is a consequence of the fat intersection property.
+            Summation over the cut elements $\mathcal{T} ^{\Gamma }_{h}$ implies,
+            \begin{align}
+                    \| v_{h} \|_{ \mathcal{T} ^{\Gamma }_h }^{2  } & \lesssim \| v_{h} \|_{ \mathcal{T} ^{\Gamma }_h\cap \Omega  }^{2  }+ \sum_{i=1}^{l-1} g_{F_{l}}^{L^{2}}( v_{h},v_{h}) \\
+                                                                 & = \| v_{h} \|_{ \mathcal{T}^{\Gamma }_h \cap \Omega   }^{ 2 }  + \sum_{j=0}^{k} h^{2j+1} ( \jump{ \partial ^{j}_{n} v_{h} }, \jump{ \partial ^{j}_{n}v_{h} }    )_{\mathcal{F}_{h}^{g}}
+            \end{align}
+        And as a trivial extension this now also holds for the active mesh $\mathcal{T} _{h}$ , that is,
+        \begin{equation}
+                    \| v_{h} \|_{ \mathcal{T} _{h } }^{2  } \lesssim  \| v_{h} \|_{ \mathcal{T}_{h } \cap \Omega   }^{ 2 }  + \sum_{j=1}^{k} h^{2j+1} ( \jump{ \partial ^{j}_{n} v_{h} }, \jump{ \partial ^{j}_{n}v_{h} }    )_{\mathcal{F}_{h}^{g}}.
+        \end{equation}
+        Hence, \eqref{eq:bi_inv_gh_1} holds and the first part of the proof is complete.
+
+        \textbf{Estimate \eqref{eq:bi_inv_gh_2} and \eqref{eq:bi_inv_gh_2}.}
+        We simply use the exact same procedure as \textbf{Estimate \eqref{eq:bi_inv_gh_1}}  for the estimates with \eqref{eq:local_ghost:2}  and \eqref{eq:local_ghost:3}. Hence by defining the bilinear form $g_{h}( \cdot ,\cdot ) $ similarly. Proof is complete.
+    \end{proof}
+
+Finally, we now have the tools we need to construct an candidate for the ghost penalty for which satisfies all assumptions.
+
+\begin{proposition}[Face-based ghost penalty]
+    Let $k\ge  2$ be the order of the polynomial basis in $V_{h}$ .
+    For any set of positive parameters $\left\{ \gamma _{j} \right\} _{j=0}^{k}$, the ghost penalty defined as
+    \begin{equation}
+        \label{eq:ghost_penalty}
+    g^{}_{h}( v_{h},w_{h})  := \sum_{j=1}^{k} \sum_{F \in \mathcal{F} _{h}^{g}}^{} \gamma _{j} h^{2j-3}_{F} ( \jump{ \partial ^{j}_{n} v_{h} }, \jump{ \partial ^{j}_{n} w_{h} }  ) _{F} \text{ for any } v_{h},w_{h} \in V_{h},
+    \end{equation}
+    satisfies the Assumption \ref{as:EP1} and \ref{as:EP2}.
+\end{proposition}
+
+\begin{proof}
+  From Lemma \ref{lemma:bi_inv_gh_lemma} is it clear that $
+    \| D^2v_{h} \|_{ \mathcal{T} _{h} }^{  }  \lesssim \| D^2 v_{h} \|_{ \Omega   }^{  } + \abs{ v_{h} } _{g_{h}}
+    $, hence, Assumption \ref{as:EP1} holds.
+    Therefore, we only need to verify Assumption \ref{as:EP2}, which states that $ \abs{ C^{e}_{h} v }_{g_{h}} \lesssim h^{r-2} \| v \|_{r, \Omega   }^{  }$.
+    Let $v  \in H^{s}( \Omega ) $, $s\ge 3$,  and $r = \min\{s,k+1\} $. We can see that from definition is,
+    \begin{equation}
+        \label{eq:est_gh:1}
+        \begin{split}
+        \abs{ C^{e}_{h} v }_{g_{h}}^{2} & = \sum_{j=0}^{k}  \gamma _{j} h^{2j-3}  \| \jump{ \partial ^{j}_{n} C^{e}_{h} v }  \|_{\mathcal{F}_{h}^{g} }^{2} \\
+                                        & = \sum_{j=0}^{r-1}  \gamma _{j} h^{2j-3}   \| \jump{ \partial ^{j}_{n}  ( C^{e}_{h} v- v^{e} )  }  \|_{\mathcal{F}_{h}^{g} }^{2} + \sum_{j=r}^{k}  \gamma _{j} h^{2j-3}  \| \jump{ \partial ^{j}_{n} C^{e}_{h} v }
+                                        \|_{\mathcal{F}_{h}^{g} }^{2} = \mathrm{I} + \mathrm{II}
+        \end{split}
+    \end{equation}
+    Here we added a zero term $v^{e} \in H^{s}( \Omega_{h} ) $  since jump vanishes for the for the first $r-1$ terms, i.e. $\jump{ \partial ^{j}_{n} v^{e} } = 0  \  \forall j \le r-1$. The given expression suggests that the first term can be readily estimated by utilizing the a priori estimate provided in equation \eqref{eq:bi_projection_estimates_2}.
+
+    \begin{equation}
+        \begin{split}
+        \mathrm{I}  & \lesssim \sum_{j=0}^{r-1} h^{2j-3}   \| \jump{ \partial ^{j}_{n}  ( C^{e}_{h} v - v^{e})   }  \|_{\mathcal{F}_{h}^{g} }^{2} \lesssim \sum_{j=0}^{r-1} h^{2j-3}   \| D ^{j}  ( C^{e}_{h} v - v^{e})     \|_{\partial \mathcal{T}_{h}  }^{2} \\
+        & \lesssim \sum_{j=0}^{r-1} h^{2j-3}  h^{2r - 2j - 1}\| v  \|_{r,\Omega  }^{2} \lesssim     h^{2( r  - 2 )}\| v  \|_{r,\Omega  }^{2}
+        \end{split}
+    \end{equation}
+
+     For the second term are we allowed to use the basic discrete inverse
+    estimate \eqref{eq:general} times since we work on the Clément operator,
+    \begin{equation}
+        \begin{split}
+       \mathrm{II}  & \lesssim \sum_{j=r}^{k} h^{2j-3}  \|  \partial ^{j}_{n} C^{e}_{h} v \|_{\partial \mathcal{T}_{h} }^{2} \lesssim \sum_{j=r}^{k} h^{2j-3} h^{2( r-j -\frac{1}{2}) }  \|  D^r ( C^{e}_{h} v ) \|_{ \Omega  }^{2}  \\
+       &  \lesssim h^{2( r-2) } \| C^{e}_{h}v \|_{r,\Omega}^{2}
+        \end{split}
+    \end{equation}
+    Hence, the estimate $\abs{ C^{e}_{h} v }_{g_{h}}^{2} \lesssim h^{2( r -2 )}\| v \|_{r, \Omega   }^{2}$ holds.
+
+\end{proof}
     % % \input{CutCIP_biharmonic_results}
-    % \input{numerical_results}
-    % \input{cahn-hilliard}
-    % \input{conclusion}
+\subsection{Numerical experiments}%
+\label{sec:numerical_results}
+
+
+To validate the proposed cut finite element methods for the biharmonic problem will we investigate several numerical experiments both for the Laplace and Hessian formulation. From the theoretical optimal a priori estimates presented in presented in Theorem \ref{thm:apriori_result} will we provide examples where it holds. We also demonstrate the effect ghost penalty of stabilization by translating the domain to trigger badly cut cells. Finally, we provide numerical validation of the expected convergence for
+the Cahn-Hilliard problem. We propose the following penalty parameters $\gamma = 20$ for the Hessian formulation \eqref{eq:hessian_prob} and the Laplace formulation \eqref{eq:laplace_prob}, and $\gamma _{1}, \gamma _{2} = 10, 0.5$ for the
+corresponding ghost penalty \eqref{eq:ghost_penalty}.
+
+Condition numbers are essential to solve linear systems because they help us assess the accuracy and stability of the system's solutions. A large condition number indicates that the system is ill-conditioned, meaning the solution can be highly
+sensitive to small changes in the input data, potentially leading to inaccurate results. This underline the importance checking the conditional stability of cut cells, hence, motivating to do a so-called translation test with and without ghost
+penalty.
+
+All numerical experiments are conducted using the open-source finite element method framework Gridap \cite{verdugo22}.
+
+\subsubsection{Numerical setup}%
+\label{sub:numerical_results_for_cutcip_biharmonic_equation}
+For the convergence study will we consider a square background domain $\widetilde{\Omega} $ with side lengths $L$ and a physical domain $\Omega \subset \widetilde{\Omega}$ on the form $\Omega  = \left\{ ( x,y)  \mid \phi ( x,y) \le 0    \right\} $,
+where $\phi: \mathbb{R} ^2 \to \mathbb{R}  $ is a given level set function. We will consider two cases; a circular domain,
+\begin{equation}
+    \label{eq:circle}
+\phi( x,y) = x^{ 2} + y^{2} -1
+\end{equation}
+and a flower shaped domain,
+\begin{equation}
+\label{eq:flower}
+\phi ( x,y) =\sqrt{x^{2} + y^{2}} - r_{0} - r_{1}\cos(\atantwo(y,x)) \text{ where }  r_{0} = 0.3L  \text{ and } \ r_{1} = 0.1L .
+\end{equation}
+For an illustration of the flower domain, see Figure \ref{fig:flower}.
+
+\begin{figure}[h!]
+    \centering
+\begin{tikzpicture}
+  \def\rZero{0.6} % Define r_0
+  \def\rOne{0.2} % Define r_1
+  \begin{axis}[
+    xmin=-1, xmax=1,
+    ymin=-1, ymax=1,
+    axis lines=center,
+    axis equal,
+    hide axis,  % This will hide the axis
+    % xlabel={$x$},
+    % ylabel={$y$},
+    % grid=both,
+    % minor tick num=1,
+    domain=0:2*pi,
+    samples=200
+  ]
+
+  \addplot[thick, parametric, smooth, fill=blue!30] ({(\rZero + \rOne*cos(5*deg(x)))*sin(deg(x))} , {(\rZero + \rOne*cos(5*deg(x)))*cos(deg(x))});
+  \node at (0.1, 0.1) {$\Omega$};
+  \node at (0.6, 0.6) {$\phi( x,y ) = 0 $};
+
+  % Background mesh
+  \foreach \i in {-1, -0.75, ..., 1} {
+      \addplot[ thin, opacity=0.3, forget plot] coordinates {(\i,-1) (\i,1)};
+      \addplot[ thin, opacity=0.3, forget plot] coordinates {(-1,\i) (1,\i)};
+  }
+
+  \end{axis}
+\end{tikzpicture}
+\caption{Illustration of the flower domain associated with the level set function \eqref{eq:flower}.}
+    \label{fig:flower}
+\end{figure}
+
+
+We want to test spatial convergence for the method by doing a numerous of mesh refinements. Let $ \widetilde{\mathcal{T}}_{h}^{j} $ be the associated regular square mesh of the background domain $\widetilde{\Omega }$ with the mesh size  $h^{j} = L/2^{3+j} $
+for the side length $L=2.7$ and refinements
+$j=1, \ldots, 8$. For the circular domain is this illustrated in the Figure \ref{fig:refinement}.
+
+\begin{figure}[hpbt!]
+    \centering
+\subfloat[]{\label{sub:fig:refine_a}
+        \begin{tikzpicture}[scale=0.9]
+
+            % Domain is blue
+            \fill[blue!30] (0.1, 0.1) circle (1.5cm);
+            \draw[black] (0.1, 0.1) circle (1.5cm);
+            \node at (0.2, 0.2) {$\Omega$};
+
+            % Background mesh
+            \foreach \i in {-2.5, -2, ..., 2.5} {
+                \draw[line width=0.1pt, shift={(-2.5,\i)}, opacity=0.2] (0,0) -- (5,0);
+                \draw[line width=0.1pt, shift={(\i,-2.5)},opacity=0.2] (0,0) -- (0,5);
+            }
+
+        \end{tikzpicture}
+
+}\hfill
+\subfloat[]{\label{sub:fig:refine_b}
+        \begin{tikzpicture}[scale=0.9]
+
+            % Domain is blue
+            \fill[blue!30] (0.1, 0.1) circle (1.5cm);
+            \draw[black] (0.1, 0.1) circle (1.5cm);
+            \node at (0.2, 0.2) {$\Omega$};
+
+            % Background mesh
+            \foreach \i in {-2.5, -2.25, ..., 2.5} {
+                \draw[line width=0.1pt, shift={(-2.5,\i)}, opacity=0.2] (0,0) -- (5,0);
+                \draw[line width=0.1pt, shift={(\i,-2.5)},opacity=0.2] (0,0) -- (0,5);
+            }
+
+        \end{tikzpicture}
+
+
+}
+\hfill
+\subfloat[]{\label{sub:fig:refine_c}
+        \begin{tikzpicture}[scale=0.9]
+
+            % Domain is blue
+            \fill[blue!30] (0.1, 0.1) circle (1.5cm);
+            \draw[black] (0.1, 0.1) circle (1.5cm);
+            \node at (0.2, 0.2) {$\Omega$};
+
+            % Background mesh
+            \foreach \i in {-2.5, -2.375, ..., 2.5} {
+                \draw[line width=0.1pt, shift={(-2.5,\i)}, opacity=0.2] (0,0) -- (5,0);
+                \draw[line width=0.1pt, shift={(\i,-2.5)},opacity=0.2] (0,0) -- (0,5);
+            }
+
+        \end{tikzpicture}
+}
+    \caption{Illustration of the domain $\Omega $ defined as a circle with radius $R$. The regular square background mesh $ \widetilde{\mathcal{T}}_{h}^{j} $ with side lengths $L$ with three refinements of the mesh size $h^{j}$.}
+    \label{fig:refinement}
+\end{figure}
+
+On each mesh $\widetilde{\mathcal{T}}^{k}_{h}  $ we compute a numerical solution $u_{h}^{k}$, hence, motivating us to define the convergence rate. Let $u $ be the exact solution, then do we define the so-called Experimental Order of Convergence (EOC) as
+\begin{equation}
+EOC( j) =  \frac{\log \left(  \frac{e^{j-1}}{e^{j}} \right)}{\log \left(  \frac{h^{j-1}}{h^{j}} \right)}, \quad    j = 2,\ldots, 8
+\end{equation}
+Here we define the error $e^{j} = \| u - u_{h}^{j} \|_{  }^{  } $, where we choose to measure in the norms $ \|\cdot   \|_{L^2( \Omega )   }^{  },   \|\cdot   \|_{H^1( \Omega )   }^{  } $ and $ \|\cdot   \|_{ a_{h},* }^{  }$.
+Recall the definition of the condition number $\kappa_{\infty} ( A)$ from \eqref{eq:condition_num}, where $A$ is the system matrix defined in \eqref{eq:linear_system}. We define $A^{j}$ to the associated system matrix to the corresponding discrete solution
+$u_{h}^{j}$. Hence, when computing EOC specifically for the condition number we define,
+\begin{equation}
+EOC( j) =  \frac{\log \left(  \frac{\kappa _{\infty}( A^{j-1})}{\kappa _{\infty}( A^{j})} \right)}{\log \left(  \frac{h^{j-1}}{h^{j}} \right)}, \quad    j = 2,\ldots, 8
+\end{equation}
+
+
+\subsubsection{Validation of the a priori estimates }%
+\label{ssub:numerical_results}
+
+Our goal it validate the a priori estimates presented in Theorem \ref{thm:apriori_result} for $k= 2$.
+The big-oh $O( h^{r})$ is defined to be to be a upper bound such that it exists an $C>0$ such that $\| e \|_{  }^{  } \le C h^{r} \text{ for all } h$, where $r$ is the order of convergence. Since we only will implement $k=2$, we validate that it exists an upper bound $ O( h)  $ for  $\| e \|_{L^{2}( \Omega )   }^{  }$  and $O( h^2)  $ for $\| e \|_{ a_{h},* }^{  } $.
+It has also been shown that for condition number $\kappa_{\infty} ( A) $  increases with the order of $O( h^{-4}) $\cite{li07}, hence, we expect this to hold for both methods as well.
+We did the following convergence tests.
+\begin{itemize}
+    \item \textbf{Convergence on circle domain}
+        First we consider the manufactured solution s.t.
+        \begin{equation}
+        \label{eq:man_sol_1}
+            u(x,y) = (x^2+ y^2 -1) \sin\left(2 \pi x \right)\cos\left(2\pi y\right)
+        \end{equation}
+        The result can be shown on the in Figure \ref{fig:conv_hes_lap} and Table \ref{tab:conv_hes_lap}. Here we observe that for we clearly get optimal convergence, that is, we get a consistent EOC 1 and 2 for the respective norms $\| e  \|_{a_{h},*  }^{  } $
+        and $\| e  \|_{L^2( \Omega )   }^{  } $.  We also get a consistent EOC of 2 for $\| e \|_{ H^{1}(\Omega  )  }^{  } $, even though we do not have theoretical a priori estimates of this norm.
+        We also see that the condition number $\kappa _{\infty}( A)  $ has a expected
+        convergence of $-4$ and, thus, for small $h\le \frac{L}{512}$ we see a drop in convergence rate.
+    \item \textbf{Convergence on flower domain}
+        We consider the manufactured solution such that
+        \begin{equation}
+        \label{eq:man_sol_2}
+            u(x,y) =  \sin\left( 2\pi x \right)\cos\left(2\pi y\right)
+        \end{equation}
+        In this case must we assume non homogeneous Neumann conditions, and thus we only test the numerical results for the Laplace formulation. The result can be shown on the in Figure \ref{fig:conv_flower_lap} and Table \ref{tab:conv_flower_lap}. Here we
+        observe that for we get optimal convergence, that is EOC of order 1 and 2 for $\| e  \|_{a_{h},*  }^{  } $ and  $ \| e  \|_{L^{2}( \Omega )   }^{  } $ norm. Again, we see that the condition number $\kappa _{\infty}( A)  $ has a EOC of order
+        $-4$ and, thus, for small $h\le \frac{L}{512}$ we see a drop in convergence rate for the $\| e_{h} \|_{ L^{2} }^{  } $ norm.
+\end{itemize}
+
+\begin{figure}[h!]
+\centering
+\subfloat[Hessian]{\input{results/eoc-test/eoc-hessian-circle/conv-plot.tex}}
+% \hfill
+\subfloat[Laplace]{\input{results/eoc-test/eoc-laplace-circle/conv-plot.tex}}
+
+\caption{ Convergence plots for the Hessian and the Laplacian method applied to the circular domain with side length $L=2.7$, using parameters $\gamma=20$, $\gamma_1=10$ and $\gamma_2= 0.5$.}
+\label{fig:conv_hes_lap}
+\end{figure}
+
+
+
+\begin{table}
+
+\begin{minipage}{1.0\textwidth}
+    \centering
+    \subfloat[Hessian]{\input{results/eoc-test/eoc-hessian-circle/conv-table.tex}}
+\end{minipage}%
+
+% You may include a third table below, or comment/delete the \bigskip and third minipage block if you don't need it.
+\bigskip
+\begin{minipage}{1.0\textwidth}
+    \centering
+    \subfloat[Laplace]{\input{results/eoc-test/eoc-laplace-circle/conv-table.tex}}
+\end{minipage}
+\caption{EOC results for the Hessian and the Laplacian method applied to the circular domain with side length $L=2.7$, using parameters $\gamma=20$, $\gamma_1=10$ and $\gamma_2= 0.5$.}
+\label{tab:conv_hes_lap}
+\end{table}
+
+
+\begin{table} \input{results/eoc-test/eoc-laplace-flower/conv-table.tex}
+\caption{Convergence rates for the Laplacian-based method applied to the Flower domain with side length $L=2.7$, using parameters $\gamma=20$, $\gamma_1=10$, and $\gamma_2= 0.5$}
+\label{tab:conv_flower_lap}
+\end{table}
+\begin{figure}[h!]
+    \centering
+\input{results/eoc-test/eoc-laplace-flower/conv-plot.tex}
+\caption{Convergence rates for the Laplacian-based method applied to the Flower domain with side length $L=2.7$, using parameters $\gamma=20$, $\gamma_1=10$, and $\gamma_2= 0.5$}
+\label{fig:conv_flower_lap}
+\end{figure}
+
+
+\newpage
+\subsubsection{Translation test}%
+\label{ssub:translation_test}
+
+\begin{figure}[h!]
+    \centering
+    \begin{tikzpicture}[scale=0.9]
+
+        % Domain is blue
+        % \fill[blue!30] (0.1, 0.1) circle (1.5cm);
+
+        \coordinate (p0) at (0.1, 0.1);  % the origin of the circle
+
+        \draw[black,line width=0.8pt, opacity=1.0 ] (0.1, 0.1) circle (1.1cm);
+        \draw[black,line width=0.8pt, opacity=0.7 ] (0.4535, 0.4535) circle (1.1cm);
+        \draw[black,line width=0.8pt, opacity=0.3 ] (0.807, 0.807) circle (1.1cm);
+        \draw[black,line width=0.8pt, opacity=0.2 ] (1.16, 1.16) circle (1.1cm);
+
+        % Drawing points
+        \fill[black] (p0) circle (2pt);
+        \pgfmathsetmacro{\pOneX}{0.1 + 1.5*sqrt(2)*0.5}
+        \pgfmathsetmacro{\pOneY}{0.1 + 1.5*sqrt(2)*0.5}
+        \coordinate (p1) at (\pOneX, \pOneY);
+
+        \draw[->, thick] (p0) -- (p1) node[midway,below] {$\delta$};
+        % Background mesh
+        \foreach \i in {-2.5, -2, ..., 2.5} {
+            \draw[line width=0.1pt, shift={(-2.5,\i)}, opacity=0.2] (0,0) -- (5,0);
+            \draw[line width=0.1pt, shift={(\i,-2.5)},opacity=0.2] (0,0) -- (0,5);
+        }
+
+    \end{tikzpicture}
+    \caption{Illustration of several iterations of the translation test with translation distance $\delta$ from  $(0,2 \sqrt{2}h)  $. Remark that the circle is fixed in the origin, and the background mesh is translated diagonally. }
+    \label{fig:illustration_translation}
+\end{figure}
+
+In order to evaluate the robustness of the technique during adverse cut configurations (refer to Figure \ref{fig:intersection-example}), we will incorporate what is known as a translation test. The fundamental concept involves conducting precise,
+iterative diagonal translations of the background mesh while keeping the domain fixed in the origin, thereby intentionally inducing challenging cut cell scenarios. We denote the total length of the translation as $ \delta$. For this report will we
+choose to do the test on the circle domain and translate a distance $\delta = 2\sqrt{2}h  $ diagonally for $500$ iterations for a background mesh $h = \frac{L}{n}$ where $n=16$ using the manufactured solution \eqref{eq:man_sol_1}. For a sketch of the experiment see Figure \ref{fig:illustration_translation}.
+
+In this context, due to the symmetry of the domain and background mesh, we expect a periodic pattern of bad cut configurations being triggered. This affords us the opportunity to assess the impact of stabilisation with and without the ghost penalty
+term. As illustrated in the numerical experiments provided in Figure \ref{fig:trans_lap_hes}, the ghost penalty demonstrated significant enhancements regarding the stability of the system for both the Laplace and Hessian
+formulation. It is apparent that the error may not only magnify, but potentially exceed an order of magnitude if the ghost penalty is not considered. Hence, this demonstrating that the method is robust in handling bad cut configurations for both the Laplace and Hessian formulation.
+
+
+
+\begin{figure}[h!]
+\centering
+
+\subfloat[Hessian]{%
+\input{"results/translation-test/hessian_no_penalty/translation-cond.tex"}
+}
+
+\subfloat[Hessian]{%
+\input{"results/translation-test/hessian_no_penalty/translation-error.tex"}
+}
+
+\vspace{10pt}
+
+% \caption{ Translation results for Hessian $n=16$ for $500$ iterations, $\delta =(0, 2 \sqrt{2}h) $ for $L=2.7$ with a circle $R=1$       }
+
+% \label{fig:trans_hes}
+% \end{figure}
+
+\subfloat[Laplace ]{%
+\input{"results/translation-test/laplace_no_penalty/translation-cond.tex"}
+}
+
+\subfloat[Laplace ]{%
+\input{"results/translation-test/laplace_no_penalty/translation-error.tex"}
+}
+
+
+\caption{Translation results of the Laplace and Hessian formulations for n=16 and 500 iterations, with $\delta = ( 0, 2\sqrt{2}h) $  for L=2.7, inside a circle with radius R=1.}
+
+\label{fig:trans_lap_hes}
+\end{figure}
+
+
+\newpage
+\section{Applications to the Cahn Hilliard equation }%
+\label{sec:cahn_hilliar_applications}
+
+In this section, we will demonstrate that the proposed cut finite element method can be used to solve the Cahn-Hilliard problem. Firstly, we will recall the strong form and illustrate how it can be recast into a weak form following the approach in
+\cite{feng2007fully}. Subsequently, we will derive a simplistic numerical time iteration scheme to demonstrate that the solution to the problem can indeed be found. Again, all numerical experiments are conducted using the open-source finite element method (FEM) framework, Gridap, as documented in \cite{verdugo22}.
+
+
+\subsection{Deriving the discrete formulation of the Cahn-Hilliard equation}%
+\label{sub:revisiting_the_strong_formulation}
+
+ Recall the strong formulation of the Cahn-Hilliard equation.
+Let $ u( x,0) =  u_{0}$ then is the dynamics on the form,
+\begin{subequations}
+\label{eq:strong_ch}
+    \begin{align}
+\partial _{t} u + \Delta  \left(  \varepsilon^2  \Delta u - f( u) \right)   &=0  \quad \text{ in } \Omega  \\
+\partial _{n} u &= 0 \quad \text{ on } \Gamma  \\
+\partial _{n}    \Delta u       &= 0 \quad \text{ on } \Gamma
+    \end{align}
+\end{subequations}
+Here we define $f( u) = u( u^{2} -1)  = F' ( u)  $ where $F( u) = ( 1 / 4 ) ( u^2 -1 ) ^{2} $. With the corresponding energy. We define the small parameter to be $\varepsilon  = 1 / 100$.
+\begin{equation}
+    \label{eq:physical_prop}
+E( u)  = \int_{\Omega }^{} \frac{\varepsilon^{2} }{2} \abs{ \nabla u } ^2 +  F( u) dx
+\end{equation}
+
+We also recall that the energy functional monotonically decreasing and that the global mass concentration is conserved, i.e.
+\begin{equation}
+\label{eq:mass_cons_energy_decrease2}
+\frac{d}{dt} E( u)  <  0 \text{ and }\frac{d}{dt} \int_{\Omega }^{}  u dx = 0.
+\end{equation}
+
+For convenience, we decompose the functional so that $E(u) = E_{1}(u) + E_{2}(u)$. Here, $E_{1}(u) = \int_{\Omega } \frac{\varepsilon^{2}}{2} |\nabla u|^2 , dx$ represents the smoothing contribution, while $E_{2}(u) = \int_{\Omega } F(u) , dx$ represents the separation contribution.
+
+Now assume that $u \in L^2( [0,T], H^{4}( \Omega ) ) $ and $v_{h} \in  V_{h}$ of order $k$. It is clear that the initial weak formulation is,
+\begin{equation}
+    ( \partial_{t} u,v_{h} )_{\Omega }  + \varepsilon^{2} ( \Delta ^2u, v_{h})_{\Omega } -  ( f( u), v_{h} )_{\Omega } = 0.
+\end{equation}
+
+As we can see did the biharmonic equation appear and, thus, we can apply the cut finite element framework developed in Section \ref{sec:cutcip_biharmonic_problem}. We define the discrete weak problem as follows.
+\begin{equation}
+    \begin{split}
+        & \text{Find  }u_{h} \in L^{2}( [0,T],V_{h})  \text{ such that } \forall v_{h} \in V_{h} \\
+        & ( \partial_{t} u_{h},v_{h} )_{\Omega }   + \varepsilon^{2} A_{h}( u_{h},v_{h})   +  c_{h}( u_{h},v_{h})  = 0.
+    \end{split}
+\end{equation}
+Here we have followed the nonlinear weak formulation \cite[Equation
+4.2]{feng2007fully} and the cut finite element bilinear form for the biharmonic equation proposed in Equation \eqref{eq:discrete_CutCIP_prob} such that
+\begin{align}
+    c_{h}( u_{h}, v_{h})  & = ( f( u_{h}) ,\Delta v_{h})_{\Omega } +  ( f( u_{h}) , \partial _{n}v)_{\mathcal{F}_{h} } \\
+    A_{h}( u_{h}, v_{h})  & =  a_{h}( u_{h}, v_{h}) + g_{h}( u_{h}, v_{h})
+\end{align}
+
+The primary aim is to formulate demonstrate that this problem can be solved using a simple time-integration scheme. Define the index $m= 0, 1, \ldots, M$. This index corresponds to uniformly distributed time points $t_{m}$, which are subject to the
+boundary conditions $t_{0} = 0$ and $t_{M} = M \tau$. Here, we denote the time step as $\tau = \varepsilon^2$. Each time step $u^{m}_{h}$ is an element of the discrete space $V_{h}$ , i.e. $u^{m}_{h} \in V_{h}$  with the initial condition defined as $u^{0} = u( t_{0},x )$. Following this, we establish the forward difference operator, which is determined by the time step $\tau $.
+\begin{equation}
+\overline{\partial } _{t} u_{h}^{m} = \frac{u_{h}^{m} - u_{h}^{m-1}}{ \tau }
+\end{equation}
+
+We define the Implicit explicit scheme (IMEX) scheme to have the following discretization,
+\begin{equation}
+( \overline{\partial } _{t} u^{m}_{h}, v_{h}   )_{\Omega } + \varepsilon^{2} A^{m}_{h}( u_{h}^{m} , v) +  c_{h} (  u_{h}^{m-1}, v_{h})  = 0 , \quad \forall v_{h}, u^{m}_{h} \in V^{}_{h}.
+\end{equation}
+which equivalently can be rewritten as
+\begin{equation}
+( u_{h}^{m},v )_{\Omega }  + \tau \varepsilon^{2} A_{h}( u_{h}^{m} , v)   =  ( u_{h}^{m-1},v )_{\Omega } - \tau c_{h} (  u_{h}^{m-1}, v) .
+\end{equation}
+Hence, we have a complete space time scheme.
+
+
+\subsection{Demonstration on the Cahn-Hilliard problem}%
+\label{sub:demonstration_on_the_physical_cahn_hilliard}
+
+For the strong form of the Cahn-Hilliard \eqref{eq:strong_ch} we have no analytical solution, so we cannot construct a manufactured solution. However, a way to check that the system does behave like expected based on the physical properties \eqref{eq:physical_prop}. In other
+words, we can check that our discrete solution satisfies the following conditions. We define the discrete values $E^m = E( u_{h}^{m})$, $E_{1}^m = E_{1}( u_{h}^{m})$ and $E_{2}^m = E_{2}( u_{h}^{m})$ and the initial function  $u_{0} = u( x,0) $. From
+the physical properties \eqref{eq:physical_prop} to we expect the discrete equivalent to hold, i.e.
+\begin{equation}
+    E^m   <  E^{ m-1 } \text{ and }   \int_{\Omega }^{} u_{h}^{m}   dx \approx \int_{\Omega }^{} u_{0}  dx.
+\end{equation}
+To test this, we check that $ \delta E^{m} >0 $ generally holds, where
+\begin{equation}
+ \delta E^{m} = E( u_{h}^{m-1}) -  E( u_{h}^{m}) ,  \\
+\end{equation}
+ Similarly, let us define the relative cumulative global mass error and local mass error.
+ \begin{equation}
+ \Delta u_{h}^{m}  = \frac{ \abs{ \int_{\Omega }^{}  ( u_h^{m} - u_{0} ) dx } }{ \abs{ \int_{\Omega }^{}  u_{0} dx } } \quad \text{ and } \quad
+ \delta u_{h}^{m}  = \frac{  \int_{\Omega }^{}  ( u_h^{m} - u^{m-1}_{h} ) dx  }{ \abs{ \int_{\Omega }^{}  u_{0} dx } }.
+ \end{equation}
+ To test mass conservation we expect the error $\Delta u_{h}^{m}$ and $\delta u_{h}^{m}$   to be close to zero.
+
+\begin{figure}[]
+    \includegraphics{results/physical_CH_plot.pdf}
+\caption{Consider time as $t^{m} = m\tau $ where $m= 0,\ldots, M $, with $M = 10^4$ and timestep $\tau $. The figure describes the evolution of the relative global mass error $\Delta u^m$ and the local mass difference $\delta u^m$. It also demonstrates the total discrete energies $E^m$,$E^m_{1}$,$E^m_{2}$, along with the corresponding local energy difference $\delta E^m$. Simulations are conducted on both the circular and the flower domain.}
+    \label{fig:physical_CH_plot}
+\end{figure}
+
+\begin{figure}[]
+    \centering
+    \hfill
+    \subfloat[$m=0$]{
+        \includegraphics[width=0.3\textwidth]{results/illustration/c0.png}
+    }\hfill
+    \subfloat[$m=2$]{
+        \includegraphics[width=0.3\textwidth]{results/illustration/c2.png}
+    }
+    \hfill
+    \subfloat[$m=10$]{
+        \includegraphics[width=0.3\textwidth]{results/illustration/c10.png}
+    }
+    \\
+    \vspace{10pt}
+    \hfill
+    \subfloat[$m=50$]{
+        \includegraphics[width=0.3\textwidth]{results/illustration/c50.png}
+    }
+    \hfill
+    \subfloat[$m=200$]{
+        \includegraphics[width=0.3\textwidth]{results/illustration/c200.png}
+    }\hfill
+    \subfloat[$m=500$]{
+        \includegraphics[width=0.3\textwidth]{results/illustration/c500.png}
+    }
+    \\
+    \vspace{10pt}
+    \hfill
+    \subfloat[$m=1000$]{
+        \includegraphics[width=0.3\textwidth]{results/illustration/c1000.png}
+    }
+    \hfill
+    \subfloat[$m=5000$]{
+        \includegraphics[width=0.3\textwidth]{results/illustration/c5000.png}
+    }\hfill
+    \subfloat[$m=10000$]{
+        \includegraphics[width=0.3\textwidth]{results/illustration/c10000.png}
+    }
+    \vspace{10pt}
+        \includegraphics[width=0.8\textwidth]{results/illustration/colobar.png}
+
+\caption{Illustration of a simulation of the Cahn-Hilliard equation on the circular domain for time $ t_{m} = m\tau $, where $\tau $ is the timestep and $m= 0,\ldots, M $, with $M = 10^4$.}
+        \label{sub:fig:ill_circle}
+\end{figure}
+
+\begin{figure}[]
+    \centering
+    \hfill
+    \subfloat[$m=0$]{
+        \includegraphics[width=0.3\textwidth]{results/illustration/f0.png}
+    }\hfill
+    \subfloat[$m=2$]{
+        \includegraphics[width=0.3\textwidth]{results/illustration/f2.png}
+    }
+    \hfill
+    \subfloat[$m=10$]{
+        \includegraphics[width=0.3\textwidth]{results/illustration/f10.png}
+    }
+    \\
+    \vspace{10pt}
+    \hfill
+    \subfloat[$m=50$]{
+        \includegraphics[width=0.3\textwidth]{results/illustration/f50.png}
+    }
+    \hfill
+    \subfloat[$m=200$]{
+        \includegraphics[width=0.3\textwidth]{results/illustration/f200.png}
+    }\hfill
+    \subfloat[$m=500$]{
+        \includegraphics[width=0.3\textwidth]{results/illustration/f500.png}
+    }
+    \\
+    \vspace{10pt}
+    \hfill
+    \subfloat[$m=1000$]{
+        \includegraphics[width=0.3\textwidth]{results/illustration/f1000.png}
+    }
+    \hfill
+    \subfloat[$m=5000$]{
+        \includegraphics[width=0.3\textwidth]{results/illustration/f5000.png}
+    }\hfill
+    \subfloat[$m=10000$]{
+        \includegraphics[width=0.3\textwidth]{results/illustration/f10000.png}
+    }
+    \vspace{10pt}
+        \includegraphics[width=0.8\textwidth]{results/illustration/colobar.png}
+        \caption{Illustration of a simulation of the Cahn-Hilliard equation on the flower domain for time $ t_{m} = m\tau $, where $\tau $ is the timestep and $m= 0,\ldots, M $, with $M = 10^4$.}
+        \label{sub:fig:ill_flower}
+\end{figure}
+
+
+
+In our experiments, we defined the initial function $u_{0}(x)$ as the uniform samples from the interval $[-1, 1]$ for each node. That is, for each node $a_{i}$, $u_{0}(a_{i})$ is a sample from the uniform distribution on the interval $[-1, 1]$. This
+applies for all $i = 1, \ldots, N$, where $N$ is the total number of degrees of freedom in our system. The node $a_{i}$ is associated with the nodal basis for all $N$ degrees of freedom, as discussed for the discrete system
+\eqref{eq:discretized_system}. We again used a square background mesh with length $L=2.7$ and mesh size $h=\frac{L}{n}$ for $n=2^{7}$. For an illustration of the active set $\mathcal{T}_{h} $ (defined in Section \ref{sub:unfitted_mesh}), see Figure \ref{sub:fig:active_mesh}.
+
+\begin{figure}[H]
+    \centering
+    \hfill
+    % \subfloat[]{
+        \includegraphics[width=0.45\textwidth]{results/illustration/active_circle.png}
+    % }
+    \hfill
+    % \subfloat[]{
+        \includegraphics[width=0.45\textwidth]{results/illustration/active_flower.png}
+    % }
+    \caption{Illustration of the active mesh $\mathcal{T}_{h} $.}
+    \label{sub:fig:active_mesh}
+\end{figure}
+
+
+We ran the simulation on the for the flower domain \eqref{eq:flower} and the circular domain \eqref{eq:circle}, illustrated in Figure \ref{sub:fig:ill_flower} and \ref{sub:fig:ill_circle}. The corresponding plots of the mass conservation and energy decrease are presented
+in the Figure \ref{fig:physical_CH_plot}, and confirm the expected physical properties of the Cahn-Hilliard equation. The global relative error $\Delta u^{m}_{h}$ and $\delta u^{m}_{h}$ demonstrating that the mass is conserved. We also observe that the energy functional
+$E(u_h)$ monotonically decreases over time and that $\delta E^{m} >0$, signifying the systems tendency to seek a state of minimal energy. Take note that $E^{m}{1}$ and $E^{m}{2}$ are interconnected in such a way that if the value of one increases, the other will correspondingly decrease to maintain balance, and vice versa.
+
+
+
+\subsection{Note on the manufactured solution}%
+\label{sub:the_problem}
+
+While the report is not consisting of a numerical convergence analysis of the Cahn-Hilliard problem, we still present a framework for manufactured solutions for non-homogeneous boundary conditions. Let $ u( x,0) =  u_{0}$ then is Cahn-Hilliard with
+non-homogeneous boundary conditions as follows,
+\begin{subequations}
+    \label{eq:ch_gen}
+    \begin{align}
+    \label{eq:ch_gen:a}
+        \partial _{t} u + \Delta  \left(  \varepsilon^2  \Delta u - f( u) \right)   &= g_{0}( x)   \quad \text{ in } \Omega,  \\
+        \partial _{n} u &= g_{1}( x)  \quad \text{ on } \Gamma,  \\
+        \partial _{n}    \Delta u   &= g_{2}(x)  \quad \text{ on } \Gamma,
+    \end{align}
+\end{subequations}
+where we defined $f( u) = F'( u) =u( u^2 -1)  $ for $F( u) = \frac{1}{4}( u^{2} - 1)^{2} $ and the domain $\Omega \subset \mathbb{R} ^{d} $  for $d = 2,3$. In contrast to the standard version presented in the introduction \eqref{eq:strongch}, this
+version is generalized to also holds for for functions $g_{0},g_{1},g_{2}: \Omega \to\mathbb{R}   $. While the standard version may be physical correct, this version creates flexibility so we can easily construct manufactured solution on complex domains.
+
+    Designing a manufactured solution using $g_{0}( \cdot ) $ may be temping with the formulation \eqref{eq:ch_gen:a}. However, observe that expanding the Laplacian we get,
+    \begin{equation}
+    \begin{split}
+        \Delta  \left(  \varepsilon^2  \Delta u - f( u) \right) & = \varepsilon^2 \Delta^2 u -  \Delta f( u) \\
+                                                                                    &= \varepsilon^{2} \Delta ^2 u  - 3( 2u \| \nabla u \|_{ 2 }^{ 2 } + u^{2}  \Delta u )   \\
+    \end{split}
+    \end{equation}
+Here we applied the chain rule twice and inserted the derivatives.
+\begin{equation}
+    \label{eq:nonlinear_laplace}
+    \begin{split}
+\Delta f( u)  &= \nabla \cdot \nabla f( u)  = \nabla \cdot  \left[ f' ( u) \partial _{x_{1}}u, \ldots, f' ( u) \partial _{x_{d}}u \right] ^{T} \\
+& =  f'' ( u)( ( \partial _{x_{1}}u )^{2} + \ldots +( \partial _{x_{d}}u )^{2} ) +  f' ( u)( \partial _{x_{1} x_{1}}u + \ldots +   \partial _{x_{d} x_{d}}u ) \\
+&=  f'' ( u) \| \nabla u \|_{ 2 }^{ 2 } + f' ( u)  \Delta u  = 6u \| \nabla u \|_{ 2 }^{ 2 } + 3u^{2}  \Delta u
+    \end{split}
+\end{equation}
+
+% Our goal is to write the Cahn Hilliard equation on weak form.
+% Assume that $\Omega  \subset \mathbb{R} ^{d}$ with a $\Gamma $ in $C^2$.
+%  Let $u \in  H^{4}( \Omega ) $ and $v \in V_{h} $.
+% Now, expanding the first Laplace operator from a weak point of view is it clear that
+% \[
+%  ( \Delta ( \varepsilon  \Delta u - \frac{1}{\varepsilon } f( u) ) ,v )_{\Omega } = \varepsilon ( \Delta^{2} u ,v )_{\Omega } - \frac{1}{\varepsilon } ( \Delta f( u)  ,v )_{\Omega }.
+% \]
+% Hence, this makes it natural to associate the biharmonic $( \Delta ^2 u,v)_{\Omega } $ with bilinear forms $A_{h}( \cdot ,\cdot ) $ , however, in this section will we only consider the Laplace
+% variant $a^{L}( \cdot ,\cdot ) $.
+We now seek to find a weak form of the nonlinear term with non homogeneous boundary conditions.
+\begin{lemma}[Semi-linear form]
+    Let $u \in H^4( \Omega ) $ be solution to \eqref{eq:ch_gen} and $v_{h} \in V_{h}$ the test function.
+Then can we rewrite the nonlinear term into the corresponding semi-linear form $c_{h}( \cdot ,\cdot )  $ for the nonlinear term $( -\Delta f( u) , v_{h})_{\Omega }$ into two consistent formulations.
+\begin{align}
+    \label{eq:ch:1}
+      c^{1}_{h} ( u,v_{h})  & = ( f' ( u) \nabla u, \nabla v_{h} )_{\Omega }  - ( f'( u)  g_{1}   ,  v_{h})_{\Gamma } \\
+    \label{eq:ch:2}
+        c^{2}_{h} ( u,v_{h})  & = -( f( u), \Delta v_{h} )_{\Omega }+  ( f( u) , \jump{ \partial _{n}v_{h} }  )_{\mathcal{F} _{h}^{int}} + ( f(u), \partial _{n} v_{h})_{\Gamma  }  - ( f'( u)  g_{1}   ,  v_{h})_{\Gamma }
+\end{align}
+% \begin{remark}
+%     Be aware that the both formulations are consistent and if we replace $u \in H^{4}( \Omega ) $ with  $u_{h} \in  V_{h}$ we have two different discrete formulations.
+% \end{remark}
+
+\end{lemma}
+% \todo[inline]{ I criticize \cite[ Remark 4.1d]{feng2007fully} which says that says that finding this weak form is not possible for conforming methods (I guess $C^{0}$ is a conforming method??). }
+
+\begin{proof}
+
+         \textbf{Derivation of \eqref{eq:ch:1}.  }  We want to construct the first formulation. Let $T$ be an element in $\mathcal{T}_{h}$. From Greens theorem is it easy to see that
+            \begin{equation}
+            \label{eq:1_gr}
+-(\Delta f( u) , v_{h})_{T } = (\nabla f( u), \nabla v_{h}  )_{T } - ( \partial _{n}  f( u), v_{h} )_{\partial T }
+            \end{equation}
+            First by utilizing that $\nabla f( u) = f' ( u) \nabla u $ and $\partial _{n}f( u)  = f' ( u)  \partial _{n}u$  and doing a summation over the triangles  is it clear that \[
+            ( -\Delta f( u),v_{h} )_{\Omega  } =(f' ( u) \nabla u, \nabla v_{h}  )_{\Omega  } - (   f' ( u)\partial _{n}u, v_{h} )_{\partial \mathcal{T}_{h}  }
+            \]
+            Iterating over the facets is it clear that \[
+                \begin{split}
+            (   f' ( u)\partial _{n}u, v_{h} )_{\partial \mathcal{T}_{h}  } & = \sum_{F \in \mathcal{F}_{h}  }^{} \int_{F}^{}   \jump{ f' ( u)\partial _{n}u, v_{h} } \\
+                                                                        & =  ( \jump{ f' ( u) \partial _{n}u },  \mean{v_{h}}    )_{\mathcal{F}^{int}_{h} } + ( \mean{ f' ( u) \partial _{n}u }, \jump{ v_{h} }    )_{\mathcal{F}^{int}_{h} } +  ( f' ( u)
+                                                                        \partial _{n}u, v_{h}) _{\Gamma } \\
+                                                                        & =  ( f' ( u) \partial _{n}u, v_{h}) _{\Gamma }
+                \end{split}
+            \]
+            The jump terms vanishes by the regularity of $u$ and $v_{h}$. Hence, by inserting $g_{1}$ we have shown that the first formulation holds.
+
+         \textbf{Derivation of \eqref{eq:ch:2}.  }  Applying a extra iteration of Greens theorem on \eqref{eq:1_gr} we get the following terms.
+\[
+    \begin{split}
+-(\Delta f( u) , v_{h})_{T }  = -( f( u), \Delta v_{h} )_{T} + (f( u), \partial _{n} v_{h}  )_{\partial T} - (   f'( u)\partial _{n}u, v_{h} )_{\partial T } .
+    \end{split}
+\]
+Now, by doing a summation of all triangles it is clear that this holds.
+\begin{equation}
+\label{eq:f_g2}
+-(\Delta f( u) , v_{h})_{\Omega  }  = -( f( u), \Delta v_{h} )_{\Omega } + (f( u), \partial _{n} v_{h}  )_{\partial \mathcal{T}_{h} } - (   f'( u)\partial _{n}u, v_{h} )_{\partial \mathcal{T}_{h}  }
+\end{equation}
+It comes evident from the first step of the proof that $ (   f'( u)\partial _{n}u, v_{h} )_{\partial \mathcal{T}_{h}  } = (   f'( u)\partial _{n}u, v_{h} )_{\Gamma }$, hence, we only need to compute the term $(f( u), \partial _{n} v_{h}  )_{\partial
+\mathcal{T}_{h} }$ on the facets. \[
+    \begin{split}
+(f( u), \partial _{n} v_{h}  )_{\partial
+\mathcal{T}_{h} } & = \sum_{F\in \mathcal{F} _{h}}^{} \int_{F}^{}\jump{ f( u), \partial _{n} v_{h}  } \\
+& =  (\jump{ f( u)  }  , \mean{ \partial _{n} v_{h} }    )_{ \mathcal{F}_{h}^{int} } +(\mean{ f( u)  }  , \jump{ \partial _{n} v_{h} }    )_{ \mathcal{F}_{h}^{int} } + (f( u), \partial _{n} v_{h}  )_{\Gamma } \\
+&=  (\mean{ f( u)  }  , \jump{ \partial _{n} v_{h} }    )_{ \mathcal{F}_{h}^{int} } + (f( u), \partial _{n} v_{h}  )_{\Gamma }
+    \end{split}
+\]
+Again one of the jump terms vanishes because of the regularity of $u$.
+Inserting the result into \eqref{eq:f_g2} have we shown that the second formulation also holds.
+\end{proof}
+
+
+Combining the full general Cahn-Hilliard problem in \eqref{eq:ch_gen} with the semi-linear forms\eqref{eq:ch:1} and the CutCIP biharmonic problem \eqref{eq:discrete_CutCIP_prob}, we get the following scheme.
+\begin{equation}
+    ( \partial _{t}u_{h}, v_{h})_\Omega + \varepsilon^2  A_{h}( u_{h},v_{h}) + c_{h}( u_{h},v_{h})   =   l_{h}(v_{h}) \quad  \forall u_{h}, v_{h} \in V_{h}
+\end{equation}
+
+To illustrate, assume we use the Laplace formulation presented in \eqref{eq:laplace_prob} integrated into \eqref{eq:discrete_CutCIP_prob}, i.e. $A_{h}( u_{h}, v_{h}) = a^{L}_{h}( u_{h}, v_{h}) + g_{h}( u_{h}, v_{h})   = l_{h}^{L}( v_{h})$. Due to the $\varepsilon $ scaling, we ultimately
+arrive at the following modification.
+ \begin{equation}
+    l_{h}^{L}( v_{h})  =  \left( g_{0}, v_{h} \right) _{\Omega } -  \varepsilon^2 ( g_{2},  v_{h} )_{\Gamma }  -  \varepsilon^2 ( g_{1}, \Delta  v_{h}  )_{\Gamma }  + \varepsilon^2 \frac{\gamma }{h} ( g_{1}, \partial _{n} v_{h}  )_{\Gamma }
+ \end{equation}
+ Hence, we arrived at a system which can easily be used to construct manufactured solution.
+
+\newpage
+\section{Conclusion}%
+\label{sec:conclusion}
+
+We first presented the construction on the properties of the continuous interior penalty methods for the biharmonic equation with Cahn-Hilliard boundary conditions based on \cite{feng2007fully, brenner2012}.
+Next, we constructed a stabilized cut finite element method for an unfitted mesh based the framework established in \cite{gurkan2019stabilized}.
+This method involves the use of a so-called ghost penalty, which ensures stabilization by integrating
+outside of the physical domain.
+Theoretical evidence was provided to validate its stability, and an a priori analysis was conducted alongside corresponding numerical experiments.
+Finally, we then demonstrated that the cut continuous interior penalty methods can successfully be applied to the nonlinear Cahn-Hilliard equation.
     % \input{appendix}
 
     % \newpage
     \printbibliography
 
     \includepdf[pages=-]{results/illustration/back_page.pdf}
+
+
+
+
 
 
 
