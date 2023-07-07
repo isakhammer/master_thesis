@@ -141,6 +141,9 @@
     % \input{introduction}
 
 \newpage
+\section{Abstract}
+
+The fourth order Cahn-Hilliard equation, with its wide range of applications in phase-separation, poses numerical solution challenges due to its non-linearity, stiffness and fourth-order derivatives. This thesis introduces a novel, stabilized, unfitted, cut continuous interior penalty method specifically designed for the biharmonic problem with Cahn-Hilliard type boundary conditions. This method is then extended to tackle the Cahn-Hilliard equation. Our approach combines the theoretical cut discontinuous Galerkin framework for the Poisson problem, as proposed by \cite{gurkan2019stabilized}, with the continuous interior penalty biharmonic formulation presented by \cite{brenner2012} and \cite{feng2007fully}. We provide proof that this method is well-posed and ensures optimal convergence. The theoretical results are further supported by presented numerical evidence. Finally, we demonstrate the applicability of the method by extending the formulation to handle the Cahn-Hilliard equation using a straightforward Implicit-Explicit (IMEX) scheme to manage the non-linearities.
 
 \section{Introduction}\label{sec:introduction}
 
@@ -4169,6 +4172,7 @@ This method involves the use of a so-called ghost penalty, which ensures stabili
 outside of the physical domain.
 Theoretical evidence was provided to validate its stability, and an a priori analysis was conducted alongside corresponding numerical experiments.
 Finally, we then demonstrated that the cut continuous interior penalty methods can successfully be applied to the nonlinear Cahn-Hilliard equation.
+
     % \input{appendix}
 
     % \newpage
