@@ -1457,10 +1457,10 @@ Thus, since these norms are equivalent, will we in this thesis focus on $ \kappa
 
 \subsection{Cléments interpolation}%
 \label{ssub:clement_operator}
-Our goal is to to utilize interpolation estimates to compute convergence rates. An important tool in the process is the so-called Cléments interpolation operator, $C_{h}$.
-It is used for interpolation on non smooth functions by applying an regularization on so-called macroelements. However, we need to define affine operations on so-called macroelements before we can proceed with the error estimates.
+Our goal is to utilize interpolation estimates to compute convergence rates. An important tool in the process is the so-called Cléments interpolation operator, $C_{h}$.
+It is used for interpolation on non-smooth functions by regularizing so-called macroelements. However, we need to define affine operations on so-called macroelements before proceeding with the error estimates.
 
-A patch for a element $\omega \left( T \right) $ is denoted as the set of elements in $\mathcal{T} _{h}$  sharing at least one vertex with $T \in \mathcal{T} _{h}$. Similarly,  a patch of a facet $\omega \left( F \right) $ is defined as the set of all elements in $\mathcal{T}_{h} $
+A patch for an element $\omega \left( T \right) $ is denoted as the set of elements in $\mathcal{T} _{h}$  sharing at least one vertex with $T \in \mathcal{T} _{h}$. Similarly,  a patch of a facet $\omega \left( F \right) $ is defined as the set of all elements in $\mathcal{T}_{h} $
 sharing at least one vertex with $F \in  \mathcal{F} _{h}$. For an illustrative example of patches in a two-dimensional triangular mesh, please refer to Figure \ref{fig:example_patch}.
 
 \begin{figure}[ht!]
@@ -1675,8 +1675,8 @@ sharing at least one vertex with $F \in  \mathcal{F} _{h}$. For an illustrative 
 \end{figure}
 
 
- Let the set  $\left\{ a_{i}\right\}_{i\in N}$ be all Lagrange nodes on the mesh $\mathcal{T}_{h}$. Associated with each node $a_{i}$ we denote the macroelement $A_{i}$ to consist of all elements containing $a_{i}$. Let $n_{cf}$ be the number of configurations for the macroelement, then we define the index $j:
-\left\{ 1,\ldots,N \right\} \to \left\{ 1, \ldots, n_{cf} \right\}  $ s.t. $j( i) $ is the index associated with the reference configuration $\widehat{A}_{j(i) }$ for corresponding macroelement $A_{i}$.
+ Let the set  $\left\{ a_{i}\right\}_{i\in N}$ be all Lagrange nodes on the mesh $\mathcal{T}_{h}$. Associated with each node $a_{i}$, we denote the macroelement $A_{i}$ to consist of all elements containing $a_{i}$. Let $n_{cf}$ be the number of configurations for the macroelement. We define the index $j:
+\left\{ 1,\ldots,N \right\} \to \left\{ 1, \ldots, n_{cf} \right\}  $ such that $j( i) $ is the index associated with the reference configuration $\widehat{A}_{j(i) }$ for corresponding macroelement $A_{i}$.
 Let us define a $C^{0}$-diffeomorphism $\mathcal{G}_{A_{i}}:
 \widehat{A}_{j( i) } \to A_{i}$ on the reference macroelements such that for all $\hat{T} \in \widehat{A}_{j( i) } $ is the restriction $\mathcal{G} _{A_{i}}|_{ \hat{T} }$ affine. For an illustration of the reference
 macroelement $\widehat{A}_{j( i) }$ and how it related to $a_{i}$ , see
@@ -1709,7 +1709,7 @@ $C_{h}: L^{2}( \Omega )   \to  V_{h}$, where $V_{h}$ has the order $k$. Then doe
 \[
  \| C_{h} v \|_{ s, \Omega     }^{  } \lesssim \| v \|_{ s, \Omega   }^{  } \quad \forall v \in H^{s}( \Omega ) ,
 \]
-Let $r = \mathrm{min} ( s, k+1) $. If the following conditions for an parameter $l$ is satisfied, it exists error estimates such that
+Let $r = \mathrm{min} ( s, k+1) $. If the following conditions for a parameter $l$ is satisfied, it exists error estimates such that
 \begin{equation}
     \begin{split}
       0\le l \le r  \implies \| v - C_{h} v \|_{ m,T   }^{  }  &  \lesssim h^{r-l}_{T} \| v \|_{l,\omega \left( T \right)  }^{  } \quad  \forall T \in \mathcal{T} _{h}, \forall v \in H^{l}( \omega \left( T \right)
@@ -1725,12 +1725,12 @@ Let $r = \mathrm{min} ( s, k+1) $. If the following conditions for an parameter 
 \begin{corollary}
     \label{cor:celement_apriori}
     Let $0 \le l \le k+1$ and let $0\le m \le \min_{} ( 1,l )$.
-    Given Lemma \ref{lemma:clements}  then does the following estimate hold
-    \[
-    \inf_{v_{h} \in V_{h} } \| v - v_{h} \|_{  m,\Omega }^{  } \lesssim   h^{l-m}  \| v \|_{ l,\Omega  }^{  } \quad     \forall v \in H^{l}( \Omega ).
-    \]
+    Given Lemma \ref{lemma:clements}, then does the following estimate hold
+    \begin{equation}
+        \inf_{v_{h} \in V_{h} } \| v - v_{h} \|_{  m,\Omega }^{  } \lesssim   h^{l-m}  \| v \|_{ l,\Omega  }^{  } \quad     \forall v \in H^{l}( \Omega ).
+    \end{equation}
 \end{corollary}
-This result is very useful since it is now sufficient to show that a priori estimates holds to prove convergence rate. For further detailed information about the Cléments interpolation, please investigate \cite[Chapter 1.6]{ern04}.
+This result is very useful since it is now sufficient to show that a priori estimates holds to prove the convergence rate. For further detailed information about the Cléments interpolation, please investigate \cite[Chapter 1.6]{ern04}.
 
 \subsection{Useful local inverse estimates}%
 \label{sub:some_general_inequalities}
@@ -1748,7 +1748,7 @@ This result is very useful since it is now sufficient to show that a priori esti
 \| D^2v_{h} \|_{T  }^{  } \lesssim h^{-1} \| \nabla v_{h}  \|_{ T  }^{  } \lesssim h^{-2} \| v_{h} \|_{T  }^{  }
  \end{equation}
 
-Another very useful inequality is the so-called trace inequality which connect the relationship of evaluating the norm on element $ T $ and with any of the corresponding facets $F \in \partial T$. The general form is
+Another advantageous inequality is the so-called trace inequality which connects the relationship of evaluating the norm on element $ T $ and with any of the corresponding facets $F \in \partial T$. The general form is
 \begin{equation}
     \label{eq:inv2}
 \| v_{h} \|_{F   }^{  }  \lesssim
@@ -1757,7 +1757,7 @@ h^{-\frac{1}{2}} \| v_{h} \|_{ T  }^{  },
 For proof, see \cite[Lemma 12.8]{ErnGuermond2021}.
 
 Let $\partial _{n} v = \nabla v \ n$ and $\partial_{nn} v = n^{T} D^2 v \ n $. Keeping in mind that the normal vector has a unit length and, thus, evidently applying the
-trace inverse inequality we have two present useful examples,
+trace inverse inequality, we have two present useful examples,
 \begin{equation}
     \label{eq:fund_inv_est}
 \begin{split}
@@ -1791,12 +1791,12 @@ Hence, we now have abstract error estimate
 \| u - u_{h} \|_{ V_{h},*  }^{  }  \lesssim  \inf_{v_{h} \in  V_{h}}  \| v - v_{h} \|_{ V_{h},*  }^{  } = 0 \quad  \forall v \in V.
 \end{equation}
 For more information, see \cite[Theorem 1.35]{pietro2012}.
-A useful property is that for a conformal numerical method to converge can we now simply require
+A useful property is that for a conformal numerical method to converge, we can now simply require
 \begin{equation}
 \lim_{h \to 0}  \inf_{v_{h} \in  V_{h}}  \| v - v_{h} \|_{ V_{h},*  }^{  } = 0 \quad  \forall v \in V.
 \end{equation}
 In that case will $\| u - u_{h} \|_{ V_{h},*  }^{  }  \to  0$, $h \to  0$. Hence, if this requirement is fulfilled, the numerical methods will converge towards the unique solution.
-Note that in combination with Corollary \ref{cor:celement_apriori} is this very useful for estimating a priori estimates.
+Note that in combination with Corollary \ref{cor:celement_apriori} this is very useful for estimating a priori estimates.
 
 
 \section{Continuous interior penalty methods for the biharmonic problem with Cahn-Hilliard type boundary conditions}%
