@@ -2259,9 +2259,955 @@ However, in this thesis is the focus on solving the biharmonic equation avoiding
 
 
 
-    % \input{CutCIP_biharmonic_intro}
-    % \input{CutCIP_biharmonic_apriori}
-    % % \input{CutCIP_biharmonic_condition_number}
+\newpage
+\section{Cut continuous interior penalty methods for the biharmonic problem}%
+\label{sec:cutcip_biharmonic_problem}
+
+
+Questions arise when we want to allow for complex geometries where some physical domain $\Omega $ has a smooth boundary $\Gamma $.
+A method would be to generate a structured background mesh which fully covers $\Omega $, but does not necessarily fit to the boundary perfectly.
+For consistency, integration of the contribution is performed on the physical domain, but the involved discrete test and trial functions in $V_{h}$ are defined on the background mesh.
+However, we will run into geometrical problems when
+so-called cut finite elements has a very small intersection of the physical domain, i.e, $\abs{ T \cap \Omega  }_{d} \ll \abs{ T }_{d}  \lesssim h^{d}$ and $\abs{ \Gamma \cap T }_{d-1} \ll  h^{d-1}$, where $\abs{\ \cdot \  }_{d} $ is the
+measure of the volume in dimension $d$.
+The cut elements are identified as a crucial geometric issue since the inverse inequalities outlined in Section \ref{sub:some_general_inequalities} do not generalize well to these elements. This identifies the challenges in establishing theoretical stability and a priori estimates for any geometric arrangement.
+
+One way do handle this issue is to introduce the so-called cut finite element method (CutFEM).
+The method involves adding a stabilization term, commonly referred to as the ghost penalty term.
+This term serves the purpose of controlling the energy norm associated with the bilinear form, utilizing the entire background mesh to ensure stabilization and geometric robustness.
+For more information, see
+\cite{burman2015cutfem, burman2010ghost, burman2022cutfem, burman2012fictitious}.
+Inspired by the corresponding CutFEM DG elliptic framework outlined in \cite{gurkan2019stabilized}, the objective of this section is to engineer suitable stabilized ghost penalty terms for the biharmonic problem, starting from the CIP methods introduced in Section \ref{sec:CIP_biharmonic_problem}.
+We will show what assumptions are needed for the ghost-penalty method for the discrete problem to be stable in Section \ref{sub:stability_estimate} and derive optimal convergence in Section \ref{sec:a_priori_estimates}.  Once
+this is fulfilled we propose a ghost penalty which fulfills these assumptions in Section \ref{sec:constructing_ghost_penalties}. Lastly, we provide numerical experiments to validate the theoretical results in Section \ref{sec:numerical_results}
+
+
+\subsection{Computational domain}%
+\label{sub:unfitted_mesh}
+
+\begin{figure}[h!]
+    \centering
+% \subfloat[]{\label{a1}
+%         \begin{tikzpicture}[scale=0.7]
+
+%             \draw[fill=blue!30] (0.1, 0.1) circle (1.5cm);
+%             % Background mesh
+%             \foreach \i in {-2.5, -2, ..., 2.5} {
+%                 \draw[line width=0.1pt, shift={(-2.5,\i)}, opacity=0.2] (0,0) -- (5,0);
+%                 \draw[line width=0.1pt, shift={(\i,-2.5)}, opacity=0.2] (0,0) -- (0,5);
+%             }
+
+
+%             % Labels
+%             \node[below right] at (-0.2,0.4) {$\Omega$};
+%             \node[below right] at (1.2,1.5) {$\Gamma$};
+%         \end{tikzpicture}
+
+% }\hfill
+\subfloat[]{\label{a}
+        \begin{tikzpicture}[scale=1.0]
+
+            \fill[yellow!30] (-2.5,2.5) -- (2.5,2.5) -- (2.5,-2.5) -- (-2.5,-2.5) -- cycle;
+            \draw[fill=blue!30, opacity=0.4] (0.1, 0.1) circle (1.5cm);
+
+            \draw (0.1, 0.1) circle (1.5cm);
+            % Background mesh
+            \foreach \i in {-2.5, -2, ..., 2.5} {
+                \draw[line width=0.1pt, shift={(-2.5,\i)}, opacity=0.2] (0,0) -- (5,0);
+                \draw[line width=0.1pt, shift={(\i,-2.5)}, opacity=0.2] (0,0) -- (0,5);
+            }
+
+            \node[below right] at (-0.2,0.4) {$\Omega$};
+            \node[below right] at (-1.6,1.6) {$\Gamma$};
+
+            % Labels
+            \node[below right] at (1.6,2.0) {$\widetilde{\mathcal{T}}_{h}$};
+        \end{tikzpicture}
+
+}\hfill
+\subfloat[]{\label{c}
+        \begin{tikzpicture}[scale=1.0]
+
+            % POTENTIAL ACTIVE MESH
+            \fill[blue!30] (2,2) -- (2,-1.5) --(-1.5,-1.5) -- (-1.5,2) -- cycle;
+
+            % ELEMENTS WITH NO INTERSECTION
+            % lower left
+            \fill[white] (-1.5,-1.5) rectangle (-1.0,-1.0);
+            \fill[white] (-1.5,2.0) rectangle (-1.0,1.5);
+            \fill[white] (-1.0,2.0) rectangle (-0.5,1.5);
+            \fill[white] (2,2) rectangle (1.5,1.5);
+            \fill[white] (1.5,2) rectangle (1.0,1.5);
+            \fill[white] (2,1.5) rectangle (1.5,1.0);
+            \fill[white] (1.5,-1) rectangle (2,-1.5);
+            \fill[white] (1.5,-0.5) rectangle (2,-1.0);
+
+            % CUT ELEMENTS
+            \fill[green!40] (-0.5,2.0) rectangle (1.0,1.5);
+            \fill[green!40] (-1.5,1.5) rectangle (0.0,1.0);
+            \fill[green!40] (0.5,1.5) rectangle (1.5,1.0);
+            \fill[green!40] (-1.5,1.0) rectangle (-1.0,-1.0);
+            \fill[green!40] (-1.0,-0.5) rectangle (-0.5,-1.5);
+            \fill[green!40] (-0.5,-1.5) rectangle (1.5,-1.0);
+            \fill[green!40] (1.5,-1) rectangle (1.0,-0.0);
+            \fill[green!40] (1.5,-0.5) rectangle (2.0,1.0);
+            \fill[green!40] (1.0,0.5) rectangle (1.5,1.0);
+
+            \draw (0.1, 0.1) circle (1.5cm);
+            % Background mesh
+            \foreach \i in {-2.5, -2, ..., 2.5} {
+                \draw[line width=0.1pt, shift={(-2.5,\i)}, opacity=0.2] (0,0) -- (5,0);
+                \draw[line width=0.1pt, shift={(\i,-2.5)}, opacity=0.2] (0,0) -- (0,5);
+            }
+
+
+            % Labels
+            \node[below right] at (0.0,0.5) {$\mathcal{T}^{\mathrm{int} }_{h}$};
+            \node[below right] at (-1.9,1.6) {$\mathcal{T}^{\Gamma }_{h}$};
+        \end{tikzpicture}
+}
+\hfill
+\subfloat[]{\label{b}
+        \begin{tikzpicture}[scale=1.0]
+
+            % POTENTIAL ACTIVE MESH
+            \fill[orange!30] (2,2) -- (2,-1.5) --(-1.5,-1.5) -- (-1.5,2) -- cycle;
+
+            % ELEMENTS WITH NO INTERSECTION
+            % lower left
+            \fill[white] (-1.5,-1.5) rectangle (-1.0,-1.0);
+            \fill[white] (-1.5,2.0) rectangle (-1.0,1.5);
+            \fill[white] (-1.0,2.0) rectangle (-0.5,1.5);
+            \fill[white] (2,2) rectangle (1.5,1.5);
+            \fill[white] (1.5,2) rectangle (1.0,1.5);
+            \fill[white] (2,1.5) rectangle (1.5,1.0);
+            \fill[white] (1.5,-1) rectangle (2,-1.5);
+            \fill[white] (1.5,-0.5) rectangle (2,-1.0);
+
+            % CUT ELEMENTS
+            \fill[orange!30] (-0.5,2.0) rectangle (1.0,1.5);
+            \fill[orange!30] (-1.5,1.5) rectangle (0.0,1.0);
+            \fill[orange!30] (0.5,1.5) rectangle (1.5,1.0);
+            \fill[orange!30] (-1.5,1.0) rectangle (-1.0,-1.0);
+            \fill[orange!30] (-1.0,-0.5) rectangle (-0.5,-1.5);
+            \fill[orange!30] (-0.5,-1.5) rectangle (1.5,-1.0);
+            \fill[orange!30] (1.5,-1) rectangle (1.0,-0.0);
+            \fill[orange!30] (1.5,-0.5) rectangle (2.0,1.0);
+            \fill[orange!30] (1.0,0.5) rectangle (1.5,1.0);
+
+            \draw (0.1, 0.1) circle (1.5cm);
+            % Background mesh
+            \foreach \i in {-2.5, -2, ..., 2.5} {
+                \draw[line width=0.1pt, shift={(-2.5,\i)}, opacity=0.2] (0,0) -- (5,0);
+                \draw[line width=0.1pt, shift={(\i,-2.5)}, opacity=0.2] (0,0) -- (0,5);
+            }
+
+
+            % Labels
+            % \node[below right] at (2.5,2.5) {$\widetilde{\mathcal{T}}_{h}$};
+            % \node[below right] at (0.4,0.5) {$\mathcal{T}_{int}$};
+            \node[below right] at (-0.5,0.5) {$\mathcal{T}_{h }$};
+        \end{tikzpicture}
+
+
+}
+
+
+\caption{Illustration of the domain $\Omega$ with the corresponding boundary $\Gamma$, the background mesh $\widetilde{\mathcal{T}}_{h} $,  the cut cells $\mathcal{T}_{h} ^{\Gamma }$, the interior cells $\mathcal{T} _{int}$ and the active set $\mathcal{T} _{h} =
+\mathcal{T}^{ \mathrm{int}  }_{h} \cup \mathcal{T}_{h }^{ \Gamma  }  $. }
+\label{fig:background_mesh}
+\end{figure}
+
+
+We want to devise a CutFEM based on the CIP formulation for the biharmonic problem. Assume that the physical domain $\Omega \subseteq    \mathbb{R} ^d$ to be open and bounded with a corresponding a sufficiently smooth boundary $\Gamma  $.
+ Let $\widetilde{\mathcal{T}_{h} } $ be a shape-regular and quasi-uniform mesh which covers $\Omega $, but does not need to fit the
+domain. Let us denote the active set $\mathcal{T} _{h} \subseteq \widetilde{\mathcal{T}_{h}}$ which intersects the interior of the active domain $\Omega $, that is
+\begin{equation}
+\label{eq:active_set}
+\mathcal{T} _{h} = \left\{ T \in \widetilde{\mathcal{T} }_{h}  \mid  T \cap \Omega   \neq \emptyset    \right\}.
+\end{equation}
+We define the corresponding set of interior facets, \[
+    \mathcal{F} _{h}^{\mathrm{int} } = \left\{ F = T^{+} \cap T^{-}  \mid  T^{+}, T^{-} \in \mathcal{T} _{h} \text{ and } T^{+} \neq T^{-} \right\},
+\]
+and the set of elements cut by the boundary \[
+\mathcal{T}_{h} ^{\Gamma } = \left\{ T \in \mathcal{T} _{h}   \mid  T \cap \Gamma \neq \emptyset  \right\}.
+\]
+For convenience, will we define also the interior of the active set as $\mathcal{T} _{int}$.
+\[
+\mathcal{T} ^{\mathrm{int} }_{h} = \left\{ T \in \mathcal{T} _{h}   \mid  T \cap  \mathrm{Int}(\Omega ) \neq \emptyset  \right\}.
+\]
+Hence, we have that the active set is the union of the interior and cut elements, $\mathcal{T} _{h} = \mathcal{T}_{h} ^{\mathrm{int} } \cup  \mathcal{T} ^{\Gamma }_{h}$. For an illustration, see Figure \ref{fig:background_mesh}.
+
+
+
+\subsection{Cut continuous interior penalty methods }%
+\label{sub:cut_cip_method}
+
+As $\Omega $ is static is it easy to observe that having a polynomial basis on the full mesh $\widetilde{\mathcal{T}}_{h}$ is not necessary. Restricting us to the active set, we define the domain $\Omega _{h} = \bigcup _{T \in \mathcal{T} _{h}} T$.
+Hence, we define the polynomial space only on the active set $\mathcal{T}_{h} $ from \eqref{eq:active_set},
+\begin{equation}
+    \label{eq:vh_energy}
+V_{h} = \left\{ v \in C^{0}( \Omega _{h}  )  \mid  v_{T} = v | _{T} \in \left\{ \mathcal{P} ^{k} ( T ) \text{ or } \mathcal{Q} ^{k}( T ) \right\}  \  \forall T \in
+\mathcal{T}_{h}    \right\}.
+\end{equation}
+Here is $k$ the polynomial order and $\mathcal{P}^{k}( \cdot  )  $ and $\mathcal{Q} ^{k}( \cdot ) $ is defined in Definition \ref{def:local_space}.
+Furthermore, drawing on the principles outlined in Section \ref{sec:CIP_biharmonic_problem}, we can indeed recall two CIP formulations for the biharmonic equation: the Hessian formulation \eqref{eq:hessian_prob} and the Laplace formulation \eqref{eq:laplace_prob}.
+
+To make sure the problem is stabilized will we add a consistent symmetric positive semi-definite bilinear ghost-penalty term  $g_{h}: V_{h} \times  V_{h} \to \mathbb{R} $ to our bilinear form. That is, we define the discrete problem to be:
+\begin{equation}
+\label{eq:discrete_CutCIP_prob}
+\text{ Find } u_{h} \in V_{h}  \text{ such that }    A_{h}( u_{h} ,v_{h} ) := a_{h}( u_{h}, v_{h})  + g_{h}( u_{h},v_{h}) = l_{h} ( v_{h}) \quad  \forall v_{h} \in  V_{h}.
+\end{equation}
+Here $a_{h}( \cdot,\cdot  ) $ stand for either $a_{h}^{L}( \cdot ,\cdot ) $ or $a_{h}^{H}( \cdot ,\cdot ) $.
+
+In this section, we provide a full proof for the Hessian formulation, however, the proof of the Laplace formulation does not differ too much. For simplification will we use the notation $a_{h}(\cdot ,\cdot  ) = a_{h}^{H}(\cdot  ,\cdot )$ and
+$l_{h}(\cdot ) =l_{h}^{H}(\cdot )$ for the rest of the stability and convergence analysis.
+
+Keep in mind that in contrast to the standard CIP methods our proposed method is defined on an unfitted mesh. As we will see in the analysis, the ghost penalty is a method to ensure numerical stability on cut cell $\mathcal{T} ^{\Gamma }_{h}$. The main reason why
+this numerical instability is happening for a unfitted mesh is when a cell is badly cut, see examples in Figure \ref{fig:intersection-example}.
+In other words, when a cell is "badly cut," it means that it is intersected by the boundary $\Gamma$ in such a way that only a very small part of the interior of an element $T$  intersects with the physical domain $\Omega $ , i.e. $\abs{ \Omega \cap
+T }_{d} \ll h^{d}$. This can lead to both stability issues and a very poor condition number of the system matrix causing numerical instability.
+
+The ghost penalty stabilization technique is designed to tackle this issue. Essentially, this approach introduces additional terms into the finite element method that penalize jumps in the discrete solution and its gradients across cell interfaces,
+typically the cut-cells. This penalty not only improves the conditioning of the system matrix but also enhances the robustness of the method with respect to the location of the boundary inside each cell. However, to make this possible, we assume a
+so-called fat-intersection property, which will be relevant in Section \ref{sec:constructing_ghost_penalties}.
+
+Our first assumption as as follows;
+for a $T \in \mathcal{T} ^{\Gamma }_{h}$ there always exists a patch $\omega ( T) $ which contains $T$ and an element $T'$ with a so-called fat intersection $
+        \abs{ T' \cap \Omega  } _{d} \gtrsim \abs{ T' } _{d}$, where $\abs{ \cdot  }_{d} $ is the measure of an element of dimensions $d =2,3  $ . For an illustration, see Figure \ref{fig:fat_intersection_property}.
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+        \coordinate (center) at (0, 0);
+
+        % Reference hexagon vertices
+        \coordinate (A1) at (0:2.5);
+        \coordinate (A2) at (55:2.5);
+        \coordinate (A3) at (125:2.5);
+        \coordinate (A4) at (180:2.5);
+        \coordinate (A5) at (235:2.5);
+        \coordinate (A6) at (305:2.5);
+
+        \fill[green!40] (center) --(A1) -- (A2) -- (A3) -- (A4) -- (A5)  -- cycle;
+        \fill[blue!30] (center) -- (A5)--(A6) -- (A1) -- cycle;
+
+        % Draw the individual edges
+        \draw (center) -- (A1);
+        \draw (center) -- (A2) --(A1);
+        \draw (center) -- (A3);
+        \draw (center) -- (A4);
+        \draw (A2) -- (A3);
+        \draw (A3) -- (A4);
+        \draw (A5) -- (A6);
+        \draw (A4) -- (A5);
+        \draw (center) -- (A5);
+        \draw (center) -- (A6) -- (A1);
+
+        \coordinate (Ti) at (-0,-1.5);
+        \coordinate (Tg) at (0.5,2.1);
+        % \node[below] at (Tg) {$\mathcal{T}_{\Gamma }$};
+        % \node[below] at (Ti) {$\mathcal{T}_{int }$};
+
+        \coordinate (T0) at (1.1,1.0);
+        \coordinate (T1) at (-1.1,-0.4);
+        \node[below] at (T0) {$T$};
+        \node[below] at (T1) {$T'$};
+
+        \coordinate (C1) at (-3,-1.0);
+        \coordinate (C2) at (2.6,0.4);
+        \draw[-, line width=2pt, >=stealth] ($(C2)$) to[bend right=16.9] node[midway,xshift=-2.3cm, yshift=-1.3cm] {$\Gamma $} ($(C1)$);
+
+        % \coordinate (D1) at (1,0.0);
+        % \coordinate (D2) at (1.0,0.4);
+        % \coordinate (D3) at (1.2,0.2);
+        % \node at (D3) {$\varepsilon$};
+        % \draw[line width=1.3pt, dotted] (D1) -- (D2);
+
+        % Draw the line with brackets
+
+    % Legend
+    \begin{scope}[shift={(2.3,0.3)}]
+        \draw (0,0.4) rectangle (1.3,1.5);
+        \fill[green!30] (0.2,1.3) rectangle (0.4,1.1);
+        \node[right] at (0.4,1.2) {$\mathcal{T}^{\Gamma}_{h}$};
+        \fill[blue!30] (0.2,0.8) rectangle (0.4,0.6);
+        \node[right] at (0.4,0.7) {$\mathcal{T}^{\mathrm{int} }_{h}$};
+    \end{scope}
+
+    \end{tikzpicture}
+\caption{Illustration of the fat intersection property. Let $T \in \mathcal{T}^{\Gamma }_{h} $. It shows a patch $\omega ( T) $ contains elements $T \in  \mathcal{T}^{\Gamma }_{h} $ and $T'\in \mathcal{T} ^{\mathrm{int} } \cup \mathcal{T}
+^{\Gamma }_{h} = \mathcal{T} _{h}$, with $T' $ having a sufficiently large intersection with $\Omega$.}
+    \label{fig:fat_intersection_property}
+\end{figure}
+
+
+We define the underlying norms for $ v_{h} \in V_{h} $ as
+    \begin{align}
+        \label{eq:bi_ah_norm}
+        \| v_h \|_{ a_{h} }^{ 2 } & =    \alpha \|   v_h \|_{ \mathcal{T} _{h} \cap \Omega  }^{ 2}  + \| D^2 v_h \|_{\mathcal{T} _{h} \cap \Omega   }^{ 2 } +  \| h^{-\frac{1}{2}} \jump{ \partial _{n} v_h }   \|_{ \mathcal{F}_{h}^{}\cap \Omega    }^{ 2
+        } +  \| h^{-\frac{1}{2}}  \partial _{n} v_h    \|_{ \Gamma   }^{ 2 },    \\
+        \label{eq:bi_gh_norm}
+\abs{ v } _{g_{h}}^{2} & = g( v_h,v_h), \\
+        \label{eq:bi_Ah_norm}
+\| v_h \|_{A_{h}  }^{  2}  & = \| v_h \|_{ a_{h} }^{ 2 } + \abs{ v_h } _{g_{h}}^{2}, \\
+    \end{align}
+and for $v \in V \oplus V_{h}$ we also introduce,
+\begin{equation}
+    \label{eq:astarnorm}
+\| v \|_{ a_{h}, * }^{  2}  =\| v \|_{ a_{h} }^{ 2 } +  \| h^{\frac{1}{2}} \mean{ \partial _{nn} v }   \|_{\mathcal{F} _{h}^{} \cap \Omega   }^{  2} +  \| h^{\frac{1}{2}} \partial _{nn} v    \|_{ \Gamma }^{  2}.
+\end{equation}
+\begin{remark}
+Note that it holds that $\mathcal{T} _{h} \cap  \Omega   = \Omega  $ and $\mathcal{T} _{h} \cap  \Gamma  = \Gamma $. Depending on context, we choose the best suitable notation.
+\end{remark}
+\begin{remark}
+    The necessity to define the supplementary terms in the $\| \cdot   \|_{a{h},* }^{ } $  may raise certain questions.  The reason is because when $v$ is continuous, i.e. $v \in V$, the local inverse estimates  \ref{eq:fund_inv_est} does not hold for $\| \mean{ \partial
+    _{nn} v }  \|_{ \mathcal{F}_{h} \cap \Omega    }^{  }  $ and  $\|  \partial
+    _{nn} v   \|_{ \Gamma }^{  }  $ when evaluating $a_{h}( v, v) $. Hence, this leads necessity adding the additional terms into the norm when we later need to bound $a_{h}( u - C_{h}u, v_{h}) $ as part of the a priori error estimate derivation in Section \ref{sec:a_priori_estimates}.
+\end{remark}
+
+
+\subsection{Stability estimate}%
+\label{sub:stability_estimate}
+
+
+\begin{figure}[b]
+    \centering
+    \begin{minipage}{0.4\textwidth}
+        \centering
+        \begin{tikzpicture}
+            \coordinate (center) at (0, 0);
+
+            % Reference hexagon vertices
+            \coordinate (A1) at (0:2.5);
+            \coordinate (A2) at (55:2.5);
+            \coordinate (A3) at (125:2.5);
+            \coordinate (A4) at (180:2.5);
+            \coordinate (A5) at (235:2.5);
+            \coordinate (A6) at (305:2.5);
+
+            \fill[green!40] (center) --(A1) -- (A2) -- (A3) -- (A4) -- (A5)  -- cycle;
+            \fill[blue!30] (center) -- (A5)--(A6) -- (A1) -- cycle;
+
+            % Draw the individual edges
+            \draw (center) -- (A1);
+            \draw (center) -- (A2) --(A1);
+            \draw (center) -- (A3);
+            \draw (center) -- (A4);
+            \draw (A2) -- (A3);
+            \draw (A3) -- (A4);
+            \draw (A5) -- (A6);
+            \draw (A4) -- (A5);
+            \draw (center) -- (A5);
+            \draw (center) -- (A6) -- (A1);
+
+            \coordinate (Ti) at (-0,-1.5);
+            \coordinate (Tg) at (0.5,2.1);
+            % \node[below] at (Tg) {$\mathcal{T}_{\Gamma }$};
+            % \node[below] at (Ti) {$\mathcal{T}_{int }$};
+
+            \coordinate (T0) at (1.1,1.0);
+            \coordinate (T1) at (-1.1,-0.4);
+            \node[below] at (T0) {$T$};
+            % \node[below] at (T1) {$T'$};
+
+            \coordinate (C1) at (-3,-1.0);
+            \coordinate (C2) at (2.6,0.4);
+            \draw[-, line width=2pt, >=stealth] ($(C2)$) to[bend right=16.9] node[midway,xshift=-2.3cm, yshift=-1.3cm] {$\Gamma $} ($(C1)$);
+
+            \coordinate (D1) at (1,0.0);
+            \coordinate (D2) at (1.0,0.4);
+            \coordinate (D3) at (1.2,0.2);
+            \node at (D3) {$\varepsilon$};
+            \draw[line width=1.3pt, dotted] (D1) -- (D2);
+
+            % Draw the line with brackets
+
+            % Legend
+            % \begin{scope}[shift={(2.3,0.3)}]
+            %     \draw (0,0.4) rectangle (1.3,1.5);
+            %     \fill[green!30] (0.2,1.3) rectangle (0.4,1.1);
+            %     \node[right] at (0.4,1.2) {$\mathcal{T}_{\Gamma}$};
+            %     \fill[blue!30] (0.2,0.8) rectangle (0.4,0.6);
+            %     \node[right] at (0.4,0.7) {$\mathcal{T}_{int}$};
+            % \end{scope}
+
+        \end{tikzpicture}
+    \end{minipage}
+    \hspace{1cm}
+    \begin{minipage}{0.4\textwidth}
+        \centering
+        \begin{tikzpicture}
+            \coordinate (center) at (0, 0);
+
+            % Reference hexagon vertices
+            \coordinate (A1) at (0:2.5);
+            \coordinate (A2) at (60:2.5);
+            \coordinate (A3) at (120:2.5);
+            \coordinate (A4) at (180:2.5);
+            \coordinate (A5) at (240:2.5);
+            \coordinate (A6) at (300:2.5);
+            \coordinate (A7) at (300:2.5);
+
+
+            \fill[green!40] (center) --(A1) -- (A2) -- (A3) -- (A4) -- cycle;
+            \fill[blue!30] (center) (A4) -- (A5)--(A6)-- (A7) -- (A1) -- cycle;
+
+            % Draw the individual edges
+            \draw (center) -- (A1);
+            \draw (center) -- (A2) --(A1);
+            \draw (center) -- (A3);
+            \draw (center) -- (A4);
+            \draw (A2) -- (A3);
+            \draw (A3) -- (A4);
+            \draw (A5) -- (A6);
+            \draw (A4) -- (A5);
+            \draw (center) -- (A5);
+            \draw (center) -- (A6) -- (A1);
+
+            \coordinate (Ti) at (-0,-1.5);
+            \coordinate (Tg) at (0.5,2.2);
+            % \node[below] at (Tg) {$\mathcal{T}_{\Gamma }$};
+            % \node[below] at (Ti) {$\mathcal{T}_{int }$};
+
+            \coordinate (T0) at (-0,1.9);
+            \coordinate (T1) at (-1.1,-0.4);
+            \node[below] at (T0) {$T$};
+
+            \coordinate (C1) at (-3,0.7);
+            \coordinate (C2) at (2.6,0.7);
+            \draw[-, line width=2pt, >=stealth] ($(C2)$) to[bend right=0.9] node[midway,xshift=-2.5cm, yshift=-0.5cm] {$\Gamma $} ($(C1)$);
+            % Legend
+            \begin{scope}[shift={(2.3,0.4)}]
+                \draw (0,0.4) rectangle (1.3,1.5);
+                \fill[green!30] (0.2,1.3) rectangle (0.4,1.1);
+                \node[right] at (0.4,1.2) {$\mathcal{T}^{\Gamma}_{h}$};
+                \fill[blue!30] (0.2,0.8) rectangle (0.4,0.6);
+                \node[right] at (0.4,0.7) {$\mathcal{T}^{\mathrm{int} }_{h}$};
+            \end{scope}
+
+            \coordinate (D1) at (0,0.0);
+            \coordinate (D2) at (0.0,0.7);
+            \coordinate (D3) at (0.3,0.2);
+            \node at (D3) {$\varepsilon$};
+            \draw[line width=1.3pt, dotted] (D1) -- (D2);
+
+        \end{tikzpicture}
+    \end{minipage}
+        \caption{Illustration of two examples of bad cut cells with an arbitrary small length $\varepsilon \ll 1 $. Let $T \in  \mathcal{T}^{\Gamma }_h $ be a cut cell.  On the left example, is it clear that $\abs{ \Gamma \cap T }
+            \lesssim  h^{d-1}$ and $  \ \abs{ \Omega  \cap T } \lesssim  \varepsilon  h^{d}$  . However, on the right example is it clear that  $\abs{ \Gamma \cap T }
+            \lesssim  \varepsilon h^{d-1}$ and $\abs{ \Omega  \cap T } \lesssim  \varepsilon  h^{d}$.}
+        \label{fig:intersection-example}
+\end{figure}
+
+% From basic theory we have the following inverse estimate for $ v \in \mathcal{P}^{k}( T)$ s.t. \[
+%      \| \partial _{nn}  v \|_{F   }^{ }  \lesssim  \| h_{T}^{-\frac{1}{2}} D ^2 v \|_{ T }^{  },
+% \]
+% where the hidden constant depend on dimension $d$, order $k$ and the shape regularity.
+
+In Section \ref{sub:some_general_inequalities} we discussed standard local inverse estimates which plays a crucial role in the theoretical analysis of the classical CIP method for biharmonic problems.
+Similarly for cut elements is it easy to see that this must hold,
+\begin{equation}
+    \label{eq:inv_full1}
+     \| \partial _{nn}  v_{h} \|_{F \cap \Omega    }^{  }  \lesssim\| \partial _{nn}  v_{h} \|_{F }^{  }  \lesssim   \| h_{T}^{-\frac{1}{2}} D ^2 v_{h} \|_{ T }^{  }.
+\end{equation}
+A useful variant is the following inequality that is,
+\begin{equation}
+    \label{eq:inv_full}
+\| \partial _{nn} v_{h} \|_{ \Gamma \cap T  }^{  } \lesssim h^{-\frac{1}{2}} \| D^2 v_{h} \|_{ T }^{  }.
+\end{equation}
+
+For the proposed unfitted version, it may be natural to instead look at $\| \partial _{nn} v_{h} \|_{ \Gamma \cap T  }^{  } \lesssim h^{-\frac{1}{2}} \| D^2 v_{h} \|_{ T\cap \Omega  }^{  }$, however, this cannot hold for an arbitrary cut
+configuration for an unfitted mesh. To demonstrate this, let $\varepsilon \ll 1$ be a small length. For the examples provided in
+    Figure \ref{fig:intersection-example} we have two cases: i) $\abs{ \Gamma \cap \Omega  }_{d-1} \lesssim \varepsilon h^{d-1}  $ and $\abs{ T \cap \Omega  }_{d-1} \lesssim \varepsilon h^{d-1}  $, and ii)
+    $\abs{ \Gamma \cap \Omega  }_{d-1} \lesssim  h^{d-1}  $ and $\abs{ T \cap \Omega  }_{d-1} \lesssim \varepsilon h^{d-1}  $.
+    The first first case impacts the condition number since it is introducing almost vanishing entries in the system matrix from \eqref{eq:linear_system}.
+    The second case is bad for inverse estimates and, thus, problematic for proving discrete coercivity. To recover, one in fact on the other hand must incorporate the full element $T$ into the inverse estimate as done in \eqref{eq:inv_full} and \eqref{eq:inv_full1} .
+
+
+Since the inequalities above holds for all elements locally is it natural to work with norms which are defined  the full mesh  $\mathcal{T}_{h} $.
+\begin{align}
+\label{eq:bi_cut_inverse_1}
+\| \partial _{nn} v_h \|_{ \mathcal{T} _{h} \cap \Gamma  }^{  } &\lesssim h^{-\frac{1}{2}} \| D^2 v_h \|_{ \mathcal{T}_h }^{  }, \\
+\label{eq:bi_cut_inverse_2}
+\| \partial _{nn}  v_h \|_{ \mathcal{F}_h \cap \Omega    }^{  }  &  \lesssim   h^{-\frac{1}{2}} \| D^2 v_h \|_{ \mathcal{T}_h  }^{  }.
+\end{align}
+    We aware that these inequalities also holds for the first order, that is.
+\begin{align}
+\label{eq:bi_n_cut_inverse_1}
+\| \partial _{n} v_h \|_{ \mathcal{T} _{h} \cap \Gamma  }^{  } &\lesssim h^{-\frac{1}{2}} \| \nabla v \|_{ \mathcal{T}_h }^{  }, \\
+\label{eq:bi_n_cut_inverse_2}
+\| \partial _{n}  v_h \|_{ \mathcal{F}_h \cap \Omega    }^{  }  &  \lesssim   h^{-\frac{1}{2}} \| \nabla v_h \|_{ \mathcal{T}_h  }^{  }.
+\end{align}
+In fact, combining the second order inequalities we get the following identity.
+\begin{equation}
+\label{eq:bi_identity}
+h\| \partial _{nn}  v_{h} \|_{ \mathcal{F}_h \cap \Omega    }^{2 } + h\| \partial _{nn} v_{h} \|_{ \mathcal{T} _{h} \cap \Gamma  }^{2  } \lesssim \| D^2 v_{h} \|_{ \mathcal{T} _{h}  }^{2  } \quad  \forall v_{h} \in V_{h}.
+\end{equation}
+For more information about the derivations of the inequalities, see discussion in \cite[Section 2.4]{gurkan2019stabilized}.
+
+We may introduce our first assumption on the ghost penalty.  Inspired by the expansion for the $H^{1}$-norm as detailed in \cite[Equation 2.23]{gurkan2019stabilized}, we adopt an analogous approach for the $H^{2}$-norm in this scenario.
+\begin{assumption*}[EP1]
+    The ghost penalty $g_{h}$ extends the $H^{2}$ norm such that
+    \begin{equation}
+    \label{as:bi_EP1}
+    \| D^2 v \|_{ \mathcal{T} _{h} }^{ 2 } \lesssim  \| D^2 v \|_{ \Omega  }^{ 2 } + \abs{ v } _{g_{h}}^{2}.
+    \end{equation}
+\end{assumption*}
+
+
+Combing the results we get the following convenient corollary.
+
+\begin{corollary}
+    \label{cor:bi_inverse_thm}
+    Let  $g_{h}$ satisfy Assumption EP1 \eqref{as:bi_EP1}, then
+    \begin{equation}
+        \label{eq:inv_est}
+            h\| \partial _{nn}  v_{h} \|_{ \mathcal{F}_h^{} \cap \Omega    }^{2 } + h\| \partial _{nn} v_{h} \|_{ \mathcal{T} _{h} \cap \Gamma  }^{2  }   \lesssim  \| D^2 v_{h} \|_{ \Omega  }^{ 2 } + \abs{ v_{h} } _{g_{h}}^{2} \\
+              \lesssim \| v_{h} \|_{ A_{h} }^{  2} \quad  \forall v_{h} \in V_{h}
+    \end{equation}
+    From this is it also clear that \begin{equation}
+        \label{eq:asta_Ah}
+    \| v_{h} \|_{ a_{h},* }^{  }  \lesssim \| v_{h} \|_{ A_{h} }^{  } \quad  \forall v_{h} \in V_{h}
+    \end{equation}
+\end{corollary}
+\begin{proof}
+    The first result \eqref{eq:inv_est} is a direct result of \eqref{eq:bi_identity}, Assumption EP1 \eqref{as:bi_EP1} and the definition of $\| \cdot  \|_{ A_{h} }^{  } $.
+    The second result \eqref{eq:asta_Ah} is simply a observation that the terms in \eqref{eq:inv_est} appears in $\| \cdot   \|_{a_{h},*  }^{  } $, hence, the inequality follows.
+\end{proof}
+
+\begin{remark}
+    The alternative version of the Assumption EP1 \eqref{as:bi_EP1} for the Laplace formulation \eqref{eq:laplace_prob} is simply $\| \Delta ^2 v_{h} \|_{ \mathcal{T} _{h} }^{ 2 } \lesssim  \| \Delta ^2 v \|_{\Omega   }^{2  } + \abs{ v_{h} } _{g_{h}} ^{2}
+    $ and, similarly, is it then clear that $ h \| \Delta v  \|_{\mathcal{F} \cap \Omega   }^{ 2 } +h \| \Delta^2 v_{h}  \|_{\mathcal{T} _{h} \Gamma   }^{  } \lesssim  \| \Delta ^2 v \|_{\Omega   }^{2  } + \abs{ v_{h} } _{g_{h}} ^{2} $ would follow  as in
+    \eqref{eq:inv_est}.
+
+\end{remark}
+
+\begin{lemma}
+    \label{lemma:bi_Ah_coercive}
+    The discrete form $A_{h}$ is coercive, that is, \[
+    \| v_{h} \|_{ A_{h} }^{ 2 }  \lesssim A_{h}( v_{h},v_{h})\quad  \forall v_{h} \in V_{h}.
+    \]
+\end{lemma}
+
+\begin{proof}
+    Let $v_{h} \in V_{h}$.
+    Observe that
+    \begin{equation}
+    A_{h}( v_{h},v_{h}) = a_{h}( v_{h},v_{h})  + \abs{ v_{h} }_{g_{h}}^{2}.
+    \end{equation}
+    Firstly, the ghost penalty term is already a part of the $\| \cdot  \|_{ A_{h} }^{  } $ norm, hence, it only remains to bound the $a_{h}( \cdot ,\cdot ) $ term properly from below.
+    \begin{equation}
+        \label{eq:coerciv_ah}
+    \begin{split}
+       a_{h}( v_{h},v_{h}) &=   \alpha \| v_{h} \|_{   \Omega   }^{2} + \| D^2v_{h} \|_{   \Omega  }^{2  }  + \frac{\gamma }{h}  \|  \jump{ \partial _{n} v_{h} }\|_{\mathcal{F} _{h}^{}  }^{ 2 } + \frac{\gamma }{h}  \| \partial _{n} v_{h} \|_{ \Gamma  }^{ 2 } \\
+                   & \quad + 2 ( \mean{ \partial _{nn} v_{h} }, \jump{ \partial _{n} v_{h} }    )_{\mathcal{F} ^{}_{h} \cap \Omega }  + 2 (  \partial _{nn} v ,
+       \partial _{n} v_{h}  )_{\Gamma } \\
+    \end{split}
+    \end{equation}
+    We first focus on the last two terms in \eqref{eq:coerciv_ah}. Using Cauchy-Schwarz \eqref{eq:cauchy-schwartz}, we observe that
+    \begin{equation}
+        \begin{split}
+    ( \mean{ \partial _{nn} v_{h} }  , \jump{ \partial _{n} v_{h} }  )_{\mathcal{F}^{}_{h}\cap \Omega  } & \geqslant - \| h^{\frac{1}{2}}\mean{ \partial _{nn} v_{h} }   \|_{ \mathcal{F}^{}_{h}\cap \Omega   }^{  }  \|h^{-\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{
+    \mathcal{F}^{}_{h}\cap \Omega   }^{  }, \\
+    (  \partial _{nn} v_{h}   ,  \partial _{n} v_{h}   )_{\Gamma   } & \ge - \| h^{\frac{1}{2}} \partial _{nn} v_{h}    \|_{ \Gamma    }^{  }  \|h^{-\frac{1}{2}}  \partial _{n} v_{h}    \|_{ \Gamma    }^{  }.
+        \end{split}
+    \end{equation}
+    Using inverse-inequalities \eqref{eq:bi_cut_inverse_1} and \eqref{eq:bi_cut_inverse_2} and the Corollary \ref{cor:bi_inverse_thm} we can easily observe that
+    \begin{equation}
+        \begin{split}
+     \| h^{\frac{1}{2}} \mean{ \partial _{nn}v_{h} } \|_{ \mathcal{F}_{h} \cap \Omega    }^{  2} & \le C_{1} \| D^2 v_{h} \|_{ \mathcal{T}_{h}   }^{2  } \lesssim   \| D^2 v_{h} \|_{ \Omega  }^{ 2 }  + \abs{ v_{h} } _{ g_{h} }^{2  },   \\
+     \|  \partial _{nn}v_{h}  \|_{ \Gamma     }^{ 2 } & \le C_{2} \| D^2 v_{h} \|_{ \mathcal{T} _{h}  }^{2  } \lesssim    \| D^2 v_{h} \|_{ \Omega  }^{ 2 }  + \abs{ v_{h} } _{ g_{h} }^{2  }.
+        \end{split}
+    \end{equation}
+    Thus, by applying Young's $\varepsilon $-inequality \eqref{eq:young-epsilon}, it is natural to see that,
+    \begin{equation}
+        \begin{split}
+- C_{1}^{\frac{1}{2}} \| D^2 v_{h}    \|_{ \mathcal{T} _{h}   }^{  }  \|h^{-\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{ \mathcal{F}^{}_{h}\cap \Omega   }^{  }
+& \ge - \frac{1}{\varepsilon } C  (\| D^2 v_{h} \|_{ \Omega  }^{ 2 }  + \abs{ v_{h} } _{ g_{h} }^{2  } ) -  \varepsilon \|h^{-\frac{1}{2}} \jump{ \partial _{n} v_{h} }   \|_{ \mathcal{F}^{}_{h}\cap \Omega   }^{2  }, \\
+- C_{2}^{\frac{1}{2}}  \| D^2 v_{h} \|_{ \mathcal{T} _{h} }^{  } \| h^{-\frac{1}{2}}  \partial _{n} v_{h}    \|_{ \Gamma    }^{  }
+& \ge - \frac{1}{\varepsilon } C  (\| D^2 v_{h} \|_{ \Omega  }^{ 2 }  + \abs{ v_{h} } _{ g_{h} }^{2  } ) -  \varepsilon \|h^{-\frac{1}{2}}  \partial _{n} v_{h}    \|_{ \Gamma    }^{2  }.
+        \end{split}
+    \end{equation}
+    Combining these ideas we end up with the following inequality,
+    \begin{equation}
+    \begin{split}
+       a_{h}( v_{h},v_{h})  \ge& \  \alpha     \|\  v  \|_{   \Omega   }^{2} +\| D^2v_{h}  \|_{   \Omega   }^{2} -  \frac{1}{\varepsilon } 4C  (\| D^2 v_{h} \|_{ \Omega  }^{ 2 }  + \abs{ v_{h} } _{ g_{h} }^{2  } )  \\
+                       & + (\gamma - 2\varepsilon  )\left( \|h^{-\frac{1}{2}}  \jump{ \partial _{n} v_{h} }\|_{\mathcal{F} _{h}^{} \cap \Omega   }^{ 2 } + \| h^{-\frac{1}{2}} \partial _{n} v_{h} \|_{ \Gamma  }^{ 2} \right).
+    \end{split}
+    \end{equation}
+    This inequality is useful since by adding a ghost penalty on the left hand side we get,
+    \begin{equation}
+        \begin{split}
+     A_{h}( v_{h},v_{h}) & = a( v_{h},v_{h}) + \abs{ v_{h} }_{g_{h}}^{2} \\
+     & \gtrsim    \   \| \ |\alpha|^{\frac{1}{2}} \  v_{h}  \|_{   \Omega   }^{2} + (1  - \frac{1}{\varepsilon } 4C)  (\| D^2 v_{h} \|_{ \Omega  }^{ 2 }  + \abs{ v_{h} } _{ g_{h} }^{2  } )  \\
+                       & + (\gamma - 2\varepsilon  )\left( \|h^{-\frac{1}{2}}  \jump{ \partial _{n} v_{h} }\|_{\mathcal{F} _{h}^{}\cap \Omega   }^{ 2 } + \| h^{-\frac{1}{2}} \partial _{n} v_{h} \|_{ \Gamma  }^{ 2} \right)        .
+        \end{split}
+    \end{equation}
+    Setting $\varepsilon = 8C$ and $\gamma = 32C $ we arrive at the desired inequality,
+    \begin{equation}
+        \begin{split}
+           A_{h}( v_{h},v_{h})  \gtrsim & \   \| \ |\alpha|^{\frac{1}{2}} \    v_{h}  \|_{  \Omega   }^{2} + \frac{1}{2}  (\| D^2 v_{h} \|_{ \Omega  }^{ 2 }  + \abs{ v_{h} } _{ g_{h} }^{2  } )  \\
+                       & + \frac{\gamma }{2}\left( \|h^{-\frac{1}{2}}  \jump{ \partial _{n} v_{h} }\|_{\mathcal{F} _{h}^{}\cap \Omega   }^{ 2 } + \| h^{-\frac{1}{2}} \partial _{n} v_{h} \|_{ \Gamma  }^{ 2} \right) \\
+                        \gtrsim & \  \| v_{h} \|_{ A_{h} }^{2  }
+        \end{split}
+.
+    \end{equation}
+\end{proof}
+
+
+\begin{lemma}
+    \label{lemma:bi_Ah_bounded}
+    The discrete bilinear form $A_{h}( \cdot ,\cdot ) $ is bounded
+    \begin{equation}
+    \label{eq:bi_A_h_bounded}
+     A_{h}( v_{h},w_{h}) \lesssim \| v_{h} \|_{A_{h}  }^{  }\| w_{h} \|_{A_{h}  }^{  } \quad   \forall v_{h},w_{h} \in V_{h}.
+    \end{equation}
+    Moreover, for $v \in V_{h} \oplus V$  and $w_{h} \in V_{h}$ the discrete bilinear form $a_{h}( \cdot ,\cdot  ) $ satisfies
+    \begin{equation}
+        \label{eq:bi_a_h_bounded}
+        a_{h} ( v,w_{h}) \lesssim \| v \|_{ a_{h},* }^{  } \| w_{h} \|_{ A_{h} }^{  }.
+    \end{equation}
+\end{lemma}
+
+\begin{proof}
+    \textbf{Estimate} \eqref{eq:bi_A_h_bounded}\textbf{.} We see that $ \abs{ A_{h}( v_{h} ,w_{h} ) } \lesssim   \abs{a_{h}( v_{h}, w_{h}) }   + \abs{g_{h}( v_{h},w_{h})  } .$
+                By assumption the ghost penalty $g_{h}( \cdot ,\cdot ) $ is positive semi-definite, thus fulfills the Cauchy-Schwarz inequality,
+                \begin{equation}
+                \abs{ g_{h}(v_{h},w_{h} ) } \lesssim \abs{ v_{h} } _{g_{h}}\abs{ w_{h} }_{g_{h}}.
+                \end{equation}
+                Hence,  $\abs{ g_{h}(v_{h},w_{h} ) } \lesssim \| v_{h} \|_{ A_{h} }^{  } \| w_{h} \|_{ A_{h} }^{  } $by definition of $A_{h}( \cdot ,\cdot ) $. It remains to show that the bilinear term $ a_{h}( \cdot ,\cdot ) $ is bounded. We numerate the terms in this fashion.
+                \begin{equation}
+                    \begin{split}
+                         a_{h} \left( v_{h}, w_{h} \right)    \le  &   \overbrace{\left( \alpha  v_{h}, w_{h} \right) _{\mathcal{T} _{h} \cap \Omega }}^{\mathrm{I} }       +  \overbrace{\left( D^2 v_{h}, D^2w_{h} \right) _{\mathcal{T} _{h} \cap \Omega}}^{\mathrm{II} }     \\
+                                                     & + \overbrace{\left( \mean{  \partial _{n n} v_{h} }, \jump{ \partial _{n }w_{h}} \right)_{\mathcal{F}_{h}^{} \cap \Omega}}^{\mathrm{III} }      + \overbrace{\left( \mean{ \partial _{nn } w_{h} }, \jump{ \partial _{n}v_{h} }
+                                                     \right)_{\mathcal{F}_{h}^{} \cap \Omega}}^{\mathrm{IV} } + \overbrace{\frac{\gamma }{h}  \left( \jump{ \partial _{n} v_{h}}, \jump{ \partial _{n} w_{h}   }   \right)_{\mathcal{F}_{h}^{} \cap \Omega}}^{\mathrm{V} }    \\
+                                                     & + \overbrace{\left(  \partial _{n n} v_{h} ,  \partial _{n }w_{h} \right)_{\Gamma }}^{\mathrm{VI} } + \overbrace{\left(  \partial _{n n} w_{h} ,  \partial _{n}v_{h}       \right)_{\Gamma
+                                                     }}^{\mathrm{VII} }     + \overbrace{\frac{\gamma
+                                                     }{h}  \left(  \partial _{n} v_{h},  \partial _{n} w_{h} \right)_{\Gamma }}^{\mathrm{VIII} }  \\
+                                                     &=   \mathrm{I}  + \ldots+ \mathrm{VIII}      \\
+                    \end{split}
+                \end{equation}
+                The strategy is to bound each term individually using the Cauchy-Schwarz inequality \eqref{eq:cauchy-schwartz}. From this is it easy to see that $\abs{ \mathrm{I}    } +  \abs{( \mathrm{II} )   }   \lesssim \| v_{h} \|_{a_{h}  }^{  } \| w_{h} \|_{ a_{h}
+                }^{  } $. To the terms $
+                \mathrm{III}  $ and  $ \mathrm{IV}  $ we apply the inequality \eqref{eq:inv_est} from the Corollary \ref{cor:bi_inverse_thm} to see that,
+                \begin{equation}
+                    \label{eq:invest_1}
+                    \abs{\mathrm{III}   }  \lesssim  \|h^{\frac{1}{2}} \partial _{n n} v_{h}  \|_{ \mathcal{F}_{h}^{} \cap \Omega}^{  }\| h^{-\frac{1}{2}} \jump{ \partial _{n} w_{h} }     \|_{\mathcal{F}_{h}^{} \cap \Omega}^{  } \lesssim  \| v_{h} \|_{A_{h}
+                    }^{  } \|w    \|_{ a_{h}}^{  }.
+                \end{equation}
+              The interior penalty can we easily see that,
+              \begin{equation}
+              \abs{  \mathrm{V}   }  \lesssim  \|h^{-\frac{1}{2}} \jump{ \partial _{n} v_{h}}  \|_{ \mathcal{F}_{h}^{} \cap \Omega }^{  }
+             \|h^{-\frac{1}{2}} \jump{ \partial _{n} w_{h}}  \|_{ \mathcal{F}_{h}^{} \cap \Omega }^{  }  \lesssim  \| v_{h}  \|_{ a_{h} }^{  }
+             \| w_{h}  \|_{ a_{h} }^{  }.
+              \end{equation}
+              The remaining terms terms $  \mathrm{VI} $ and $  \mathrm{VII} $ can again be handles by Corollary \ref{cor:bi_inverse_thm}, leading to
+              \begin{equation}
+                    \label{eq:invest_2}
+                \abs{  \mathrm{VI}   }  \lesssim \| h^{\frac{1}{2}}\partial _{nn} v_{h} \|_{\Gamma   }^{  } \| h^{-\frac{1}{2}} \partial _{n}w_{h} \|_{\Gamma   }^{  }  \lesssim \|  v_{h} \|_{A_{h}  }^{  } \| w_{h} \|_{ a_{h}   }^{  }
+              \end{equation}
+             Finally, using the definition of the norm it is easy to see that
+             \[
+\abs{  \mathrm{VIII}   }  \lesssim \| \partial _{n}v_{h} \|_{ \Gamma  }^{  }
+\| \partial _{n} w_{h} \|_{ \Gamma  }^{  }  \lesssim \| v_{h} \|_{ a_{h} }^{  }
+\| w_{h} \|_{ a_{h} }^{  } .
+             \]
+
+             Hence, we can conclude \begin{equation}
+                 \label{eq:ah_ahnorm}
+                 \abs{ a_{h}( v_{h},w_{h})  } \le \| v_{h} \|_{ a_{h} }^{  } \| w_{h} \|_{ a_{h} }^{  } \forall v_{h},w_{h} \in V_{h}.
+             \end{equation}
+             Therefore, since $\| \cdot  \|_{a_{h}  }^{  } \lesssim  \| \cdot  \|_{A_{h}  }^{  } $, it has been demonstrated that $a_{h}( \cdot ,\cdot )$ is bounded within the $\|\cdot   \|_{A{h} }^{ }$ norm.
+
+             \textbf{Estimate }\eqref{eq:bi_a_h_bounded} \textbf{.} Let $v \in V_{h} \oplus V $ and $w_{h} \in V_{h}$.
+             The only difference is that since $v$ can have a contribution from $V$ where no inverse estimate can be used to bound $\mean{ \partial _{nn} v }  $, hence, we cannot apply to Corollary \ref{cor:bi_inverse_thm} on the estimates \eqref{eq:invest_1} and \eqref{eq:invest_2}. However, this is not a problem since $\| h^{\frac{1}{2}} \mean{ \partial _{nn} v }
+             \|_{\mathcal{F} _{h}\cap  \Omega   }^{  } $ and  $\|h^{\frac{1}{2}}  \partial _{nn}v \|_{\Gamma   }^{  } $ are terms in the norm $\|  v \|_{a_{h},*  }^{  } $. Thus, we know that
+             \begin{equation}
+                  \abs{ a_{h}( v,w_{h}) }  \le \| v \|_{ a_{h},* }^{  } \| w_{h} \|_{ A_{h} }^{  } \ \ \forall v \in V_{h} \oplus V \text{ and } w_{h} \in V_{h}
+             \end{equation}
+
+\end{proof}
+
+
+
+
+\subsection{A priori error estimate}%
+\label{sec:a_priori_estimates}
+
+
+For the proposed method, we want to derive a priori error estimate with respect to both the  $\| \cdot  \|_{a_{h},*   }^{  } $-norm and the  $\| \cdot  \|_{ \Omega  }^{
+} $-norm.  These estimates are geometrically robust in that they remain unaffected by specific cut configurations, thanks to the ghost penalty they incorporate.
+First, we construct a suitable (quasi-)interpolation operator, here we use the Clement quasi interpolation operator which in contrast to the standard Lagrange nodal interpolation operator is also defined for low regularity function $u \in L^{2}(
+\Omega ) $.
+In combination with discrete coercivity this allows us to derive an a priori error estimate in the energy norm. Finally, we use a standard duality argument, also known as Aubin-Nitsche trick, to derive the $L^{2}( \Omega ) $-error estimate.
+
+Recall that for $v \in H^{3}( \mathcal{T } _{h}) $ the following inequalities.
+\begin{align}
+    \label{eq:trace:1}
+    \| \nabla v \|_{ \partial T }^{  } &\lesssim h^{-\frac{1}{2}}_{T}\|  \nabla v \|_{ T }^{  }+ h^{\frac{1}{2}} \| D^2 v \|_{T  }^{   }  , \\
+    \label{eq:trace:2}
+    \| \nabla v \|_{ \Gamma \cap T }^{  } &\lesssim  h^{-\frac{1}{2}} \| \nabla v \|_{T  }^{  }   + h^{\frac{1}{2}}_{T} \| D^2 v \|_{ T }^{  },\\
+    \label{eq:trace:3}
+    \| D^2 v \|_{ \Gamma \cap T }^{  } &\lesssim  h^{-\frac{1}{2}} \| D^2 v \|_{T  }^{  }   + h^{\frac{1}{2}}_{T} \| D^3 v \|_{ T }^{  },
+\end{align}
+holds $\forall T \in \mathcal{T} _{h}$, for proof see \cite[Lemma 4.2]{hansbo2003finite}. In this context is $D^3v$ a tensor defined in Equation \eqref{eq:tensor}.
+
+Assume that $\Omega $ has a boundary $\Gamma $ in $C^{1}$, then there exists a bounded extension operator,
+\begin{equation}
+    ( \cdot ) ^{e}: H^{m}( \Omega )  \to H^{m} ( \mathbb{R} ^{d}),
+\end{equation}
+for all  $v \in H^{m}( \Omega )$ which satisfies
+\begin{equation}
+    \begin{split}
+ v^{e}| _{\Omega } =   v,  \\
+\| v^{e} \|_{ m,\mathbb{R} ^{d}  }^{  } & \lesssim \| v \|_{ m, \Omega  }^{  }.
+    \end{split}
+\end{equation}
+For more information, see \cite[Theorem 9.7]{brezis2011functional} and \cite[p.181, p.185]{stein1970singular}. For the notation we simply write $ v := v^{e}   $ for $v \in \mathbb{R} ^{d} \setminus \Omega $.
+
+
+Starting from Lemma \ref{lemma:clements}, assume $v \in H^{s}( \Omega ) $ and let $r = \mathrm{min}(s , k+1) $. Revisit the definition of $V_{h}$ from \eqref{eq:vh_energy}, which is a polynomial of degree $k$. We can then employ the combination of the Clément interpolator with the extension operator to create $C_{h}^{e}: H^{m}( \mathbb{R} ^{d}) \to V_{h}$, such that $C ^{e} _{h} v := C _{h} v^{e}$.
+ Next, recall that $ \sum_{T\in \mathcal{T}_{h}}^{} \| v \|_{s,\omega ( T)   }^{  } \le C  \| v \|_{s, \mathcal{T}_{h}   }^{  } $ where $C$ is some constant decided by shape regularity of the mesh and the maximal number of different patches a single element can
+ belong to. This also holds for the inequality $ \sum_{T \in \mathcal{T}_{h} }^{} \sum_{F \in \partial T}^{}  \| v \|_{s,\omega ( F)   }^{  } \le C  \| v \|_{s, \mathcal{T}_{h}   }^{  } $.
+The following estimates are thereby established.
+
+\begin{align}
+    \label{eq:bi_projection_estimates_1}
+    \| v - C _{h}^{e} v \|_{  l, \mathcal{T} _{h} }^{  } & \lesssim h^{r-l}\sum_{T \in \mathcal{T}_h} \| v \|_{ r, \omega(T) }^{  } \lesssim  h^{r-l-\frac{1}{2}}  \| v \|_{ r, \Omega  }^{  }, \quad 0\le l\le r, \\
+    \label{eq:bi_projection_estimates_2}
+\| v - C ^{e}_{h}v \|_{ l, \partial \mathcal{T} _{h} }^{  } & \lesssim h^{r-l-\frac{1}{2}}\sum_{T \in \mathcal{T}_h} \sum_{F \in \partial T} \| v \|_{ r, \omega(F)  }^{  } \lesssim h^{r-l-\frac{1}{2}} \| v \|_{ r, \Omega   }^{  }, \quad 0  \le  l \le   r-\frac{1}{2}.
+    % \label{eq:bi_projection_estimates_3}
+    % \| v - C ^{e}_{h}v \|_{ l, \Gamma }^{  } & \lesssim h^{r-l-\frac{1}{2}} \sum_{T \in \mathcal{T}_h}  \| v \|_{ r,  \omega(T)  }^{  }\lesssim h^{r-l-\frac{1}{2}} \lesssim    \| v \|_{ r,  \Omega   }^{  }, \quad 0  \le  l \le  r-\frac{1}{2}.
+\end{align}
+
+% \todo[inline]{ Maybe hard to argue \eqref{eq:bi_projection_estimates_3} to hold on $\Gamma $, but may be related to some generalization of \eqref{eq:bi_n_cut_inverse_1} and \eqref{eq:bi_cut_inverse_1}. Anyhow, \eqref{eq:bi_projection_estimates_2} and
+% \eqref{eq:bi_projection_estimates_3} was never used in the proof of Lemma \ref{lemma:astar_estimate} since we used inverse estimates and ended up with \eqref{eq:bi_projection_estimates_1} instead on all of them.}
+
+\begin{lemma}
+    \label{lemma:astar_estimate}
+    Let $u \in H^{s}( \Omega ) $ for $s\ge 3$ be the exact solution to $\eqref{eq:cont_weak_problem} $ and let $k$ be the polynomial order of $V_{h}$. Set $r = \mathrm{min} ( s, k+1)$, then we have the interpolation estimates
+    \begin{equation}
+    \|  u - C_{h}u \|_{ a_{h},*  }^{  } \lesssim h^{r-2} \| u \|_{ r, \Omega  }^{  }.
+    \end{equation}
+\end{lemma}
+
+\begin{proof}
+    By definition,
+    \begin{equation}
+        \begin{split}
+            \| u - C_{h}^{e}u \|_{ a_{h}, * }^{  2}  =& \ \alpha  \overbrace{\|  ( u - C_{h}^{e}u) \|_{ \mathcal{T} _{h} \cap \Omega  }^{ 2}}^{\mathrm{I} }   + \overbrace{\| D^2 ( u - C_{h}^{e}u ) \|_{\mathcal{T} _{h} \cap \Omega   }^{ 2
+            }}^{\mathrm{II} }  \\  &  +
+            \overbrace{\gamma \| h^{-\frac{1}{2}} \jump{ \partial _{n} (u -
+        C_{h}^{e} u) }   \|_{ \mathcal{F}_{h}^{}\cap \Omega    }^{ 2
+        }}^{\mathrm{III} }  + \overbrace{\gamma \| h^{-\frac{1}{2}}  \partial _{n} (u - C_{h}^{e}u)    \|_{ \Gamma   }^{ 2 }}^{\mathrm{IV} }  \\
+          & + \overbrace{\| h^{\frac{1}{2}} \mean{ \partial _{nn} (u - C_{h}^{e}u) }   \|_{\mathcal{F} _{h}^{} \cap \Omega   }^{  2}}^{\mathrm{V} }  +  \overbrace{\| h^{\frac{1}{2}} \partial _{nn}(u - C_{h}^{e}u)     \|_{ \Gamma }^{  2}}^{\mathrm{VI}
+          } \\
+          =& \  \mathrm{I}  + \ldots + \mathrm{VI}.
+        \end{split}
+    \end{equation}
+    The strategy is to bound each term individually.
+    By initially focusing on the first two terms and employing equation \eqref{eq:bi_projection_estimates_1}, we can easily observe
+             \begin{equation}
+        \begin{split}
+            \mathrm{I} +\mathrm{II}  & \lesssim \|   u - C_{h}^{e}u \|_{ \mathcal{T} _{h}  }^{ 2} + \|  D^2( u - C_{h}^{e}u )  \|_{\mathcal{T} _{h} }^{ 2 } \\
+                                     & \lesssim  ( h^{2r}  + h^{2(r-2)} )\| u \|_{r,\mathcal{T}_{h} }^{  2} \lesssim h^{2(r -2)} \| u
+                                     \|_{r, \mathcal{T} _{h} }^{2  }  .
+        \end{split}
+             \end{equation}
+    From \eqref{eq:mean_jump_estimate} is it clear that $\| \jump{ \partial _{n} u }   \|_{ \mathcal{F}_{h}   }^{  } \lesssim \| \nabla  u \|_{ \partial  \mathcal{T} _{h} }^{  }   $. Hence, first applying the trace inequality \eqref{eq:trace:1}  and then
+    \eqref{eq:bi_projection_estimates_1} is it clear that,
+    \begin{equation}
+        \begin{split}
+            \mathrm{III}  & \lesssim h^{-1} \|  \nabla ( u - C_{h}^{e})  \|_{\partial \mathcal{T}_{h}   }^{2  }  \lesssim h^{-2} \| \nabla ( u - C^{e}_{h}u)  \|_{ \mathcal{T} _{h}
+                          }^{ 2 } + \|  D^2  ( u - C_{h}^{e})  \|_{\mathcal{T}_{h}   }^{ 2 } \\
+                          & \lesssim  ( h ^{2( r-1) -2 } + h^{2( r-2) } ) \| u  \|_{r, \mathcal{T}_{h}   }^{2  }  \lesssim  h^{2( r-2) }  \| u  \|_{r, \mathcal{T}_{h}   }^{ 2 }
+    \end{split}
+\end{equation}
+% And for the boundary term we apply estimate \eqref{eq:bi_projection_estimates_3}
+%         \begin{equation}
+%             \mathrm{IV}   \lesssim h^{-1} \|  \nabla  ( u - C_{h}^{e}u ) \|_{ \Gamma  }^{2  }  \lesssim  h^{2( r - 2 )} \| u \|_{r, \mathcal{T}_{h}   }^{  }
+%         \end{equation}
+And for the boundary term we apply \eqref{eq:trace:2} and then \eqref{eq:bi_projection_estimates_1}
+        \begin{equation}
+            \begin{split}
+            \mathrm{IV}   & \lesssim h^{-1} \|  \nabla  ( u - C_{h}^{e}u ) \|_{ \Gamma  }^{2  }    \lesssim h^{-2} \| \nabla ( u - C_{h}^{e}u )  \|_{ \mathcal{T}_{h}   }^{2  } + \| D^2( u - C_{h}^{e}u ) \|_{ \mathcal{T}_{h}   }^{ 2 } \\   & \lesssim  h^{2( r-2) }  \| u  \|_{r, \mathcal{T}_{h}   }^{ 2 }
+            \end{split}
+        \end{equation}
+Again, from \eqref{eq:mean_jump_estimate} is it clear that $\| \mean{ \partial _{nn} u }   \|_{ \mathcal{F}_{h}   }^{  } \lesssim \| D^2  u \|_{ \partial  \mathcal{T} _{h} }^{  }   $, thus we see that,
+        \begin{equation}
+            \mathrm{V}   \lesssim h \|  D^2  ( u - C_{h}^{e}u ) \|_{\partial \mathcal{T}_{h}}^{2  }  \lesssim  h^{2( r - 2 )} \| u \|_{r, \mathcal{T}_{h}   }^{ 2 }.
+        \end{equation}
+        The final term we we apply \eqref{eq:trace:3} and then \eqref{eq:bi_projection_estimates_1}
+
+        \begin{equation}
+            \begin{split}
+            \mathrm{VI} &    \lesssim h \|  D^2  ( u - C_{h}^{e}u ) \|_{\Gamma }^{2  }  \\
+            & \lesssim  h^{-2} \| D^2 ( u - C_{h}^{e}u )  \|_{ \mathcal{T}_{h}   }^{2  } + \| D^3( u - C_{h}^{e}u ) \|_{ \mathcal{T}_{h}   }^{ 2 } \\
+            % & \lesssim h^{-2}( \| u- C_{h}^{e} \|_{2,\mathcal{T}_{h}   }^{2  } + \| u- C_{h}^{e} \|_{3,\mathcal{T}_{h}   }^{2  }  )\\
+            &  \lesssim h^{-2}( h^{2(r - 2 - \frac{1}{2})} + h^{2(r - 3 - \frac{1}{2})})\| u \|_{r,\Omega   }^{  } \\
+            &  \lesssim ( h^{2r - 5)} + h^{2r - 6)})\| u \|_{r,\Omega   }^{  } \lesssim h^{2(r-2)} \| u \|_{r,\Omega   }^{  }
+            \end{split}
+        \end{equation}
+    Hence, we have $ \| u - C_{h}^{e} u \|_{a_{h},*  }^{  } \lesssim   h^{r-2}  \| u \|_{ r, \mathcal{T}_{h}   }^{2  } $.
+\end{proof}
+
+\begin{lemma}[Weak Galerkin orthogonality]
+    \label{lemma:weak_galerkin_ort}
+Let $u \in H^{s}( \Omega )  $, $ s\ge 3 $  be the exact solution to   \eqref{eq:cont_weak_problem} and $u_{h} \in V_{h}$ is a discrete solution to \eqref{eq:discrete_CutCIP_prob}. Then is \[
+    a_{h}( u - u_{h}, v_{h}) = g_{h} ( u_{h}, v_{h}) \quad \forall v_{h} \in V_{h}.
+    \]
+\end{lemma}
+
+\begin{proof}
+   From the definition of the problem \eqref{eq:discrete_CutCIP_prob} and utilizing that for $u \in H^{s}( \Omega ) $ we have the identity  $A_{h}( u,v_{h}) = a_{h}( u,v_{h}) = l(v_{h} )  \ \forall v_{h} \in V_{h} $. Consequently, it follows that \[
+       \begin{split}
+   l(v_{h} ) & =  A_{h}( u_{h},v_{h}) =  a_{h}( u,v_{h})  = a_{h}( u_{h},v_{h})+g_{h}( u_{h},v_{h})  \quad \forall  v_{h} \in  V_{h}.
+       \end{split}
+   \]
+    Hence, we have $a_{h}( u -  u_{h}, v_{h}) = g_{h}( u_{h},v_{h})  $.
+\end{proof}
+
+\begin{assumption*}[EP2]
+    For $v \in H^{s}( \Omega ) $ and $r = \min \{s,k+1 \} $, the semi-norm $\abs{ \ \cdot \  }_{g_{h}} $ is weakly consistent in the sense that
+    \begin{equation}
+        \label{as:bi_EP2}
+        \abs{ C _{h}^{e} v } _{g_{h}} \lesssim  h^{r-2} \| v \|_{ r,\Omega  }^{  }.
+    \end{equation}
+\end{assumption*}
+
+\begin{theorem}
+    \label{thm:apriori_result}
+    Let $u \in H^{s}( \Omega ) $ , $s\ge 3$ be a solution to \eqref{eq:cont_weak_problem} and let $u_{h} \in V_{h}$ of order $k\ge 2$ be the discrete solution to \eqref{eq:discrete_CutCIP_prob}. Then with $r = \min_{}\{s, k+1\} $ the error $e = u - u_{h}$ satisfies
+    \begin{align}
+        \label{eq:bi_apriori_1}
+            \| e \|_{ a_{h},* }^{  } &\lesssim   h^{r-2} \| u \|_{ r,\Omega  }^{  },\\
+        \label{eq:bi_apriori_2}
+        \| e \|_{ \Omega  }^{  } &\lesssim   h^{r-\mathrm{max}\left\{ 0, 3-k \right\} } \| u \|_{ r,\Omega  }^{  }.
+    \end{align}
+
+\end{theorem}
+\begin{remark}
+    Be aware that for $k=2$ the estimate \eqref{eq:bi_apriori_2} is suboptimal with $1$ order.
+\end{remark}
+
+\begin{proof}
+    We will divide the proof into two steps.
+
+        \textbf{Step 1.} We want to prove that $\| e \|_{ a_{h},* }^{  } \lesssim   h^{r-2} \| u \|_{ r,\Omega  }^{  }$.
+    Decompose $e = u - u_{h}$ intro $e = e_{h} + e_{\pi }$, where we denote the discrete error $e_{h} = C _{h}^{e} u - u_{h}$ and the interpolation error $e_{\pi } = u - C _{h} ^{e}u$. We can then observe that
+    \begin{equation}
+        \label{eq:astar_est}
+        \begin{split}
+    \| u - u_{h} \|_{ a_{h},* }^{  } & \le   \| u - C_{h}^{e} u + C_{h}^{e}u - u_{h} \|_{ a_{h},* }^{  } \\
+    & \le \|  u - C_{h}^{e} u \|_{a_{h},*  }^{  } +  \| C_{h}^{e}u - u_{h} \|_{a_{h},*  }^{  }\\
+                                     & \lesssim  \| e_{\pi } \|_{a_{h},*}^{  } + \| e_{h} \|_{A_{h}  }^{  }.
+        \end{split}
+    \end{equation}
+    Using Lemma \ref{lemma:astar_estimate}, is it clear that $\| e_{\pi } \|_{a_{h},*}^{  } \lesssim h^{r-2} \| u \|_{ r,\Omega  }^{  }  $ is already fulfilled, hence, it remains to estimate $e_{h}$. From Lemma \ref{lemma:bi_Ah_coercive} and
+    \ref{lemma:bi_Ah_bounded}, the weak Galerkin orthogonality and Assumption EP2 \eqref{as:bi_EP2} is it natural to arrive at,
+    \begin{equation}
+        \label{eq:apriori_energy1}
+    \begin{split}
+\| e_{h} \|_{ A_{h} }^{ 2 } & \lesssim a_{h}( C _{h}^{e} u - u_{h}, e_{h}) + g_{h}( C _{h}^{e}u - u_{h}, e_{h}) \\
+ & = a_{h}( C _{h}^{e} u - u, e_{h}) + a_{h}( u - u_{h}, e_{h}) + g_{h}( C _{h}^{e}u - u_{h}, e_{h}) \\
+ & = a_{h}( C _{h}^{e} u - u, e_{h}) + g_{h}( C _{h}^{e}u, e_{h}).
+ % & \lesssim h^{r-2} \| u \|_{ r, \Omega  }^{  } \| e_{h} \|_{ A_{h} }^{  }.
+    \end{split}
+    \end{equation}
+Hence, now utilizing the Assumption EP2 \eqref{as:bi_EP2} is it clear that
+\begin{equation}
+        \label{eq:apriori_energy2}
+    \begin{split}
+        a_{h}( C _{h}^{e} u - u, e_{h}) + g_{h}( C _{h}^{e}u, e_{h}) &\lesssim \| C _{h}^{e} u - u \|_{a_{h},*  }^{  } \| e_{h} \|_{a_{h}  }^{  }
+        + \abs{ C _{h}^{e}u }_{g_{h}} \abs{e_{h}  }_{g_{h}} \\
+         &\lesssim \| C _{h}^{e} u - u \|_{a_{h},*  }^{  } \| e_{h} \|_{a_{h}  }^{  } + h^{r-2} \| u \|_{r, \Omega   }^{  }\abs{e_{h}  }_{g_{h}} \\
+         &\lesssim (\| C _{h}^{e} u - u \|_{a_{h},*  }^{  } + h^{r-2} \| u \|_{r, \Omega   }^{  }) \|e_{h}\|_{A_{h}} \\
+         &\lesssim  h^{r-2} \| u \|_{r, \Omega   }^{  } \|e_{h}\|_{A_{h}}.
+    \end{split}
+\end{equation}
+Here we noticed that $\| e_{h} \|_{a_{h}  }^{  } + \abs{e_{h}  }_{g_{h}} \lesssim \| e_{h} \|_{ A_{h} }^{  }  $, and used that $\| C _{h}^{e} u - u \|_{a_{h},*  }^{  } \lesssim h^{r-2}\| u \|_{ r,\Omega  }^{  }  $ from Lemma
+\ref{lemma:astar_estimate}. Combining \eqref{eq:apriori_energy1} and \eqref{eq:apriori_energy2} and dividing by $\| e_{h} \|_{ A_{h} }^{  } $  is it clear that
+\begin{equation}
+    \label{eq:ni_4}
+\| e_{h} \|_{ A_{h}  }^{  } \lesssim h^{r-2} \| u \|_{r, \Omega   }^{  }  .
+\end{equation}
+Hence, inserting \eqref{eq:ni_4} into \eqref{eq:astar_est} we conclude the energy a priori estimate \eqref{eq:bi_apriori_1} holds.
+
+        \textbf{Step 2.}
+        We want to show that $ \| e \|_{ \Omega  }^{  } \lesssim   h^{r- \mathrm{max}(0,3-k)} \| u \|_{ r ,\Omega  }^{  }$. The idea is to apply the so-called Aubin-Nitsche duality trick while being aware of the ghost penalty $g_{h}$. Let us denote the following
+        observation.
+        Let $e:= u -u_{h} \in L^{2}( \Omega ) $ and $\psi  \in H^{4}( \Omega ) $.
+        Then is the corresponding dual problem to \eqref{eq:bi_problem} be
+        \begin{equation}
+            \begin{split}
+            \Delta ^2 \psi &= e  \quad  \text{ in } \Omega  \\
+            \partial _{n} \psi &= 0 \quad \text{ on } \Gamma \\
+            \partial _{n} \Delta \psi & = 0 \quad  \text{ on } \Gamma   \\
+            \end{split}
+        \end{equation}
+ Here is the regularity of $\psi $ and $e$ a consequence of the assumptions of the regularity of $u$ and $u_{h}$  \cite[pp. 113]{brenner2012}.
+        This implies that it exists a $\psi \in H^{4}( \Omega ) $ such that $a_{h}(v, \psi ) = ( e,v)_{\Omega } \ \forall v \in V_{h}  $. Hence, we can easily observe that from the Lemma \ref{lemma:weak_galerkin_ort} we have
+        \begin{equation}
+            \label{eq:ni_1}
+            \begin{split}
+        \| e \|_{ \Omega  }^{ 2 }  & = ( e,e)_\Omega   = ( e, \Delta ^2 \psi )_{\Omega } \\
+        &= a_{h}( e, \psi  ) = a_{h}( u-u_h, \psi ) \\
+        &= a_{h}( u-u_h, \psi + C^{e}_{h}\psi  - C^{e}_{h}\psi )  \\
+        &= a_{h}( u-u_h, \psi   - C^{e}_{h}\psi ) +  a_{h}( u-u_h, C^{e}_{h}\psi )  \\
+        &= a_{h}( u-u_h, \psi  - C^{e}_{h}\psi ) +  g_{h}( u_h, C^{e}_{h}\psi ) \\
+        &= a_{h}( u-u_h, \psi  - C^{e}_{h}\psi ) +  g_{h}( u_h - C^{e}_{h}u, C^{e}_{h}\psi )+  g_{h}( C^{e}_{h}u, C^{e}_{h}\psi ) \\
+        &  = \mathrm{I} + \mathrm{II} + \mathrm{III}
+            \end{split}
+        \end{equation}
+
+        Let $\widetilde{r} = \mathrm{min} ( 4, k+1)  $. Additionally, we have the regularity estimate $\| \psi \|_{\widetilde{r},\Omega   }^{  } \lesssim \| e \|_{ \Omega   }^{  } $.
+        Hence, by also  utilizing the energy a priori estimate \eqref{eq:bi_apriori_1} we can observe
+        \begin{equation}
+            \label{eq:ni_2}
+            \begin{split}
+             \mathrm{I}    & \lesssim     \|u-u_{h}  \|_{a_{h},*  }^{  }    \| \psi  - C^{e}_{h}\psi \|_{a_{h},*  }^{  } \\
+                & \lesssim     h^{r-2} \| u \|_{ r,\Omega   }^{  } h^{\widetilde{r}-2}   \| \psi   \|_{\widetilde{r},\Omega  }^{  } \\
+                & \lesssim     h^{r-2} \| u \|_{ r,\Omega   }^{  }  h^{\widetilde{r}-2}  \| e   \|_{\Omega }^{  }
+            \end{split}
+        \end{equation}
+        Specifically for the term $\mathrm{II} $ we apply Assumption EP2 \eqref{as:bi_EP2} and the estimate \eqref{eq:ni_4}
+        \begin{equation}
+            \label{eq:ni_3}
+            \begin{split}
+                \mathrm{II}  & \lesssim \abs{ u_{h} - C_{h}^{e}u } _{g_{h}} \abs{ C^{e}_{h} \psi }_{g_{h}}  \\
+                & \lesssim  \| u_{h} - C_{h}^{e}u  \|_{A_{h}} \abs{ C^{e}_{h} \psi }_{g_{h}} \\
+                             & \lesssim h^{r-2}  \| u  \|_{r,\Omega } h^{\widetilde{r}-2} \| \psi  \|_{\widetilde{r}, \Omega   }^{  } \\
+                             & \lesssim h^{r + \widetilde{r} -4}   \| u  \|_{r,\Omega } \| e \|_{ \Omega   }^{  }
+            \end{split}
+        \end{equation}
+        The third term is simply an application of Assumption EP2 \eqref{as:bi_EP2}, i.e.
+        \begin{equation}
+            \label{eq:ni_5}
+             \mathrm{III}  \lesssim  \abs{ C^{e}_{h}u }_{g_{h}}  \abs{ C^{e}_{h}\psi }_{g_{h}} \lesssim h^{r + \widetilde{r}-4} \| u \|_{ r,\Omega  }^{  }.
+        \end{equation}
+        Hence, combining \eqref{eq:ni_1}, \eqref{eq:ni_2}, \eqref{eq:ni_3}, \eqref{eq:ni_5}, and dividing by $\| e \|_{ \Omega  }^{  } $ on both sides can we conclude
+        \begin{equation}
+            \| e \|_{\Omega   }^{  } \lesssim h^{r+ \widetilde{r} -4} \| u \|_{ r,\Omega   }^{  }.
+        \end{equation}
+        Having a clear look at $\widetilde{r}$, wee see that \begin{equation}
+            \widetilde{r} = \mathrm{min}(4, k+1) = \begin{cases}
+                 3, \quad  k=2 \\
+                 4, \quad  k\ge 3 \\
+            \end{cases}.
+        \end{equation}
+        So we have the following estimate,\begin{equation}
+            \| e \|_{ \Omega  }^{  }  \lesssim  \| u \|_{ r,\Omega  }^{  }  \begin{cases}
+                h^{r-1}, \quad k=2 \\
+                h^{r-2}, \quad k\ge 3
+            \end{cases},
+        \end{equation}
+        or equivalently $\| e \|_{\Omega   }^{  } \lesssim \| u \|_{\Omega   }^{r- \mathrm{max}(0,k-3)   } $.
+
+
+\end{proof}
+
+
     % \input{CutCIP_biharmonic_ghost_penalty}
     % % \input{CutCIP_biharmonic_results}
     % \input{numerical_results}
@@ -2273,6 +3219,8 @@ However, in this thesis is the focus on solving the biharmonic equation avoiding
     \printbibliography
 
     \includepdf[pages=-]{results/illustration/back_page.pdf}
+
+
 
 
 
