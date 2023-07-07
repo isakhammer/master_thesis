@@ -49,26 +49,6 @@ We will now introduce the so-called ghost penalty faces, that is, \[
 \]
 This set is simply all facets that belong to all elements of the active mesh $\mathcal{T} _{h}$  intersected with $\Gamma $, i.e., all triangles to the cut cells $\mathcal{T} ^{\Gamma }_{h}$. For an illustration, see Figure \ref{fig:illustration_F_g}.
 
-% \begin{proposition}
-%     \label{prop:hessian_change}
-%     Let $v_{h} \in V_{h} $ and $F \in  \mathcal{F} _{h}$. Assume that $ v_{h} = v_{h} |_{F}$,  then the following identity holds.
-%     \begin{equation}
-%     \partial ^{j}_{n} (D^2v_{h}) = D^2 ( \partial ^{j}_{n} v_{h}), \quad  j=0,1,2.
-%     \end{equation}
-% \end{proposition}
-
-% \begin{proof}
-
-%         Recall that $\left[ D^2 v \right]_{i_{1},i_{2}} = \partial _{x_{i_{1}}x_{i_{2}}} v $ for $i_{1}, i_{2} \in \left\{ 1,\ldots,d \right\} $ for $d$ dimensions. The case $j=0$ is trivial. For the case $j=2$ we have,
-%         \begin{equation}
-%                 \begin{split}
-%                 \partial^{2} _{n} (\partial _{x_{i_{1}} x_{i_{2}}} v) & = n^{T}  D^2(\partial _{x_{i_{1}} x_{i_{2}}} v) n = n^{T}  J( \nabla (\partial _{x_{i_{1}} x_{i_{2}}}v) ) n \\
-%                 & =  n^{T}  J(\partial _{x_{i_{1}} x_{i_{2}}}(\nabla v) ) n = \partial _{x_{i_{1}} x_{i_{2}}} n^{T} J(\nabla v) n
-%                 \end{split}.
-%         \end{equation}
-%             Thus, taking account for all elements in the matrix we get $\partial^{2} _{n} (D^2v) = D^2( \partial^{2} _{n}v)$. The case $j=1$ is computed similarly.
-
-% \end{proof}
 
 \begin{lemma}[]
     \label{lemma:bi_local_facet_estimate_2}
