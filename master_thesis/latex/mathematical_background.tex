@@ -321,7 +321,7 @@ V'  = \left\{ F: V \to \mathbb{R}   \mid  F \text{ is linear and bounded} \right
 \end{proof}
 
 
-\subsection{Finite element method}%
+\subsection{Finite element methods}%
 \label{sub:finite_element_method}
 
 The finite element method (FEM) is a numerical method to solve partial differential equation by finding an approximation of the Problem \ref{def:abstract_linear_problem}.  Let $V_{h}$ be a finite-dimensional (polynomial) approximation space on the mesh
@@ -351,11 +351,12 @@ V_{h} \to \mathbb{R} $ ), but this is outside the scope of the thesis. For more 
     \label{eq:galerin_orth}
 a_{h}( u - u_{h}, v_{h}) = 0.
 \end{equation}
-Let $v + v_{h} \in V_{h} \oplus V$, which is the direct sum of the spaces, with a corresponding norm $\| \cdot  \|_{V_{h},*  }^{  } $.  For the forthcoming a priori analysis outlined in Section \ref{sub:ceas_lemma}, a necessary assumption is that the discrete bilinear form is bounded in $V \otimes V_{h}$, i.e.
+Let $v + v_{h} \in V_{h} \oplus V$, which is the direct sum of the spaces, with a corresponding norm $\| \cdot  \|_{V_{h},*  }^{  } $. Note that $V$ must sufficiently regular enough for the $\| \cdot  \|_{V_{h},*  }^{  } $ to be well-defined. For the forthcoming a priori analysis outlined in Section \ref{sub:ceas_lemma}, a necessary assumption is that the discrete bilinear form is bounded in $V \otimes V_{h}$, i.e.
 \begin{equation}
     \label{eq:ah_star}
 a_{h}( v + v_{h}, w_{h}) \lesssim  \| v + v_{h} \|_{ V_{h},* }^{  } \| w_{h} \|_{V_{h}  }^{  }.
 \end{equation}
+
 
 Following on, we will concentrate on establishing a theoretical framework for finite element analysis.
 \begin{definition}[Local polynomial space]
@@ -1310,13 +1311,14 @@ requirement of on $u$, we are indeed equipped to formulate an effective workarou
 .\end{equation}
 Hence, we now have abstract error estimate
 \begin{equation}
-\| u - u_{h} \|_{ V_{h}  }^{  }  \lesssim  \inf_{v_{h} \in V_{h} } \|  v_{h} - u \|_{V  }^{  }.
+\| u - u_{h} \|_{ V_{h},*  }^{  }  \lesssim  \inf_{v_{h} \in  V_{h}}  \| v - v_{h} \|_{ V_{h},*  }^{  } = 0 \quad  \forall v \in V.
 \end{equation}
 For more information, see \cite[Theorem 1.35]{pietro2012}.
-A useful property is that for a conformal numerical method to converge can we now simply require \[
+A useful property is that for a conformal numerical method to converge can we now simply require
+\begin{equation}
 \lim_{h \to 0}  \inf_{v_{h} \in  V_{h}}  \| v - v_{h} \|_{ V_{h},*  }^{  } = 0 \quad  \forall v \in V.
-\]
-In that case will $\| u - u_{h} \|_{ V  }^{  }  \to  0$, $h \to  0$. Hence, if this requirement is fulfilled, the numerical methods will converge towards the unique solution.
+\end{equation}
+In that case will $\| u - u_{h} \|_{ V_{h},*  }^{  }  \to  0$, $h \to  0$. Hence, if this requirement is fulfilled, the numerical methods will converge towards the unique solution.
 Note that in combination with Corollary \ref{cor:celement_apriori} is this very useful for estimating a priori estimates.
 
 
