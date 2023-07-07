@@ -46,13 +46,13 @@ if a local point exists so $u$ attains the extreme value $+1$, then it implies t
 Let $\varepsilon \ll 1 $ be a small parameter. For an isotropic
 binary mixture non-uniform, the standard Ginzburg-Landay free energy functional is given by
 \begin{equation}
-E( u)  = \int_{\Omega }^{} \frac{\varepsilon }{2} \abs{ \nabla u } ^2 + \frac{1}{\varepsilon } F( u) dx.
+E( u)  = \int_{\Omega }^{} \frac{\varepsilon^2 }{2} \abs{ \nabla u } ^2 +  F( u) dx.
 \end{equation}
 The nonlinear function $F( u) $ denotes the (Helmholtz) free energy density associated with the interaction dynamics between the components and thus comes in many forms depending on the thermodynamic properties, see \cite{miranville2017cahn}.
 However, we will in this article assume that $F( u) = ( 1 / 4 ) ( u^2 -1 ) ^{2} $.
 The chemical potential $\mu $ is defined as the variational derivative,
 \begin{equation}
-\mu = \frac{ \delta E( u) }{ \delta  u} = \frac{1}{\varepsilon }f( u)  - \varepsilon  \Delta u ,
+\mu = \frac{ \delta E( u) }{ \delta  u} = f( u)  - \varepsilon^2  \Delta u ,
 \end{equation}
 where we used the notation $f( u) = F'( u) =u( u^2 -1)  $.
 First of all, to guarantee local mass conservation, we may enforce the continuity equation; that is,
@@ -69,7 +69,7 @@ where $\mathcal{J} $ denotes the flux governed by the physical dynamics. Hence, 
  A well-accepted law for the flux is that it is proportional to the chemical energy gradient, $\mathcal{J} = - M  \nabla \mu  $ for a parameter $M$. For the simplicity we assume $M=1$. This implies that we can rewrite the boundary condition
  \eqref{eq:bc1} such that
  \begin{equation}
-     \mathcal{J}  \cdot n  = \partial _{n} \left(  \varepsilon \Delta u - \frac{1}{\varepsilon }f( u)   \right)  = \varepsilon  \partial _{n} \Delta u - \frac{1}{\varepsilon } f' ( u) \partial _{n}u =  \varepsilon  \partial _{n} \Delta u    ,
+     \mathcal{J}  \cdot n  = \partial _{n} \left(  \varepsilon^2 \Delta u - f( u)   \right)  = \varepsilon^2  \partial _{n} \Delta u -  f' ( u) \partial _{n}u =  \varepsilon^2  \partial _{n} \Delta u    ,
  \end{equation}
  for $u$ evaluated on $\Gamma $. Here we used that $\partial _{n} f( u) = f' ( u) \partial _{n}u  = 0$ from the boundary condition \eqref{eq:bc2}.
  Hence, we now have an equivalent set of boundary conditions and can finally write the strong form of the Cahn-Hilliard equation. Let $ u( x,0) =  u_{0}$, then is the dynamics of $u$ governed by,
@@ -77,7 +77,7 @@ where $\mathcal{J} $ denotes the flux governed by the physical dynamics. Hence, 
 \begin{equation}
 \label{eq:strongch}
     \begin{split}
-\partial _{t} u + \Delta  \left(  \varepsilon  \Delta u - \frac{1}{\varepsilon }f( u) \right)   &=0  \quad \text{ in } \Omega  \\
+\partial _{t} u + \Delta  \left(  \varepsilon^2  \Delta u - f( u) \right)   &=0  \quad \text{ in } \Omega  \\
 \partial _{n} u &= 0 \quad \text{ on } \Gamma  \\
 \partial _{n}    \Delta u       &= 0 \quad \text{ on } \Gamma  \\
     \end{split}
