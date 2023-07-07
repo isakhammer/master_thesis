@@ -325,16 +325,37 @@ V'  = \left\{ F: V \to \mathbb{R}   \mid  F \text{ is linear and bounded} \right
 \label{sub:finite_element_method}
 
 The finite element method (FEM) is a numerical method to solve partial differential equation by finding an approximation of the Problem \ref{def:abstract_linear_problem}.  Let $V_{h}$ be a finite-dimensional (polynomial) approximation space on the mesh
-$\mathcal{T} _{h}$. We say that a method is conform if $V_{h}\subset V $ and non-conform if $V _{h} \not\subset V$. We define the approximate problem as follows.
+$\mathcal{T} _{h}$. We say that a method is conform if $V_{h}\subset V $ and non-conform if $V _{h} \not\subset V$. In this thesis, our primary focus will be on the non-conforming methods. We define the approximate problem as follows.
 \begin{problem}[The approximate problem]
     \label{def:approx_problem}
     Let $V_{h} \not\subset V$ a non-conform finite-dimensional space. Find  $u_{h} \in V_{h}$ such that, \[
-    a_{h}(u_{h},v ) = l_{h}( v) :=  \left<f,v \right>   \forall v \in V_{h}.
+    a_{h}(u_{h},v_{h} ) = l_{h}( v_{h}) :=  \left<f,v_{h} \right> \quad   \forall v_{h} \in V_{h}.
     \]
 \end{problem}
 
-We denote the functional $a_{h}: V_{h} \times V_{h} \to \mathbb{R} $ as an consistent approximation of $a: V \times V \to \mathbb{R} $, and similarly for the right-hand side $l_{h} : \times _{h} \to \mathbb{R} $ as an approximation of $l: V \to \mathbb{R} $.
+We denote the bilinear form $a_{h}: V_{h} \times V_{h} \to \mathbb{R} $ as approximation of $a: V \times V \to \mathbb{R} $, and similarly for the right-hand side $l_{h} : V _{h} \to \mathbb{R} $ as an approximation of $l: V \to \mathbb{R} $.
+Not that since the discrete is non-conformal, $V_{h} \not \subset  V_{}$, implies that boundedness and coercivity is not inherited from the continuous bilinear form $a( \cdot ,\cdot ) $. Hence, the discrete formulation $a_{h}:V_{h} \times V_{h}
+\to \mathbb{R}  $ well-posed if it is coercive and bounded, \begin{equation}
+    \begin{split}
+   a_{h}( v_{h}, w_{h}) & \lesssim \| v_{h} \|_{ V_{h} }^{  } \| w_{h} \|_{ V_{h} }^{  } \quad    \forall w_{h},v_{h} \in V_{h},\\
+   a_{h}( v_{h}, v_{h}) & \gtrsim  \| v_{h} \|_{ V_{h} }^{  2} \quad  \forall v_{h} \in V_{h}.
+    \end{split}
+\end{equation}
+Note that we have relaxed the boundedness of $l_{h}( \cdot ) $, which arises of the finite dimensional property of $V_{h}$.
 
+Strictly speaking, if $a_{h}( \cdot ,\cdot ) $ is well-posed does not necessary imply that it is consistent. Indeed, a critical assumption about $a_{h}( \cdot ,\cdot )$ is its consistency. To be more precise, the discrete bilinear form can extend into a mapping $a_{h} : V \times V_{h} \to \mathbb{R}$
+\footnote{
+Technically speaking, we must assume there is a subspace $V^{'} \subset V$  such that the exact solution $u$  belongs to $ V'  $ such that $a_{h}: V' \times V_{h} \to \mathbb{R} $ (we can not generalize to $a_{h} : V \times
+V_{h} \to \mathbb{R} $ ), but this is outside the scope of the thesis. For more information, see \cite[Definition 1.31]{pietro2012}}. Within this framework, there exists an exact solution $u \in V$, for which it holds that $a_{h}( u,v_{h}) = l_{h}( v_{h})$. This inherently implies the so-called Galerkin orthogonality, where
+\begin{equation}
+a_{h}( u - u_{h}, v_{h}) = 0.
+\end{equation}
+Let $v + v_{h} \in V_{h} \oplus V$, which is the direct sum of the spaces, with a corresponding norm $\| \cdot  \|_{V_{h},*  }^{  } $.  For the forthcoming a priori analysis outlined in Section \ref{sub:ceas_lemma}, a necessary assumption is that the discrete bilinear form is bounded in $V \otimes V_{h}$, i.e.
+\begin{equation}
+a_{h}( v + v_{h}, w_{h}) \lesssim  \| v + v_{h} \|_{ V_{h},* }^{  } \| w_{h} \|_{V_{h}  }^{  }.
+\end{equation}
+
+Following on, we will concentrate on establishing a theoretical framework for finite element analysis.
 \begin{definition}[Local polynomial space]
     \label{def:local_space}
     Let $T$ be a element in a mesh $\mathcal{T}_{h} $,  $x = \left[ x_{1}, \ldots, x_{d} \right] $ be a vector, and $\alpha  = \left[ \alpha _{1}, \ldots, \alpha _{d} \right] \in \mathbb{N} ^{d} $ be a multi index.
