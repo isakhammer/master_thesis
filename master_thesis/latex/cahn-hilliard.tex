@@ -219,20 +219,19 @@ $E(u_h)$ decreases over time, signifying the system's tendency to seek a state o
 \subsection{Note on the manufactured solution}%
 \label{sub:the_problem}
 
-While the report is not consisting of a full worthy experiments of convergence analysis, we still present a framework for manufactured solutions.
-
-Recall the strong form Cahn-Hilliard equation. Let $ u( x,0) =  u_{0}$ then is the dynamics on the form,
+While the report is not consisting of a numerical convergence analysis of the Cahn-Hilliard problem, we still present a framework for manufactured solutions for non-homogeneous boundary conditions. Let $ u( x,0) =  u_{0}$ then is Cahn-Hilliard with
+non-homogeneous boundary conditions as follows,
 \begin{subequations}
     \label{eq:ch_gen}
     \begin{align}
     \label{eq:ch_gen:a}
-        \partial _{t} u + \Delta  \left(  \varepsilon^2  \Delta u - f( u) \right)   &= g_{0}( x)   \quad \text{ in } \Omega  \\
-        \partial _{n} u &= g_{1}( x)  \quad \text{ on } \Gamma  \\
-        \partial _{n}    \Delta u   &= g_{2}(x)  \quad \text{ on } \Gamma
+        \partial _{t} u + \Delta  \left(  \varepsilon^2  \Delta u - f( u) \right)   &= g_{0}( x)   \quad \text{ in } \Omega,  \\
+        \partial _{n} u &= g_{1}( x)  \quad \text{ on } \Gamma,  \\
+        \partial _{n}    \Delta u   &= g_{2}(x)  \quad \text{ on } \Gamma,
     \end{align}
 \end{subequations}
-where we defined $f( u) = F'( u) =u( u^2 -1)  $ for $F( u) = \frac{1}{4}( u^{2} - 1)^{2} $ and the domain $\Omega \subset \mathbb{R} ^{d} $  for $d = 2,3$. In contrast to the standard version presented in the introduction \eqref{eq:strongch}, is this version
-generalized to also holds for for functions $g_{0},g_{1},g_{2}: \Omega \to\mathbb{R}   $. While the standard version may be physical correct, this version creates flexibility so we can easily construct manufactured solution on complex domains.
+where we defined $f( u) = F'( u) =u( u^2 -1)  $ for $F( u) = \frac{1}{4}( u^{2} - 1)^{2} $ and the domain $\Omega \subset \mathbb{R} ^{d} $  for $d = 2,3$. In contrast to the standard version presented in the introduction \eqref{eq:strongch}, this
+version is generalized to also holds for for functions $g_{0},g_{1},g_{2}: \Omega \to\mathbb{R}   $. While the standard version may be physical correct, this version creates flexibility so we can easily construct manufactured solution on complex domains.
 
     Designing a manufactured solution using $g_{0}( \cdot ) $ may be temping with the formulation \eqref{eq:ch_gen:a}. However, observe that expanding the Laplacian we get,
     \begin{equation}
@@ -319,25 +318,17 @@ It comes evident from the first step of the proof that $ (   f'( u)\partial _{n}
 \]
 Again one of the jump terms vanishes because of the regularity of $u$.
 Inserting the result into \eqref{eq:f_g2} have we shown that the second formulation also holds.
-
-The consistency follows in a weak sense for $u \in H^{4}( \Omega ) $.
 \end{proof}
 
-Hence, we have a scheme for nonlinear spatial discretization. Let $u_{h} \in \left[ 0,T \right] \times V_{h}  $ and $v_{h} \in V_{h}$. We define the following CIP discretization
-\begin{equation}
-    \label{eq:cip_ch}
-    \begin{split}
-        a_{h} \left( u_{h}, v_{h} \right)   =& ( \Delta  u_{h}, \Delta v_{h} ) _{ \Omega } \\
-                                     & + \left( \mean{  \Delta  u_{h} }, \jump{ \partial _{n }v_{h}} \right)_{\mathcal{F}_{h}  }  + \left( \mean{ \Delta  v_{h} }, \jump{ \partial _{n}u_{h} }      \right)_{\mathcal{F}_{h}  }  + \frac{\gamma }{h}
-                                     \left( \jump{ \partial _{n} u_{h}}, \jump{ \partial _{n} v_{h}   }   \right)_{\mathcal{F}_{h} } \\
-                                     & + \left(   \Delta  u_{h} ,  \partial _{n }v_{h} \right)_{\Gamma   }  + \left(  \Delta  v_{h} ,  \partial _{n}u_{h}       \right)_{\Gamma  }  + \frac{\gamma }{h}  \left(  \partial _{n} u_{h},  \partial _{n} v_{h}      \right)_{ \Gamma } \\
-    c^{}_{h} ( u_{h},v_{h})  & = -( f( u_{h}), \Delta v_{h} )_{\mathcal{T} _{h}}+  ( f( u_{h}) , \jump{ \partial _{n}v_{h} }  )_{\mathcal{F} _{h}^{int}} + ( f(u_{h}), \partial _{n} v_{h})_{\Gamma  }  + ( f'( u_{h})  g_{1}   ,  v_{h})_{\Gamma } \\
-    l_{h}( v_{h}) & =  \left( g_{0}, v_{h} \right) _{\Omega } -  \varepsilon ( g_{2},  v_{h} )_{\Gamma }  -  \varepsilon ( g_{1}, \Delta  v_{h}  )_{\Gamma }  + \varepsilon \frac{\gamma }{h} ( g_{1}, \partial _{n} v_{h}  )_{\Gamma }
-    \end{split}
-\end{equation}
-such that that the following relationship holds.
-\[
-    ( \partial _{t}u_{h}, v_{h})_\Omega + \varepsilon  a_{h}( u_{h},v_{h}) + \frac{1}{\varepsilon }c_{h}( u_{h},v_{h})   =  l_{h}(v_{h}) \quad  \forall u_{h}, v_{h} \in V_{h}
-\]
 
+Combining the full general Cahn-Hilliard problem in \eqref{eq:ch_gen} with the semi-linear forms\eqref{eq:ch:1} and the CutCIP biharmonic problem \eqref{eq:discrete_CutCIP_prob}, we get the following scheme.
+\begin{equation}
+    ( \partial _{t}u_{h}, v_{h})_\Omega + \varepsilon^2  A_{h}( u_{h},v_{h}) + c_{h}( u_{h},v_{h})   =   l_{h}(v_{h}) \quad  \forall u_{h}, v_{h} \in V_{h}
+\end{equation}
+
+To illustrate, assume we use the Laplace formulation presented in equation \eqref{eq:laplace_prob}, i.e., $A_{h}( u_{h}, v_{h}) = a^{L}_{h}( u_{h}, v_{h}) + g_{h}( u_{h}, v_{h})   = l_{h}^{L}( v_{h})$. Due to the $\varepsilon $ scaling, we ultimately arrive at the following formulation.
+ \begin{equation}
+    l_{h}( v_{h})  =  \left( g_{0}, v_{h} \right) _{\Omega } -  \varepsilon^2 ( g_{2},  v_{h} )_{\Gamma }  -  \varepsilon^2 ( g_{1}, \Delta  v_{h}  )_{\Gamma }  + \varepsilon^2 \frac{\gamma }{h} ( g_{1}, \partial _{n} v_{h}  )_{\Gamma }
+ \end{equation}
+ Hence, we arrived at a system which can easily be used to construct manufactured solution.
 
