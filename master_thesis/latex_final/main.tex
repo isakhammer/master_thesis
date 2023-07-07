@@ -276,7 +276,7 @@ such that
 \end{split}
 \end{equation}
 for given $f,g_{1} ,g_{2}: \Omega  \to \mathbb{R} $ and constant $\alpha >0  $.
-The BH problem holds relevance since it provides a proper spatial-discretization test framework prior to moving on solving the nonlinearities and time-integration.
+The BH problem holds relevance since it provides a proper spatial-discretization test framework prior to moving on solving the non-linearities and time-integration.
 
 The early Finite Element Methods (FEM) for CH were proposed in \cite{elliott1987numerical, elliott1986cahn} utilizing global $C^{1}$ and $C^{2}$ in one spatial dimension, but later it has been shown that making $C^{1}$ (or higher order) elements in
 multiple space dimensions is far from being trivial. For
@@ -445,11 +445,11 @@ A combination of these methods, the DG and mixed formulation for the CH problem,
 Creating a high-quality mesh in two and three dimensions for realistic problems is a challenging task that can consume a significant amount of time in the simulation workflow. It is also difficult to scale properly on distributed platforms, making it less suitable for moving domains, highly complex meshes, or smooth boundaries. An interesting class to approach the problem is the so-called unfitted finite element method, which utilizes a background mesh and does not align with the physical boundary. For an illustration
 see Figure \ref{fig:domain_mesh}.
 This greatly reduces the need to generate an unstructured mesh and makes it very applicable for parallelization and moving domains
-since it avoids the need of remeshing entirely. However, without paying attention to the so-called cut cells, which are the elements intersecting with the boundary, the method quickly leads to instability and ill-conditioning.
+since it avoids the need for remeshing entirely. However, without paying attention to the so-called cut cells, which are the elements intersecting with the boundary, the method quickly leads to instability and ill-conditioning.
 One of the methods to counter this is the cut finite element method (CutFEM), where the focus is to penalize the cut-cells weakly by adding an additional ghost penalty term to ensure well-posedness and optimal convergence properties \cite{burman2015cutfem}. Notably, there exist related methods, sometimes considered equivalent, named Extended FEM and Trace FEM \cite{cai2021nitsche,zonca2018unfitted}.
 This method has been successfully implemented for the BH problem for the
 mixed formulation \cite{cai2023nitsche}, the CIP formulation \cite{chen2023arbitrary, cai2021nitsche} or using so-called $C^{1}$ continuous Bogner-Fox-Schmit elements \cite{burman2020cut}.
-However, both implementations are considering an interface problem between two domains. Specifically for the CH problem, the mixed formulation \cite{karatzas2021reduced} has been shown to be successful.
+However, both implementations consider an interface problem between two domains. Specifically for the CH problem, the mixed formulation \cite{karatzas2021reduced} has been shown to be successful.
  Aggregated unfitted finite element method (AgFEM) is a close relative to CutFEM and has also shown to
 be promising \cite{badia2018aggregated, badia2022linking}. The method is an alternative way to the ghost penalty, which instead applies a so-called cell aggregation with respect to a cut cell ( assuming each cell has enough support with interior elements) and,
 thus, the badly cut cells are removed, ensuring robustness and well-posedness.
