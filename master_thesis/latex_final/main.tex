@@ -1922,13 +1922,13 @@ Let $u \in H^{4}( \Omega ) $ be the solution to \eqref{eq:bi_problem}, let $ v_{
         \node at (2,1.7) {$\Gamma$};
 
     \end{tikzpicture}
-\caption{Let $x_{0}$ be a point at the boundary $\Gamma $ for dimension $d=2$. Here is a illustration of the gradient $\nabla u$ with the corresponding normal and tangential decomposition, $Q_{F} \nabla  u$ and $P_{F} \nabla  u$.    }
+\caption{Let $x_{0}$ be a point at the boundary $\Gamma $ for dimension $d=2$. Here is an illustration of the gradient $\nabla u$ with the corresponding normal and tangential decomposition, $Q_{F} \nabla  u$ and $P_{F} \nabla  u$.    }
 \label{fig:projection_QF_PF}
 \end{figure}
 \begin{proof}
 
- We will start constructing a local theory for a element $T$ and then extend it to the full mesh
-$\mathcal{T}_{h} $. Using Greens Theorem is it obvious that
+ We will start constructing a local theory for an element $T$ and then extend it to the full mesh
+$\mathcal{T}_{h} $. Using Greens Theorem, it is obvious that
 \begin{equation}
     \label{eq:id1}
 \left( \Delta ^2 u,v_h \right) _{T }   = \left( \partial _{n} \Delta u, v_h \right) _{\partial T  } - \left( \nabla \left( \Delta  u \right) , \nabla v_h \right) _{T }
@@ -1944,13 +1944,14 @@ We can expand the second term in the following way.
 & = (  \partial_n\nabla u, \nabla v_h ) _{\partial_{} T  } - ( D^2 u, D^2v_h ) _{T }
     \end{split}
 .\end{equation}
-Hence, the normal flux of $\Delta u$ appears naturally into the formulation. It can be denoted that $D^2$ is the Hessian matrix operator. Also remark that we apply the notation
+Hence, the normal flux of $\Delta u$ appears naturally in the formulation. It can be denoted that $D^2$ is the Hessian matrix operator. Also, remark that we apply the notation
 $( D^2u, D^2v_h )_{\Omega } = \int_{\Omega }^{} D^{2}u : D^2v_h  dx$ for the inner product $D^2u:D^2v_h$.
 
 Next, we want to decompose the evaluation of $\nabla  u $ on the boundary $\partial T$ in the tangential and normal direction. Pick a facet  $F \in \partial T$, then we define the following decomposition of linear transformation $\nabla u = P_{F}\nabla u  + Q_{F}  \nabla u  $ s.t. the
 orthogonality, $
 P_{F} \nabla u  \cdot Q_{F}  \nabla u = 0$, holds. Here, the normal projection matrix is defined as $Q_{F} = n \otimes n $ and the tangential decomposition follows from $ P_{F} = I - Q_{F} = I - n \otimes n  =  \sum_{i=1}^{d-1} t_{i} \otimes t_i$,
-where we defined a orthonormal basis $t_{i}$, $i = 1, \ldots, d-1$ for the space orthogonal to the outer normal vector $n$ on a facet $F$. For demonstration in $d=2$, see Figure \ref{fig:projection_QF_PF}. Let $ a_{1}, a_{2}, a_{3} \in \mathbb{R} ^{d}$ be any vectors, then it is well known that the following identity holds $ ( a_{1}
+where we defined a orthonormal basis $t_{i}$, $i = 1, \ldots, d-1$ for the space orthogonal to the outer normal vector $n$ on a facet $F$. For demonstration in $d=2$, see Figure \ref{fig:projection_QF_PF}. Let $ a_{1}, a_{2}, a_{3} \in \mathbb{R}
+^{d}$ be any vectors, and then it is well known that the following identity holds $ ( a_{1}
 \otimes a_{2}  ) a_{3} = ( a_{2}^{T}  a_{3}) a_{1} $. Hence, we have
 \begin{equation}
 \label{eq:projection}
@@ -1981,13 +1982,13 @@ Combining \eqref{eq:id1}, \eqref{eq:id2} and \eqref{eq:id3} we see that,
 \[
     ( \Delta ^2 u, v_h) _{T}   = ( D^2 u, D^2v_h)_{T } + ( \partial _{n}  \Delta u, v_h )_{\partial T} -( \partial _{nn}u , \partial _{n} v_h  )_{\partial T}-\sum_{i=1}^{d-1} ( \partial _{n t_{i}}u, \partial _{t_{i}} v_h  )_{\partial T}
 \]
-Since we aim construct a identity for the full mesh $\mathcal{T} _{h}$, we sum over the elements.
+Since we aim constructing an identity for the full mesh $\mathcal{T} _{h}$, we sum over the elements.
 \begin{equation}
 \label{eq:bi_basic_dg2}
 \left( \Delta  ^{2} u,v_h \right) _{\Omega } = \sum_{T \in  \mathcal{T} _{h}}^{}  ( D^2 u, D^2v_h)_{T } + ( \partial _{n}  \Delta u, v_h )_{\partial T} -( \partial _{nn}u , \partial _{n} v_h  )_{\partial T}-\sum_{i=1}^{d-1} ( \partial _{n t_{i}} u , \partial _{t_{i}} v_h  )_{\partial T}
 \end{equation}
 Our goal is to simplify the equation above so we can take account for discontinuities of the derivatives.
-By integrating over exterior facets $\mathcal{F} _{h}^{ext}$ and interior facets $\mathcal{F} _{h}^{int}$ we will get e more suitable formulation which makes it easier to control the jumps between the elements, hence makes it possible to penalize discontinuities.
+By integrating over exterior facets $\mathcal{F} _{h}^{ext}$ and interior facets $\mathcal{F} _{h}^{int}$, we will get e more suitable formulation which makes it easier to control the jumps between the elements, hence makes it possible to penalize discontinuities.
 
 \begin{equation*}
     \begin{split}
@@ -2033,7 +2034,7 @@ Where integration of the interior facets is computed in the following fashion.
                  }}_{= 0}    \mean{ \partial _{t_{i}}v_h }  = 0
                    \end{split}
 .\end{equation}
-Observe that the cancellations in the term $(I)$ and term $(III)$  appears of the continuity of $v_h\in V_{h} $ and $u\in H^{4}( \Omega ) $ which makes the jumps and derivative jumps zero. On the other hand, the second term $(II)$  does not vanish
+Observe that the cancellations in the term $(I)$ and term $(III)$  appear of the continuity of $v_h\in V_{h} $ and $u\in H^{4}( \Omega ) $, which makes the jumps and derivative jumps zero. On the other hand, the second term $(II)$  does not vanish
 since the derivative of $v_h \in V_{h}$ has a nonzero jump. It can also be raised that $\mean{
 \partial _{nn} u } = \partial _{nn} u  $ holds of $H^{4}( \Omega  ) $.
 
@@ -2047,12 +2048,12 @@ Combining \eqref{eq:dg2_facets} and inserting the boundary condition $g_{2} = \p
 \end{equation}
 Under the assumption that $g_{1} = 0$ on $\Gamma$, and given that the tangential decomposition is orthogonal to $n$, we can assert that $ \partial_{t_{i} n} u = \partial_{t_{i}} ( \partial _{n} u )= \partial_{t_{i}} ( g_{1} ) = 0 $ holds for any $i =
 1,\ldots, d -1$. This implies that the
-last term of the equation vanish.
+last term of the equation vanishes.
 
 We also note that we add consistent symmetry terms $( \mean{ \partial _{nn} v_h } ,\jump{ \partial _{n} u }    )_{\mathcal{F}^{int}_{h} } $ and $( \partial _{nn} v_h  , \partial _{n} u     )_{\Gamma  } $ in addition to the penalty terms $\frac{\gamma
 }{h} ( \partial _{n} u, \partial _{n}v)_{\Gamma }  $ and $\frac{\gamma
 }{h} ( \jump{ \partial _{n} u }  , \jump{    \partial _{n}v})_{\mathcal{F}^{int}_{h} }  $ . Since $u\in H^{4}( \Omega ) $ and the boundary condition,  $\partial _{n} u = g_{1}=0$ on $\Gamma $, is each of these terms effectively zero, but does provide symmetry and will later
-be proven to be essential for well-posedness for the discrete problem. Finally, we have
+be proven to be essential for the well-posedness of the discrete problem. Finally, we have
 \begin{equation}
 \begin{split}
     \left( \Delta  ^{2} u, v_h \right) _{\Omega }  =&   \left( D^2u, D^2v_h \right)_{\Omega } + \left(g_{2}, v_h  \right) _{ \Gamma  }\\
@@ -2107,7 +2108,7 @@ With the corresponding energy norms,
 It is noteworthy that we have the consistent terms $\left( \mean{  \partial _{n n} u_{h} }, \jump{ \partial _{n }v_{h}} \right)_{\mathcal{F}_{h}^{int}} $ and $ \left(   \partial _{n n} u_{h} ,  \partial _{n }v_h \right)_{\Gamma }$ naturally appear in the
 derivation. However, we also added two symmetry terms,  $\left( \mean{  \partial _{n n} u_{h} }, \jump{ \partial _{n }v_{h}}
 \right)_{\mathcal{F}_{h}^{int}} $ and $ \left(   \partial _{n n} u_{h} ,  \partial _{n }v_{h} \right)_{\Gamma }$, and the so-called penalty terms, $ \frac{\gamma }{h}  \left( \jump{ \partial _{n} u_{h}}, \jump{ \partial _{n} v_{h}   }   \right)_{\mathcal{F}_{h}^{int}}$ and $ \frac{\gamma }{h}  \left(  \partial _{n} u_{h},  \partial _{n} v_{h}      \right)_{\Gamma }$.
-     These terms is essential for making the problem well-posed, hence, the name interior penalty method or symmetric interior penalty method. For more information of  nonconformal CIP error analysis, see \cite[Chapter 1.3]{pietro2012}.
+     These terms are essential for making the problem well-posed, hence, the name interior penalty method or symmetric interior penalty method. For more information of  nonconformal CIP error analysis, see \cite[Chapter 1.3]{pietro2012}.
 \end{remark}
 
 \subsubsection{Construction of the Laplacian formulation}%
@@ -2129,11 +2130,11 @@ derivation. However, we also added two symmetry terms,  $\left( \mean{  \partial
 
 \begin{proof}
 
-  Similarly, we start by constructing integration by parts identities locally for a element $T$ and then extend it to the full mesh $\mathcal{T}_{h} $.
+  Similarly, we start by constructing integration by parts identities locally for an element $T$ and then extend it to the entire mesh $\mathcal{T}_{h} $.
 Utilizing \eqref{eq:iden_bi} can we see that \[
 ( \Delta ^2 u, v_{h} ) _{T} = ( \Delta u, \Delta v_{h}) +  ( \partial _{n} \Delta u, v_{h})_{\partial T} - ( \partial _{n} v_{h}, \Delta u) _{\partial T}
 \]
-Now, summing over all elements we get \[
+Now, summing over all elements, we get \[
     \begin{split}
 ( \Delta ^2 u, v_{h} ) _{\Omega } & = \sum_{T \in \mathcal{T}_{h} }^{}  \left( ( \Delta u, \Delta v_{h})_{T}
 +  ( \partial _{n} \Delta u, v_{h})_{\partial T} - ( \partial _{n} v_{h}, \Delta u) _{\partial T} \right)  \\
@@ -2159,9 +2160,9 @@ Hence, we end up with the identity,
 
 Similarly as for Lemma \ref{lemma:hessian}, we add consistent symmetry terms $(  \jump{ \partial _{n} u }, \mean{ \Delta  v_{h} })_{\mathcal{F}^{int}_{h} } $ and $(  \partial _{n} u, \Delta  v_{h}       )_{\Gamma  } -(  g_{1}, \Delta  v_{h}  )_{\Gamma  }  $ and
 the penalty terms $ \frac{\gamma }{h} (  \partial _{n} u, \partial _{n}   v_{h}       )_{\Gamma  } -\frac{\gamma }{h}(  g_{1}, \partial _{n} v_{h}  )_{\Gamma  }$ and $\frac{\gamma }{h}( \jump{ \partial _{n} u } , \jump{ \partial _{n} v_{h} }
-)_{\mathcal{F}^{int}_{h} }  $  . Effectively is the terms adding zero
+)_{\mathcal{F}^{int}_{h} }  $  . Effectively, the terms adding zero
 because of the regularity $ u \in H^{4}( \Omega ) $ and the boundary condition $\partial _{n} u = g_{1}$.
-Finally we have
+Finally, we have
 \[
     \begin{split}
 ( \Delta ^2 u, v_{h} ) _{\Omega }  =& ( \Delta u, \Delta v_{h})_{\mathcal{T} _{h} }  + ( g_{2} , v_{h} )_{\Gamma }  - ( g_{1} , \Delta v_{h})_{\Gamma } + \frac{\gamma }{h} ( g_{1} ,  \partial _{n}v_{h})_{\Gamma }\\
@@ -2170,7 +2171,7 @@ Finally we have
 & - (  \Delta u , \partial _{n} v_{h})_{\Gamma }- ( \partial _{n} u, \Delta v_{h})_{\Gamma } + \frac{\gamma }{h}( \partial _{n} u, \partial _{n} v_{h})_{\Gamma }   .
     \end{split}
 \]
-and the proof is complete.
+And the proof is complete.
 \end{proof}
 
 We will now assemble the Laplace CIP formulation.
@@ -2216,13 +2217,13 @@ _{\mathcal{F}^{int}_{h} }  $, thus making the bilinear form $a^{L}( \cdot,\cdot 
 
 It should be noted that the Hessian formulation has a substantial limitation in that it is only valid for homogeneous Neumann conditions. This constraint arises from the challenges associated with imposing $g_{1}$ via the tangential derivative terms
 in Equation \eqref{eq:bi_basic_dg_full_1} during the proof of Lemma \ref{lemma:hessian}.
-From a physical perspective, this is not problematic as it aligns with the boundary conditions of the original CH problem \eqref{eq:strongch}. However, from the standpoint of numerical validation, the homogeneous Neumann condition enforces strict
+From a physical perspective, this is manageable as it aligns with the boundary conditions of the original CH problem \eqref{eq:strongch}. However, from the standpoint of numerical validation, the homogeneous Neumann condition enforces strict
 rules on the design of manufactured solutions on arbitrary domains. One way to fix this is to enforce tangential derivatives of $g_{1}$, i.e., inserting $\partial _{n}u = g_{1}$ for $ ( \partial _{t_{i}}( \partial_{n}  u ) , \partial _{n} v)_\Gamma  $ into
 \eqref{eq:bi_basic_dg_full_1}. A downside with this method is that we must require $g_{1}$ in $ H^{\frac{3}{2}}( \Gamma ) $.
 Consequently, the examples illustrated in section \ref{sec:numerical_results} are only demonstrated on simple domains. This particular constraint does not apply to the Laplace formulation.
 
-The Hessian formulation is well investigated by Susanne Brenner in several papers for \cite{brenner2012, brenner2012quadratic, brenner2012quadratic_kirk} with a corresponding analysis and numerical validation. Similarly, variants of the Laplace formulation can be found here
-\cite{feng2007fully, georgoulis2009discontinuous}. In these article there also is good theoretical and experimental evidence that both formulation have the following expected a priori estimates. Let  $u \in H^{s}( \Omega ) $ for $s\ge  \frac{5}{2} + \varepsilon$, and $u_{h}\in
+The Hessian formulation is well investigated by Susanne Brenner in several papers for \cite{brenner2012, brenner2012quadratic, brenner2012quadratic_kirk} with corresponding analysis and numerical validation. Similarly, variants of the Laplace formulation can be found here
+\cite{feng2007fully, georgoulis2009discontinuous}. In these articles there also is good theoretical and experimental evidence that both formulation have the following expected a priori estimates. Let  $u \in H^{s}( \Omega ) $ for $s\ge  \frac{5}{2} + \varepsilon$, and $u_{h}\in
 V_{h}  $ of order $k\ge 2$. Then with $r = \min\left\{ s,
 k+2 \right\}$ the a priori estimates are   \[
     \begin{split}
