@@ -343,15 +343,17 @@ Not that since the discrete is non-conformal, $V_{h} \not \subset  V_{}$, implie
 \end{equation}
 Note that we have relaxed the boundedness of $l_{h}( \cdot ) $, which arises of the finite dimensional property of $V_{h}$.
 
-Strictly speaking, if $a_{h}( \cdot ,\cdot ) $ is well-posed does not necessary imply that it is consistent. Indeed, a critical assumption about $a_{h}( \cdot ,\cdot )$ is its consistency. To be more precise, the discrete bilinear form can extend into a mapping $a_{h} : V \times V_{h} \to \mathbb{R}$
+Strictly speaking, if $a_{h}( \cdot ,\cdot ) $ is well-posed does not necessary imply that it is consistent. Hence, a critical assumption about $a_{h}( \cdot ,\cdot )$ is its consistency. To be more precise, the discrete bilinear form can extend into a mapping $a_{h} : V \times V_{h} \to \mathbb{R}$
 \footnote{
 Technically speaking, we must assume there is a subspace $V^{'} \subset V$  such that the exact solution $u$  belongs to $ V'  $ such that $a_{h}: V' \times V_{h} \to \mathbb{R} $ (we can not generalize to $a_{h} : V \times
 V_{h} \to \mathbb{R} $ ), but this is outside the scope of the thesis. For more information, see \cite[Definition 1.31]{pietro2012}}. Within this framework, there exists an exact solution $u \in V$, for which it holds that $a_{h}( u,v_{h}) = l_{h}( v_{h})$. This inherently implies the so-called Galerkin orthogonality, where
 \begin{equation}
+    \label{eq:galerin_orth}
 a_{h}( u - u_{h}, v_{h}) = 0.
 \end{equation}
 Let $v + v_{h} \in V_{h} \oplus V$, which is the direct sum of the spaces, with a corresponding norm $\| \cdot  \|_{V_{h},*  }^{  } $.  For the forthcoming a priori analysis outlined in Section \ref{sub:ceas_lemma}, a necessary assumption is that the discrete bilinear form is bounded in $V \otimes V_{h}$, i.e.
 \begin{equation}
+    \label{eq:ah_star}
 a_{h}( v + v_{h}, w_{h}) \lesssim  \| v + v_{h} \|_{ V_{h},* }^{  } \| w_{h} \|_{V_{h}  }^{  }.
 \end{equation}
 
@@ -1292,33 +1294,30 @@ Combining \eqref{eq:inv1} and \eqref{eq:inv2}, we establish that
 \text{ for } l \le m.
 \end{equation}
 
-\subsection{Cea's lemma}%
+\subsection{Abstract error estimate}%
 \label{sub:ceas_lemma}
 
-Assume that we have a discrete bilinear form $a_{h}: X_{h}\times X_{h} \to \mathbb{R} $ and let $X _{h} \subseteq  V $ be the discrete conform polynomial space. We transition the problem to find a solution, $u_{h} \in  \mathcal{V}_{h}$, so it holds that $a\left( u_{h},v_{h} \right)  = l\left( v_{h} \right) \ \  \forall v_{h} \in X _{h} $.
-Since the method is conform, i.e., $X _{h} \subseteq  V $, does it exists a exact solution, $u \in  \mathcal{V}$, such that \(
-a \left( u, v_{h} \right)  = l\left( v_{h} \right)  \ \  \forall v_{h} \in  X _{h}.
-\)
-Furthermore, the problem is said to be strongly consistent since it fulfills the Galerkin orthogonality property, that is $ a\left( u -u_{h} , v_{h} \right)  =0$. Thus, if $u_{h},v_{h} \in  X _{h}$, then
+Since $V_{h} \not \subset V_{h}$, it is clear that we cannot directly employ the standard Cea's lemma \cite[p. 66]{quartdiff}. Yet, given the discrete stability \eqref{eq:ah_star} and discrete Galerkin orthogonality \eqref{eq:galerin_orth}, coupled with an additional
+requirement of on $u$, we are indeed equipped to formulate an effective workaround.
+
 \begin{equation}
 \label{eq:cealemma_proof}
     \begin{split}
-\alpha \| u -u_{h} \|_{ V  }^{ 2 } & \le  a\left( u - u_{h}, u - u_{h}  \right)    \\
-&= a\left( u - u_{h}, u -v_{h} \right) - a\left( u -u_{h}, v_{h} - u_{h} \right)  \\
- &  \le  M \| u - u_{h} \|_{ V  }^{  }  \| u - v_{h} \|_{ V  }^{  }
+ \| v_{h} -u_{h} \|_{ V_{h}  }^{ 2 } & \lesssim   a_{h}( v_{h} - u_{h}, v_{h} - u_{h} )    \\
+ &= a_{h}( v_{h} - u, v_{h}- u_{h}) + a_{h}( u - u_{h}, v_{h} - u_{h})   \\
+ & \lesssim \| v_{h}- v \|_{ V_{h},* }^{  } \| v_{h}- u_{h} \|_{V_{h} }^{  }   \\
     \end{split}
 .\end{equation}
-Hence, we now have the so-called Ceas lemma, \[
-\| u - u_{h} \|_{ V  }^{  }  \lesssim  \inf_{v_{h} \in X_{h} } \|  v_{h} - u \|_{V  }^{  }.
-\]
+Hence, we now have abstract error estimate
+\begin{equation}
+\| u - u_{h} \|_{ V_{h}  }^{  }  \lesssim  \inf_{v_{h} \in V_{h} } \|  v_{h} - u \|_{V  }^{  }.
+\end{equation}
+For more information, see \cite[Theorem 1.35]{pietro2012}.
 A useful property is that for a conformal numerical method to converge can we now simply require \[
-\lim_{h \to 0}  \inf_{v_{h} \in  X_{h}}  \| v - v_{h} \|_{ V  }^{  } = 0 \quad  \forall v \in V.
+\lim_{h \to 0}  \inf_{v_{h} \in  V_{h}}  \| v - v_{h} \|_{ V_{h},*  }^{  } = 0 \quad  \forall v \in V.
 \]
-In that case will $\| u - u_{h} \|_{ V  }^{  }  \to  0$, $h \to  0$. Hence, if this requirement is fulfilled, the numerical methods will converge to a unique solution.
-For more information, see \cite[p. 66]{quartdiff}.
-
-In combination with Corollary \ref{cor:celement_apriori}, is Cea's lemma very handy to construct a priori estimates. However, Ceas lemma as it stands does assume conform methods $X_{h} \subset X$, hence, we must be cautious for broken Sobolev spaces.
-
+In that case will $\| u - u_{h} \|_{ V  }^{  }  \to  0$, $h \to  0$. Hence, if this requirement is fulfilled, the numerical methods will converge towards the unique solution.
+Note that in combination with Corollary \ref{cor:celement_apriori} is this very useful for estimating a priori estimates.
 
 
 
