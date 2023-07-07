@@ -1802,7 +1802,7 @@ Note that in combination with Corollary \ref{cor:celement_apriori} this is very 
 \section{Continuous interior penalty methods for the biharmonic problem with Cahn-Hilliard type boundary conditions}%
 \label{sec:CIP_biharmonic_problem}
 
-One of the objective of this section is to discuss the strong formulation for the biharmonic problem.
+One of the objectives of this section is to discuss the strong formulation for the biharmonic problem.
 Following this, we will present both the continuous weak formulation and the derivation of the two proposed discrete weak formulations, specifically the continuous interior penalty methods.
 We then present a short discussion of the current status of the properties of the methods.
 
@@ -1823,14 +1823,15 @@ $. The functions $g_{1},g_{2}: \Omega  \to \mathbb{R}$ are denoted as boundary c
 
 \begin{remark}
 It is worth noting that the problem is closely related to the Kirchhoff's plate problem by changing the boundary conditions such that $u = \partial _{n } u = 0$ on $\Gamma $, which is in the literature known as so-called clamped boundary conditions.
-Many of the papers we refer to may consider clamped boundary condition and not the CH boundary conditions. The main difference relies on if the problem is treated with homogeneous or non-homogeneous boundary conditions and if the discrete space is
+Many of the papers we refer to may consider clamped boundary conditions, not CH boundary conditions.
+The main difference relies on if the problem is treated with homogeneous or non-homogeneous boundary conditions and if the discrete space is
 imposing the Dirichlet and Neumann conditions strongly in the discrete solution space or weakly using the Nitsche's method \cite{nitsche1971variationsprinzip}.
 \end{remark}
 
 We want to construct a weak form for the strong biharmonic problem \eqref{eq:bi_problem}. Let $v \in H^{2}( \Omega ) $  Using Greens Theorem is it obvious that \(
 \left( \Delta ^2 u,v \right) _{ \Omega  }   = ( \partial _{n} \Delta u, v ) _{\Gamma   } - ( \nabla \left( \Delta  u \right) , \nabla v ) _{ \Omega }
 \).
-Next, applying a new iteration of the Greens theorem we get
+Next, applying a new iteration of the Greens theorem, we get
 $ -( \nabla ( \Delta u ) , \nabla v ) _{\Omega  }  =   ( \Delta u, \Delta v ) _{\Omega } - ( \Delta u, \partial _{n}v )_{\Gamma } $.
 Hence, we obtain the identity
 \begin{equation}
@@ -1863,12 +1864,13 @@ Note that the Neumann boundary condition $g_{1}$ is strongly imposed in $V$, and
 \subsection{Detailed construction of Hessian and Laplacian Formulations }%
 \label{sub:construction_of_laplacian_cip}
 The goal is to construct two CIP formulations for the problem \eqref{eq:cont_weak_problem}, that is: Find $u_{h} \in V_{h} \not\in V$ such that $a_{h}( u_{h}, v_{h}) = l_{h}( v_{h}) $ for all $v_{h} \in V_{h}$. We will follow the ideas presented in \cite{brenner2012} and \cite{feng2007fully}.
-A property that is necessary is that when we have a bilinear form and replace the exact solution with $u_{h} \in V_{h}$, the system still remains consistent in $V$. Hence, we guarantee a consistency of the discrete weak formulation by assuming during
+A necessary property is that when we have a bilinear form and replace the exact solution with $u_{h} \in V_{h}$, the system remains consistent in $V$.
+Hence, we guarantee consistency of the discrete weak formulation by assuming during
 the construction that $u \in H^{4}( \Omega ) $ and $v_{h} \in  V_{h}$ .
- However, due to the nonconformal nature of $V_{h}$, it becomes necessary to introduce penalty terms to ensure the discrete system is well-posed when we replace with $u_{h} \in V_{h}$. Keep in mind that the $C^{1}$
-continuity is imposed weakly and in the same way is the Neumann conditions also imposed weakly.
+ However, due to the nonconformal nature of $V_{h}$, it becomes necessary to introduce penalty terms to ensure the discrete system is well-posed when we replace it with $u_{h} \in V_{h}$. Keep in mind that the $C^{1}$
+continuity is imposed weakly and, in the same way, are the Neumann conditions also imposed weakly.
 
-To achieve the objective of constructing the Hessian and Laplacian formulations, the following lemmas will be the primary components.
+Our goal is to achieve the objective of constructing the Hessian and Laplacian formulations. The following lemmas will be the primary components.
 
 \subsubsection{Construction of the Hessian formulation}%
 \label{ssub:construction_of_the_hessian_formulation}
