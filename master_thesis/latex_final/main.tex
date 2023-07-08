@@ -1759,7 +1759,7 @@ Combining \eqref{eq:inv1} and \eqref{eq:inv2}, we establish that
 \text{ for } l \le m.
 \end{equation}
 
-\subsection{Nonconform Error Estimates}%
+\subsection{Abstract Nonconform Error Analysis}%
 \label{sub:ceas_lemma}
 
 Our goal is to construct abstract error estimates for the discrete bilinear form $a_{h}( \cdot ,\cdot ) $.
@@ -1769,6 +1769,7 @@ Our goal is to construct abstract error estimates for the discrete bilinear form
     \label{eq:galerin_orth}
 a_{h}( u - u_{h}, v_{h}) = 0.
 \end{equation}
+For more information, see \cite[Definition 1.31]{pietro2012}.
 
 Let $v + v_{h} \in W \oplus V_{h} $ be associated with a corresponding norm $\| \cdot  \|_{V,*  }^{  } $. Here the symbol $\oplus$ is denoted the direct sum of the spaces $V_{h}$ and $W$.
 A necessary assumption is that the discrete bilinear form $a_{h}( \cdot ,\cdot ) $  is bounded in $W \otimes V_{h} \times V_{h}$, i.e.
@@ -1781,12 +1782,12 @@ a_{h}( v_{h}, w_{h}) \lesssim  \|  v_{h} \|_{ V,* }^{  } \| w_{h} \|_{V_{h}  }^{
 \end{equation}
 This, is good since we can now utilize the stability and coercivity of the discrete bilinear form presented in \eqref{eq:discrete_wellposed}.
 
-Since $V_{h} \not \subset V_{h}$, it is clear that we cannot directly employ the standard Cea's lemma \cite[p. 66]{quartdiff}. Yet, given the discrete stability \eqref{eq:ah_star} and discrete Galerkin orthogonality \eqref{eq:galerin_orth}, we are indeed equipped to formulate an effective workaround.
+Since $V_{h} \not \subset V_{h}$, it is clear that we cannot directly employ the standard Cea's lemma \cite[p. 66]{quartdiff}. Yet, we are indeed equipped to formulate an effective workaround.
 
-\begin{lemma}[Nonconform Ceas Lemma]
-    Let $V_{h} \not \subset V$.
+\begin{lemma}[Nonconform Cea's Lemma]
+    Let $u$ be the exact solution. Let $V_{h} \not \subset V$. Assume $a_{h}( \cdot ,\cdot ) $ is well-posed in $V_{h} \times _V_{h}$, the discrete stability \eqref{eq:ah_star} and Galerkin orthogonality \eqref{eq:galerin_orth}. Then, the following error estimate hold,
     \begin{equation}
-        \| u - u_{h} \|_{ V_{h},*  }^{  }  \lesssim  \inf_{v_{h} \in  V_{h}}  \| v - v_{h} \|_{ V_{h},*  }^{  } = 0 \quad  \forall v \in V.
+        \| u - u_{h} \|_{ V_{h},*  }^{  }  \lesssim  \inf_{v_{h} \in  V_{h}}  \| u - v_{h} \|_{ V_{h},*  }^{  }.
     \end{equation}
 \end{lemma}
 
@@ -1803,8 +1804,8 @@ Since $V_{h} \not \subset V_{h}$, it is clear that we cannot directly employ the
     \begin{equation}
         \| u - u_{h} \|_{ V_{h},*  }^{  }  \lesssim  \inf_{v_{h} \in  V_{h}}  \| v - v_{h} \|_{ V_{h},*  }^{  } = 0 \quad  \forall v \in V.
     \end{equation}
-    For more information, see \cite[Theorem 1.35]{pietro2012} and \cite[Definition 1.31]{pietro2012}.
 \end{proof}
+A more general proof, see \cite[Theorem 1.35]{pietro2012}
 
 A useful property is that for a conformal numerical method to converge, we can now simply require
 \begin{equation}
