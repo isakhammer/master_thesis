@@ -1762,7 +1762,8 @@ Combining \eqref{eq:inv1} and \eqref{eq:inv2}, we establish that
 \subsection{Abstract Nonconform Error Analysis}%
 \label{sub:ceas_lemma}
 
-Our goal is to construct abstract error estimates for the discrete bilinear form $a_{h}( \cdot ,\cdot ) $.
+Our goal is to construct abstract error estimates for the discrete bilinear form $a_{h}( \cdot ,\cdot ) $. Since $V_{h} \not \subset V_{h}$, it is clear that we cannot directly employ the standard Cea's lemma \cite[p. 66]{quartdiff}. Hence, we have to formulate an effective workaround.
+
  To successfully achieve this, a critical assumption for $a_{h}( \cdot ,\cdot )$ is its consistency. Assume that the discrete bilinear form can be extended to a mapping  $a_{h} : W \times V_{h} \to \mathbb{R}$ for an sufficiently regular subset $W \subset V$.
   We say that the bilinear form is consistent if it exists an exact solution $u \in W$ for which it holds that $a_{h}( u,v_{h}) = l_{h}( v_{h})$. This inherently implies the so-called Galerkin orthogonality,
 \begin{equation}
@@ -1772,22 +1773,23 @@ a_{h}( u - u_{h}, v_{h}) = 0.
 For more information, see \cite[Definition 1.31]{pietro2012}.
 
 Let $v + v_{h} \in W \oplus V_{h} $ be associated with a corresponding norm $\| \cdot  \|_{V,*  }^{  } $. Here the symbol $\oplus$ is denoted the direct sum of the spaces $V_{h}$ and $W$.
-A necessary assumption is that the discrete bilinear form $a_{h}( \cdot ,\cdot ) $  is bounded in $W \otimes V_{h} \times V_{h}$, i.e.
+A necessary assumption is that the discrete bilinear form $a_{h}( \cdot ,\cdot ) $  is bounded in $W \otimes V_{h} \times V_{h}$ and that $\| v_{h} \|_{V,*  }^{  } \lesssim  \| v_{h} \|_{ V_{h} }^{  }  \ \forall v_{h } \in  V_{h} $, i.e.
 \begin{equation}
     \label{eq:ah_star}
-a_{h}( v + v_{h}, w_{h}) \lesssim  \| v + v_{h} \|_{ V,* }^{  } \| w_{h} \|_{V_{h}  }^{  } \quad  \forall v+ v_{h} \in W \otimes V_{h}, w_{h} \in V_{h}
+    \begin{split}
+a_{h}( v + v_{h}, w_{h}) & \lesssim  \| v + v_{h} \|_{ V,* }^{  } \| w_{h} \|_{V_{h}  }^{  } \quad  \forall v+ v_{h} \in W \otimes V_{h}, \ \  w_{h} \in V_{h}, \\
+a_{h}( v_{h}, w_{h}) & \lesssim  \|  v_{h} \|_{ V,* }^{  } \| w_{h} \|_{V_{h}  }^{  } \lesssim \|  v_{h} \|_{ V_{h} }^{  } \| w_{h} \|_{V_{h}  }^{  } \quad  \forall  v_{h},  w_{h} \in V_{h}.
+    \end{split}
 \end{equation}
-We also assume that $\| v_{h} \|_{V,*  }^{  } \lesssim  \| v_{h} \|_{ V_{h} }^{  }  \ \forall v_{h } \in  V_{h} $. Hence, we have the estimate \begin{equation}
-a_{h}( v_{h}, w_{h}) \lesssim  \|  v_{h} \|_{ V,* }^{  } \| w_{h} \|_{V_{h}  }^{  } \lesssim \|  v_{h} \|_{ V,* }^{  } \| w_{h} \|_{V_{h}  }^{  } \quad  \forall  v_{h},  w_{h} \in V_{h}.
-\end{equation}
-This, is good since we can now utilize the stability and coercivity of the discrete bilinear form presented in \eqref{eq:discrete_wellposed}.
+This, is good since we can now utilize this in combination iwth the stability and coercivity results presented in \eqref{eq:discrete_wellposed}.
 
-Since $V_{h} \not \subset V_{h}$, it is clear that we cannot directly employ the standard Cea's lemma \cite[p. 66]{quartdiff}. Yet, we are indeed equipped to formulate an effective workaround.
 
 \begin{lemma}[Nonconform Cea's Lemma]
-    Let $u$ be the exact solution. Let $V_{h} \not \subset V$. Assume $a_{h}( \cdot ,\cdot ) $ is well-posed in $V_{h} \times _V_{h}$, the discrete stability \eqref{eq:ah_star} and Galerkin orthogonality \eqref{eq:galerin_orth}. Then, the following error estimate hold,
+    Let $u$ be the exact solution and let $V_{h} \not \subset V$.
+    Assume that the discrete bilinear form $a_{h}( \cdot ,\cdot ) $ is well-posed in $V_{h} \times V_{h}$. Additionally, assume that both the discrete stability (as given by \eqref{eq:ah_star}) and Galerkin orthogonality (as outlined in \eqref{eq:galerin_orth}) are valid
+    Then, the following error estimate hold,
     \begin{equation}
-        \| u - u_{h} \|_{ V_{h},*  }^{  }  \lesssim  \inf_{v_{h} \in  V_{h}}  \| u - v_{h} \|_{ V_{h},*  }^{  }.
+        \| u - u_{h} \|_{ V,*  }^{  }  \lesssim  \inf_{v_{h} \in  V_{h}}  \| u - v_{h} \|_{ V_{h},*  }^{  }.
     \end{equation}
 \end{lemma}
 
