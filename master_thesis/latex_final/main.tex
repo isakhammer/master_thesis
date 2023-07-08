@@ -160,6 +160,11 @@ equation using a minimalistic Implicit-Explicit (IMEX) time discretization schem
 
 
 \newpage
+\section*{Acknowledgement}%
+\label{sec:acknowledgement}
+\todo[inline]{ GJØRE DENNE }
+
+\newpage
 \section{Introduction}\label{sec:introduction}
 
 
@@ -4216,12 +4221,14 @@ arrive at the following modification.
 \section{Conclusion}%
 \label{sec:conclusion}
 
-We first presented the construction on the properties of the continuous interior penalty methods for the biharmonic equation with Cahn-Hilliard boundary conditions based on \cite{feng2007fully, brenner2012}.
-Next, we constructed a stabilized cut finite element method for an unfitted mesh based on the framework established in \cite{gurkan2019stabilized}.
-This method involves the use of a so-called ghost penalty, which ensures stabilization by integrating
-outside of the physical domain.
-Theoretical evidence was provided to validate its stability, and an a priori analysis was conducted alongside corresponding numerical experiments.
-Finally, we then demonstrated that the cut continuous interior penalty methods can successfully be applied to the nonlinear Cahn-Hilliard equation.
+First, we provided a brief overview of Sobolev spaces and basic PDE theory, introducing the FEM method and discussing how error analysis is affected when our method is nonconformal, as opposed to when it is conformal.
+Next, we revisited and meticulously constructed the so-called Laplace and Hessian formulations of the continuous interior penalty methods for the biharmonic equation with Cahn-Hilliard type boundary conditions presented by \cite{brenner2012, feng2007fully}.
+
+The primary aim of this thesis has been to enhance this formulations to accommodate unfitted mesh. In doing so, a novel, stabilized, unfitted cut continuous interior penalty finite element method has been successfully developed for the biharmonic equation. Moreover, this method has been effectively extended to handle the Cahn-Hilliard equation.
+Using the theoretical discontinuous Galerkin framework for the Poisson problem, as proposed by \cite{gurkan2019stabilized}, we managed to show that the method was
+well-posed and that the convergence properties from the original fitted formulation was confirmed. The theoretical results are further supported by presented numerical evidence. We also did a additional analysis
+
+Finally, we then demonstrated that the cut continuous interior penalty methods can successfully be applied to the nonlinear Cahn-Hilliard equation using a very simple Implicit-Explicit solver.
 
     % \input{appendix}
 
