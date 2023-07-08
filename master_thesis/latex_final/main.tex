@@ -2336,15 +2336,15 @@ this is fulfilled we propose a ghost penalty which fulfills these assumptions in
             \draw (0.1, 0.1) circle (1.5cm);
             % Background mesh
             \foreach \i in {-2.5, -2, ..., 2.5} {
-                \draw[line width=0.1pt, shift={(-2.5,\i)}, opacity=0.2] (0,0) -- (5,0);
-                \draw[line width=0.1pt, shift={(\i,-2.5)}, opacity=0.2] (0,0) -- (0,5);
+                \draw[line width=0.1pt, shift={(-2.5,\i)}, opacity=0.4] (0,0) -- (5,0);
+                \draw[line width=0.1pt, shift={(\i,-2.5)}, opacity=0.4] (0,0) -- (0,5);
             }
 
-            \node[below right] at (-0.2,0.4) {$\Omega$};
-            \node[below right] at (-1.6,1.6) {$\Gamma$};
+            \node[below right] at (-0.1,0.5) {$\Omega$};
+            \node[below right] at (-1.45,1.5) {$\Gamma$};
 
             % Labels
-            \node[below right] at (1.6,2.0) {$\widetilde{\mathcal{T}}_{h}$};
+            \node[below right] at (1.4,2.1) {$\widetilde{\mathcal{T}}_{h}$};
         \end{tikzpicture}
 
 }\hfill
@@ -2379,14 +2379,14 @@ this is fulfilled we propose a ghost penalty which fulfills these assumptions in
             \draw (0.1, 0.1) circle (1.5cm);
             % Background mesh
             \foreach \i in {-2.5, -2, ..., 2.5} {
-                \draw[line width=0.1pt, shift={(-2.5,\i)}, opacity=0.2] (0,0) -- (5,0);
-                \draw[line width=0.1pt, shift={(\i,-2.5)}, opacity=0.2] (0,0) -- (0,5);
+                \draw[line width=0.1pt, shift={(-2.5,\i)}, opacity=0.4] (0,0) -- (5,0);
+                \draw[line width=0.1pt, shift={(\i,-2.5)}, opacity=0.4] (0,0) -- (0,5);
             }
 
 
             % Labels
-            \node[below right] at (0.0,0.5) {$\mathcal{T}^{\mathrm{int} }_{h}$};
-            \node[below right] at (-1.9,1.6) {$\mathcal{T}^{\Gamma }_{h}$};
+            \node[below right] at (-0.1,0.6) {$\mathcal{T}^{\mathrm{int} }_{h}$};
+            \node[below right] at (-1.70,1.6) {$\mathcal{T}^{\Gamma }_{h}$};
         \end{tikzpicture}
 }
 \hfill
@@ -2421,15 +2421,15 @@ this is fulfilled we propose a ghost penalty which fulfills these assumptions in
             \draw (0.1, 0.1) circle (1.5cm);
             % Background mesh
             \foreach \i in {-2.5, -2, ..., 2.5} {
-                \draw[line width=0.1pt, shift={(-2.5,\i)}, opacity=0.2] (0,0) -- (5,0);
-                \draw[line width=0.1pt, shift={(\i,-2.5)}, opacity=0.2] (0,0) -- (0,5);
+                \draw[line width=0.1pt, shift={(-2.5,\i)}, opacity=0.4] (0,0) -- (5,0);
+                \draw[line width=0.1pt, shift={(\i,-2.5)}, opacity=0.4] (0,0) -- (0,5);
             }
 
 
             % Labels
             % \node[below right] at (2.5,2.5) {$\widetilde{\mathcal{T}}_{h}$};
             % \node[below right] at (0.4,0.5) {$\mathcal{T}_{int}$};
-            \node[below right] at (-0.5,0.5) {$\mathcal{T}_{h }$};
+            \node[below right] at (-0.7,0.5) {$\mathcal{T}_{h }$};
         \end{tikzpicture}
 
 
@@ -3617,8 +3617,8 @@ For an illustration of the flower domain, see Figure \ref{fig:flower}.
 
   % Background mesh
   \foreach \i in {-1, -0.75, ..., 1} {
-      \addplot[ thin, opacity=0.3, forget plot] coordinates {(\i,-1) (\i,1)};
-      \addplot[ thin, opacity=0.3, forget plot] coordinates {(-1,\i) (1,\i)};
+      \addplot[ thin, opacity=0.5, forget plot] coordinates {(\i,-1) (\i,1)};
+      \addplot[ thin, opacity=0.5, forget plot] coordinates {(-1,\i) (1,\i)};
   }
 
   \end{axis}
@@ -3644,8 +3644,8 @@ $j=1, \ldots, 8$. This is illustrated in Figure \ref{fig:refinement} for the cir
 
             % Background mesh
             \foreach \i in {-2.5, -2, ..., 2.5} {
-                \draw[line width=0.1pt, shift={(-2.5,\i)}, opacity=0.2] (0,0) -- (5,0);
-                \draw[line width=0.1pt, shift={(\i,-2.5)},opacity=0.2] (0,0) -- (0,5);
+                \draw[line width=0.1pt, shift={(-2.5,\i)}, opacity=0.4] (0,0) -- (5,0);
+                \draw[line width=0.1pt, shift={(\i,-2.5)},opacity=0.4] (0,0) -- (0,5);
             }
 
         \end{tikzpicture}
@@ -3661,8 +3661,8 @@ $j=1, \ldots, 8$. This is illustrated in Figure \ref{fig:refinement} for the cir
 
             % Background mesh
             \foreach \i in {-2.5, -2.25, ..., 2.5} {
-                \draw[line width=0.1pt, shift={(-2.5,\i)}, opacity=0.2] (0,0) -- (5,0);
-                \draw[line width=0.1pt, shift={(\i,-2.5)},opacity=0.2] (0,0) -- (0,5);
+                \draw[line width=0.1pt, shift={(-2.5,\i)}, opacity=0.4] (0,0) -- (5,0);
+                \draw[line width=0.1pt, shift={(\i,-2.5)},opacity=0.4] (0,0) -- (0,5);
             }
 
         \end{tikzpicture}
@@ -3680,8 +3680,8 @@ $j=1, \ldots, 8$. This is illustrated in Figure \ref{fig:refinement} for the cir
 
             % Background mesh
             \foreach \i in {-2.5, -2.375, ..., 2.5} {
-                \draw[line width=0.1pt, shift={(-2.5,\i)}, opacity=0.2] (0,0) -- (5,0);
-                \draw[line width=0.1pt, shift={(\i,-2.5)},opacity=0.2] (0,0) -- (0,5);
+                \draw[line width=0.1pt, shift={(-2.5,\i)}, opacity=0.4] (0,0) -- (5,0);
+                \draw[line width=0.1pt, shift={(\i,-2.5)},opacity=0.4] (0,0) -- (0,5);
             }
 
         \end{tikzpicture}
