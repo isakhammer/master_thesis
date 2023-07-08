@@ -812,6 +812,7 @@ $\mathcal{T} _{h}$. We say that a method is conform if $V_{h}\subset V $ and non
 We denote the bilinear form $a_{h}: V_{h} \times V_{h} \to \mathbb{R} $ as approximation of $a: V \times V \to \mathbb{R} $, and similarly for the right-hand side $l_{h} : V _{h} \to \mathbb{R} $ as an approximation of $l: V \to \mathbb{R} $.
 Not that since the discrete is non-conformal, $V_{h} \not \subset  V_{}$, implies that boundedness and coercivity is not inherited from the continuous bilinear form $a( \cdot ,\cdot ) $. Hence, the discrete formulation $a_{h}:V_{h} \times V_{h}
 \to \mathbb{R}  $ well-posed if it is coercive and bounded, \begin{equation}
+    \label{eq:discrete_wellposed}
     \begin{split}
    a_{h}( v_{h}, w_{h}) & \lesssim \| v_{h} \|_{ V_{h} }^{  } \| w_{h} \|_{ V_{h} }^{  } \quad    \forall w_{h},v_{h} \in V_{h},\\
    a_{h}( v_{h}, v_{h}) & \gtrsim  \| v_{h} \|_{ V_{h} }^{  2} \quad  \forall v_{h} \in V_{h}.
@@ -819,21 +820,7 @@ Not that since the discrete is non-conformal, $V_{h} \not \subset  V_{}$, implie
 \end{equation}
 Note that we have relaxed the boundedness of $l_{h}( \cdot ) $, which arises from the finite dimensional property of $V_{h}$.
 
-Strictly speaking, if $a_{h}( \cdot ,\cdot ) $ is well-posed does not necessarily imply that it is consistent. Hence, a critical assumption about $a_{h}( \cdot ,\cdot )$ is its consistency. To be more precise, the discrete bilinear form can extend into a mapping $a_{h} : V \times V_{h} \to \mathbb{R}$
-\footnote{
-Technically speaking, we must assume there is a subspace $V^{'} \subset V$  such that the exact solution $u$  belongs to $ V'  $ such that $a_{h}: V' \times V_{h} \to \mathbb{R} $ (we can not generalize to $a_{h} : V \times
-V_{h} \to \mathbb{R} $ ), but this is outside the scope of the thesis. For more information, see \cite[Definition 1.31]{pietro2012}}. Within this framework, there exists an exact solution $u \in V$, for which it holds that $a_{h}( u,v_{h}) = l_{h}( v_{h})$. This inherently implies the so-called Galerkin orthogonality, where
-\begin{equation}
-    \label{eq:galerin_orth}
-a_{h}( u - u_{h}, v_{h}) = 0.
-\end{equation}
-Let $v + v_{h} \in V_{h} \oplus V$, which is the direct sum of the spaces, with a corresponding norm $\| \cdot  \|_{V_{h},*  }^{  } $. Note that $V$ must sufficiently regular enough for the $\| \cdot  \|_{V_{h},*  }^{  } $ to be well-defined. For the forthcoming a priori analysis outlined in Section \ref{sub:ceas_lemma}, a necessary assumption is that the discrete bilinear form is bounded in $V \otimes V_{h}$, i.e.
-\begin{equation}
-    \label{eq:ah_star}
-a_{h}( v + v_{h}, w_{h}) \lesssim  \| v + v_{h} \|_{ V_{h},* }^{  } \| w_{h} \|_{V_{h}  }^{  }.
-\end{equation}
-
-
+Strictly speaking, if $a_{h}( \cdot ,\cdot ) $ is well-posed does not necessarily imply that it is consistent. However this detail will be addressed in Section \ref{sub:ceas_lemma}.
 Following, we will establish a theoretical framework for finite element analysis.
 \begin{definition}[Local polynomial space]
     \label{def:local_space}
@@ -1772,25 +1759,53 @@ Combining \eqref{eq:inv1} and \eqref{eq:inv2}, we establish that
 \text{ for } l \le m.
 \end{equation}
 
-\subsection{Abstract error estimate}%
+\subsection{Nonconform Error Estimates}%
 \label{sub:ceas_lemma}
 
-Since $V_{h} \not \subset V_{h}$, it is clear that we cannot directly employ the standard Cea's lemma \cite[p. 66]{quartdiff}. Yet, given the discrete stability \eqref{eq:ah_star} and discrete Galerkin orthogonality \eqref{eq:galerin_orth}, coupled with an additional
-requirement of on $u$, we are indeed equipped to formulate an effective workaround.
-
+Our goal is to construct abstract error estimates for the discrete bilinear form $a_{h}( \cdot ,\cdot ) $.
+ To successfully achieve this, a critical assumption for $a_{h}( \cdot ,\cdot )$ is its consistency. Assume that the discrete bilinear form can be extended to a mapping  $a_{h} : W \times V_{h} \to \mathbb{R}$ for an sufficiently regular subset $W \subset V$.
+  We say that the bilinear form is consistent if it exists an exact solution $u \in W$ for which it holds that $a_{h}( u,v_{h}) = l_{h}( v_{h})$. This inherently implies the so-called Galerkin orthogonality,
 \begin{equation}
-\label{eq:cealemma_proof}
-    \begin{split}
- \| v_{h} -u_{h} \|_{ V_{h}  }^{ 2 } & \lesssim   a_{h}( v_{h} - u_{h}, v_{h} - u_{h} )    \\
- &= a_{h}( v_{h} - u, v_{h}- u_{h}) + a_{h}( u - u_{h}, v_{h} - u_{h})   \\
- & \lesssim \| v_{h}- v \|_{ V_{h},* }^{  } \| v_{h}- u_{h} \|_{V_{h} }^{  }   \\
-    \end{split}
-.\end{equation}
-Hence, we now have abstract error estimate
-\begin{equation}
-\| u - u_{h} \|_{ V_{h},*  }^{  }  \lesssim  \inf_{v_{h} \in  V_{h}}  \| v - v_{h} \|_{ V_{h},*  }^{  } = 0 \quad  \forall v \in V.
+    \label{eq:galerin_orth}
+a_{h}( u - u_{h}, v_{h}) = 0.
 \end{equation}
-For more information, see \cite[Theorem 1.35]{pietro2012}.
+
+Let $v + v_{h} \in W \oplus V_{h} $ be associated with a corresponding norm $\| \cdot  \|_{V,*  }^{  } $. Here the symbol $\oplus$ is denoted the direct sum of the spaces $V_{h}$ and $W$.
+A necessary assumption is that the discrete bilinear form $a_{h}( \cdot ,\cdot ) $  is bounded in $W \otimes V_{h} \times V_{h}$, i.e.
+\begin{equation}
+    \label{eq:ah_star}
+a_{h}( v + v_{h}, w_{h}) \lesssim  \| v + v_{h} \|_{ V,* }^{  } \| w_{h} \|_{V_{h}  }^{  } \quad  \forall v+ v_{h} \in W \otimes V_{h}, w_{h} \in V_{h}
+\end{equation}
+We also assume that $\| v_{h} \|_{V,*  }^{  } \lesssim  \| v_{h} \|_{ V_{h} }^{  }  \ \forall v_{h } \in  V_{h} $. Hence, we have the estimate \begin{equation}
+a_{h}( v_{h}, w_{h}) \lesssim  \|  v_{h} \|_{ V,* }^{  } \| w_{h} \|_{V_{h}  }^{  } \lesssim \|  v_{h} \|_{ V,* }^{  } \| w_{h} \|_{V_{h}  }^{  } \quad  \forall  v_{h},  w_{h} \in V_{h}.
+\end{equation}
+This, is good since we can now utilize the stability and coercivity of the discrete bilinear form presented in \eqref{eq:discrete_wellposed}.
+
+Since $V_{h} \not \subset V_{h}$, it is clear that we cannot directly employ the standard Cea's lemma \cite[p. 66]{quartdiff}. Yet, given the discrete stability \eqref{eq:ah_star} and discrete Galerkin orthogonality \eqref{eq:galerin_orth}, we are indeed equipped to formulate an effective workaround.
+
+\begin{lemma}[Nonconform Ceas Lemma]
+    Let $V_{h} \not \subset V$.
+    \begin{equation}
+        \| u - u_{h} \|_{ V_{h},*  }^{  }  \lesssim  \inf_{v_{h} \in  V_{h}}  \| v - v_{h} \|_{ V_{h},*  }^{  } = 0 \quad  \forall v \in V.
+    \end{equation}
+\end{lemma}
+
+\begin{proof}
+    \begin{equation}
+        \label{eq:cealemma_proof}
+        \begin{split}
+            \| v_{h} -u_{h} \|_{ V_{h}  }^{ 2 } & \lesssim   a_{h}( v_{h} - u_{h}, v_{h} - u_{h} )    \\
+                                                &= a_{h}( v_{h} - u, v_{h}- u_{h}) + a_{h}( u - u_{h}, v_{h} - u_{h})   \\
+                                                & \lesssim \| v_{h}- v \|_{ V_{h},* }^{  } \| v_{h}- u_{h} \|_{V_{h} }^{  }   \\
+        \end{split}
+    .\end{equation}
+    Hence, we now have abstract error estimate
+    \begin{equation}
+        \| u - u_{h} \|_{ V_{h},*  }^{  }  \lesssim  \inf_{v_{h} \in  V_{h}}  \| v - v_{h} \|_{ V_{h},*  }^{  } = 0 \quad  \forall v \in V.
+    \end{equation}
+    For more information, see \cite[Theorem 1.35]{pietro2012} and \cite[Definition 1.31]{pietro2012}.
+\end{proof}
+
 A useful property is that for a conformal numerical method to converge, we can now simply require
 \begin{equation}
 \lim_{h \to 0}  \inf_{v_{h} \in  V_{h}}  \| v - v_{h} \|_{ V_{h},*  }^{  } = 0 \quad  \forall v \in V.
