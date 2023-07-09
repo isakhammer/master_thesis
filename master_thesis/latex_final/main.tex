@@ -166,21 +166,22 @@ equation using a minimalistic Implicit-Explicit (IMEX) time discretization schem
 \section*{Acknowledgement}%
 \label{sec:acknowledgement}
 
-Nå som jeg sitter på bussen til Oppdal for å delta på et 10-dagers fallskjermskurs, og samtidig skriver slutten på masteroppgaven, vil jeg også benytte anledningen til å takke rammeverket som har gjort denne mastergraden mulig.
+Nå som jeg sitter på bussen til Oppdal for å delta på et 10-dagers introduksjonskurs i fallskjermhopping, og samtidig skriver slutten på masteroppgaven, vil jeg også benytte anledningen til å takke rammeverket som har gjort denne mastergraden mulig.
 
 Fra det siste året går nok den største takken til min masterveileder, André Massing.
-Det å skrive masteroppgave ble plutselig mye mer morsomt når man blir inkludert i forskningsgruppa da bli eksponert av forskjellige vinkler og utfordringer generelt i fagfeltet.
-Men absolutt det mest viktige er oppfølging og den detaljert gjennomlesing av masteroppgaven. Selv om det er tidkrevende og til tider utmattende, er det nettopp gjennom disse diskusjonene jeg mener vokst mest innen matematikk.
+Det å skrive masteroppgave ble plutselig mye mer morsomt når man blir inkludert i forskningsgruppa og bli eksponert av forskjellige vinkler og utfordringer generelt i fagfeltet.
+Men absolutt det mest viktigste er oppfølging av dumme spørsmål og detaljert gjennomlesing av masteroppgaven. Selv om det er tidkrevende (og utmattende), er det nettopp gjennom disse diskusjonene jeg mener jeg har vokst mest innen matematikk!
 
 Også en generell takk til ansatte på Institutt for matematiske fag på NTNU for å ikke bare opprettholde et høyt faglig og pedagogisk nivå, men også for å investere i studentene.
 Det er ikke alltid like lett med fire eksamener innen et kort tidsrom på
-to til tre uker, og da setter mang en student (les: meg) stor pris på at foreleserne er veldig positive og åpne for å legge opp til et nytt forsøk.
-Ut fra erfaring er det faktisk når man øver til andre forsøk i stillhet i august at man virkelig lærer mest!
+to til tre uker, og da setter mang en student (les: meg) som setter stor pris på at foreleserne er veldig positive og åpne for å legge opp til et nytt forsøk.
+Ut fra erfaring er det faktisk når man øver til andre (eller tredje) forsøk i stillhet i august at man virkelig lærer mest!
 
-Selv om jeg tidlig byttet linje fra Industriell kjemi og bioteknologi til Fysikk og matematikk ble sjelen min fortsatt igjen i linjeforeningen. Derfor en stor takk til Høiskolen Chemikerforening (HC) for å gi meg en fantastisk sosial arena der jeg sikkert har brukt et par tusen
+Selv om jeg tidlig byttet linje fra Industriell kjemi og bioteknologi til Fysikk og matematikk ble sjelen min fortsatt igjen i linjeforeningen. Derfor en stor takk til Høiskolen Chemikerforening (HC) for å gi meg en fantastisk sosial arena der jeg sikkert har brukt et par (tusen)
 timer på 'Kontoret' gjennom studieløpet. I tillegg en kjempetakk til vennelinjeforeningen Kongliga Kemisektionen på KTH i Sverige for at vi i HC får komme på besøk en gang i året for å ha det gøy!
 
-Sist, men ikke minst, stor takk til tålmodigheten til både Mamma og Pappa som fortsatt har åpner husene og gir mat sine akkurat når jeg trenger det mest. Det er en viktig trygghet!
+Sist, men ikke minst, stor takk til tålmodigheten til både Mamma og Pappa som fortsatt åpner husene sine og gir mat akkurat når jeg trenger det mest. Selv om jeg verken vasker eller lager middag, og til tross at dere knapt vet hva jeg faktisk
+studerer, er det en viktig trygghet!
 \\
 
 \noindent Isak Hammer,  8. Juli 2023.
@@ -4251,7 +4252,17 @@ Using the theoretical discontinuous Galerkin framework for the Poisson problem, 
 
 Finally, we then demonstrated that the cut continuous interior penalty methods can successfully be applied to the nonlinear Cahn-Hilliard equation using a very simple Implicit-Explicit solver.
 
+
+Now, in the context of the biharmonic problem. First of all, int the numerical implementation we only considered element of order $k=2$, hence, a good extension would be to look at $k=3,4$. It would also be interesting to compare this method to other
+unfitted methods, such at aggregated finite element methods and isogeometric analysis.
+
+Specifically, for the Cahn-Hilliard problem. In this report we restricted ourself to handle a constant mobility $M=1$ and a polynomial approximation of the non-linearity $F(u) =\frac{1}{4} ( u^2 - 1)^{2}  $. However, to adapt this formulation to more
+diverse physical problems this has to be taken into account. From the numerical point of view is the method very inefficient in the sense of adaptivity both in space and time. Hence, in future work, would exploiting more advanced adaptive methods be
+suitable.
+
+
     \printbibliography
 
     \includepdf[pages=-]{results/illustration/back_page.pdf}
 \end{document}
+
