@@ -97,6 +97,7 @@
 
 
 \addbibresource{bibliography.bib} % Makes the bibliography file available to biblatex.
+\addbibresource{biharmonic.bib} % Makes the bibliography file available to biblatex.
 
 %% PGF PLOTS DEPENDECIES
 \usepackage{pgfplots}
@@ -148,7 +149,7 @@
 \begin{abstract}
 The Cahn-Hilliard equation, with its wide range of applications in phase-separation, poses numerical challenges due to its non-linear and stiff nature and fourth-order derivatives. This thesis introduces a novel, stabilized,
 unfitted cut continuous interior penalty finite element method specifically designed for the biharmonic problem with Cahn-Hilliard type boundary conditions, which we have successfully extended to handle the Cahn-Hilliard equation. Our approach combines the theoretical cut
-discontinuous Galerkin framework for the Poisson problem, as proposed by \cite{gurkan2019stabilized}, with the continuous interior penalty biharmonic formulation presented by \cite{brenner2012, feng2007fully}. We provide proof that this
+discontinuous Galerkin framework for the Poisson problem, as proposed by \cite{gurkan2019stabilized}, with the continuous interior penalty biharmonic formulation presented by \cite{brenner2012, feng2007fully}. We prove that this
 method is well-posed and ensures optimal convergence. The theoretical results are further supported by presented numerical evidence. Finally, we demonstrate the applicability of the method by extending the formulation to handle the Cahn-Hilliard
 equation using a minimalistic Implicit-Explicit (IMEX) time discretization scheme to manage the non-linearities.
 
@@ -1790,9 +1791,9 @@ Combining \eqref{eq:inv1} and \eqref{eq:inv2}, we establish that
 \subsection{Abstract Nonconform Error Analysis}%
 \label{sub:ceas_lemma}
 
-Our goal is to construct abstract error estimates for the discrete bilinear form $a_{h}( \cdot ,\cdot ) $. Since $V_{h} \not \subset V_{h}$, it is clear that we cannot directly employ the standard Cea's lemma \cite[p. 66]{quartdiff}. Hence, we have to formulate an effective workaround.
-
- To successfully achieve this, a critical assumption for $a_{h}( \cdot ,\cdot )$ is its consistency. Assume that the discrete bilinear form can be extended to a mapping  $a_{h} : W \times V_{h} \to \mathbb{R}$ for an sufficiently regular subset $W \subset V$.
+Our goal is to construct abstract error estimates for the discrete bilinear form $a_{h}( \cdot ,\cdot ) $. Since $V_{h} \not \subset V_{h}$, it is clear that we cannot directly employ the standard Cea's lemma \cite[p. 66]{quartdiff}. Hence, we have to review
+how a non-conform variant can be derived, see for instance \cite{ErnGuermond2021m}[Chapter 27].
+ To successfully achieve this, a critical assumption for $a_{h}( \cdot ,\cdot )$ is its consistency. Assume that the discrete bilinear form can be extended to a mapping  $a_{h} : W \times V_{h} \to \mathbb{R}$ for an sufficiently regular subspace $W \subset V$.
   We say that the bilinear form is consistent if it exists an exact solution $u \in W$ for which it holds that $a_{h}( u,v_{h}) = l_{h}( v_{h})$. This inherently implies the so-called Galerkin orthogonality,
 \begin{equation}
     \label{eq:galerin_orth}
@@ -1809,45 +1810,41 @@ a_{h}( v + v_{h}, w_{h}) & \lesssim  \| v + v_{h} \|_{ V,* }^{  } \| w_{h} \|_{V
 a_{h}( v_{h}, w_{h}) & \lesssim  \|  v_{h} \|_{ V,* }^{  } \| w_{h} \|_{V_{h}  }^{  } \lesssim \|  v_{h} \|_{ V_{h} }^{  } \| w_{h} \|_{V_{h}  }^{  } \quad  \forall  v_{h},  w_{h} \in V_{h}.
     \end{split}
 \end{equation}
-This, is good since we can now utilize this in combination iwth the stability and coercivity results presented in \eqref{eq:discrete_wellposed}.
-
+We can now utilize these boundedness assumptions in combination with the stability and coercivity results presented in \eqref{eq:discrete_wellposed}.
 
 \begin{lemma}[Nonconform Cea's Lemma]
-    Let $u$ be the exact solution and let $V_{h} \not \subset V$.
-    Assume that the discrete bilinear form $a_{h}( \cdot ,\cdot ) $ is well-posed in $V_{h} \times V_{h}$. Additionally, assume that both the stability estimates \eqref{eq:ah_star} and Galerkin orthogonality (as outlined in \eqref{eq:galerin_orth}) are valid
-    Then, the following error estimate hold,
+    Let $u \in W \subset V$ be the exact solution and let $V_{h} \not \subset V$.
+    Assume that the discrete bilinear form $a_{h}( \cdot ,\cdot ) $ is well-posed in $W \oplus V_{h} \times V_{h}$. Additionally, assume that both the stability estimates \eqref{eq:ah_star} and Galerkin orthogonality (as outlined in \eqref{eq:galerin_orth}) are valid
+    Then the following error estimate hold,
     \begin{equation}
         \| u - u_{h} \|_{ V,*  }^{  }  \lesssim  \inf_{v_{h} \in  V_{h}}  \| u - v_{h} \|_{ V_{h},*  }^{  }.
     \end{equation}
 \end{lemma}
 
 \begin{proof}
-    First starting  applying the triangle inequality on the error $\| u - u_{h} \|_{V,*  }^{  } $ and then the assumption $\| v_{h} \|_{ V,* }^{  } \lesssim  \| v_{h} \|_{V_{h}  }^{  } \ \forall  v_{h} \in V_{h}  $, we have
+    Applying the triangle inequality to the error $\| u - u_{h} \|_{V,*  }^{  } $ and then the assumption $\| v_{h} \|_{ V,* }^{  } \lesssim  \| v_{h} \|_{V_{h}  }^{  } \ \forall  v_{h} \in V_{h}  $, we have
     \begin{equation}
         \label{eq:error_star}
         \begin{split}
         \| u - u_{h} \|_{V,*  }^{  } & \lesssim \| u - v_{h} \|_{V,*  }^{  } + \| v_{h} - u_{h} \|_{V,*  }^{  } \\
-                                     & \lesssim \| u - v_{h} \|_{V,*  }^{  } + \| v_{h} - u_{h} \|_{V_{h}  }^{  }
-        \end{split}.
+                                     & \lesssim \| u - v_{h} \|_{V,*  }^{  } + \| v_{h} - u_{h} \|_{V_{h}  }^{  }.
+        \end{split}
     \end{equation}
-
-Initially, by employing the discrete coercivity as defined in equation \eqref{eq:discrete_wellposed}, and then applying the Galerkin orthogonality from equation \eqref{eq:galerin_orth}, followed by the stability condition from equation \eqref{eq:ah_star}, we can derive the following result.
+By employing the discrete coercivity as defined in equation \eqref{eq:discrete_wellposed}, and then applying the Galerkin orthogonality from equation \eqref{eq:galerin_orth}, followed by the stability condition from equation \eqref{eq:ah_star}, we can derive the following estimate,
     \begin{equation}
         \label{eq:cealemma_proof}
         \begin{split}
             \| v_{h} -u_{h} \|_{ V_{h}  }^{ 2 } & \lesssim   a_{h}( v_{h} - u_{h}, v_{h} - u_{h} )    \\
                                                 &= a_{h}( v_{h} - u, v_{h}- u_{h}) + a_{h}( u - u_{h}, v_{h} - u_{h})   \\
-                                                & \lesssim \| v_{h}- u \|_{ V,* }^{  } \| v_{h}- u_{h} \|_{V_{h} }^{  }   \\
+                                                & \lesssim \| v_{h}- u \|_{ V,* }^{  } \| v_{h}- u_{h} \|_{V_{h} }^{  }.   \\
         \end{split}
-    .\end{equation}
-
-    Dividing $\| v_{h}- u_{h} \|_{V_{h} }^{  }$ on both sides we have $ \| v_{h}- u_{h} \|_{V_{h} }^{  } \lesssim \|  u -  v_{h}\|_{ V,* }^{  } $. Combing this with \eqref{eq:error_star} we obtain the following abstract error estimate.
+    \end{equation}
+\noindent Dividing $\| v_{h}- u_{h} \|_{V_{h} }^{  }$ on both sides we have $ \| v_{h}- u_{h} \|_{V_{h} }^{  } \lesssim \|  u -  v_{h}\|_{ V,* }^{  } $. Combing this with \eqref{eq:error_star} we obtain the following abstract error estimate.
     \begin{equation}
-        \| u - u_{h} \|_{ V,*  }^{  }  \lesssim  \inf_{v_{h} \in  V_{h}}  \| v - v_{h} \|_{ V_{},*  }^{  }
+        \| u - u_{h} \|_{ V,*  }^{  }  \lesssim  \inf_{v_{h} \in  V_{h}}  \| v - v_{h} \|_{ V_{},*  }^{  }.
     \end{equation}
 \end{proof}
-
-A useful property is that for a nonconformal numerical method to converge, we can now simply require
+\noindent A useful property is that for a nonconformal numerical method to converge, we can now simply require
 \begin{equation}
 \lim_{h \to 0}  \inf_{v_{h} \in  V_{h}}  \| u - v_{h} \|_{ V,*  }^{  } = 0
 \end{equation}
@@ -1874,7 +1871,7 @@ Let $\Omega \subseteq    \mathbb{R} ^d$ be a bounded polygonal domain and $\Gamm
 \end{align}
 \label{eq:bi_problem}
 \end{subequations}
-Here is $\Delta ^2 = \Delta  \left( \Delta  \right) $ the biharmonic operator, also known as the bilaplacian. We will assume for the strong form that $u \in H^{4}\left( \Omega  \right) $, $\alpha  >0 $ and $f \in L^{2}\left( \Omega  \right)
+\noindent Here $\Delta ^2 = \Delta  \left( \Delta  \right) $ is the biharmonic operator, also known as the bilaplacian. We will assume for the strong form that $u \in H^{4}\left( \Omega  \right) $, $\alpha  >0 $ and $f \in L^{2}\left( \Omega  \right)
 $. The functions $g_{1},g_{2}: \Omega  \to \mathbb{R}$ are denoted as boundary conditions similar to the CH problem.
 
 \begin{remark}
@@ -1894,28 +1891,31 @@ Hence, we obtain the identity
 \label{eq:iden_bi}
 ( \Delta ^2 u, v ) _{\Omega } = ( \Delta u, \Delta v)_{\Omega } +  ( \partial _{n} \Delta u, v)_{\Gamma } - ( \partial _{n} v, \Delta u) _{\Gamma }
 \end{equation}
-Taking into account the boundary conditions, we end up with the following corresponding weak formulation of the biharmonic problem \eqref{eq:bi_problem}.
-
-\begin{equation}
-\label{eq:V_deg}
-V := \left\{ v \in  H^s( \Omega ), \  s \ge  5  /2 + \varepsilon   \mid \partial _{n} v  = g_{1}     \right\}
-\end{equation}
-Consider the bilinear form $a:V\times V \to \mathbb{R}$ and the linear form $l: V \to \mathbb{R}$. We define the continuous weak formulation problem formulation as follows.
-
-
+We now see that boundary condition ~\eqref{eq:bi_problem_c} can be naturally included in 
+the variational formulation by simply replacing $\partial_n \Delta u $ with $g_2$ in the third term
+of~\eqref{eq:iden_bi}. The remaining boundary condition~\eqref{eq:bi_problem_b} on the other hand
+needs to be built into the function space and thus presents an essential boundary condition.
+As a consequence, the corresponding test function space will consist of functions with zero normal flux, i.e.,
+$\partial_n v = 0$ on $\Gamma$ and therefore the last contribution in \eqref{eq:iden_bi} disappears.
+We end up with the following corresponding weak formulation of the biharmonic problem \eqref{eq:bi_problem}:
 \begin{equation}
 \label{eq:cont_weak_problem}
-\text{Find } u \in V   \text{ such that } a( u,v) = l( v)  \forall v \in V
+\text{Find } u \in V_{g_1}   \text{ such that } a( u,v) = l( v)  \quad \forall v \in V_0
 \end{equation}
-where
+with
 \begin{equation}
     \begin{split}
-a( u,v) & =  ( \alpha u,v)_{\Omega } + ( \Delta u, \Delta v)_{\Omega } - (  \Delta u, \partial _{n} v) _{\Gamma }\\
-l( v)  &= ( f,v)_{\Omega } - ( g_{2} , v)_\Omega
+a( u,v) & =  ( \Delta u, \Delta v)_{\Omega } +( \alpha u,v)_{\Omega },
+\\
+l( v)  &= ( f,v)_{\Omega } - ( g_{2} , v)_\Omega,
     \end{split}
 \end{equation}
-Note that the Neumann boundary condition $g_{1}$ is strongly imposed in $V$, and $g_{2}$ is naturally incorporated in the weak formulation.
-
+where we introduced for general $g\in H^{1/2}(\Gamma)$ the function space
+\begin{equation}
+\label{eq:V_deg}
+V_{g} := \left\{ v \in  H^2( \Omega ) \mid \partial _{n} v  = g \; \text{on } \Gamma \right\}.
+\end{equation}
+% Note that the Neumann boundary condition $g_{1}$ is strongly imposed in $V$, and $g_{2}$ is naturally incorporated in the weak formulation.
 
 \subsection{Detailed construction of Hessian and Laplacian Formulations }%
 \label{sub:construction_of_laplacian_cip}
@@ -4249,22 +4249,46 @@ arrive at the following modification.
 \newpage
 \section{Conclusion}%
 \label{sec:conclusion}
+% First, we provided a brief overview of Sobolev spaces and basic PDE theory, introducing the 
+% finite element method and discussing how the error analysis is affected when our method is nonconformal, as opposed to when it is conformal.
+% Next, we revisited and meticulously constructed the so-called Laplace and Hessian formulations of the continuous interior penalty methods for the biharmonic equation with Cahn-Hilliard type boundary conditions presented by \cite{brenner2012, feng2007fully}.
+The primary goal of this thesis was to develop a cut finite element method for
+discretizing the biharmonic problem in its primal formulation on unfitted meshes,
+and to apply the resulting scheme to the Cahn-Hilliard equation.
+Inspired by the theoretical discontinuous Galerkin framework for the Poisson
+problem proposed in \cite{gurkan2019stabilized}, 
+we managed to show that our method is well-posed and that the stability and convergence properties
+from the original fitted formulation are maintained.
+Thanks to the design of suitable ghost penalties, we could also show
+that all presented theoretical properties are geometrically robust in the sense
+that the derived bounds are insensitive to how the domain boundary cuts the background mesh.
+The theoretical results are further substantiated by the numerical
+evidence presented.  Additionally, we conducted supplementary tests to
+ensure the method's geometrical robustness, particularly in instances where the
+non-stabilized formulation fails.
+Finally, we demonstrated that our cut continuous interior penalty
+methods can successfully be applied to the nonlinear Cahn-Hilliard
+equation using a simple implicit-explicit time stepping method.
 
-First, we provided a brief overview of Sobolev spaces and basic PDE theory, introducing the FEM method and discussing how error analysis is affected when our method is nonconformal, as opposed to when it is conformal.
-Next, we revisited and meticulously constructed the so-called Laplace and Hessian formulations of the continuous interior penalty methods for the biharmonic equation with Cahn-Hilliard type boundary conditions presented by \cite{brenner2012, feng2007fully}.
+While the present thesis demonstrates that the ghost penalty techniques can be successfully used
+to design non-conform $C^0$-CutFEMs for elliptic
+and parabolic 4th order problems, we have only scratched the surface of this research direction.
+First of all, in the numerical implementation of the biharmonic problem,
+we only considered elements of order $k = 2$, hence, it remains to exploit higher order, i.e. $k = 3, 4$.
+In the continous interior penalty setting, as our theory already
+covers the $k\geqslant 2$ case, this amounts to implement higher order
+ghost penalty in our computational framework. Moreover, it would also be interesting
+to compare our method to other unfitted methods, including aggregated finite element methods~\cite{BadiaVerdugoMartin2018} and
+conform immersogeometric methods based on $C^1$-continuous $B$-splines~\cite{ZhaoSchillingerXu2017}.
 
-The primary aim of this thesis has been to enhance this formulations to accommodate unfitted mesh. In doing so, a novel, stabilized, unfitted cut continuous interior penalty finite element method has been successfully developed for the biharmonic equation. Moreover, this method has been effectively extended to handle the Cahn-Hilliard equation.
-Using the theoretical discontinuous Galerkin framework for the Poisson problem, as proposed by \cite{gurkan2019stabilized}, we managed to show that the method was well-posed and that the convergence properties from the original fitted formulation were confirmed. The theoretical results are further substantiated by the numerical evidence presented. Additionally, we conducted supplementary tests to ensure the method's robustness, particularly in instances where the non-stabilized formulation fails.
-
-Finally, we then demonstrated that the cut continuous interior penalty methods can successfully be applied to the nonlinear Cahn-Hilliard equation using a very simple Implicit-Explicit solver.
-
-
-In the case of the biharmonic problem, our numerical implementation so far has only taken into account second order elements, i.e., $k=2$. However, it would be interesting to explore and exploit higher order elements such as $k=3,4$. Additionally, it would be advantageous to contrast this method with other non-fitted methods. Examples of these include aggregated finite element methods and isogeometric analysis.
-
-Specifically focusing on the Cahn-Hilliard problem, this report confined our study to managing a constant mobility of $M=1$ and a polynomial approximation of the non-linearity $F(u) =\frac{1}{4} ( u^2 - 1)^{2}$. However, in order to adapt this
-formulation to a wider range of physical problems, we need to take these factors into consideration. Numerically speaking, the natural progression would be to also to incorporate adaptive schemes for both spatial and transient discretization.
-
-
+Regarding the Cahn-Hilliard problem,
+we restricted ourself to handle a constant mobility $M=1$ and a polynomial approximation of the non-linearity $F(u) =\frac{1}{4} ( u^2 - 1)^{2}$ in this report. Consequently, we need to extend and test our framework
+using more physically realistic formulations, including concentration-dependent mobilities as
+well as thermodynamically more relevant $\log$-based Ginzburg-Landau free energy densities $F(u)$.
+From a numerical efficiency point of view, our proposed method
+could significantly benefit from including adaptivity in space and time
+to both resolve the locally high gradient in the phase transition zone 
+and to account for the different time scales in the phase separation process.
     \printbibliography
 
     \includepdf[pages=-]{results/illustration/back_page.pdf}
