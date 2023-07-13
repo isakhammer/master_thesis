@@ -1945,7 +1945,7 @@ Let $u \in H^{4}( \Omega ) $ be the solution to \eqref{eq:bi_problem}, let $ v_{
     &    -  ( \mean{ \partial _{nn} u }   , \jump{ \partial_{n} v_h } )_{\mathcal{F}_{h}^{int} } -  (  \jump{ \partial_{n} u
     },\mean{ \partial _{nn} v_h } )_{\mathcal{F}_{h}^{int} } + \frac{\gamma }{h} (  \jump{ \partial_{n} u
     },\mean{ \partial _{nn} v_h } )_{\mathcal{F}_{h}^{int} } \\
-    & - ( \partial _{nn} u , \partial _{n} v_h)_{\Gamma  }- ( \partial _{n} u , \partial _{nn} v_h)_{\Gamma  } + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v_{h}      \right)_{\Gamma }
+    & - ( \partial _{nn} u , \partial _{n} v_h)_{\Gamma  }- ( \partial _{n} u , \partial _{nn} v_h)_{\Gamma  } + \frac{\gamma }{h}  \left(  \partial _{n} u,  \partial _{n} v_{h}      \right)_{\Gamma }.
 \end{split}
 \end{equation}
 \end{lemma}
@@ -1988,7 +1988,7 @@ Let $u \in H^{4}( \Omega ) $ be the solution to \eqref{eq:bi_problem}, let $ v_{
 $\mathcal{T}_{h} $. Using Greens Theorem, it is obvious that
 \begin{equation}
     \label{eq:id1}
-\left( \Delta ^2 u,v_h \right) _{T }   = \left( \partial _{n} \Delta u, v_h \right) _{\partial T  } - \left( \nabla \left( \Delta  u \right) , \nabla v_h \right) _{T }
+\left( \Delta ^2 u,v_h \right) _{T }   = \left( \partial _{n} \Delta u, v_h \right) _{\partial T  } - \left( \nabla \left( \Delta  u \right) , \nabla v_h \right) _{T }.
 \end{equation}
 
 We can expand the second term in the following way.
@@ -1998,7 +1998,7 @@ We can expand the second term in the following way.
 ( \nabla ( \Delta u ) , \nabla v_h ) _{T } & = \sum_{i = 1}^{ d}  ( \Delta  \partial _{x_{i}} u, \partial _{x_{i}}v_h ) _{T }
                                            = \sum_{i = 1}^{d}  ( \nabla \cdot ( \nabla \partial _{x_{i}} u ) , \partial _{x_{i}} v_h )_{T }  \\
 &= \sum_{i = 1}^{d}  \left( ( \partial_n  \partial _{x_{i}} u,  \partial _{x_{i}} v_h ) _{\partial T } -   ( \nabla \partial _{x_{i}} u, \nabla \partial _{x_{i}} v_h )_{T } \right) \\
-& = (  \partial_n\nabla u, \nabla v_h ) _{\partial_{} T  } - ( D^2 u, D^2v_h ) _{T }
+& = (  \partial_n\nabla u, \nabla v_h ) _{\partial_{} T  } - ( D^2 u, D^2v_h ) _{T }.
     \end{split}
 .\end{equation}
 Hence, the normal flux of $\Delta u$ appears naturally in the formulation. It can be denoted that $D^2$ is the Hessian matrix operator. Also, remark that we apply the notation
@@ -2013,8 +2013,8 @@ where we defined a orthonormal basis $t_{i}$, $i = 1, \ldots, d-1$ for the space
 \begin{equation}
 \label{eq:projection}
     \begin{split}
-   Q_{F} \nabla u & = ( n \otimes n ) \nabla u =  (n^{T} \nabla u)n \\
-   P_{F} \nabla u & =( I - n \otimes n ) \nabla u =   \nabla u  - (n^{T}  \nabla u)n =  \sum_{ i =1 }^{d-1} ( t_{i}^{T}  \nabla u ) t_{i}
+   Q_{F} \nabla u & = ( n \otimes n ) \nabla u =  (n^{T} \nabla u)n, \\
+   P_{F} \nabla u & =( I - n \otimes n ) \nabla u =   \nabla u  - (n^{T}  \nabla u)n =  \sum_{ i =1 }^{d-1} ( t_{i}^{T}  \nabla u ) t_{i}.
     \end{split}
 \end{equation}
 
@@ -2024,7 +2024,7 @@ $\nabla u = \left( n^{T} \nabla u   \right) n + \sum_i^{d-1} \left( t_i^{T} \nab
 \label{eq:id3}
     \begin{split}
 (  \partial_n\nabla u, \nabla v_h ) _{\partial_{} T  } & =  ( \partial _{n} ( \partial_{n}u \ n), \partial _{n} v_h \ n )_{\partial T}   +\sum_{i,j=1}^{d-1} ( \partial _{n} ( \partial_{t_{i}}u \ t_{i}), \partial _{t_{j}} v_h \ t_{j} )_{\partial T} \\
-& =  ( \partial _{nn} u, \partial _{n} v_h  )_{\partial T}+\sum_{i=1}^{d-1} ( \partial _{n t_{i}}u , \partial _{t_{i}} v_h  )_{\partial T}
+& =  ( \partial _{nn} u, \partial _{n} v_h  )_{\partial T}+\sum_{i=1}^{d-1} ( \partial _{n t_{i}}u , \partial _{t_{i}} v_h  )_{\partial T}.
     \end{split}
 \end{equation}
 Here we used that $n^{T} n = 1$ and $t_{i}^{T} t_{j} = \delta_{ij}$.
@@ -2037,12 +2037,13 @@ We may also deduce the relationship $\partial _{nt_{i}} u = \partial _{t_{i}n}u$
 product is a scalar.
 Combining \eqref{eq:id1}, \eqref{eq:id2} and \eqref{eq:id3} we see that,
 \[
-    ( \Delta ^2 u, v_h) _{T}   = ( D^2 u, D^2v_h)_{T } + ( \partial _{n}  \Delta u, v_h )_{\partial T} -( \partial _{nn}u , \partial _{n} v_h  )_{\partial T}-\sum_{i=1}^{d-1} ( \partial _{n t_{i}}u, \partial _{t_{i}} v_h  )_{\partial T}
+    ( \Delta ^2 u, v_h) _{T}   = ( D^2 u, D^2v_h)_{T } + ( \partial _{n}  \Delta u, v_h )_{\partial T} -( \partial _{nn}u , \partial _{n} v_h  )_{\partial T}-\sum_{i=1}^{d-1} ( \partial _{n t_{i}}u, \partial _{t_{i}} v_h  )_{\partial T}.
 \]
 Since we aim constructing an identity for the full mesh $\mathcal{T} _{h}$, we sum over the elements.
 \begin{equation}
 \label{eq:bi_basic_dg2}
-\left( \Delta  ^{2} u,v_h \right) _{\Omega } = \sum_{T \in  \mathcal{T} _{h}}^{}  ( D^2 u, D^2v_h)_{T } + ( \partial _{n}  \Delta u, v_h )_{\partial T} -( \partial _{nn}u , \partial _{n} v_h  )_{\partial T}-\sum_{i=1}^{d-1} ( \partial _{n t_{i}} u , \partial _{t_{i}} v_h  )_{\partial T}
+\left( \Delta  ^{2} u,v_h \right) _{\Omega } = \sum_{T \in  \mathcal{T} _{h}}^{}  ( D^2 u, D^2v_h)_{T } + ( \partial _{n}  \Delta u, v_h )_{\partial T} -( \partial _{nn}u , \partial _{n} v_h  )_{\partial T}-\sum_{i=1}^{d-1} ( \partial _{n t_{i}} u ,
+\partial _{t_{i}} v_h  )_{\partial T}.
 \end{equation}
 Our goal is to simplify the equation above so we can take account for discontinuities of the derivatives.
 By integrating over exterior facets $\mathcal{F} _{h}^{ext}$ and interior facets $\mathcal{F} _{h}^{int}$, we will get e more suitable formulation which makes it easier to control the jumps between the elements, hence makes it possible to penalize discontinuities.
@@ -2060,11 +2061,10 @@ By integrating over exterior facets $\mathcal{F} _{h}^{ext}$ and interior facets
 \right) _{F} \right) }_{\mathrm{II} } \\
    &  \quad \quad - \sum_{i=1}^{d-1}\underbrace{( (\partial _{n^{+}t_{i}} u^{+}, \partial_{t_{i}} v_h^{+} )_{F} +  \left(\partial _{n^{-}t_{i}} u^{-},
         \partial_{t_{i}} v_h^{-}
-\right)_{F} ) }_{\mathrm{III} } \\
+\right)_{F} ) }_{\mathrm{III} }.
     \end{split}
 .\end{equation*}
-
-Where integration of the interior facets is computed in the following fashion.
+Where the integration of the interior facets is computed in the following fashion.
 \begin{equation}
     \label{eq:dg2_facets}
     \begin{split}
