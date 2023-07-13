@@ -1360,14 +1360,14 @@ Hence, affine meshes are essential for the error analysis, which utilize the int
     Let $\mathcal{T}_{h} $ be a mesh of $\Omega \in \mathbb{R} ^{d} $ and $\Omega _{h} = \bigcup_{T \in \mathcal{T}_{h} } T$ . Let $\mathcal{P}^{k}(T) $ be the space of all polynomials of order $k$ in the mesh element $T$ in $\mathcal{T}_{h}$ . We define the broken polynomial space and the global $C^{0}$ continuous polynomial space as
     \begin{equation}
         \begin{split}
-    \mathcal{P}^{k} ( \mathcal{T}_{h} ) & := \left\{ v \in L^{2}( \Omega _{h} )    \mid  v|_{T} \in \mathcal{P}^k( T) \quad  \forall T \in  \mathcal{T}_{h}   \right\}. \\
+    \mathcal{P}^{k} ( \mathcal{T}_{h} ) & := \left\{ v \in L^{2}( \Omega _{h} )    \mid  v|_{T} \in \mathcal{P}^k( T) \quad  \forall T \in  \mathcal{T}_{h}   \right\}, \\
     \mathcal{P}^{k}_{c} ( \mathcal{T}_{h} ) & := \left\{ v \in C^{0}( \Omega _{h}  )   \mid  v|_{T} \in \mathcal{P}^k( T) \quad  \forall T \in  \mathcal{T}_{h}   \right\}.
         \end{split}
     \end{equation}
     Similarly, for quadrilateral elements is the polynomial spaces defined as,
     \begin{equation}
         \begin{split}
-    \mathcal{Q}^{k} ( \mathcal{T}_{h} ) & := \left\{ v \in L^{2}( \Omega _{h} )    \mid  v|_{T} \in \mathcal{Q}^k( T) \quad  \forall T \in  \mathcal{T}_{h}   \right\}. \\
+    \mathcal{Q}^{k} ( \mathcal{T}_{h} ) & := \left\{ v \in L^{2}( \Omega _{h} )    \mid  v|_{T} \in \mathcal{Q}^k( T) \quad  \forall T \in  \mathcal{T}_{h}   \right\}, \\
     \mathcal{Q}^{k}_{c} ( \mathcal{T}_{h} ) & := \left\{ v \in C^{0}( \Omega _{h} )   \mid  v|_{T} \in \mathcal{Q}^k( T) \quad  \forall T \in  \mathcal{T}_{h}   \right\}.
         \end{split}
     \end{equation}
@@ -1802,11 +1802,11 @@ a_{h}( u - u_{h}, v_{h}) = 0.
 For more information, see \cite[Definition 1.31]{pietro2012}.
 
 Let $v + v_{h} \in W \oplus V_{h} $ be associated with a corresponding norm $\| \cdot  \|_{V,*  }^{  } $. Here the symbol $\oplus$ is denoted the direct sum of the spaces $V_{h}$ and $W$.
-A necessary assumption is that the discrete bilinear form $a_{h}( \cdot ,\cdot ) $  is bounded in $W \otimes V_{h} \times V_{h}$ and that $\| v_{h} \|_{V,*  }^{  } \lesssim  \| v_{h} \|_{ V_{h} }^{  }  \ \forall v_{h } \in  V_{h} $, i.e.
+A necessary assumption is that the discrete bilinear form $a_{h}( \cdot ,\cdot ) $  is bounded in $W \oplus V_{h} \times V_{h}$ and that $\| v_{h} \|_{V,*  }^{  } \lesssim  \| v_{h} \|_{ V_{h} }^{  }  \ \forall v_{h } \in  V_{h} $, i.e.
 \begin{equation}
     \label{eq:ah_star}
     \begin{split}
-a_{h}( v + v_{h}, w_{h}) & \lesssim  \| v + v_{h} \|_{ V,* }^{  } \| w_{h} \|_{V_{h}  }^{  } \quad  \forall v+ v_{h} \in W \otimes V_{h}, \ \  w_{h} \in V_{h}, \\
+a_{h}( v + v_{h}, w_{h}) & \lesssim  \| v + v_{h} \|_{ V,* }^{  } \| w_{h} \|_{V_{h}  }^{  } \quad  \forall v+ v_{h} \in W \oplus V_{h}, \ \  w_{h} \in V_{h}, \\
 a_{h}( v_{h}, w_{h}) & \lesssim  \|  v_{h} \|_{ V,* }^{  } \| w_{h} \|_{V_{h}  }^{  } \lesssim \|  v_{h} \|_{ V_{h} }^{  } \| w_{h} \|_{V_{h}  }^{  } \quad  \forall  v_{h},  w_{h} \in V_{h}.
     \end{split}
 \end{equation}
