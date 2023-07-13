@@ -149,7 +149,7 @@
 \begin{abstract}
 The Cahn-Hilliard equation, with its wide range of applications in phase-separation, poses numerical challenges due to its non-linear and stiff nature and fourth-order derivatives. This thesis introduces a novel, stabilized,
 unfitted cut continuous interior penalty finite element method specifically designed for the biharmonic problem with Cahn-Hilliard type boundary conditions, which we have successfully extended to handle the Cahn-Hilliard equation. Our approach combines the theoretical cut
-discontinuous Galerkin framework for the Poisson problem, as proposed by \cite{gurkan2019stabilized}, with the continuous interior penalty biharmonic formulation presented by \cite{brenner2012, feng2007fully}. We provide proof that this
+discontinuous Galerkin framework for the Poisson problem, as proposed by \cite{gurkan2019stabilized}, with the continuous interior penalty biharmonic formulation presented by \cite{brenner2012, feng2007fully}. We prove that this
 method is well-posed and ensures optimal convergence. The theoretical results are further supported by presented numerical evidence. Finally, we demonstrate the applicability of the method by extending the formulation to handle the Cahn-Hilliard
 equation using a minimalistic Implicit-Explicit (IMEX) time discretization scheme to manage the non-linearities.
 
@@ -1875,7 +1875,7 @@ Let $\Omega \subseteq    \mathbb{R} ^d$ be a bounded polygonal domain and $\Gamm
 \end{align}
 \label{eq:bi_problem}
 \end{subequations}
-Here $\Delta ^2 = \Delta  \left( \Delta  \right) $ is the biharmonic operator, also known as the bilaplacian. We will assume for the strong form that $u \in H^{4}\left( \Omega  \right) $, $\alpha  >0 $ and $f \in L^{2}\left( \Omega  \right)
+\noindent Here $\Delta ^2 = \Delta  \left( \Delta  \right) $ is the biharmonic operator, also known as the bilaplacian. We will assume for the strong form that $u \in H^{4}\left( \Omega  \right) $, $\alpha  >0 $ and $f \in L^{2}\left( \Omega  \right)
 $. The functions $g_{1},g_{2}: \Omega  \to \mathbb{R}$ are denoted as boundary conditions similar to the CH problem.
 
 \begin{remark}
@@ -1895,28 +1895,31 @@ Hence, we obtain the identity
 \label{eq:iden_bi}
 ( \Delta ^2 u, v ) _{\Omega } = ( \Delta u, \Delta v)_{\Omega } +  ( \partial _{n} \Delta u, v)_{\Gamma } - ( \partial _{n} v, \Delta u) _{\Gamma }
 \end{equation}
-Taking into account the boundary conditions, we end up with the following corresponding weak formulation of the biharmonic problem \eqref{eq:bi_problem}.
-
-\begin{equation}
-\label{eq:V_deg}
-V := \left\{ v \in  H^s( \Omega ), \  s \ge  5  /2 + \varepsilon   \mid \partial _{n} v  = g_{1}     \right\}
-\end{equation}
-Consider the bilinear form $a:V\times V \to \mathbb{R}$ and the linear form $l: V \to \mathbb{R}$. We define the continuous weak formulation problem formulation as follows.
-
-
+We now see that boundary condition ~\eqref{eq:bi_problem_c} can be naturally included in 
+the variational formulation by simply replacing $\partial_n \Delta u $ with $g_2$ in the third term
+of~\eqref{eq:iden_bi}. The remaining boundary condition~\eqref{eq:bi_problem_b} on the other hand
+needs to be built into the function space and thus presents an essential boundary condition.
+As a consequence, the corresponding test function space will consist of functions with zero normal flux, i.e.,
+$\partial_n v = 0$ on $\Gamma$ and therefore the last contribution in \eqref{eq:iden_bi} disappears.
+We end up with the following corresponding weak formulation of the biharmonic problem \eqref{eq:bi_problem}:
 \begin{equation}
 \label{eq:cont_weak_problem}
-\text{Find } u \in V   \text{ such that } a( u,v) = l( v)  \forall v \in V
+\text{Find } u \in V_{g_1}   \text{ such that } a( u,v) = l( v)  \quad \forall v \in V_0
 \end{equation}
-where
+with
 \begin{equation}
     \begin{split}
-a( u,v) & =  ( \alpha u,v)_{\Omega } + ( \Delta u, \Delta v)_{\Omega } - (  \Delta u, \partial _{n} v) _{\Gamma }\\
-l( v)  &= ( f,v)_{\Omega } - ( g_{2} , v)_\Omega
+a( u,v) & =  ( \Delta u, \Delta v)_{\Omega } +( \alpha u,v)_{\Omega },
+\\
+l( v)  &= ( f,v)_{\Omega } - ( g_{2} , v)_\Omega,
     \end{split}
 \end{equation}
-Note that the Neumann boundary condition $g_{1}$ is strongly imposed in $V$, and $g_{2}$ is naturally incorporated in the weak formulation.
-
+where we introduced for general $g\in H^{1/2}(\Gamma)$ the function space
+\begin{equation}
+\label{eq:V_deg}
+V_{g} := \left\{ v \in  H^2( \Omega ) \mid \partial _{n} v  = g \; \text{on } \Gamma \right\}.
+\end{equation}
+% Note that the Neumann boundary condition $g_{1}$ is strongly imposed in $V$, and $g_{2}$ is naturally incorporated in the weak formulation.
 
 \subsection{Detailed construction of Hessian and Laplacian Formulations }%
 \label{sub:construction_of_laplacian_cip}
