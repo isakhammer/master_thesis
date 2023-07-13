@@ -1433,14 +1433,13 @@ To summarize the workflow of solving linear PDEs using the FEM method, see Figur
 \label{sub:note_on_condition_number}
 
 Recall the discrete $l^{p}$ norm for a vector,
-
  \begin{equation}
      \forall U \in \mathbb{R} ^{N}, \quad
 \| U  \|_{ p }^{  } =
      \begin{cases}
      &  \left( \sum_{i=1}^{N}  \abs{ U_{i}  }^{p} \right)^{\frac{1}{p}} , \quad  1\le p < \infty \\
    &  \max_{i}  \abs{ U_i },  \quad  p= \infty
-     \end{cases}
+     \end{cases}.
  \end{equation}
 Also, recall the definition of the matrix norm,
 \begin{equation}
@@ -1469,7 +1468,7 @@ It is well established that $ \frac{1}{\sqrt{N} }  \| A \|_{ \infty }^{  }  \le 
 
 }. Applying this identity, we obtain the upper and lower bounds for $\kappa_{2}(A)$. Specifically, we have
 \begin{equation}
-\frac{1}{N} \kappa_{\infty} ( A) \le  \kappa_{2} ( A) \le N \kappa _{\infty}(A)
+\frac{1}{N} \kappa_{\infty} ( A) \le  \kappa_{2} ( A) \le N \kappa _{\infty}(A).
 \end{equation}
 Thus, since these norms are equivalent, will we in this thesis focus on $ \kappa_{\infty}( A)  $ because of the efficiency of computing $\| A \|_{ \infty }^{  } $.
 
@@ -1701,8 +1700,8 @@ macroelement $\widehat{A}_{j( i) }$ and how it related to $a_{i}$ , see
 Figure \ref{fig:macroelements}.
 
 The Cléments interpolation operator $C_{h}$ is the $L^2$-projection onto the macroelements. That is, given
-a reference macroelement $\widehat{A}_{j( i) }$ and a function $\hat{v} \in L^{1}( \widehat{A}_{j( i) })  $, then $\widehat{C}_{j( i) } \hat{v}$  is the unique polynomial in $\mathcal{P}^{k} ( \widehat{A}_{j( i) })  $ s.t. \[
-\int_{  \widehat{A}_{j( i) }}^{} ( \widehat{C}_{j( i) } \hat{v} - \hat{v}) p \ dx  = 0 \quad  \forall p \in \mathcal{P}^{k} ( \widehat{A}_{j( i) })
+a reference macroelement $\widehat{A}_{j( i) }$ and a function $\hat{v} \in L^{1}( \widehat{A}_{j( i) })  $, then $\widehat{C}_{j( i) } \hat{v}$  is the unique polynomial in $\mathcal{P}^{k} ( \widehat{A}_{j( i) })  $ such that \[
+\int_{  \widehat{A}_{j( i) }}^{} ( \widehat{C}_{j( i) } \hat{v} - \hat{v}) p \ dx  = 0 \quad  \forall p \in \mathcal{P}^{k} ( \widehat{A}_{j( i) }).
 \]
 Finally, the Cléments interpolator is defined as the mapping $C_{h} : L^{1}( \Omega )  \to \mathcal{P} ^{k}_{c}(\mathcal{T}_{h}   ) $ such that
 \[
@@ -1724,9 +1723,9 @@ Finally, we have the following a priori estimate.
 
     Let $v \in H^{s}( \Omega ) $. We define the Clement interpolation as the mapping
 $C_{h}: L^{2}( \Omega )   \to  V_{h}$, where $V_{h}$ has the order $k$. Then does the following stability estimate hold,
-\[
- \| C_{h} v \|_{ s, \Omega     }^{  } \lesssim \| v \|_{ s, \Omega   }^{  } \quad \forall v \in H^{s}( \Omega ) ,
-\]
+\begin{equation}
+ \| C_{h} v \|_{ s, \Omega     }^{  } \lesssim \| v \|_{ s, \Omega   }^{  } \quad \forall v \in H^{s}( \Omega ) .
+\end{equation}
 Let $r = \mathrm{min} ( s, k+1) $. If the following conditions for a parameter $l$ is satisfied, it exists error estimates such that
 \begin{equation}
     \begin{split}
@@ -1763,14 +1762,14 @@ This result is very useful since it is now sufficient to show that a priori esti
  For proof, see \cite[Lemma 12.1]{ErnGuermond2021}. An essential example is the following inequality.
  \begin{equation}
      \label{eq:degrade}
-\| D^2v_{h} \|_{T  }^{  } \lesssim h^{-1} \| \nabla v_{h}  \|_{ T  }^{  } \lesssim h^{-2} \| v_{h} \|_{T  }^{  }
+\| D^2v_{h} \|_{T  }^{  } \lesssim h^{-1} \| \nabla v_{h}  \|_{ T  }^{  } \lesssim h^{-2} \| v_{h} \|_{T  }^{  }.
  \end{equation}
 
 Another advantageous inequality is the so-called trace inequality which connects the relationship of evaluating the norm on element $ T $ and with any of the corresponding facets $F \in \partial T$. The general form is
 \begin{equation}
     \label{eq:inv2}
 \| v_{h} \|_{F   }^{  }  \lesssim
-h^{-\frac{1}{2}} \| v_{h} \|_{ T  }^{  },
+h^{-\frac{1}{2}} \| v_{h} \|_{ T  }^{  }.
 \end{equation}
 For proof, see \cite[Lemma 12.8]{ErnGuermond2021}.
 
@@ -1828,7 +1827,7 @@ We can now utilize these boundedness assumptions in combination with the stabili
     \begin{equation}
         \label{eq:error_star}
         \begin{split}
-        \| u - u_{h} \|_{V,*  }^{  } & \lesssim \| u - v_{h} \|_{V,*  }^{  } + \| v_{h} - u_{h} \|_{V,*  }^{  } \\
+        \| u - u_{h} \|_{V,*  }^{  } & \lesssim \| u - v_{h} \|_{V,*  }^{  } + \| v_{h} - u_{h} \|_{V,*  }^{  }, \\
                                      & \lesssim \| u - v_{h} \|_{V,*  }^{  } + \| v_{h} - u_{h} \|_{V_{h}  }^{  }.
         \end{split}
     \end{equation}
@@ -1848,7 +1847,7 @@ By employing the discrete coercivity as defined in equation \eqref{eq:discrete_w
 \end{proof}
 \noindent A useful property is that for a nonconformal numerical method to converge, we can now simply require
 \begin{equation}
-\lim_{h \to 0}  \inf_{v_{h} \in  V_{h}}  \| u - v_{h} \|_{ V,*  }^{  } = 0
+\lim_{h \to 0}  \inf_{v_{h} \in  V_{h}}  \| u - v_{h} \|_{ V,*  }^{  } = 0.
 \end{equation}
 In that case will $\| u - u_{h} \|_{ V_{h},*  }^{  }  \to  0$, $h \to  0$. Hence, if this requirement is fulfilled, the numerical methods will converge towards the unique solution.
 Note that in combination with Corollary \ref{cor:celement_apriori} this is very useful for estimating a priori estimates. For further details on nonconformal error analysis, refer to \cite[Chapter 1.3]{pietro2012}
