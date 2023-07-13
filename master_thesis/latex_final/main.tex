@@ -2288,12 +2288,13 @@ Consequently, the examples illustrated in section \ref{sec:numerical_results} ar
 The Hessian formulation is well investigated by Susanne Brenner in several papers for \cite{brenner2012, brenner2012quadratic, brenner2012quadratic_kirk} with corresponding analysis and numerical validation. Similarly, variants of the Laplace formulation can be found here
 \cite{feng2007fully, georgoulis2009discontinuous}. In these articles there also is good theoretical and experimental evidence that both formulation have the following expected a priori estimates. Let  $u \in H^{s}( \Omega ) $ for $s\ge  \frac{5}{2} + \varepsilon$, and $u_{h}\in
 V_{h}  $ of order $k\ge 2$. Then with $r = \min\left\{ s,
-k+2 \right\}$ the a priori estimates are   \[
+k+2 \right\}$ the a priori estimates are
+\begin{equation}
     \begin{split}
-\| u - u_{h} \|_{ a_{h},*  }^{  }  & \lesssim  h^{r-2} \| u \|_{ r, \Omega  }^{  } \\
-\| u - u_{h} \|_{ \Omega   }^{  }  & \lesssim  h^{r- \max_{}\left\{ 0, 3-k \right\}  } \| u \|_{ r,\Omega  }^{  }
+\| u - u_{h} \|_{ a_{h},*  }^{  }  & \lesssim  h^{r-2} \| u \|_{ r, \Omega  }^{  }, \\
+\| u - u_{h} \|_{ \Omega   }^{  }  & \lesssim  h^{r- \max_{}\left\{ 0, 3-k \right\}  } \| u \|_{ r,\Omega  }^{  }.
     \end{split}
-\]
+\end{equation}
 
 Be aware that the $\| \cdot  \|_{\Omega   }^{  } $ norm estimates is suboptimal for $k=2$.
 It is worth noting that technically is the interior regularisation equivalent to do a Nitsche's method in all interior boundaries of the elements with boundary conditions of each element weakly
@@ -2304,38 +2305,42 @@ imposed to zero. Thus, we expect the penalty parameter $\gamma$ to be the same i
 \subsection{Note on the biharmonic mixed formulation}%
 \label{subsec:biharmonic_mixed_formulation}
 
-It is easy to see that the biharmonic problem can be rewritten into an equivalent mixed formulation , that is, to find $\sigma, \tau  \in H^2( \Omega ) $ s.t. \[
-    \begin{split}
-\Delta \sigma  & = f \quad  \text{in } \Omega \\
-\sigma   & = \Delta u  \text{ in } \Omega \\
-\partial _{n} \sigma  & = g_{1} \text{ on } \Gamma  \\
-\partial _{n} u   & = g_{2} \text{ on } \Gamma
-    \end{split}
-\]
+It is easy to see that the biharmonic problem can be rewritten into an equivalent mixed formulation , that is, to find $\sigma, \tau  \in H^2( \Omega ) $ such that
+
+\begin{subequation}
+    \begin{align}
+\Delta \sigma  & = f \quad  \text{in } \Omega, \\
+\sigma   & = \Delta u  \text{ in } \Omega, \\
+\partial _{n} \sigma  & = g_{1} \text{ on } \Gamma,  \\
+\partial _{n} u   & = g_{2} \text{ on } \Gamma.
+    \end{align}
+\end{subequation}
+
 The goal is to obtain an useful weak formulation. Using Greens theorem on the first equation we get,
-\[
-( \sigma, v)_{\Omega } = ( \nabla  u , \nabla v  )_{\Omega } - ( \nabla _{n} u , v) _{\Gamma }.
-\]
+\begin{equation}
+    ( \sigma, v)_{\Omega } = ( \nabla  u , \nabla v  )_{\Omega } - ( \nabla _{n} u , v) _{\Gamma }.
+\end{equation}
 Similarly for the second equation we obtain
-\[
-( \nabla \sigma , \nabla \varphi  )_{\Omega} - ( \partial _{n} \sigma ,  \varphi )_{\Gamma } = ( f,\varphi ) _{\Omega}
-\]
-Putting it all together we have the following mixed weak formulation; Find $( u, \sigma ) \in H^{1}( \Omega ) \times H^{1}( \Omega )  $ s.t. \[
+\begin{equation}
+( \nabla \sigma , \nabla \varphi  )_{\Omega} - ( \partial _{n} \sigma ,  \varphi )_{\Gamma } = ( f,\varphi ) _{\Omega}.
+\end{equation}
+Putting it all together we have the following mixed weak formulation; Find $( u, \sigma ) \in H^{1}( \Omega ) \times H^{1}( \Omega )  $ such that \begin{equation}
     \begin{split}
-     ( \nabla  u , \nabla v  )_{\Omega } -( \sigma, v)_{\Omega }  & =   ( g_{1} , v) _{\Gamma } \quad  \forall v \in H^{1}( \Omega ) \\
-( \nabla \sigma , \nabla \varphi  )_{\Omega}  & = ( f,\varphi ) _{\Omega} + ( g_{2} ,  \varphi )_{\Gamma } \quad  \forall \varphi \in H^{1}( \Omega )
+     ( \nabla  u , \nabla v  )_{\Omega } -( \sigma, v)_{\Omega }  & =   ( g_{1} , v) _{\Gamma } \quad  \forall v \in H^{1}( \Omega ), \\
+( \nabla \sigma , \nabla \varphi  )_{\Omega}  & = ( f,\varphi ) _{\Omega} + ( g_{2} ,  \varphi )_{\Gamma } \quad  \forall \varphi \in H^{1}( \Omega ).
     \end{split}
-\]
+\end{equation}
 Now we want to relate this formulation to the abstract saddle point problem (SPP).
 Let $V = H^{1}( \Omega ) $  and $W=H^{1}( \Omega ) $ be  Hilbert spaces and define the bilinear form $a: V\times V \to \mathbb{R}  $ and $b: V \times W \to \mathbb{R} $ s.t. $a( \sigma,v ) = - ( \sigma , v) _{\Omega }  $ and $b( u,v) = ( \nabla u,
-\nabla v)_{\Omega  }  $. We also may define the linear forms, $G,F: V \to \mathbb{R} $ s.t. $ G( v)  = ( g_{1}, v) _{\Gamma } $ and $F( \varphi ) = ( f, \varphi )_{\Omega } + ( g_{2}, \varphi )_{\Gamma } $.
+\nabla v)_{\Omega  }  $. We also may define the linear forms, $G,F: V \to \mathbb{R} $ such that $ G( v)  = ( g_{1}, v) _{\Gamma } $ and $F( \varphi ) = ( f, \varphi )_{\Omega } + ( g_{2}, \varphi )_{\Gamma } $.
 
-Hence, we obtain the following SPP. Find $( u,\sigma ) \in V \times W$ s.t.  \[
+Hence, we obtain the following SPP. Find $( u,\sigma ) \in V \times W$ such that
+\begin{equation}
     \begin{cases}
-       a( \sigma ,v) + b ( u, v )  & = G( v)   \quad  \forall v \in V \\
-       b( u, \varphi  )  & = F( \varphi )     \quad \forall \phi \in W
+       a( \sigma ,v) + b ( u, v )  & = G( v)   \quad  \forall v \in V, \\
+       b( u, \varphi  )  & = F( \varphi )     \quad \forall \phi \in W.
     \end{cases}
-\]
+\end{equation}
 This is useful since we can now apply standard saddle point theory to do an analysis for the problem. We will see that it is now easier to handle the boundary constraints naturally, but with the cost of a more challenging time discretization
 procedure.
 For more information about the biharmonic mixed formulation, see \cite{babuvska1980analysis,cai2023nitsche}.
@@ -4250,14 +4255,14 @@ arrive at the following modification.
 \newpage
 \section{Conclusion}%
 \label{sec:conclusion}
-% First, we provided a brief overview of Sobolev spaces and basic PDE theory, introducing the 
+% First, we provided a brief overview of Sobolev spaces and basic PDE theory, introducing the
 % finite element method and discussing how the error analysis is affected when our method is nonconformal, as opposed to when it is conformal.
 % Next, we revisited and meticulously constructed the so-called Laplace and Hessian formulations of the continuous interior penalty methods for the biharmonic equation with Cahn-Hilliard type boundary conditions presented by \cite{brenner2012, feng2007fully}.
 The primary goal of this thesis was to develop a cut finite element method for
 discretizing the biharmonic problem in its primal formulation on unfitted meshes,
 and to apply the resulting scheme to the Cahn-Hilliard equation.
 Inspired by the theoretical discontinuous Galerkin framework for the Poisson
-problem proposed in \cite{gurkan2019stabilized}, 
+problem proposed in \cite{gurkan2019stabilized},
 we managed to show that our method is well-posed and that the stability and convergence properties
 from the original fitted formulation are maintained.
 Thanks to the design of suitable ghost penalties, we could also show
@@ -4288,7 +4293,7 @@ using more physically realistic formulations, including concentration-dependent 
 well as thermodynamically more relevant $\log$-based Ginzburg-Landau free energy densities $F(u)$.
 From a numerical efficiency point of view, our proposed method
 could significantly benefit from including adaptivity in space and time
-to both resolve the locally high gradient in the phase transition zone 
+to both resolve the locally high gradient in the phase transition zone
 and to account for the different time scales in the phase separation process.
     \printbibliography
 
