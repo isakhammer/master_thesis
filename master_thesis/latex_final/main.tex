@@ -2053,13 +2053,13 @@ By integrating over exterior facets $\mathcal{F} _{h}^{ext}$ and interior facets
 )_{F}     \\
    &  + \sum_{F \in \mathcal{F} _{h}^{int}}^{} \underbrace{\left( (\partial _{n^{+}} \Delta  u^{+}
         ,v_h^{+} )_{F}
-+ \left(\partial _{n^{-}} \Delta  u^{+} ,v_h^{-}\right)_{F}  \right)}_{(I)}    \\
++ \left(\partial _{n^{-}} \Delta  u^{+} ,v_h^{-}\right)_{F}  \right)}_{\mathrm{I} }    \\
     &\quad \quad  -
 \underbrace{\left( \left(\partial _{n^{+}n^{+}} u^{+}, \partial _{n^{+}} v_h^{+} \right) _{F} + \left(\partial _{n^{-}n^{-}} u^{-}, \partial _{n^{-}} v_h^{-}
-\right) _{F} \right) }_{(II)} \\
+\right) _{F} \right) }_{\mathrm{II} } \\
    &  \quad \quad - \sum_{i=1}^{d-1}\underbrace{( (\partial _{n^{+}t_{i}} u^{+}, \partial_{t_{i}} v_h^{+} )_{F} +  \left(\partial _{n^{-}t_{i}} u^{-},
         \partial_{t_{i}} v_h^{-}
-\right)_{F} ) }_{(III)} \\
+\right)_{F} ) }_{\mathrm{III} } \\
     \end{split}
 .\end{equation*}
 
@@ -2067,19 +2067,19 @@ Where integration of the interior facets is computed in the following fashion.
 \begin{equation}
     \label{eq:dg2_facets}
     \begin{split}
-        (I) &  =    \left(\partial _{n^{+}} \Delta  u^{+} ,v_h^{+}\right)_{F} +
+        \mathrm{I}  &  =    \left(\partial _{n^{+}} \Delta  u^{+} ,v_h^{+}\right)_{F} +
         \left(\partial _{n^{-}} \Delta  u^{-} ,v_h^{-}\right)_{F}  \\
             & =   \int_{F}^{}
             \jump{ \partial _{n} \Delta  u \cdot v_h } =
             \int_{F}^{}
             \mean{ \partial _{n} \Delta  u } \underbrace{\jump{ v_h }}_{= 0}    + \underbrace{\jump{ \partial _{n} \Delta  u
             }}_{= 0}    \mean{ v_h } = 0 \\
-            (II) &  =     \left(\partial _{n^{+}n^{+}} u^{+}, \partial_{n^{+}} v_h^{+} \right)_{F} +  \left(\partial _{n^{-}n^{-}} u^{-}, \partial_{n^{-}} v_h^{-} \right)_{F}    \\
+            \mathrm{II}  &  =     \left(\partial _{n^{+}n^{+}} u^{+}, \partial_{n^{+}} v_h^{+} \right)_{F} +  \left(\partial _{n^{-}n^{-}} u^{-}, \partial_{n^{-}} v_h^{-} \right)_{F}    \\
                  &= \int_{F}^{} \jump{ \partial _{nn} u \cdot  \partial_{n} v_h }   = \int_{F}^{}
                        \mean{ \partial _{nn} u    } \underbrace{\jump{ \partial_{n} v_h }  }_{\neq 0}    + \underbrace{\jump{ \partial
                                _{nn}  u
                        }}_{= 0}    \mean{ \partial _{n}v_h } \\
-            (III) &  =     \left(\partial _{n^{+}t_{i}} u^{+}, \partial_{t_{i}} v_h^{+}
+            \mathrm{III}  &  =     \left(\partial _{n^{+}t_{i}} u^{+}, \partial_{t_{i}} v_h^{+}
                 \right)_{F} +  \left(\partial _{n^{-}t_{i}} u^{-}, \partial_{t_{i}} v_h^{-}
                 \right)_{F}   \\
                  &  =   \int_{F}^{}
@@ -2090,7 +2090,8 @@ Where integration of the interior facets is computed in the following fashion.
                  }}_{= 0}    \mean{ \partial _{t_{i}}v_h }  = 0
                    \end{split}
 .\end{equation}
-Observe that the cancellations in the term $(I)$ and term $(III)$  appear of the continuity of $v_h\in V_{h} $ and $u\in H^{4}( \Omega ) $, which makes the jumps and derivative jumps zero. On the other hand, the second term $(II)$  does not vanish
+Observe that the cancellations in the term $\mathrm{I} $ and term $\mathrm{III} $  appear of the continuity of $v_h\in V_{h} $ and $u\in H^{4}( \Omega ) $, which makes the jumps and derivative jumps zero. On the other hand, the second term
+$\mathrm{II} $  does not vanish
 since the derivative of $v_h \in V_{h}$ has a nonzero jump. It can also be raised that $\mean{
 \partial _{nn} u } = \partial _{nn} u  $ holds of $H^{4}( \Omega  ) $.
 
