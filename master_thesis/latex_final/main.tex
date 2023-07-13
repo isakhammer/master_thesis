@@ -1890,9 +1890,9 @@ $ -( \nabla ( \Delta u ) , \nabla v ) _{\Omega  }  =   ( \Delta u, \Delta v ) _{
 Hence, we obtain the identity
 \begin{equation}
 \label{eq:iden_bi}
-( \Delta ^2 u, v ) _{\Omega } = ( \Delta u, \Delta v)_{\Omega } +  ( \partial _{n} \Delta u, v)_{\Gamma } - ( \partial _{n} v, \Delta u) _{\Gamma }
+( \Delta ^2 u, v ) _{\Omega } = ( \Delta u, \Delta v)_{\Omega } +  ( \partial _{n} \Delta u, v)_{\Gamma } - ( \partial _{n} v, \Delta u) _{\Gamma }.
 \end{equation}
-We now see that boundary condition ~\eqref{eq:bi_problem_c} can be naturally included in 
+We now see that boundary condition ~\eqref{eq:bi_problem_c} can be naturally included in
 the variational formulation by simply replacing $\partial_n \Delta u $ with $g_2$ in the third term
 of~\eqref{eq:iden_bi}. The remaining boundary condition~\eqref{eq:bi_problem_b} on the other hand
 needs to be built into the function space and thus presents an essential boundary condition.
@@ -1901,7 +1901,7 @@ $\partial_n v = 0$ on $\Gamma$ and therefore the last contribution in \eqref{eq:
 We end up with the following corresponding weak formulation of the biharmonic problem \eqref{eq:bi_problem}:
 \begin{equation}
 \label{eq:cont_weak_problem}
-\text{Find } u \in V_{g_1}   \text{ such that } a( u,v) = l( v)  \quad \forall v \in V_0
+\text{Find } u \in V_{g_1}   \text{ such that } a( u,v) = l( v)  \quad \forall v \in V_0.
 \end{equation}
 with
 \begin{equation}
@@ -1914,7 +1914,7 @@ l( v)  &= ( f,v)_{\Omega } - ( g_{2} , v)_\Omega,
 where we introduced for general $g\in H^{1/2}(\Gamma)$ the function space
 \begin{equation}
 \label{eq:V_deg}
-V_{g} := \left\{ v \in  H^2( \Omega ) \mid \partial _{n} v  = g \; \text{on } \Gamma \right\}.
+V_{g_{1}} := \left\{ v \in  H^2( \Omega ) \mid \partial _{n} v  = g_{1} \; \text{on } \Gamma \right\}.
 \end{equation}
 % Note that the Neumann boundary condition $g_{1}$ is strongly imposed in $V$, and $g_{2}$ is naturally incorporated in the weak formulation.
 
