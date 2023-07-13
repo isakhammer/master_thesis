@@ -3789,7 +3789,7 @@ This drop occurs for small values of $h \leq \frac{L}{512}$ because the conditio
         We consider the manufactured solution such that
         \begin{equation}
         \label{eq:man_sol_2}
-            u(x,y) =  \sin\left( 2\pi x \right)\cos\left(2\pi y\right)
+            u(x,y) =  \sin\left( 2\pi x \right)\cos\left(2\pi y\right).
         \end{equation}
         In this case, we must assume non-homogeneous Neumann conditions, and thus we only test the numerical results for the Laplace formulation. The result can be shown in Figure \ref{fig:conv_flower_lap} and Table \ref{tab:conv_flower_lap}. Here we
         observe that we get optimal convergence that is EOC of order 1 and 2 for $\| e  \|_{a_{h},*  }^{  } $ and  $ \| e  \|_{L^{2}( \Omega )   }^{  } $ norm. Again, we see that the condition number $\kappa _{\infty}( A)  $ has a EOC of order
@@ -3933,15 +3933,15 @@ Let $ u( x,0) =  u_{0}$ then is the dynamics on the form,
 \begin{subequations}
 \label{eq:strong_ch}
     \begin{align}
-\partial _{t} u + \Delta  \left(  \varepsilon^2  \Delta u - f( u) \right)   &=0  \quad \text{ in } \Omega  \\
-\partial _{n} u &= 0 \quad \text{ on } \Gamma  \\
-\partial _{n}    \Delta u       &= 0 \quad \text{ on } \Gamma
+\partial _{t} u + \Delta  \left(  \varepsilon^2  \Delta u - f( u) \right)   &=0  \quad \text{ in } \Omega,  \\
+\partial _{n} u &= 0 \quad \text{ on } \Gamma,  \\
+\partial _{n}    \Delta u       &= 0 \quad \text{ on } \Gamma.
     \end{align}
 \end{subequations}
 Here we define $f( u) = u( u^{2} -1)  = F' ( u)  $ where $F( u) = ( 1 / 4 ) ( u^2 -1 ) ^{2} $. With the corresponding energy. We define the small parameter to be $\varepsilon  = 1 / 100$.
 \begin{equation}
     \label{eq:physical_prop}
-E( u)  = \int_{\Omega }^{} \frac{\varepsilon^{2} }{2} \abs{ \nabla u } ^2 +  F( u) dx
+E( u)  = \int_{\Omega }^{} \frac{\varepsilon^{2} }{2} \abs{ \nabla u } ^2 +  F( u) dx.
 \end{equation}
 
 We also recall that the energy functional monotonically decreasing and that the global mass concentration is conserved, i.e.
@@ -3967,17 +3967,17 @@ Given the appearance of the biharmonic equation, we can now utilize the cut fini
 Here we have followed the nonlinear weak formulation \cite[Equation
 4.2]{feng2007fully} and the cut finite element bilinear form for the biharmonic equation proposed in Equation \eqref{eq:discrete_CutCIP_prob} such that
 \begin{align}
-    c_{h}( u_{h}, v_{h})  & = ( f( u_{h}) ,\Delta v_{h})_{\Omega } +  ( f( u_{h}) , \partial _{n}v)_{\mathcal{F}_{h} } \\
-    A_{h}( u_{h}, v_{h})  & =  a_{h}( u_{h}, v_{h}) + g_{h}( u_{h}, v_{h})
+    c_{h}( u_{h}, v_{h})  & = ( f( u_{h}) ,\Delta v_{h})_{\Omega } +  ( f( u_{h}) , \partial _{n}v)_{\mathcal{F}_{h} }, \\
+    A_{h}( u_{h}, v_{h})  & =  a_{h}( u_{h}, v_{h}) + g_{h}( u_{h}, v_{h}).
 \end{align}
 
 The primary aim is to demonstrate that this problem can be solved using a simple time-integration scheme. Define the index $m= 0, 1, \ldots, M$. This index corresponds to uniformly distributed time points $t_{m}$, which are subject to the
 boundary conditions $t_{0} = 0$ and $t_{M} = M \tau$. Here, we denote the time step as $\tau = \varepsilon^2$. Each time step $u^{m}_{h}$ is an element of the discrete space $V_{h}$ , i.e. $u^{m}_{h} \in V_{h}$  with the initial condition defined as $u^{0} = u( t_{0},x )$. Following this, we establish the forward difference operator, which is determined by the time step $\tau $.
 \begin{equation}
-\overline{\partial } _{t} u_{h}^{m} = \frac{u_{h}^{m} - u_{h}^{m-1}}{ \tau }
+\overline{\partial } _{t} u_{h}^{m} = \frac{u_{h}^{m} - u_{h}^{m-1}}{ \tau }.
 \end{equation}
 
-We define the Implicit explicit scheme (IMEX) scheme to have the following discretization,
+We define the implicit explicit time step scheme (IMEX) scheme to have the following discretization,
 \begin{equation}
 ( \overline{\partial } _{t} u^{m}_{h}, v_{h}   )_{\Omega } + \varepsilon^{2} A^{m}_{h}( u_{h}^{m} , v) +  c_{h} (  u_{h}^{m-1}, v_{h})  = 0 , \quad \forall v_{h}, u^{m}_{h} \in V^{}_{h}.
 \end{equation}
