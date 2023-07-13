@@ -97,6 +97,7 @@
 
 
 \addbibresource{bibliography.bib} % Makes the bibliography file available to biblatex.
+\addbibresource{biharmonic.bib} % Makes the bibliography file available to biblatex.
 
 %% PGF PLOTS DEPENDECIES
 \usepackage{pgfplots}
@@ -1874,7 +1875,7 @@ Let $\Omega \subseteq    \mathbb{R} ^d$ be a bounded polygonal domain and $\Gamm
 \end{align}
 \label{eq:bi_problem}
 \end{subequations}
-Here is $\Delta ^2 = \Delta  \left( \Delta  \right) $ the biharmonic operator, also known as the bilaplacian. We will assume for the strong form that $u \in H^{4}\left( \Omega  \right) $, $\alpha  >0 $ and $f \in L^{2}\left( \Omega  \right)
+Here $\Delta ^2 = \Delta  \left( \Delta  \right) $ is the biharmonic operator, also known as the bilaplacian. We will assume for the strong form that $u \in H^{4}\left( \Omega  \right) $, $\alpha  >0 $ and $f \in L^{2}\left( \Omega  \right)
 $. The functions $g_{1},g_{2}: \Omega  \to \mathbb{R}$ are denoted as boundary conditions similar to the CH problem.
 
 \begin{remark}
@@ -4243,24 +4244,46 @@ arrive at the following modification.
 \newpage
 \section{Conclusion}%
 \label{sec:conclusion}
+% First, we provided a brief overview of Sobolev spaces and basic PDE theory, introducing the 
+% finite element method and discussing how the error analysis is affected when our method is nonconformal, as opposed to when it is conformal.
+% Next, we revisited and meticulously constructed the so-called Laplace and Hessian formulations of the continuous interior penalty methods for the biharmonic equation with Cahn-Hilliard type boundary conditions presented by \cite{brenner2012, feng2007fully}.
+The primary goal of this thesis was to develop a cut finite element method for
+discretizing the biharmonic problem in its primal formulation on unfitted meshes,
+and to apply the resulting scheme to the Cahn-Hilliard equation.
+Inspired by the theoretical discontinuous Galerkin framework for the Poisson
+problem proposed in \cite{gurkan2019stabilized}, 
+we managed to show that our method is well-posed and that the stability and convergence properties
+from the original fitted formulation are maintained.
+Thanks to the design of suitable ghost penalties, we could also show
+that all presented theoretical properties are geometrically robust in the sense
+that the derived bounds are insensitive to how the domain boundary cuts the background mesh.
+The theoretical results are further substantiated by the numerical
+evidence presented.  Additionally, we conducted supplementary tests to
+ensure the method's geometrical robustness, particularly in instances where the
+non-stabilized formulation fails.
+Finally, we demonstrated that our cut continuous interior penalty
+methods can successfully be applied to the nonlinear Cahn-Hilliard
+equation using a simple implicit-explicit time stepping method.
 
-First, we provided a brief overview of Sobolev spaces and basic PDE theory, introducing the FEM method and discussing how error analysis is affected when our method is nonconformal, as opposed to when it is conformal.
-Next, we revisited and meticulously constructed the so-called Laplace and Hessian formulations of the continuous interior penalty methods for the biharmonic equation with Cahn-Hilliard type boundary conditions presented by \cite{brenner2012, feng2007fully}.
+While the present thesis demonstrates that the ghost penalty techniques can be successfully used
+to design non-conform $C^0$-CutFEMs for elliptic
+and parabolic 4th order problems, we have only scratched the surface of this research direction.
+First of all, in the numerical implementation of the biharmonic problem,
+we only considered elements of order $k = 2$, hence, it remains to exploit higher order, i.e. $k = 3, 4$.
+In the continous interior penalty setting, as our theory already
+covers the $k\geqslant 2$ case, this amounts to implement higher order
+ghost penalty in our computational framework. Moreover, it would also be interesting
+to compare our method to other unfitted methods, including aggregated finite element methods~\cite{BadiaVerdugoMartin2018} and
+conform immersogeometric methods based on $C^1$-continuous $B$-splines~\cite{ZhaoSchillingerXu2017}.
 
-The primary aim of this thesis has been to enhance this formulations to accommodate unfitted mesh. In doing so, a novel, stabilized, unfitted cut continuous interior penalty finite element method has been successfully developed for the biharmonic equation. Moreover, this method has been effectively extended to handle the Cahn-Hilliard equation.
-Using the theoretical discontinuous Galerkin framework for the Poisson problem, as proposed by \cite{gurkan2019stabilized}, we managed to show that the method was well-posed and that the convergence properties from the original fitted formulation were confirmed. The theoretical results are further substantiated by the numerical evidence presented. Additionally, we conducted supplementary tests to ensure the method's robustness, particularly in instances where the non-stabilized formulation fails.
-
-Finally, we then demonstrated that the cut continuous interior penalty methods can successfully be applied to the nonlinear Cahn-Hilliard equation using a very simple Implicit-Explicit solver.
-
-
-Now, in the context of the biharmonic problem. First of all, int the numerical implementation we only considered element of order $k=2$, hence, it remains to exploit higher order, i.e. $k=3,4$. It would also be interesting to compare this method to other
-unfitted methods, such at aggregated finite element methods and isogeometric analysis.
-
-Specifically, for the Cahn-Hilliard problem. In this report we restricted ourself to handle a constant mobility $M=1$ and a polynomial approximation of the non-linearity $F(u) =\frac{1}{4} ( u^2 - 1)^{2}  $. However, to adapt this formulation to more
-diverse physical problems this has to be taken into account. From the numerical point of view is the method very inefficient in the sense of adaptivity both in space and time. Hence, in future work, would exploiting more advanced adaptive methods be
-suitable.
-
-
+Regarding the Cahn-Hilliard problem,
+we restricted ourself to handle a constant mobility $M=1$ and a polynomial approximation of the non-linearity $F(u) =\frac{1}{4} ( u^2 - 1)^{2}$ in this report. Consequently, we need to extend and test our framework
+using more physically realistic formulations, including concentration-dependent mobilities as
+well as thermodynamically more relevant $\log$-based Ginzburg-Landau free energy densities $F(u)$.
+From a numerical efficiency point of view, our proposed method
+could significantly benefit from including adaptivity in space and time
+to both resolve the locally high gradient in the phase transition zone 
+and to account for the different time scales in the phase separation process.
     \printbibliography
 
     \includepdf[pages=-]{results/illustration/back_page.pdf}
