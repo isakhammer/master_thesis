@@ -3534,11 +3534,11 @@ Now it remains to make this Lemma hold for the active mesh.
         \begin{subequations}
             \begin{align}
                 \label{eq:bi_inv_gh_1}
-                \| v_h \|_{ \mathcal{T} _{h} }^{ 2 }  & \lesssim  \| v_h \|_{ \Omega  }^{ 2 }  + \sum_{j=1}^{k} h^{2j+1} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n} v_h}    )_{\mathcal{F}_{h}^{g}}\\
+                \| v_h \|_{ \mathcal{T} _{h} }^{ 2 }  & \lesssim  \| v_h \|_{ \Omega  }^{ 2 }  + \sum_{j=1}^{k} h^{2j+1} ( \jump{ \partial ^{j}_{n} v }, \jump{ \partial ^{j}_{n} v_h}    )_{\mathcal{F}_{h}^{g}},\\
                 \label{eq:bi_inv_gh_2}
-                \| D ^2 v_h \|_{ \mathcal{T} _{h} }^{ 2 }  & \lesssim  \| D^2 v_h \|_{ \Omega  }^{ 2 }  + \sum_{j=1}^{k} h^{2j-3} ( \jump{ \partial ^{j}_{n} v_h }, \jump{ \partial ^{j}_{n}v_h }    )_{\mathcal{F}_{h}^{g}} \\
+                \| D ^2 v_h \|_{ \mathcal{T} _{h} }^{ 2 }  & \lesssim  \| D^2 v_h \|_{ \Omega  }^{ 2 }  + \sum_{j=1}^{k} h^{2j-3} ( \jump{ \partial ^{j}_{n} v_h }, \jump{ \partial ^{j}_{n}v_h }    )_{\mathcal{F}_{h}^{g}}, \\
                 \label{eq:bi_inv_gh_3}
-                \| \Delta v_h \|_{ \mathcal{T} _{h} }^{ 2 }  & \lesssim  \| \Delta v_h \|_{ \Omega  }^{ 2 }  + \sum_{j=1}^{k} h^{2j-3} ( \jump{ \partial ^{j}_{n} v_h }, \jump{ \partial ^{j}_{n}v_h }    )_{\mathcal{F}_{h}^{g}}
+                \| \Delta v_h \|_{ \mathcal{T} _{h} }^{ 2 }  & \lesssim  \| \Delta v_h \|_{ \Omega  }^{ 2 }  + \sum_{j=1}^{k} h^{2j-3} ( \jump{ \partial ^{j}_{n} v_h }, \jump{ \partial ^{j}_{n}v_h }    )_{\mathcal{F}_{h}^{g}}.
             \end{align}
         \end{subequations}
 \end{lemma}
@@ -3550,7 +3550,7 @@ Now it remains to make this Lemma hold for the active mesh.
 
             Let us define the following norm
             \begin{equation}
-            g_{F_{i}}^{L^{2}}( v_{h},v_{h})  = \sum_{j=1}^{k} h^{2j+1}( \jump{ \partial ^{j}_{n}v_{h} }, \jump{ \partial ^{j}_{n}v_{h} }    )_{F_{i} }
+            g_{F_{i}}^{L^{2}}( v_{h},v_{h})  = \sum_{j=1}^{k} h^{2j+1}( \jump{ \partial ^{j}_{n}v_{h} }, \jump{ \partial ^{j}_{n}v_{h} }    )_{F_{i} }.
             \end{equation}
             where $F_{i} \in  \mathcal{F} ^{g}_{h}$ and polynomial degree $ k$. Using Lemma \ref{lemma:bi_local_facet_estimate} can we see that
             \begin{equation}
@@ -3562,13 +3562,14 @@ By employing induction on each pair $\left\{ T_{i}, T_{i+1} \right\}$ along with
             \| v_{h} \|_{ T_{1} }^{2  }  & \le  C \| v_{h} \|_{ T_{2} }^{ 2 } + g_{F_{1}}^{L^{2}}( v_{h},v_{h})\\
               & \le  C( C( \| v_{h} \|_{ T_{3} }^{ 2 } + g_{F_{2}}^{L^{2}}( v_{h},v_{h}) ) + g_{F_{1}}^{L^{2}}( v_{h},v_{h}) )\\
               & \lesssim    \| v_{h} \|_{ T_{l} }^{ 2 }  + \sum_{i=1}^{l-1} g_{F_{i}}^{L^{2}}( v_{h},v_{h})  \\
-              & \lesssim    \| v_{h} \|_{ T_{l} \cap \Omega  }^{ 2 }  + \sum_{i=1}^{l-1} g_{F_{i}}^{L^{2}}( v_{h},v_{h})
+              & \lesssim    \| v_{h} \|_{ T_{l} \cap \Omega  }^{ 2 }  + \sum_{i=1}^{l-1} g_{F_{i}}^{L^{2}}( v_{h},v_{h}).
     \end{align}
             Here the last steps arise from the fact that $\|  v_{h} \|_{ T_{l} }^{  } \lesssim  \|  v_{h} \|_{ T_{l} \cap \Omega  }^{  }  $, which is a consequence of the fat intersection property.
             Summation over the cut elements $\mathcal{T} ^{\Gamma }_{h}$ implies,
             \begin{align}
                     \| v_{h} \|_{ \mathcal{T} ^{\Gamma }_h }^{2  } & \lesssim \| v_{h} \|_{ \mathcal{T} ^{\Gamma }_h\cap \Omega  }^{2  }+ \sum_{i=1}^{l-1} g_{F_{l}}^{L^{2}}( v_{h},v_{h}) \\
-                                                                 & = \| v_{h} \|_{ \mathcal{T}^{\Gamma }_h \cap \Omega   }^{ 2 }  + \sum_{j=0}^{k} h^{2j+1} ( \jump{ \partial ^{j}_{n} v_{h} }, \jump{ \partial ^{j}_{n}v_{h} }    )_{\mathcal{F}_{h}^{g}}
+                                                                 & = \| v_{h} \|_{ \mathcal{T}^{\Gamma }_h \cap \Omega   }^{ 2 }  + \sum_{j=0}^{k} h^{2j+1} ( \jump{ \partial ^{j}_{n} v_{h} }, \jump{ \partial ^{j}_{n}v_{h} }
+                                                                 )_{\mathcal{F}_{h}^{g}}.
             \end{align}
         And as a trivial extension, this now also holds for the active mesh $\mathcal{T} _{h}$, that is,
         \begin{equation}
@@ -3603,7 +3604,7 @@ Finally, we now have the tools to construct a candidate for the ghost penalty th
         \begin{split}
         \abs{ C^{e}_{h} v }_{g_{h}}^{2} & = \sum_{j=0}^{k}  \gamma _{j} h^{2j-3}  \| \jump{ \partial ^{j}_{n} C^{e}_{h} v }  \|_{\mathcal{F}_{h}^{g} }^{2} \\
                                         & = \sum_{j=0}^{r-1}  \gamma _{j} h^{2j-3}   \| \jump{ \partial ^{j}_{n}  ( C^{e}_{h} v- v^{e} )  }  \|_{\mathcal{F}_{h}^{g} }^{2} + \sum_{j=r}^{k}  \gamma _{j} h^{2j-3}  \| \jump{ \partial ^{j}_{n} C^{e}_{h} v }
-                                        \|_{\mathcal{F}_{h}^{g} }^{2} = \mathrm{I} + \mathrm{II}
+                                        \|_{\mathcal{F}_{h}^{g} }^{2} = \mathrm{I} + \mathrm{II}.
         \end{split}
     \end{equation}
     Here we added a zero term $v^{e} \in H^{s}( \Omega_{h} ) $  since jump vanishes for the for the first $r-1$ terms, i.e. $\jump{ \partial ^{j}_{n} v^{e} } = 0  \  \forall j \le r-1$. The given expression suggests that the first term can be readily estimated by utilizing the a priori estimate provided in equation \eqref{eq:bi_projection_estimates_2}.
@@ -3611,7 +3612,7 @@ Finally, we now have the tools to construct a candidate for the ghost penalty th
     \begin{equation}
         \begin{split}
         \mathrm{I}  & \lesssim \sum_{j=0}^{r-1} h^{2j-3}   \| \jump{ \partial ^{j}_{n}  ( C^{e}_{h} v - v^{e})   }  \|_{\mathcal{F}_{h}^{g} }^{2} \lesssim \sum_{j=0}^{r-1} h^{2j-3}   \| D ^{j}  ( C^{e}_{h} v - v^{e})     \|_{\partial \mathcal{T}_{h}  }^{2} \\
-        & \lesssim \sum_{j=0}^{r-1} h^{2j-3}  h^{2r - 2j - 1}\| v  \|_{r,\Omega  }^{2} \lesssim     h^{2( r  - 2 )}\| v  \|_{r,\Omega  }^{2}
+        & \lesssim \sum_{j=0}^{r-1} h^{2j-3}  h^{2r - 2j - 1}\| v  \|_{r,\Omega  }^{2} \lesssim     h^{2( r  - 2 )}\| v  \|_{r,\Omega  }^{2}.
         \end{split}
     \end{equation}
 
@@ -3620,7 +3621,7 @@ Finally, we now have the tools to construct a candidate for the ghost penalty th
     \begin{equation}
         \begin{split}
        \mathrm{II}  & \lesssim \sum_{j=r}^{k} h^{2j-3}  \|  \partial ^{j}_{n} C^{e}_{h} v \|_{\partial \mathcal{T}_{h} }^{2} \lesssim \sum_{j=r}^{k} h^{2j-3} h^{2( r-j -\frac{1}{2}) }  \|  D^r ( C^{e}_{h} v ) \|_{ \Omega  }^{2}  \\
-       &  \lesssim h^{2( r-2) } \| C^{e}_{h}v \|_{r,\Omega}^{2}
+       &  \lesssim h^{2( r-2) } \| C^{e}_{h}v \|_{r,\Omega}^{2}.
         \end{split}
     \end{equation}
     Hence, the estimate $\abs{ C^{e}_{h} v }_{g_{h}}^{2} \lesssim h^{2( r -2 )}\| v \|_{r, \Omega   }^{2}$ holds.
@@ -3647,7 +3648,7 @@ For the convergence study, we will consider a square background domain $\widetil
 where $\phi: \mathbb{R} ^2 \to \mathbb{R}  $ is a given level set function. We will consider two cases; a circular domain,
 \begin{equation}
     \label{eq:circle}
-\phi( x,y) = x^{ 2} + y^{2} -1
+\phi( x,y) = x^{ 2} + y^{2} -1.
 \end{equation}
 and a flower domain,
 \begin{equation}
@@ -3756,13 +3757,13 @@ $j=1, \ldots, 8$. This is illustrated in Figure \ref{fig:refinement} for the cir
 
 On each mesh $\widetilde{\mathcal{T}}^{k}_{h}  $ we compute a numerical solution $u_{h}^{k}$, hence, motivating us to define the convergence rate. Let $u $ be the exact solution, then do we define the so-called Experimental Order of Convergence (EOC) as
 \begin{equation}
-EOC( j) =  \frac{\log \left(  \frac{e^{j-1}}{e^{j}} \right)}{\log \left(  \frac{h^{j-1}}{h^{j}} \right)}, \quad    j = 2,\ldots, 8
+EOC( j) =  \frac{\log \left(  \frac{e^{j-1}}{e^{j}} \right)}{\log \left(  \frac{h^{j-1}}{h^{j}} \right)}, \quad    j = 2,\ldots, 8.
 \end{equation}
 Here we define the error $e^{j} = \| u - u_{h}^{j} \|_{  }^{  } $, where we choose to measure in the norms $ \|\cdot   \|_{L^2( \Omega )   }^{  },   \|\cdot   \|_{H^1( \Omega )   }^{  } $ and $ \|\cdot   \|_{ a_{h},* }^{  }$.
 Recall the definition of the condition number $\kappa_{\infty} ( A)$ from \eqref{eq:condition_num}, where $A$ is the system matrix defined in \eqref{eq:linear_system}. We define $A^{j}$ to the associated system matrix to the corresponding discrete solution
 $u_{h}^{j}$. Hence, when computing EOC specifically for the condition number we define,
 \begin{equation}
-EOC( j) =  \frac{\log \left(  \frac{\kappa _{\infty}( A^{j-1})}{\kappa _{\infty}( A^{j})} \right)}{\log \left(  \frac{h^{j-1}}{h^{j}} \right)}, \quad    j = 2,\ldots, 8
+EOC( j) =  \frac{\log \left(  \frac{\kappa _{\infty}( A^{j-1})}{\kappa _{\infty}( A^{j})} \right)}{\log \left(  \frac{h^{j-1}}{h^{j}} \right)}, \quad    j = 2,\ldots, 8.
 \end{equation}
 
 
