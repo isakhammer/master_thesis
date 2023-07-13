@@ -1347,12 +1347,11 @@ Then the Lagrange interpolation follows,  \[
 \]
 Hence, the finite element $( T, \mathcal{P}, \Sigma  ) $, associated with the notes $\left\{ a_{i} \right\}_{i\in N} $, is reconstructed via the reference finite element $( \hat{T}, \hat{\mathcal{P} }, \hat{\Sigma} ) $.
 Thus, the definition of the local polynomial space can be extended to using the affine transformation depending on the reference element.
-That is, \[
-    \begin{split}
-\mathcal{P}^{k}( T) & = \left\{ \hat{v} \circ  \mathcal{G}^{-1}( T)   \mid  \hat{v} \in \mathcal{P}^{k}( \hat{T})      \right\} \\
-\mathcal{Q}^{k}( T) & = \left\{ \hat{v} \circ  \mathcal{G}^{-1}( T)     \mid  \hat{v} \in \mathcal{Q}^{k}( \hat{T})      \right\} \\
-    \end{split}
-\]
+That is,
+    \begin{align}
+\mathcal{P}^{k}( T) & = \left\{ \hat{v} \circ  \mathcal{G}^{-1}( T)   \mid  \hat{v} \in \mathcal{P}^{k}( \hat{T})      \right\}, \\
+\mathcal{Q}^{k}( T) & = \left\{ \hat{v} \circ  \mathcal{G}^{-1}( T)     \mid  \hat{v} \in \mathcal{Q}^{k}( \hat{T})      \right\}.
+    \end{align}
 Working on shape-regular and affine geometries has been shown to greatly simplify and generalise local interpolation estimates, see \cite[Theorem 11.12]{ErnGuermond2021}, and thus is very useful for deriving a priori estimates.
 Please note that workarounds exist for proving non-affine local interpolation estimates. However, they require key assumptions on the relationship between the nodes $a_{i}$ and the regularity of the mapping $\mathcal{G} $ \cite[Chapter 13]{ErnGuermond2021}.
 Hence, affine meshes are essential for the error analysis, which utilize the interpolation estimates, but it limits us to work on structure mesh if we specifically choose quadrilateral meshes.
@@ -1380,7 +1379,7 @@ In this thesis, we will generally utilize the global $C^{0}$ continuity. Thus, f
 \begin{equation}
     \label{def:Vh_background}
 V_{h} =  \left\{ P_{c}^{k}( \mathcal{T}_{h} ) \text{ or }  Q_{c}^{k}( \mathcal{T}_{h} )
- \right\} \end{equation}
+ \right\}. \end{equation}
 Hence, all results hold for both polynomial spaces.
 
 \begin{figure}[h!]
@@ -1417,7 +1416,7 @@ also known as ndofs, is denoted as $dim(V_{h}) = N$. Let $U_{j} = u_{h}\left(
 a_{j} \right) $, so that $u_{h} = \sum_{j=1}^{N} U_{j} \phi _{j}  $. Then the Problem \ref{def:approx_problem} is equivalent to
 \begin{equation}
     \label{eq:discretized_system}
-\sum_{j = 1}^{N} u_{j} a_{h}\left( \phi _{j}, \phi _{i} \right)  = l_{h}\left( \phi _{i} \right)
+\sum_{j = 1}^{N} u_{j} a_{h}\left( \phi _{j}, \phi _{i} \right)  = l_{h}\left( \phi _{i} \right).
 \end{equation}
 Hence, by letting $U = \left[ U_{j} \right] $ , $F = \left[ \left( f, \phi _{i}  \right) _{\Omega } \right] $  and $A = \left[ a_{h}\left( \phi _{j}, \phi _{i} \right)  \right] $ can we construct a linear system,
 \begin{equation}
