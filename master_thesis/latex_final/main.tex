@@ -2845,7 +2845,7 @@ We may introduce our first assumption on the ghost penalty.  Inspired by the exp
 \end{assumption*}
 
 
-Combing the results, we get the following convenient corollary.
+Combining the results, we get the following convenient corollary.
 
 \begin{corollary}
     \label{cor:bi_inverse_thm}
@@ -2853,7 +2853,7 @@ Combing the results, we get the following convenient corollary.
     \begin{equation}
         \label{eq:inv_est}
             h\| \partial _{nn}  v_{h} \|_{ \mathcal{F}_h^{} \cap \Omega    }^{2 } + h\| \partial _{nn} v_{h} \|_{ \mathcal{T} _{h} \cap \Gamma  }^{2  }   \lesssim  \| D^2 v_{h} \|_{ \Omega  }^{ 2 } + \abs{ v_{h} } _{g_{h}}^{2} \\
-              \lesssim \| v_{h} \|_{ A_{h} }^{  2} \quad  \forall v_{h} \in V_{h}
+              \lesssim \| v_{h} \|_{ A_{h} }^{  2} \quad  \forall v_{h} \in V_{h}.
     \end{equation}
     From this, it is also clear that \begin{equation}
         \label{eq:asta_Ah}
@@ -2891,7 +2891,7 @@ Combing the results, we get the following convenient corollary.
     \begin{split}
        a_{h}( v_{h},v_{h}) &=   \alpha \| v_{h} \|_{   \Omega   }^{2} + \| D^2v_{h} \|_{   \Omega  }^{2  }  + \frac{\gamma }{h}  \|  \jump{ \partial _{n} v_{h} }\|_{\mathcal{F} _{h}^{}  }^{ 2 } + \frac{\gamma }{h}  \| \partial _{n} v_{h} \|_{ \Gamma  }^{ 2 } \\
                    & \quad + 2 ( \mean{ \partial _{nn} v_{h} }, \jump{ \partial _{n} v_{h} }    )_{\mathcal{F} ^{}_{h} \cap \Omega }  + 2 (  \partial _{nn} v ,
-       \partial _{n} v_{h}  )_{\Gamma } \\
+       \partial _{n} v_{h}  )_{\Gamma }. \\
     \end{split}
     \end{equation}
     We first focus on the last two terms in \eqref{eq:coerciv_ah}. Using Cauchy-Schwarz \eqref{eq:cauchy-schwartz}, we observe that
@@ -2938,9 +2938,8 @@ Combing the results, we get the following convenient corollary.
         \begin{split}
            A_{h}( v_{h},v_{h})  \gtrsim & \   \| \ |\alpha|^{\frac{1}{2}} \    v_{h}  \|_{  \Omega   }^{2} + \frac{1}{2}  (\| D^2 v_{h} \|_{ \Omega  }^{ 2 }  + \abs{ v_{h} } _{ g_{h} }^{2  } )  \\
                        & + \frac{\gamma }{2}\left( \|h^{-\frac{1}{2}}  \jump{ \partial _{n} v_{h} }\|_{\mathcal{F} _{h}^{}\cap \Omega   }^{ 2 } + \| h^{-\frac{1}{2}} \partial _{n} v_{h} \|_{ \Gamma  }^{ 2} \right) \\
-                        \gtrsim & \  \| v_{h} \|_{ A_{h} }^{2  }
+                        \gtrsim & \  \| v_{h} \|_{ A_{h} }^{2  }.
         \end{split}
-.
     \end{equation}
 \end{proof}
 
@@ -2974,10 +2973,10 @@ Combing the results, we get the following convenient corollary.
                                                      & + \overbrace{\left(  \partial _{n n} v_{h} ,  \partial _{n }w_{h} \right)_{\Gamma }}^{\mathrm{VI} } + \overbrace{\left(  \partial _{n n} w_{h} ,  \partial _{n}v_{h}       \right)_{\Gamma
                                                      }}^{\mathrm{VII} }     + \overbrace{\frac{\gamma
                                                      }{h}  \left(  \partial _{n} v_{h},  \partial _{n} w_{h} \right)_{\Gamma }}^{\mathrm{VIII} }  \\
-                                                     &=   \mathrm{I}  + \ldots+ \mathrm{VIII}      \\
+                                                     &=   \mathrm{I}  + \ldots+ \mathrm{VIII}.      \\
                     \end{split}
                 \end{equation}
-                The strategy is to bound each term individually using the Cauchy-Schwarz inequality \eqref{eq:cauchy-schwartz}. From this is it easy to see that $\abs{ \mathrm{I}    } +  \abs{( \mathrm{II} )   }   \lesssim \| v_{h} \|_{a_{h}  }^{  } \| w_{h} \|_{ a_{h}
+                The strategy is to bound each term individually using the Cauchy-Schwarz inequality \eqref{eq:cauchy-schwartz}. From this is it easy to see that $\abs{ \mathrm{I}    } +  \abs{ \mathrm{II}    }   \lesssim \| v_{h} \|_{a_{h}  }^{  } \| w_{h} \|_{ a_{h}
                 }^{  } $. To the terms $
                 \mathrm{III}  $ and  $ \mathrm{IV}  $ we apply the inequality \eqref{eq:inv_est} from the Corollary \ref{cor:bi_inverse_thm} to see that,
                 \begin{equation}
@@ -2994,15 +2993,14 @@ Combing the results, we get the following convenient corollary.
               The remaining terms terms $  \mathrm{VI} $ and $  \mathrm{VII} $ can again be handles by Corollary \ref{cor:bi_inverse_thm}, leading to
               \begin{equation}
                     \label{eq:invest_2}
-                \abs{  \mathrm{VI}   }  \lesssim \| h^{\frac{1}{2}}\partial _{nn} v_{h} \|_{\Gamma   }^{  } \| h^{-\frac{1}{2}} \partial _{n}w_{h} \|_{\Gamma   }^{  }  \lesssim \|  v_{h} \|_{A_{h}  }^{  } \| w_{h} \|_{ a_{h}   }^{  }
+                \abs{  \mathrm{VI}   }  \lesssim \| h^{\frac{1}{2}}\partial _{nn} v_{h} \|_{\Gamma   }^{  } \| h^{-\frac{1}{2}} \partial _{n}w_{h} \|_{\Gamma   }^{  }  \lesssim \|  v_{h} \|_{A_{h}  }^{  } \| w_{h} \|_{ a_{h}   }^{  }.
               \end{equation}
              Finally, using the definition of the norm, it is easy to see that
-             \[
+             \begin{equation}
 \abs{  \mathrm{VIII}   }  \lesssim \| \partial _{n}v_{h} \|_{ \Gamma  }^{  }
 \| \partial _{n} w_{h} \|_{ \Gamma  }^{  }  \lesssim \| v_{h} \|_{ a_{h} }^{  }
 \| w_{h} \|_{ a_{h} }^{  } .
-             \]
-
+             \end{equation}
              Hence, we can conclude \begin{equation}
                  \label{eq:ah_ahnorm}
                  \abs{ a_{h}( v_{h},w_{h})  } \le \| v_{h} \|_{ a_{h} }^{  } \| w_{h} \|_{ a_{h} }^{  } \forall v_{h},w_{h} \in V_{h}.
@@ -3013,7 +3011,7 @@ Combing the results, we get the following convenient corollary.
              The only difference is that since $v$ can have a contribution from $V$ where no inverse estimate can be used to bound $\mean{ \partial _{nn} v }  $, hence, we cannot apply to Corollary \ref{cor:bi_inverse_thm} on the estimates \eqref{eq:invest_1} and \eqref{eq:invest_2}. However, this is not a problem since $\| h^{\frac{1}{2}} \mean{ \partial _{nn} v }
              \|_{\mathcal{F} _{h}\cap  \Omega   }^{  } $ and  $\|h^{\frac{1}{2}}  \partial _{nn}v \|_{\Gamma   }^{  } $ are terms in the norm $\|  v \|_{a_{h},*  }^{  } $. Thus, we know that
              \begin{equation}
-                  \abs{ a_{h}( v,w_{h}) }  \le \| v \|_{ a_{h},* }^{  } \| w_{h} \|_{ A_{h} }^{  } \ \ \forall v \in V_{h} \oplus V \text{ and } w_{h} \in V_{h}
+                  \abs{ a_{h}( v,w_{h}) }  \le \| v \|_{ a_{h},* }^{  } \| w_{h} \|_{ A_{h} }^{  } \ \ \forall v \in V_{h} \oplus V \text{ and } w_{h} \in V_{h}.
              \end{equation}
 
 \end{proof}
