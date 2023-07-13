@@ -3108,7 +3108,7 @@ The following estimates are thereby established.
         \begin{split}
             \mathrm{III}  & \lesssim h^{-1} \|  \nabla ( u - C_{h}^{e})  \|_{\partial \mathcal{T}_{h}   }^{2  }  \lesssim h^{-2} \| \nabla ( u - C^{e}_{h}u)  \|_{ \mathcal{T} _{h}
                           }^{ 2 } + \|  D^2  ( u - C_{h}^{e})  \|_{\mathcal{T}_{h}   }^{ 2 } \\
-                          & \lesssim  ( h ^{2( r-1) -2 } + h^{2( r-2) } ) \| u  \|_{r, \mathcal{T}_{h}   }^{2  }  \lesssim  h^{2( r-2) }  \| u  \|_{r, \mathcal{T}_{h}   }^{ 2 }
+                          & \lesssim  ( h ^{2( r-1) -2 } + h^{2( r-2) } ) \| u  \|_{r, \mathcal{T}_{h}   }^{2  }  \lesssim  h^{2( r-2) }  \| u  \|_{r, \mathcal{T}_{h}   }^{ 2 }.
     \end{split}
 \end{equation}
 % And for the boundary term we apply estimate \eqref{eq:bi_projection_estimates_3}
@@ -3118,7 +3118,8 @@ The following estimates are thereby established.
 And for the boundary term we apply \eqref{eq:trace:2} and then \eqref{eq:bi_projection_estimates_1}
         \begin{equation}
             \begin{split}
-            \mathrm{IV}   & \lesssim h^{-1} \|  \nabla  ( u - C_{h}^{e}u ) \|_{ \Gamma  }^{2  }    \lesssim h^{-2} \| \nabla ( u - C_{h}^{e}u )  \|_{ \mathcal{T}_{h}   }^{2  } + \| D^2( u - C_{h}^{e}u ) \|_{ \mathcal{T}_{h}   }^{ 2 } \\   & \lesssim  h^{2( r-2) }  \| u  \|_{r, \mathcal{T}_{h}   }^{ 2 }
+            \mathrm{IV}   & \lesssim h^{-1} \|  \nabla  ( u - C_{h}^{e}u ) \|_{ \Gamma  }^{2  }    \lesssim h^{-2} \| \nabla ( u - C_{h}^{e}u )  \|_{ \mathcal{T}_{h}   }^{2  } + \| D^2( u - C_{h}^{e}u ) \|_{ \mathcal{T}_{h}   }^{ 2 } \\   & \lesssim
+            h^{2( r-2) }  \| u  \|_{r, \mathcal{T}_{h}   }^{ 2 }.
             \end{split}
         \end{equation}
 Again, from \eqref{eq:mean_jump_estimate} is it clear that $\| \mean{ \partial _{nn} u }   \|_{ \mathcal{F}_{h}   }^{  } \lesssim \| D^2  u \|_{ \partial  \mathcal{T} _{h} }^{  }   $, thus we see that,
@@ -3133,7 +3134,7 @@ Again, from \eqref{eq:mean_jump_estimate} is it clear that $\| \mean{ \partial _
             & \lesssim  h^{-2} \| D^2 ( u - C_{h}^{e}u )  \|_{ \mathcal{T}_{h}   }^{2  } + \| D^3( u - C_{h}^{e}u ) \|_{ \mathcal{T}_{h}   }^{ 2 } \\
             % & \lesssim h^{-2}( \| u- C_{h}^{e} \|_{2,\mathcal{T}_{h}   }^{2  } + \| u- C_{h}^{e} \|_{3,\mathcal{T}_{h}   }^{2  }  )\\
             &  \lesssim h^{-2}( h^{2(r - 2 - \frac{1}{2})} + h^{2(r - 3 - \frac{1}{2})})\| u \|_{r,\Omega   }^{  } \\
-            &  \lesssim ( h^{2r - 5)} + h^{2r - 6)})\| u \|_{r,\Omega   }^{  } \lesssim h^{2(r-2)} \| u \|_{r,\Omega   }^{  }
+            &  \lesssim ( h^{2r - 5)} + h^{2r - 6)})\| u \|_{r,\Omega   }^{  } \lesssim h^{2(r-2)} \| u \|_{r,\Omega   }^{  }.
             \end{split}
         \end{equation}
     Hence, we have $ \| u - C_{h}^{e} u \|_{a_{h},*  }^{  } \lesssim   h^{r-2}  \| u \|_{ r, \mathcal{T}_{h}   }^{2  } $.
@@ -3228,9 +3229,9 @@ Hence, inserting \eqref{eq:ni_4} into \eqref{eq:astar_est} we conclude the energ
         Then is the corresponding dual problem to \eqref{eq:bi_problem} be
         \begin{equation}
             \begin{split}
-            \Delta ^2 \psi &= e  \quad  \text{ in } \Omega  \\
-            \partial _{n} \psi &= 0 \quad \text{ on } \Gamma \\
-            \partial _{n} \Delta \psi & = 0 \quad  \text{ on } \Gamma   \\
+            \Delta ^2 \psi &= e  \quad  \text{ in } \Omega,  \\
+            \partial _{n} \psi &= 0 \quad \text{ on } \Gamma, \\
+            \partial _{n} \Delta \psi & = 0 \quad  \text{ on } \Gamma.   \\
             \end{split}
         \end{equation}
  Here is the regularity of $\psi $ and $e$ a consequence of the assumptions of the regularity of $u$ and $u_{h}$  \cite[pp. 113]{brenner2012}.
@@ -3244,7 +3245,7 @@ Hence, inserting \eqref{eq:ni_4} into \eqref{eq:astar_est} we conclude the energ
         &= a_{h}( u-u_h, \psi   - C^{e}_{h}\psi ) +  a_{h}( u-u_h, C^{e}_{h}\psi )  \\
         &= a_{h}( u-u_h, \psi  - C^{e}_{h}\psi ) +  g_{h}( u_h, C^{e}_{h}\psi ) \\
         &= a_{h}( u-u_h, \psi  - C^{e}_{h}\psi ) +  g_{h}( u_h - C^{e}_{h}u, C^{e}_{h}\psi )+  g_{h}( C^{e}_{h}u, C^{e}_{h}\psi ) \\
-        &  = \mathrm{I} + \mathrm{II} + \mathrm{III}
+        &  = \mathrm{I} + \mathrm{II} + \mathrm{III}.
             \end{split}
         \end{equation}
 
@@ -3255,7 +3256,7 @@ Hence, inserting \eqref{eq:ni_4} into \eqref{eq:astar_est} we conclude the energ
             \begin{split}
              \mathrm{I}    & \lesssim     \|u-u_{h}  \|_{a_{h},*  }^{  }    \| \psi  - C^{e}_{h}\psi \|_{a_{h},*  }^{  } \\
                 & \lesssim     h^{r-2} \| u \|_{ r,\Omega   }^{  } h^{\widetilde{r}-2}   \| \psi   \|_{\widetilde{r},\Omega  }^{  } \\
-                & \lesssim     h^{r-2} \| u \|_{ r,\Omega   }^{  }  h^{\widetilde{r}-2}  \| e   \|_{\Omega }^{  }
+                & \lesssim     h^{r-2} \| u \|_{ r,\Omega   }^{  }  h^{\widetilde{r}-2}  \| e   \|_{\Omega }^{  }.
             \end{split}
         \end{equation}
         Specifically for the term $\mathrm{II} $ we apply Assumption EP2 \eqref{as:bi_EP2} and the estimate \eqref{eq:ni_4}
@@ -3265,7 +3266,7 @@ Hence, inserting \eqref{eq:ni_4} into \eqref{eq:astar_est} we conclude the energ
                 \mathrm{II}  & \lesssim \abs{ u_{h} - C_{h}^{e}u } _{g_{h}} \abs{ C^{e}_{h} \psi }_{g_{h}}  \\
                 & \lesssim  \| u_{h} - C_{h}^{e}u  \|_{A_{h}} \abs{ C^{e}_{h} \psi }_{g_{h}} \\
                              & \lesssim h^{r-2}  \| u  \|_{r,\Omega } h^{\widetilde{r}-2} \| \psi  \|_{\widetilde{r}, \Omega   }^{  } \\
-                             & \lesssim h^{r + \widetilde{r} -4}   \| u  \|_{r,\Omega } \| e \|_{ \Omega   }^{  }
+                             & \lesssim h^{r + \widetilde{r} -4}   \| u  \|_{r,\Omega } \| e \|_{ \Omega   }^{  }.
             \end{split}
         \end{equation}
         The third term is simply an application of Assumption EP2 \eqref{as:bi_EP2}, i.e.
