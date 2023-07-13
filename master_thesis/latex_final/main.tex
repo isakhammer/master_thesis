@@ -1791,9 +1791,9 @@ Combining \eqref{eq:inv1} and \eqref{eq:inv2}, we establish that
 \subsection{Abstract Nonconform Error Analysis}%
 \label{sub:ceas_lemma}
 
-Our goal is to construct abstract error estimates for the discrete bilinear form $a_{h}( \cdot ,\cdot ) $. Since $V_{h} \not \subset V_{h}$, it is clear that we cannot directly employ the standard Cea's lemma \cite[p. 66]{quartdiff}. Hence, we have to formulate an effective workaround.
-
- To successfully achieve this, a critical assumption for $a_{h}( \cdot ,\cdot )$ is its consistency. Assume that the discrete bilinear form can be extended to a mapping  $a_{h} : W \times V_{h} \to \mathbb{R}$ for an sufficiently regular subset $W \subset V$.
+Our goal is to construct abstract error estimates for the discrete bilinear form $a_{h}( \cdot ,\cdot ) $. Since $V_{h} \not \subset V_{h}$, it is clear that we cannot directly employ the standard Cea's lemma \cite[p. 66]{quartdiff}. Hence, we have to review
+how a non-conform variant can be derived, see for instance \cite{ErnGuermond2021m}[Chapter 27].
+ To successfully achieve this, a critical assumption for $a_{h}( \cdot ,\cdot )$ is its consistency. Assume that the discrete bilinear form can be extended to a mapping  $a_{h} : W \times V_{h} \to \mathbb{R}$ for an sufficiently regular subspace $W \subset V$.
   We say that the bilinear form is consistent if it exists an exact solution $u \in W$ for which it holds that $a_{h}( u,v_{h}) = l_{h}( v_{h})$. This inherently implies the so-called Galerkin orthogonality,
 \begin{equation}
     \label{eq:galerin_orth}
@@ -1810,45 +1810,41 @@ a_{h}( v + v_{h}, w_{h}) & \lesssim  \| v + v_{h} \|_{ V,* }^{  } \| w_{h} \|_{V
 a_{h}( v_{h}, w_{h}) & \lesssim  \|  v_{h} \|_{ V,* }^{  } \| w_{h} \|_{V_{h}  }^{  } \lesssim \|  v_{h} \|_{ V_{h} }^{  } \| w_{h} \|_{V_{h}  }^{  } \quad  \forall  v_{h},  w_{h} \in V_{h}.
     \end{split}
 \end{equation}
-This, is good since we can now utilize this in combination iwth the stability and coercivity results presented in \eqref{eq:discrete_wellposed}.
-
+We can now utilize these boundedness assumptions in combination with the stability and coercivity results presented in \eqref{eq:discrete_wellposed}.
 
 \begin{lemma}[Nonconform Cea's Lemma]
-    Let $u$ be the exact solution and let $V_{h} \not \subset V$.
-    Assume that the discrete bilinear form $a_{h}( \cdot ,\cdot ) $ is well-posed in $V_{h} \times V_{h}$. Additionally, assume that both the stability estimates \eqref{eq:ah_star} and Galerkin orthogonality (as outlined in \eqref{eq:galerin_orth}) are valid
-    Then, the following error estimate hold,
+    Let $u \in W \subset V$ be the exact solution and let $V_{h} \not \subset V$.
+    Assume that the discrete bilinear form $a_{h}( \cdot ,\cdot ) $ is well-posed in $W \oplus V_{h} \times V_{h}$. Additionally, assume that both the stability estimates \eqref{eq:ah_star} and Galerkin orthogonality (as outlined in \eqref{eq:galerin_orth}) are valid
+    Then the following error estimate hold,
     \begin{equation}
         \| u - u_{h} \|_{ V,*  }^{  }  \lesssim  \inf_{v_{h} \in  V_{h}}  \| u - v_{h} \|_{ V_{h},*  }^{  }.
     \end{equation}
 \end{lemma}
 
 \begin{proof}
-    First starting  applying the triangle inequality on the error $\| u - u_{h} \|_{V,*  }^{  } $ and then the assumption $\| v_{h} \|_{ V,* }^{  } \lesssim  \| v_{h} \|_{V_{h}  }^{  } \ \forall  v_{h} \in V_{h}  $, we have
+    Applying the triangle inequality to the error $\| u - u_{h} \|_{V,*  }^{  } $ and then the assumption $\| v_{h} \|_{ V,* }^{  } \lesssim  \| v_{h} \|_{V_{h}  }^{  } \ \forall  v_{h} \in V_{h}  $, we have
     \begin{equation}
         \label{eq:error_star}
         \begin{split}
         \| u - u_{h} \|_{V,*  }^{  } & \lesssim \| u - v_{h} \|_{V,*  }^{  } + \| v_{h} - u_{h} \|_{V,*  }^{  } \\
-                                     & \lesssim \| u - v_{h} \|_{V,*  }^{  } + \| v_{h} - u_{h} \|_{V_{h}  }^{  }
-        \end{split}.
+                                     & \lesssim \| u - v_{h} \|_{V,*  }^{  } + \| v_{h} - u_{h} \|_{V_{h}  }^{  }.
+        \end{split}
     \end{equation}
-
-Initially, by employing the discrete coercivity as defined in equation \eqref{eq:discrete_wellposed}, and then applying the Galerkin orthogonality from equation \eqref{eq:galerin_orth}, followed by the stability condition from equation \eqref{eq:ah_star}, we can derive the following result.
+By employing the discrete coercivity as defined in equation \eqref{eq:discrete_wellposed}, and then applying the Galerkin orthogonality from equation \eqref{eq:galerin_orth}, followed by the stability condition from equation \eqref{eq:ah_star}, we can derive the following estimate,
     \begin{equation}
         \label{eq:cealemma_proof}
         \begin{split}
             \| v_{h} -u_{h} \|_{ V_{h}  }^{ 2 } & \lesssim   a_{h}( v_{h} - u_{h}, v_{h} - u_{h} )    \\
                                                 &= a_{h}( v_{h} - u, v_{h}- u_{h}) + a_{h}( u - u_{h}, v_{h} - u_{h})   \\
-                                                & \lesssim \| v_{h}- u \|_{ V,* }^{  } \| v_{h}- u_{h} \|_{V_{h} }^{  }   \\
+                                                & \lesssim \| v_{h}- u \|_{ V,* }^{  } \| v_{h}- u_{h} \|_{V_{h} }^{  }.   \\
         \end{split}
-    .\end{equation}
-
-    Dividing $\| v_{h}- u_{h} \|_{V_{h} }^{  }$ on both sides we have $ \| v_{h}- u_{h} \|_{V_{h} }^{  } \lesssim \|  u -  v_{h}\|_{ V,* }^{  } $. Combing this with \eqref{eq:error_star} we obtain the following abstract error estimate.
+    \end{equation}
+\noindent Dividing $\| v_{h}- u_{h} \|_{V_{h} }^{  }$ on both sides we have $ \| v_{h}- u_{h} \|_{V_{h} }^{  } \lesssim \|  u -  v_{h}\|_{ V,* }^{  } $. Combing this with \eqref{eq:error_star} we obtain the following abstract error estimate.
     \begin{equation}
-        \| u - u_{h} \|_{ V,*  }^{  }  \lesssim  \inf_{v_{h} \in  V_{h}}  \| v - v_{h} \|_{ V_{},*  }^{  }
+        \| u - u_{h} \|_{ V,*  }^{  }  \lesssim  \inf_{v_{h} \in  V_{h}}  \| v - v_{h} \|_{ V_{},*  }^{  }.
     \end{equation}
 \end{proof}
-
-A useful property is that for a nonconformal numerical method to converge, we can now simply require
+\noindent A useful property is that for a nonconformal numerical method to converge, we can now simply require
 \begin{equation}
 \lim_{h \to 0}  \inf_{v_{h} \in  V_{h}}  \| u - v_{h} \|_{ V,*  }^{  } = 0
 \end{equation}
