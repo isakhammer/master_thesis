@@ -8,6 +8,12 @@ method is well-posed and ensures optimal convergence. The theoretical results ar
 equation using a minimalistic Implicit-Explicit (IMEX) time discretization scheme to manage the non-linearities.
 
 
+# Research project (7.5 credit points) 
+![image](https://github.com/isakhammer/master_thesis/assets/43385748/54f6ae33-31db-4d64-83cc-26395e405e0a)
+
+**Abstract:** This article aims to show the latest methods of mathematical modelling of biological cell membranes. We first presented general research on incorporating multi-physics into mathematical models. We then presented a mathematical and numerical shape optimization framework using a gradient flow method and a finite element method to solve cell membrane dynamics specifically for the elastic bending energy on evolving surfaces.
+
+
 # Specialization project (15 credit points) 
 ![image](https://github.com/isakhammer/master_thesis/assets/43385748/34e3115c-287a-475f-acb7-c9b510518389)
 
@@ -16,12 +22,3 @@ equation using a minimalistic Implicit-Explicit (IMEX) time discretization schem
 - Derive the continuous penalty method method based on the work done by this [PhD Dissertation](https://digitalcommons.lsu.edu/gradschool_dissertations/1744/)
 - Derive stability and apriori estimates.
 - Verify the estimates numerically.
-
-
-# Research project (7.5 credit points) 
-![image](https://github.com/isakhammer/master_thesis/assets/43385748/54f6ae33-31db-4d64-83cc-26395e405e0a)
-
-**Abstract:** This article aims to show the latest methods of mathematical modelling of biological cell membranes. We first presented general research on incorporating multi-physics into mathematical models. We then presented a mathematical and numerical shape optimization framework using a gradient flow method and a finite element method to solve cell membrane dynamics specifically for the elastic bending energy on evolving surfaces.
-
-
-
