@@ -16,9 +16,3 @@ equation using a minimalistic Implicit-Explicit (IMEX) time discretization schem
 
 # Specialization project (15 credit points) 
 ![image](https://github.com/isakhammer/master_thesis/assets/43385748/34e3115c-287a-475f-acb7-c9b510518389)
-
-**Summary:** The goal of the thesis was to
-- State the issues that arise when solving the biharmonic equation
-- Derive the continuous penalty method method based on the work done by this [PhD Dissertation](https://digitalcommons.lsu.edu/gradschool_dissertations/1744/)
-- Derive stability and apriori estimates.
-- Verify the estimates numerically.
