@@ -31,7 +31,7 @@ WORKDIR $WORK_DIR
 # Copy the current directory contents into the container
 COPY . .
 
-ENV LATEX_DIR $WORK_DIR/master_thesis/latex
+ENV LATEX_DIR $WORK_DIR/master_thesis/latex_final
 WORKDIR $LATEX_DIR
 
 RUN latexmk -pdf main.tex && latexmk -c
