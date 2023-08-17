@@ -1,20 +1,20 @@
-name: Build LaTeX Docker Image
+#name: Build LaTeX Docker Image
 
-on:
-  schedule:
-    - cron: '0 2 */3 * *' # run every three days at 2 AM UTC
-  #push:
-  #  branches: [ master, dev ]
-  #pull_request:
-  #  branches: [ master, dev]
+#on:
+#  schedule:
+#    - cron: '0 2 */3 * *' # run every three days at 2 AM UTC
+#  #push:
+#  #  branches: [ master, dev ]
+#  #pull_request:
+#  #  branches: [ master, dev]
 
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+#jobs:
+#  build:
+#    runs-on: ubuntu-latest
 
-    steps:
-    - uses: actions/checkout@v2
+#    steps:
+#    - uses: actions/checkout@v2
 
-    - name: Build the Docker image
-      run: docker build . --file dockerfiles/Dockerfile-latex --tag mylateximage
+#    - name: Build the Docker image
+#      run: docker build . --file dockerfiles/Dockerfile-latex --tag mylateximage
