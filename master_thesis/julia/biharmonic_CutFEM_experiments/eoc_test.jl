@@ -106,8 +106,9 @@ function main()
     maindir = "figures/eoc-test"
     if isdir(maindir)
         rm(maindir; recursive=true)
-        mkdir(maindir)
     end
+    mkpath(maindir)
+
     # Manufactured solution
     l, m, r = (1, 1, 1)
     u_ex(x) = sin(m*( 2π/l )*x[1])*cos(r*( 2π/l )*x[2])
