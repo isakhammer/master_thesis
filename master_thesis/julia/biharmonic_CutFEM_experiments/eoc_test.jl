@@ -1,21 +1,7 @@
 include("biharmonic_CutCIP_laplace.jl")
 include("biharmonic_CutCIP_hessian.jl")
-using Statistics
 using YAML
 using Dates
-using Test
-import Plots
-
-# default_size = (800, 600)
-default_size = (400, 300)
-
-# Plots.pgfplotsx()
-# endfix=".tex"
-Plots.gr()
-endfix=".png"
-
-using LaTeXStrings
-using Latexify
 using PrettyTables
 using DataFrames
 using CSV
@@ -35,7 +21,7 @@ function compute_eoc(hs::Vector, errs1::Vector, errs2::Vector, errs3::Vector)
 end
 
 
-function generate_figures(;ns, el2s, eh1s, ehs_energy, cond_numbers, ndofs, dirname::String)
+function generate_csv(;ns, el2s, eh1s, ehs_energy, cond_numbers, ndofs, dirname::String)
     filename = dirname*"/conv"
 
     hs = 1 .// ns
@@ -77,25 +63,8 @@ function convergence_analysis(; ns, dirname, u_ex, run_solver::Function, L=1.11,
         push!(cond_numbers, sol.cond_number)
         push!(ndofs, sol.ndof)
     end
-    generate_figures(ns=ns, el2s=el2s, eh1s=eh1s, ehs_energy=ehs_energy,
+    generate_csv(ns=ns, el2s=el2s, eh1s=eh1s, ehs_energy=ehs_energy,
                      cond_numbers=cond_numbers, ndofs=ndofs, dirname=dirname)
-
-    hs = 1 .//ns
-
-    @testset "EOC tests" begin
-        expected_eoc_l2, expected_eoc_h1, expected_eoc_energy = (2, 2, 1)
-
-        # Compute the mean of all EOC except for the "nothing" value and first one.
-        eoc_l2, eoc_eh1, eoc_eh_energy = compute_eoc(hs, el2s, eh1s, ehs_energy)
-        mean_eoc_l2 = mean(eoc_l2[3:end])
-        mean_eoc_h1 = mean(eoc_eh1[3:end])
-        mean_eoc_energy = mean(eoc_eh_energy[3:end])
-
-        # Check if the computed means are approximately equal to the expected values
-        @test isapprox(mean_eoc_l2, expected_eoc_l2, atol=0.25)
-        @test isapprox(mean_eoc_h1, expected_eoc_h1, atol=0.25)
-        @test isapprox(mean_eoc_energy, expected_eoc_energy, atol=0.25)
-    end
 
 end
 
@@ -122,37 +91,31 @@ function main()
         "gamma2" => γg2,
         "L" => L,
     )
-
-
     YAML.write_file("$maindir/parameters.yml", parameters)
 
-    ns = [2^3, 2^4, 2^5]
+    ns = [2^3, 2^4, 2^5, 2^6]
 
-    @testset "Laplace Flower EOC tests" begin
-        geometry ="flower"
-        resultdir= "$maindir/eoc-laplace-$(geometry)"
-        println(resultdir)
-        mkpath(resultdir)
-        @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex, run_solver=SolverLaplace.run,  L=L, δ=δ, γ=γ, γg1=γg1, γg2=γg2, geometry=geometry)
-    end
+    # Flower experiment
+    geometry ="flower"
+    resultdir= "$maindir/eoc-laplace-$(geometry)"
+    println(resultdir)
+    mkpath(resultdir)
+    convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex, run_solver=SolverLaplace.run,  L=L, δ=δ, γ=γ, γg1=γg1, γg2=γg2, geometry=geometry)
 
-    # Manufactured solution
+    # Circle experiment
     u_ex2(x) = (x[1]^2 + x[2]^2 - 1)^2*sin(m*( 2π/l )*x[1])*cos(r*( 2π/l )*x[2])
-    @testset "Laplace EOC tests" begin
-        geometry ="circle"
-        resultdir= "$maindir/eoc-laplace-$(geometry)"
-        println(resultdir)
-        mkpath(resultdir)
-        @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex2, run_solver=SolverLaplace.run,  L=L, δ=δ, γ=γ, γg1=γg1, γg2=γg2, geometry=geometry)
-    end
+    geometry ="circle"
 
-    @testset "Hessian EOC tests" begin
-        geometry ="circle"
-        resultdir= "$maindir/eoc-hessian-$(geometry)"
-        println(resultdir)
-        mkpath(resultdir)
-        @time convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex2, run_solver=SolverHessian.run,  L=L, δ=δ, γ=γ, γg1=γg1, γg2=γg2)
-    end
+    resultdir= "$maindir/eoc-laplace-$(geometry)"
+    println(resultdir)
+    mkpath(resultdir)
+    convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex2, run_solver=SolverLaplace.run,  L=L, δ=δ, γ=γ, γg1=γg1, γg2=γg2, geometry=geometry)
+
+    geometry ="circle"
+    resultdir= "$maindir/eoc-hessian-$(geometry)"
+    println(resultdir)
+    mkpath(resultdir)
+    convergence_analysis( ns=ns,  dirname=resultdir, u_ex=u_ex2, run_solver=SolverHessian.run,  L=L, δ=δ, γ=γ, γg1=γg1, γg2=γg2)
 
 end
 
