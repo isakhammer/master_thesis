@@ -3953,7 +3953,7 @@ For convenience, we decompose the functional so that $E(u) = E_{1}(u) + E_{2}(u)
 
 Now assume that $u \in L^2( [0,T], H^{4}( \Omega ) ) $ and $v_{h} \in  V_{h}$ of order $k$. It is clear that the initial weak formulation is,
 \begin{equation}
-    ( \partial_{t} u,v_{h} )_{\Omega }  + \varepsilon^{2} ( \Delta ^2u, v_{h})_{\Omega } -  ( f( u), v_{h} )_{\Omega } = 0.
+    ( \partial_{t} u,v_{h} )_{\Omega }  + \varepsilon^{2} ( \Delta ^2u, v_{h})_{\Omega } -  ( \Delta f( u), v_{h} )_{\Omega } = 0.
 \end{equation}
 
 Given the appearance of the biharmonic equation, we can now utilize the cut finite element framework that was developed in Section \ref{sec:cutcip_biharmonic_problem}. We define the discrete weak problem as follows.
@@ -3966,7 +3966,7 @@ Given the appearance of the biharmonic equation, we can now utilize the cut fini
 Here we have followed the nonlinear weak formulation \cite[Equation
 4.2]{feng2007fully} and the cut finite element bilinear form for the biharmonic equation proposed in Equation \eqref{eq:discrete_CutCIP_prob} such that
 \begin{align}
-    c_{h}( u_{h}, v_{h})  & = ( f( u_{h}) ,\Delta v_{h})_{\Omega } +  ( f( u_{h}) , \partial _{n}v)_{\mathcal{F}_{h} }, \\
+    c_{h}( u_{h}, v_{h})  & = -( f( u_{h}) ,\Delta v_{h})_{\Omega } +  ( f( u_{h}) , \jump{ \partial _{n}v_h })_{\mathcal{F}_{h}^{int} } +   ( f( u_{h}) , \partial _{n}v_h)_{\Gamma } \\
     A_{h}( u_{h}, v_{h})  & =  a_{h}( u_{h}, v_{h}) + g_{h}( u_{h}, v_{h}).
 \end{align}
 
