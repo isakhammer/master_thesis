@@ -1,0 +1,67 @@
+\documentclass[aspectratio=169]{beamer}
+\usepackage[english]{babel}
+\usepackage{booktabs,listings}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[style=numeric,backend=bibtex,sorting=none]{biblatex}
+
+\usetheme[slogan=english,mathfont=serif]{NTNU}
+
+\newcommand{\mean}[1]{\left\{\!\!\left\{#1\right\}\!\!\right\}}
+\newcommand{\jump}[1]{\left[\!\!\left[ #1 \right]\!\!\right]}
+\newcommand{\abs}[1]{\left\lvert #1 \right\rvert}
+
+\usetikzlibrary{calc}
+\addbibresource{bibliography.bib}
+
+%% PGF PLOTS DEPENDECIES
+\usepackage{pgfplots}
+\usetikzlibrary{calc}
+\usepgfplotslibrary{patchplots}
+\usepgfplotslibrary{fillbetween}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{backgrounds}
+\pgfplotsset{compat=newest} % Set the compatibility mode for pgfplots
+
+\pgfplotsset{%
+    layers/standard/.define layer set={%
+        background,axis background,axis grid,axis ticks,axis lines,axis tick labels,pre main,main,axis descriptions,axis foreground%
+    }{
+        grid style={/pgfplots/on layer=axis grid},%
+        tick style={/pgfplots/on layer=axis ticks},%
+        axis line style={/pgfplots/on layer=axis lines},%
+        label style={/pgfplots/on layer=axis descriptions},%
+        legend style={/pgfplots/on layer=axis descriptions},%
+        title style={/pgfplots/on layer=axis descriptions},%
+        colorbar style={/pgfplots/on layer=axis descriptions},%
+        ticklabel style={/pgfplots/on layer=axis tick labels},%
+        axis background@ style={/pgfplots/on layer=axis background},%
+        3d box foreground style={/pgfplots/on layer=axis foreground},%
+    },
+}
+%%%
+
+
+\title[Your Short Title]{Cut Finite Element Method for the Cahn-Hilliard Equation}
+\subtitle{Supervised by André Massing }
+\author{Isak Hammer}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\include{introduction}
+
+% \printbibliography
+
+% \begin{frame}{Example block}
+
+%     \begin{block}{Example}
+%         Rather than freely writing text in the frame, the use of blocks (such as this) is recommended.
+%         \begin{enumerate}
+%             \item https://www.overleaf.com/learn/latex/beamer
+%         \end{enumerate}
+%     \end{block}
+% \end{frame}
+
+\end{document}
