@@ -1,29 +1,20 @@
 \section{Introduction}
 
 
-\begin{frame}{Introducing Myself}
+\begin{frame}{Related this (hopefully soon submitted) work. }
     \begin{columns}
-        % Column 1
-        \begin{column}{0.5\textwidth}
-            \begin{itemize}
-                \item Isak Hammer, 27 year old, Lofoten
-                \item Graduate student in Industrial Mathematics
-                \item Research Focus: Numerical methods for Partial Differential Equations (PDEs).
-            \end{itemize}
-        \end{column}
-
         % Column 2
-        \begin{column}{0.5\textwidth}
+        \begin{column}{1.0\textwidth}
             \begin{figure}
                 \centering
-                \includegraphics[width=0.7\textwidth]{figures/isak.jpg}
+                \includegraphics[width=0.7\textwidth]{CH-example/abstract.png}
             \end{figure}
         \end{column}
     \end{columns}
 \end{frame}
 
 
-\begin{frame}{Importance and Motivation of the Cahn Hilliard Equation}
+\begin{frame}{Motivation of Phase Separation}
     \begin{columns}
         % Column 1
         \begin{column}{0.5\textwidth}
@@ -39,7 +30,7 @@
     \end{columns}
 \end{frame}
 
-\begin{frame}{Importance and Motivation of the Cahn Hilliard Equation}
+\begin{frame}{Motivation of Phase Separation}
     \begin{columns}
         % Column 1
         \begin{column}{0.5\textwidth}
@@ -54,37 +45,25 @@
     \end{columns}
 \end{frame}
 
-
 \begin{frame}
     \begin{block}{The Cahn Hilliard Equation}
-        The general Cahn Hilliard Equation  has the form $u( x, t): \Omega \times [0,T] \mapsto [-1,1]   $ s.t.
+        The general Cahn Hilliard Equation  has the form $u( x, t): \Omega \times [0,T] \mapsto [-1,1]   $ and $ u(0,x)  =u_0$  s.t.
             \[
             \begin{split}
                  u_t+\Delta\left(\varepsilon^2 \Delta u- f(u)\right)&=0 \quad \text{in } \Omega \\
-\partial_n u=\partial_n \Delta u& =0 \quad \text{on } \Gamma  \\
- u & =u_0 \quad \text{on } \Omega
+\partial_n u=\partial_n \Delta u& =0 \quad \text{on } \Gamma
             \end{split}
             \]
 where $f(s)=F^{\prime}(s)$, where we define the chemical energy $F(s)=\frac{1}{4}\left(s^2-1\right)^2$,  $\Omega \subset \mathbf{R}^d$, is a bounded domain.
 \end{block}
 \begin{block}{Challenges}
-    \begin{enumerate}
+    \begin{itemize}
+         \item 4th order system. $ \implies  \text{ Solved using a novel unfitted FEM method}$
         \item Highly nonlinear and stiff. $\implies \text{IMEX method} $.
-            % \item 4th order system. \text{Solved using a FEM method} $
-    \end{enumerate}
+    \end{itemize}
 \end{block}
 \end{frame}
 
-\begin{frame}
-    \begin{block}{Why Finite Element Method (FEM)}
-        \begin{enumerate}
-            \item \textbf{Robust mathematical framework}
-            \item \textbf{Can easily handle complex geometries}
-            \item \textbf{High flexibility of basis functions}
-            \item \textbf{Other: } Supports adaptive refinements, easily adaptable to multi-physics problems ++ .
-        \end{enumerate}
-    \end{block}
-\end{frame}
 
 
 \begin{frame}
@@ -155,6 +134,9 @@ where $f(s)=F^{\prime}(s)$, where we define the chemical energy $F(s)=\frac{1}{4
 \frametitle{ $C^0$ Interior Penalty Method (CIP) for the Biharmonic Problem }
 
 \begin{block}{}
+    Define the polynomial space \begin{equation}
+        V_{h} = \left\{ w \in C^{0}( \Omega )  \mid    w \in  \mathcal{P}_{k}  \right\}
+    \end{equation}
 The proposed numerical scheme is to find an  $w \in V_{h}$ .t.
 \begin{equation*}
 a_{h}( w, v )   = l_{h}( v) = ( f,v)_{\Omega } , \quad \forall v \in V_{h}  .
@@ -171,10 +153,10 @@ a_{h} \left( w, v \right)   =&
 \end{split}
 \end{equation*}
 
-Which is inspired from Brenner2012 \footnotemark[1]
+
 \end{block}
 
-\footnotetext[1]{\fullcite{brenner2012}}
+% \footnotetext[1]{\fullcite{brenner2012}}
 
 \end{frame}
 
@@ -253,243 +235,82 @@ Which is inspired from Brenner2012 \footnotemark[1]
 
 \end{frame}
 
-\begin{frame}
-    \frametitle{Cut Finite Element Method}
-Background Mesh
-    \begin{block}{}
-        \begin{tikzpicture}[scale=1.0]
-
-            \fill[yellow!30] (-2.5,2.5) -- (2.5,2.5) -- (2.5,-2.5) -- (-2.5,-2.5) -- cycle;
-
-            \draw (0.1, 0.1) circle (1.5cm);
-            % Background mesh
-            \foreach \i in {-2.5, -2, ..., 2.5} {
-                \draw[line width=0.1pt, shift={(-2.5,\i)}] (0,0) -- (5,0);
-                \draw[line width=0.1pt, shift={(\i,-2.5)}] (0,0) -- (0,5);
-            }
-
-
-            % Labels
-            \node[below right] at (2.5,2.5) {$\widetilde{\mathcal{T}}_{h}$};
-        \end{tikzpicture}
-    \end{block}
-\end{frame}
 
 \begin{frame}
     \frametitle{Cut Finite Element Method}
-    Active Mesh
-    \begin{block}{}
-        \begin{tikzpicture}[scale=1.0]
+    \begin{columns}
+        % Left column
+        \begin{column}{0.5\textwidth}
+            Interior Mesh and Cut Cells
+            \begin{block}{}
+                \begin{tikzpicture}[scale=1]
+                    % POTENTIAL ACTIVE MESH
+                    \fill[blue!30] (2,2) -- (2,-1.5) --(-1.5,-1.5) -- (-1.5,2) -- cycle;
 
-            % POTENTIAL ACTIVE MESH
-            \fill[orange!30] (2,2) -- (2,-1.5) --(-1.5,-1.5) -- (-1.5,2) -- cycle;
+                    % ELEMENTS WITH NO INTERSECTION
+                    % lower left
+                    \fill[white] (-1.5,-1.5) rectangle (-1.0,-1.0);
+                    \fill[white] (-1.5,2.0) rectangle (-1.0,1.5);
+                    \fill[white] (-1.0,2.0) rectangle (-0.5,1.5);
+                    \fill[white] (2,2) rectangle (1.5,1.5);
+                    \fill[white] (1.5,2) rectangle (1.0,1.5);
+                    \fill[white] (2,1.5) rectangle (1.5,1.0);
+                    \fill[white] (1.5,-1) rectangle (2,-1.5);
+                    \fill[white] (1.5,-0.5) rectangle (2,-1.0);
 
-            % ELEMENTS WITH NO INTERSECTION
-            % lower left
-            \fill[white] (-1.5,-1.5) rectangle (-1.0,-1.0);
-            \fill[white] (-1.5,2.0) rectangle (-1.0,1.5);
-            \fill[white] (-1.0,2.0) rectangle (-0.5,1.5);
-            \fill[white] (2,2) rectangle (1.5,1.5);
-            \fill[white] (1.5,2) rectangle (1.0,1.5);
-            \fill[white] (2,1.5) rectangle (1.5,1.0);
-            \fill[white] (1.5,-1) rectangle (2,-1.5);
-            \fill[white] (1.5,-0.5) rectangle (2,-1.0);
+                    % CUT ELEMENTS
+                    \fill[green!40] (-0.5,2.0) rectangle (1.0,1.5);
+                    \fill[green!40] (-1.5,1.5) rectangle (0.0,1.0);
+                    \fill[green!40] (0.5,1.5) rectangle (1.5,1.0);
+                    \fill[green!40] (-1.5,1.0) rectangle (-1.0,-1.0);
+                    \fill[green!40] (-1.0,-0.5) rectangle (-0.5,-1.5);
+                    \fill[green!40] (-0.5,-1.5) rectangle (1.5,-1.0);
+                    \fill[green!40] (1.5,-1) rectangle (1.0,-0.0);
+                    \fill[green!40] (1.5,-0.5) rectangle (2.0,1.0);
+                    \fill[green!40] (1.0,0.5) rectangle (1.5,1.0);
 
-            % CUT ELEMENTS
-            \fill[orange!30] (-0.5,2.0) rectangle (1.0,1.5);
-            \fill[orange!30] (-1.5,1.5) rectangle (0.0,1.0);
-            \fill[orange!30] (0.5,1.5) rectangle (1.5,1.0);
-            \fill[orange!30] (-1.5,1.0) rectangle (-1.0,-1.0);
-            \fill[orange!30] (-1.0,-0.5) rectangle (-0.5,-1.5);
-            \fill[orange!30] (-0.5,-1.5) rectangle (1.5,-1.0);
-            \fill[orange!30] (1.5,-1) rectangle (1.0,-0.0);
-            \fill[orange!30] (1.5,-0.5) rectangle (2.0,1.0);
-            \fill[orange!30] (1.0,0.5) rectangle (1.5,1.0);
+                    \draw (0.1, 0.1) circle (1.5cm);
+                    % Background mesh
+                    \foreach \i in {-2.5, -2, ..., 2.5} {
+                        \draw[line width=0.1pt, shift={(-2.5,\i)}] (0,0) -- (5,0);
+                        \draw[line width=0.1pt, shift={(\i,-2.5)}] (0,0) -- (0,5);
+                    }
 
-            \draw (0.1, 0.1) circle (1.5cm);
-            % Background mesh
-            \foreach \i in {-2.5, -2, ..., 2.5} {
-                \draw[line width=0.1pt, shift={(-2.5,\i)}] (0,0) -- (5,0);
-                \draw[line width=0.1pt, shift={(\i,-2.5)}] (0,0) -- (0,5);
-            }
-
-
-            % Labels
-            % \node[below right] at (2.5,2.5) {$\widetilde{\mathcal{T}}_{h}$};
-            % \node[below right] at (0.4,0.5) {$\mathcal{T}_{int}$};
-            \node[below right] at (-0.5,0.5) {$\mathcal{T}_{h }$};
-        \end{tikzpicture}
-    \end{block}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Cut Finite Element Method}
-    Interior Mesh and Cut Cells
-    \begin{block}{}
-        \begin{tikzpicture}[scale=1]
-
-            % POTENTIAL ACTIVE MESH
-            \fill[blue!30] (2,2) -- (2,-1.5) --(-1.5,-1.5) -- (-1.5,2) -- cycle;
-
-            % ELEMENTS WITH NO INTERSECTION
-            % lower left
-            \fill[white] (-1.5,-1.5) rectangle (-1.0,-1.0);
-            \fill[white] (-1.5,2.0) rectangle (-1.0,1.5);
-            \fill[white] (-1.0,2.0) rectangle (-0.5,1.5);
-            \fill[white] (2,2) rectangle (1.5,1.5);
-            \fill[white] (1.5,2) rectangle (1.0,1.5);
-            \fill[white] (2,1.5) rectangle (1.5,1.0);
-            \fill[white] (1.5,-1) rectangle (2,-1.5);
-            \fill[white] (1.5,-0.5) rectangle (2,-1.0);
-
-            % CUT ELEMENTS
-            \fill[green!40] (-0.5,2.0) rectangle (1.0,1.5);
-            \fill[green!40] (-1.5,1.5) rectangle (0.0,1.0);
-            \fill[green!40] (0.5,1.5) rectangle (1.5,1.0);
-            \fill[green!40] (-1.5,1.0) rectangle (-1.0,-1.0);
-            \fill[green!40] (-1.0,-0.5) rectangle (-0.5,-1.5);
-            \fill[green!40] (-0.5,-1.5) rectangle (1.5,-1.0);
-            \fill[green!40] (1.5,-1) rectangle (1.0,-0.0);
-            \fill[green!40] (1.5,-0.5) rectangle (2.0,1.0);
-            \fill[green!40] (1.0,0.5) rectangle (1.5,1.0);
-
-            \draw (0.1, 0.1) circle (1.5cm);
-            % Background mesh
-            \foreach \i in {-2.5, -2, ..., 2.5} {
-                \draw[line width=0.1pt, shift={(-2.5,\i)}] (0,0) -- (5,0);
-                \draw[line width=0.1pt, shift={(\i,-2.5)}] (0,0) -- (0,5);
-            }
-
-
-            % Labels
-            \node[below right] at (0.4,0.5) {$\mathcal{T}_{int}$};
-            \node[below right] at (-1.5,0.5) {$\mathcal{T}_{\Gamma }$};
-        \end{tikzpicture}
-    \end{block}
-\end{frame}
-
-\begin{frame}
-\frametitle{Cut Finite Element Method}
-
-A recent and promising numerical technique for PDEs, has gained significant momentum in the past decade \footnotemark[1]\footnotemark[2].
-
-\begin{block}{}
-    \begin{itemize}
-        \item  Complex domains and moving domains efficiently.
-        \item Utilizing so-called ghost penalties to ensure well-posedness.
-        % \item Dividing the computational domains into \textbf{background} , \textbf{active}, \textbf{cut}  and \textbf{interior} mesh.
-    \end{itemize}
-\end{block}
-\footnotetext[1]{\fullcite{burman2015cutfem}}
-\footnotetext[2]{\fullcite{gurkan2019stabilized}}
-
-\end{frame}
-
-
-\begin{frame}
-\frametitle{ Cut $C^0$ Interior Penalty Method (CutCIP) }
-
-\begin{block}{}
-The discretized numerical problem is to solve $w \in V_{h}$ such that
+                    % Labels
+                    \node[below right] at (0.4,0.5) {$\mathcal{T}_{\text{int}}$};
+                    \node[below right] at (-1.5,0.5) {$\mathcal{T}_{\Gamma}$};
+                \end{tikzpicture}
+            \end{block}
+        \end{column}
+        % Right column
+        \begin{column}{0.5\textwidth}
+            \begin{block}{}
+                \begin{itemize}
+                    \item Adding a regularization term to ensure well-posedness.
 \begin{equation*}
-A( w, v )  = a_{h}( w,v) + \textcolor{red}{g_{h}( w,v)}  = l_{h}( v), \quad \forall v \in V_{h}  .
+    A_h(w,v) = a_{h}(w, v) + \textcolor{red}{g(w, v)} = l( v)
 \end{equation*}
-
-Where the additional bilinear term $g_{h}( w,v) : V_{h} \times V_{h} \to  \mathbb{R} $ is the so-called \textbf{ghost penalty}, which does the numerical regularization to ensure stability on cut cells.
-
-\end{block}
-
-\end{frame}
-
-\begin{frame}
-\frametitle{ Cut $C^0$ Interior Penalty Method}
-
-My master's thesis is dedicated to demonstrating that the relevant properties remain valid for CutCIP formulation still holds.
-
-%     \begin{block}{Well-posedness }
-%          The discrete bilinear form $a_{h}$ is wellposed on $V_{h}$ if this holds; \[
-%              \begin{split}
-%                  (Coercivity) \quad  A( v,v) &  \gtrsim  \| v \|_{A }^{ 2 } \quad  \forall v \in  V_{h} \\
-%             (Boundedness) \quad A( v,w) & \lesssim  \| v \|_{A }^{  }\| w \|_{a_{h} }^{  } \quad  \forall v,w \in  V_{h}
-%              \end{split}
-%         \]
-%     \end{block}
-
-    \begin{block}{A Priori Estimates }
-
-         Let $u$ be the solution to the strong problem with the corresponding discrete solution $u_{h}$ with polynomical order $k\ge 2$ .
-        Then does it exist  $l = \min_{} ( 2, k)  $ s.t.
-\[
-        \| u - u_{h} \|_{a_{h}  }^{  } \lesssim  h^{l-1} \| u \|_{ H^{l} ( \Omega ) }^{  }
-\]
-    \end{block}
-    \footnotetext[1]{\fullcite{Gu2012}}
+                    \item Efficient handling of complex and moving domains.
+                \end{itemize}
+            \end{block}
+        \end{column}
+    \end{columns}
 \end{frame}
 
 
 
 \begin{frame}
-\frametitle{ Cut $C^0$ Interior Penalty Method Results }
-% \frametitle{Manufactured Solution}
-
-
-\begin{block}{Manufactured solution}
-    In the experiments will we only consider polynomial order $k=2$.
-We consider the manufactured solution:
-$$
-u_{ex}(\mathbf{x}) = \left(x_1^2 + x_2^2 - 1\right)^2 \cos(2\pi x_1) \cos(2\pi x_2)
-$$
-where $\mathbf{x}=(x_1,x_2)$ and $\Omega=\{(x_1,x_2): x_1^2 + x_2^2 \le  1\}$.
-This manufactured solution can be used to test the accuracy of numerical methods for solving the above differential equation.
-\end{block}
-\end{frame}
-
-
-\begin{frame}
-\frametitle{ Cut $C^0$ Interior penalty method (CutCIP) Results }
-\resizebox{\textwidth}{!}{
-\begin{tabular}{rrrrrrrrr}
-    \hline\hline
-    \textbf{$n$} & \textbf{$\Vert e \Vert_{L^2}$} & \textbf{EOC} & \textbf{$ \Vert e \Vert_{H^1}$} & \textbf{EOC} & \textbf{$\Vert e \Vert_{ a_h,* }$} & \textbf{EOC} & \textbf{Cond number} & \textbf{ndofs} \\\hline
-    4 & 2.4E+00 &  & 3.3E+00 &  & 6.2E+01 &  & 8.7E+04 & 8.1E+01 \\
-    8 & 3.6E-01 & 2.72 & 1.1E+00 & 1.60 & 3.9E+01 & 0.68 & 5.1E+05 & 2.4E+02 \\
-    16 & 2.2E-02 & 4.06 & 2.5E-01 & 2.12 & 1.4E+01 & 1.51 & 3.7E+06 & 8.3E+02 \\
-    32 & 5.6E-03 & 1.97 & 6.0E-02 & 2.04 & 3.6E+00 & 1.93 & 2.8E+07 & 3.0E+03 \\
-    64 & 1.4E-03 & 2.00 & 1.5E-02 & 2.02 & 9.2E-01 & 1.96 & 2.1E+08 & 1.1E+04 \\
-    128 & 3.5E-04 & 2.00 & 3.7E-03 & 2.01 & 2.4E-01 & 1.94 & 1.7E+09 & 4.3E+04 \\\hline\hline
-  \end{tabular}
-}
-\end{frame}
-
-
-
-
-
-
-\begin{frame}
-\frametitle{ Cut $C^0$ Interior penalty method (CutCIP) Results }
-
-\begin{figure}[h!]
-    \centering
-    \resizebox{0.6\textwidth}{!}{\input{conv_plot}}
-    \caption{The plot presents the $L^2$ and $H^1$ error norms and the error in the energy norm ($\Vert e \Vert_{a_h,*}$).}
-    \label{fig:CutFEM_error1}
-\end{figure}
-
-\end{frame}
-
-\begin{frame}
-\frametitle{The Cahn Hilliard Equation}
+\frametitle{Recall the Cahn Hilliard Equation}
     \begin{columns}
         % Left column
         \begin{column}{0.5\textwidth}
             \begin{block}{Recall}
-                The problem has the form $u( x, t): \Omega \times [0,T] \mapsto [-1,1]$ s.t.
+                The problem has the form $u( x, t): \Omega \times [0,T] \mapsto [-1,1]$ and $u(0,x)  =u_0$ s.t.
                 \[
                 \begin{split}
-                    u_t+\Delta\left(\varepsilon \Delta u-\frac{1}{\varepsilon} f(u)\right)&=0 \quad \text{in } \Omega \\
-                    \partial_n u=\partial_n \Delta u& =0 \quad \text{on } \Gamma  \\
-                    u & =u_0 \quad \text{on } \Omega
+                    u_t+\Delta\left(\varepsilon ^2 \Delta u- f(u)\right)&= g_0(x,t) \quad \text{in } \Omega \\
+                    \partial_n u & =g_1(x,t) \quad \text{on } \Gamma  \\
+                    \partial_n \Delta u& =g_2(x,t) \quad \text{on } \Gamma  \\
                 \end{split}
                 \]
                 where $f(u)$ is a nonlinear function.
@@ -508,17 +329,17 @@ This manufactured solution can be used to test the accuracy of numerical methods
 \end{frame}
 
 
+
+
 \begin{frame}
 \frametitle{The CutCIP Cahn-Hilliard Formulation}
 
 
-Drawing upon the concepts delineated in Feng\footnotemark[1], the most efficient approach to address the nonlinear term is by employing an implicit-explicit (IMEX) scheme.
-
 \begin{block}{IMEX method on the CutCIP formulation}
     Let $u^{m}_{h} \in V_{h}$ for the timesteps $m=0,1,\ldots,M$. Let $u_{h}^{0} = u_{0}$ be the initial timestep, then is.
-\[
-(\overline{\partial}  _{t} u_{h}^m, v_h ) + \varepsilon A (u_{h}^{m}, v_h )+\frac{1}{\varepsilon} c_h ( u_{h}^{m-1}, v_h)=0 \quad \forall v_h \in V_h^m .
-\]
+\begin{equation}
+( \overline{\partial } _{t} u^{m}_{h}, v_{h}   )_{\Omega } + \varepsilon^{2} A^{}_{h}( u_{h}^{m} , v) +  c_{h} (  u_{h}^{m-1}, v_{h})  = \varepsilon ^2 l_{h}^{}( v_{h})  , \quad \forall v_{h}, u^{m}_{h} \in V^{}_{h}.
+\end{equation}
 Here is $c_{h}( . , .) $ an the nonlinear terms handled in a implicit fashion. The $ \overline{\partial}  _{t}$ operator is simply a finite difference scheme in time-dimension.
 
 \end{block}
@@ -527,99 +348,95 @@ Here is $c_{h}( . , .) $ an the nonlinear terms handled in a implicit fashion. T
 \end{frame}
 
 \begin{frame}
-\frametitle{The CutCIP Cahn-Hilliard Experiments}
-Implemented using the Gridap FEM framework written in Julia \footnotemark[1].
+\frametitle{ Cut $C^0$ Interior Penalty Method Results }
+% \frametitle{Manufactured Solution}
 
-
-\begin{block}{Simulation parameters}
-    \begin{itemize}
-        \item Physical domain $\Omega$  is a 4 discs of radius $R=1$ with distance $d=0.999$, i.e. they are touching!
-        \item Inital data is $u_0 = random(-1,1)$ in physical domain $\Omega $.
-        % \item Backgroundmesh with size ($L\times L$ ) for $L=2$ and $n=128$.
-        % \item Polynomial order $k=2$ .
-        % \item Physical parameter $\varepsilon  = \frac{1}{30}$.
-        % \item Time-step $\tau = \varepsilon ^{2} \frac{1}{10} $ for the interval $ 0\le t \le 10^3 \tau $.
-    \end{itemize}
+\begin{block}{Manufactured solution}
+For our experiment we chose the manufactured solution
+\begin{equation}
+    u_{ ex }(x, t) = \sin\left(\frac{2\pi x_1}{\sqrt{\varepsilon}}\right)\cos\left(\frac{2 \pi x_2}{\sqrt{\varepsilon}}\right)\cos\left(\frac{2\pi t}{\varepsilon^2}\right)\exp\left(-\frac{t}{\varepsilon^2}\right)
+\end{equation}
+This manufactured solution can be used to test the accuracy of numerical methods for solving the above differential equation.
 \end{block}
-
-\footnotetext[1]{\fullcite{badia2020gridap}}
-
-
 \end{frame}
-
-% \begin{frame}
-% \frametitle{The CutCIP Cahn-Hilliard Experiments}
 
 
 \begin{frame}
-\frametitle{The CutCIP Cahn-Hilliard Experiments}
-
+\frametitle{Convergence results}
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.5\textwidth]{CH-example/flower_0.png}
-    \caption{Iteration 0}
-\end{figure}
-\end{frame}
-
-\begin{frame}
-\frametitle{The CutCIP Cahn-Hilliard Experiments}
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.5\textwidth]{CH-example/flower_10.png}
-    \caption{Iteration 10}
-\end{figure}
-\end{frame}
-
-\begin{frame}
-\frametitle{The CutCIP Cahn-Hilliard Experiments}
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.5\textwidth]{CH-example/flower_50.png}
-    \caption{Iteration 50}
-\end{figure}
-\end{frame}
-
-\begin{frame}
-\frametitle{The CutCIP Cahn-Hilliard Experiments}
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.5\textwidth]{CH-example/flower_200.png}
-    \caption{Iteration 200}
-\end{figure}
-\end{frame}
-
-\begin{frame}
-\frametitle{The CutCIP Cahn-Hilliard Experiments}
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.5\textwidth]{CH-example/flower_500.png}
-    \caption{Iteration 1000}
-\end{figure}
-\end{frame}
-
-\begin{frame}
-\frametitle{The CutCIP Cahn-Hilliard Experiments}
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.5\textwidth]{CH-example/flower_1000.png}
-    \caption{Iteration 1000}
+    \includegraphics[width=0.7\textwidth]{CH-example/spatial-plot.pdf}
 \end{figure}
 \end{frame}
 
 
 \begin{frame}
-\frametitle{Further work}
-\begin{enumerate}
-    \item Adaptive time steps.
-    \item Further numerical validation.
-    \item Extend the method to handle moving domains.
+\frametitle{The CutCIP Cahn-Hilliard Experiments}
+\begin{center}
+    \begin{tabular}{ccc}
+        \includegraphics[width=0.2\textwidth]{CH-example/flower_0.png} &
+        \includegraphics[width=0.2\textwidth]{CH-example/flower_10.png} &
+        \includegraphics[width=0.2\textwidth]{CH-example/flower_50.png} \\
+        Step 0 & Step 10 & Step 50 \\
+        \includegraphics[width=0.2\textwidth]{CH-example/flower_200.png} &
+        \includegraphics[width=0.2\textwidth]{CH-example/flower_500.png} &
+        \includegraphics[width=0.2\textwidth]{CH-example/flower_1000.png} \\
+        Step 200 & Step 500 & Step 1000 \\
+    \end{tabular}
+\end{center}
+\end{frame}
 
-\end{enumerate}
+
+\begin{frame}
+\frametitle{The CutCIP Cahn-Hilliard Experiments}
+\begin{center}
+    \begin{tabular}{ccc}
+        \includegraphics[width=0.2\textwidth]{CH-example/popcorn_0.png} &
+        \includegraphics[width=0.2\textwidth]{CH-example/popcorn_10.png} &
+        \includegraphics[width=0.2\textwidth]{CH-example/popcorn_50.png} \\
+        Step 0 & Step 10 & Step 50 \\
+        \includegraphics[width=0.2\textwidth]{CH-example/popcorn_200.png} &
+        \includegraphics[width=0.2\textwidth]{CH-example/popcorn_500.png} &
+        \includegraphics[width=0.2\textwidth]{CH-example/popcorn_1000.png} \\
+        Step 200 & Step 500 & Step 1000 \\
+    \end{tabular}
+\end{center}
 \end{frame}
 
 
 \begin{frame}
 \frametitle{Questions?}
+\end{frame}
+
+\begin{frame}
+\begin{center}
+
+\begin{columns}
+\begin{column}{0.5\textwidth}
+    We denote the energy functional
+    \begin{equation*}
+        E(u) = \int_{\Omega} \left( \frac{\varepsilon^2}{2} |\nabla u|^2 + F(u) \right) \, dx.
+    \end{equation*}
+    Decomposing \( E(u) \) into:
+    \begin{align*}
+        E_{1}(u) &= \int_{\Omega} \frac{\varepsilon^2}{2} |\nabla u|^2 \, dx, \\
+        E_{2}(u) &= \int_{\Omega} F(u) \, dx.
+    \end{align*}
+\end{column}
+
+\begin{column}{0.5\textwidth}
+    \textit{Physical Expectations:}
+    \begin{equation*}
+        \frac{d}{dt} E(u) < 0, \quad \frac{d}{dt} \int_{\Omega} u \, dx = 0.
+    \end{equation*}
+\end{column}
+\end{columns}
+\end{center}
+\end{frame}
+\begin{frame}
+\begin{center}
+    \includegraphics[width=1.0\textwidth]{CH-example/physical_energy.pdf}
+\end{center}
 \end{frame}
 
 
