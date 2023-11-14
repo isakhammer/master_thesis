@@ -410,22 +410,21 @@ This manufactured solution can be used to test the accuracy of numerical methods
 
 \begin{frame}
 \begin{center}
-
 \begin{columns}
 \begin{column}{0.5\textwidth}
-    We denote the energy functional
+    \textbf{Energy Functional:}
     \begin{equation*}
         E(u) = \int_{\Omega} \left( \frac{\varepsilon^2}{2} |\nabla u|^2 + F(u) \right) \, dx.
     \end{equation*}
     Decomposing \( E(u) \) into:
     \begin{align*}
-        E_{1}(u) &= \int_{\Omega} \frac{\varepsilon^2}{2} |\nabla u|^2 \, dx, \\
-        E_{2}(u) &= \int_{\Omega} F(u) \, dx.
+        E_{1}(u) &= \int_{\Omega} \frac{\varepsilon^2}{2} |\nabla u|^2 \, dx, \text{ (smoothness)} \\
+        E_{2}(u) &= \int_{\Omega} F(u) \, dx \text{ (separation)}.
     \end{align*}
+    For chemical energy \( F(s)=\frac{1}{4}\left(s^2-1\right)^2 \)
 \end{column}
-
 \begin{column}{0.5\textwidth}
-    \textit{Physical Expectations:}
+    \textbf{Physical Expectations:}
     \begin{equation*}
         \frac{d}{dt} E(u) < 0, \quad \frac{d}{dt} \int_{\Omega} u \, dx = 0.
     \end{equation*}
@@ -433,6 +432,7 @@ This manufactured solution can be used to test the accuracy of numerical methods
 \end{columns}
 \end{center}
 \end{frame}
+
 \begin{frame}
 \begin{center}
     \includegraphics[width=1.0\textwidth]{CH-example/physical_energy.pdf}
